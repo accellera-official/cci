@@ -156,13 +156,13 @@ namespace cci {
      *
      * @param val  The new value for this parameter.
      */
-    virtual void set_value(const val_type& val) = 0;
+    virtual void set(const val_type& val) = 0;
     
     /// Returns the value of this parameter.
     /**
      * @return Value
      */
-    virtual const val_type& get_value() const = 0;
+    virtual const val_type& get() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -199,15 +199,15 @@ namespace cci {
   };
     
   template<class T> bool operator == (cci_param<T>& p1, cci_param<T>& p2) {
-    return p1.getValue() == p2.getValue();
+    return p1.get() == p2.getValue();
   }
 
   template<class T> bool operator == (cci_param<T>& p1, T& p2) {
-    return p1.getValue() == p2;
+    return p1.get() == p2;
   }
 
   template<class T> bool operator == (T& p1, cci_param<T>& p2) {
-    return p1 == p2.getValue();
+    return p1 == p2.get();
   }
   
   

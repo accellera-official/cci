@@ -180,7 +180,7 @@ namespace cci {
      * @param par Parameter (including name and value).
      * @return Success of the adding.
      */
-    virtual bool add_param(cci_param_base* par, std::string meta_data = "") = 0;
+    virtual bool add_param(cci_param_base* par) = 0;
     
     /// Remove a parameter from the registry. Called by the parameter destructor.
     /**
@@ -190,7 +190,7 @@ namespace cci {
      * @param par Parameter pointer.
      * @return Success of remove.
      */
-    virtual bool removePar(cci_param_base* par, std::string meta_data = "") = 0;
+    virtual bool removePar(cci_param_base* par) = 0;
     
 
   public:
@@ -198,6 +198,17 @@ namespace cci {
     // ///////////////   Optional functions   ///////////////////////////// //
 
     
+    /// Set an alias to a parameter name
+    /**
+     * TODO: Guideline for other functions, e.g.:
+     * - get_param_list will NOT return any alias names
+     * - all parameter access functions will take an alias
+     *
+     * @param orig_parname    Full hierarchical name of the original parameter (or another alias).
+     * @param alias_parname   Full hierarchical (full user chosen) alias name.
+     */
+    virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
+        
     /// Convenience function to get a typed parameter pointer.
     /**
      * @param   parname   Full hierarchical parameter name.
