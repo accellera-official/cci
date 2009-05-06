@@ -55,11 +55,7 @@ namespace cci {
 
     // Set the api pointer
     sc_core::sc_module *mod = get_sc_module(sc_core::sc_get_current_process_handle().get_parent_object()); // TODO
-    m_api = GCnf_Api::getApiInstance(mod);
-
-    if (isHierarchicalParameterName(n) && parent_array != NULL) {
-      SC_REPORT_FATAL(name(), "Do not use hierarchical parameter names for Extended Parameter Array members!");
-    }
+//TODO    m_api = GCnf_Api::getApiInstance(mod);
 
     // Set the name
     std::stringstream ss;
@@ -71,7 +67,7 @@ namespace cci {
 
   }
 
-  ~cci_param_base::cci_param_base() {
+  cci_param_base::~cci_param_base() {
     // delete pointer to this parameter in all callback adapters called by this parameter
     observerParamCallback_type::iterator it;
     for (it = m_observer_param_callback_mmap.begin();  it != m_observer_param_callback_mmap.end();   ++it) {
@@ -96,7 +92,7 @@ namespace cci {
   
   template<class T>
   const bool cci_param_base::getValue(T &value) const {
-    return cci_param<T>::static_deserialize(value, this->get());
+    return cci_param<T>::static_deserialize(value, this->getString());
   }
   
   template<class T>
@@ -115,7 +111,7 @@ namespace cci {
   // ////////   Type   /////////// //
 
   const std::string cci_param_base::getTypeString() const {
-    return string("PARTYPE_NOT_AVAILABLE");
+    return std::string("PARTYPE_NOT_AVAILABLE");
   }
   
   const Param_type cci_param_base::getType() const{
@@ -152,7 +148,7 @@ namespace cci {
   // ////////   diverse   /////////// //
 
   
-  std::string &cci_param_base::getName() const { 
+  const std::string& cci_param_base::getName() const { 
     return m_par_name; 
   }
 
