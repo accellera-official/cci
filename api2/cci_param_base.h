@@ -24,17 +24,10 @@
 #include <iostream>
 #include <map>
 #include <set>
+
 #include <boost/shared_ptr.hpp>
 #include "cci_datatypes.h"
-#include "cci_paramcallbadapt.h"
 
-
-/*#include "greencontrol/gcnf/plugin/config_globals.h"
-#include "greencontrol/core/gc_core.h"
-#include "greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h"
-#include "greencontrol/gcnf/apis/GCnf_private_Api/gcnf_private_api.h"
-#include "greencontrol/gcnf/plugin/utils.h"
-*/
 
 namespace cci {
 
@@ -53,7 +46,7 @@ namespace cci {
   public:
 
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   construction / destruction   ///////////////////// //
+    // ///////////////   Construction / Destruction   ///////////////////// //
 
     /// Constructor with (local or hierarchical) name
     /**
@@ -74,7 +67,7 @@ namespace cci {
      *                             default false,
      *                             be carefull in using this.
      */
-    explicit cci_param_base(const std::string &n, const bool register_at_db = true,
+    explicit cci_param_base(const std::string& n, const bool register_at_db = true,
                             const bool force_top_level_name = false);
     
     /// Destructor.
@@ -82,7 +75,7 @@ namespace cci {
     
 
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   set and get with value   ///////////////////////// //
+    // ///////////////   Set and Get with Value   ///////////////////////// //
 
     
     /// Get this parameter's value converted to the type.
@@ -99,7 +92,7 @@ namespace cci {
      * @return         If the convertion was successfull.
      */
     virtual template<class T>
-    const bool getValue(T &value) const;
+    const bool get_value(T& value) const = 0;
     
     /// Get a parameter's value. Independent of the implicit or explicit status.
     /**
@@ -113,18 +106,18 @@ namespace cci {
      * @return         Value of the parameter, converted to the user-chosen type.
      */
     virtual template<class T>
-    const T getValue() const;  
+    const T get_value() const = 0;
     
     /// Convenience function to get a parameter pointer of the cci_param<T> type defined by the caller (does a dynamic_cast).
     /**
      * @return  Pointer to the parameter object (NULL if not existing or wrong type).
      */ 
     virtual template<class T>
-    cci_param<T>* get_cci_param();
+    cci_param<T>* get_cci_param() = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////   set and get with string representation   ///////////////// //
+    // ///////   Set and Get with String Representation   ///////////////// //
     
     
     /// Sets the value of this parameter given by a string.
@@ -132,35 +125,24 @@ namespace cci {
      * @param str the new value represented as a string.
      * @return If setting was successful.
      */
-    virtual bool setString(const std::string &str) = 0;
+    virtual bool set_string(const std::string& str) = 0;
     
     /// Get the string representation of this parameter's value.
     /**
      * @return  The value of this parameter represented as a string.
      */
-    virtual const std::string& getString() const = 0;
+    virtual const std::string& get_string() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Parameter Data Type   //////////////////////////// //
 
-    /// Returns the string representation of the type this parameter stores
-    virtual const std::string getTypeString() const;
     
     /// Returns the type identifying enum of the type this parameter stores
-    virtual const Param_type getType() const;
+    virtual const Param_type get_type() const = 0;
     
-    // //////  param_attributes  ////// //
-    /*/// Adds a param attribute.
-    bool add_param_attribute(const param_attribute attr);
-    /// If a special param attribute is set.
-    bool has_param_attribute(const param_attribute attr) const;
-    /// Returns a set containing all param attributes that are set for this param.
-    const std::set<param_attribute> get_param_attributes() const;
-    /// Removes a param attribute.
-    bool remove_param_attribute(param_attribute attr);
-    /// Removes all param attributes of this param.
-    void remove_all_param_attributes();*/
+    /// Returns the string representation of the type this parameter stores
+    virtual const std::string get_type_string() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -171,14 +153,14 @@ namespace cci {
     /**
      * @return   Name of the parameter.
      */
-    virtual const std::string& getName() const;
+    virtual const std::string& get_name() const = 0;
    
     /// Returns the destrcution flag status: if this parameter is to be destroyed (for callbacks)
-    virtual const bool is_destructing() const;
+    virtual const bool is_destructing() const = 0;
     
 
     // //////////////////////////////////////////////////////////////////// //
-    // ///////   Callback handling methods   ////////////////////////////// //
+    // ///////   Callback Handling Methods   ////////////////////////////// //
     
     TODO 
     
@@ -246,7 +228,7 @@ namespace cci {
      * GC_REGISTER_PARAM_CALLBACK(&my_param, MyIP,       config_callback)
      * \endcode
      */
-    virtual boost::shared_ptr<ParamCallbAdapt_b> registerParamCallback(boost::shared_ptr<ParamCallbAdapt_b> callb);
+    virtual boost::shared_ptr<ParamCallbAdapt_b> registerParamCallback(boost::shared_ptr<ParamCallbAdapt_b> callb) = 0;
 
     /// <code>GC_HAS_CALLBACKS();</code> creates a vector for the module where all parameter callback adapters are stored when being created by the macro GC_REGISTER_PARAM_CALLBACK. To be used by a user module in its (e.g. private) class body.
   #define GC_HAS_CALLBACKS()  \
@@ -292,7 +274,7 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregisterParamCallback(ParamCallbAdapt_b *callb);
+    virtual bool unregisterParamCallback(ParamCallbAdapt_b* callb) = 0;
     
     /// Unregisters all callbacks that belong to the observer and deletes the belonging callback adapter objects.
     /**
@@ -304,10 +286,10 @@ namespace cci {
      * @param observer  void* pointer to the observer object which registered the parameter callbacks
      * @return          If there were any callbacks that had to be removed or not.
      */
-    virtual bool unregisterParamCallbacks(void* observer);
+    virtual bool unregisterParamCallbacks(void* observer) = 0;
       
     /// Returns if this param has registered callbacks
-    virtual bool has_callbacks();
+    virtual bool has_callbacks() = 0;
     
   };
 

@@ -19,24 +19,19 @@
 #ifndef __CCI_PARAM_H__
 #define __CCI_PARAM_H__
 
+
 #include <string>
 #include <iostream>
 #include <sstream>
 
 #include <systemc>
-#include "cci_paramcallbadapt.h"
 #include "cci_cnf_api.h"
 #include "cci_param_base.h"
-//#include "cci_param_operator_macros.h"
+
 
 namespace cci {
 
-  /// The parameters, cci_param class, templated.
-  /**
-   * Each explicitely supported data type has a template specialisation.
-   * See specialisations.
-   * All data types for which no specialization is existing, will use this class.
-   */
+  /// The parameters class
   template<typename T>
   class cci_param 
   : public cci_param_base
@@ -44,30 +39,30 @@ namespace cci {
   public:
 
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   construction / destruction   ///////////////////// //
+    // ///////////////   Construction / Destruction   ///////////////////// //
 
     // Explicit constructors to avoid implicit construction of parameters.
     
     /// Empty constructor. Name will be set in base
-    explicit cci_param() : cci_param_t<val_type>(false, true) { cci_param_t<val_type>::init();  }
-    explicit cci_param(const val_type &val) : cci_param_t<val_type>(false, true) { cci_param_t<val_type>::init(); }
+    explicit cci_param()                    : cci_param_t<val_type>(false, true) { cci_param_t<val_type>::init(); }
+    explicit cci_param(const val_type& val) : cci_param_t<val_type>(false, true) { cci_param_t<val_type>::init(); }
     
     /// Constructor with (local/hierarchical) name.
-    explicit cci_param(const std::string &nam) : cci_param_t<val_type>(nam             , false, true) { cci_param_t<val_type>::init(); }
-    explicit cci_param(const char *nam       ) : cci_param_t<val_type>(std::string(nam), false, true) { cci_param_t<val_type>::init(); }
+    explicit cci_param(const std::string& nam) : cci_param_t<val_type>(nam             , false, true) { cci_param_t<val_type>::init(); }
+    explicit cci_param(const char* nam       ) : cci_param_t<val_type>(std::string(nam), false, true) { cci_param_t<val_type>::init(); }
     
     /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit cci_param(const std::string &nam, const std::string &val, const bool force_top_level_name = false) : cci_param_t<val_type>(nam             , force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
-    explicit cci_param(const char *nam,        const char *val       , const bool force_top_level_name = false) : cci_param_t<val_type>(std::string(nam), force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(std::string(val))); } 
-    explicit cci_param(const std::string &nam, const char *val       , const bool force_top_level_name = false) : cci_param_t<val_type>(nam             , force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(std::string(val))); } 
-    explicit cci_param(const char *nam,        const std::string &val, const bool force_top_level_name = false) : cci_param_t<val_type>(std::string(nam), force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
+    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false) : cci_param_t<val_type>(nam             , force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
+    explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false) : cci_param_t<val_type>(std::string(nam), force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(std::string(val))); } 
+    explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false) : cci_param_t<val_type>(nam             , force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(std::string(val))); } 
+    explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false) : cci_param_t<val_type>(std::string(nam), force_top_level_name, true ) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
     
     /// Constructor with (local/hierarchical) name and initial value.
-    explicit cci_param(const std::string &nam, const val_type &val, const bool force_top_level_name = false) : cci_param_t<val_type>(nam             , force_top_level_name, true )  { cci_param_t<val_type>::init(val); }    
-    explicit cci_param(const char *nam,        const val_type &val, const bool force_top_level_name = false) : cci_param_t<val_type>(std::string(nam), force_top_level_name, true )  { cci_param_t<val_type>::init(val); }    
+    explicit cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false) : cci_param_t<val_type>(nam             , force_top_level_name, true )  { cci_param_t<val_type>::init(val); }    
+    explicit cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false) : cci_param_t<val_type>(std::string(nam), force_top_level_name, true )  { cci_param_t<val_type>::init(val); }    
     
     // Constructors with register_at_db bool
-    explicit cci_param(const std::string &nam, const std::string &val, const bool force_top_level_name, const bool register_at_db) : cci_param_t<val_type>(nam, force_top_level_name, register_at_db) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
+    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : cci_param_t<val_type>(nam, force_top_level_name, register_at_db) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
     
     /// Destructor
     virtual ~cci_param() { cci_param_t<val_type>::destruct_cci_param(); }
@@ -77,14 +72,14 @@ namespace cci {
      * Has to be called by the cci_param class after construction!
      * Does set the value and add the parameter to the plugin db.
      */
-    void init(const val_type &default_val);
+    void init(const val_type& default_val) = 0;
     
     /// Init method without value @see init(val_type &default_val)
-    void init();    
+    void init() = 0;
 
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////////////   operators   ////////////////////////////// //
+    // ///////////////////////   Operators   ////////////////////////////// //
 
     
     // templated operators
@@ -111,7 +106,7 @@ namespace cci {
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   set and get operators   ////////////////////////// //
+    // ///////////////   Set and Get Operators   ////////////////////////// //
 
     
     /// Set the value of this parameter to the value of another cci_param.
@@ -152,7 +147,7 @@ namespace cci {
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   set and get with value   ///////////////////////// //
+    // ///////////////   Set and Get with Value   ///////////////////////// //
 
     
     /// Set the value of this parameter.
@@ -161,35 +156,17 @@ namespace cci {
      *
      * @param val  The new value for this parameter.
      */
-    virtual void setValue(const val_type &val);
+    virtual void set_value(const val_type& val) = 0;
     
     /// Returns the value of this parameter.
     /**
      * @return Value
      */
-    virtual const val_type& getValue() const;
+    virtual const val_type& get_value() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////   set and get with string representation   ///////////////// //
-    
-    
-    /// Set the value of this parameter with a string.
-    /**
-     * @param str  The new value for this parameter, represented as a string.
-     * @return If setting was successful
-     */ 
-    virtual bool setString(const std::string &str);
-    
-    /// Get the value of this parameter as a string.
-    /**
-     * @return String representation of the current value of this parameter.
-     */
-    virtual const std::string& getString() const;
-    
-    
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////   conversion methods string <-> value   //////////////////// //
+    // ///////   Conversion Methods String <-> Value   //////////////////// //
     
     
     /// Conversion method value type --> string. To be implemented by the specialization.
@@ -199,10 +176,10 @@ namespace cci {
      * @param val  Value that should be converted to string.
      * @return String representation of the value.
      */
-    virtual std::string serialize(const val_type &val) const;
+    virtual std::string serialize(const val_type& val) const = 0;
 
     /// Deserialize for this parameter. Calls the static_deserialize function
-    virtual const bool deserialize(val_type &target_val, const std::string& str) { return static_deserialize(target_val, str); }
+    virtual const bool deserialize(val_type& target_val, const std::string& str) { return static_deserialize(target_val, str); }
     
     /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
     /**
@@ -217,15 +194,15 @@ namespace cci {
      * @param  str         String that should be converted to a value.
      * @return If the convertion was successfull
      */
-    virtual static bool static_deserialize(val_type &target_val, const std::string& str);
+    virtual static bool static_deserialize(val_type& target_val, const std::string& str) = 0;
 
   };
     
-  template<class T> bool operator == (cci_param<T> &p1, cci_param<T>& p2) {
+  template<class T> bool operator == (cci_param<T>& p1, cci_param<T>& p2) {
     return p1.getValue() == p2.getValue();
   }
 
-  template<class T> bool operator == (cci_param<T> &p1, T& p2) {
+  template<class T> bool operator == (cci_param<T>& p1, T& p2) {
     return p1.getValue() == p2;
   }
 
