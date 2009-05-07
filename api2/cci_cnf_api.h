@@ -20,6 +20,10 @@
 #define __CCI_CNF_API_H__
 
 
+#include "cci_param.h"
+#include "cci_callbacks.h"
+
+
 namespace cci {
 
 
@@ -85,29 +89,25 @@ namespace cci {
      * @return Vector with full hierarchical parameter names.
      */
     virtual const std::vector<std::string> get_param_list() = 0;
+    // also see optional functions!
 
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////   Callback Handling   //////////////////////////// //
-
     
-    // Makro for registering new parameter callback functions (see method registerCallback).
-  #define REGISTER_NEW_PARAM_CALLBACK(class, method)                \
-  registerNewParamCallback(new gs::cnf::CallbAdapt< class >(this, &class::method));
     
-
-    /// Register callback function for notifications of new added (or first time implicitely set) parameters.
+    /// Registers an observer callback function (with the signature of callback_func_ptr).
     /**
-     * The callback works even during initialize-mode (elaboration time).
+     * Several callbacks may be registered. Even several callbacks to the same method
+     * in the same object can be registered!
      *
      * Inside the callback functions no waits are allowed!
      *
      * The user may register any methods as callback functions which have
      * the following signature:
      * \code
-     * void method_name(const std::string parname, const std::string value);
+     * void method_name(cci_param_base& changed_param);
      * \endcode
-     *
      *
      * Usage example:
      * \code
@@ -117,51 +117,64 @@ namespace cci {
      * public:
      *   // some code [...]
      *   
-     *   GC_nfApi my_GCnf_Api;
+     *   cci_param<int> my_param;
+     *
+     *   MyIP_Class(sc_core::sc_module_name name)
+     *    : sc_core::sc_module(name),
+     *      my_param("my_param", 10) 
+     *   { //...
+     *   }
      *
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     my_GCnf_Api.REGISTER_NEW_PARAM_CALLBACK(MyIP_Class, config_callback);
+     *     TODO m_api.register_callback(cci::post_write, my_param.get_name(), this, MyIP_Class::config_callback);
      *   }
      *
      *   // Callback function with default signature.
-     *   void config_callback(const std::string parname, const std::string value) {
+     *   void config_callback(cci_param_base& changed_param) {
      *     // some action
      *   }
      * };
      * \endcode
      *
-     * This method registers a callback which is done each time a parameter is added
-     * (without being an implicit parameter before) to the Config Plugin or an 
-     * (implicit) parameters value is set the first time (without being added before).
-     *
-     * @param callb      Pointer to the CallbAdapt_b object which contains the object pointer
-     *                   and the member function pointer.
-     * @return           Success of registering.
+     * @param type        Type of the callback.
+     * @param parname     Parameter name or pattern the callback should be applied to.
+     * @param observer    Pointer to the observing object (the one being called).
+     * @param callb_func  Function pointer to the function being called.
+     * @return            boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-   // TODO virtual bool registerNewParamCallback(CallbAdapt_b *callb) = 0;
+    virtual boost::shared_ptr<callb_adapt_b> register_callback(callback_types type, std::string& parname, void* observer, callb_func* func) = 0;
     
-    /// Internal callback function that is called by the parameters. Deprecated!
-    /** 
-     * Registering is done in the methods getUpdateEvent (deprecated part) and registerCallback (deprecated)
-     *
-     * Does not perform the callback if the parameter is during destruction.
-     * The legacy target module does not await this information and it 
-     * cannot be transfered by the string value attribute.
-     */
-    virtual void legacy_callback_adapter_method(cci_param_base &par) = 0;
-    
-    /// Unregisters all callbacks (within all existing parameters) for the specified observer module. 
+    /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
     /**
-     * Currently not used.
-     *
-     * Could be used by a observer's destructor instead of the 
-     * macro <code>GC_UNREGISTER_CALLBACKS();</code>.
-     *
      * @param observer   Pointer to the observer module who did register parameter callbacks.
      */
-    virtual void unregisterAllCallbacks(void* observer) = 0;
+    virtual void unregister_all_callbacks(void* observer) = 0;
+    
+    // TODO: If we want to provide create_param callbacks for initial values 
+    //       being set for not yet existing parameters (implicit parameters),
+    //       we will need another register_callback()-function with a different 
+    //       callback function signature getting <stringName,stringValue>-pair
+    //       instead of cci_param_base.
+    
+    /// Unregisters the callback and (default) deletes the callback adapter.
+    /**
+     * Unregisters (only) the given callback.
+     *
+     * The callback adapter is NOT deleted because this should be done by the
+     * surrounding shared pointer!
+     *
+     * This may be used by a user module which stored the shared pointer to a
+     * specific callback or by the destructor of the param callback adapter.
+     *
+     * @param callb  Parameter callback adapter
+     * @return       If the callback adapter existed in this parameter.
+     */
+    virtual bool unregisterParamCallback(ParamCallbAdapt_b* callb) = 0;
+    
+    /// Returns if the parameter has registered callbacks
+    virtual bool has_callbacks(std::string& parname) = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
