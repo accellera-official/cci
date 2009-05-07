@@ -43,7 +43,7 @@
 
 #include <systemc>
 
-#include "callb_globals.h"
+#include "ex_globals.h"
 
 #include "greencontrol/gcnf/apis/GCnf_Api/GCnf_Api.h"
 #include "greencontrol/gcnf/apis/gs_param/gs_param.h"

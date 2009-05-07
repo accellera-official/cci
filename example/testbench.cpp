@@ -18,16 +18,17 @@
 
 #include <systemc>
 //#include "greencontrol/all.h"
-#include "ParameterOwnerModule.h"
+//#include "ParameterOwnerModule.h"
 //#include "ObserverModule.h"
 //#include "ParamManipulateModule.h"
+#include "greenstarcore/api/cci_param.h"
 
 /// Testbench for the example GreenConfig
 int sc_main(int argc, char *argv[]) {
   
   //GS_INIT_STANDARD_GREENCONTROL;
   
-  ParameterOwnerModule  owner      ("Owner");
+  //ParameterOwnerModule  owner      ("Owner");
   //ObserverModule        observer   ("Observer");
   //ParamManipulateModule manipulator("Manipulator");
 

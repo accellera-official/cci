@@ -115,7 +115,7 @@ namespace cci {
    * by the virtual call method of the base class when the API calls it.
    */
   template<class T>
-  class ParamCallbAdapt
+  class callb_adapt
   : public callb_adapt_b
   {
   protected:
@@ -135,8 +135,8 @@ namespace cci {
      * @param _observer_ptr  void* pointer to the observer object (needed for unregistering).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    ParamCallbAdapt(T* ob, callb_func_ptr _ptr, void* _observer_ptr, cci_param_base* _caller_param)
-    : callb_adapt_b(_observer_ptr, _caller_param) {
+    callb_adapt(T* ob, callb_func_ptr _ptr, cci_param_base* _caller_param)
+    : callb_adapt_b(ob, _caller_param) {
       obj = ob;
       ptr = _ptr;
     }

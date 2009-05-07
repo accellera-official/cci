@@ -20,6 +20,8 @@
 #define __CCI_CNF_API_H__
 
 
+#include <boost/shared_ptr.hpp>
+
 #include "cci_param.h"
 #include "cci_callbacks.h"
 
@@ -128,7 +130,12 @@ namespace cci {
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     TODO m_api.register_callback(cci::post_write, my_param.get_name(), this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::post_write   , my_param.get_name(), this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::destroy_param, my_param.get_name(), this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::create_param , "*"                , this, MyIP_Class::config_callback);
+     *  OPTIONAL:
+     *     m_api.register_callback(cci::post_write, "*.my_param"  , this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::post_write, "MyIP_Class.*", this, MyIP_Class::config_callback);
      *   }
      *
      *   // Callback function with default signature.
@@ -144,7 +151,14 @@ namespace cci {
      * @param callb_func  Function pointer to the function being called.
      * @return            boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-    virtual boost::shared_ptr<callb_adapt_b> register_callback(callback_types type, std::string& parname, void* observer, callb_func* func) = 0;
+    template <typename T>
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, const std::string& parname, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
+      // call the pure virtual function, independent from template T
+      register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, get_param(parname))));
+    }
+    
+    virtual bool register_callback(const std::string& parname, boost::shared_ptr< callb_adapt_b> callb) = 0;
+
     
     /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
     /**
@@ -171,7 +185,7 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregisterParamCallback(ParamCallbAdapt_b* callb) = 0;
+    virtual bool unregisterParamCallback(callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks(std::string& parname) = 0;
@@ -227,8 +241,10 @@ namespace cci {
      * @param   parname   Full hierarchical parameter name.
      * @return  Pointer to the parameter object (NULL if not existing).
      */ 
-    virtual template<class T>
-    cci_param<T>* get_cci_param(const std::string &parname) = 0;
+    template<class T>
+    cci_param<T>* get_cci_param(const std::string &parname) {
+      return dynamic_cast<cci_param<T>*>(get_param(parname));
+    };
     
     /// Return a list of all parameters (TODO implicit and explicit?) matching the pattern
     /**

@@ -25,6 +25,7 @@
 #include <sstream>
 
 #include <systemc>
+#include "cci_datatypes.h"
 #include "cci_cnf_api.h"
 #include "cci_param_base.h"
 
@@ -36,6 +37,12 @@ namespace cci {
   class cci_param 
   : public cci_param_base
   {
+  protected:
+    /// Typedef for the value.
+    typedef T val_type;
+    /// Typedef for the param itself.
+    typedef cci_param<T> my_type;
+
   public:
 
     // //////////////////////////////////////////////////////////////////// //
@@ -44,8 +51,8 @@ namespace cci {
     // Explicit constructors to avoid implicit construction of parameters.
     
     /// Empty constructor. Name will be set in base
-    explicit cci_param()                    : cci_param_t<val_type>(false, true) { cci_param_t<val_type>::init(); }
-    explicit cci_param(const val_type& val) : cci_param_t<val_type>(false, true) { cci_param_t<val_type>::init(); }
+/*    explicit cci_param()                    : cci_param_t<val_type>(false, true) { init(); }
+    explicit cci_param(const val_type& val) : cci_param_t<val_type>(false, true) { init(); }
     
     /// Constructor with (local/hierarchical) name.
     explicit cci_param(const std::string& nam) : cci_param_t<val_type>(nam             , false, true) { cci_param_t<val_type>::init(); }
@@ -63,9 +70,9 @@ namespace cci {
     
     // Constructors with register_at_db bool
     explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : cci_param_t<val_type>(nam, force_top_level_name, register_at_db) { cci_param_t<val_type>::init(convertStringToValue(val));         } 
-    
+*/    
     /// Destructor
-    virtual ~cci_param() { cci_param_t<val_type>::destruct_cci_param(); }
+    virtual ~cci_param() = 0;
     
     /// Init method to set the value and add the parameter to the plugin db.
     /** 
@@ -142,7 +149,7 @@ namespace cci {
      * @return Value of the parameter.
      */
     operator const val_type& () const { 
-      return getValue(); 
+      return get(); 
     }
     
     
@@ -169,7 +176,7 @@ namespace cci {
     // ///////   Conversion Methods String <-> Value   //////////////////// //
     
     
-    /// Conversion method value type --> string. To be implemented by the specialization.
+    /// Conversion value type --> string. To be implemented by the specialization.
     /**
      * May not make use of m_par_name because it is called inside constructor!
      *
@@ -178,23 +185,19 @@ namespace cci {
      */
     virtual std::string serialize(const val_type& val) const = 0;
 
-    /// Deserialize for this parameter. Calls the static_deserialize function
-    virtual const bool deserialize(val_type& target_val, const std::string& str) { return static_deserialize(target_val, str); }
-    
-    /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
+    /// Convertion string --> value type
     /**
-     * Conversion string --> value type.
+     * Implemented for each template specialization of cci_param:
      *
-     * User implemented for each template specialization of cci_param:
-     * Do not write to target_val if deserialization fails!
-     *
-     * Set target_val to the default value if str is empty (=="").
+     * Guidelines:
+     * - Do not write to target_val if deserialization fails!
+     * - Set target_val to the default value if str is empty (=="").
      *
      * @param  target_val  Reference to the value that should be set.
      * @param  str         String that should be converted to a value.
      * @return If the convertion was successfull
      */
-    virtual static bool static_deserialize(val_type& target_val, const std::string& str) = 0;
+    virtual const bool deserialize(val_type& target_val, const std::string& str) = 0;
 
   };
     

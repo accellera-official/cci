@@ -26,7 +26,6 @@
 #include <set>
 
 #include <boost/shared_ptr.hpp>
-#include "cci_datatypes.h"
 
 
 namespace cci {
@@ -78,42 +77,14 @@ namespace cci {
     // ///////////////   Set and Get with Value   ///////////////////////// //
 
     
-    /// Get this parameter's value converted to the type.
-    /**
-     * This function can be called if the user knows the type.
-     *
-     * The string value is converted to the user-chosen template type
-     * by using the cci_param template specialization.
-     *
-     * This function does only work for types of cci_param<T>, not for 
-     * any kind of cci_param_base, e.g. parameter arrays.
-     *
-     * @param value    The value of the parameter will be written to this parameter
-     * @return         If the convertion was successfull.
-     */
-    virtual template<class T>
-    const bool get_value(T& value) const = 0;
-    
-    /// Get a parameter's value. Independent of the implicit or explicit status.
-    /**
-     * Better use getValue(value) to avoid copying of the value.
-     *
-     * This function can be called if the user knows the type.
-     *
-     * The string value is converted to the user-chosen template type
-     * by using the cci_param template specialization.
-     *
-     * @return         Value of the parameter, converted to the user-chosen type.
-     */
-    virtual template<class T>
-    const T get_value() const = 0;
-    
     /// Convenience function to get a parameter pointer of the cci_param<T> type defined by the caller (does a dynamic_cast).
     /**
      * @return  Pointer to the parameter object (NULL if not existing or wrong type).
      */ 
-    virtual template<class T>
-    cci_param<T>* get_cci_param() = 0;
+    template<class T>
+    cci_param<T>* get_cci_param() {
+      return dynamic_cast<cci_param<T>*>(this);
+    }
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -161,7 +132,5 @@ namespace cci {
   };
 
 } // namespace cci
-
-#include "cci_param_base.hpp"
 
 #endif
