@@ -40,6 +40,7 @@ namespace cci {
    * Requires set and get with the string representation of the value.
    */
   class cci_param_base
+  : public sc_core::sc_object
   {
 
   public:
@@ -128,6 +129,92 @@ namespace cci {
    
     /// Returns the destrcution flag status: if this parameter is to be destroyed (for callbacks)
     virtual const bool is_destructing() const = 0;
+    
+    
+    // //////////////////////////////////////////////////////////////////// //
+    // /////////////////   Callback Handling   //////////////////////////// //
+    
+    
+    /// Registers an observer callback function (with the signature of callback_func_ptr).
+    /**
+     * For further callbacks @see cci::cci_cnf_api::register_callback
+     *
+     * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
+     *
+     * The user may register any methods as callback functions which have
+     * the following signature:
+     * \code
+     * void method_name(cci_param_base& changed_param);
+     * \endcode
+     *
+     * Usage example:
+     * \code
+     * class MyIP_Class
+     * : public sc_core::sc_module
+     * {
+     * public:
+     *   // some code [...]
+     *   
+     *   cci_param<int> my_param;
+     *
+     *   MyIP_Class(sc_core::sc_module_name name)
+     *    : sc_core::sc_module(name),
+     *      my_param("my_param", 10) 
+     *   { //...
+     *   }
+     *
+     *   // Example code to register callback function
+     *   void main_action() {
+     *     // some code, parameters etc...
+     *     my_param.register_callback(cci::post_write   , this, MyIP_Class::config_callback);
+     *     my_param.register_callback(cci::destroy_param, this, MyIP_Class::config_callback);
+     *   }
+     *
+     *   // Callback function with default signature.
+     *   void config_callback(cci_param_base& changed_param) {
+     *     // some action
+     *   }
+     * };
+     * \endcode
+     *
+     * @param type        Type of the callback.
+     * @param observer    Pointer to the observing object (the one being called).
+     * @param callb_func  Function pointer to the function being called.
+     * @return            boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
+     */
+    template <typename T>
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
+      // call the pure virtual function, independent from template T
+      return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, get_param(parname))));
+    }
+    
+    /// Function handling the callback (without template)
+    virtual boost::shared_ptr<callb_adapt_b> register_callback(boost::shared_ptr< callb_adapt_b> callb) = 0;
+    
+    
+    /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
+    /**
+     * @param observer   Pointer to the observer module who did register parameter callbacks.
+     */
+    virtual void unregister_all_callbacks(void* observer) = 0;
+    
+    /// Unregisters the callback and (default) deletes the callback adapter.
+    /**
+     * Unregisters (only) the given callback.
+     *
+     * The callback adapter is NOT deleted explicitely because this
+     * should be done by the surrounding shared pointer!
+     *
+     * This may be used by a user module which stored the shared pointer to a
+     * specific callback or by the destructor of the param callback adapter.
+     *
+     * @param callb  Parameter callback adapter
+     * @return       If the callback adapter existed in this parameter.
+     */
+    virtual bool unregisterParamCallback(callb_adapt_b* callb) = 0;
+    
+    /// Returns if the parameter has registered callbacks
+    virtual bool has_callbacks() = 0;
     
   };
 

@@ -100,16 +100,12 @@ namespace cci {
     
     /// Registers an observer callback function (with the signature of callback_func_ptr).
     /**
-     * Several callbacks may be registered. Even several callbacks to the same method
-     * in the same object can be registered!
-     *
-     * Inside the callback functions no waits are allowed!
-     *
-     * The user may register any methods as callback functions which have
-     * the following signature:
-     * \code
-     * void method_name(cci_param_base& changed_param);
-     * \endcode
+     * Same as @see cci::cci_param_base::register_callback but additional
+     * - create param callbacks
+     * - callbacks to not yet existing params
+     * - (optionally) callbacks for regex names
+     * 
+     * This will forward callback registration to the parameter object.
      *
      * Usage example:
      * \code
@@ -130,8 +126,15 @@ namespace cci {
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
+     *
+     *     my_param.register_callback(cci::post_write,  this, MyIP_Class::config_callback);
+     *     //   equal to
      *     m_api.register_callback(cci::post_write   , my_param.get_name(), this, MyIP_Class::config_callback);
+     *
+     *     my_param.register_callback(cci::destroy_param, this, MyIP_Class::config_callback);
+     *     //   equal to
      *     m_api.register_callback(cci::destroy_param, my_param.get_name(), this, MyIP_Class::config_callback);
+     *
      *     m_api.register_callback(cci::create_param , "*"                , this, MyIP_Class::config_callback);
      *  OPTIONAL:
      *     m_api.register_callback(cci::post_write, "*.my_param"  , this, MyIP_Class::config_callback);
@@ -154,10 +157,11 @@ namespace cci {
     template <typename T>
     boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, const std::string& parname, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
       // call the pure virtual function, independent from template T
-      register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, get_param(parname))));
+      return register_callback(parname, boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, get_param(parname))));
     }
     
-    virtual bool register_callback(const std::string& parname, boost::shared_ptr< callb_adapt_b> callb) = 0;
+    /// Function handling the callback (without template)
+    virtual boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, boost::shared_ptr< callb_adapt_b> callb) = 0;
 
     
     /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
@@ -217,7 +221,7 @@ namespace cci {
      * @param par Parameter pointer.
      * @return Success of remove.
      */
-    virtual bool removePar(cci_param_base* par) = 0;
+    virtual bool remove_param(cci_param_base* par) = 0;
     
 
   public:

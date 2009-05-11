@@ -1,0 +1,14 @@
+The library implementing the CCI configuration must provide the following function, which must work in the static code before sc_main is executed.
+
+/**
+ * @param mod  (Optional:) The sc module that wants an API
+ * @return     Pointer to a configuration API
+ */
+cci::cci_cnf_api* cci::get_cnf_api_instance(sc_module* mod = NULL);
+
+
+
+
+The callback order must match the registration order. This allows the 
+tool to register all desired callbacks prior to all others, because it 
+gets the add_param() call at parameter construction.
