@@ -67,11 +67,11 @@ namespace cci {
      *                             default false,
      *                             be carefull in using this.
      */
-    explicit cci_param_base(const std::string& n, const bool register_at_db = true,
-                            const bool force_top_level_name = false);
+    //explicit cci_param_base(const std::string& n, const bool register_at_db = true,
+    //                        const bool force_top_level_name = false);
     
     /// Destructor.
-    virtual ~cci_param_base();
+    //virtual ~cci_param_base();
     
 
     // //////////////////////////////////////////////////////////////////// //
@@ -185,7 +185,7 @@ namespace cci {
     template <typename T>
     boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
       // call the pure virtual function, independent from template T
-      return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, get_param(parname))));
+      return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr)));
     }
     
     /// Function handling the callback (without template)

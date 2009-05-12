@@ -1,14 +1,51 @@
+Requirements for the standard
+
+----------------------------------------------------------------
+
+TOOL ACCESS IN USER CODE
+
 The library implementing the CCI configuration must provide the following function, which must work in the static code before sc_main is executed.
+it is forward declared in cci.h
+cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
 
-/**
- * @param mod  (Optional:) The sc module that wants an API
- * @return     Pointer to a configuration API
- */
-cci::cci_cnf_api* cci::get_cnf_api_instance(sc_module* mod = NULL);
+Code for tool:
+
+namespace cci {
+  /**
+   * @param mod  (Optional:) The sc module that wants an API
+   * @return     Pointer to a configuration API
+   */
+  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod);
+} // end namespace cci
 
 
+----------------------------------------------------------------
 
+CALLBACK ORDER
 
 The callback order must match the registration order. This allows the 
 tool to register all desired callbacks prior to all others, because it 
 gets the add_param() call at parameter construction.
+
+
+----------------------------------------------------------------
+
+STRING REPRESENTATION
+
+Parameter string representations are JSON-conform (see http://www.json.org/)
+Examples:
+ Numbers:
+  42
+  42.3333
+  -42.23e+12
+ Strings:
+  "Any unicode character but some specials like \" \\ \/"
+ bool:
+  true
+  false
+ Objects:
+  {"any string":{"any object":42,"another member":43}}
+
+
+----------------------------------------------------------------
+

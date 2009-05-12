@@ -22,9 +22,6 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include "cci_param.h"
-#include "cci_callbacks.h"
-
 
 namespace cci {
 
@@ -43,7 +40,7 @@ namespace cci {
   public:
     
     // Destructor
-    virtual ~cci_cnf_api() { }
+    virtual ~cci_cnf_api() = 0;
 
     
     // //////////////////////////////////////////////////////////////////// //

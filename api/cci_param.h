@@ -25,9 +25,6 @@
 #include <sstream>
 
 #include <systemc>
-#include "cci_datatypes.h"
-#include "cci_cnf_api.h"
-#include "cci_param_base.h"
 
 
 namespace cci {

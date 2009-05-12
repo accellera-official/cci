@@ -17,9 +17,13 @@
 
 
 #include "ParameterOwnerModule.h"
+#include <systemc.h>
 
 void ParameterOwnerModule::main_action() {
 
+  cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
+  
+#ifdef HH
   wait(1, SC_NS);
 
   wait(1, SC_US);
@@ -81,6 +85,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << std::endl;
  
   wait(100, SC_US);
+#endif
   std::cout << "----------------------------" << std::endl;
 
 }

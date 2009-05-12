@@ -3,15 +3,23 @@
 #SYSTEMC21V1 = yes
 
 CC     = g++
-#OPT    = -O3 -funroll-loops -mtune=pentium4
-OPT  = -g -Wall -lpthread -D_REENTRANT
-#OTHER  = -Wno-deprecated
+OPT  = -g -Wall
 CFLAGS = $(OPT) $(OTHER)
-# CFLAGS = $(DEBUG) $(OTHER)
-# EXTRA_LIBS = -lboost_program_options
 
-MODULE = testbench_callback
-SRCS = testbench.cpp # ParameterOwnerModule.cpp ObserverModule.cpp ParamManipulateModule.cpp
+MODULE = testbench
+
+SRCS = testbench.cpp \
+       ParameterOwnerModule.cpp \
+       ../gs_implementation/gs_cci.cpp \
+       ../gs_implementation/gs_cci_cnf_api.cpp \
+       ../gs_implementation/gs_cci_param_base.cpp
+
+OBJS = testbench.o \
+       ParameterOwnerModule.o \
+       gs_cci.o \
+       gs_cci_cnf_api.o \
+       gs_cci_param_base.o
+
 OBJS = $(SRCS:.cpp=.o)
 
 #include ../Makefile.gspm
