@@ -41,13 +41,9 @@ namespace cci {
     
     ~gs_cci_param_base();
     
-    bool set_string(const std::string& str);
+    const std::string& json_serialize() const;
     
-    const std::string& get_string() const;
-    
-    const Param_type get_type() const;
-    
-    const std::string get_type_string() const;
+    bool json_deserialize(const std::string& str);
     
     const std::string& get_name() const;
    

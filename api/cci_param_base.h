@@ -128,16 +128,16 @@ namespace cci {
      * @param value  Value which the parameter should be set to.
      * @return       If the setting was successfull.
      */
-    virtual bool cci_param_base::set_number(const long long value)   { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual bool set_number(const long long value)   { CCI_NOT_SUPPORTED_WRN; return false; }
     /// Set the parameter value by trying to convert the given number to the param value.
     /** Details @see cci_param_base::set_number(const long long value) If the parameter does not implement this, it will call the set_number function. */
-    virtual bool cci_param_base::set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
+    virtual bool set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
     /// Set the parameter value by trying to convert the given string to the param value.
     /** Details @see cci_param_base::set_number(const long long value) */
-    virtual bool cci_param_base::set_string(const std::string value) { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual bool set_string(const std::string value) { CCI_NOT_SUPPORTED_WRN; return false; }
     /// Set the parameter value by trying to convert the given bool to the param value.
     /** Details @see cci_param_base::set_number(const long long value) */
-    virtual bool cci_param_base::set_bool(const bool value)          { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual bool set_bool(const bool value)          { CCI_NOT_SUPPORTED_WRN; return false; }
 
     /// Get the parameter value by trying to convert it to the given number.
     /**
@@ -152,16 +152,16 @@ namespace cci {
      * @param value  Value which the parameter should be copied to.
      * @return       If the getting was successfull.
      */
-    virtual bool cci_param_base::get_number(long long& retvalue)     { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual bool get_number(long long& retvalue)     { CCI_NOT_SUPPORTED_WRN; return false; }
     /// Get the parameter value by trying to convert it to the given number.
     /** Details @see cci_param_base::get_number(long long& retvalue). If the parameter does not implement this, it will call the get_number function. */
-    virtual bool cci_param_base::get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
+    virtual bool get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retvalue=(double)llval; return res; }
     /// Get the parameter value by trying to convert it to the given string.
     /** Details @see cci_param_base::get_number(long long& retvalue) */
-    virtual bool cci_param_base::get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual bool get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return false; }
     /// Get the parameter value by trying to convert it to the given bool.
     /** Details @see cci_param_base::get_number(long long& retvalue) */
-    virtual bool cci_param_base::get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual bool get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return false; }
     
     
     // //////////////////////////////////////////////////////////////////// //

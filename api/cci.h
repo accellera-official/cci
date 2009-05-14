@@ -20,6 +20,8 @@
 #define __CCI_H__
 
 
+#define OSCI_CCI_SC_REPORT_IDENT "/OSCI/CCI"
+
 #include <systemc>
 
 namespace cci {

@@ -30,27 +30,6 @@ cci::gs_cci_param_base::~gs_cci_param_base() {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
 }
 
-bool cci::gs_cci_param_base::set_string(const std::string& str) {
-  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-  return false;
-}
-
-const std::string& cci::gs_cci_param_base::get_string() const {
-  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-  return parname;
-}
-
-const cci::Param_type cci::gs_cci_param_base::get_type() const {
-  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-  return cci::PARTYPE_NOT_AVAILABLE;
-}
-
-const std::string cci::gs_cci_param_base::get_type_string() const {
-  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-  std::string str("PARTYPE_NOT_AVAILABLE");
-  return str;
-}
-
 const std::string& cci::gs_cci_param_base::get_name() const {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return parname;

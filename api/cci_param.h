@@ -76,10 +76,10 @@ namespace cci {
      * Has to be called by the cci_param class after construction!
      * Does set the value and add the parameter to the plugin db.
      */
-    void init(const val_type& default_val) = 0;
+    virtual void init(const val_type& default_val) = 0;
     
     /// Init method without value @see init(val_type &default_val)
-    void init() = 0;
+    virtual void init() = 0;
 
     
     // //////////////////////////////////////////////////////////////////// //
@@ -123,7 +123,7 @@ namespace cci {
      * @return   Pointer to this.
      */
     virtual my_type& operator = (const my_type& v) { 
-      setValue(v.getValue());
+      set(v.get());
       return *this;
     }
     
@@ -137,7 +137,7 @@ namespace cci {
      * @return   Pointer to this.
      */
     my_type& operator = (const val_type& v) { 
-      setValue(v);
+      set(v);
       return *this;
     }
     

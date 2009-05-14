@@ -21,6 +21,7 @@
 #include <systemc>
 #include "ex_globals.h"
 #include "cci.h"
+#include "../gs_implementation/gs_cci.h"
 
 
 /// Module which owns some gs_params.
@@ -35,7 +36,7 @@ public:
   /// Constructor
   ParameterOwnerModule(sc_core::sc_module_name name)
     : sc_core::sc_module(name)
-      //,int_param ("int_param", 50 )
+      ,int_param ("int_param", 50 )
       // TODO ,str_param ("str_param", "This is a test string.")
       //,uint_param("uint_param", 12000)
   { 
@@ -46,7 +47,7 @@ public:
   void main_action();
 
   /// Example parameter.
-  //cci::cci_param<int>             int_param;
+  cci::gs_cci_param<int>             int_param;
   // TODO cci::cci_param<std::string>     str_param;
   //cci::cci_param<unsigned int>    uint_param;
 
