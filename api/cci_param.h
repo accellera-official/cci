@@ -156,8 +156,6 @@ namespace cci {
     
     /// Set the value of this parameter.
     /**
-     * Calls conversion value type --> string.
-     *
      * @param val  The new value for this parameter.
      */
     virtual void set(const val_type& val) = 0;

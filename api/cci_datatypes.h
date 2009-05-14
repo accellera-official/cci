@@ -24,35 +24,12 @@ namespace cci {
 
   
   /// Enumeration for natively supported data types
-  enum Param_type {
-    // default, used when not specified
-    PARTYPE_NOT_AVAILABLE = 0,
-    // POD
-    PARTYPE_INT,
-    PARTYPE_UINT,
-    PARTYPE_BOOL,
-    PARTYPE_DOUBLE,
-    PARTYPE_FLOAT,
-    PARTYPE_STRING,
-    PARTYPE_ULONGLONG,
-    PARTYPE_LONGLONG,
-    PARTYPE_UCHAR,
-    PARTYPE_USHORT,
-    // SystemC
-    PARTYPE_SC_BIT,
-    PARTYPE_SC_INT_BASE,
-    PARTYPE_SC_INT,
-    PARTYPE_SC_UINT_BASE,
-    PARTYPE_SC_UINT,
-    PARTYPE_SC_SIGNED,
-    PARTYPE_SC_BIGINT,
-    PARTYPE_SC_UNSIGNED,
-    PARTYPE_SC_BIGUINT,
-    PARTYPE_SC_LOGIC,
-    PARTYPE_SC_TIME,
-    PARTYPE_SC_ATTRIBUTE,
-    // Last
-    LAST_PARTYPE
+  enum Param_JSON_type {
+    partype_not_available = 0, // default, type unknown
+    partype_json_number,   // used for all param data types that can handle numbers
+    partype_json_bool,     // used for all param data types that can handle bool
+    partype_json_string,   // used for all param data types that can handle strings
+    partype_json_other     // used for all param other data types (objects, arrays etc.)
   };
   
 

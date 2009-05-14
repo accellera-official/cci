@@ -89,32 +89,79 @@ namespace cci {
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////   Set and Get with String Representation   ///////////////// //
+    // ///////   Set and Get with JSON String Representation   //////////// //
     
     
-    /// Sets the value of this parameter given by a string.
+    /// Sets the value of this parameter given by a JSON string.
     /** 
-     * @param str the new value represented as a string.
+     * @param str the new value represented as a JSON string.
      * @return If setting was successful.
      */
-    virtual bool set_string(const std::string& str) = 0;
+    virtual bool json_deserialize(const std::string& str) = 0;
     
-    /// Get the string representation of this parameter's value.
+    /// Get the JSON string representation of this parameter's value.
     /**
-     * @return  The value of this parameter represented as a string.
+     * @return  The value of this parameter represented as a JSON string.
      */
-    virtual const std::string& get_string() const = 0;
+    virtual const std::string& json_serialize() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Parameter Data Type   //////////////////////////// //
+    // ///////////////   JSON Data Type and access   ////////////////////// //
 
     
-    /// Returns the type identifying enum of the type this parameter stores
-    virtual const Param_type get_type() const = 0;
+    /// Returns a type this parameter can be converted to (which is not the actual parameter type)
+    virtual const Param_JSON_type get_JSON_type() const { return partype_not_available; }
     
-    /// Returns the string representation of the type this parameter stores
-    virtual const std::string get_type_string() const = 0;
+#define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(OSCI_CCI_SC_REPORT_IDENT, "Not supported for this parameter type!")
+
+    /// Set the parameter value by trying to convert the given number to the param value.
+    /**
+     * This function is optionally implemented, check get_JSON_type() 
+     * if supported for this param.
+     *
+     * The function should return true only if the value was 
+     * applied successfully to the parameter, e.g without an overflow. 
+     * In cases of overflows and not other mismatches the function 
+     * should return false and shall not change the parameter!
+     *
+     * @param value  Value which the parameter should be set to.
+     * @return       If the setting was successfull.
+     */
+    virtual bool cci_param_base::set_number(const long long value)   { CCI_NOT_SUPPORTED_WRN; return false; }
+    /// Set the parameter value by trying to convert the given number to the param value.
+    /** Details @see cci_param_base::set_number(const long long value) If the parameter does not implement this, it will call the set_number function. */
+    virtual bool cci_param_base::set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
+    /// Set the parameter value by trying to convert the given string to the param value.
+    /** Details @see cci_param_base::set_number(const long long value) */
+    virtual bool cci_param_base::set_string(const std::string value) { CCI_NOT_SUPPORTED_WRN; return false; }
+    /// Set the parameter value by trying to convert the given bool to the param value.
+    /** Details @see cci_param_base::set_number(const long long value) */
+    virtual bool cci_param_base::set_bool(const bool value)          { CCI_NOT_SUPPORTED_WRN; return false; }
+
+    /// Get the parameter value by trying to convert it to the given number.
+    /**
+     * This function is optionally implemented, check get_JSON_type() 
+     * if supported for this param.
+     *
+     * The function should return true only if the value was copied/converted
+     * successfully to the given retvalue parameter, e.g without an overflow. 
+     * In cases of overflows and not other mismatches the function 
+     * should return false and shall not change the retalue!
+     *
+     * @param value  Value which the parameter should be copied to.
+     * @return       If the getting was successfull.
+     */
+    virtual bool cci_param_base::get_number(long long& retvalue)     { CCI_NOT_SUPPORTED_WRN; return false; }
+    /// Get the parameter value by trying to convert it to the given number.
+    /** Details @see cci_param_base::get_number(long long& retvalue). If the parameter does not implement this, it will call the get_number function. */
+    virtual bool cci_param_base::get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
+    /// Get the parameter value by trying to convert it to the given string.
+    /** Details @see cci_param_base::get_number(long long& retvalue) */
+    virtual bool cci_param_base::get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return false; }
+    /// Get the parameter value by trying to convert it to the given bool.
+    /** Details @see cci_param_base::get_number(long long& retvalue) */
+    virtual bool cci_param_base::get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return false; }
     
     
     // //////////////////////////////////////////////////////////////////// //
