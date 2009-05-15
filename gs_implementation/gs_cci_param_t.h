@@ -42,6 +42,8 @@ namespace cci {
     
   public:
 
+    using cci_param<T>::operator=;
+
     explicit gs_cci_param_t(const std::string& n, const bool register_at_db = true,
                             const bool force_top_level_name = false) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
@@ -98,6 +100,7 @@ namespace cci {
     }
     
   protected:
+    
     std::string parname;
 
     val_type my_value;

@@ -27,6 +27,7 @@ namespace cci {
 
 
   class gs_cci_cnf_api
+  : public cci_cnf_api
   {
     
   public:

@@ -22,8 +22,8 @@
 void ParameterOwnerModule::main_action() {
 
   cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
+  assert(mApi != NULL && "get_cnf_api_instance returned is NULL");
   
-#ifdef HH
   wait(1, SC_NS);
 
   wait(1, SC_US);
@@ -56,7 +56,7 @@ void ParameterOwnerModule::main_action() {
   cout << name() << ": Create two new parameters which can be observed with new param callbacks/events and set them" << endl;
 
   cout << name() << ": unnamed param" << endl;
-  cci::cci_param<unsigned char> uchar_param;
+  cci::gs_cci_param<unsigned char> uchar_param;
   cout << endl;
   wait(SC_ZERO_TIME);
   cout << name() << ": Set the new parameter uchar_param" << endl;
@@ -64,20 +64,18 @@ void ParameterOwnerModule::main_action() {
   cout << endl;
 
   cout << endl << "**** Parameter list: " << endl;
-  std::vector<std::string> vec = cci::cci_cnf_Api::getApiInstance(this)->getParamList();
+  std::vector<std::string> vec = mApi->get_param_list();
   // Show vector
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
-  iter = vec.begin();
-  while( iter != vec.end() ) {
+  for (iter = vec.begin() ; iter < vec.end(); iter++) {
     if (iter != vec.begin()) ss_show << ", ";
     ss_show << *iter;
-    iter++;
   }
   std::cout << "   " << ss_show.str() << std::endl<<std::endl<<std::endl;
   
   wait(SC_ZERO_TIME);
-  gs::gs_param<unsigned long long> ull_param("ull_param", 1000ULL);
+  cci::gs_cci_param<unsigned long long> ull_param("ull_param", 1000ULL);
   std::cout << std::endl;
   wait(SC_ZERO_TIME);
   std::cout << name() << ": Set the new parameter ull_param" << std::endl;
@@ -85,7 +83,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << std::endl;
  
   wait(100, SC_US);
-#endif
+
   std::cout << "----------------------------" << std::endl;
 
 }

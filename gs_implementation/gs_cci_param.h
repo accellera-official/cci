@@ -43,6 +43,7 @@ namespace cci {
 
     using gs_cci_param_t<T>::return_string;
     using gs_cci_param_t<T>::my_value;
+    using gs_cci_param_t<T>::operator=;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //

@@ -40,7 +40,7 @@ namespace cci {
   public:
     
     // Destructor
-    virtual ~cci_cnf_api() = 0;
+    virtual ~cci_cnf_api() { };
 
     
     // //////////////////////////////////////////////////////////////////// //
