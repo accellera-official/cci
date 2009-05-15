@@ -35,9 +35,10 @@ namespace cci {
 
   /// Base class for all cci_param template specialisations.
   /**
-   * Manages the name of the parameter 
-   *
-   * Requires set and get with the string representation of the value.
+   * Features:
+   * - Name of the parameter,
+   * - JSON (de)serialize functions
+   * - Callback handling
    */
   class cci_param_base
   : public sc_core::sc_object
@@ -71,21 +72,7 @@ namespace cci {
     //                        const bool force_top_level_name = false);
     
     /// Destructor.
-    //virtual ~cci_param_base();
-    
-
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Set and Get with Value   ///////////////////////// //
-
-    
-    /// Convenience function to get a parameter pointer of the cci_param<T> type defined by the caller (does a dynamic_cast).
-    /**
-     * @return  Pointer to the parameter object (NULL if not existing or wrong type).
-     */ 
-    template<class T>
-    cci_param<T>* get_cci_param() {
-      return dynamic_cast<cci_param<T>*>(this);
-    }
+    virtual ~cci_param_base() { }
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -174,9 +161,6 @@ namespace cci {
      */
     virtual const std::string& get_name() const = 0;
    
-    /// Returns the destrcution flag status: if this parameter is to be destroyed (for callbacks)
-    virtual const bool is_destructing() const = 0;
-    
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////   Callback Handling   //////////////////////////// //

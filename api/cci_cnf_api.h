@@ -245,7 +245,7 @@ namespace cci {
     template<class T>
     cci_param<T>* get_cci_param(const std::string &parname) {
       return dynamic_cast<cci_param<T>*>(get_param(parname));
-    };
+    }
     
     /// Return a list of all parameters (TODO implicit and explicit?) matching the pattern
     /**

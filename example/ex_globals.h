@@ -44,9 +44,9 @@
 #define DEMO_VERBOSE
 
 #ifdef DEMO_VERBOSE
-# define DEMO_TRACE(name, msg, args...) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); printf(msg, ##args); printf("\n"); } 
+# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
 #else
-# define DEMO_TRACE(name, msg, args...)
+# define DEMO_DUMP(name, msg)
 #endif
 
 #endif
