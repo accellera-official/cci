@@ -21,8 +21,6 @@
 
 void ParameterOwnerModule::main_action() {
 
-  cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
-  
   wait(1, SC_US);
 
 }

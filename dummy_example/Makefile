@@ -11,17 +11,20 @@ MODULE = testbench
 
 SRCS = testbench.cpp \
        ParameterOwnerModule.cpp \
-       ../gs_implementation/gs_cci.cpp \
-       ../gs_implementation/gs_cci_cnf_api.cpp 
+       ParamManipulateModule.cpp \
+       ObserverModule.cpp \
+       ../dummy_implementation/gs_cci.cpp \
+       ../dummy_implementation/gs_cci_cnf_api.cpp 
 
 OBJS = testbench.o \
        ParameterOwnerModule.o \
+       ParamManipulateModule.o \
+       ObserverModule.o \
        gs_cci.o \
        gs_cci_cnf_api.o
  
-#OBJS = $(SRCS:.cpp=.o)
+OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-#include ../Makefile.gspm
 include ../Makefile.defs
 
 all: $(EXE)
