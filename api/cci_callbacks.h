@@ -56,10 +56,11 @@ namespace cci {
   public:
     /// Constructor
     callb_adapt_B(void* _observer_ptr, T_cci_param_base *_caller_param)
-    : observer_ptr(_observer_ptr),
-      caller_param(_caller_param) {
+    : observer_ptr(_observer_ptr)
+    , caller_param(_caller_param) {
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
-        printf("callb_adapt_B: Create parameter callback adapter %p for caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
+      if (caller_param) printf("callb_adapt_B: Create parameter callback adapter %p for caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
+      else printf("callb_adapt_B: Create parameter callback adapter %p for no parameter.\n", (void*)this);
 #endif
       }
     /// Virtual destructor, unregisters at caller parameter if not yet done.

@@ -19,8 +19,8 @@
 #include <systemc>
 //#include "greencontrol/all.h"
 #include "ParameterOwnerModule.h"
-//#include "ObserverModule.h"
-//#include "ParamManipulateModule.h"
+#include "ObserverModule.h"
+#include "ParamManipulateModule.h"
 #include <cci.h>
 
 /// Testbench for the example GreenConfig
@@ -29,10 +29,12 @@ int sc_main(int argc, char *argv[]) {
   //GS_INIT_STANDARD_GREENCONTROL;
   
   ParameterOwnerModule  owner      ("Owner");
-  //ObserverModule        observer   ("Observer");
-  //ParamManipulateModule manipulator("Manipulator");
+  ObserverModule        observer   ("Observer");
+  ParamManipulateModule manipulator("Manipulator");
 
+  std::cout << "------ sc_start() ----------------" << std::endl;
   sc_core::sc_start();
+  std::cout << "------ sc_start() returned -------" << std::endl;
   
   return EXIT_SUCCESS; 
   

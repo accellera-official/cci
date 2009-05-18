@@ -126,16 +126,16 @@ namespace cci {
      *
      *     my_param.register_callback(cci::post_write,  this, MyIP_Class::config_callback);
      *     //   equal to
-     *     m_api.register_callback(cci::post_write   , my_param.get_name(), this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::post_write   , my_param.get_name(), this, &MyIP_Class::config_callback);
      *
-     *     my_param.register_callback(cci::destroy_param, this, MyIP_Class::config_callback);
+     *     my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback);
      *     //   equal to
-     *     m_api.register_callback(cci::destroy_param, my_param.get_name(), this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::destroy_param, my_param.get_name(), this, &MyIP_Class::config_callback);
      *
-     *     m_api.register_callback(cci::create_param , "*"                , this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::create_param , "*"                , this, &MyIP_Class::config_callback);
      *  OPTIONAL:
-     *     m_api.register_callback(cci::post_write, "*.my_param"  , this, MyIP_Class::config_callback);
-     *     m_api.register_callback(cci::post_write, "MyIP_Class.*", this, MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::post_write, "*.my_param"  , this, &MyIP_Class::config_callback);
+     *     m_api.register_callback(cci::post_write, "MyIP_Class.*", this, &MyIP_Class::config_callback);
      *   }
      *
      *   // Callback function with default signature.
@@ -154,7 +154,7 @@ namespace cci {
     template <typename T>
     boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, const std::string& parname, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
       // call the pure virtual function, independent from template T
-      return register_callback(parname, boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, get_param(parname))));
+      return register_callback(parname, boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, NULL)));
     }
     
     /// Function handling the callback (without template)

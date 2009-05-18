@@ -37,58 +37,43 @@
 // ENDLICENSETEXT
 
 #include "ParamManipulateModule.h"
+#include <systemc.h>
 
-using namespace std;
-using namespace sc_core;
+ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
+: sc_core::sc_module(name)
+{ 
+  mApi = cci::get_cnf_api_instance(this);
+  SC_THREAD(main_action);
+}
 
 void ParamManipulateModule::main_action() {
 
-  DEMO_TRACE(name(), " waits for later");
-  wait(6, SC_US);
+  wait(10, SC_NS);
   
-  gs::gs_param<int> &p = *static_cast<gs::gs_param<int>* >(mGcnfApi->getPar("Owner.int_param"));
-  gs::gs_param<std::string> &pu = *static_cast<gs::gs_param<std::string>* >(mGcnfApi->getPar("Owner.str_param"));
+  cci::cci_param_base *ptr = mApi->get_param("Owner.int_param");
+  if (ptr == NULL) return;
+  cci::gs_cci_param<int> &p = *static_cast<cci::gs_cci_param<int>* >(ptr);
+  //cci::gs_cci_param<std::string> &pu = *static_cast<cci::gs_cci_param<std::string>* >(mApi->get_param("Owner.str_param"));
   
-  DEMO_TRACE(name(), "Set parameter Owner.int_param to value=5000");
-  p.setString("5000");
+  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
+  p.set_string("5000");
   cout << endl;
   wait(SC_ZERO_TIME);
   
-  DEMO_TRACE(name(), "Set parameter Owner.int_param to value=5001");
-  p.setValue(5001);
+  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5001");
+  p.set(5001);
   cout << endl;
   wait(SC_ZERO_TIME);
   
-  DEMO_TRACE(name(), "Set parameter Owner.int_param to value=5002");
+  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5002");
   p = 5002;
   cout << endl;
   wait(SC_ZERO_TIME);
   
-  // //// wait ////////////////////
-  wait(1, SC_US);
-
-  DEMO_TRACE(name(), "Set parameter Owner.int_param to value=6002");
-  p = 6002;
-  cout << endl;
-  wait(SC_ZERO_TIME);
-
-  DEMO_TRACE(name(), "Set parameter Owner.str_param to value=\"SHOW THIS\"");
+  /*DEMO_DUMP(name(), "Set parameter Owner.str_param to value=\"SHOW THIS\"");
   pu = "SHOW THIS";
   cout << endl;
-  wait(SC_ZERO_TIME);
-  
-  // //// wait ////////////////////
-  wait(6, SC_US);
-  
-  DEMO_TRACE(name(), "Set parameter Owner.int_param to value=7002");
-  p = 7002;
-  cout << endl;
-  wait(SC_ZERO_TIME);
+  wait(SC_ZERO_TIME);*/
 
-  DEMO_TRACE(name(), "Set parameter Owner.str_param to value=\"NOT OBSERVE THIS\"");
-  pu = "NOT OBSERVE THIS";
-  cout << endl;
-  wait(SC_ZERO_TIME);
-  
 }
 

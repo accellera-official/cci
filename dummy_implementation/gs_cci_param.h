@@ -127,7 +127,6 @@ namespace cci {
     bool get_bool(bool& retvalue)            { return false; }
      */
     
-    
   };
       
 } // end namespace cci

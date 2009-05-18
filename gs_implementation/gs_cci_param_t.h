@@ -100,7 +100,7 @@ namespace cci {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
-    bool unregisterParamCallback(callb_adapt_b* callb)  {
+    bool unregister_param_callback(callb_adapt_b* callb)  {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return false;
     }

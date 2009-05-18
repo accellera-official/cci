@@ -168,7 +168,7 @@ namespace cci {
     
     /// Registers an observer callback function (with the signature of callback_func_ptr).
     /**
-     * For further callbacks @see cci::cci_cnf_api::register_callback
+     * For further callback types @see cci::cci_cnf_api::register_callback
      *
      * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
      *
@@ -177,6 +177,8 @@ namespace cci {
      * \code
      * void method_name(cci_param_base& changed_param);
      * \endcode
+     *
+     * The registered callbacks should be unregistered latest during destruction.
      *
      * Usage example:
      * \code
@@ -194,17 +196,24 @@ namespace cci {
      *   { //...
      *   }
      *
+     *   ~MyIP_Class() {
+     *     my_param.unregister_all_callbacks(this);
+     *   }
+     *
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     my_param.register_callback(cci::post_write   , this, MyIP_Class::config_callback);
-     *     my_param.register_callback(cci::destroy_param, this, MyIP_Class::config_callback);
+     *     my_param.register_callback(cci::post_write   , this, &MyIP_Class::config_callback);
+     *     my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback);
      *   }
      *
      *   // Callback function with default signature.
      *   void config_callback(cci_param_base& changed_param) {
      *     // some action
      *   }
+     * protected:
+     *   boost::shared_ptr<callb_adapt_b> p1cb;
+     *   boost::shared_ptr<callb_adapt_b> p2cb;
      * };
      * \endcode
      *
@@ -216,7 +225,7 @@ namespace cci {
     template <typename T>
     boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
       // call the pure virtual function, independent from template T
-      return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr)));
+      return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, this)));
     }
     
     /// Function handling the callback (without template)
@@ -242,7 +251,7 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregisterParamCallback(callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;
