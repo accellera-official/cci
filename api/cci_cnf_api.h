@@ -210,10 +210,9 @@ namespace cci {
      */
     virtual bool add_param(cci_param_base* par) = 0;
     
-    /// Remove a parameter from the registry. Called by the parameter destructor.
+    /// Remove a parameter from the registry. May only be called by the parameter destructor.
     /**
-     * Checks if destruction flag is set (so this may only be called by the
-     * parameter destructor).
+     * Should ensure not being called from elsewhere (e.g. by user)
      *
      * @param par Parameter pointer.
      * @return Success of remove.

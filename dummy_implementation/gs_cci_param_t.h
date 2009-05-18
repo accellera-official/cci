@@ -27,14 +27,12 @@
 #include <boost/shared_ptr.hpp>
 
 #include "cci.h"
-#include "greencontrol/gcnf/apis/gs_param/gs_param.h"
 
 namespace cci {
 
   template <typename T>
   class gs_cci_param_t
   : public cci_param<T>
-  , public gs::gs_param<T>
   {
   protected:
     /// Typedef for the value.
@@ -46,49 +44,40 @@ namespace cci {
 
     using cci_param<T>::operator=;
 
-    explicit gs_cci_param_t(const std::string& n, 
-                            const val_type &val, 
-                            const bool force_top_level_name = false,
-                            const bool register_at_db = true)
-    : gs::gs_param<val_type>(n, val, NULL, force_top_level_name, register_at_db) {
-    }
-
-    explicit gs_cci_param_t(const std::string& n, 
-                            const bool force_top_level_name = false,
-                            const bool register_at_db = true)
-    : gs::gs_param<val_type>(n, std::string(""), NULL, force_top_level_name, register_at_db) {
+    explicit gs_cci_param_t(const std::string& n, const bool register_at_db = true,
+                            const bool force_top_level_name = false) {
+      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
     ~gs_cci_param_t() {
+      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
-    /*void init(const val_type& default_val) {
+    void init(const val_type& default_val) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
     void init() {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-    }*/
+    }
     
     const std::string& get_name() const {
-      return gs::gs_param<T>::getName();
+      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+      return parname;
     }
    
     const bool is_destructing() const {
-      return gs::gs_param<T>::is_destucting();
+      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+      return false;
     }
 
     void set(const val_type& val) {
-      gs::gs_param<T>::setValue(val);
+      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
     const val_type& get() const {
-      return gs::gs_param<T>::getValue();
-    }
-    
-    bool get_string(std::string& retvalue) {
-      retvalue = gs::gs_param<T>::getString();
-      return true;
+      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+      return my_value;
     }
     
     boost::shared_ptr<callb_adapt_b> register_callback(boost::shared_ptr< callb_adapt_b> callb) {
@@ -109,7 +98,15 @@ namespace cci {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return false;
     }
-        
+    
+  protected:
+    
+    std::string parname;
+
+    val_type my_value;
+    
+    /// String whose reference can be returned as string value
+    mutable std::string return_string;
   };
 
 } // namespace cci

@@ -21,7 +21,7 @@
 
 
 #include <cci.h>
-#include "greencontrol/gcnf/apis/GCnf_Api/GCnf_Api.h"
+
 
 namespace cci {
 
@@ -31,8 +31,6 @@ namespace cci {
   {
     
   public:
-    
-    gs_cci_cnf_api();
     
     ~gs_cci_cnf_api();
 
@@ -64,9 +62,6 @@ namespace cci {
     
     const std::vector<cci_param_base*> get_params(const std::string& pattern = "");
 
-  protected:
-  
-    gs::cnf::cnf_api* m_gcnf_api;
   };
 
       

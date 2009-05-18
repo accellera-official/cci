@@ -18,32 +18,34 @@
 
 #include "gs_cci_cnf_api.h"
 
-cci::gs_cci_cnf_api::gs_cci_cnf_api() 
-: m_gcnf_api(NULL) { 
-  m_gcnf_api = gs::cnf::GCnf_Api::getApiInstance(NULL);
-}
-
 cci::gs_cci_cnf_api::~cci_cnf_api() { 
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
 }
 
 bool cci::gs_cci_cnf_api::set_init_value(const std::string &parname, const std::string &value) {
-  return m_gcnf_api->setInitValue(parname, value);
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  return false;
 }
 
 const std::string cci::gs_cci_cnf_api::get_string(const std::string &parname) {
-  return m_gcnf_api->getValue(parname);
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  return std::string("default");
 }
 
 cci::cci_param_base* cci::gs_cci_cnf_api::get_param(const std::string &parname) {
-  return dynamic_cast<cci::cci_param_base*> (m_gcnf_api->getPar(parname));
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  return NULL;
 }
 
 bool cci::gs_cci_cnf_api::exists_param(const std::string &parname) {
-  return m_gcnf_api->existsParam(parname);
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  return false; 
 }
 
 const std::vector<std::string> cci::gs_cci_cnf_api::get_param_list() {
-  return m_gcnf_api->getParamList();
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  std::vector<std::string> vec;
+  return vec;
 }
 
 boost::shared_ptr< cci::callb_adapt_b> cci::gs_cci_cnf_api::register_callback(const std::string& parname, boost::shared_ptr< cci::callb_adapt_b> callb) {
@@ -72,8 +74,8 @@ bool cci::gs_cci_cnf_api::add_param(cci_param_base* par) {
 }
 
 bool cci::gs_cci_cnf_api::remove_param(cci_param_base* par) {
-  gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
-  return m_gcnf_api->removePar(p);
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  return false;
 }
 
 
@@ -82,19 +84,14 @@ void cci::gs_cci_cnf_api::set_alias(std::string& orig_parname, std::string& alia
 }
     
 const std::vector<std::string> cci::gs_cci_cnf_api::get_param_list(const std::string& pattern) {
-  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "pattern limited to GreenSocs capabilities");
-  return m_gcnf_api->getParamList(pattern);
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  std::vector<std::string> vec;
+  return vec;
 }
 
 const std::vector<cci::cci_param_base*> cci::gs_cci_cnf_api::get_params(const std::string& pattern) {
-  std::vector<cci::cci_param_base*> parvec;
-  std::vector<std::string> strvec;
-  strvec = get_param_list(pattern);
-  std::vector<std::string>::iterator striter;
-  for (striter = strvec.begin(); striter != strvec.end(); striter++) {
-    cci::cci_param_base* p = get_param(*striter);
-    if (p) parvec.push_back(p);
-  }
-  return parvec;
+  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+  std::vector<cci_param_base*> vec;
+  return vec;
 }
 
