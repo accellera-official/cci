@@ -1,19 +1,23 @@
-//   OSCI CCI WG
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
+
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
 
 
 #ifndef __GS_CCI_PARAM_H__
@@ -96,20 +100,20 @@ namespace cci {
     val_type operator ++ (int); // postfix */ 
        
     const std::string& json_serialize() const {
-      return_string = serialize(my_value);
+      return_string = json_serialize(my_value);
       return return_string;
     }
     
     bool json_deserialize(const std::string& str) {
-      return deserialize(my_value, str);
+      return json_deserialize(my_value, str);
     }
 
-    std::string serialize(const val_type& val) const {
+    std::string json_serialize(const val_type& val) const {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return std::string("default");
     }
 
-    const bool deserialize(val_type& target_val, const std::string& str) {
+    const bool json_deserialize(val_type& target_val, const std::string& str) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return false;
     }

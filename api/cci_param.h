@@ -1,19 +1,23 @@
-//   OSCI CCI WG
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
+
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
 
 
 #ifndef __CCI_PARAM_H__
@@ -48,8 +52,8 @@ namespace cci {
     // Constructors shall be provided by the derived class:
 /*    
     /// Empty constructor. Name will be set in base
-    explicit cci_param();
-    explicit cci_param(const val_type& val);
+    explicit cci_param(); // TODO: make private?
+    explicit cci_param(const val_type& val); // TODO: allow this one?
     
     /// Constructor with (local/hierarchical) name.
     explicit cci_param(const std::string& nam);
@@ -124,19 +128,22 @@ namespace cci {
     
     
     // //////////////////////////////////////////////////////////////////// //
-    // //////////   Conversion Methods String <-> Value   ///////////////// //
-    
-    
-    /// Conversion value type --> string. To be implemented by the specialization.
-    /**
-     * May not make use of m_par_name because it is called inside constructor!
-     *
-     * @param val  Value that should be converted to string.
-     * @return String representation of the value.
-     */
-    virtual std::string serialize(const val_type& val) const = 0;
+    // //////////   Conversion Methods JSON string <-> Value   //////////// //
 
-    /// Convertion string --> value type
+    // These functions allow access to the conversion even without changing
+    // the parameter.
+    
+    
+    /// Conversion value type --> JSON string. To be implemented by the specialization.
+    /**
+     * Should not make use of m_par_name because it is possibly called inside constructor!
+     *
+     * @param val  Value that should be converted.
+     * @return JSON string representation of the value.
+     */
+    virtual std::string json_serialize(const val_type& val) const = 0;
+
+    /// Convertion JSON string --> value type
     /**
      * Implemented for each template specialization of cci_param:
      *
@@ -145,10 +152,10 @@ namespace cci {
      * - Set target_val to the default value if str is empty (=="").
      *
      * @param  target_val  Reference to the value that should be set.
-     * @param  str         String that should be converted to a value.
+     * @param  str         JSON string that should be converted to a value.
      * @return If the convertion was successfull
      */
-    virtual const bool deserialize(val_type& target_val, const std::string& str) = 0;
+    virtual const bool json_deserialize(val_type& target_val, const std::string& str) = 0;
 
   };
     

@@ -1,115 +1,66 @@
-//   GreenControl framework
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2007 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
 
-// doxygen comments
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
 
-#ifndef __ObserverModule_H__
-#define __ObserverModule_H__
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
+
+
+#ifndef __OBSERVERMODULE_H__
+#define __OBSERVERMODULE_H__
 
 #include <systemc>
 
 #include "ex_globals.h"
-
-#include "greencontrol/gcnf/apis/GCnf_Api/GCnf_Api.h"
-#include "greencontrol/gcnf/apis/gs_param/gs_param.h"
+#include "cci.h"
+#include "../gs_implementation/gs_cci.h"
 
 
 /// Module which registers for parameter changes
 class ObserverModule
 : public sc_core::sc_module
 {
-  
-private:
-  sc_core::sc_event *m_new_param_event;
-  sc_core::sc_event *m_param_change_event;
-  
 public:
 
-  GC_HAS_CALLBACKS();
-  
   SC_HAS_PROCESS(ObserverModule);
-	
-  /// Constructor
-  ObserverModule(sc_core::sc_module_name name)
-    : sc_core::sc_module(name)
-  { 
-    m_Api = gs::cnf::GCnf_Api::getApiInstance(this);
-    SC_THREAD(main_action);
-    
-    m_new_param_event = &m_Api->getNewParamEvent();
-    SC_METHOD(event_reactor_new_param);
-    sensitive << *m_new_param_event;
-    dont_initialize();
-
-    m_param_change_event = &m_Api->getPar("Owner.int_param")->getUpdateEvent();
-    SC_METHOD(event_reactor_param_change);
-    sensitive << *m_param_change_event;
-    dont_initialize();
-  }
+  ObserverModule(sc_core::sc_module_name name);
   
-  ~ObserverModule() {
-    DEMO_TRACE(name(), "~~~ Destructor ObserverModule ~~~");
-    GC_UNREGISTER_CALLBACKS();
-  }
+  ~ObserverModule();
   
   /// Main action to make tests with parameters.
   void main_action();
 
-  /// SC_METHOD which reacts on parameter events
-  void event_reactor_new_param();
-  /// SC_METHOD for parameter update event tests
-  void event_reactor_param_change();
-  
-  // Callback function with default signature.
-  void config_new_param_callback(const std::string parname, const std::string val);
-  
-  // Callback function with default signature.
-  void config_callback(gs::gs_param_base& par);
+  /// Callback function with default signature.
+  void config_callback(cci::cci_param_base& par);
 
-  // Deprecated callback function with default signature.
-  void config_callback_deprecated(const std::string parname, const std::string val);
+  /// Callback function with default signature.
+  void config_new_param_callback(cci::cci_param_base& par);
 
+  // Optional callback function with default signature.
+  //void config_callback_deprecated(const std::string parname, const std::string val);
 
 protected:
-  gs::cnf::cnf_api *m_Api;
+  /// Pointer the the module's configuration API
+  cci::cci_cnf_api* mApi;
+  
+  /// Vector of callbacks to ensure they can be unregistered when module is destructed
+  std::vector< boost::shared_ptr<cci::callb_adapt_b> > mCallbacks;
   
 };
 
 
 #endif
-

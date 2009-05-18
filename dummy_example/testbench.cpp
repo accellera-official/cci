@@ -1,32 +1,33 @@
-//   OSCI CCI WG
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
+
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
 
 
 #include <systemc>
-//#include "greencontrol/all.h"
 #include "ParameterOwnerModule.h"
 #include "ObserverModule.h"
 #include "ParamManipulateModule.h"
 #include <cci.h>
 
-/// Testbench for the example GreenConfig
+/// Testbench for the dummy example
 int sc_main(int argc, char *argv[]) {
-  
-  //GS_INIT_STANDARD_GREENCONTROL;
   
   ParamManipulateModule manipulator("Manipulator");
   ParameterOwnerModule  owner      ("Owner");

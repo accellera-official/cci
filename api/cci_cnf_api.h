@@ -1,19 +1,23 @@
-//   OSCI CCI WG
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
+
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
 
 
 #ifndef __CCI_CNF_API_H__
@@ -29,6 +33,7 @@ namespace cci {
   // forward declaration 
   class cci_param_base;
     
+  // forward declaration 
   template <class T> 
   class cci_param;
 
@@ -118,6 +123,10 @@ namespace cci {
      *    : sc_core::sc_module(name),
      *      my_param("my_param", 10) 
      *   { //...
+     *   }
+     *
+     *   ~MyIP_Class() {
+     *     my_param.unregister_all_callbacks(this);
      *   }
      *
      *   // Example code to register callback function
@@ -212,7 +221,7 @@ namespace cci {
     
     /// Remove a parameter from the registry. May only be called by the parameter destructor.
     /**
-     * Should ensure not being called from elsewhere (e.g. by user)
+     * Should ensure not being called from elsewhere (e.g. by user).
      *
      * @param par Parameter pointer.
      * @return Success of remove.
@@ -227,7 +236,7 @@ namespace cci {
     
     /// Set an alias to a parameter name
     /**
-     * TODO: Guideline for other functions, e.g.:
+     * TODO: Guideline for other CCI functions, e.g.:
      * - get_param_list will NOT return any alias names
      * - all parameter access functions will take an alias
      *

@@ -49,3 +49,7 @@ Examples:
 
 ----------------------------------------------------------------
 
+PARAMETER CONSTRUCTORS
+
+Due to compatibility a parameter vendor should provide at least
+the constructors shown as comment in cci_param.h

@@ -1,19 +1,23 @@
-//   OSCI CCI WG
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
+
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
 
 
 #ifndef __CCI_CALLBACKS_H__
@@ -36,11 +40,8 @@ namespace cci {
 
   /// Adapter base class which can be used to call a arbitrary parameter callback function.
   /**
-   * Base class for cci_callb_adapt to allow access by the back calling API without
+   * Base class for cci_callb_adapt to allow access by anyone without
    * knowing the template parameter.
-   *
-   * This class stores a void* pointer to the observer. (Needed by arrays to identify
-   * observers in the maps.)
    *
    * This class stores a param pointer to the caller. When unregistering this 
    * callback with the function <code>unregister_at_parameter</code> at the caller 
@@ -63,7 +64,7 @@ namespace cci {
       else printf("callb_adapt_B: Create parameter callback adapter %p for no parameter.\n", (void*)this);
 #endif
       }
-    /// Virtual destructor, unregisters at caller parameter if not yet done.
+    /// Destructor unregisters at caller parameter if not yet done.
     virtual ~callb_adapt_B() {
       unregister_at_parameter();
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
@@ -113,7 +114,7 @@ namespace cci {
   /**
    * This class saves an object pointer and a member function pointer to the object's
    * callback function and a pointer to the observer object. The call method is called
-   * by the virtual call method of the base class when the API calls it.
+   * by the virtual call method of the base class when anyone calls it.
    */
   template<class T>
   class callb_adapt
@@ -132,7 +133,7 @@ namespace cci {
     /// Constructor with pointers to be saved in this object.
     /**
      * @param ob    Pointer to the object where the callback method should be called.
-     * @param _ptr  Member function pointer to the callback method (must match signature CallbAdapt::callb_func_ptr).
+     * @param _ptr  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
      * @param _observer_ptr  void* pointer to the observer object (needed for unregistering).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
@@ -144,10 +145,10 @@ namespace cci {
 
     /// Pointer to the object where the callback method should be called.
     T *obj;
-    /// Member function pointer to the callback method (must match signature CallbAdapt::callb_func_ptr).
+    /// Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
     callb_func_ptr ptr;
 
-    /// Makes the callback, called by the base class CallbAdapt_b.
+    /// Makes the callback, called by the base class callb_adapt_b.
     void call(cci_param_base& changed_param) {
       (obj->*ptr)(changed_param);
     }

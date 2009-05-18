@@ -1,19 +1,23 @@
-//   OSCI CCI WG
-//
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-//
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+
+  The following code is derived, directly or indirectly, from the SystemC
+  source code Copyright (c) 1996-2009 by all Contributors.
+  All Rights reserved.
+
+  Developed by GreenSocs : http://www.greensocs.com/
+   Christian Schroeder, schroeder@eis.cs.tu-bs.de
+   Mark Burton, mark@greensocs.com
+
+  The contents of this file are subject to the restrictions and limitations
+  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  You may not use this file except in compliance with such restrictions and
+  limitations. You may obtain instructions on how to receive a copy of the
+  License at http://www.systemc.org/. Software distributed by Contributors
+  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
+  ANY KIND, either express or implied. See the License for the specific
+  language governing rights and limitations under the License.
+
+ *****************************************************************************/
 
 
 #ifndef __CCI_PARAM_BASE_H__
@@ -33,7 +37,7 @@ namespace cci {
   template <typename T> 
   class cci_param;
 
-  /// Base class for all cci_param template specialisations.
+  /// Base class for all cci_param template specializations.
   /**
    * Features:
    * - Name of the parameter,
@@ -49,7 +53,7 @@ namespace cci {
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
 
-    /// Constructor with (local or hierarchical) name
+    /// Proposed constructor with (local or hierarchical) name
     /**
      * - Sets the hierarchical parameter name (default name if name is empty).
      *   (If the parent_array is != NULL: 
@@ -66,7 +70,7 @@ namespace cci {
      *                         parameters while adding them.
      * @param force_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
      *                             default false,
-     *                             be carefull in using this.
+     *                             Be carefull in using this.
      */
     //explicit cci_param_base(const std::string& n, const bool register_at_db = true,
     //                        const bool force_top_level_name = false);
