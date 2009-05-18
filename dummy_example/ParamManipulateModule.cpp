@@ -44,6 +44,12 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 { 
   mApi = cci::get_cnf_api_instance(this);
   SC_THREAD(main_action);
+  
+  mApi->set_init_value("Owner.int_param", "11");
+  if (mApi->exists_param("Owner.int_param"))
+    cout << "Owner.int_param esists (implicit or explicit)" << endl;
+  else
+    SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT esists!");
 }
 
 void ParamManipulateModule::main_action() {

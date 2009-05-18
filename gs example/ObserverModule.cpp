@@ -75,7 +75,7 @@ void ObserverModule::main_action() {
 
   cout << "----------------------------" << endl;
   DEMO_TRACE(name(), "Unregister all callbacks to this module in the param int_param");
-  m_Api->getPar("Owner.int_param")->unregisterParamCallbacks(this);
+  m_Api->getPar("Owner.int_param")->unregister_param_callbacks(this);
   cout << "  Now there must not be callbacks for parameter int_param any more!" << endl;
   cout << "----------------------------" << endl<<endl;
 }

@@ -28,9 +28,9 @@ int sc_main(int argc, char *argv[]) {
   
   //GS_INIT_STANDARD_GREENCONTROL;
   
+  ParamManipulateModule manipulator("Manipulator");
   ParameterOwnerModule  owner      ("Owner");
   ObserverModule        observer   ("Observer");
-  ParamManipulateModule manipulator("Manipulator");
 
   std::cout << "------ sc_start() ----------------" << std::endl;
   sc_core::sc_start();

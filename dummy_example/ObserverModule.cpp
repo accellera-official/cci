@@ -48,7 +48,24 @@ void ObserverModule::main_action() {
     mCallbacks.push_back(cbAdapt_int_param);
   }
   
-
+  // check if callback is there
+  if (mApi->has_callbacks("Owner.int_param"))
+    cout << "callback successfully registered" << endl;
+  else
+    SC_REPORT_WARNING(name(), "ERROR: callback NOT registered!");
+    cout << endl;
+  
+  // first check of value:
+  cout << "json string value of Owner.int_param=" << mApi->get_json_string("Owner.int_param") << endl << endl;
+  
+  // show param list
+  cout << "param list:" << endl;
+  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string>::iterator iter;
+  for (iter = vec.begin(); iter != vec.end(); iter++)
+    cout << *iter << " ";
+  cout << endl;
+  
   cout << "----------------------------" << endl;
 }
 

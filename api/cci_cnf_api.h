@@ -52,17 +52,17 @@ namespace cci {
      * The init value has priority to the initial value set by the owner!
      *
      * @param parname Full hierarchical parameter name.
-     * @param value   String representation of the init value the parameter has to be set to.
+     * @param value   JSON string representation of the init value the parameter has to be set to.
      * @return        Success of the setting.
      */
-    virtual bool set_init_value(const std::string &parname, const std::string &value) = 0;
+    virtual bool set_init_value(const std::string &parname, const std::string &json_value) = 0;
     
-    /// Get a parameter's value (string representation). Independent of the implicit or explicit status.
+    /// Get a parameter's value (JSON string representation). Independent of the implicit or explicit status.
     /**
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
-     * @return  Value of the parameter, converted to the user-chosen type
+     * @return  JSON string of the parameter's value
      */
-    virtual const std::string get_string(const std::string &parname) = 0;
+    virtual const std::string get_json_string(const std::string &parname) = 0;
 
     /// Get a parameter pointer.
     /**
@@ -74,7 +74,7 @@ namespace cci {
     /// Checks whether a parameter exists (implicit or explicit).
     /**
      * @param parname  Full hierarchical parameter name.
-     * @return Whether the parameter <parname> exists in the ConfigPlugin.
+     * @return Whether the parameter <parname> exists in the registry.
      */
     virtual bool exists_param(const std::string &parname) = 0;
 
@@ -186,10 +186,10 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregisterParamCallback(callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
-    virtual bool has_callbacks(std::string& parname) = 0;
+    virtual bool has_callbacks(const std::string& parname) = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //

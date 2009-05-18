@@ -38,7 +38,7 @@ namespace cci {
 
     bool set_init_value(const std::string &parname, const std::string &value);
     
-    const std::string get_string(const std::string &parname);
+    const std::string get_json_string(const std::string &parname);
 
     cci_param_base* get_param(const std::string &parname);
     
@@ -50,9 +50,9 @@ namespace cci {
 
     void unregister_all_callbacks(void* observer);
     
-    bool unregisterParamCallback(callb_adapt_b* callb);
+    bool unregister_param_callback(callb_adapt_b* callb);
     
-    bool has_callbacks(std::string& parname);
+    bool has_callbacks(const std::string& parname);
     
     bool add_param(cci_param_base* par);
     

@@ -30,7 +30,7 @@ bool cci::gs_cci_cnf_api::set_init_value(const std::string &parname, const std::
   return m_gcnf_api->setInitValue(parname, value);
 }
 
-const std::string cci::gs_cci_cnf_api::get_string(const std::string &parname) {
+const std::string cci::gs_cci_cnf_api::get_json_string(const std::string &parname) {
   return m_gcnf_api->getValue(parname);
 }
 
@@ -56,12 +56,12 @@ void cci::gs_cci_cnf_api::unregister_all_callbacks(void* observer) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
 }
 
-bool cci::gs_cci_cnf_api::unregisterParamCallback(callb_adapt_b* callb) {
+bool cci::gs_cci_cnf_api::unregister_param_callback(callb_adapt_b* callb) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return false;
 }
 
-bool cci::gs_cci_cnf_api::has_callbacks(std::string& parname) {
+bool cci::gs_cci_cnf_api::has_callbacks(const std::string& parname) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return false;
 }
