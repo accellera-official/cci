@@ -126,31 +126,39 @@ namespace cci {
      *   }
      *
      *   ~MyIP_Class() {
-     *     my_param.unregister_all_callbacks(this);
+     *     // In this example the callback adapters are deleted automatically 
+     *     // because the shared pointers are destroyed here.
+     *   }
+     *
+     *   clean_my_callbacks() {
+     *     // will unregister the callbacks being registered within this module for all parameters
+     *     m_api.unregister_all_callbacks(this);
      *   }
      *
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
      *
-     *     my_param.register_callback(cci::post_write,  this, MyIP_Class::config_callback);
+     *     my_callbacks.push_back( my_param.register_callback(cci::post_write,  this, MyIP_Class::config_callback) );
      *     //   equal to
-     *     m_api.register_callback(cci::post_write   , my_param.get_name(), this, &MyIP_Class::config_callback);
+     *     my_callbacks.push_back( m_api.register_callback(cci::post_write   , my_param.get_name(), this, &MyIP_Class::config_callback) );
      *
-     *     my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback);
+     *     my_callbacks.push_back( my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback) );
      *     //   equal to
-     *     m_api.register_callback(cci::destroy_param, my_param.get_name(), this, &MyIP_Class::config_callback);
+     *     my_callbacks.push_back( m_api.register_callback(cci::destroy_param, my_param.get_name(), this, &MyIP_Class::config_callback) );
      *
-     *     m_api.register_callback(cci::create_param , "*"                , this, &MyIP_Class::config_callback);
+     *     my_callbacks.push_back( m_api.register_callback(cci::create_param , "*"                , this, &MyIP_Class::config_callback) );
      *  OPTIONAL:
-     *     m_api.register_callback(cci::post_write, "*.my_param"  , this, &MyIP_Class::config_callback);
-     *     m_api.register_callback(cci::post_write, "MyIP_Class.*", this, &MyIP_Class::config_callback);
+     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "*.my_param"  , this, &MyIP_Class::config_callback) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "MyIP_Class.*", this, &MyIP_Class::config_callback) );
      *   }
      *
      *   // Callback function with default signature.
      *   void config_callback(cci_param_base& changed_param) {
      *     // some action
      *   }
+     *
+     *   std::vector< boost::shared_ptr<callb_adapt_b> > my_callbacks;
      * };
      * \endcode
      *

@@ -141,8 +141,13 @@ namespace cci {
     : callb_adapt_b(ob, _caller_param) {
       obj = ob;
       ptr = _ptr;
+      std::cout << this << "  callb_adapt<t> constructor" << std::endl;
     }
 
+    ~callb_adapt() {
+      std::cout << this << "  callb_adapt<t> destructor" << std::endl;
+    }
+    
     /// Pointer to the object where the callback method should be called.
     T *obj;
     /// Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).

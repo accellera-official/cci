@@ -64,15 +64,11 @@ namespace cci {
      * @param n  The local (or full hierarchical) parameter name (local: should not but may include points) 
      *           (local: unique inside a module, hierarchical: unique in the system).
      *           May be empty: name will be chosen automatically.
-     * @param register_at_db   If this parameter should be registered at the database, 
-     *                         default true, 
-     *                         only the database itself may use false when creating 
-     *                         parameters while adding them.
      * @param force_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
      *                             default false,
      *                             Be carefull in using this.
      */
-    //explicit cci_param_base(const std::string& n, const bool register_at_db = true,
+    //explicit cci_param_base(const std::string& n,
     //                        const bool force_top_level_name = false);
     
     /// Destructor.
@@ -201,14 +197,20 @@ namespace cci {
      *   }
      *
      *   ~MyIP_Class() {
+     *     // In this example the callback adapters are deleted automatically 
+     *     // because the shared pointers are destroyed here.
+     *   }
+     *
+     *   clean_my_callbacks() {
+     *     // will unregister the callbacks being registered within this module for the parameter my_param
      *     my_param.unregister_all_callbacks(this);
      *   }
      *
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     my_param.register_callback(cci::post_write   , this, &MyIP_Class::config_callback);
-     *     my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback);
+     *     p1cb = my_param.register_callback(cci::post_write   , this, &MyIP_Class::config_callback);
+     *     p2cb = my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback);
      *   }
      *
      *   // Callback function with default signature.
@@ -238,6 +240,9 @@ namespace cci {
     
     /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
     /**
+     * observer = NULL should be an error (and not mean unregister all callbacks) 
+     *                 to avoid accidental unregistration of e.g. callbacks initiated 
+     *                 by the/a tool.
      * @param observer   Pointer to the observer module who did register parameter callbacks.
      */
     virtual void unregister_all_callbacks(void* observer) = 0;

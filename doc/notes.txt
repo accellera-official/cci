@@ -1,0 +1,18 @@
+Notes
+-----
+
+
+----------------------------------------------------------------
+
+CALLBACKS
+
+Callback registration methods return boost shared pointers 
+to callback adapters. Advantage: the callback will automatically 
+destroyed when no smart pointer to the callback adapter exists 
+any longer. The only rule is: 
+Rule: Store the returned boost pointer and keep it until you want
+      the callback to be deleted.
+
+BTW: The shared pointer handling does not cause any memory leak.
+
+----------------------------------------------------------------
