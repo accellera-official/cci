@@ -60,7 +60,7 @@ namespace cci {
      * @param value   JSON string representation of the init value the parameter has to be set to.
      * @return        Success of the setting.
      */
-    virtual bool set_init_value(const std::string &parname, const std::string &json_value) = 0;
+    virtual set_param_error_type set_init_value(const std::string &parname, const std::string &json_value) = 0;
     
     /// Get a parameter's value (JSON string representation). Independent of the implicit or explicit status.
     /**
@@ -154,7 +154,7 @@ namespace cci {
      *   }
      *
      *   // Callback function with default signature.
-     *   void config_callback(cci_param_base& changed_param) {
+     *   void config_callback(cci_param_base& changed_param, const callback_type& cb_reason) {
      *     // some action
      *   }
      *
@@ -169,7 +169,7 @@ namespace cci {
      * @return            boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
     template <typename T>
-    boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, const std::string& parname, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, const std::string& parname, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param, const cci::callback_type& cb_reason)) {
       // call the pure virtual function, independent from template T
       return register_callback(parname, boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, NULL)));
     }
@@ -225,7 +225,7 @@ namespace cci {
      * @param par Parameter (including name and value).
      * @return Success of the adding.
      */
-    virtual bool add_param(cci_param_base* par) = 0;
+    virtual add_param_error_type add_param(cci_param_base* par) = 0;
     
     /// Remove a parameter from the registry. May only be called by the parameter destructor.
     /**
@@ -234,7 +234,7 @@ namespace cci {
      * @param par Parameter pointer.
      * @return Success of remove.
      */
-    virtual bool remove_param(cci_param_base* par) = 0;
+    virtual remove_param_error_type remove_param(cci_param_base* par) = 0;
     
 
   public:

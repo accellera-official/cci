@@ -26,7 +26,7 @@
 
 namespace cci {
   
-  enum callback_types {
+  enum callback_type {
     pre_read,
     post_read,
     pre_write,
@@ -85,7 +85,7 @@ namespace cci {
     }
     
     /// Virtual call method to make the call in the template specialized class.
-    virtual void call(T_cci_param_base& changed_param) = 0;
+    virtual void call(T_cci_param_base& changed_param, const callback_type& cb_reason) = 0;
     /// Returns the observer (pointer to the object where the method should be called)
     void* get_observer() {
       return (void*) observer_ptr;
@@ -126,7 +126,7 @@ namespace cci {
     /**
      * Callback functions must have the signature: void method_name(cci_param_base& changed_param)
      */
-    typedef void (T::*callb_func_ptr)(cci_param_base& changed_param);
+    typedef void (T::*callb_func_ptr)(cci_param_base& changed_param, const callback_type& cb_reason);
 
   public:
 
@@ -154,8 +154,8 @@ namespace cci {
     callb_func_ptr ptr;
 
     /// Makes the callback, called by the base class callb_adapt_b.
-    void call(cci_param_base& changed_param) {
-      (obj->*ptr)(changed_param);
+    void call(cci_param_base& changed_param, const callback_type& cb_reason) {
+      (obj->*ptr)(changed_param, cb_reason);
     }
     
   };

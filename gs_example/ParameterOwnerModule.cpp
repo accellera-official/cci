@@ -88,7 +88,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << "   " << ss_show.str() << std::endl<<std::endl<<std::endl;
   
   wait(SC_ZERO_TIME);
-  cci::gs_cci_param<unsigned long long> ull_param("ull_param", 1000ULL);
+  cci::gs_cci_param<sc_dt::uint64> ull_param("ull_param", 1000ULL);
   std::cout << std::endl;
   wait(SC_ZERO_TIME);
   std::cout << name() << ": Set the new parameter ull_param" << std::endl;

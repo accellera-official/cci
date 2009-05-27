@@ -20,8 +20,8 @@
  *****************************************************************************/
 
 
-#ifndef __GS_CCI_PARAM_H__
-#define __GS_CCI_PARAM_H__
+#ifndef __DUMMY_CCI_PARAM_H__
+#define __DUMMY_CCI_PARAM_H__
 
 
 #include <string>
@@ -34,20 +34,20 @@
 namespace cci {
 
   template<typename T>
-  class gs_cci_param 
-  : public gs_cci_param_t<T>
+  class dummy_cci_param 
+  : public dummy_cci_param_t<T>
   {
   protected:
     /// Typedef for the value.
     typedef T val_type;
     /// Typedef for the param itself.
-    typedef gs_cci_param<T> my_type;
+    typedef dummy_cci_param<T> my_type;
 
   public:
 
-    using gs_cci_param_t<T>::return_string;
-    using gs_cci_param_t<T>::my_value;
-    using gs_cci_param_t<T>::operator=;
+    using dummy_cci_param_t<T>::return_string;
+    using dummy_cci_param_t<T>::my_value;
+    using dummy_cci_param_t<T>::operator=;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
@@ -55,27 +55,27 @@ namespace cci {
     // Explicit constructors to avoid implicit construction of parameters.
     
     /// Empty constructor. Name will be set in base
-    explicit gs_cci_param()                    : gs_cci_param_t<T>("") { gs_cci_param_t<T>::init(); }
-    explicit gs_cci_param(const val_type& val) : gs_cci_param_t<T>("") { gs_cci_param_t<T>::init(); }
+    explicit dummy_cci_param()                    : dummy_cci_param_t<T>("") { dummy_cci_param_t<T>::init(); }
+    explicit dummy_cci_param(const val_type& val) : dummy_cci_param_t<T>("") { dummy_cci_param_t<T>::init(); }
     
     /// Constructor with (local/hierarchical) name.
-    explicit gs_cci_param(const std::string& nam) : gs_cci_param_t<T>(nam) { gs_cci_param_t<T>::init(); }
-    explicit gs_cci_param(const char* nam       ) : gs_cci_param_t<T>(nam) { gs_cci_param_t<T>::init(); }
+    explicit dummy_cci_param(const std::string& nam) : dummy_cci_param_t<T>(nam) { dummy_cci_param_t<T>::init(); }
+    explicit dummy_cci_param(const char* nam       ) : dummy_cci_param_t<T>(nam) { dummy_cci_param_t<T>::init(); }
     
     /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : gs_cci_param_t<T>(nam, true, force_top_level_name) { gs_cci_param_t<T>::init(); } 
-    explicit gs_cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : gs_cci_param_t<T>(nam, true, force_top_level_name) { gs_cci_param_t<T>::init(); } 
-    explicit gs_cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : gs_cci_param_t<T>(nam, true, force_top_level_name) { gs_cci_param_t<T>::init(); } 
-    explicit gs_cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : gs_cci_param_t<T>(nam, true, force_top_level_name) { gs_cci_param_t<T>::init(); } 
+    explicit dummy_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : dummy_cci_param_t<T>(nam, true, force_top_level_name) { dummy_cci_param_t<T>::init(); } 
+    explicit dummy_cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : dummy_cci_param_t<T>(nam, true, force_top_level_name) { dummy_cci_param_t<T>::init(); } 
+    explicit dummy_cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : dummy_cci_param_t<T>(nam, true, force_top_level_name) { dummy_cci_param_t<T>::init(); } 
+    explicit dummy_cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : dummy_cci_param_t<T>(nam, true, force_top_level_name) { dummy_cci_param_t<T>::init(); } 
     
     /// Constructor with (local/hierarchical) name and initial value.
-    explicit gs_cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false) : gs_cci_param_t<T>(nam, true, force_top_level_name)   { gs_cci_param_t<T>::init(val); }    
-    explicit gs_cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false) : gs_cci_param_t<T>(nam, true, force_top_level_name)   { gs_cci_param_t<T>::init(val); }    
+    explicit dummy_cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false) : dummy_cci_param_t<T>(nam, true, force_top_level_name)   { dummy_cci_param_t<T>::init(val); }    
+    explicit dummy_cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false) : dummy_cci_param_t<T>(nam, true, force_top_level_name)   { dummy_cci_param_t<T>::init(val); }    
     
     // Constructors with register_at_db bool
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : gs_cci_param_t<T>(nam, register_at_db, force_top_level_name)  { gs_cci_param_t<T>::init();         } 
+    explicit dummy_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : dummy_cci_param_t<T>(nam, register_at_db, force_top_level_name)  { dummy_cci_param_t<T>::init();         } 
 
-    ~gs_cci_param() {
+    ~dummy_cci_param() {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
@@ -120,13 +120,13 @@ namespace cci {
 
     
     /* To be implemented in specializations
-     const Param_JSON_type get_JSON_type() const { return partype_not_available; }
-    bool set_number(const long long value)   { return false; }
-    bool set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
+     const Param_JSON_type get_basic_type() const { return partype_not_available; }
+    bool set_number(const sc_dt::uint64 value)   { return false; }
+    bool set_double(const double value)      { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
     bool set_string(const std::string value) { return false; }
     bool set_bool(const bool value)          { return false; }
-    bool get_number(long long& retvalue)     { return false; }
-    bool get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
+    bool get_number(sc_dt::uint64& retvalue)     { return false; }
+    bool get_double(double& retvalue)        { sc_dt::uint64 llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
     bool get_string(std::string& retvalue)   { return false; }
     bool get_bool(bool& retvalue)            { return false; }
      */

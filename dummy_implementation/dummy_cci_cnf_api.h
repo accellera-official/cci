@@ -20,8 +20,8 @@
  *****************************************************************************/
 
 
-#ifndef __GS_CCI_CNF_API_H__
-#define __GS_CCI_CNF_API_H__
+#ifndef __DUMMY_CCI_CNF_API_H__
+#define __DUMMY_CCI_CNF_API_H__
 
 
 #include <cci.h>
@@ -30,18 +30,18 @@
 namespace cci {
 
 
-  class gs_cci_cnf_api
+  class dummy_cci_cnf_api
   : public cci_cnf_api
   {
     
   public:
     
-    ~gs_cci_cnf_api();
+    ~dummy_cci_cnf_api();
 
-    bool set_init_value(const std::string &parname, const std::string &value);
+    set_param_error_type set_init_value(const std::string &parname, const std::string &value);
     
     const std::string get_json_string(const std::string &parname);
-
+    
     cci_param_base* get_param(const std::string &parname);
     
     bool exists_param(const std::string &parname);
@@ -49,23 +49,23 @@ namespace cci {
     const std::vector<std::string> get_param_list();
     
     boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, boost::shared_ptr< callb_adapt_b> callb);
-
+    
     void unregister_all_callbacks(void* observer);
     
     bool unregister_param_callback(callb_adapt_b* callb);
     
     bool has_callbacks(const std::string& parname);
     
-    bool add_param(cci_param_base* par);
+    add_param_error_type add_param(cci_param_base* par);
     
-    bool remove_param(cci_param_base* par);
+    remove_param_error_type remove_param(cci_param_base* par);
     
     void set_alias(std::string& orig_parname, std::string& alias_parname);
-        
+    
     const std::vector<std::string> get_param_list(const std::string& pattern);
     
     const std::vector<cci_param_base*> get_params(const std::string& pattern = "");
-
+    
   };
 
       

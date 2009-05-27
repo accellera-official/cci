@@ -44,8 +44,8 @@ void ParamManipulateModule::main_action() {
   
   cci::cci_param_base *ptr = mApi->get_param("Owner.int_param");
   if (ptr == NULL) return;
-  cci::gs_cci_param<int> &p = *static_cast<cci::gs_cci_param<int>* >(ptr);
-  //cci::gs_cci_param<std::string> &pu = *static_cast<cci::gs_cci_param<std::string>* >(mApi->get_param("Owner.str_param"));
+  cci::dummy_cci_param<int> &p = *static_cast<cci::dummy_cci_param<int>* >(ptr);
+  //cci::dummy_cci_param<std::string> &pu = *static_cast<cci::dummy_cci_param<std::string>* >(mApi->get_param("Owner.str_param"));
   
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
   p.set_string("5000");

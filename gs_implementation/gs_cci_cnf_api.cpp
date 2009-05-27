@@ -30,8 +30,11 @@ cci::gs_cci_cnf_api::gs_cci_cnf_api()
 cci::gs_cci_cnf_api::~cci_cnf_api() { 
 }
 
-bool cci::gs_cci_cnf_api::set_init_value(const std::string &parname, const std::string &value) {
-  return m_gcnf_api->setInitValue(parname, value);
+cci::set_param_error_type cci::gs_cci_cnf_api::set_init_value(const std::string &parname, const std::string &value) {
+  if ( m_gcnf_api->setInitValue(parname, value) )
+    return cci::set_param_success;
+  else
+    return cci::set_param_failed;
 }
 
 const std::string cci::gs_cci_cnf_api::get_json_string(const std::string &parname) {
@@ -70,14 +73,17 @@ bool cci::gs_cci_cnf_api::has_callbacks(const std::string& parname) {
   return false;
 }
 
-bool cci::gs_cci_cnf_api::add_param(cci_param_base* par) {
+cci::add_param_error_type cci::gs_cci_cnf_api::add_param(cci_param_base* par) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-  return false;
+  return cci::add_param_failed;
 }
 
-bool cci::gs_cci_cnf_api::remove_param(cci_param_base* par) {
+cci::remove_param_error_type cci::gs_cci_cnf_api::remove_param(cci_param_base* par) {
   gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
-  return m_gcnf_api->removePar(p);
+  if ( m_gcnf_api->removePar(p) )
+    return cci::remove_param_successful;
+  else
+    return cci::remove_param_failed;
 }
 
 

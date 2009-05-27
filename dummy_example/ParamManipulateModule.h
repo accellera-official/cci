@@ -27,7 +27,7 @@
 #include <systemc>
 #include "ex_globals.h"
 #include "cci.h"
-#include "../dummy_implementation/gs_cci.h"
+#include "../dummy_implementation/dummy_cci.h"
 
 
 /// Module which changes parameter values of the Module ParameterOwnerModule

@@ -20,8 +20,8 @@
  *****************************************************************************/
 
 
-#ifndef __GS_CCI_PARAM_BASE_H__
-#define __GS_CCI_PARAM_BASE_H__
+#ifndef __DUMMY_CCI_PARAM_BASE_H__
+#define __DUMMY_CCI_PARAM_BASE_H__
 
 
 #include <string>
@@ -35,25 +35,25 @@
 namespace cci {
 
   template <typename T>
-  class gs_cci_param_t
+  class dummy_cci_param_t
   : public cci_param<T>
   {
   protected:
     /// Typedef for the value.
     typedef T val_type;
     /// Typedef for the param itself.
-    typedef gs_cci_param_t<T> my_type;
+    typedef dummy_cci_param_t<T> my_type;
     
   public:
 
     using cci_param<T>::operator=;
 
-    explicit gs_cci_param_t(const std::string& n, const bool register_at_db = true,
+    explicit dummy_cci_param_t(const std::string& n, const bool register_at_db = true,
                             const bool force_top_level_name = false) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     
-    ~gs_cci_param_t() {
+    ~dummy_cci_param_t() {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }
     

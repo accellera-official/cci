@@ -27,7 +27,7 @@
 #include <systemc>
 #include "ex_globals.h"
 #include "cci.h"
-#include "../dummy_implementation/gs_cci.h"
+#include "../dummy_implementation/dummy_cci.h"
 
 
 /// Module which owns some cci parameters.
@@ -53,9 +53,9 @@ public:
   void main_action();
 
   /// Example parameter.
-  cci::gs_cci_param<int>             int_param;
-  cci::gs_cci_param<unsigned int>    uint_param;
-  //cci::gs_cci_param<std::string>     str_param;
+  cci::dummy_cci_param<int>             int_param;
+  cci::dummy_cci_param<unsigned int>    uint_param;
+  //cci::dummy_cci_param<std::string>     str_param;
 
 };
 

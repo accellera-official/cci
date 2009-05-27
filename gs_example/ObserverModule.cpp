@@ -76,17 +76,18 @@ void ObserverModule::main_action() {
 }
 
 
-void ObserverModule::config_new_param_callback(cci::cci_param_base& par) {
+void ObserverModule::config_new_param_callback(cci::cci_param_base& par, const cci::callback_type& cb_reason) {
   DEMO_DUMP(name(), "New parameter callback method called:");
   cout << "  New parameter '" << par.get_name() << "'"<< endl;
 }
 
 
 // Callback function with default signature.
-void ObserverModule::config_callback(cci::cci_param_base& par) {
+void ObserverModule::config_callback(cci::cci_param_base& par, const cci::callback_type& cb_reason) {
   DEMO_DUMP(name(), "Callback method called:");
   cout << "  Parameter '" << par.get_name() << "'"<< endl;
   std::string str; par.get_string(str);
   cout << "    changed to value '" << str << "'." << endl;
+  cout << "    type " << cb_reason << endl;
   cout << endl;
 }

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 #include <cci.h>
-#include "gs_cci_cnf_api.h"
+#include "dummy_cci_cnf_api.h"
 
 
 namespace cci {
@@ -29,7 +29,7 @@ namespace cci {
   cci_cnf_api* singleton_api = NULL;
 
   cci_cnf_api* get_cnf_api_instance(sc_core::sc_module*) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
+    if (!singleton_api) singleton_api = new dummy_cci_cnf_api();
     return singleton_api;
   }
 

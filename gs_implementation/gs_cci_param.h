@@ -30,6 +30,8 @@
 
 #include <systemc>
 
+#include "json_spirit/json_spirit.h"
+
 
 namespace cci {
 
@@ -97,15 +99,13 @@ namespace cci {
     val_type operator -- (int); // postfix
     my_type& operator ++ ();    // prefix
     val_type operator ++ (int); // postfix */ 
-       
+
     const std::string& json_serialize() const {
-      // TODO
       return_string = json_serialize(gs_cci_param_t<val_type>::get());
       return return_string;
     }
     
     bool json_deserialize(const std::string& str) {
-      // TODO
       val_type t;
       bool ret = json_deserialize(t, str);
       if (ret) gs_cci_param_t<val_type>::set(t);
@@ -113,22 +113,24 @@ namespace cci {
     }
 
     std::string json_serialize(const val_type& val) const {
+      // TODO
       return gs::gs_param<val_type>::convertValueToString(val);
     }
 
     const bool json_deserialize(val_type& target_val, const std::string& str) {
+      // TODO
       return gs::gs_param<val_type>::deserialize(target_val, str);
     }
 
     
     /* To be implemented in specializations
-     const Param_JSON_type get_JSON_type() const { return partype_not_available; }
-    bool set_number(const long long value)   { return false; }
-    bool set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
+     const Param_JSON_type get_basic_type() const { return partype_not_available; }
+    bool set_number(const sc_dt::uint64 value)   { return false; }
+    bool set_double(const double value)      { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
     bool set_string(const std::string value) { return false; }
     bool set_bool(const bool value)          { return false; }
-    bool get_number(long long& retvalue)     { return false; }
-    bool get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
+    bool get_number(sc_dt::uint64& retvalue)     { return false; }
+    bool get_double(double& retvalue)        { sc_dt::uint64 llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
     bool get_string(std::string& retvalue)   { return false; }
     bool get_bool(bool& retvalue)            { return false; }
      */
@@ -220,13 +222,13 @@ namespace cci {
     }    
     
     /* To be implemented in specializations
-     const Param_JSON_type get_JSON_type() const { return partype_not_available; }
-     bool set_number(const long long value)   { return false; }
-     bool set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
+     const Param_JSON_type get_basic_type() const { return partype_not_available; }
+     bool set_number(const sc_dt::uint64 value)   { return false; }
+     bool set_double(const double value)      { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
      bool set_string(const std::string value) { return false; }
      bool set_bool(const bool value)          { return false; }
-     bool get_number(long long& retvalue)     { return false; }
-     bool get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
+     bool get_number(sc_dt::uint64& retvalue)     { return false; }
+     bool get_double(double& retvalue)        { sc_dt::uint64 llval; bool res=set_number(llval); if (res) retval=(double)llval; return res; }
      bool get_string(std::string& retvalue)   { return false; }
      bool get_bool(bool& retvalue)            { return false; }
      */

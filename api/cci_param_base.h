@@ -97,14 +97,14 @@ namespace cci {
     // ///////////////   JSON Data Type and access   ////////////////////// //
 
     
-    /// Returns a type this parameter can be converted to (which is not the actual parameter type)
-    virtual const Param_JSON_type get_JSON_type() const { return partype_not_available; }
+    /// Returns a basic type this parameter can be converted to (which is not necessarily the actual parameter type)
+    virtual const basic_param_type get_basic_type() const { return partype_not_available; }
     
 #define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(OSCI_CCI_SC_REPORT_IDENT, "Not supported for this parameter type!")
 
     /// Set the parameter value by trying to convert the given number to the param value.
     /**
-     * This function is optionally implemented, check get_JSON_type() 
+     * This function is optionally implemented, check get_basic_type() 
      * if supported for this param.
      *
      * The function should return true only if the value was 
@@ -115,20 +115,20 @@ namespace cci {
      * @param value  Value which the parameter should be set to.
      * @return       If the setting was successfull.
      */
-    virtual bool set_number(const long long value)   { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual set_param_error_type set_number(const sc_dt::uint64 value) { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
     /// Set the parameter value by trying to convert the given number to the param value.
-    /** Details @see cci_param_base::set_number(const long long value) If the parameter does not implement this, it will call the set_number function. */
-    virtual bool set_double(const double value)      { long long llval = (long long)value; return set_number(llval); }
+    /** Details @see cci_param_base::set_number(const sc_dt::uint64 value) If the parameter does not implement this, it will call the set_number function. */
+    virtual set_param_error_type set_double(const double value)        { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
     /// Set the parameter value by trying to convert the given string to the param value.
-    /** Details @see cci_param_base::set_number(const long long value) */
-    virtual bool set_string(const std::string value) { CCI_NOT_SUPPORTED_WRN; return false; }
+    /** Details @see cci_param_base::set_number(const sc_dt::uint64 value) */
+    virtual set_param_error_type set_string(const std::string value)   { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
     /// Set the parameter value by trying to convert the given bool to the param value.
-    /** Details @see cci_param_base::set_number(const long long value) */
-    virtual bool set_bool(const bool value)          { CCI_NOT_SUPPORTED_WRN; return false; }
+    /** Details @see cci_param_base::set_number(const sc_dt::uint64 value) */
+    virtual set_param_error_type set_bool(const bool value)            { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
 
     /// Get the parameter value by trying to convert it to the given number.
     /**
-     * This function is optionally implemented, check get_JSON_type() 
+     * This function is optionally implemented, check get_basic_type() 
      * if supported for this param.
      *
      * The function should return true only if the value was copied/converted
@@ -139,16 +139,16 @@ namespace cci {
      * @param value  Value which the parameter should be copied to.
      * @return       If the getting was successfull.
      */
-    virtual bool get_number(long long& retvalue)     { CCI_NOT_SUPPORTED_WRN; return false; }
+    virtual get_param_error_type get_number(sc_dt::uint64& retvalue) { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
     /// Get the parameter value by trying to convert it to the given number.
-    /** Details @see cci_param_base::get_number(long long& retvalue). If the parameter does not implement this, it will call the get_number function. */
-    virtual bool get_double(double& retvalue)        { long long llval; bool res=set_number(llval); if (res) retvalue=(double)llval; return res; }
+    /** Details @see cci_param_base::get_number(sc_dt::uint64& retvalue). If the parameter does not implement this, it will call the get_number function. */
+    virtual get_param_error_type get_double(double& retvalue)        { sc_dt::uint64 llval; get_param_error_type res=get_number(llval); if (res) retvalue=(double)llval; return res; }
     /// Get the parameter value by trying to convert it to the given string.
-    /** Details @see cci_param_base::get_number(long long& retvalue) */
-    virtual bool get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return false; }
+    /** Details @see cci_param_base::get_number(sc_dt::uint64& retvalue) */
+    virtual get_param_error_type get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
     /// Get the parameter value by trying to convert it to the given bool.
-    /** Details @see cci_param_base::get_number(long long& retvalue) */
-    virtual bool get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return false; }
+    /** Details @see cci_param_base::get_number(sc_dt::uint64& retvalue) */
+    virtual get_param_error_type get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -214,7 +214,7 @@ namespace cci {
      *   }
      *
      *   // Callback function with default signature.
-     *   void config_callback(cci_param_base& changed_param) {
+     *   void config_callback(cci_param_base& changed_param, const callback_type& cb_reason) {
      *     // some action
      *   }
      * protected:
@@ -229,7 +229,7 @@ namespace cci {
      * @return            boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
     template <typename T>
-    boost::shared_ptr<callb_adapt_b> register_callback(const callback_types type, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param)) {
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param, const cci::callback_type& cb_reason)) {
       // call the pure virtual function, independent from template T
       return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, this)));
     }

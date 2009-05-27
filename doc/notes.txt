@@ -15,4 +15,49 @@ Rule: Store the returned boost pointer and keep it until you want
 
 BTW: The shared pointer handling does not cause any memory leak.
 
+* Why not using SCV callback mechanism of scv_smart_ptr? *
+
+The scv_extension_if provides in the form of 
+scv_extension_callbacks_if a similar callback mechanism we have 
+in mind. The biggest problem is the lack of callback types 
+pre/post-read and pre-write, only post-write (value change) is 
+provided. 
+Unfortunately extending the SCV mechanism is not possible because 
+there is the method get_instance() which returns a non-constant 
+pointer to the underlying object, which then can be changed and 
+the trigger_value_change_cb() function needs to be called 
+manually (SCV Spec. v.1.0e, p.22). When introducing further 
+callback types to SCV we would need to change the SCV standard 
+according the user rules to this get_instance() call, which is 
+no option.
+Another disadvantage is that callback method parameter needs to 
+be an object of type scv_extensions_if - which would require a 
+big amount of methods to be implemented by the parameters.
+
+Therefore I suggest we adopt the proposed approach which is aligned 
+to the SCV approach: We use register/remove method calls which look 
+similar but take a different function pointer which gets a 
+cci_param_base object and a callback_type. It will therefore look 
+and feel similar, but will have the added benefits we need in CCI 
+(more callback types and different objects given to the called 
+functions).
+I prefer the boost::shared_ptr approach (the register/add method 
+returns such a pointer instead of an SCV-like callback ID) to 
+reduce the danger of memory leaks which may occur when just 
+newing callback objects.
+
 ----------------------------------------------------------------
+
+PORTABILITY
+
+One aspect ensuring portability is the used data type sc_dt::uint64. 
+Since this standard is a SystemC standard, this should be the data 
+type used. 
+"int64 is a native C++ integer type having a word length of exactly 
+64 bits.", "uint64 is a native C++ unsigned integer type having a 
+word length of exactly 64 bits." 
+(IEEE Standard SystemC Language Reference Manual, March 2006).
+
+----------------------------------------------------------------
+
+

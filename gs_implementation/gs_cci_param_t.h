@@ -90,11 +90,11 @@ namespace cci {
       return gs::gs_param<T>::getValue();
     }
     
-    bool get_string(std::string& retvalue) {
+    get_param_error_type get_string(std::string& retvalue) {
       retvalue = gs::gs_param<T>::getString();
-      return true;
+      return get_param_success;
     }
-    
+
     boost::shared_ptr<callb_adapt_b> register_callback(boost::shared_ptr< callb_adapt_b> callb) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return callb;
@@ -113,7 +113,12 @@ namespace cci {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return false;
     }
-        
+
+  protected:
+    
+    /// String whose reference can be returned as string value
+    mutable std::string return_string;
+    
   };
 
 } // namespace cci

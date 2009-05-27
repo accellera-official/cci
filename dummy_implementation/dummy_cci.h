@@ -20,14 +20,14 @@
  *****************************************************************************/
 
 
-#ifndef __GS_CCI_H__
-#define __GS_CCI_H__
+#ifndef __DUMMY_CCI_H__
+#define __DUMMY_CCI_H__
 
 
 #include <cci.h>
-#include "gs_cci_cnf_api.h"
-#include "gs_cci_param_t.h"
-#include "gs_cci_param.h"
+#include "dummy_cci_cnf_api.h"
+#include "dummy_cci_param_t.h"
+#include "dummy_cci_param.h"
 
 namespace cci {
 
