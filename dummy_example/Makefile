@@ -13,15 +13,15 @@ SRCS = testbench.cpp \
        ParameterOwnerModule.cpp \
        ParamManipulateModule.cpp \
        ObserverModule.cpp \
-       ../dummy_implementation/gs_cci.cpp \
-       ../dummy_implementation/gs_cci_cnf_api.cpp 
+       ../dummy_implementation/dummy_cci.cpp \
+       ../dummy_implementation/dummy_cci_cnf_api.cpp 
 
 OBJS = testbench.o \
        ParameterOwnerModule.o \
        ParamManipulateModule.o \
        ObserverModule.o \
-       gs_cci.o \
-       gs_cci_cnf_api.o
+       dummy_cci.o \
+       dummy_cci_cnf_api.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 

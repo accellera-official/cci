@@ -84,7 +84,7 @@ namespace cci {
       return my_value;
     }
     
-    boost::shared_ptr<callb_adapt_b> register_callback(boost::shared_ptr< callb_adapt_b> callb) {
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< callb_adapt_b> callb) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return callb;
     }

@@ -53,7 +53,7 @@ const std::vector<std::string> cci::gs_cci_cnf_api::get_param_list() {
   return m_gcnf_api->getParamList();
 }
 
-boost::shared_ptr< cci::callb_adapt_b> cci::gs_cci_cnf_api::register_callback(const std::string& parname, boost::shared_ptr< cci::callb_adapt_b> callb) {
+boost::shared_ptr< cci::callb_adapt_b> cci::gs_cci_cnf_api::register_callback(const std::string& parname, const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return callb;
 }

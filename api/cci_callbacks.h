@@ -23,6 +23,7 @@
 #ifndef __CCI_CALLBACKS_H__
 #define __CCI_CALLBACKS_H__
 
+#include <boost/function.hpp>
 
 namespace cci {
   
@@ -35,9 +36,15 @@ namespace cci {
     destroy_param
   };
 
-    
   class cci_param_base;
-
+  
+  /// Typedef for the member function pointer.
+  /**
+   * Callback functions must have the signature: void method_name(cci_param_base& changed_param, const callback_type& cb_reason)
+   */
+  typedef boost::function2<void, cci_param_base&, const callback_type&> callb_func_ptr;  // boost function portable syntax
+  //typedef boost::function<void (cci_param_base&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
+  
   /// Adapter base class which can be used to call a arbitrary parameter callback function.
   /**
    * Base class for cci_callb_adapt to allow access by anyone without
@@ -51,21 +58,31 @@ namespace cci {
   template<class T_cci_param_base>
   class callb_adapt_B
   {
+  protected:
+
     // allows cci_param_base to access the caller_param to set to NULL
     friend class cci_param_base; 
-    
+        
   public:
-    /// Constructor
-    callb_adapt_B(void* _observer_ptr, T_cci_param_base *_caller_param)
+    
+    /// Constructor with pointers to be saved in this object.
+    /**
+     * @param _observer_ptr    Pointer to the object where the callback method should be called.
+     * @param _func  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
+     * @param _caller_param  Pointer to the param that calls this adapter.
+     */
+    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, cci_param_base* _caller_param)
     : observer_ptr(_observer_ptr)
-    , caller_param(_caller_param) {
+    , caller_param(_caller_param)
+    , func(_func)
+    {
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
       if (caller_param) printf("callb_adapt_B: Create parameter callback adapter %p for caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
       else printf("callb_adapt_B: Create parameter callback adapter %p for no parameter.\n", (void*)this);
 #endif
-      }
-    /// Destructor unregisters at caller parameter if not yet done.
-    virtual ~callb_adapt_B() {
+    }
+    
+    ~callb_adapt_B() {
       unregister_at_parameter();
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
       printf("callb_adapt_B: Deleting parameter callback adapter %p (shared pointer deleted)\n", (void*)this);
@@ -84,8 +101,15 @@ namespace cci {
       }
     }
     
-    /// Virtual call method to make the call in the template specialized class.
-    virtual void call(T_cci_param_base& changed_param, const callback_type& cb_reason) = 0;
+    /// Makes the callback, called by the base class callb_adapt_b.
+    void call(cci_param_base& changed_param, const callback_type& cb_reason) {
+      if (func) {
+        func(changed_param, cb_reason);
+      } else {
+        SC_REPORT_ERROR(OSCI_CCI_SC_REPORT_IDENT, "No callback registered yet.");
+      }      
+    }
+
     /// Returns the observer (pointer to the object where the method should be called)
     void* get_observer() {
       return (void*) observer_ptr;
@@ -105,62 +129,15 @@ namespace cci {
     
     /// Caller parameter
     T_cci_param_base *caller_param;
+    
+    /// Boost function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
+    callb_func_ptr func;
+    
   };
 
   typedef callb_adapt_B<cci_param_base> callb_adapt_b;
-
-    
-  /// Template specialized adapter class which can be used to call an arbitrary parameter callback function.
-  /**
-   * This class saves an object pointer and a member function pointer to the object's
-   * callback function and a pointer to the observer object. The call method is called
-   * by the virtual call method of the base class when anyone calls it.
-   */
-  template<class T>
-  class callb_adapt
-  : public callb_adapt_b
-  {
-  protected:
-    
-    /// Typedef for the member function pointer.
-    /**
-     * Callback functions must have the signature: void method_name(cci_param_base& changed_param)
-     */
-    typedef void (T::*callb_func_ptr)(cci_param_base& changed_param, const callback_type& cb_reason);
-
-  public:
-
-    /// Constructor with pointers to be saved in this object.
-    /**
-     * @param ob    Pointer to the object where the callback method should be called.
-     * @param _ptr  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
-     * @param _observer_ptr  void* pointer to the observer object (needed for unregistering).
-     * @param _caller_param  Pointer to the param that calls this adapter.
-     */
-    callb_adapt(T* ob, callb_func_ptr _ptr, cci_param_base* _caller_param)
-    : callb_adapt_b(ob, _caller_param) {
-      obj = ob;
-      ptr = _ptr;
-      std::cout << this << "  callb_adapt<t> constructor" << std::endl;
-    }
-
-    ~callb_adapt() {
-      std::cout << this << "  callb_adapt<t> destructor" << std::endl;
-    }
-    
-    /// Pointer to the object where the callback method should be called.
-    T *obj;
-    /// Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
-    callb_func_ptr ptr;
-
-    /// Makes the callback, called by the base class callb_adapt_b.
-    void call(cci_param_base& changed_param, const callback_type& cb_reason) {
-      (obj->*ptr)(changed_param, cb_reason);
-    }
-    
-  };
-
-
+  
+      
 } // end namespace cci
 
 #endif

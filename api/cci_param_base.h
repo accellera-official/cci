@@ -166,14 +166,18 @@ namespace cci {
     // /////////////////   Callback Handling   //////////////////////////// //
     
     
-    /// Registers an observer callback function (with the signature of callback_func_ptr).
+    /// Registers an observer callback function (a boost function with the signature of callback_func_ptr).
     /**
      * For further callback types @see cci::cci_cnf_api::register_callback
      *
      * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
      *
-     * The user may register any methods as callback functions which have
+     * The user may register any boost function for callbacks which have
      * the following signature:
+     * \code
+     * boost::function<void (cci_param_base& changed_param)>
+     * \endcode
+     * e.g.
      * \code
      * void method_name(cci_param_base& changed_param);
      * \endcode
@@ -209,8 +213,8 @@ namespace cci {
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     p1cb = my_param.register_callback(cci::post_write   , this, &MyIP_Class::config_callback);
-     *     p2cb = my_param.register_callback(cci::destroy_param, this, &MyIP_Class::config_callback);
+     *     p1cb = my_param.register_callback(cci::post_write   , this, boost::bind(&MyIP_Class::config_callback, this, _1, _2));
+     *     p2cb = my_param.register_callback(cci::destroy_param, this, boost::bind(&MyIP_Class::config_callback, this, _1, _2));
      *   }
      *
      *   // Callback function with default signature.
@@ -225,17 +229,16 @@ namespace cci {
      *
      * @param type        Type of the callback.
      * @param observer    Pointer to the observing object (the one being called).
-     * @param callb_func  Function pointer to the function being called.
-     * @return            boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
+     * @param function    Boost function pointer to the function being called.
+     * @return            Boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-    template <typename T>
-    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, T* observer, void (T::*callb_func_ptr)(cci_param_base& changed_param, const cci::callback_type& cb_reason)) {
-      // call the pure virtual function, independent from template T
-      return register_callback(boost::shared_ptr< callb_adapt_b>(new callb_adapt<T>(observer, callb_func_ptr, this)));
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {
+      // call the pure virtual function performing the registration
+      return register_callback(type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
     }
     
-    /// Function handling the callback (without template)
-    virtual boost::shared_ptr<callb_adapt_b> register_callback(boost::shared_ptr< callb_adapt_b> callb) = 0;
+    /// Function handling the callback
+    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr<callb_adapt_b> callb) = 0;
     
     
     /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 

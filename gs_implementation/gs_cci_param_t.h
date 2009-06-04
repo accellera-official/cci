@@ -34,6 +34,33 @@
 #include "greencontrol/gcnf/apis/gs_param/gs_param.h"
 
 namespace cci {
+  
+  class internal_callback_forwarder {
+  public:
+    internal_callback_forwarder(boost::shared_ptr<cci::callb_adapt_b> _adapt, const callback_type _type)
+    : adapt(_adapt)
+    , type(_type) {
+    }
+    void call(gs::gs_param_base& par) {
+      if (par.is_destructing()) {
+        if (type == cci::destroy_param) {
+          SC_REPORT_WARNING("GreenSocs/cci/not_supported", "destruction callback not supported by GreenSocs parameters");
+          // This cannot work because the cast the the already destructed cci_param_base fails.
+          //adapt->call(*cci_p, cci::destroy_param);
+        }
+      } else {
+        if (type == cci::post_write) {
+          gs::gs_param_base *p = &par;
+          cci_param_base *cci_p = dynamic_cast<cci_param_base*> (p);
+          assert (cci_p != NULL && "Got a wrong parameter type");
+          adapt->call(*cci_p, cci::post_write);
+        }          
+      }
+    }
+  protected:
+    boost::shared_ptr<cci::callb_adapt_b> adapt;
+    callback_type type;
+  };
 
   template <typename T>
   class gs_cci_param_t
@@ -95,8 +122,25 @@ namespace cci {
       return get_param_success;
     }
 
-    boost::shared_ptr<callb_adapt_b> register_callback(boost::shared_ptr< callb_adapt_b> callb) {
-      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
+      switch(type) {
+        case pre_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+        case post_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+        case pre_write: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+        case create_param: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "create_param callbacks not supported at parameters"); break;
+        case post_write:
+        case destroy_param:
+          internal_callback_forwarder *fw = new internal_callback_forwarder(callb, type);
+          fw_vec.push_back(fw);
+          gs::gs_param<T>::registerParamCallback( 
+                                                 boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
+                                                                                                  new ::gs::cnf::ParamCallbAdapt<internal_callback_forwarder>
+                                                                                                  (fw, 
+                                                                                                   &internal_callback_forwarder::call, 
+                                                                                                   callb->get_observer(), 
+                                                                                                   const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(this)))
+                                                                                                  )   );
+      }
       return callb;
     }
     
@@ -113,11 +157,13 @@ namespace cci {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return false;
     }
-
+    
   protected:
     
     /// String whose reference can be returned as string value
     mutable std::string return_string;
+    
+    std::vector<internal_callback_forwarder*> fw_vec;
     
   };
 

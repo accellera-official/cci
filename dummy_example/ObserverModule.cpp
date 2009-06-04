@@ -43,14 +43,17 @@ ObserverModule::~ObserverModule() {
 
 void ObserverModule::main_action() {
   DEMO_DUMP(name(), "register new parameter callback");
-  boost::shared_ptr<cci::callb_adapt_b> cb1 = mApi->register_callback(cci::create_param, "*", this, &ObserverModule::config_new_param_callback);
+  boost::shared_ptr<cci::callb_adapt_b> cb1 = 
+  mApi->register_callback(cci::create_param, "*", this, 
+                          boost::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
 
   DEMO_DUMP(name(), "register callback for int_param");
   // Register Callback for parameter int_param in module other_ip (IP1)
   cci::cci_param_base* p = mApi->get_param("Owner.int_param");
   if (p != NULL) {
     boost::shared_ptr<cci::callb_adapt_b> cbAdapt_int_param;
-    cbAdapt_int_param = p->register_callback(cci::post_write, this, &ObserverModule::config_callback);
+    cbAdapt_int_param = p->register_callback(cci::post_write, this, 
+                                             boost::bind(&ObserverModule::config_callback, this, _1, _2));
     mCallbacks.push_back(cbAdapt_int_param);
   }
   
@@ -88,5 +91,6 @@ void ObserverModule::config_callback(cci::cci_param_base& par, const cci::callba
   cout << "  Parameter '" << par.get_name() << "'"<< endl;
   std::string str; par.get_string(str);
   cout << "    changed to value '" << str << "'." << endl;
+  cout << "    type " << cb_reason << endl;
   cout << endl;
 }

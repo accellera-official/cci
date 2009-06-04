@@ -33,8 +33,8 @@ void ParameterOwnerModule::main_action() {
   cout << name() << ": "<<int_param.get_name() << ".json_serialize() = "<< int_param.json_serialize()<<endl;
   
   int_param.json_deserialize("555000");
-  bool succ = int_param.get_string(str);
-  assert(succ);
+  cci::get_param_error_type succ = int_param.get_string(str);
+  assert(succ == cci::get_param_success  && "This should be successful");
   cout << name() << ": "<<int_param.get_name() << ".json_deserialize(555000) results in "<< str <<endl;
   
   wait(1, SC_NS);

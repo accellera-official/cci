@@ -48,7 +48,7 @@ namespace cci {
     
     const std::vector<std::string> get_param_list();
     
-    boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, boost::shared_ptr< callb_adapt_b> callb);
+    boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, boost::shared_ptr< callb_adapt_b> callb);
     
     void unregister_all_callbacks(void* observer);
     

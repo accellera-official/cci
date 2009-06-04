@@ -1,0 +1,22 @@
+ChangeLog
+---------
+
+**** CCI-1.2-xxxx09.tar.gz ****
+
+- Changed callback type from function pointer to boost::function.
+
+
+**** CCI-1.1-280509.tar.gz ****
+
+- Added callback type (reason) to callback function signature
+- Error codes as return value instead of bool
+- Made basic parameter types JSON independent (just renaming)
+  to avoid confusion (JSON not necessary here, only needed for 
+  (de)serialize).
+- Added notes.txt file.
+- Portability: changed long long to sc_dt::uint64
+
+
+**** CCI-1.0-180509.tar.gz ****
+
+- initial release
