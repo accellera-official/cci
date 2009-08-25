@@ -43,7 +43,7 @@ namespace cci {
 
 #include "cci_datatypes.h"
 #include "cci_callbacks.h"
-#include "cci_param_base.h"
+#include "cci_base_param.h"
 #include "cci_param.h"
 #include "cci_cnf_api.h"
 

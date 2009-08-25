@@ -24,6 +24,7 @@
 #include "ParameterOwnerModule.h"
 #include "ObserverModule.h"
 #include "ParamManipulateModule.h"
+#include "BaseParamModule.h"
 #include <cci.h>
 
 /// Testbench for the dummy example
@@ -32,6 +33,7 @@ int sc_main(int argc, char *argv[]) {
   ParamManipulateModule manipulator("Manipulator");
   ParameterOwnerModule  owner      ("Owner");
   ObserverModule        observer   ("Observer");
+  BaseParamModule       baseParTest("baseParTest");
 
   std::cout << "------ sc_start() ----------------" << std::endl;
   sc_core::sc_start();

@@ -24,13 +24,17 @@
 #define __CCI_DATATYPES_H__
 
 
+#include <boost/cstdint.hpp>
+
+
 namespace cci {
 
   
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
   enum basic_param_type {
     partype_not_available = 0, // default, type unknown
-    partype_number,   // used for all param data types that can handle numbers
+    partype_number,   // used for all param data types that can handle integer numbers
+    partype_real,     // used for all param data types that can handle real numbers
     partype_bool,     // used for all param data types that can handle bool
     partype_string,   // used for all param data types that can handle strings
     partype_list,     // used for all param lists 

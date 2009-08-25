@@ -31,7 +31,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include "cci.h"
-#include "greencontrol/gcnf/apis/gs_param/gs_param.h"
+#include "greencontrol/config.h"
 
 namespace cci {
   
@@ -45,13 +45,13 @@ namespace cci {
       if (par.is_destructing()) {
         if (type == cci::destroy_param) {
           SC_REPORT_WARNING("GreenSocs/cci/not_supported", "destruction callback not supported by GreenSocs parameters");
-          // This cannot work because the cast the the already destructed cci_param_base fails.
+          // This cannot work because the cast the the already destructed cci_base_param fails.
           //adapt->call(*cci_p, cci::destroy_param);
         }
       } else {
         if (type == cci::post_write) {
           gs::gs_param_base *p = &par;
-          cci_param_base *cci_p = dynamic_cast<cci_param_base*> (p);
+          cci_base_param *cci_p = dynamic_cast<cci_base_param*> (p);
           assert (cci_p != NULL && "Got a wrong parameter type");
           adapt->call(*cci_p, cci::post_write);
         }          

@@ -21,12 +21,31 @@ namespace cci {
 
 ----------------------------------------------------------------
 
+PRE_WRITE CALLBACK
+
+It is possible that any pre_write callback rejects the value (by returning
+the according enum item). Thus each observer getting such a callback must
+not rely on the given value to appear as the new one!
+
+TODO: Another option would be to introduce another callback type, e.g. a
+'reject_write' callback which is called before the pre_write callback.
+
+
+----------------------------------------------------------------
+
 CALLBACK ORDER
 
 The callback order must match the registration order. This allows the 
 tool to register all desired callbacks prior to all others, because it 
 gets the add_param() call at parameter construction.
 
+
+----------------------------------------------------------------
+
+CALLBACK RETURN STATUS
+
+The parameter implementation shall evaluate the enum returned by callback
+functions and perform the according action (e.g. reject a value).
 
 ----------------------------------------------------------------
 
@@ -51,5 +70,8 @@ Examples:
 
 PARAMETER CONSTRUCTORS
 
-Due to compatibility a parameter vendor should provide at least
-the constructors shown as comment in cci_param.h
+The parameter vendor shall provide cci_base_param constructors as shown
+in the file cci_base_param.h
+
+For typed parameters a parameter vendor shall provide at least
+the constructors shown in cci_param.h

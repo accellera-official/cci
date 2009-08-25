@@ -45,13 +45,13 @@ public:
   void main_action();
 
   /// Callback function with default signature.
-  void config_callback(cci::cci_param_base& par, const cci::callback_type& cb_reason);
+  cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
   /// Callback function with default signature.
-  void config_new_param_callback(cci::cci_param_base& par, const cci::callback_type& cb_reason);
+  cci::callback_return_type config_new_param_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
   // Optional callback function with default signature.
-  //void config_callback_deprecated(const std::string parname, const std::string val);
+  //callback_return_type config_callback_deprecated(const std::string parname, const std::string val);
 
 protected:
   /// Pointer the the module's configuration API

@@ -20,8 +20,8 @@
  *****************************************************************************/
 
 
-#ifndef __CCI_PARAM_BASE_H__
-#define __CCI_PARAM_BASE_H__
+#ifndef __CCI_BASE_PARAM_H__
+#define __CCI_BASE_PARAM_H__
 
 
 #include <string>
@@ -31,21 +31,24 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include "cci_value.h"
+
 
 namespace cci {
 
   template <typename T> 
   class cci_param;
 
-  /// Base class for all cci_param template specializations.
+  /// Base param which stores string values (can be instantiated) or base class for all cci_param template specializations.
   /**
    * Features:
    * - Name of the parameter,
+   * - stores value untyped as string representation
+   * - allows generic typed and list access
    * - JSON (de)serialize functions
    * - Callback handling
    */
-  class cci_param_base
-  : public sc_core::sc_object
+  class cci_base_param
   {
 
   public:
@@ -53,12 +56,9 @@ namespace cci {
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
 
-    /// Proposed constructor with (local or hierarchical) name
+    /// Proposed constructor with (local or hierarchical) name, to be called by derived param
     /**
      * - Sets the hierarchical parameter name (default name if name is empty).
-     *   (If the parent_array is != NULL: 
-     *            hierarchical name is the parent's name + local name)
-     * - Sets the API pointer.
      * - Explicit constructor to avoid implicit construction of parameters.
      *
      * @param n  The local (or full hierarchical) parameter name (local: should not but may include points) 
@@ -68,11 +68,28 @@ namespace cci {
      *                             default false,
      *                             Be carefull in using this.
      */
-    //explicit cci_param_base(const std::string& n,
+    //explicit cci_base_param(const std::string& n,
+    //                        const bool force_top_level_name = false);
+
+    /// Proposed constructor with (local or hierarchical) name and string value, to be called by user
+    /**
+     * - Sets the hierarchical parameter name (default name if name is empty).
+     * - Explicit constructor to avoid implicit construction of parameters.
+     *
+     * @param name  The local (or full hierarchical) parameter name (local: should not but may include points) 
+     *              (local: unique inside a module, hierarchical: unique in the system).
+     *              May be empty: name will be chosen automatically.
+     * @param value The string value that should be stored by this base param (NOT use when having typed params!)
+     * @param force_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
+     *                             default false,
+     *                             Be carefull in using this.
+     */
+    //explicit cci_base_param(const std::string& name,
+    //                        const std::string& value,
     //                        const bool force_top_level_name = false);
     
     /// Destructor.
-    virtual ~cci_param_base() { }
+    virtual ~cci_base_param() { }
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -117,13 +134,13 @@ namespace cci {
      */
     virtual set_param_error_type set_number(const sc_dt::uint64 value) { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
     /// Set the parameter value by trying to convert the given number to the param value.
-    /** Details @see cci_param_base::set_number(const sc_dt::uint64 value) If the parameter does not implement this, it will call the set_number function. */
+    /** Details @see cci_base_param::set_number(const sc_dt::uint64 value) If the parameter does not implement this, it will call the set_number function. */
     virtual set_param_error_type set_double(const double value)        { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
     /// Set the parameter value by trying to convert the given string to the param value.
-    /** Details @see cci_param_base::set_number(const sc_dt::uint64 value) */
-    virtual set_param_error_type set_string(const std::string value)   { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
+    /** Details @see cci_base_param::set_number(const sc_dt::uint64 value) */
+    virtual set_param_error_type set_string(const std::string& value)   { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
     /// Set the parameter value by trying to convert the given bool to the param value.
-    /** Details @see cci_param_base::set_number(const sc_dt::uint64 value) */
+    /** Details @see cci_base_param::set_number(const sc_dt::uint64 value) */
     virtual set_param_error_type set_bool(const bool value)            { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
 
     /// Get the parameter value by trying to convert it to the given number.
@@ -141,15 +158,31 @@ namespace cci {
      */
     virtual get_param_error_type get_number(sc_dt::uint64& retvalue) { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
     /// Get the parameter value by trying to convert it to the given number.
-    /** Details @see cci_param_base::get_number(sc_dt::uint64& retvalue). If the parameter does not implement this, it will call the get_number function. */
+    /** Details @see cci_base_param::get_number(sc_dt::uint64& retvalue). If the parameter does not implement this, it will call the get_number function. */
     virtual get_param_error_type get_double(double& retvalue)        { sc_dt::uint64 llval; get_param_error_type res=get_number(llval); if (res) retvalue=(double)llval; return res; }
     /// Get the parameter value by trying to convert it to the given string.
-    /** Details @see cci_param_base::get_number(sc_dt::uint64& retvalue) */
+    /** Details @see cci_base_param::get_number(sc_dt::uint64& retvalue) */
     virtual get_param_error_type get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
     /// Get the parameter value by trying to convert it to the given bool.
-    /** Details @see cci_param_base::get_number(sc_dt::uint64& retvalue) */
+    /** Details @see cci_base_param::get_number(sc_dt::uint64& retvalue) */
     virtual get_param_error_type get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
     
+    //
+    // Alternatively??
+    //
+    
+    /// Set the parameter's value to the given one
+    /**
+     * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
+     * @return    If the setting was successfull.
+     */
+    virtual set_param_error_type set_value(const cci_value& val) = 0;
+    
+    /// Get the parameter's value
+    /**
+     * @return val This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
+     */
+    virtual cci_value get_value() = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////////   Miscellaneous   //////////////////////////// //
@@ -175,11 +208,11 @@ namespace cci {
      * The user may register any boost function for callbacks which have
      * the following signature:
      * \code
-     * boost::function<void (cci_param_base& changed_param)>
+     * boost::function<void (cci_base_param& changed_param)>
      * \endcode
      * e.g.
      * \code
-     * void method_name(cci_param_base& changed_param);
+     * void method_name(cci_base_param& changed_param);
      * \endcode
      *
      * The registered callbacks should be unregistered latest during destruction.
@@ -218,7 +251,7 @@ namespace cci {
      *   }
      *
      *   // Callback function with default signature.
-     *   void config_callback(cci_param_base& changed_param, const callback_type& cb_reason) {
+     *   void config_callback(cci_base_param& changed_param, const callback_type& cb_reason) {
      *     // some action
      *   }
      * protected:

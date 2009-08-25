@@ -31,7 +31,7 @@ namespace cci {
 
 
   // forward declaration 
-  class cci_param_base;
+  class cci_base_param;
     
   // forward declaration 
   template <class T> 
@@ -74,7 +74,7 @@ namespace cci {
      * @param   parname   Full hierarchical parameter name.
      * @return  Pointer to the parameter object (NULL if not existing).
      */ 
-    virtual cci_param_base* get_param(const std::string &parname) = 0;
+    virtual cci_base_param* get_param(const std::string &parname) = 0;
     
     /// Checks whether a parameter exists (implicit or explicit).
     /**
@@ -102,7 +102,7 @@ namespace cci {
     
     /// Registers an observer callback function (with the signature of callback_func_ptr).
     /**
-     * Same as @see cci::cci_param_base::register_callback but additional
+     * Same as @see cci::cci_base_param::register_callback but additional
      * - create param callbacks
      * - callbacks to not yet existing params
      * - (optionally) callbacks for regex names
@@ -154,7 +154,7 @@ namespace cci {
      *   }
      *
      *   // Callback function with default signature.
-     *   void config_callback(cci_param_base& changed_param, const callback_type& cb_reason) {
+     *   void config_callback(cci_base_param& changed_param, const callback_type& cb_reason) {
      *     // some action
      *   }
      *
@@ -187,7 +187,7 @@ namespace cci {
     //       being set for not yet existing parameters (implicit parameters),
     //       we will need another register_callback()-function with a different 
     //       callback function signature getting <stringName,stringValue>-pair
-    //       instead of cci_param_base.
+    //       instead of cci_base_param.
     
     /// Unregisters the callback and (default) deletes the callback adapter.
     /**
@@ -213,18 +213,18 @@ namespace cci {
 
     
   //protected:
-  //  friend class cci_param_base;
+  //  friend class cci_base_param;
     
     /// Add a parameter to the registry.
     /** 
      * Note: addPar (and all related methods) must not call any of the 
-     *       pure virtual functions in cci_param_base because this method is 
-     *       called by the cci_param_base constructor.
+     *       pure virtual functions in cci_base_param because this method is 
+     *       called by the cci_base_param constructor.
      *
      * @param par Parameter (including name and value).
      * @return Success of the adding.
      */
-    virtual add_param_error_type add_param(cci_param_base* par) = 0;
+    virtual add_param_error_type add_param(cci_base_param* par) = 0;
     
     /// Remove a parameter from the registry. May only be called by the parameter destructor.
     /**
@@ -233,7 +233,7 @@ namespace cci {
      * @param par Parameter pointer.
      * @return Success of remove.
      */
-    virtual remove_param_error_type remove_param(cci_param_base* par) = 0;
+    virtual remove_param_error_type remove_param(cci_base_param* par) = 0;
     
 
   public:
@@ -283,7 +283,7 @@ namespace cci {
      * @param pattern Specifies the parameters to be returned.
      * @return Vector with parameter base object pointers.
      */
-    virtual const std::vector<cci_param_base*> get_params(const std::string& pattern = "") = 0;
+    virtual const std::vector<cci_base_param*> get_params(const std::string& pattern = "") = 0;
 
   };
 

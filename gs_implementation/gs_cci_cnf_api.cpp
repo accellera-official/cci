@@ -41,8 +41,8 @@ const std::string cci::gs_cci_cnf_api::get_json_string(const std::string &parnam
   return m_gcnf_api->getValue(parname);
 }
 
-cci::cci_param_base* cci::gs_cci_cnf_api::get_param(const std::string &parname) {
-  return dynamic_cast<cci::cci_param_base*> (m_gcnf_api->getPar(parname));
+cci::cci_base_param* cci::gs_cci_cnf_api::get_param(const std::string &parname) {
+  return dynamic_cast<cci::cci_base_param*> (m_gcnf_api->getPar(parname));
 }
 
 bool cci::gs_cci_cnf_api::exists_param(const std::string &parname) {
@@ -73,12 +73,12 @@ bool cci::gs_cci_cnf_api::has_callbacks(const std::string& parname) {
   return false;
 }
 
-cci::add_param_error_type cci::gs_cci_cnf_api::add_param(cci_param_base* par) {
+cci::add_param_error_type cci::gs_cci_cnf_api::add_param(cci_base_param* par) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return cci::add_param_failed;
 }
 
-cci::remove_param_error_type cci::gs_cci_cnf_api::remove_param(cci_param_base* par) {
+cci::remove_param_error_type cci::gs_cci_cnf_api::remove_param(cci_base_param* par) {
   gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
   if ( m_gcnf_api->removePar(p) )
     return cci::remove_param_successful;
@@ -96,13 +96,13 @@ const std::vector<std::string> cci::gs_cci_cnf_api::get_param_list(const std::st
   return m_gcnf_api->getParamList(pattern);
 }
 
-const std::vector<cci::cci_param_base*> cci::gs_cci_cnf_api::get_params(const std::string& pattern) {
-  std::vector<cci::cci_param_base*> parvec;
+const std::vector<cci::cci_base_param*> cci::gs_cci_cnf_api::get_params(const std::string& pattern) {
+  std::vector<cci::cci_base_param*> parvec;
   std::vector<std::string> strvec;
   strvec = get_param_list(pattern);
   std::vector<std::string>::iterator striter;
   for (striter = strvec.begin(); striter != strvec.end(); striter++) {
-    cci::cci_param_base* p = get_param(*striter);
+    cci::cci_base_param* p = get_param(*striter);
     if (p) parvec.push_back(p);
   }
   return parvec;

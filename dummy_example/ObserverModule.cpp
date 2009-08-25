@@ -49,7 +49,7 @@ void ObserverModule::main_action() {
 
   DEMO_DUMP(name(), "register callback for int_param");
   // Register Callback for parameter int_param in module other_ip (IP1)
-  cci::cci_param_base* p = mApi->get_param("Owner.int_param");
+  cci::cci_base_param* p = mApi->get_param("Owner.int_param");
   if (p != NULL) {
     boost::shared_ptr<cci::callb_adapt_b> cbAdapt_int_param;
     cbAdapt_int_param = p->register_callback(cci::post_write, this, 
@@ -79,14 +79,14 @@ void ObserverModule::main_action() {
 }
 
 
-void ObserverModule::config_new_param_callback(cci::cci_param_base& par, const cci::callback_type& cb_reason) {
+void ObserverModule::config_new_param_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
   DEMO_DUMP(name(), "New parameter callback method called:");
   cout << "  New parameter '" << par.get_name() << "'"<< endl;
 }
 
 
 // Callback function with default signature.
-void ObserverModule::config_callback(cci::cci_param_base& par, const cci::callback_type& cb_reason) {
+void ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
   DEMO_DUMP(name(), "Callback method called:");
   cout << "  Parameter '" << par.get_name() << "'"<< endl;
   std::string str; par.get_string(str);

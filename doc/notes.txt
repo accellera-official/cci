@@ -37,7 +37,7 @@ big amount of methods to be implemented by the parameters.
 Therefore I suggest we adopt the proposed approach which is aligned 
 to the SCV approach: We use register/remove method calls which look 
 similar but take a different function pointer which gets a 
-cci_param_base object and a callback_type. It will therefore look 
+cci_base_param object and a callback_type. It will therefore look 
 and feel similar, but will have the added benefits we need in CCI 
 (more callback types and different objects given to the called 
 functions).

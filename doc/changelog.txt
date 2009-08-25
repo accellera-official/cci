@@ -3,6 +3,10 @@ ChangeLog
 
 **** CCI-1.2-xxxx09.tar.gz ****
 
+- cci_value parameter value representation (still TODO)
+- added real number to basic data types
+- cci_base_param are objects that can be instantiated.
+- renamed cci_param_base to cci_base_param, because it will change from a base class to a param object
 - Changed callback type from function pointer to boost::function.
 
 

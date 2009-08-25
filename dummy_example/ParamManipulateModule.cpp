@@ -42,7 +42,7 @@ void ParamManipulateModule::main_action() {
 
   wait(10, SC_NS);
   
-  cci::cci_param_base *ptr = mApi->get_param("Owner.int_param");
+  cci::cci_base_param *ptr = mApi->get_param("Owner.int_param");
   if (ptr == NULL) return;
   cci::dummy_cci_param<int> &p = *static_cast<cci::dummy_cci_param<int>* >(ptr);
   //cci::dummy_cci_param<std::string> &pu = *static_cast<cci::dummy_cci_param<std::string>* >(mApi->get_param("Owner.str_param"));

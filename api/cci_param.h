@@ -36,7 +36,7 @@ namespace cci {
   /// The parameters class
   template<typename T>
   class cci_param 
-  : public cci_param_base
+  : public cci_base_param
   {
   protected:
     /// Typedef for the value.

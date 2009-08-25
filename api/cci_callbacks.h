@@ -35,15 +35,21 @@ namespace cci {
     create_param,
     destroy_param
   };
+  
+  enum callback_return_type {
+    return_nothing,
+    return_value_change_rejected, // may only be used in pre_write callbacks
+    return_other_error
+  };
 
-  class cci_param_base;
+  class cci_base_param;
   
   /// Typedef for the member function pointer.
   /**
-   * Callback functions must have the signature: void method_name(cci_param_base& changed_param, const callback_type& cb_reason)
+   * Callback functions must have the signature: callback_return_type method_name(cci_base_param& changed_param, const callback_type& cb_reason)
    */
-  typedef boost::function2<void, cci_param_base&, const callback_type&> callb_func_ptr;  // boost function portable syntax
-  //typedef boost::function<void (cci_param_base&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
+  typedef boost::function2<callback_return_type, cci_base_param&, const callback_type&> callb_func_ptr;  // boost function portable syntax
+  //typedef boost::function<callback_return_type (cci_base_param&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
   
   /// Adapter base class which can be used to call a arbitrary parameter callback function.
   /**
@@ -55,13 +61,13 @@ namespace cci {
    * parameter, the pointer is set to NULL to avoid repeated unregistration during
    * destruction.
    */
-  template<class T_cci_param_base>
+  template<class T_cci_base_param>
   class callb_adapt_B
   {
   protected:
 
-    // allows cci_param_base to access the caller_param to set to NULL
-    friend class cci_param_base; 
+    // allows cci_base_param to access the caller_param to set to NULL
+    friend class cci_base_param; 
         
   public:
     
@@ -71,7 +77,7 @@ namespace cci {
      * @param _func  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, cci_param_base* _caller_param)
+    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, cci_base_param* _caller_param)
     : observer_ptr(_observer_ptr)
     , caller_param(_caller_param)
     , func(_func)
@@ -102,7 +108,7 @@ namespace cci {
     }
     
     /// Makes the callback, called by the base class callb_adapt_b.
-    void call(cci_param_base& changed_param, const callback_type& cb_reason) {
+    void call(cci_base_param& changed_param, const callback_type& cb_reason) {
       if (func) {
         func(changed_param, cb_reason);
       } else {
@@ -119,7 +125,7 @@ namespace cci {
     /**
      * @return Caller parameter. NULL if not existing.
      */
-    T_cci_param_base* get_caller_param() {
+    T_cci_base_param* get_caller_param() {
       return caller_param;
     }
     
@@ -128,14 +134,14 @@ namespace cci {
     void* observer_ptr;
     
     /// Caller parameter
-    T_cci_param_base *caller_param;
+    T_cci_base_param *caller_param;
     
     /// Boost function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
     callb_func_ptr func;
     
   };
 
-  typedef callb_adapt_B<cci_param_base> callb_adapt_b;
+  typedef callb_adapt_B<cci_base_param> callb_adapt_b;
   
       
 } // end namespace cci
