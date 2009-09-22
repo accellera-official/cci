@@ -70,7 +70,7 @@ namespace cci {
     remove_param_failed_not_available, // The given pointer was not in the registry (e.g. it was NULL or simply not there)
     remove_param_failed                // other error
   };
-
+  
   // Output of the parameter objects
 #ifdef CCI_PARAM_VERBOSE
 # define CCI_PARAM_DUMP(msg) { std::cout<<this->name()<<": "<<msg<<std::endl; } 

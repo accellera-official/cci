@@ -180,9 +180,69 @@ namespace cci {
     
     /// Get the parameter's value
     /**
-     * @return val This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
+     * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
     virtual cci_value get_value() = 0;
+    
+    
+    // //////////////////////////////////////////////////////////////////// //
+    // /////////////////////   Documentation   //////////////////////////// //
+
+    
+    /// Set parameter meta data/documentation
+    /**
+     * Adds parameter meta data which should describe the 
+     * intended use, allowed value range etc.
+     */
+    virtual void set_documentation(const std::string& doc) = 0;
+
+    /// Get the parameter's meta data/documentation
+    /**
+     * @param  Documentation
+     */
+    virtual std::string get_documentation() const = 0;
+    
+    
+    // //////////////////////////////////////////////////////////////////// //
+    // ////////////////   Parameter Value Status   //////////////////////// //
+
+    
+    /// Returns if the current value is the default one being set by the constructor and never been modified
+    /**
+     * True if the value had never been set but only by the constructor.
+     *
+     * Note that this returns false even if the current value is 
+     * actually the same as the default one.
+     *
+     * @return If the parameter's current value is the default one
+     */
+    virtual bool is_default_value() = 0;
+    
+    /// Returns if the current value is an initial value being set by the database and not been modified
+    /**
+     * TODO: Optional function
+     *
+     * True if the value has been set using the cnf_api's
+     * set_init_value function and not been modified since then.
+     *
+     * @param If the parameter's current value is an initial value being set by the database
+     */
+    virtual bool is_initial_value() = 0;
+
+    /// Returns if the current value is invalid
+    /**
+     * Returns true if 
+     *  - the parameter has no constructor default value and never been set or
+     * TODO: optional:
+     *  - the value has manually been set to be invalid (function set_invalid_value)
+     *
+     * @param  If the parameter's current value is invalid
+     */
+    virtual bool is_invalid_value() = 0;
+
+    /// Marks the value to be invalid. (Does not impact the actual value.)
+    virtual void set_invalid_value() = 0;
+    
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////////   Miscellaneous   //////////////////////////// //
@@ -300,6 +360,14 @@ namespace cci {
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;
+    
+
+    // //////////////////////////////////////////////////////////////////// //
+    // ////////////////////   Parameter Lock   //////////////////////////// //
+    // optional! Could use a pre change callback instead which might be able to reject a param change
+    virtual bool lock(const void* passwd) = 0;
+    virtual bool unlock(const void* passwd) = 0;
+    
     
   };
 
