@@ -122,6 +122,31 @@ namespace cci {
       return gs::gs_param<val_type>::deserialize(target_val, str);
     }
 
+    set_param_error_type set_value(const cci_value& val) {
+    }
+
+    cci_value get_value() {
+    }
+    
+    void set_documentation(const std::string& doc) {
+    }
+    
+    std::string get_documentation() const {
+    }
+
+    bool is_default_value() {
+    }
+    
+    bool is_initial_value() {
+    }
+    
+    bool is_invalid_value() {
+    }
+    
+    void set_invalid_value() {
+    }
+
+    
     
     /* To be implemented in specializations
      const Param_JSON_type get_basic_type() const { return partype_not_available; }
@@ -220,6 +245,30 @@ namespace cci {
     const bool json_deserialize(val_type& target_val, const std::string& str) {
       return gs::gs_param<val_type>::deserialize(target_val, str);
     }    
+    
+    set_param_error_type set_value(const cci_value& val) {
+    }
+    
+    cci_value get_value() {
+    }
+    
+    void set_documentation(const std::string& doc) {
+    }
+    
+    std::string get_documentation() const {
+    }
+    
+    bool is_default_value() {
+    }
+    
+    bool is_initial_value() {
+    }
+    
+    bool is_invalid_value() {
+    }
+    
+    void set_invalid_value() {
+    }
     
     /* To be implemented in specializations
      const Param_JSON_type get_basic_type() const { return partype_not_available; }

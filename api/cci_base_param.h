@@ -365,8 +365,8 @@ namespace cci {
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////////   Parameter Lock   //////////////////////////// //
     // optional! Could use a pre change callback instead which might be able to reject a param change
-    virtual bool lock(const void* passwd) = 0;
-    virtual bool unlock(const void* passwd) = 0;
+    //virtual bool lock(const void* passwd) = 0;
+    //virtual bool unlock(const void* passwd) = 0;
     
     
   };

@@ -3,7 +3,7 @@ ChangeLog
 
 **** CCI-1.2-xxxx09.tar.gz ****
 
-- added explicite support for parameter locking to pbase param
+- added explicit support for parameter locking to base param
 - added functions for value origin (is_default_value, is_initial_value, is_invalid_value, set_invalid_value to base param
 - added functions set/get_documentation for meta data to base param
 - cci_value parameter value representation (still TODO)
