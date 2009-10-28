@@ -37,19 +37,19 @@ namespace cci {
   
   class internal_callback_forwarder {
   public:
-    internal_callback_forwarder(boost::shared_ptr<cci::callb_adapt_b> _adapt, const callback_type _type)
+    internal_callback_forwarder(boost::shared_ptr<cci::callb_adapt_b> _adapt, const gs::cnf::callback_type _type)
     : adapt(_adapt)
     , type(_type) {
     }
-    void call(gs::gs_param_base& par) {
+    void call(gs::gs_param_base& par, gs::cnf::callback_type cbtype) {
       if (par.is_destructing()) {
-        if (type == cci::destroy_param) {
+        if (type == gs::cnf::destroy_param) { // = cci::destroy_param
           SC_REPORT_WARNING("GreenSocs/cci/not_supported", "destruction callback not supported by GreenSocs parameters");
           // This cannot work because the cast the the already destructed cci_base_param fails.
           //adapt->call(*cci_p, cci::destroy_param);
         }
       } else {
-        if (type == cci::post_write) {
+        if (type == gs::cnf::post_write) { // = cci::post_write
           gs::gs_param_base *p = &par;
           cci_base_param *cci_p = dynamic_cast<cci_base_param*> (p);
           assert (cci_p != NULL && "Got a wrong parameter type");
@@ -57,9 +57,12 @@ namespace cci {
         }          
       }
     }
+    const gs::cnf::callback_type get_type() {
+      return type;
+    }
   protected:
     boost::shared_ptr<cci::callb_adapt_b> adapt;
-    callback_type type;
+    gs::cnf::callback_type type;
   };
 
   template <typename T>
@@ -123,23 +126,36 @@ namespace cci {
     }
 
     boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
+      gs::cnf::callback_type cb = gs::cnf::no_callback;
       switch(type) {
-        case pre_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+        case pre_read: //SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+          cb = gs::cnf::pre_read;
+          break;
         case post_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
-        case pre_write: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
-        case create_param: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "create_param callbacks not supported at parameters"); break;
+        case pre_write: //SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+          cb = gs::cnf::pre_write;
+          break;
+        case create_param: //SC_REPORT_WARNING("GreenSocs/cci/not_supported", "create_param callbacks not supported at parameters"); break;
+          cb = gs::cnf::create_param;
+          break;
         case post_write:
+          cb = gs::cnf::post_write;
+          break;
         case destroy_param:
-          internal_callback_forwarder *fw = new internal_callback_forwarder(callb, type);
-          fw_vec.push_back(fw);
-          gs::gs_param<T>::registerParamCallback( 
-                                                 boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
-                                                                                                  new ::gs::cnf::ParamCallbAdapt<internal_callback_forwarder>
-                                                                                                  (fw, 
-                                                                                                   &internal_callback_forwarder::call, 
-                                                                                                   callb->get_observer(), 
-                                                                                                   const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(this)))
-                                                                                                  )   );
+          cb = gs::cnf::destroy_param;
+          break;
+      }
+      if (cb != gs::cnf::no_callback) {
+        internal_callback_forwarder *fw = new internal_callback_forwarder(callb, cb);
+        fw_vec.push_back(fw);
+        gs::gs_param<T>::registerParamCallback( 
+                                               boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
+                                                                                                new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
+                                                                                                (fw, 
+                                                                                                 &internal_callback_forwarder::call, 
+                                                                                                 callb->get_observer(), 
+                                                                                                 const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(this)))
+                                                                                                ), fw->get_type() );
       }
       return callb;
     }

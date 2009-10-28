@@ -51,7 +51,7 @@ namespace cci {
   typedef boost::function2<callback_return_type, cci_base_param&, const callback_type&> callb_func_ptr;  // boost function portable syntax
   //typedef boost::function<callback_return_type (cci_base_param&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
   
-  /// Adapter base class which can be used to call a arbitrary parameter callback function.
+  /// Adapter base class which can be used to call an arbitrary parameter callback function.
   /**
    * Base class for cci_callb_adapt to allow access by anyone without
    * knowing the template parameter.
