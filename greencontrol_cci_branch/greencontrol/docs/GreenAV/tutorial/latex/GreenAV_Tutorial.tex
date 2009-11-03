@@ -1,0 +1,140 @@
+% (c) GreenSocs Ltd
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+%\documentclass[a4paper,12pt]{scrartcl}
+\documentclass[a4paper,12pt,oneside]{gsbook}
+
+\usepackage{hyperref}
+
+\usepackage{greensocs}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{helvet}
+
+\usepackage{graphicx}
+
+\usepackage{multicol}
+
+\usepackage{fancyhdr}
+
+\usepackage{multirow}
+
+\usepackage{tabularx}
+
+%\usepackage{xspace}
+
+%% Christian's package CS_inputs
+\input{CS_inputs}
+
+% Fuer \begin{landscape}
+\usepackage{lscape}
+
+% allows [H] in figure
+\usepackage{float}
+\restylefloat{figure}
+
+%Inlcudes fuer mathematische Formeln
+\usepackage{amsmath,amsthm,latexsym}
+\usepackage{wasysym}
+
+\sloppy % Verhindert uebervolle H-Boxen (aber groessere Spaces!)
+\nonfrenchspacing % Abstand nach Satzende immer gleich gross
+
+% Verhindern von Schusterjungen (club) und Hurenkindern (widow)
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000 
+
+% sets spacing between paragraphs
+\parskip 7.2pt
+
+% Farbe fuer listings
+\usepackage{color}  
+\definecolor{stringblue}{RGB}{0,0,255}
+\definecolor{keywordred}{RGB}{160,0,0}
+\definecolor{commentgreen}{RGB}{0,128,0}
+% Symbole fuer Listing-Umbruch-Pfeil
+\usepackage{marvosym} 
+\newcommand{\linebreaksign}{\hbox{\space\Righttorque}} % marvosym S.28 symbols-letter.pdf
+\usepackage{listings}
+\lstset{
+  language=C++,
+  %basicstyle=\ttfamily,
+  breaklines=true,
+  captionpos=b,
+  breakatwhitespace=true,% erlaubt line break nur bei einem whitespace
+  aboveskip=15pt, % Abstand über einem Listing
+  basicstyle=\ttfamily \small,
+  %identifierstyle=\it,%\bf,
+  commentstyle=\color{commentgreen} \ttfamily, % mach mich dunkler
+  stringstyle=\color{stringblue} \ttfamily,
+  keywordstyle=\color{keywordred},
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  numberfirstline=true,
+  firstnumber=1,
+  stepnumber=5,
+  numbersep=5pt,
+  %prebreak=\mbox{\tiny$\linebreaksign$}, 
+  prebreak=\Righttorque,
+  frame=trbl, % Rahmen
+  tabsize=2             % 2 spaces per tab
+}
+
+%\makeatletter
+%\DeclareRobustCommand*\textsubscript[1]{%
+%  \@textsubscript{\selectfont#1}}
+%\def\@textsubscript#1{%
+%  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+%\makeatother
+
+\hypersetup{%
+  plainpages=false,
+  colorlinks,   % Ausschalten fuer Druckversion
+  linkcolor=blue,
+  bookmarksnumbered,
+  pdftitle={GreenConfig User's Guide},
+  pdfsubject={Tutorial of use / Example for the GreenSocs GreenAV Analysis and Visibility Framework},
+  pdfauthor={Christian Schroeder, Technical University of Braunschweig, Dept. E.I.S. and GreenSocs Ltd},
+  pdfkeywords={SystemC GreenSocs GreenConfig GreenControl GreenAV analysis visibility configuration tutorial of use},
+  pdfstartview=FitH
+}
+\author{Copyright GreenSocs Ltd 2008\\ \\Developed by\\Christian Schr\"oder\\ and Wolfgang Klingauf and Robert G\"unzel\\Technical University of Braunschweig, Dept. E.I.S.}
+\title{GreenAV Tutorial / Example\\(GreenAV v.1.1.1)}
+
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\theenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\theenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\theenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+
+%% new commands for this document
+\newcommand{\GreenBus}{\mbox{\textsc{\small GreenBus}}\xspace}
+\newcommand{\GreenControl}{\mbox{\textsc{\small GreenControl}}\xspace}
+\newcommand{\GreenConfig}{\mbox{\textsc{\small GreenConfig}}\xspace}
+\newcommand{\GreenAV}{\mbox{\textsc{\small GreenAV}}\xspace}
+
+\newcommand{\TODO}{\textcolor{red}{TODO}}
+
+
+\begin{document}
+
+%Developed by Technical University of Braunschweig, Dept. E.I.S.
+%Christian Schroeder
+\maketitle
+
+\tableofcontents
+\enlargethispage{\baselineskip}
+
+\chapter{GreenAV Tutorial / Example}
+
+% section Introduction
+\input{Introduction}
+
+% section Tutorial
+\input{Tutorial}
+
+\end{document}
+

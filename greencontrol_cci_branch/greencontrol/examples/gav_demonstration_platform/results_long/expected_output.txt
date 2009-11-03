@@ -1,0 +1,616 @@
+
+[Session started at 2008-04-22 12:21:11 +0200.]
+
+             SystemC 2.2.0 --- Jul  9 2007 11:52:11
+        Copyright (c) 1996-2006 by all Contributors
+                    ALL RIGHTS RESERVED
+ConfigFile_Api: Configuring value of param 'TG1.init_size' to '1048576'
+ConfigFile_Api: Configuring value of param 'TG1.write_size' to '1000'
+ConfigFile_Api: Configuring value of param 'TG1.write_inc' to '10'
+ConfigFile_Api: Configuring value of param 'TG1.read_size' to '100'
+ConfigFile_Api: Configuring value of param 'TG1.read_inc' to '10'
+ConfigFile_Api: Configuring value of param 'TG1.write_count' to '1'
+ConfigFile_Api: Configuring value of param 'TG1.read_count' to '1'
+ConfigFile_Api: Configuring value of param 'TG1.loops' to '10'
+ConfigFile_Api: Configuring value of param 'TG2.init_size' to '1048576'
+ConfigFile_Api: Configuring value of param 'TG2.write_size' to '1000'
+ConfigFile_Api: Configuring value of param 'TG2.write_inc' to '10'
+ConfigFile_Api: Configuring value of param 'TG2.read_size' to '100'
+ConfigFile_Api: Configuring value of param 'TG2.read_inc' to '10'
+ConfigFile_Api: Configuring value of param 'TG2.write_count' to '1'
+ConfigFile_Api: Configuring value of param 'TG2.read_count' to '1'
+ConfigFile_Api: Configuring value of param 'TG2.loops' to '10'
+ConfigFile_Api: Configuring value of param 'TG3.init_size' to '1048576'
+ConfigFile_Api: Configuring value of param 'TG3.write_size' to '2048'
+ConfigFile_Api: Configuring value of param 'TG3.write_inc' to '0'
+ConfigFile_Api: Configuring value of param 'TG3.read_size' to '1200'
+ConfigFile_Api: Configuring value of param 'TG3.read_inc' to '0'
+ConfigFile_Api: Configuring value of param 'TG3.write_count' to '1'
+ConfigFile_Api: Configuring value of param 'TG3.read_count' to '1'
+ConfigFile_Api: Configuring value of param 'TG3.loops' to '10'
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_size' to '256'
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_line_size' to '64'
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_lines' to '4'
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_write_back' to 'true'
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_size' to '1024'
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_line_size' to '128'
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_lines' to '8'
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_write_back' to 'true'
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_size' to '64'
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_line_size' to '8'
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_lines' to '8'
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_write_back' to 'true'
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.hitrate_lower_addr' to '0x200'
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.hitrate_upper_addr' to '0xFFFFFF'
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.hitrate_lower_addr' to '0x200'
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.hitrate_upper_addr' to '0x10FFFFF'
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.hitrate_lower_addr' to '0x2000000'
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.hitrate_upper_addr' to '0x20000F0'
+ConfigFile_Api: Configuring value of param 'Mem.base_addr' to '0x200'
+ConfigFile_Api: Configuring value of param 'Mem.high_addr' to '0xFFFFFF'
+ConfigFile_Api: Configuring value of param 'PCIeDevice1.base_addr' to '0x1000000'
+ConfigFile_Api: Configuring value of param 'PCIeDevice1.mem_size' to '0xFFFFFF'
+ConfigFile_Api: Configuring value of param 'PCIeDevice2.base_addr' to '0x2000000'
+ConfigFile_Api: Configuring value of param 'PCIeDevice2.mem_size' to '0xFF'
+#0: /Users/schroede/mydev/greensocs_greencontrol/build/Debug/analysis_demoplatform.app/Contents/MacOS/analysis_demoplatform
+#1: --configfile
+#2: demoplatform_long.cfg
+Config file command line parser: parse option --configfile (-c) demoplatform_long.cfg
+ConfigFile_Api: Configuring value of param 'TG1.init_size' to '1048576'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.write_size' to '1000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.write_inc' to '10'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.read_size' to '100'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.read_inc' to '10'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.write_count' to '1'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.read_count' to '1'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG1.loops' to '500'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.init_size' to '1048576'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.write_size' to '1000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.write_inc' to '10'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.read_size' to '100'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.read_inc' to '10'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.write_count' to '1'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.read_count' to '1'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG2.loops' to '20000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.init_size' to '1048576'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.write_size' to '2048'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.write_inc' to '0'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.read_size' to '1200'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.read_inc' to '0'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.write_count' to '1'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.read_count' to '1'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'TG3.loops' to '10000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_size' to '256'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_line_size' to '64'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_lines' to '4'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_write_back' to 'true'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_size' to '1024'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_line_size' to '128'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_lines' to '8'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_write_back' to 'true'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_size' to '64'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_line_size' to '8'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_lines' to '8'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_write_back' to 'true'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.hitrate_lower_addr' to '0x200'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.hitrate_upper_addr' to '0xFFFFFF'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.hitrate_lower_addr' to '0x200'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.hitrate_upper_addr' to '0x10FFFFF'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.hitrate_lower_addr' to '0x2000000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.hitrate_upper_addr' to '0x20000F0'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Mem.base_addr' to '0x200'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'Mem.high_addr' to '0xFFFFFF'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'PCIeDevice1.base_addr' to '0x1000000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'PCIeDevice1.mem_size' to '0xFFFFFF'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'PCIeDevice2.base_addr' to '0x2000000'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+ConfigFile_Api: Configuring value of param 'PCIeDevice2.mem_size' to '0xFF'
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: ./greencontrol/gcnf/plugin/configdatabase.h:211
+(TG1):write and read address for PCIeDevice1 set to 0x1000000=16777216
+(TG1):write and read size for PCIeDevice1 set to 16777215
+(TG1):write and read address for PCIeDevice2 set to 0x2000000=33554432
+(TG1):write and read size for PCIeDevice2 set to 255
+(TG1):write and read address for Mem set to 0x200=33554432
+(TG1):write and read size for Mem set to 16777215-512=16776703
+overall_hit_rate parameter name: Cache1.LRUCache.overall_hit_rate_result_2
+addr_range_hit_rate parameter name: Cache1.LRUCache.addr_range_hit_rate_result_2
+(TG2):write and read address for PCIeDevice1 set to 0x1000000=16777216
+(TG2):write and read size for PCIeDevice1 set to 16777215
+(TG2):write and read address for PCIeDevice2 set to 0x2000000=33554432
+(TG2):write and read size for PCIeDevice2 set to 255
+(TG2):write and read address for Mem set to 0x200=33554432
+(TG2):write and read size for Mem set to 16777215-512=16776703
+overall_hit_rate parameter name: Cache2.LRUCache.overall_hit_rate_result_2
+addr_range_hit_rate parameter name: Cache2.LRUCache.addr_range_hit_rate_result_2
+(TG3):write and read address for PCIeDevice1 set to 0x1000000=16777216
+(TG3):write and read size for PCIeDevice1 set to 16777215
+(TG3):write and read address for PCIeDevice2 set to 0x2000000=33554432
+(TG3):write and read size for PCIeDevice2 set to 255
+(TG3):write and read address for Mem set to 0x200=33554432
+(TG3):write and read size for Mem set to 16777215-512=16776703
+overall_hit_rate parameter name: Cache3.LRUCache.overall_hit_rate_result_2
+addr_range_hit_rate parameter name: Cache3.LRUCache.addr_range_hit_rate_result_2
+WARNING: A function with this operator sign were already registered. Ignoring redefinition of "private_transaction_count_diff".
+WARNING: A function with this operator sign were already registered. Ignoring redefinition of "per_second".
+only record transactions from master Cache1 (mID=0xbfff39c4) at the Mem port (see file recorded_transactions.log.txt)
+//////////////////////// SIMULATION START ////////////////////////////
+parameters:
+  init_size  = 1048576
+  write_size = 1000
+  read_size  = 100
+  clk_period = 10
+  write_inc  = 10
+  read_inc   = 10
+  loops      = 500
+  read_count      = 1
+  write_count     = 1
+  write_count_inc = 0
+  read_count_inc  = 0
+  write_count_rnd = 0
+  read_count_rnd  = 0
+  delay_max       = 10000
+parameters:
+  init_size  = 1048576
+  write_size = 1000
+  read_size  = 100
+  clk_period = 10
+  write_inc  = 10
+  read_inc   = 10
+  loops      = 20000
+  read_count      = 1
+  write_count     = 1
+  write_count_inc = 0
+  read_count_inc  = 0
+  write_count_rnd = 0
+  read_count_rnd  = 0
+  delay_max       = 10000
+parameters:
+  init_size  = 1048576
+  write_size = 2048
+  read_size  = 1200
+  clk_period = 10
+  write_inc  = 0
+  read_inc   = 0
+  loops      = 10000
+  read_count      = 1
+  write_count     = 1
+  write_count_inc = 0
+  read_count_inc  = 0
+  write_count_rnd = 0
+  read_count_rnd  = 0
+  delay_max       = 10000
+//////////////////////// SIMULATION END //////////////////////////////
+Simulation runtime: 10001 ms
+
+
+--------------------------------------------------------
+Parameter list: 
+
+  Cache1.LRUCache.addr_range_hit_rate_default_0
+  Cache1.LRUCache.addr_range_hit_rate_result_0
+  Cache1.LRUCache.addr_range_hit_rate_result_1
+  Cache1.LRUCache.addr_range_hit_rate_result_2
+  Cache1.LRUCache.addr_range_hits
+  Cache1.LRUCache.addr_range_misses
+  Cache1.LRUCache.const_temp_var_0
+  Cache1.LRUCache.const_temp_var_1
+  Cache1.LRUCache.hitrate_lower_addr
+  Cache1.LRUCache.hitrate_upper_addr
+  Cache1.LRUCache.overall_hit_rate_default_0
+  Cache1.LRUCache.overall_hit_rate_result_0
+  Cache1.LRUCache.overall_hit_rate_result_1
+  Cache1.LRUCache.overall_hit_rate_result_2
+  Cache1.LRUCache.overall_hits
+  Cache1.LRUCache.overall_misses
+  Cache1.LRUCache.param_cache_line_size
+  Cache1.LRUCache.param_cache_lines
+  Cache1.LRUCache.param_cache_size
+  Cache1.LRUCache.param_write_back
+  Cache1.enable_cache
+  Cache1.iport.transaction_latency_start_timepoint
+  Cache1.iport.transaction_overall_latency_default_0
+  Cache1.iport.transaction_overall_latency_end_timepoint
+  Cache1.iport.transaction_overall_latency_result_0
+  Cache1.iport.transaction_transport_latency_default_0
+  Cache1.iport.transaction_transport_latency_end_timepoint
+  Cache1.iport.transaction_transport_latency_result_0
+  Cache1.tport.record_transaction_master_id_filter
+  Cache1.tport.record_transactions_enabled
+  Cache1.tport.recorded_transaction
+  Cache2.LRUCache.addr_range_hit_rate_default_0
+  Cache2.LRUCache.addr_range_hit_rate_result_0
+  Cache2.LRUCache.addr_range_hit_rate_result_1
+  Cache2.LRUCache.addr_range_hit_rate_result_2
+  Cache2.LRUCache.addr_range_hits
+  Cache2.LRUCache.addr_range_misses
+  Cache2.LRUCache.const_temp_var_0
+  Cache2.LRUCache.const_temp_var_1
+  Cache2.LRUCache.hitrate_lower_addr
+  Cache2.LRUCache.hitrate_upper_addr
+  Cache2.LRUCache.overall_hit_rate_default_0
+  Cache2.LRUCache.overall_hit_rate_result_0
+  Cache2.LRUCache.overall_hit_rate_result_1
+  Cache2.LRUCache.overall_hit_rate_result_2
+  Cache2.LRUCache.overall_hits
+  Cache2.LRUCache.overall_misses
+  Cache2.LRUCache.param_cache_line_size
+  Cache2.LRUCache.param_cache_lines
+  Cache2.LRUCache.param_cache_size
+  Cache2.LRUCache.param_write_back
+  Cache2.enable_cache
+  Cache2.iport.transaction_latency_start_timepoint
+  Cache2.iport.transaction_overall_latency_default_0
+  Cache2.iport.transaction_overall_latency_end_timepoint
+  Cache2.iport.transaction_overall_latency_result_0
+  Cache2.iport.transaction_transport_latency_default_0
+  Cache2.iport.transaction_transport_latency_end_timepoint
+  Cache2.iport.transaction_transport_latency_result_0
+  Cache2.tport.record_transaction_master_id_filter
+  Cache2.tport.record_transactions_enabled
+  Cache2.tport.recorded_transaction
+  Cache3.LRUCache.addr_range_hit_rate_default_0
+  Cache3.LRUCache.addr_range_hit_rate_result_0
+  Cache3.LRUCache.addr_range_hit_rate_result_1
+  Cache3.LRUCache.addr_range_hit_rate_result_2
+  Cache3.LRUCache.addr_range_hits
+  Cache3.LRUCache.addr_range_misses
+  Cache3.LRUCache.const_temp_var_0
+  Cache3.LRUCache.const_temp_var_1
+  Cache3.LRUCache.hitrate_lower_addr
+  Cache3.LRUCache.hitrate_upper_addr
+  Cache3.LRUCache.overall_hit_rate_default_0
+  Cache3.LRUCache.overall_hit_rate_result_0
+  Cache3.LRUCache.overall_hit_rate_result_1
+  Cache3.LRUCache.overall_hit_rate_result_2
+  Cache3.LRUCache.overall_hits
+  Cache3.LRUCache.overall_misses
+  Cache3.LRUCache.param_cache_line_size
+  Cache3.LRUCache.param_cache_lines
+  Cache3.LRUCache.param_cache_size
+  Cache3.LRUCache.param_write_back
+  Cache3.enable_cache
+  Cache3.iport.transaction_latency_start_timepoint
+  Cache3.iport.transaction_overall_latency_default_0
+  Cache3.iport.transaction_overall_latency_end_timepoint
+  Cache3.iport.transaction_overall_latency_result_0
+  Cache3.iport.transaction_transport_latency_default_0
+  Cache3.iport.transaction_transport_latency_end_timepoint
+  Cache3.iport.transaction_transport_latency_result_0
+  Cache3.tport.record_transaction_master_id_filter
+  Cache3.tport.record_transactions_enabled
+  Cache3.tport.recorded_transaction
+  Mem.base_addr
+  Mem.high_addr
+  Mem.memory.clk_period
+  Mem.memory.read_ws
+  Mem.memory.simulation_mode
+  Mem.memory.size
+  Mem.memory.write_ws
+  Mem.simplebus_slaveport.record_transaction_master_id_filter
+  Mem.simplebus_slaveport.record_transactions_enabled
+  Mem.simplebus_slaveport.recorded_transaction
+  PCIeBridge_SimpleBus.const_temp_var_0
+  PCIeBridge_SimpleBus.const_temp_var_1
+  PCIeBridge_SimpleBus.out_port_tr_counter_PCIeDevice1
+  PCIeBridge_SimpleBus.out_port_tr_counter_PCIeDevice2
+  PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice1_default_0
+  PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice1_result_0
+  PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice2_default_0
+  PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice2_result_0
+  PCIeBridge_SimpleBus.tport.payload_event_queue_0.const_temp_var_0
+  PCIeBridge_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Router_SimpleBus
+  PCIeBridge_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Router_SimpleBus_default_0
+  PCIeBridge_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Router_SimpleBus_result_0
+  PCIeDevice1.base_addr
+  PCIeDevice1.mem_size
+  PCIeDevice1.registers.clk_period
+  PCIeDevice1.registers.read_ws
+  PCIeDevice1.registers.simulation_mode
+  PCIeDevice1.registers.size
+  PCIeDevice1.registers.write_ws
+  PCIeDevice1.simplebus_slaveport.record_transaction_master_id_filter
+  PCIeDevice1.simplebus_slaveport.record_transactions_enabled
+  PCIeDevice1.simplebus_slaveport.recorded_transaction
+  PCIeDevice2.base_addr
+  PCIeDevice2.mem_size
+  PCIeDevice2.registers.clk_period
+  PCIeDevice2.registers.read_ws
+  PCIeDevice2.registers.simulation_mode
+  PCIeDevice2.registers.size
+  PCIeDevice2.registers.write_ws
+  PCIeDevice2.simplebus_slaveport.record_transaction_master_id_filter
+  PCIeDevice2.simplebus_slaveport.record_transactions_enabled
+  PCIeDevice2.simplebus_slaveport.recorded_transaction
+  Protocol_PCIeBridge_SimpleBus.const_temp_var_0
+  Protocol_PCIeBridge_SimpleBus.const_temp_var_1
+  Protocol_PCIeBridge_SimpleBus.dynamic_tr_p_sec_overall_default_0
+  Protocol_PCIeBridge_SimpleBus.dynamic_tr_p_sec_overall_result_0
+  Protocol_PCIeBridge_SimpleBus.tr_cnt
+  Protocol_PCIeBridge_SimpleBus.tr_p_sec_overall_default_0
+  Protocol_PCIeBridge_SimpleBus.tr_p_sec_overall_result_0
+  Protocol_SimpleBus.const_temp_var_0
+  Protocol_SimpleBus.const_temp_var_1
+  Protocol_SimpleBus.dynamic_tr_p_sec_overall_default_0
+  Protocol_SimpleBus.dynamic_tr_p_sec_overall_result_0
+  Protocol_SimpleBus.tr_cnt
+  Protocol_SimpleBus.tr_p_sec_overall_default_0
+  Protocol_SimpleBus.tr_p_sec_overall_result_0
+  Router_SimpleBus.const_temp_var_0
+  Router_SimpleBus.const_temp_var_1
+  Router_SimpleBus.out_port_tr_counter_Mem
+  Router_SimpleBus.out_port_tr_counter_PCIeBridge_SimpleBus
+  Router_SimpleBus.out_port_tr_p_sec_Mem_default_0
+  Router_SimpleBus.out_port_tr_p_sec_Mem_result_0
+  Router_SimpleBus.out_port_tr_p_sec_PCIeBridge_SimpleBus_default_0
+  Router_SimpleBus.out_port_tr_p_sec_PCIeBridge_SimpleBus_result_0
+  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_0
+  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_1
+  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_2
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Cache1
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Cache2
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Cache3
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Cache1_default_0
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Cache1_result_0
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Cache2_default_0
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Cache2_result_0
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Cache3_default_0
+  Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Cache3_result_0
+  TG1.clk_period
+  TG1.delay_max
+  TG1.init_size
+  TG1.iport.transaction_latency_start_timepoint
+  TG1.iport.transaction_overall_latency_default_0
+  TG1.iport.transaction_overall_latency_end_timepoint
+  TG1.iport.transaction_overall_latency_result_0
+  TG1.iport.transaction_transport_latency_default_0
+  TG1.iport.transaction_transport_latency_end_timepoint
+  TG1.iport.transaction_transport_latency_result_0
+  TG1.loops
+  TG1.read_count
+  TG1.read_count_inc
+  TG1.read_count_rnd
+  TG1.read_inc
+  TG1.read_size
+  TG1.write_count
+  TG1.write_count_inc
+  TG1.write_count_rnd
+  TG1.write_inc
+  TG1.write_size
+  TG2.clk_period
+  TG2.delay_max
+  TG2.init_size
+  TG2.iport.transaction_latency_start_timepoint
+  TG2.iport.transaction_overall_latency_default_0
+  TG2.iport.transaction_overall_latency_end_timepoint
+  TG2.iport.transaction_overall_latency_result_0
+  TG2.iport.transaction_transport_latency_default_0
+  TG2.iport.transaction_transport_latency_end_timepoint
+  TG2.iport.transaction_transport_latency_result_0
+  TG2.loops
+  TG2.read_count
+  TG2.read_count_inc
+  TG2.read_count_rnd
+  TG2.read_inc
+  TG2.read_size
+  TG2.write_count
+  TG2.write_count_inc
+  TG2.write_count_rnd
+  TG2.write_inc
+  TG2.write_size
+  TG3.clk_period
+  TG3.delay_max
+  TG3.init_size
+  TG3.iport.transaction_latency_start_timepoint
+  TG3.iport.transaction_overall_latency_default_0
+  TG3.iport.transaction_overall_latency_end_timepoint
+  TG3.iport.transaction_overall_latency_result_0
+  TG3.iport.transaction_transport_latency_default_0
+  TG3.iport.transaction_transport_latency_end_timepoint
+  TG3.iport.transaction_transport_latency_result_0
+  TG3.loops
+  TG3.read_count
+  TG3.read_count_inc
+  TG3.read_count_rnd
+  TG3.read_inc
+  TG3.read_size
+  TG3.write_count
+  TG3.write_count_inc
+  TG3.write_count_rnd
+  TG3.write_inc
+  TG3.write_size
+
+
+--------------------------------------------------------
+---------   ANALYSIS  RESULTS   ------------------------
+--------------------------------------------------------
+
+Cache hit rates:
+   Cache1 (overall):      98.4728%
+          overall hits:   628202
+          overall misses: 9743
+   Cache1 (address range 512-16777215): 98.3802%
+          address range hits:   292327
+          address range misses: 4813
+   Cache2 (overall):      99.2188%
+          overall hits:   174768050
+          overall misses: 1376027
+   Cache2 (address range 512-17825791): 99.215%
+          address range hits:   91435996
+          address range misses: 723478
+   Cache3 (overall):      87.6437%
+          overall hits:   10232621
+          overall misses: 1442623
+   Cache3 (address range 33554432-33554672): 90.0026%
+          address range hits:   722732
+          address range misses: 80280
+
+--------------------------------------------------------
+
+Transaction per second:
+ over all ports (actual dynamic transactions per second: see default output file)
+ over all ports Router_SimpleBus (extrapolated over whole time):      1.32959e+06
+ over all ports PCIeBridge_SimpleBus (extrapolated over whole time):  683593
+
+ Router in ports:
+  Cache1:   extrapolated transactions per second:  521539
+                       absolut transaction count:  31628
+  Cache2:   extrapolated transactions per second:  415152
+                       absolut transaction count:  4151928
+  Cache3:   extrapolated transactions per second:  2.66574e+06
+                       absolut transaction count:  4681230
+  Mem:   extrapolated transactions per second:  215441
+                    absolut transaction count:  2153522
+  PCIeDevice1:   extrapolated transactions per second:  215307
+                            absolut transaction count:  2153249
+  PCIeDevice2:   extrapolated transactions per second:  71560.9
+                            absolut transaction count:  125622
+
+--------------------------------------------------------
+
+Transaction recording at Mem slave port recording transactions from Cache1: 
+  see output file 'recorded_transactions.log.txt'
+
+--------------------------------------------------------
+

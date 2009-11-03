@@ -1,0 +1,23 @@
+% (c) GreenSocs Ltd
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+\section{Introduction}
+
+This document introduces SystemC developers to \GreenAV: A \hypertarget{GCGreenControl}{\href{http://www.greensocs.com/projects/GreenControl/docs/GCUsersGuide}{\GreenControl}}\footnote{\GreenControl project page: \href{http://www.greensocs.com/projects/GreenControl}{http://www.greensocs.com/projects/GreenControl}} service plugin providing analysis and visibility features.
+
+In this tutorial an example system will be equipped with analysis abilities. The example system uses the \GreenBus framework for communication between the modules. The SimpleBus protocol and ports are extended with analysis abilities. At least the \GreenBus version of April 21th, 2008\footnote{The needed \GreenBus is the revision 2028 (or later) of the svn https://svn.greensocs.com/public/packages/greenbus} is needed. See the \href{http://www.greensocs.com/projects/GreenBus}{\GreenBus project page}\footnote{\GreenBus project page: \href{http://www.greensocs.com/projects/GreenBus}{http://www.greensocs.com/projects/GreenBus}} for more information on \GreenBus.
+
+
+This example system ({\em demonstration platform}) is a advancement of the system developed in the \hypertarget{GCnfTutorial}{\href{http://www.greensocs.com/projects/GreenControl/GreenConfig/docs/GCnfTutorial}{\GreenConfig Tutorial}}. This example requires the \GreenConfig release 0.3 which is part of the \GreenAV download.
+
+This tutorial will {\em not} describe the connection between the modules of the system (using
+\GreenBus) and their functionality. See the \GreenConfig Tutorial for these information.
+
+The platform is composed of some user modules connected to two buses: Several traffic generators ({\sffamily TG1}, {\sffamily TG2}, {\sffamily TG3}), three caches connected to the traffic generators ({\sffamily Cache1}, {\sffamily Cache2}, {\sffamily Cache3}), and three devices which the traffic generators access: a memory ({\sffamily Mem}) and two PCIe devices
+({\sffamily PCIeDevice1} and {\sffamily PCIeDevice2}.The caches and the memory module communicate through a SimpleBus (which is provided with \GreenBus), the PCIe devices are connected over a second bus (called {\sffamily PCIeBridge}) which is another SimpleBus.
+
+The so-called PCIe devices and the PCIe bus are {\em not} PCI Express implementations since we need a timed bus simulation and the available \GreenBus PCI Express implementation only provides (untimed) PV level.
+
+This tutorial will describe shortly the code snippets that are needed to equip the demonstration platform and the bus implementation with several analysis abilities. For more details and further and alternative analysis functionality use the \hypertarget{GAVUsersGuide}{\href{http://www.greensocs.com/en/projects/GreenControl/GreenAV/docs/GAVUsersGuide}{\GreenAV User's Guide}}.
+
+The intended audience for this tutorial have to be familiar with C++ and SystemC.

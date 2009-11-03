@@ -1,0 +1,819 @@
+% (c) GreenSocs Ltd
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Tutorial Full Example}
+
+Figure \ref{fig:demoplatform} shows an overview of the demonstration platform we aspire to build in this tutorial. A sample implementation is in the directory \Verzeichnis{greencontrol/examples/demonstration\_platform}. The modules with the main configurable values are:
+\begin{itemize}
+	\item \textsl{Random traffic generator (TG)}: Acts as bus
+master and creates test traffic to the memory and the PCIe device. Its
+bound should be set with configurable parameters (and can be changed even during runtime).
+	\item \textsl{Memory (Mem)}: This memory module is a simple double data rate random access memory (DDR RAM). It is a bus slave. Its size and base address should be configured.
+	\item \textsl{Cache (Cache1)}: This cache is a write-back LRU cache whose size and line size is configurable during runtime. It also can be disabled during runtime.
+	\item \textsl{PCIe device (PCIeDevice2)}: This bus slave's functionality is just a stub with registers which can be written and read. The base address should be configured.
+	\item \textsl{Switch}: The switch is modeled by the SimpleBus router and need not be developed as user module.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centerline{
+		\includegraphics[width=10cm]{DemoPlatform.eps}} 
+	\caption{Demonstration Platform built in this tutorial. }
+	\label{fig:demoplatform}
+\end{figure}
+
+\begin{samepage}
+Main steps for creating our configurable demonstration platform:
+
+\begin{enumerate}
+
+	\item Create user modules with desired functionality:\\
+	In our case for slaves
+	\begin{itemize}
+		\item implement the SimpleBus interface \\ \lstinline|class ddr : public sc_module, public virtual simplebus_if|,
+		\item instantiate a slave port as member variable \\ \lstinline|simplebusSlavePort slave_port;|,
+		\item in the constructor connect \lstinline|this| to the port \\ \lstinline|slave_port.slave_port(*this);|
+		\item also in the constructor set the address range of this slave (we use \lstinline|gs_params| for this) \\ 
+		\lstinline|slave_port.base_addr = base_addr;|\\
+    \lstinline|slave_port.high_addr = high_addr;|
+	\end{itemize}
+	In our case for masters
+	\begin{itemize}
+		\item instantiate a master port as member variable \\ \lstinline|simplebusMasterPort master_port;|,
+	\end{itemize}
+
+ 	\item Concurrently include the GreenConfig parameters and make use of them:
+	\begin{itemize}
+		\item Include the framework: \\ \lstinline|#include "greencontrol/api/gs_param/gs_param.h"|.
+		\item Optionally make ''using'' statements for configuration (and SimpleBus tlm): \\ 
+		  \lstinline|using gs::gs_param;|\\
+		\lstinline|using gs::gs_param_base; // e.g. needed for callbacks| \\
+		\lstinline|using namespace tlm; // for SimpleBus tlm|
+		\item Usage of parameters:
+		\begin{itemize}
+			\item declare them as member variables and initialize them in the constructor:
+\begin{lstlisting}
+class MyClass
+: public sc_module
+{
+public: (or private:)
+  gs::gs_param<unsigned int> my_param;
+public:
+  MyClass(sc_module_name name)
+    : sc_module(name),
+      port("PortName"),
+      my_param("my_param", 100) // gs_param with initial value
+  { [...] }
+};
+\end{lstlisting}
+
+			\item declare and initialize them as local variables:\\
+			\lstinline|gs::gs_param<int> my_local_param("my_local_param", 50);|
+
+		\end{itemize}
+	\end{itemize}
+
+	\item Connect the user modules in the testbench with the SimpleBus.
+
+\end{enumerate}
+\end{samepage}
+
+\begin{figure}[htbp]
+	\centerline{
+		\includegraphics[width=\textwidth]{DemoPlatformWconfig.eps}} 
+	\caption{Demonstration Platform with configuration framework. }
+	\label{fig:DemoPlatformWconfig}
+\end{figure}
+
+
+\subsection{Create bus master module Traffic Generator (TG)}
+
+The traffic generator module (instance name TG1) is developed with the
+steps above and results are in the files \Datei{TG.h} and \Datei{TG.cpp}.
+
+The following listing is a shortened extract of the header file. For
+the sake of clarity, most
+of the parts which are needed for the functionality of the traffic
+generator are left out here.
+
+In this module different parameters are used: Member variable parameters (e.g. \lstinline|init_size|) of type \lstinline|scml_property| are declared private and get their default values inside the constructor. A local parameter variable (\lstinline|tmp_param|) of GreenConfig parameter type \lstinline|gs_param| is declared inside the constructor.
+
+All member parameters have to be set at construction time to avoid undefined behavior. The full hierarchical name of the parameters is \lstinline|TG1.param_name|.
+
+Apart from the normal usage of scml parameters
+(\lstinline|init_size| etc.) there is one interesting point: The
+reading of external parameters from the module whose instance name is
+\lstinline|PCIeDevice2|. This is done in order to get the address and
+size of this device.  The GCnf API is used to get the values of the
+\lstinline|gs_param| parameters \lstinline|PCIeDevice2.base_addr|
+and \lstinline|PCIeDevice2.mem_size|. A local pointer to a
+GreenConfig parameter is used to parse the parameter base pointer to the
+correct data type.
+
+To get access to these foreign parameters we need a GCnf API instance which
+provides the method \lstinline|getPar(string param_name)| which
+returns a parameter base pointer. The default way getting a reference to the GCnf API
+is:
+\begin{itemize}
+	%\item If we already have  instances of \lstinline|gs_param|s which provide their underlying GCnf API with the method \lstinline|getApi()| we can use that method (e.g. store the pointer into a member variable).
+	%\item If we have no parameter instances, we have to instantiate a GCnf API as member variable. Make sure this is done during elaboration because of the automatic port binding the API does during its construction.
+	\item Get the API instance with the static call \lstinline[language=TeX]|gs::cnf::GCnf_Api::getApiInstance(this)|. The static method \lstinline|getApiInstance| is available when gs\_param.h or gcnf\_api.h is included.
+\end{itemize}
+
+To get the values (and not the string representations) the temporary parameter \lstinline|tmp_param| is used and the parameter base pointer is casted to the correct parameter pointer type. The string value of any parameter in the system can be accessed through the GCnf API with the call \lstinline[language=TeX]|getPar("module.param_name").getString()|. 
+
+TODO: new options getting values/params
+
+\begin{lstlisting}
+[...]
+#include "demo_globals.h"
+#include "greencontrol/core/helpfunctions.h"
+
+// SimpleBus API
+#include "userAPI/simplebusAPI.h"
+
+// GreenControl and GreenConfig
+#include "greencontrol/api/gs_param/gs_param.h"
+
+[...]
+class TG
+: public sc_module
+{
+  
+public:
+  tlm::simplebusMasterPort port;
+
+private:
+  scml_property<gs_uint32> init_size;    // data vector size (1MB)
+	/*[some more gs_param parameters]*/
+
+  gs::gs_uint64 write_addr[2];      // addresses were to write to
+  gs::gs_uint64 read_addr[2];       // addresses were to read from
+  gs::gs_uint64 write_addr_size[2]; // size of the address space write_addr[i]
+  gs::gs_uint64 read_addr_size[2];  // size of the address space read_addr[i]
+
+  unsigned int target;      // target which is addressed
+
+public:
+  SC_HAS_PROCESS(TG);
+	
+  /// Constructor
+  TG(sc_module_name name)
+    : sc_module(name),
+      port("iport"),
+      init_size("init_size", 1048576),
+      [some more scml_property parameters]
+  { 
+    /*[...]*/
+    
+    m_GCnf_Api = gs::cnf::GCnf_Api::getApiInstance(this);
+    
+    // Pointer to a gs_uint64 parmeter
+    gs::gs_param<gs_uint64> *tmp_param;
+
+    // Addresses for PCIeDevice2
+    tmp_param = static_cast<gs::gs_param<gs_uint64>* >
+                          ( m_GCnf_Api->getPar("PCIeDevice2.base_addr") );
+    write_addr[0] = read_addr[0] = *tmp_param;
+
+    /*[Addresses and sizes for devices]*/
+  }
+private:
+  /*[some methods]*/
+private:
+  gs::cnf::cnf_api *m_GCnf_Api;
+  /*[some methods and member variables]*/
+};
+\end{lstlisting}
+
+
+\subsection{Create bus slave module (Mem)}
+\label{Mem}
+
+The memory module (instance name Mem) is located in the files \Datei{Mem.h} and \Datei{Mem.cpp}. It uses an instance of a DDR RAM class \lstinline|ddr| to store words.
+
+The memory has configurable addresses \lstinline|base_addr| and
+\lstinline|high_addr| of type \lstinline|gs_param| which have to be
+set during construction time when they are used to set the addresses
+in the slave port. Changes during runtime are not handled by this model.
+
+The parameters can be set with their full hierarchical names \lstinline|Mem.param_name|.
+
+The DDR RAM module has GreenConfig parameters, too.
+
+The following listing shows a shortened part of the header file Mem.h:
+
+\begin{lstlisting}
+class Mem
+: public sc_module
+{
+public:
+  /// SimpleBus slave port
+  tlm::simplebusSlavePort slave_port;
+
+  gs::gs_param<gs_uint64> base_addr;
+  gs::gs_param<gs_uint64> high_addr;
+
+  SC_HAS_PROCESS(Mem);
+
+  /// Constructor
+  Mem(sc_module_name name)
+    : sc_module(name),
+      slave_port("simplebus_slaveport"),
+      base_addr("base_addr", 0x200),
+      high_addr("high_addr", 0x400),
+      ddr_mem("memory")
+  { 
+    ddr_mem.size = high_addr - base_addr;
+    slave_port.slave_port(ddr_mem);
+    slave_port.base_addr = tlm::MAddr(base_addr);
+    slave_port.high_addr = tlm::MAddr(high_addr);
+  }
+
+private:
+  /// Memory
+  ddr ddr_mem;
+
+};
+\end{lstlisting}
+
+\subsection{Create bus slave module PCIeDevice}
+
+The module PCIeDevice is a little memory and can be found in the files \Datei{PCIeDevice.h} and \Datei{PCIeDevice.cpp}. The instance is named PCIeDevice2 accordingly its parameters can be accessed with \lstinline|PCIeDevice2.param_name|. This module also uses the DDR RAM which was introduced in section \ref{Mem} and is similar to the memory module.
+
+The provided parameters are \lstinline|base_addr| and
+\lstinline|mem_size|. The memory size is used to calculate the high
+address for the slave port to make it different from the memory. These
+parameters have to be set before construction of this module. How the
+parameters may be used, and how they allow changes during runtime, is
+shown in the next section \ref{Cache}.
+
+
+\subsection{Create cache module (Cache)}
+\label{Cache}
+
+The cache module consists of two nested classes. The module which is instantiated in the testbench is the \lstinline|Cache| class in the files \Datei{Cache.h} and \Datei{Cache.cpp}. This module owns a SimpleBus slave and a master port to receive and send reads and writes.
+
+The address range of the slave port is fixed to the whole address range (0x00000000 to 0xFFFFFFFF).
+
+\subsubsection{Submodule LRU\_cache}
+
+The Cache module owns an instance of the cache module \lstinline|LRU_cache|. This module is a word addressable LRU (Least Recently Used) cache with configurable parameters for its size and its behavior (write-back or write-through).
+The GreenConfig parameters for sizes are not used directly in the cache to allow runtime changes. If the cache size parameter \lstinline|cache_size| changes during runtime, all lines are written back and the cache is reset and re-sized. 
+ 
+The cache supports write-back and write-through. The parameter
+\lstinline|param_write_back| is used directly. So a change to this
+parameter takes effect directly on the behavior (write-back or
+write-through). If the behavior is changed from write back to write
+through the cache will reset itself and write back dirty lines. In the
+write-through-mode data is written to the memory word-wise but read
+line-wise.
+
+The following parameters have affect on the size of the cache:
+\begin{itemize}
+	\item \lstinline|cache_line_size| is the size of one cache line (block)
+	\item \lstinline|cache_lines| is the number of cache lines in the cache
+	\item \lstinline|cache_size| is the entire size of the cache.
+\end{itemize}
+
+When using this cache module in this platform be aware of some important design rules:
+\begin{itemize}
+	\item The size parameters must match each other: The size of all cache lines together has to be equal or greater than the cache size and the cache lines must not be able to store more than $cache size + line size - 1$ words.
+	\item The address ranges of two target modules must not be inside a cache line. The cache line size has to be chosen carefully to guarantee that. The cache reads and writes entire cache lines from and to the modules. So either the module has to be able to deal with out-of-bound-queries or the cache lines have to match the address borders.
+	\item When changing the size parameters during runtime, first change \lstinline|cache_line_size| and \lstinline|cache_lines|, \emph{afterwards} change the parameter \lstinline|cache_size|.
+\end{itemize}
+
+\subsubsection{Cache module}
+
+The Cache module demonstrates how the runtime configuration can be
+used by the developer in a module.
+
+The following listing shows an extract of the Cache code illustrating the usage of parameters changing at runtime and registering callbacks. Callback registering modules must call the macro \lstinline|GC_HAS_CALLBACKS()| in its body and must call \lstinline|GC_UNREGISTER_CALLBACKS()| during destruction.
+
+\begin{lstlisting}
+class Cache
+: public sc_module, /*[...]*/
+{
+/*[...]*/
+private:
+  gs::gs_param<bool> enable_cache;
+  
+public:
+  GC_HAS_CALLBACKS();
+  /*[...]*/
+  Cache(sc_module_name name)
+    : sc_module(name), /*[...]*/
+      enable_cache("enable_cache", true), /*[...]*/
+  {
+    /*[...]*/
+    // register callback
+    GC_REGISTER_PARAM_CALLBACK(&enable_cache, Cache, parameter_changed_callback);
+  }
+  ~Cache() {
+    GC_UNREGISTER_CALLBACKS();
+  }
+  /*[...]*/
+  /// Callback functions for changed enable_cache-parameter
+  /** Write back all lines and disable or enable cache. */
+  void parameter_changed_callback(gs::gs_param_base &par);
+
+private:
+  LRU_cache cache;
+};
+
+void Cache::parameter_changed_callback(gs::gs_param_base& par) {
+  if (!par.is_destructing()) {
+    // notify cache to make write backs and reset.
+    cache.create_cache_event.notify();
+  } 
+}
+\end{lstlisting}
+
+Inside the callback function an event in the LRU cache is notified which initiates a write back and resets the cache. The reset method may not be invoked directly because \emph{no waits are allowed in the callback function}.
+
+
+\subsection{Testbench and module connection}
+
+This important section is about how to include the framework and needed plugins and APIs in a testbench and how to instantiate them.
+
+The code snippets in this section are ordered as they appear in the testbench file of the demonstration platform, testbench\_demonstration\_platform.cpp.
+
+The define at the beginning of the testbench is needed for the command line tool, see section \ref{CommandLineTool}.
+\begin{lstlisting}
+#define TEST_TOOL_POLL_TIME sc_time(1, SC_MS)
+\end{lstlisting}
+
+\subsubsection{Includes}
+
+To be able to use the SimpleBus for the connection of the modules we have to include a router, a scheduler and the SimpleBus protocol:
+\begin{lstlisting}
+#include "greenbus/transport/genericRouter.h"
+#include "greenbus/protocol/SimpleBus/simpleBusProtocol.h"
+#include "greenbus/scheduler/fixedPriorityScheduler.h"
+\end{lstlisting}
+
+The GreenControl Core has to be included prior to all other GreenControl elements:
+\begin{lstlisting}
+#include "greencontrol/core/gc_core.h"
+\end{lstlisting}
+
+After that the required GreenConfig  plugin and the corresponding GreenConfig standard database have to be included:
+\begin{lstlisting}
+#include "greencontrol/plugins/configplugin.h"
+#include "greencontrol/gcnf/plugin/configdatabase.h"
+\end{lstlisting}
+
+Afterwards some APIs which are used in the testbench are included. We use the config file parser tool (see section \ref{ConfigFileTool}) which allows reading configuration files and the command line config parser (see section \ref{CommandLineConfigParser}) which allows setting of parameters on the command line. We also use the command line tool (see section \ref{CommandLineTool}) which allows the user to access parameters during runtime by an internal command line at the simulation terminal. Other APIs may be included in the modules which make use of them.
+\begin{lstlisting}
+#include "greencontrol/api/configFileApi/configfile_tool.h"
+#include "greencontrol/api/commandLineConfigParserApi/commandLineConfigParser.h"
+#include "greencontrol/api/commandLine_Tool/CommandLine_Tool.h"
+\end{lstlisting}
+
+The include order of plugins and APIs is not fixed.
+
+in the end we include our user modules we developed for the demonstration platform above:
+\begin{lstlisting}
+#include "Mem.h"
+#include "TG.h"
+#include "Cache.h"
+#include "PCIeDevice.h"
+\end{lstlisting}
+
+\subsubsection{Instantiations}
+\label{Instantiations}
+
+In the main method of the testbench the Core and plugins have to be instantiated.
+
+Before any other GreenControl elements may be instantiated the \emph{Core} is needed. All GreenControl classes are in the namespace {\sffamily gs::ctr}|.
+\begin{lstlisting}
+gs::ctr::GC_Core   core("ControlCore");
+\end{lstlisting}
+
+Afterwards the GreenConfig elements may be instantiated, beginning with the plugin which manages the parameters. An instance of the parameter database (\lstinline|ConfigDatabase|) has to be overgiven. All GreenConfig classes can be found in the namespace {\sffamily gs::cnf}.
+\begin{lstlisting}
+gs::cnf::ConfigDatabase *db = new gs::cnf::ConfigDatabase("CnfDatabase");
+gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", db);
+\end{lstlisting}
+
+The plugin is followed by the two APIs we want to use to set initial parameter values:
+\begin{lstlisting}
+// Configuration with GreenConfig config files
+gs::cnf::ConfigFile_Tool configTool("ConfigFileTool");
+configTool.parseCommandLine(argc, argv); // parses the command line for --configfile
+configTool.config("demoplatform.cfg");   // reads in a config file
+
+// Configuration with GreenConfig command line options
+gs::cnf::CommandLineConfigParser configParser("ConfigParser");
+configParser.parse(argc, argv); // parses the command line
+
+// Command line tool which provides a command line to access parameters
+gs::cnf::CommandLine_Tool commandLineTool("CommandLineTool");
+\end{lstlisting}
+
+Now the initial values of the modules are set by the APIs inside the configuration plugin as \emph{implicit parameters}. That means that they already exist with a value and even can be accesses by any other API, but they have not yet been added by the owner module itself. 
+
+Now we can instantiate the owner modules (the demonstration platform modules). They add their parameters using the \lstinline|gs_param| API and hence their state is changes from implicit to \emph{explicit parameters}.
+
+We instantiate the user modules Mem, Cache, PCIeDevice and TG.
+
+In the end we connect our modules with the SimpleBus. The TG and the cache are connected directly over their SimpleBus ports without a SimpleBus instance between them. Between the cache and the devices a SimpleBus instance takes care of communication. With the usage of SimpleBus ports between the TG and the cache slave we have the opportunity to leave out the cache by simply connecting the TG to the bus.
+
+The instantiation and connection of the SimpleBus is done as presented in section \ref{IntroductionSimpleBus}.
+
+\subsection{Usage of the config file parser}
+\label{ConfigFileTool}
+
+The config file parser API (class \lstinline|ConfigFile_Tool|) reads in a configuration file and sets the parameters in the ConfigPlugin.
+
+After instantiating an instance of the API (e.g.) in the testbench there are two different ways of reading one or more configuration files:
+\begin{itemize}
+	\item The name of the configuration file which should be
+parsed can be hard coded in the testbench by using the method call
+\mbox{\lstinline[language=TeX]|my_configFileTool_instance.config("config_file.cfg");|}.
+This method may be invoked multiple times in order to parse more than one configuration file.
+	\item A configuration file may be specified at command line with the option \\ 
+	\lstinline|--configfile <config_file_name>|. \\ The parsing of the command line is initiated in the testbench with the call \\ 
+	\lstinline[language=TeX]|my_configFileTool_instance.parseCommandLine(argc, argv)|. \\
+	You are allowed to mix these two techniques. The last called has priority. 
+\end{itemize}
+
+The configuration file is a simple text file with one line per parameter:
+\begin{lstlisting}[language=TeX]
+# comment line
+hierarchical.par_name value # comment ignored
+myModule.my_SubModule.parameter 18349
+string_parameter "String value"
+\end{lstlisting}
+
+For details especially concerning string values see the User's Guide.
+
+
+\subsection{Usage of the command line config parser}
+\label{CommandLineConfigParser}
+
+First, the parsers must be instantiated and initiated as explained in
+section \ref{Instantiations}. Afterwards parameters may be set in the
+command line at the start of the simulation.
+
+Setting  parameters from the command line can be done with the command line option \\
+\lstinline|--param parname=value|. String values with spaces may be set in quotes. Quotes in string values have to be written as '\lstinline[language=TeX]|\"|'. For more details see the User's Guide.
+
+
+\subsection{Usage of the command line tool}
+\label{CommandLineTool}
+
+The command line tool provides a command line interface during simulation in the simulation terminal. After having instantiated the class \lstinline|CommandLine_Tool| some simple commands may be used: \emph{get}, \emph{set}, \emph{list}, \emph{h}~(help), \emph{q}~(quit):
+
+\begin{minipage}{\textwidth}
+\begin{lstlisting}[language=TeX]
+  h   : this help
+  q   : quit
+  set <param_name> <value>  : Set value <value> of parameter <param_name> 
+  get <param_name>          : Get value of parameter <param_name>
+  list                      : List all parameters
+  list <modname>            : List all parameters of module <modname>
+  list <modname>.*          : List all parameters of module <modname> and 
+                              its children
+\end{lstlisting}
+\end{minipage}
+
+Dont worry if the command line (\lstinline|toolThread (h=help) >|) is
+not shown (it may be hidden in some output that the simulation produces), just type the command and press enter. 
+
+The only additional special use case is the  \lstinline|#define TEST_TOOL_POLL_TIME|. This sets the interval the command line's SC\_THREAD polls for new data. For untimed models use \lstinline|SC_ZERO_TIME|, for timed models use a reasonable time, e.g. \lstinline|sc_time(1, SC_MS)|. In this demonstration platform we use \lstinline[language=TeX]|#define TEST_TOOL_POLL_TIME sc_time(1, SC_MS)| which is set in the testbench.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Parameter Callbacks and Notification}
+\label{ParameterCallbacks}
+
+
+\ZwischenUberschrift{Prepare modules to use callbacks}
+
+How to prepare a module to be able to register callbacks on parameters.
+
+\begin{itemize}
+  \item Include the GreenConfig framework: \\
+           \lstinline|#include "greencontrol/gcnf/apis/gs_param/gs_param.h"|
+  \item Use macro \lstinline|GC_HAS_CALLBACKS()| in the module body.
+  \item Use macro \lstinline|GC_UNREGISTER_CALLBACKS()| in the module destructor.
+  \item Define a callback function with the signature \\
+            \lstinline|void func_name(gs::gs_param_base&)|
+  \item Check each call of the callback function if the called parameter is just being destroyed. In that case make sure not to use any parameter reference/pointer to that parameter any longer!
+  \item If desired use \lstinline|par.getType()| or \lstinline|getTypeString()| to cast to the correct parameter type.
+\end{itemize}
+
+\ZwischenUberschrift{Register callbacks}
+
+\begin{itemize}
+  \item Register a callback for the parameter \lstinline|my_param| using the macro \\
+          \lstinline|GC_REGISTER_PARAM_CALLBACK(&my_param, MyModule, parameter_callback)|
+\end{itemize}
+
+\ZwischenUberschrift{Unregister callbacks}
+
+You {\em may} unregister callbacks but you need not! If you are not interested any longer in getting the callbacks for a specific parameter you may unregister the callback:
+\begin{itemize}
+  \item Store the callback adapter pointer when registering the callback: \\
+          \lstinline|boost::shared_ptr<gs::cnf::ParamCallbAdapt_b > callbadapt| \\
+          \lstinline| = GC_REGISTER_PARAM_CALLBACK(&my_param, MyModule, parameter_callback)|
+  \item Unregister the callback using the macro \\
+          \lstinline|GC_UNREGISTER_CALLBACK (callbadapt)| 
+\end{itemize}
+There are alternative ways unregistering parameters, please see the {\em GreenConfig User's Guide}.
+
+\begin{minipage}{\textwidth}
+\ZwischenUberschrift{Code example}
+
+\begin{lstlisting}
+// GreenControl and GreenConfig
+#include "greencontrol/gcnf/apis/gs_param/gs_param.h"
+
+class MyModule
+: public sc_module
+{
+public:
+  GC_HAS_CALLBACKS();
+  SC_HAS_PROCESS(MyModule);
+  MyModule(sc_module_name name)
+    : sc_module(name),
+      my_param("my_param")
+  {
+    // register callback
+    GC_REGISTER_PARAM_CALLBACK(&my_param, MyModule, parameter_callback);
+  }
+  ~MyModule() {
+    GC_UNREGISTER_CALLBACKS();
+  }
+  /// Callback function
+  void parameter_callback(gs::gs_param_base &par);
+private:
+  gs::gs_param<int> my_param;
+};
+
+void MyModule::parameter_callback(gs::gs_param_base& par) {
+  if (!par.is_destructing()) {
+    /* do something but do NO time! */
+    switch(par.getType()) {
+      case gs::cnf::PARTYPE_INT: {
+        gs::gs_param<int>* tmp_param = 
+                                 static_cast<gs::gs_param<int>* >( &par );
+        /* do something */
+        break; }
+      /* other cases */
+    }
+
+  } 
+}
+\end{lstlisting}
+\end{minipage}
+
+
+\WarningSymbol{Deprecated:} \newline 
+You may get an event which is notified when a parameter changes using \lstinline|par.getUpdateEvent()|. \\
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Parameter Arrays}
+\label{ParameterArrays}
+
+GreenConfig provides two different types of arrays:
+\begin{itemize}
+    \item Parameter arrays with \textsl{unnamed} members each of the \textsl{same data type}: {\em Simple Parameter Array}\\
+     (see section \ref{SimpleParArr}).
+    \item Parameter arrays with \textsl{named} members of \textsl{different data types}: {\em Extended Parameter Array} \\
+    (see section \ref{ExtParArr}).
+\end{itemize}
+
+%%
+\subsection{Simple Parameter Arrays}
+\label{SimpleParArr}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Instances:}
+\begin{lstlisting}
+      class IP1 {
+        [...]
+        gs::gs_param<int*>     my_int_array;
+        gs::gs_param<float*>   my_float_array;
+        gs::gs_param<string*>  my_string_array;
+        gs::gs_param<unsigned int*> my_uint_array;
+      }
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Constructor:}
+\begin{lstlisting}
+       IP1()
+        : my_int_array("my_int_array", 3),  // with size=3
+          my_float_array("my_float_array"), // with default size
+          my_string_array("my_string_array"),
+          my_uint_array("my_uint_array", 3) // with size=3
+        { ... }
+       
+        void any_method() {
+          std::vector<int> intvec;
+          for( int i = 0; i < 20; i++ ) intvec.push_back( 110 + i );
+          // constructor with default values in a vector
+          gs::gs_param<int*> my_new_arr("my_new_arr", intvec);
+        }
+      }
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Access:}
+\begin{lstlisting}
+       any_function() {
+          // set members individually
+          my_int_array[0] = 100;
+          my_int_array[1] = 101;
+          my_int_array[2] = 102;
+          // resize and set the new member
+          my_int_array.resize(4);
+          my_int_array[3] = 103;
+          // set all members concurrently and resize automatically
+          my_int_array.setString("{10 12 13 14 15}");
+        }
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Iterate:}
+Example for iterating through a Simple Parameter Array. Simple Parameter Arrays need no iterators because they can be accessed with the position.
+\begin{lstlisting}
+      for (int i = 0; i < arr.size(); i++) {
+        cout << "member #" <<i<< "=" << arr[i].getString() <<endl;
+      }
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Config file Usage:}
+\begin{lstlisting}
+      IP1.my_uint_array.init_size 3  ## optional. Otherwise the config file calculates the size
+      IP1.my_uint_array.0 1000
+      IP1.my_uint_array.1 2200
+      IP1.my_uint_array.2 3330
+\end{lstlisting}
+\end{minipage}
+
+Sets the array size either to \textsf{init\_size} (if given) or automatically to the highest member (here \textsf{size=3}). This syntax has priority to the \lstinline|{...}| notation.
+
+%%
+\subsection{Extended Parameter Arrays}
+\label{ExtParArr}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Example of usage:} Alternatively the array member pointers could be class members:
+\begin{lstlisting}
+class IP1 {
+  gs::gs_param_array myTopArr;
+       
+  IP1()
+  : myTopArr("myTopArr")
+  {
+    gs::gs_param_array *subArr0
+                = new gs::gs_param_array("my2ndArray0", &myTopArr);
+    gs::gs_param_array *subArr1 
+                = new gs::gs_param_array("my2ndArray1", &myTopArr);
+       
+    gs::gs_param<int> *par0
+                = new gs::gs_param<int>("myIntPar0", 10, &subArr0);
+    gs::gs_param<int> *par1 
+                = new gs::gs_param<int>("myIntPar1", 12, &subArr0);
+    gs::gs_param<string> *par2 
+                = new gs::gs_param<string>("myStringPar", "Def.", &subArr0);
+       
+    gs::gs_param<int> *otherIntPar  
+                = new gs::gs_param<int>("myOtherIntPar", 500, &subArr1);
+    gs::gs_param<int> *otherIntPar1 
+                = new gs::gs_param<int>("myIntPar1", 600, &subArr1);
+  }
+}
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Resulting structure:}
+\begin{lstlisting}[language=TeX]
+      myTopArr {
+        'my2ndArray0',
+        'my2ndArray1'
+      }
+      my2ndArray0 {
+        myIntPar0 = 10,
+        myIntPar1 = 12,
+        myStringPar = "Def."
+      }
+      my2ndArray1 {
+        myOtherIntPar = 500,
+        myIntPar1 = 600,
+      }
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Access:} Access an Extended Parameter Array in any module in the simulation (not the owner module which can access directly).
+\begin{lstlisting}
+      any_function() {
+        gs::gs_param_base *tmp = m_Api.getPar("Owner.myTopArr");
+        gs::gs_param_array &topArr 
+              = *(dynamic_cast<gs::gs_param_array*>(tmp));
+        gs::gs_param_array::iterator it;
+        it = topArr.getMemberArray("my2ndArray0")->find("myIntPar1");
+      }
+\end{lstlisting}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\textwidth}
+{\bf Config file Usage:}
+\begin{lstlisting}
+      IP1.myTopArr.my2ndArray0.myIntPar0 100
+      IP1.myTopArr.my2ndArray0.myIntPar1 111
+      IP1.myTopArr.my2ndArray0.myStringPar "Hello world!"
+      IP1.myTopArr.my2ndArray1.myIntPar1 50000
+\end{lstlisting}
+Or use the lua config file parser (\Datei{luafile\_tool.h}).
+\end{minipage}
+
+\vspace{.5cm}
+\ZwischenUberschrift{Iterators}
+The \lstinline|gs_param_array| class has an iterator class \lstinline|gs_param_array::iterator|.
+
+The iterators support the operators \textsf{=, ==, !=, ++ (prefix), -- (prefix), *}
+
+The iterator class has the functions
+\begin{itemize}
+    \item \lstinline|begin()| returns an iterator which points to the first member.
+    \item \lstinline|end()| returns an iterator which points behind the last member.
+    \item \lstinline|find(string local_name)| returns an iterator which points to the member with the local name.
+\end{itemize}
+
+Example usage of the array iterator:
+\begin{lstlisting}
+      gs::gs_param_array::iterator it;
+      for (it = myArr.begin(); it != myArr.end(); ++it) {
+        cout << (*it).getName() << "="<< (*it).getString()<< endl;
+      }
+\end{lstlisting}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Frequently Asked Questions}
+\label{FAQ}
+
+\ZwischenUberschrift{Simulation crash during destruction}
+{\bf Question:} My simulation crashes during destruction within the macro \lstinline|GC_UNREGISTER_CALLBACKS()|.\\
+{\bf Answer:} You missed to use the \lstinline|GC_HAS_CALLBACKS()| macro in the body of your module.
+
+\ZwischenUberschrift{Simulation crash inside parameter callback function}
+{\bf Question:} My simulation crashes inside a parameter callback function.\\
+{\bf Answer:} Maybe you missed to check the \lstinline|is_destructing()| flag of the changed parameter. If a parameter does a callback during destruction you must not access its value any more (even not in this callback).
+
+\ZwischenUberschrift{Simulation crash inside parameter callback function}
+{\bf Question:} Compiler error within macro \lstinline|GC_REGISTER_PARAM_CALLBACK|:\\ {\sffamily error: 'gc\_add\_ParamCallbAdapt' was not declared in this scope}\\
+{\bf Answer:} You missed to use the \lstinline|GC_HAS_CALLBACKS()| macro in the body of your module.
+
+\ZwischenUberschrift{Simulation crash when sending transaction}
+{\bf Question:} My simulation crashes (segmentation fault) within an API in a line which calls \lstinline|m_gc_port.init_port.out->notify(transaction, PEQ_IMMEDIATE);|. \\
+{\bf Answer:} Make sure that the Core and the Plugins are still existing. They need to be created before any other GreenControl elements and have to be deleted as last. E.g. try to use new instead of variables in the main function.
+
+\vspace{3cm}
+To be continued...

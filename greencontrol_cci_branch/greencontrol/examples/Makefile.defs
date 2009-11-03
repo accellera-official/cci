@@ -1,0 +1,97 @@
+# Directory where this Makefile is located
+TOP := $(dir $(lastword $(MAKEFILE_LIST)))
+
+# Try to find dependencies automatically
+-include $(TOP)/../../Makefile.greensocs
+
+
+## target architecture (if not defined in Makefile)
+ifndef TARGET_ARCH
+ TARGET_ARCH=$(subst $(SYSTEMC)/lib-,,$(wildcard $(SYSTEMC)/lib-*))
+endif
+
+## Your SystemC installation path
+ifdef SYSTEMC21V1
+ SYSTEMC = /cad/tools/systemc2.1
+ SCCFLAG = # auto detect now (was -DSYSTEMC21V1)
+else
+ SYSTEMC ?= /cad/tools/systemc
+endif
+
+## Your compiler
+CC ?= g++
+
+## set some directories 
+GREENBUS_DIR ?= /Users/schroede/mydev/greensocs_greenbus
+#GREENBUS_DIR ?= / # dummy
+GREENSOCKET_DIR ?= /Users/schroede/mydev/greensocs_greensocket/greensocket
+GPSOCKET_DIR ?= /Users/schroede/mydev/greensocs_greenbus/GPSocket_branch
+TLM2_DIR ?= /Users/schroede/mydev/TLM-2008-06-09/include/tlm
+DUST_DIR ?= /home/klingauf/mydev/sc_dust/trunk/src/systemc
+GS_CONTROL_DIR ?= /Users/schroede/mydev/greensocs_greencontrol
+HPC_DIR ?= /Users/schroede/mydev/hpc
+BOOST ?= /cad/tools/boost
+LUA_DIR ?= /cad/tools/lua5.1
+GCOV_DIR ?= /Developer/SDKs/MacOSX10.5.sdk/usr/lib/gcc/i686-apple-darwin9/4.0.1
+
+ifdef SYSTEMC21V1
+ SCV_INCLUDE = /cad/tools/systemc2.1-scv/include
+ SCV_LIB = /cad/tools/systemc2.1-scv/lib-$(TARGET_ARCH)
+else
+ SCV_INCLUDE ?= /cad/tools/systemc-scv/include
+ SCV_LIB ?= /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
+endif
+
+## Static or dynamic cast class hierarchy
+#ifdef STATIC
+## Note: dynamic cast variant of the generic protocol is deprecated. So always use static casts.
+STATIC_DEFINE=-DUSE_STATIC_CASTS
+#endif
+
+## Generic Protocol Extensions
+ifdef EXTENSION
+EXT_TR_DEFINE=-DEXTENDED_TRANSACTION=$(EXTENSION)
+endif
+
+DEFFLAGS = $(EXT_TR_DEFINE) $(STATIC_DEFINE) -DSC_INCLUDE_DYNAMIC_PROCESSES
+
+
+## muldefs should be avoided in the source code, not by the linker
+##LDFLAGS = -Wl,-zmuldefs
+LDFLAGS =
+
+INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) -I$(GREENBUS_DIR) -I$(GREENSOCKET_DIR)/include -I$(GPSOCKET_DIR) -I$(TLM2_DIR) -I$(DUST_DIR) -I$(HPC_DIR) -I$(SCV_INCLUDE) -I. -I.. -I$(SYSTEMC)/include -I$(LUA_DIR)/include
+LIBDIR = -L$(DUST_DIR) -L$(SCV_LIB) -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH) -L$(LUA_DIR)/lib
+
+## use this line if you want to link against dust
+#LIBS   =  -lscv -ldust -lsystemc -lm $(EXTRA_LIBS)
+
+## use this line if you dont need dust
+## here may be needed to write -lscv at the beginning - which also may cause problems!
+LIBS   =  -lsystemc -lm $(EXTRA_LIBS) 
+
+
+EXE    = $(MODULE).x
+
+.SUFFIXES: .cc .cpp .o .x
+
+$(EXE): $(OBJS) $(SYSTEMC)/lib-$(TARGET_ARCH)/libsystemc.a 
+	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
+#	strip $(EXE)
+
+.cpp.o:
+	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+
+.cc.o:
+	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+
+clean::
+	rm -f $(OBJS) *~ $(EXE) core
+
+ultraclean: clean
+	rm -f Makefile.deps
+
+Makefile.deps:
+#	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -M $(SRCS) >> Makefile.deps
+
+#include Makefile.deps

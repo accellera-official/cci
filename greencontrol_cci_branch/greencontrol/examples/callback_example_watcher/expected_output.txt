@@ -1,0 +1,366 @@
+
+Info: ControlAddressMap: insert: Service already exists.
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+
+Warning: GCnf_Api: DEPRECATED: The getNewParamEvent function is deprecated due to performance reasons! Register a callback instead using mApi.REGISTER_NEW_PARAM_CALLBACK(class_name, callback_function);
+In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1141
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+Owner.gs_param_base_0: Param 'Owner.int_param': create callback for update event
+ParamCallbAdapt_b: Create parameter callback adapter 1 for caller parameter 'Owner.int_param'.
+Owner.gs_param_base_0: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
+Owner.gs_param_base_0:    param 'Owner.int_param' registerParamCallback(ParamCallbAdapt callb=1, type=post_write)
+Owner.gs_param_base_0:   calback adapter = 1
+@0 s /0 (Observer): register new parameter callback
+Observer: register callbacks for int_param (twice!) and str_param
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ParamCallbAdapt_b: Create parameter callback adapter 2 for caller parameter 'Owner.int_param'.
+Owner.gs_param_base_0: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
+Owner.gs_param_base_0:    param 'Owner.int_param' registerParamCallback(ParamCallbAdapt callb=2, type=post_write_and_destroy)
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ParamCallbAdapt_b: Create parameter callback adapter 3 for caller parameter 'Owner.int_param'.
+Owner.gs_param_base_0: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
+Owner.gs_param_base_0:    param 'Owner.int_param' registerParamCallback(ParamCallbAdapt callb=3, type=post_write_and_destroy)
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ParamCallbAdapt_b: Create parameter callback adapter 4 for caller parameter 'Owner.str_param'.
+Owner.gs_param_base_1: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
+Owner.gs_param_base_1:    param 'Owner.str_param' registerParamCallback(ParamCallbAdapt callb=4, type=post_write_and_destroy)
+Observer: register deprecated callback for uint_param
+
+Warning: Observer.__gcnf_api___0: DEPRECATED: registerCallback (and macro REGISTER_CALLBACK) is deprecated due to simulation overhead! Use 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.
+In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1097
+In process: Observer.main_action @ 0 s
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+ParamCallbAdapt_b: Create parameter callback adapter 5 for caller parameter 'Owner.uint_param'.
+Owner.gs_param_base_2: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
+Owner.gs_param_base_2:    param 'Owner.uint_param' registerParamCallback(ParamCallbAdapt callb=5, type=post_write_and_destroy)
+@0 s /0 (Manipulator):  waits for later
+Owner: set int_param = 100
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+Owner.gs_param_base_0:    call adapter 2
+@1002 ns /3 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '100'.
+
+Owner.gs_param_base_0:    call adapter 3
+@1002 ns /3 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '100'.
+
+
+@1002 ns /3 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+Owner: set str_param = 'Hello World!'
+Owner.gs_param_base_1: Make pre write callbacks
+Owner.gs_param_base_1: Make post write callbacks and notify event
+Owner.gs_param_base_1:    call adapter 4
+@1002 ns /4 (Observer): Callback method called:
+  Parameter 'Owner.str_param'
+    of type 'string'
+Owner.gs_param_base_1: Make pre read callbacks
+    changed to value 'Hello World!'.
+
+
+Owner: set int_param = 200
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+Owner.gs_param_base_0:    call adapter 2
+@1003 ns /6 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '200'.
+
+Owner.gs_param_base_0:    call adapter 3
+@1003 ns /6 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '200'.
+
+
+@1003 ns /6 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+Owner: set str_param = 'Hello Germany!'
+Owner.gs_param_base_1: Make pre write callbacks
+Owner.gs_param_base_1: Make post write callbacks and notify event
+Owner.gs_param_base_1:    call adapter 4
+@1003 ns /7 (Observer): Callback method called:
+  Parameter 'Owner.str_param'
+    of type 'string'
+Owner.gs_param_base_1: Make pre read callbacks
+    changed to value 'Hello Germany!'.
+
+
+Owner: Create two new parameters which can be observed with new param callbacks/events and set them
+Owner: unnamed param
+Owner.main_action.gs_param_base_0: Make pre read callbacks
+@1003 ns /8 (Observer): New parameter callback method called:
+  New parameter 'Owner.no_name_0'
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+  of type 'unsigned char'
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+
+@1003 ns /8 (Observer): Got new parameter update event! This should happen each time a new parameter is added during runtime!
+
+Owner: Set the new parameter uchar_param
+Owner.main_action.gs_param_base_0: Make pre write callbacks
+Owner.main_action.gs_param_base_0: Make post write callbacks and notify event
+
+
+**** Parameter list: 
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+   Owner.int_param, Owner.no_name_0, Owner.str_param, Owner.uint_param
+
+
+Owner.main_action.gs_param_base_1: Make pre read callbacks
+@1003 ns /10 (Observer): New parameter callback method called:
+  New parameter 'Owner.ull_param'
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+  of type 'unsigned long long'
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+
+@1003 ns /10 (Observer): Got new parameter update event! This should happen each time a new parameter is added during runtime!
+
+Owner: Set the new parameter ull_param
+Owner.main_action.gs_param_base_1: Make pre write callbacks
+Owner.main_action.gs_param_base_1: Make post write callbacks and notify event
+
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Manipulator.__gc_port___0
+Port Name = Manipulator
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Manipulator.__gc_port___0
+Port Name = Manipulator
+@6 us /12 (Manipulator): Set parameter Owner.int_param to value=5000
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+Owner.gs_param_base_0:    call adapter 2
+@6 us /12 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '5000'.
+
+Owner.gs_param_base_0:    call adapter 3
+@6 us /12 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '5000'.
+
+
+@6 us /12 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+@6 us /13 (Manipulator): Set parameter Owner.int_param to value=5001
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+Owner.gs_param_base_0:    call adapter 2
+@6 us /13 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '5001'.
+
+Owner.gs_param_base_0:    call adapter 3
+@6 us /13 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '5001'.
+
+
+@6 us /13 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+@6 us /14 (Manipulator): Set parameter Owner.int_param to value=5002
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+Owner.gs_param_base_0:    call adapter 2
+@6 us /14 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '5002'.
+
+Owner.gs_param_base_0:    call adapter 3
+@6 us /14 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '5002'.
+
+
+@6 us /14 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+----------------------------
+@6001 ns /16 (Observer): Unregister callback for int_param
+ParamCallbAdapt_b: Unregister parameter callback adapter 2 at caller parameter 'Owner.int_param'.
+Owner.gs_param_base_0: param 'Owner.int_param' unregisterParamCallback(ParamCallbAdapt callb=2)
+Owner.gs_param_base_0:              removed parameter callback adapter 2
+Owner.gs_param_base_0:              removed parameter callback adapter 2
+  Now there must only be ONE callback for each int_param change!
+----------------------------
+
+@7 us /17 (Manipulator): Set parameter Owner.int_param to value=6002
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+Owner.gs_param_base_0:    call adapter 3
+@7 us /17 (Observer): Callback method called:
+  Parameter 'Owner.int_param'
+    of type 'int'
+Owner.gs_param_base_0: Make pre read callbacks
+    changed to value '6002'.
+
+
+@7 us /17 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+@7 us /18 (Manipulator): Set parameter Owner.str_param to value="SHOW THIS"
+Owner.gs_param_base_1: Make pre write callbacks
+Owner.gs_param_base_1: Make post write callbacks and notify event
+Owner.gs_param_base_1:    call adapter 4
+@7 us /18 (Observer): Callback method called:
+  Parameter 'Owner.str_param'
+    of type 'string'
+Owner.gs_param_base_1: Make pre read callbacks
+    changed to value 'SHOW THIS'.
+
+
+----------------------------
+@12001 ns /20 (Observer): Unregister all callbacks to this module in the param int_param
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Observer.__gc_port___0
+Port Name = Observer
+Owner.gs_param_base_0: param 'Owner.int_param' unregisterParamCallbacks(observer)
+Owner.gs_param_base_0:              removed parameter callback adapter 3
+Owner.gs_param_base_0:              removed parameter callback adapter 3
+  Now there must not be callbacks for parameter int_param any more!
+----------------------------
+
+ParamCallbAdapt_b: Deleting parameter callback adapter 2 (shared pointer deleted)
+@13 us /21 (Manipulator): Set parameter Owner.int_param to value=7002
+Owner.gs_param_base_0: Make pre write callbacks
+Owner.gs_param_base_0: Make post write callbacks and notify event
+Owner.gs_param_base_0:    call adapter 1
+
+@13 us /21 (Observer): Got parameter update event! This should happen when Owner.int_param changed!
+
+@13 us /22 (Manipulator): Set parameter Owner.str_param to value="NOT OBSERVE THIS"
+Owner.gs_param_base_1: Make pre write callbacks
+Owner.gs_param_base_1: Make post write callbacks and notify event
+Owner.gs_param_base_1:    call adapter 4
+@13 us /22 (Observer): Callback method called:
+  Parameter 'Owner.str_param'
+    of type 'string'
+Owner.gs_param_base_1: Make pre read callbacks
+    changed to value 'NOT OBSERVE THIS'.
+
+
+----------------------------
+Owner.main_action.gs_param_base_1: Make destroy param callbacks
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+Owner.main_action.gs_param_base_0: Make destroy param callbacks
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+@18446744073709551615 ps /25 (Observer): ~~~ Destructor ObserverModule ~~~
+ParamCallbAdapt_b: Unregister parameter callback adapter 4 at caller parameter 'Owner.str_param'.
+Owner.gs_param_base_1: param 'Owner.str_param' unregisterParamCallback(ParamCallbAdapt callb=4)
+Owner.gs_param_base_1:              removed parameter callback adapter 4
+Owner.gs_param_base_1:              removed parameter callback adapter 4
+ParamCallbAdapt_b: Deleting parameter callback adapter 3 (shared pointer deleted)
+ParamCallbAdapt_b: Deleting parameter callback adapter 4 (shared pointer deleted)
+Owner.gs_param_base_2: Make destroy param callbacks
+Owner.gs_param_base_2:    call adapter 5
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+Owner.gs_param_base_1: Make destroy param callbacks
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+Owner.gs_param_base_0: Make destroy param callbacks
+ConfigPluginWatcher :: masterAccess called 
+Service name = CONFIG_SERVICE
+Port Name = Owner.__gc_port___0
+Port Name = Owner
+ParamCallbAdapt_b: Deleting parameter callback adapter 1 (shared pointer deleted)

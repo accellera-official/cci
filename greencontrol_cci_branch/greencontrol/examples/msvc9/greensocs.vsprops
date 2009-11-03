@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="greensocs"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalOptions="/vmg"
+		AdditionalIncludeDirectories="&quot;$(SYSTEMC)\..\src&quot;;&quot;$(SCV)\..\src&quot;;&quot;$(BOOST)&quot;;&quot;$(GREENBUS)&quot;;&quot;$(GREENCONTROL)&quot;"
+		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;SC_INCLUDE_DYNAMIC_PROCESSES;USE_STATIC_CASTS"
+		RuntimeTypeInfo="true"
+		DisableSpecificWarnings="4099;4100;4127;4267;4311;4396;4505;4554"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="systemc.lib cudd.lib dddmp.lib mtr.lib obj.lib scv.lib st.lib util.lib"
+		AdditionalLibraryDirectories="&quot;$(SYSTEMC)\SystemC\$(OutDir)&quot;;&quot;$(SCV)\$(OutDir)&quot;;&quot;$(SCV)\cudd\$(OutDir)&quot;;&quot;$(SCV)\dddmp\$(OutDir)&quot;;&quot;$(SCV)\mtr\$(OutDir)&quot;;&quot;$(SCV)\obj\$(OutDir)&quot;;&quot;$(SCV)\st\$(OutDir)&quot;;&quot;$(SCV)\util\$(OutDir)&quot;"
+		RandomizedBaseAddress="1"
+	/>
+</VisualStudioPropertySheet>

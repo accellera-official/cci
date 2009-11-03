@@ -1,0 +1,8 @@
+Simulation time: Wed Oct 28 10:15:48 2009
+
+sys_msg_INFO: testbench_message_streamer_tests.cpp:111: @20 ns /2: (ModuleA): This is an sc_info!
+sys_msg_WARNING: testbench_message_streamer_tests.cpp:112: @20 ns /2: (ModuleA): This is an sc_warning!
+sys_msg_ERROR: testbench_message_streamer_tests.cpp:113: @20 ns /2: (ModuleA): This is an sc_error!
+sys_msg_INFO: testbench_message_streamer_tests.cpp:111: @20 ns /2: (ModuleA2): This is an sc_info!
+sys_msg_WARNING: testbench_message_streamer_tests.cpp:112: @20 ns /2: (ModuleA2): This is an sc_warning!
+sys_msg_ERROR: testbench_message_streamer_tests.cpp:113: @20 ns /2: (ModuleA2): This is an sc_error!

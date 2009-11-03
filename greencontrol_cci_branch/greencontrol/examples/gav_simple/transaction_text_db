@@ -1,0 +1,79 @@
+scv_tr_stream (ID 1, name "GreenAVstream", kind "GreenAV_parameter")
+scv_tr_generator (ID 2, name "Owner.int_param", scv_tr_stream 1,
+begin_attribute (ID 0, name "val", type "STRING")
+)
+scv_tr_generator (ID 3, name "Owner.str_param", scv_tr_stream 1,
+begin_attribute (ID 0, name "val", type "STRING")
+)
+tx_begin 1 2 2 ns
+a "102"
+tx_end 1 2 2 ns
+tx_begin 2 2 2 ns
+a "103"
+tx_end 2 2 2 ns
+tx_begin 3 2 2 ns
+a "104"
+tx_end 3 2 2 ns
+tx_begin 4 2 2 ns
+a "105"
+tx_end 4 2 2 ns
+tx_begin 5 2 2 ns
+a "106"
+tx_begin 6 3 2 ns
+a "Hello Germany!"
+tx_end 6 3 2 ns
+tx_begin 7 3 2 ns
+a "Hello Arizona!"
+tx_end 7 3 2 ns
+tx_begin 8 3 2 ns
+a "Hello France!"
+scv_tr_generator (ID 4, name "Owner.uint_param", scv_tr_stream 1,
+begin_attribute (ID 0, name "val", type "STRING")
+)
+tx_begin 9 4 3 ns
+a "2000"
+tx_end 9 4 5 ns
+tx_begin 10 4 5 ns
+a "3000"
+tx_end 8 3 5 ns
+tx_begin 11 3 5 ns
+a "new hello"
+tx_end 5 2 5 ns
+tx_begin 12 2 5 ns
+a "222"
+scv_tr_generator (ID 5, name "Owner.int_param", scv_tr_stream 1,
+begin_attribute (ID 0, name "val", type "STRING")
+)
+tx_end 12 2 106 ns
+tx_begin 13 2 106 ns
+a "133"
+tx_begin 14 5 106 ns
+a "133"
+tx_end 13 2 107 ns
+tx_begin 15 2 107 ns
+a "42"
+tx_end 14 5 107 ns
+tx_begin 16 5 107 ns
+a "42"
+scv_tr_generator (ID 6, name "AVscvTool.tmp_par", scv_tr_stream 1,
+begin_attribute (ID 0, name "val", type "STRING")
+)
+tx_begin 17 6 112 ns
+a "77"
+tx_end 17 6 117 ns
+tx_end 15 2 117 ns
+tx_begin 18 2 117 ns
+a "4422"
+tx_end 16 5 117 ns
+tx_begin 19 5 117 ns
+a "4422"
+tx_end 18 2 210 ns
+tx_begin 20 2 210 ns
+a "10000"
+tx_end 19 5 210 ns
+tx_begin 21 5 210 ns
+a "10000"
+tx_end 10 4 18446744073709551615 ps
+tx_end 11 3 18446744073709551615 ps
+tx_end 20 2 18446744073709551615 ps
+tx_end 21 5 18446744073709551615 ps

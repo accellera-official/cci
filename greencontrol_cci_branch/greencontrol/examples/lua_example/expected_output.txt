@@ -1,0 +1,2 @@
+Get parameter param1: 132
+Get parameter param2: /bin/bash

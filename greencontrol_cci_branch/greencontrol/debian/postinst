@@ -1,0 +1,16 @@
+#! /bin/sh
+
+# Source debconf library.
+. $GSROOT/Debian/usr/share/debconf/confmodule
+
+# postinst script for modules (by GreenSocs)
+set -e
+case "$1" in
+    configure)
+        db_get shared/email || [ $? -eq 30 ]
+        [ "$RET" ] && gs-register greencontrol "$RET" || true
+    ;;
+    abort-upgrade|abort-remove|abort-deconfigure) ;;
+    *) echo "postinst called with unknown argument: $1" >&2 ; exit 1 ;;
+esac
+exit 0

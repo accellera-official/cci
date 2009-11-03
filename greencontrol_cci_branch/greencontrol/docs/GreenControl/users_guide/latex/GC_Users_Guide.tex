@@ -1,0 +1,147 @@
+% (c) GreenSocs Ltd
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+%\documentclass[a4paper,12pt]{scrartcl}
+\documentclass[a4paper,12pt,oneside]{gsbook}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{helvet}
+
+\usepackage{hyperref}
+
+\usepackage{greensocs}
+
+\usepackage{graphicx}
+
+\usepackage{multicol}
+
+\usepackage{fancyhdr}
+
+\usepackage{multirow}
+
+\usepackage{tabularx}
+
+\usepackage[dvips]{rotating} 
+
+%% Christian's package CS_inputs
+\input{CS_inputs}
+
+%\usepackage{xspace}
+
+% Fuer \begin{landscape}
+\usepackage{lscape}
+
+% allows [H] in figure
+\usepackage{float}
+\restylefloat{figure}
+
+%Includes fuer mathematische Formeln
+\usepackage{amsmath,amsthm,latexsym}
+\usepackage{wasysym}
+
+\sloppy % Verhindert uebervolle H-Boxen (aber groessere Spaces!)
+\nonfrenchspacing % Abstand nach Satzende immer gleich gross
+
+% Verhindern von Schusterjungen (club) und Hurenkindern (widow)
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000 
+
+% sets spacing between paragraphs
+\parskip 7.2pt
+
+% Farbe
+\usepackage{color}  
+
+% Symbole
+\usepackage{marvosym} 
+
+% Farbe fuer listings
+\definecolor{stringblue}{RGB}{0,0,255}
+\definecolor{keywordred}{RGB}{160,0,0}
+\definecolor{commentgreen}{RGB}{0,128,0}
+% Symbole fuer Listing-Umbruch-Pfeil
+\newcommand{\linebreaksign}{\hbox{\space\Righttorque}} % marvosym S.28 symbols-letter.pdf
+% Listings
+\usepackage{listings}
+\lstset{
+  language=C++,
+  %basicstyle=\ttfamily,
+  breaklines=true,
+  captionpos=b
+  %breakatwhitespace=true% erlaubt line break nur bei einem whitespace
+  aboveskip=15pt, % Abstand ueber einem Listing
+  basicstyle=\ttfamily \small,
+  %identifierstyle=\it,%\bf,
+  commentstyle=\color{commentgreen} \ttfamily, % mach mich dunkler
+  stringstyle=\color{stringblue} \ttfamily,
+  keywordstyle=\color{keywordred},
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  numberfirstline=true,
+  firstnumber=1,
+  stepnumber=5,
+  numbersep=5pt,
+  %prebreak=\mbox{\tiny$\linebreaksign$}, 
+  prebreak=\Righttorque,
+  frame=trbl, % Rahmen
+  tabsize=2   % 2 spaces per tab
+}
+
+%\makeatletter
+%\DeclareRobustCommand*\textsubscript[1]{%
+%  \@textsubscript{\selectfont#1}}
+%\def\@textsubscript#1{%
+%  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+%\makeatother
+
+\hypersetup{%
+  plainpages=false,
+  colorlinks,   % Ausschalten fuer Druckversion
+  linkcolor=blue,
+  bookmarksnumbered,
+  pdftitle={GreenControl User's Guide},
+  pdfsubject={User's Guide for the GreenSocs GreenControl Framework, GreenControl},
+  pdfauthor={Christian Schroeder, Technical University of Braunschweig, Dept. E.I.S. and GreenSocs Ltd},
+  pdfkeywords={SystemC GreenSocs GreenControl},
+  pdfstartview=FitH
+}
+\author{Copyright GreenSocs Ltd 2007-2009\\ \\Developed by\\Christian Schr\"oder and Wolfgang Klingauf\\Technical University of Braunschweig, Dept. E.I.S.}
+\title{GreenControl User's Guide\\(GreenControl v.3.0.0)}
+
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\theenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\theenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\theenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+% with subsubsections in tableofcontents
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+
+%% new commands for this document
+\newcommand{\GreenBus}{\mbox{\textsc{\small GreenBus}}\xspace}
+\newcommand{\GreenControl}{\mbox{\textsc{\small GreenControl}}\xspace}
+\newcommand{\GreenConfig}{\mbox{\textsc{\small GreenConfig}}\xspace}
+\newcommand{\GreenAV}{\mbox{\textsc{\small GreenAV}}\xspace}
+
+
+\begin{document}
+
+%Developed by Technical University of Braunschweig, Dept. E.I.S.
+%Christian Schroeder
+\maketitle
+
+\tableofcontents
+
+\listoffigures
+
+% Chapter Introduction
+\input{GCIntroduction}
+
+% Chapter
+\input{GCGreenControl}
+
+\end{document}

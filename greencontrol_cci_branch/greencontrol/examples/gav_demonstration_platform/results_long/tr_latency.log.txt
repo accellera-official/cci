@@ -1,0 +1,26 @@
+transaction_latency.log.txt is a huge file (> 360 MB) for the long simulation
+beginning with:
+
+
+Simulation time: Tue Apr 22 12:21:11 2008
+
+@0 s /2: TG1.iport.transaction_transport_latency_result_0 = 0
+@0 s /2: TG2.iport.transaction_transport_latency_result_0 = 0
+@0 s /2: TG3.iport.transaction_transport_latency_result_0 = 0
+@40 ns /5: Cache1.iport.transaction_transport_latency_result_0 = 10000
+@990 ns /10: Cache2.iport.transaction_transport_latency_result_0 = 960000
+@2660 ns /39: Cache1.iport.transaction_transport_latency_result_0 = 960000
+@3610 ns /74: Cache3.iport.transaction_transport_latency_result_0 = 3.58e+06
+@4110 ns /116: Cache3.iport.transaction_transport_latency_result_0 = 10000
+@4460 ns /142: Cache2.iport.transaction_transport_latency_result_0 = 10000
+@6130 ns /191: Cache1.iport.transaction_transport_latency_result_0 = 610000
+@7080 ns /226: Cache3.iport.transaction_transport_latency_result_0 = 2.42e+06
+@7640 ns /274: Cache3.iport.transaction_transport_latency_result_0 = 10000
+@8200 ns /314: Cache3.iport.transaction_transport_latency_result_0 = 10000
+@8760 ns /353: Cache3.iport.transaction_transport_latency_result_0 = 10000
+@9080 ns /375: Cache1.iport.transaction_transport_latency_result_0 = 90000
+@10030 ns /419: Cache2.iport.transaction_transport_latency_result_0 = 70000
+@11700 ns /478: Cache3.iport.transaction_transport_latency_result_0 = 2.39e+06
+@12020 ns /501: Cache1.iport.transaction_transport_latency_result_0 = 80000
+
+...

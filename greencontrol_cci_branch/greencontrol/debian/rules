@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+# Package properties
+PACKAGE = greencontrol
+VENDOR = GreenSocs
+
+# Dependencies
+LOAD_DEPENDS = greenbus
+
+# Other
+BUILD_EXTRA = mkdir ${GS_BUILD_DIR}/${PREFIX}/include; ln -s .. $(GS_BUILD_DIR)/${PREFIX}/include/${PACKAGE}
+
+# Modulefile
+define MODULEFILE_ENVIRONMENT
+   prepend-path CPLUS_INCLUDE_PATH "$$GSROOT${PREFIX}/include"
+endef
+
+# Architecture should be all
+override ARCH = all
+
+# Set operation
+include $(MAKEFILE_PACKAGES)

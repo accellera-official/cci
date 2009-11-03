@@ -1,0 +1,178 @@
+  * added gs_param callback types (enum data types, gs_param_base support)
+  * added new callback adapter and callback register macro
+  * post_write callbacks (for set_string) are called indepenently from success
+  * added sc_event param test
+  * fixed some expected_output.txt
+
+greencontrol (3.1.1-gs1) tested; urgency=low
+
+  * replace variables everywhere when a parameter is set with a string
+  * added gs_param sc_event
+  * added class gs_param_sync to syncronize two parameters
+
+ -- GreenSocs <greensocs@greensocs.com>  Wed, 14 Oct 2009 19:17:22 -0300
+
+greencontrol (3.1.0-gs1) tested; urgency=low
+
+  * environment variable substitution in config files
+  * changed the gs_param<T *> default array size to zero (r3395)
+  * included parameter attribute 'state' (r3397)
+  * created wrappers gs_output and gs_state that initialize a gs_param with that attributes (r3397)
+
+ -- GreenSocs <greensocs@greensocs.com>  Tue, 08 Sep 2009 13:32:56 -0300
+
+greencontrol (3.0.0-gs1) tested; urgency=low
+
+  * added check for temporary created APIs and plugins in core (to warn against segfaults)
+  * fixed config file parser to be safer (uses default API, not a local one any longer)
+  * Added new top-level include files for easier usage
+  * Synopsys Innovator code parser support
+  * fixed report message bug (not explicitly applied configuration were not automatically applied due to a wrong simple param array constructor call)
+  * added a simple param array constructor allowing top-level names without a user chosen array size
+  * updated expected output files for all examples
+  * changed gs_param callback behavior to fixed order (calls are done in registering order)
+  * Changed behavior of already existing parameters: take init value anyway
+  * Changed available gs_param constructors, now not allowing force_top_level_name for array members
+  * Updated documentation
+  * Changed include files (some old ones are deprecated now) 
+  * Added alternative automatic Config Plugin instantiation
+  * Added alternative automatic Control Core instantiation
+  * Renamed GreenReg data types (parameter attributes)
+
+ -- GreenSocs <greensocs@greensocs.com>  Wed, 22 Jul 2009 11:28:21 -0300
+
+greencontrol (2.0.0-gs1) tested; urgency=low
+
+  * updated GreenReg data types
+  * fixed uninitialized variable bug
+  * fixed memory leak
+
+ -- GreenSocs <greensocs@greensocs.com>  Wed, 18 Feb 2009 17:31:18 -0300
+
+greencontrol (1.2.7-gs1) tested; urgency=low
+
+  * bug fix in configfile_tool handling config macros
+  * added regression test (to mixed_tests example) for config macros
+  * again fix for static_deserialize
+  * Added has() function to ConfigSet
+  * fix auto-detect systemc api
+
+ -- GreenSocs <greensocs@greensocs.com>  Fri, 23 Jan 2009 19:31:11 -0200
+
+greencontrol (1.2.6-gs1) tested; urgency=low
+
+  * added drf gs_param attribute types
+  * changed some debug macros
+  * GreenConfig: show_database() function/API
+  * Fixed scv unsigned short problem (using unsigned int now)
+  * added virtual statement for param_base callback functions
+  * fixed callback_example_watcher example
+  * GreenConfig: fixed bug for gs_param (unsigned) char deserialization
+  * providing support for macros in the config file
+
+ -- GreenSocs <greensocs@greensocs.com>  Fri, 19 Dec 2008 17:25:28 -0200
+
+greencontrol (1.2.5-gs1) tested; urgency=low
+
+  * Changed default way to create database and config plugin
+  * Auto-detect systemc api
+  * Lua parser: lua index now 0-based and set size of lua array
+  * Added unsigned short support
+  * Fixed Simple Parameter Array default size automatic setting
+  * Simple Parameter Arrays: Changed priority of initialized array sizes
+  * Output plugin FileWithTd: write current time and decoupled time
+  * GreenConfig command line options: added gs_ prefix and disabled short opt
+  * Added gs_param< sc_attribute<T> > support
+  * GreenControl doxygen using dot tool
+
+ -- GreenSocs <greensocs@greensocs.com>  Fri, 28 Nov 2008 15:37:17 -0200
+
+greencontrol (1.2.4-gs1) tested; urgency=low
+
+  * luafile_tool: accept long double numbers
+  * parameter listing: accepts *.param to list the parameter from all modules
+  * command-line parser tools: accept sc_argc() and sc_argv()
+  * fix CommandLine_Tool.hpp to use inline (may be #included in many files)
+  * all.h: make lua tool optional (protected by USE_LUA macro)
+  * GreenControl message streamer: fixed a duplicate symbol error
+
+ -- GreenSocs <greensocs@greensocs.com>  Fri, 24 Oct 2008 19:22:13 -0200
+
+greencontrol (1.2.3-gs1) tested; urgency=low
+
+  * handleApiInstances: Each module gets own API (not if one of the parents uses a private API)  * new transaction field mMetaData  * added access functions for meta data in APIs (private + normal)
+  * Fixed bug in extended parameter array (gs_param_array) operator[]  * Added gs_param<std::vector<std::string> > template specialization  * Enhanced gs_param<sc_time> template specialization to support more deserialization syntaxes
+
+ -- GreenSocs <greensocs@greensocs.com>  Tue, 12 Aug 2008 08:49:21 +0200
+
+greencontrol (1.2.2-gs1) unstable; urgency=low
+
+  * Fixes to run in 64 bits machines
+  * Fix Makefile.gspm to run examples 2-level down from the examples directory
+  * config file parse does handle \\"" to \" instead of " (only search one time for \" and replace)
+
+ -- GreenSocs <greensocs@greensocs.com>  Tue, 12 Aug 2008 08:49:21 +0200
+
+greencontrol (1.2.1-gs1) unstable; urgency=low
+
+  * GreenConfig command line options use getopt as default again, instead of boost_program_options. The default is defined in config_globals.h
+
+ -- GreenSocs <greensocs@greensocs.com>  Tue, 12 Aug 2008 08:49:21 +0200
+
+greencontrol (1.2.0-gs1) unstable; urgency=low
+
+  * Config files allow tab character
+  * gs_param<unsigned char> supports setting with 'x' (Note: the surrounding 's are important! Otherwise a '0'=48 differs not from 0.)
+  * Added gs_param<char> which also supports setting with 'x'
+  * Added == operators to compare gs_params of same type to each other and with objects of their type
+  * Renamed internal enum members to avoid macro clash (enum gc_config_parse_result)
+  * Fixed bug in lua file parser (for big values)
+  * gs_param int, unsigned int, long long, unsigned long long now ignore decimal dots
+
+ -- GreenSocs <greensocs@greensocs.com>  Mon, 11 Aug 2008 11:29:17 +0200
+
+greencontrol (1.1.1-gs1) unstable; urgency=low
+
+  * Output Plugin more variable:  * Not all output plugins are included by default  * GreenControl / GreenAV is no longer dependent on scv by default (only if SCV_OutputPlugin is included)  * More generic way to include output plugins to the model
+
+ -- GreenSocs <greensocs@greensocs.com>  Thu, 31 Jul 2008 15:41:25 +0200
+
+greencontrol (1.1.0-gs1) testing; urgency=low
+
+  * Added support (and fix) for gs_params that are not registered at the database
+  * Fixed command line tool not using deprecated API calls  * Parameter attributes  * Command CMD_GET_PARAM_LIST deprecated, new command CMD_GET_PARAM_LIST_VEC submitting a vector  * Config API function getPar does no longer make SC_WARNING when getting fails.
+
+ -- GreenSocs <greensocs@greensocs.com>  Thu, 31 Jul 2008 12:06:57 +0200
+
+greencontrol (0.3-gs1) testing; urgency=low
+
+  * GreenControl: Namespace changes tlm::gc -> gs::ctr, tlm::gc::config -> gs::cnf, tlm::gc::gav -> gs::av
+  * GreenConfig: Namespace changed tlm::gc::config -> gs::cnf
+  * GreenConfig: parameter data types supported
+  * GreenConfig: parameter base returns void* pointer to data
+  * GreenConfig: parameter gs_param: standard operators
+  * GreenConfig: parameter base gs_param_base: operators returning tripple to be used by GAV
+  * GreenAV: initial release
+
+ -- GreenSocs <greensocs@greensocs.com>  Fri, 25 Apr 2008 15:40:01 +0200
+
+greencontrol (0.2.1686-gs1) unstable; urgency=low
+
+  * Change license
+  * Ask acceptance to the license and email
+
+ -- GreenSocs <greensocs@greensocs.com>  Mon, 28 Jan 2008 20:27:35 -0200
+
+greencontrol (0.2-gs1) unstable; urgency=low
+
+  * Change package name to greencontrol
+  * Support to build examples inside GSPM with Makefile.gspm
+  *
+
+ -- GreenSocs <greensocs@greensocs.com>  
+
+gscontrol (0.1-gs1) unstable; urgency=low
+
+  * Initial release
+
+ -- GreenSocs <greensocs@greensocs.com>  Fri, 27 Jul 2007 18:47:49 -0300

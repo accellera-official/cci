@@ -1,0 +1,73 @@
+% (c) GreenSocs Ltd
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+\section{Introduction to SimpleBus}
+\label{IntroductionSimpleBus}
+
+In this tutorial we developped a platform with devices which
+communicate using transaction over a bus. This bus is modeled by the
+SimpleBus which is a protocol in the GreenBus framework developed by
+GreenSocs.
+
+Although the GreenControl framework uses the GreenBus aswell, the SimpleBus communication is not used and not part of GreenControl. The SimpleBus is used to achieve a realistic demonstration platform. This section is a brief overview of how to use its API.
+
+The SimpleBus has a bus oriented API. A master can access an addressed slave by reading and writing data of a chosen length.
+
+A slave module has to implement the interface \lstinline|simplebus_if|. The method \lstinline|bool read(std::vector<gs_uint8> &data, const gs_uint32 addr, const gs_uint32 length)| allows a master to read data from the SimpleBus slave. The method \lstinline|bool write(const std::vector<gs_uint8> &data, const gs_uint32 addr, const gs_uint32 length)| allows a master to write data to the SimpleBus slave. The transactions may be of arbitrary length. The implementation of these methods has to be blocking and must not return until the data has been completely received by the slave. The methods return if a slave is present at the target address. The address in these calls is the bus address of the transaction less the base address of the slave. The data types are GreenSocs typedefs, see gs\_datatypes.h.
+
+A master is able to call similar read and write methods in its '''simplebusMasterPort'''. The address is different from the address the slave gets: Here the bus address of the slave the transaction should be delivered to has to be set.
+
+A master module simply has to have a \lstinline|simplebusMasterPort|
+as a public member variable which can be connected in the testbench to the router.
+
+Slave modules have to implement the interface
+\lstinline|simplebus_if|. Hence, the \lstinline|simplebusSlavePort myslaveport| has to be called: \lstinline|myslaveport.slave_port((simplebus_if) ddr_mem)|. 
+
+\begin{itemize}
+  \item Either the module owning the bus port may implement the interface itself and call \mbox{\lstinline|slave_port(*this)|} 
+  \item or another module has to have the bus port 
+  \item or the testbench instatiates the slave port and calls it with the interface implementing object of the module.
+\end{itemize}
+
+In the testbench the connection is done as follows:
+\begin{lstlisting}
+  // SimpleBus
+  SimpleBusProtocol p("Protocol", sc_time(10, SC_NS));
+  fixedPriorityScheduler s("Scheduler");
+  GenericRouter r("Router");
+  r.protocol_port(p);
+  p.router_port(r);
+  p.scheduler_port(s);
+  
+  // Connect Masters
+  tg_master->mySimplebusMasterPort(r.target_port);
+
+  // Connect Slaves
+  r.init_port(testbenchSimplebusSlavePort);
+  r.init_port(mem.mySimplebusSlavePort);
+\end{lstlisting}
+
+%Slave modules can be set up with two different approaches:
+%\begin{itemize}
+% \item Either the module implements the interface \lstinline|simplebus_if| and the user creates a \lstinline|simplebusSlavePort| in the testbench (for an example see class \lstinline|ddr|)
+%\begin{lstlisting}
+%// Slave class:
+%class ddr 
+%: public sc_module, 
+%  public virtual simplebus_if
+%{
+%	[...]
+%  virtual bool read(std::vector<gs_uint8> &data, const gs_uint32 addr, const gs_uint32 length);
+%  virtual bool write(const std::vector<gs_uint8> &data, const gs_uint32 addr, const gs_uint32 length);
+%};
+%// Testbench:
+%simplebusSlavePort *slaveport = new simplebusSlavePort("memoryport");
+%ddr *memory = new ddr("Mem");
+%slaveport->slave_port(*memory);
+%slaveport->base_addr = 0x200;
+%slaveport->high_addr = 0x300;
+%\end{lstlisting}
+%   \item Or the module implements the interface '''and''' has member variable of type \lstinline|simplebusSlavePort| which can be connected directly to the router (see class \lstinline|PCIeDevice|).
+%\begin{lstlisting}
+%\end{lstlisting}
+%\end{itemize}

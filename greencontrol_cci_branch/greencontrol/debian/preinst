@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+# Source debconf library.
+. $GSROOT/Debian/usr/share/debconf/confmodule
+
+# Try to find shared/license-gsl
+unset RET
+db_get shared/license-gsl || true
+if [ "$RET" != "Always" ]; then
+
+    # Reset any old answer
+    db_fset greencontrol/license-gsl seen false
+
+    # Ask license acceptance for this package
+    db_input high greencontrol/license-gsl && db_go || [ $? -eq 30 ] && db_clear
+
+    # If user select Always, save as shared question
+    db_get greencontrol/license-gsl || [ $? -eq 30 ]
+    if [ "$RET" = "Always" ]; then
+        db_register greencontrol/license-gsl shared/license-gsl
+        db_set shared/license-gsl Always
+    fi
+else
+    # Set Always to this package too
+    db_set greencontrol/license-gsl Always
+fi
+
+# Don't continue if user select to not accept the licence
+db_get greencontrol/license-gsl || [ $? -eq 30 ]
+if [ "$RET" = "No" ]; then
+    echo
+    echo
+    echo "ERROR: If you don't accept the licence terms, this package can't be installed."
+    echo
+    echo
+    exit 1
+fi
+
+# Ask email if not in database
+db_input high shared/email && db_go || [ $? -eq 30 ] && db_clear

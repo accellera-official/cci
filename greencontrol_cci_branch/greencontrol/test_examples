@@ -1,0 +1,108 @@
+#!/bin/bash
+
+TARGET_ARCH=$"macosx"
+DEBUG_OUT_FILE="_DEBUG.txt"
+LOG_FILE="_LOG.txt"
+
+# Use a new dir
+DIR=$PWD/$0-$(date +%F-%H%M)
+mkdir $DIR
+cd $DIR
+#DIR=$PWD
+
+## test all GreenControl examples
+
+
+function process_current_directory()
+{
+
+  for example in $(ls); do
+
+    if [ -d $example ]; then
+        cd $example
+        echo Process $example
+        echo | tee -a $DIR/$LOG_FILE
+        echo | tee -a $DIR/$LOG_FILE
+        echo | tee -a $DIR/$LOG_FILE
+        echo | tee -a $DIR/$LOG_FILE
+        echo "### $example" | tee -a $DIR/$LOG_FILE
+
+        # Verify if Makefile exists
+        if [ ! -f Makefile ]; then
+            echo "### ERROR compiling $example: no Makefile found" | tee -a $DIR/$LOG_FILE
+            process_current_directory
+            cd ..; continue
+        fi
+
+        # Verify if TARGET_ARCH in Makefile match the one asked
+        #TARGET_ARCH_HARDCODED=$(sed -n -e 's/^TARGET_ARCH\s*=\s*\(.*\)/\1/p' Makefile)
+        #if [ "$TARGET_ARCH_HARDCODED" != "$TARGET_ARCH" ]; then
+        #    echo "### WARNING compiling $example: changing TARGET_ARCH from $TARGET_ARCH_HARDCODED to $TARGET_ARCH" | tee -a $DIR/$LOG_FILE
+        #    sed -i -e "/^TARGET_ARCH/cTARGET_ARCH = $TARGET_ARCH" Makefile
+        #fi
+
+        # Try to compile
+        make clean
+        make
+        if [ $? -ne 0 ]; then
+            echo "### ERROR compiling $example" | tee -a $DIR/$LOG_FILE
+            cd ..; continue
+        else
+            echo "### SUCCESS compiling $example" | tee -a $DIR/$LOG_FILE
+        fi
+
+        # Try to run
+        for example_x in $(ls *.x); do
+            COMMAND="./$example_x $(args $example_x)"
+            echo $COMMAND ; $COMMAND ; 
+            $COMMAND > $DIR/"$example"_out.txt
+            if [ $? -ne 0 ]; then
+                echo "### ERROR running $example_x" | tee -a $DIR/$LOG_FILE
+            else
+                echo "### SUCCESS running $example_x" | tee -a $DIR/$LOG_FILE
+            fi
+        done
+
+        # copy expected output
+        CPY_CMD="cp expected_output.txt "$DIR"/"$example"_expected_out.txt"
+        $CPY_CMD
+
+        # original diff expected output
+        #COMMAND="diff -uN -a $DIR/"$example"_out.txt expected_output.txt"
+	# filtered diff: ignores lines with "In file:":
+	#COMMAND="diff -uN <(grep -v '^In file:' --binary-files=text $DIR/"$example"_out.txt) <(grep -v '^In file:' --binary-files=text expected_output.txt)"
+	
+	grep -v '^In file:' --binary-files=text $DIR/"$example"_out.txt > $DIR/grep1.txt
+	grep -v '^In file:' --binary-files=text expected_output.txt > $DIR/grep2.txt
+	COMMAND="diff -uN --text --ignore-all-space $DIR/grep1.txt $DIR/grep2.txt"
+
+        echo $COMMAND ; $COMMAND ; $COMMAND > $DIR/"$example"_diff.txt
+        if [ $? -ne 0 ]; then
+            echo "### ERROR diff $example_x with expected output" | tee -a $DIR/$LOG_FILE
+        else
+            echo "### SUCCESS diff $example_x with expected output" | tee -a $DIR/$LOG_FILE
+        fi
+	cp $DIR/"$example"_diff.txt $DIR/diff_"$example".txt
+
+        cd ..
+    fi
+    rm $DIR/grep1.txt
+    rm $DIR/grep2.txt
+  done >>$DIR/$DEBUG_OUT_FILE 2>&1
+}
+
+
+# Run all examples
+rm -f $DIR/$LOG_FILE $DIR/$DEBUG_OUT_FILE
+echo "Process test script."
+echo "### Using TARGET_ARCH=$TARGET_ARCH" | tee -a $DIR/$LOG_FILE >>$DIR/$DEBUG_OUT_FILE
+cd ../examples
+
+process_current_directory
+
+echo "done"
+
+# Show results
+cat $DIR/$LOG_FILE
+echo
+echo "### See details in file: $DIR/$DEBUG_OUT_FILE "

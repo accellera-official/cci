@@ -1,0 +1,91 @@
+% (c) GreenSocs Ltd
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+\section{Green Analysis and Visibility Requirements}
+\label{GAVRequirements}
+
+
+\subsection{General}
+
+\begin{itemize}
+  \item Capture any kind of parameters (\verb|gs_param|s) - when changed - to
+  \begin{itemize}
+    \item store changes
+    \item make changes visible to external tools
+    \item calculate with other parameters (result is again a parameter)
+    \item calculate statistics on parameters (result is again a parameter)
+  \end{itemize}
+  \item Capture parameters conditional (not only on changes)
+  \begin{itemize}
+    \item boolean expression of \verb|gs_param<bool>|s
+    \item event based
+    \item function call (manually call to statistics calculator)
+    \item combination of these
+  \end{itemize}
+
+  \item The \GreenAV framework does not store results itself, expect in the case of
+  \begin{itemize}
+    \item statistics, e.g. sliding window
+    \item special output plugins that caches values
+  \end{itemize}
+  \item All results, changes etc. are provided to tools, files, etc. via OutputPlugins in the GAV\_Plugin.
+\end{itemize}
+
+\subsection{Details}
+
+{\em Requirements met by architectural design}:
+\begin{itemize}
+  \item captured data processed in real-time (4.1.1.2)
+  \begin{itemize}
+    \item maximum data available: statistics calculators caches data they need
+  \end{itemize}
+
+{\em Functional Requirements}:
+  \item Capture API: \verb|GAV_Api| and \verb|StatisticsCalculator| (4.1.1)
+  \begin{itemize}
+    \item Capture information if user defined condition exists: (4.1.1.1)
+    \begin{itemize}
+      \item sc\_event,
+      \item boolean expression,
+      \item method call,
+      \item combination of the three.
+    \end{itemize}
+  \end{itemize}
+
+  \item Listener API \verb|GAV_Plugin| with \verb|OutputPlugin|s
+  \begin{itemize}
+    \item Tool interface: Listener API is a bridge to output types: \verb|OutputPlugin|s (4.1.2), combined with \verb|GAV_API| (4.1.2.1) and \verb|GCnf_Api| (4.1.2.2) (pull mechanism to browse parameters and add them to output or calculate statistics)
+    \item Support SCV API but do not use it (4.1.1.3), export to SCV stream(s) via OutputPlugin
+  \end{itemize}
+
+  \item Provide information to module inside simulation (\verb|GAV_Api|: Service Plugin API for \GreenControl)
+
+{\em Performance requirements}:
+
+  \item Performance impact low per capture instance (4.3.1) \newline
+  	Callbacks inside \verb|gs_param|s.
+  \item Inactive probe negligible performance impact (4.3.2) \newline
+  	Performance impact of a \verb|gs_param| without callbacks.
+\end{itemize}
+
+\subsection{Nice to have features}
+
+The \GreenAV framework in its first version (April 2008) will provide needed functionality for several statistics. The implementation of pre-defined statistics in GreenBus may be done in the future:
+
+\begin{itemize}
+  \item Built-in analysis parameters and statistics, e.g.
+  \begin{itemize}
+    \item (4.1.1.4.1), (4.1.1.4.2), (4.1.1.4.3):
+    \begin{itemize}
+      \item how many transactions generated,
+      \item how many certain types are generated,
+      \item transaction latencies,
+      \item utilization (in percent) of link,
+      \item average time in queue in the fabric,
+      \item what queues were full, empty, utilization of queues,
+      \item Transactions, ex. Addresses, data payload size
+      \item Analyze transactions and create statistics.
+      \item Register/memory accesses
+    \end{itemize}
+  \end{itemize}
+\end{itemize}

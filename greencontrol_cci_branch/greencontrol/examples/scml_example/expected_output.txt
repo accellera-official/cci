@@ -1,0 +1,17 @@
+Use standart database 'ConfigDatabase'
+
+Scml test: Get not existing parameter my.name
+
+Info: ScmlTestIP.__gcnf_api___0: getPar: ... getting failed!
+
+Scml test: Set scml_property parameter 'ScmlOriginalPropertyIP.intProp' = 1
+Scml test: Set scml_property parameter 'ScmlOriginalPropertyIP.boolProp' = 1
+Scml test: Set scml_property parameter 'ScmlOriginalPropertyIP.doubleProp' = 1
+Scml test: Set scml_property parameter 'ScmlOriginalPropertyIP.stringProp' = hello world
+
+
+Scml_Orig_IP scml properties: 
+Int    intProp:    1
+Bool   boolProp:   1
+Double doubleProp: 1
+String stringProp: hello world

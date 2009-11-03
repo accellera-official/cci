@@ -1,0 +1,976 @@
+@0 s /0 (MessageStreamer): constructor called on toplevel
+protected MessageConfiguration constructor with name 'MessageStreamer_config.0' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.0.msgconfig_name = 
+MessageStreamer_config.0.msgconfig_starttime_en = 0
+MessageStreamer_config.0.msgconfig_starttime = 0 s
+MessageStreamer_config.0.msgconfig_endtime = 0 s
+MessageStreamer_config.0.msgconfig_dbglvl = 0
+MessageStreamer_config.0.msgconfig_info_en = 0
+MessageStreamer_config.0.msgconfig_warn_en = 0
+MessageStreamer_config.0.msgconfig_error_en = 0
+MessageStreamer_config.0.msgconfig_fatal_en = 0
+MessageStreamer_config.0.msgconfig_printtime = 0
+MessageStreamer_config.0.msgconfig_printname = 0
+MessageStreamer_config.0.msgconfig_printfile = 0
+MessageStreamer_config.0.msgconfig_printlevel = 0
+MessageStreamer_config.0.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config report_message_file1.txt: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #0: 
+MessageStreamer_config.0.msgconfig_name = report_message_file1.txt
+MessageStreamer_config.0.msgconfig_starttime_en = 1
+MessageStreamer_config.0.msgconfig_starttime = 13 ns
+MessageStreamer_config.0.msgconfig_endtime = 23 ns
+MessageStreamer_config.0.msgconfig_dbglvl = 9
+MessageStreamer_config.0.msgconfig_info_en = 0
+MessageStreamer_config.0.msgconfig_warn_en = 0
+MessageStreamer_config.0.msgconfig_error_en = 0
+MessageStreamer_config.0.msgconfig_fatal_en = 0
+MessageStreamer_config.0.msgconfig_printtime = 1
+MessageStreamer_config.0.msgconfig_printname = 1
+MessageStreamer_config.0.msgconfig_printfile = 1
+MessageStreamer_config.0.msgconfig_printlevel = 0
+MessageStreamer_config.0.msgconfig_module_id = {"ModuleA",""}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+protected MessageConfiguration constructor with name 'MessageStreamer_config.1' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.1.msgconfig_name = 
+MessageStreamer_config.1.msgconfig_starttime_en = 0
+MessageStreamer_config.1.msgconfig_starttime = 0 s
+MessageStreamer_config.1.msgconfig_endtime = 0 s
+MessageStreamer_config.1.msgconfig_dbglvl = 0
+MessageStreamer_config.1.msgconfig_info_en = 0
+MessageStreamer_config.1.msgconfig_warn_en = 0
+MessageStreamer_config.1.msgconfig_error_en = 0
+MessageStreamer_config.1.msgconfig_fatal_en = 0
+MessageStreamer_config.1.msgconfig_printtime = 0
+MessageStreamer_config.1.msgconfig_printname = 0
+MessageStreamer_config.1.msgconfig_printfile = 0
+MessageStreamer_config.1.msgconfig_printlevel = 0
+MessageStreamer_config.1.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config stdout: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #1: 
+MessageStreamer_config.1.msgconfig_name = stdout
+MessageStreamer_config.1.msgconfig_starttime_en = 0
+MessageStreamer_config.1.msgconfig_starttime = 13 ns
+MessageStreamer_config.1.msgconfig_endtime = 23 ns
+MessageStreamer_config.1.msgconfig_dbglvl = 6
+MessageStreamer_config.1.msgconfig_info_en = 0
+MessageStreamer_config.1.msgconfig_warn_en = 0
+MessageStreamer_config.1.msgconfig_error_en = 0
+MessageStreamer_config.1.msgconfig_fatal_en = 0
+MessageStreamer_config.1.msgconfig_printtime = 1
+MessageStreamer_config.1.msgconfig_printname = 1
+MessageStreamer_config.1.msgconfig_printfile = 1
+MessageStreamer_config.1.msgconfig_printlevel = 0
+MessageStreamer_config.1.msgconfig_module_id = {}
+
+protected MessageConfiguration constructor with name 'MessageStreamer_config.2' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.2.msgconfig_name = 
+MessageStreamer_config.2.msgconfig_starttime_en = 0
+MessageStreamer_config.2.msgconfig_starttime = 0 s
+MessageStreamer_config.2.msgconfig_endtime = 0 s
+MessageStreamer_config.2.msgconfig_dbglvl = 0
+MessageStreamer_config.2.msgconfig_info_en = 0
+MessageStreamer_config.2.msgconfig_warn_en = 0
+MessageStreamer_config.2.msgconfig_error_en = 0
+MessageStreamer_config.2.msgconfig_fatal_en = 0
+MessageStreamer_config.2.msgconfig_printtime = 0
+MessageStreamer_config.2.msgconfig_printname = 0
+MessageStreamer_config.2.msgconfig_printfile = 0
+MessageStreamer_config.2.msgconfig_printlevel = 0
+MessageStreamer_config.2.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config report_message_file_only_ModuleA2_and_top.txt: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #2: 
+MessageStreamer_config.2.msgconfig_name = report_message_file_only_ModuleA2_and_top.txt
+MessageStreamer_config.2.msgconfig_starttime_en = 0
+MessageStreamer_config.2.msgconfig_starttime = 0 s
+MessageStreamer_config.2.msgconfig_endtime = 0 s
+MessageStreamer_config.2.msgconfig_dbglvl = 9
+MessageStreamer_config.2.msgconfig_info_en = 0
+MessageStreamer_config.2.msgconfig_warn_en = 0
+MessageStreamer_config.2.msgconfig_error_en = 0
+MessageStreamer_config.2.msgconfig_fatal_en = 0
+MessageStreamer_config.2.msgconfig_printtime = 1
+MessageStreamer_config.2.msgconfig_printname = 1
+MessageStreamer_config.2.msgconfig_printfile = 1
+MessageStreamer_config.2.msgconfig_printlevel = 0
+MessageStreamer_config.2.msgconfig_module_id = {"ModuleA2",""}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+protected MessageConfiguration constructor with name 'MessageStreamer_config.3' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.3.msgconfig_name = 
+MessageStreamer_config.3.msgconfig_starttime_en = 0
+MessageStreamer_config.3.msgconfig_starttime = 0 s
+MessageStreamer_config.3.msgconfig_endtime = 0 s
+MessageStreamer_config.3.msgconfig_dbglvl = 0
+MessageStreamer_config.3.msgconfig_info_en = 0
+MessageStreamer_config.3.msgconfig_warn_en = 0
+MessageStreamer_config.3.msgconfig_error_en = 0
+MessageStreamer_config.3.msgconfig_fatal_en = 0
+MessageStreamer_config.3.msgconfig_printtime = 0
+MessageStreamer_config.3.msgconfig_printname = 0
+MessageStreamer_config.3.msgconfig_printfile = 0
+MessageStreamer_config.3.msgconfig_printlevel = 0
+MessageStreamer_config.3.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config SC_REPORT_INFO: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #3: 
+MessageStreamer_config.3.msgconfig_name = SC_REPORT_INFO
+MessageStreamer_config.3.msgconfig_starttime_en = 0
+MessageStreamer_config.3.msgconfig_starttime = 0 s
+MessageStreamer_config.3.msgconfig_endtime = 0 s
+MessageStreamer_config.3.msgconfig_dbglvl = 99
+MessageStreamer_config.3.msgconfig_info_en = 1
+MessageStreamer_config.3.msgconfig_warn_en = 0
+MessageStreamer_config.3.msgconfig_error_en = 0
+MessageStreamer_config.3.msgconfig_fatal_en = 0
+MessageStreamer_config.3.msgconfig_printtime = 1
+MessageStreamer_config.3.msgconfig_printname = 1
+MessageStreamer_config.3.msgconfig_printfile = 0
+MessageStreamer_config.3.msgconfig_printlevel = 0
+MessageStreamer_config.3.msgconfig_module_id = {}
+
+protected MessageConfiguration constructor with name 'MessageStreamer_config.4' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.4.msgconfig_name = 
+MessageStreamer_config.4.msgconfig_starttime_en = 0
+MessageStreamer_config.4.msgconfig_starttime = 0 s
+MessageStreamer_config.4.msgconfig_endtime = 0 s
+MessageStreamer_config.4.msgconfig_dbglvl = 0
+MessageStreamer_config.4.msgconfig_info_en = 0
+MessageStreamer_config.4.msgconfig_warn_en = 0
+MessageStreamer_config.4.msgconfig_error_en = 0
+MessageStreamer_config.4.msgconfig_fatal_en = 0
+MessageStreamer_config.4.msgconfig_printtime = 0
+MessageStreamer_config.4.msgconfig_printname = 0
+MessageStreamer_config.4.msgconfig_printfile = 0
+MessageStreamer_config.4.msgconfig_printlevel = 0
+MessageStreamer_config.4.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config SC_REPORT_WARNING: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #4: 
+MessageStreamer_config.4.msgconfig_name = SC_REPORT_WARNING
+MessageStreamer_config.4.msgconfig_starttime_en = 0
+MessageStreamer_config.4.msgconfig_starttime = 0 s
+MessageStreamer_config.4.msgconfig_endtime = 0 s
+MessageStreamer_config.4.msgconfig_dbglvl = 99
+MessageStreamer_config.4.msgconfig_info_en = 0
+MessageStreamer_config.4.msgconfig_warn_en = 1
+MessageStreamer_config.4.msgconfig_error_en = 0
+MessageStreamer_config.4.msgconfig_fatal_en = 0
+MessageStreamer_config.4.msgconfig_printtime = 1
+MessageStreamer_config.4.msgconfig_printname = 1
+MessageStreamer_config.4.msgconfig_printfile = 0
+MessageStreamer_config.4.msgconfig_printlevel = 0
+MessageStreamer_config.4.msgconfig_module_id = {}
+
+protected MessageConfiguration constructor with name 'MessageStreamer_config.5' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.5.msgconfig_name = 
+MessageStreamer_config.5.msgconfig_starttime_en = 0
+MessageStreamer_config.5.msgconfig_starttime = 0 s
+MessageStreamer_config.5.msgconfig_endtime = 0 s
+MessageStreamer_config.5.msgconfig_dbglvl = 0
+MessageStreamer_config.5.msgconfig_info_en = 0
+MessageStreamer_config.5.msgconfig_warn_en = 0
+MessageStreamer_config.5.msgconfig_error_en = 0
+MessageStreamer_config.5.msgconfig_fatal_en = 0
+MessageStreamer_config.5.msgconfig_printtime = 0
+MessageStreamer_config.5.msgconfig_printname = 0
+MessageStreamer_config.5.msgconfig_printfile = 0
+MessageStreamer_config.5.msgconfig_printlevel = 0
+MessageStreamer_config.5.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config SC_REPORT_ERROR: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #5: 
+MessageStreamer_config.5.msgconfig_name = SC_REPORT_ERROR
+MessageStreamer_config.5.msgconfig_starttime_en = 0
+MessageStreamer_config.5.msgconfig_starttime = 0 s
+MessageStreamer_config.5.msgconfig_endtime = 0 s
+MessageStreamer_config.5.msgconfig_dbglvl = 99
+MessageStreamer_config.5.msgconfig_info_en = 0
+MessageStreamer_config.5.msgconfig_warn_en = 0
+MessageStreamer_config.5.msgconfig_error_en = 1
+MessageStreamer_config.5.msgconfig_fatal_en = 0
+MessageStreamer_config.5.msgconfig_printtime = 1
+MessageStreamer_config.5.msgconfig_printname = 1
+MessageStreamer_config.5.msgconfig_printfile = 0
+MessageStreamer_config.5.msgconfig_printlevel = 0
+MessageStreamer_config.5.msgconfig_module_id = {}
+
+protected MessageConfiguration constructor with name 'MessageStreamer_config.6' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.6.msgconfig_name = 
+MessageStreamer_config.6.msgconfig_starttime_en = 0
+MessageStreamer_config.6.msgconfig_starttime = 0 s
+MessageStreamer_config.6.msgconfig_endtime = 0 s
+MessageStreamer_config.6.msgconfig_dbglvl = 0
+MessageStreamer_config.6.msgconfig_info_en = 0
+MessageStreamer_config.6.msgconfig_warn_en = 0
+MessageStreamer_config.6.msgconfig_error_en = 0
+MessageStreamer_config.6.msgconfig_fatal_en = 0
+MessageStreamer_config.6.msgconfig_printtime = 0
+MessageStreamer_config.6.msgconfig_printname = 0
+MessageStreamer_config.6.msgconfig_printfile = 0
+MessageStreamer_config.6.msgconfig_printlevel = 0
+MessageStreamer_config.6.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config SC_REPORT_FATAL: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #6: 
+MessageStreamer_config.6.msgconfig_name = SC_REPORT_FATAL
+MessageStreamer_config.6.msgconfig_starttime_en = 0
+MessageStreamer_config.6.msgconfig_starttime = 0 s
+MessageStreamer_config.6.msgconfig_endtime = 0 s
+MessageStreamer_config.6.msgconfig_dbglvl = 99
+MessageStreamer_config.6.msgconfig_info_en = 0
+MessageStreamer_config.6.msgconfig_warn_en = 0
+MessageStreamer_config.6.msgconfig_error_en = 0
+MessageStreamer_config.6.msgconfig_fatal_en = 1
+MessageStreamer_config.6.msgconfig_printtime = 1
+MessageStreamer_config.6.msgconfig_printname = 1
+MessageStreamer_config.6.msgconfig_printfile = 0
+MessageStreamer_config.6.msgconfig_printlevel = 0
+MessageStreamer_config.6.msgconfig_module_id = {}
+
+protected MessageConfiguration constructor with name 'MessageStreamer_config.7' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.7.msgconfig_name = 
+MessageStreamer_config.7.msgconfig_starttime_en = 0
+MessageStreamer_config.7.msgconfig_starttime = 0 s
+MessageStreamer_config.7.msgconfig_endtime = 0 s
+MessageStreamer_config.7.msgconfig_dbglvl = 0
+MessageStreamer_config.7.msgconfig_info_en = 0
+MessageStreamer_config.7.msgconfig_warn_en = 0
+MessageStreamer_config.7.msgconfig_error_en = 0
+MessageStreamer_config.7.msgconfig_fatal_en = 0
+MessageStreamer_config.7.msgconfig_printtime = 0
+MessageStreamer_config.7.msgconfig_printname = 0
+MessageStreamer_config.7.msgconfig_printfile = 0
+MessageStreamer_config.7.msgconfig_printlevel = 0
+MessageStreamer_config.7.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config sc_report_message_file.txt: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #7: 
+MessageStreamer_config.7.msgconfig_name = sc_report_message_file.txt
+MessageStreamer_config.7.msgconfig_starttime_en = 0
+MessageStreamer_config.7.msgconfig_starttime = 0 s
+MessageStreamer_config.7.msgconfig_endtime = 0 s
+MessageStreamer_config.7.msgconfig_dbglvl = 99
+MessageStreamer_config.7.msgconfig_info_en = 1
+MessageStreamer_config.7.msgconfig_warn_en = 1
+MessageStreamer_config.7.msgconfig_error_en = 1
+MessageStreamer_config.7.msgconfig_fatal_en = 1
+MessageStreamer_config.7.msgconfig_printtime = 1
+MessageStreamer_config.7.msgconfig_printname = 1
+MessageStreamer_config.7.msgconfig_printfile = 1
+MessageStreamer_config.7.msgconfig_printlevel = 1
+MessageStreamer_config.7.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+@0 s /0 (MessageStreamer): Apply ConfigSet for file name report_file.txt
+protected MessageConfiguration constructor with name 'MessageStreamer_config.8' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.8.msgconfig_name = 
+MessageStreamer_config.8.msgconfig_starttime_en = 0
+MessageStreamer_config.8.msgconfig_starttime = 0 s
+MessageStreamer_config.8.msgconfig_endtime = 0 s
+MessageStreamer_config.8.msgconfig_dbglvl = 0
+MessageStreamer_config.8.msgconfig_info_en = 0
+MessageStreamer_config.8.msgconfig_warn_en = 0
+MessageStreamer_config.8.msgconfig_error_en = 0
+MessageStreamer_config.8.msgconfig_fatal_en = 0
+MessageStreamer_config.8.msgconfig_printtime = 0
+MessageStreamer_config.8.msgconfig_printname = 0
+MessageStreamer_config.8.msgconfig_printfile = 0
+MessageStreamer_config.8.msgconfig_printlevel = 0
+MessageStreamer_config.8.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config report_file.txt: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #8: 
+MessageStreamer_config.8.msgconfig_name = report_file.txt
+MessageStreamer_config.8.msgconfig_starttime_en = 1
+MessageStreamer_config.8.msgconfig_starttime = 20 ns
+MessageStreamer_config.8.msgconfig_endtime = 25 ns
+MessageStreamer_config.8.msgconfig_dbglvl = 5
+MessageStreamer_config.8.msgconfig_info_en = 1
+MessageStreamer_config.8.msgconfig_warn_en = 0
+MessageStreamer_config.8.msgconfig_error_en = 1
+MessageStreamer_config.8.msgconfig_fatal_en = 0
+MessageStreamer_config.8.msgconfig_printtime = 1
+MessageStreamer_config.8.msgconfig_printname = 1
+MessageStreamer_config.8.msgconfig_printfile = 1
+MessageStreamer_config.8.msgconfig_printlevel = 1
+MessageStreamer_config.8.msgconfig_module_id = {"ModuleA",""}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+@0 s /0 (MessageStreamer): new registered stream my_dbg_stream1: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (my_dbg_stream1): end message
+@0 s /0 (MessageStreamer): out( from module , streamer id=my_dbg_stream1, level=dbg_msg_L2,
+                  filename=testbench_message_streamer_tests.cpp, line=238, parent_name=
+                  message:  STREAM CONTENT
+ another line with stream content
+@0 s /0 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@0 s /0 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:238: @0 s /0: (): STREAM CONTENT
+ another line with stream content
+@0 s /0 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@0 s /0 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@0 s /0 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@0 s /0 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@0 s /0 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@0 s /0 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@0 s /0 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@0 s /0 (MessageStreamer): new registered stream my_dbg_stream2: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (my_dbg_stream2): end message
+@0 s /0 (MessageStreamer): out( from module , streamer id=my_dbg_stream2, level=dbg_msg_L5,
+                  filename=testbench_message_streamer_tests.cpp, line=243, parent_name=
+                  message:  Hallo
+@0 s /0 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@0 s /0 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:243: @0 s /0: (): Hallo
+@0 s /0 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@0 s /0 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@0 s /0 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@0 s /0 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@0 s /0 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@0 s /0 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@0 s /0 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@0 s /0 (my_dbg_stream2): end message
+@0 s /0 (MessageStreamer): out( from module , streamer id=my_dbg_stream2, level=dbg_msg_L5,
+                  filename=testbench_message_streamer_tests.cpp, line=245, parent_name=
+                  message:  This is a new message
+@0 s /0 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@0 s /0 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:245: @0 s /0: (): This is a new message
+@0 s /0 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@0 s /0 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@0 s /0 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@0 s /0 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@0 s /0 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@0 s /0 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@0 s /0 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@0 s /0 (MessageStreamer): new registered stream ModuleA.dbgL2: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.dbgL4: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.dbgL9: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.sysINFO: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.sysWARN: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.sysERROR: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.sysFATAL: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.dbgL2: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.dbgL4: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.dbgL9: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.sysINFO: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.sysWARN: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.sysERROR: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA2.sysFATAL: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_message_file1.txt
+@0 s /0 (MessageStreamer):   check config #1: stdout
+@0 s /0 (MessageStreamer):   check config #2: report_message_file_only_ModuleA2_and_top.txt
+@0 s /0 (MessageStreamer):   check config #3: SC_REPORT_INFO
+@0 s /0 (MessageStreamer):   check config #4: SC_REPORT_WARNING
+@0 s /0 (MessageStreamer):   check config #5: SC_REPORT_ERROR
+@0 s /0 (MessageStreamer):   check config #6: SC_REPORT_FATAL
+@0 s /0 (MessageStreamer):   check config #7: sc_report_message_file.txt
+@0 s /0 (MessageStreamer):   check config #8: report_file.txt
+-------------------- START SIMULATION -----------------------
+@10 ns /1 (ModuleA.dbgL2): end message
+@10 ns /1 (MessageStreamer): out( from module ModuleA, streamer id=dbgL2, level=dbg_msg_L2,
+                  filename=testbench_message_streamer_tests.cpp, line=103, parent_name=ModuleA
+                  message:  Hallo L2 after 10ns
+@10 ns /1 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:103: @10 ns /1: (ModuleA): Hallo L2 after 10ns
+@10 ns /1 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@10 ns /1 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@10 ns /1 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@10 ns /1 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@10 ns /1 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@10 ns /1 (ModuleA.dbgL9): end message
+@10 ns /1 (MessageStreamer): out( from module ModuleA, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_message_streamer_tests.cpp, line=105, parent_name=ModuleA
+                  message:  Hallo L9 after 10ns
+new line
+@10 ns /1 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 1 (stdout) failed
+@10 ns /1 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@10 ns /1 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@10 ns /1 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@10 ns /1 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@10 ns /1 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@10 ns /1 (ModuleA2.dbgL2): end message
+@10 ns /1 (MessageStreamer): out( from module ModuleA2, streamer id=dbgL2, level=dbg_msg_L2,
+                  filename=testbench_message_streamer_tests.cpp, line=103, parent_name=ModuleA2
+                  message:  Hallo L2 after 10ns
+@10 ns /1 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:103: @10 ns /1: (ModuleA2): Hallo L2 after 10ns
+@10 ns /1 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@10 ns /1 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@10 ns /1 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@10 ns /1 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@10 ns /1 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@10 ns /1 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@10 ns /1 (ModuleA2.dbgL9): end message
+@10 ns /1 (MessageStreamer): out( from module ModuleA2, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_message_streamer_tests.cpp, line=105, parent_name=ModuleA2
+                  message:  Hallo L9 after 10ns
+new line
+@10 ns /1 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 1 (stdout) failed
+@10 ns /1 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@10 ns /1 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@10 ns /1 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@10 ns /1 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@10 ns /1 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@10 ns /1 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@20 ns /2 (ModuleA.dbgL4): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA, streamer id=dbgL4, level=dbg_msg_L4,
+                  filename=testbench_message_streamer_tests.cpp, line=109, parent_name=ModuleA
+                  message:  Hallo L4 after 20ns
+new line
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:109: @20 ns /2: (ModuleA): Hallo L4 after 20ns
+new line
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) passed
+@20 ns /2 (ModuleA.sysINFO): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA, streamer id=sysINFO, level=sys_msg_INFO,
+                  filename=testbench_message_streamer_tests.cpp, line=111, parent_name=ModuleA
+                  message:  This is an sc_info!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) passed
+
+Info: ModuleA.sysINFO: @20 ns /2: (ModuleA): This is an sc_info!
+
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) passed
+@20 ns /2 (ModuleA.sysWARN): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA, streamer id=sysWARN, level=sys_msg_WARNING,
+                  filename=testbench_message_streamer_tests.cpp, line=112, parent_name=ModuleA
+                  message:  This is an sc_warning!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) passed
+
+Warning: ModuleA.sysWARN: @20 ns /2: (ModuleA): This is an sc_warning!
+
+In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/reportmsg/MessageStreamer.h:185
+In process: ModuleA.main_action @ 20 ns
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@20 ns /2 (ModuleA.sysERROR): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA, streamer id=sysERROR, level=sys_msg_ERROR,
+                  filename=testbench_message_streamer_tests.cpp, line=113, parent_name=ModuleA
+                  message:  This is an sc_error!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) passed
+
+Error: ModuleA.sysERROR: @20 ns /2: (ModuleA): This is an sc_error!
+
+In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/reportmsg/MessageStreamer.h:189
+In process: ModuleA.main_action @ 20 ns
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) passed
+@20 ns /2 (ModuleA2.dbgL4): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA2, streamer id=dbgL4, level=dbg_msg_L4,
+                  filename=testbench_message_streamer_tests.cpp, line=109, parent_name=ModuleA2
+                  message:  Hallo L4 after 20ns
+new line
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:109: @20 ns /2: (ModuleA2): Hallo L4 after 20ns
+new line
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@20 ns /2 (ModuleA2.sysINFO): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA2, streamer id=sysINFO, level=sys_msg_INFO,
+                  filename=testbench_message_streamer_tests.cpp, line=111, parent_name=ModuleA2
+                  message:  This is an sc_info!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) passed
+
+Info: ModuleA2.sysINFO: @20 ns /2: (ModuleA2): This is an sc_info!
+
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@20 ns /2 (ModuleA2.sysWARN): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA2, streamer id=sysWARN, level=sys_msg_WARNING,
+                  filename=testbench_message_streamer_tests.cpp, line=112, parent_name=ModuleA2
+                  message:  This is an sc_warning!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) passed
+
+Warning: ModuleA2.sysWARN: @20 ns /2: (ModuleA2): This is an sc_warning!
+
+In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/reportmsg/MessageStreamer.h:185
+In process: ModuleA2.main_action @ 20 ns
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@20 ns /2 (ModuleA2.sysERROR): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA2, streamer id=sysERROR, level=sys_msg_ERROR,
+                  filename=testbench_message_streamer_tests.cpp, line=113, parent_name=ModuleA2
+                  message:  This is an sc_error!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (stdout) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@20 ns /2 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@20 ns /2 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) passed
+
+Error: ModuleA2.sysERROR: @20 ns /2: (ModuleA2): This is an sc_error!
+
+In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/reportmsg/MessageStreamer.h:189
+In process: ModuleA2.main_action @ 20 ns
+@20 ns /2 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@20 ns /2 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@21 ns /3 (ModuleA.dbgL9): end message
+@21 ns /3 (MessageStreamer): out( from module ModuleA, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_message_streamer_tests.cpp, line=117, parent_name=ModuleA
+                  message:  Hallo L9 after 21ns
+@21 ns /3 (MessageStreamer): check fileno 0 (report_message_file1.txt) passed
+@21 ns /3 (MessageStreamer): check fileno 1 (stdout) failed
+@21 ns /3 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@21 ns /3 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@21 ns /3 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@21 ns /3 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@21 ns /3 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@21 ns /3 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@21 ns /3 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@21 ns /3 (ModuleA2.dbgL9): end message
+@21 ns /3 (MessageStreamer): out( from module ModuleA2, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_message_streamer_tests.cpp, line=117, parent_name=ModuleA2
+                  message:  Hallo L9 after 21ns
+@21 ns /3 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@21 ns /3 (MessageStreamer): check fileno 1 (stdout) failed
+@21 ns /3 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@21 ns /3 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@21 ns /3 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@21 ns /3 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@21 ns /3 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@21 ns /3 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@21 ns /3 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@30 ns /4 (ModuleA.dbgL4): end message
+@30 ns /4 (MessageStreamer): out( from module ModuleA, streamer id=dbgL4, level=dbg_msg_L4,
+                  filename=testbench_message_streamer_tests.cpp, line=121, parent_name=ModuleA
+                  message:  Hallo L4 after 30ns
+@30 ns /4 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:121: @30 ns /4: (ModuleA): Hallo L4 after 30ns
+@30 ns /4 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@30 ns /4 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@30 ns /4 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@30 ns /4 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@30 ns /4 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@30 ns /4 (ModuleA.dbgL9): end message
+@30 ns /4 (MessageStreamer): out( from module ModuleA, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_message_streamer_tests.cpp, line=123, parent_name=ModuleA
+                  message:  14
+
+@30 ns /4 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 1 (stdout) failed
+@30 ns /4 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@30 ns /4 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@30 ns /4 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@30 ns /4 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@30 ns /4 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@30 ns /4 (ModuleA2.dbgL4): end message
+@30 ns /4 (MessageStreamer): out( from module ModuleA2, streamer id=dbgL4, level=dbg_msg_L4,
+                  filename=testbench_message_streamer_tests.cpp, line=121, parent_name=ModuleA2
+                  message:  Hallo L4 after 30ns
+@30 ns /4 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 1 (stdout) passed
+testbench_message_streamer_tests.cpp:121: @30 ns /4: (ModuleA2): Hallo L4 after 30ns
+@30 ns /4 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@30 ns /4 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@30 ns /4 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@30 ns /4 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@30 ns /4 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@30 ns /4 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 8 (report_file.txt) failed
+@30 ns /4 (ModuleA2.dbgL9): end message
+@30 ns /4 (MessageStreamer): out( from module ModuleA2, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_message_streamer_tests.cpp, line=123, parent_name=ModuleA2
+                  message:  14
+
+@30 ns /4 (MessageStreamer): check fileno 0 (report_message_file1.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 1 (stdout) failed
+@30 ns /4 (MessageStreamer): check fileno 2 (report_message_file_only_ModuleA2_and_top.txt) passed
+@30 ns /4 (MessageStreamer): check fileno 3 (SC_REPORT_INFO) failed
+@30 ns /4 (MessageStreamer): check fileno 4 (SC_REPORT_WARNING) failed
+@30 ns /4 (MessageStreamer): check fileno 5 (SC_REPORT_ERROR) failed
+@30 ns /4 (MessageStreamer): check fileno 6 (SC_REPORT_FATAL) failed
+@30 ns /4 (MessageStreamer): check fileno 7 (sc_report_message_file.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 8 (report_file.txt) failed
+-------------------- SIMULATION ENDED -----------------------
+Parameter list:
+  vector: size=136
+   MessageStreamer_config = {"Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters" "Warning: getString not implemented for MessageConfiguration parameters"}
+   MessageStreamer_config.0 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.0.msgconfig_dbglvl = 9
+   MessageStreamer_config.0.msgconfig_endtime = 23 ns
+   MessageStreamer_config.0.msgconfig_error_en = 0
+   MessageStreamer_config.0.msgconfig_fatal_en = 0
+   MessageStreamer_config.0.msgconfig_info_en = 0
+   MessageStreamer_config.0.msgconfig_module_id = {"ModuleA",""}
+   MessageStreamer_config.0.msgconfig_name = report_message_file1.txt
+   MessageStreamer_config.0.msgconfig_printfile = 1
+   MessageStreamer_config.0.msgconfig_printlevel = 0
+   MessageStreamer_config.0.msgconfig_printname = 1
+   MessageStreamer_config.0.msgconfig_printtime = 1
+   MessageStreamer_config.0.msgconfig_starttime = 13 ns
+   MessageStreamer_config.0.msgconfig_starttime_en = 1
+   MessageStreamer_config.0.msgconfig_warn_en = 0
+   MessageStreamer_config.1 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.1.msgconfig_dbglvl = 6
+   MessageStreamer_config.1.msgconfig_endtime = 23 ns
+   MessageStreamer_config.1.msgconfig_error_en = 0
+   MessageStreamer_config.1.msgconfig_fatal_en = 0
+   MessageStreamer_config.1.msgconfig_info_en = 0
+   MessageStreamer_config.1.msgconfig_module_id = {}
+   MessageStreamer_config.1.msgconfig_name = stdout
+   MessageStreamer_config.1.msgconfig_printfile = 1
+   MessageStreamer_config.1.msgconfig_printlevel = 0
+   MessageStreamer_config.1.msgconfig_printname = 1
+   MessageStreamer_config.1.msgconfig_printtime = 1
+   MessageStreamer_config.1.msgconfig_starttime = 13 ns
+   MessageStreamer_config.1.msgconfig_starttime_en = 0
+   MessageStreamer_config.1.msgconfig_warn_en = 0
+   MessageStreamer_config.2 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.2.msgconfig_dbglvl = 9
+   MessageStreamer_config.2.msgconfig_endtime = 0 s
+   MessageStreamer_config.2.msgconfig_error_en = 0
+   MessageStreamer_config.2.msgconfig_fatal_en = 0
+   MessageStreamer_config.2.msgconfig_info_en = 0
+   MessageStreamer_config.2.msgconfig_module_id = {"ModuleA2",""}
+   MessageStreamer_config.2.msgconfig_name = report_message_file_only_ModuleA2_and_top.txt
+   MessageStreamer_config.2.msgconfig_printfile = 1
+   MessageStreamer_config.2.msgconfig_printlevel = 0
+   MessageStreamer_config.2.msgconfig_printname = 1
+   MessageStreamer_config.2.msgconfig_printtime = 1
+   MessageStreamer_config.2.msgconfig_starttime = 0 s
+   MessageStreamer_config.2.msgconfig_starttime_en = 0
+   MessageStreamer_config.2.msgconfig_warn_en = 0
+   MessageStreamer_config.3 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.3.msgconfig_dbglvl = 99
+   MessageStreamer_config.3.msgconfig_endtime = 0 s
+   MessageStreamer_config.3.msgconfig_error_en = 0
+   MessageStreamer_config.3.msgconfig_fatal_en = 0
+   MessageStreamer_config.3.msgconfig_info_en = 1
+   MessageStreamer_config.3.msgconfig_module_id = {}
+   MessageStreamer_config.3.msgconfig_name = SC_REPORT_INFO
+   MessageStreamer_config.3.msgconfig_printfile = 0
+   MessageStreamer_config.3.msgconfig_printlevel = 0
+   MessageStreamer_config.3.msgconfig_printname = 1
+   MessageStreamer_config.3.msgconfig_printtime = 1
+   MessageStreamer_config.3.msgconfig_starttime = 0 s
+   MessageStreamer_config.3.msgconfig_starttime_en = 0
+   MessageStreamer_config.3.msgconfig_warn_en = 0
+   MessageStreamer_config.4 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.4.msgconfig_dbglvl = 99
+   MessageStreamer_config.4.msgconfig_endtime = 0 s
+   MessageStreamer_config.4.msgconfig_error_en = 0
+   MessageStreamer_config.4.msgconfig_fatal_en = 0
+   MessageStreamer_config.4.msgconfig_info_en = 0
+   MessageStreamer_config.4.msgconfig_module_id = {}
+   MessageStreamer_config.4.msgconfig_name = SC_REPORT_WARNING
+   MessageStreamer_config.4.msgconfig_printfile = 0
+   MessageStreamer_config.4.msgconfig_printlevel = 0
+   MessageStreamer_config.4.msgconfig_printname = 1
+   MessageStreamer_config.4.msgconfig_printtime = 1
+   MessageStreamer_config.4.msgconfig_starttime = 0 s
+   MessageStreamer_config.4.msgconfig_starttime_en = 0
+   MessageStreamer_config.4.msgconfig_warn_en = 1
+   MessageStreamer_config.5 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.5.msgconfig_dbglvl = 99
+   MessageStreamer_config.5.msgconfig_endtime = 0 s
+   MessageStreamer_config.5.msgconfig_error_en = 1
+   MessageStreamer_config.5.msgconfig_fatal_en = 0
+   MessageStreamer_config.5.msgconfig_info_en = 0
+   MessageStreamer_config.5.msgconfig_module_id = {}
+   MessageStreamer_config.5.msgconfig_name = SC_REPORT_ERROR
+   MessageStreamer_config.5.msgconfig_printfile = 0
+   MessageStreamer_config.5.msgconfig_printlevel = 0
+   MessageStreamer_config.5.msgconfig_printname = 1
+   MessageStreamer_config.5.msgconfig_printtime = 1
+   MessageStreamer_config.5.msgconfig_starttime = 0 s
+   MessageStreamer_config.5.msgconfig_starttime_en = 0
+   MessageStreamer_config.5.msgconfig_warn_en = 0
+   MessageStreamer_config.6 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.6.msgconfig_dbglvl = 99
+   MessageStreamer_config.6.msgconfig_endtime = 0 s
+   MessageStreamer_config.6.msgconfig_error_en = 0
+   MessageStreamer_config.6.msgconfig_fatal_en = 1
+   MessageStreamer_config.6.msgconfig_info_en = 0
+   MessageStreamer_config.6.msgconfig_module_id = {}
+   MessageStreamer_config.6.msgconfig_name = SC_REPORT_FATAL
+   MessageStreamer_config.6.msgconfig_printfile = 0
+   MessageStreamer_config.6.msgconfig_printlevel = 0
+   MessageStreamer_config.6.msgconfig_printname = 1
+   MessageStreamer_config.6.msgconfig_printtime = 1
+   MessageStreamer_config.6.msgconfig_starttime = 0 s
+   MessageStreamer_config.6.msgconfig_starttime_en = 0
+   MessageStreamer_config.6.msgconfig_warn_en = 0
+   MessageStreamer_config.7 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.7.msgconfig_dbglvl = 99
+   MessageStreamer_config.7.msgconfig_endtime = 0 s
+   MessageStreamer_config.7.msgconfig_error_en = 1
+   MessageStreamer_config.7.msgconfig_fatal_en = 1
+   MessageStreamer_config.7.msgconfig_info_en = 1
+   MessageStreamer_config.7.msgconfig_module_id = {}
+   MessageStreamer_config.7.msgconfig_name = sc_report_message_file.txt
+   MessageStreamer_config.7.msgconfig_printfile = 1
+   MessageStreamer_config.7.msgconfig_printlevel = 1
+   MessageStreamer_config.7.msgconfig_printname = 1
+   MessageStreamer_config.7.msgconfig_printtime = 1
+   MessageStreamer_config.7.msgconfig_starttime = 0 s
+   MessageStreamer_config.7.msgconfig_starttime_en = 0
+   MessageStreamer_config.7.msgconfig_warn_en = 1
+   MessageStreamer_config.8 = Warning: getString not implemented for MessageConfiguration parameters
+   MessageStreamer_config.8.msgconfig_dbglvl = 5
+   MessageStreamer_config.8.msgconfig_endtime = 25 ns
+   MessageStreamer_config.8.msgconfig_error_en = 1
+   MessageStreamer_config.8.msgconfig_fatal_en = 0
+   MessageStreamer_config.8.msgconfig_info_en = 1
+   MessageStreamer_config.8.msgconfig_module_id = {"ModuleA",""}
+   MessageStreamer_config.8.msgconfig_name = report_file.txt
+   MessageStreamer_config.8.msgconfig_printfile = 1
+   MessageStreamer_config.8.msgconfig_printlevel = 1
+   MessageStreamer_config.8.msgconfig_printname = 1
+   MessageStreamer_config.8.msgconfig_printtime = 1
+   MessageStreamer_config.8.msgconfig_starttime = 20 ns
+   MessageStreamer_config.8.msgconfig_starttime_en = 1
+   MessageStreamer_config.8.msgconfig_warn_en = 0
+

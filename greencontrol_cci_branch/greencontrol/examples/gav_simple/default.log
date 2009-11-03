@@ -1,0 +1,17 @@
+Simulation time: Wed Oct 28 10:15:04 2009
+
+@1 ns /1: Owner.int_param = 100
+@1 ns /1: Owner.uint_param = 670
+@1 ns /1: Owner.int_param = 101
+@2 ns /3: Owner.int_param = 102
+@2 ns /3: Owner.int_param = 103
+@2 ns /3: Owner.int_param = 104
+@2 ns /4: Owner.int_param = 105
+@2 ns /4: Owner.int_param = 106
+@3 ns /7: Owner.uint_param = 2000
+@5 ns /8: Owner.uint_param = 3000
+@5 ns /8: Owner.int_param = 222
+@106 ns /10: Owner.int_param = 133
+@107 ns /11: Owner.int_param = 42
+@117 ns /15: Owner.int_param = 4422
+@210 ns /18: Owner.int_param = 10000

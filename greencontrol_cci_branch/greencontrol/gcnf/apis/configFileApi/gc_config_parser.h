@@ -1,0 +1,121 @@
+//   GreenControl framework
+//
+// LICENSETEXT
+//
+//   Copyright (C) 2007 : GreenSocs Ltd
+// 	 http://www.greensocs.com/ , email: info@greensocs.com
+//
+//   Developed by :
+//   
+//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
+//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
+//     Technical University of Braunschweig, Dept. E.I.S.
+//     http://www.eis.cs.tu-bs.de
+//
+//
+//   This program is free software.
+// 
+//   If you have no applicable agreement with GreenSocs Ltd, this software
+//   is licensed to you, and you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation; either version 2 of the License, or
+//   (at your option) any later version.
+// 
+//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
+//   agreement prevail.
+// 
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+// 
+//   You should have received a copy of the GNU General Public License
+//   along with this program; if not, write to the Free Software
+//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+//   02110-1301  USA 
+// 
+// ENDLICENSETEXT
+
+#ifndef __GC_CONFIG_PARSER_h__
+#define __GC_CONFIG_PARSER_h__
+
+#undef TRACENAME
+#define TRACENAME "GC_CONFIG_PARSER"
+
+/**
+ * \file gc_config_parser.h A simple config file parser for GreenBus models.
+ * (C) 2007 Wolfgang Klingauf, TU Braunschweig, E.I.S.
+ *     modified for GreenControl Config by CS
+ */
+
+namespace gs {
+namespace cnf {
+
+
+  enum gc_config_parse_result {
+    parse_result_ignore = 0,
+    parse_result_param
+  };
+
+#define BUFSIZE 1024
+  static char line[BUFSIZE];
+
+
+  typedef std::pair<std::vector<std::string>, gc_config_parse_result> parseresult;
+
+
+  /**
+   * Classify a token.
+   * @param token_ A token.
+   * @return A classification of the given token.
+   */
+  static parseresult parse(const std::string &token_) {
+    std::string::size_type idx;
+    std::vector<std::string> tokenlist;
+    std::string token(token_);
+    
+    // test for empty token --> ignore
+    if (token == "")
+      return parseresult(tokenlist, parse_result_ignore);
+
+    // test for comment --> remove 
+    idx = token.find("#"); 
+    if (idx != std::string::npos) {
+      token = token.substr(0, idx);
+    }
+     
+    //cout << "full token: '"<< token.substr(0,idx) << "'"<< endl<< flush;
+
+    // test for tabs and spaces and create token list
+    while((idx = token.find_first_of(" \t")) != std::string::npos) {
+      if (idx > 0) { // is a word
+        //cout << "token: '"<< token.substr(0,idx) <<"'"<< endl<< flush;
+        tokenlist.push_back(token.substr(0,idx));
+      }    
+      token = token.substr(idx+1);
+    }
+    
+    if (token.size() > 0) {
+      tokenlist.push_back(token);
+    }  
+
+    //cout << "tokenlist.size()=" << tokenlist.size() <<endl<<flush;
+
+    if (tokenlist.empty())
+      return make_pair(tokenlist, parse_result_ignore);
+
+    if (tokenlist.size() == 1) {
+      //sc_assert(false);
+      return make_pair(tokenlist, parse_result_ignore);
+    } else {
+      return make_pair(tokenlist, parse_result_param);
+    }
+
+    return make_pair(tokenlist, parse_result_ignore);
+  }
+
+
+} // end namespace cnf
+} // end namespace gs
+
+#endif

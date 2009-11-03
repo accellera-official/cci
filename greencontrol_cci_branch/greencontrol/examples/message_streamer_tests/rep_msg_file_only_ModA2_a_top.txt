@@ -1,0 +1,15 @@
+Simulation time: Tue Nov  4 21:22:29 2008
+
+testbench_message_streamer_tests.cpp:240: @0 s /0: (): STREAM CONTENT
+ another line with stream content
+testbench_message_streamer_tests.cpp:245: @0 s /0: (): Hallo
+testbench_message_streamer_tests.cpp:247: @0 s /0: (): This is a new message
+testbench_message_streamer_tests.cpp:105: @10 ns /1: (ModuleA2): Hallo L2 after 10ns
+testbench_message_streamer_tests.cpp:107: @10 ns /1: (ModuleA2): Hallo L9 after 10ns
+new line
+testbench_message_streamer_tests.cpp:111: @20 ns /2: (ModuleA2): Hallo L4 after 20ns
+new line
+testbench_message_streamer_tests.cpp:119: @21 ns /3: (ModuleA2): Hallo L9 after 21ns
+testbench_message_streamer_tests.cpp:123: @30 ns /4: (ModuleA2): Hallo L4 after 30ns
+testbench_message_streamer_tests.cpp:125: @30 ns /4: (ModuleA2): 14
+

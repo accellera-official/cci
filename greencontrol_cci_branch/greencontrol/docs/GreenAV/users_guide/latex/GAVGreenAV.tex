@@ -1,0 +1,285 @@
+% (c) GreenSocs Ltd 2008
+% author: Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+
+
+%%%%%%%%%%%%% cleardoublepage %%%%%%%%%%%%%%%%
+\cleardoublepage
+
+\chapter{Green Analysis and Visibility}
+\label{GreenAV}
+
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+
+\section{Architecture}
+\label{Architecture}
+
+Green Analysis and Visibility (\GreenAV, GAV) follows the \GreenControl concept (see figure \ref{fig:GAVConcept1}): A plugin ({\em GAV\_Plugin}) manages the functionality that is needed centralized for analysis and visibility. An API ({\em GAV\_Api}) allows access to the plugin's functionality.
+
+\begin{figure}[ht]
+	\centerline{
+		\includegraphics[width=\linewidth]{./images/GAVconcept(1)}}
+	\caption{GreenAV Concept}
+	\label{fig:GAVConcept1}
+\end{figure}
+
+Figure \ref{fig:GAVConcept2} is an overview over the most important elements of \GreenAV. The user module may use the \lstinline|GAV_Api| to access \lstinline|OutputPlugin|s (see section \ref{GAVOutputPlugins}). The user module also can create Statistics Calculator objects \lstinline|StatCalc| and the concerning \lstinline|Trigger|s and \lstinline|Calculator|s (see section \ref{GAVStatisticsCalculator}). The event listeners are members of the \lstinline|GAV_Plugin|. One is used by the output plugins and one is used by the triggers without the user's recognition.
+
+\begin{figure}[ht]
+	\centerline{
+		\includegraphics[width=\linewidth]{./images/GAVconcept(2)}}
+	\caption{GreenAV full Concept}
+	\label{fig:GAVConcept2}
+\end{figure}
+
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+
+\section{Namespace gs::av}
+\label{GAVnamespace}
+
+All analysis and visibility classes of this \GreenAV framework are located within the namespace {\sffamily gs::av} which is a sub namespace of the GreenSocs namespace {\sffamily gs}.
+
+This framework uses the \GreenControl namespace {\sffamily gs::ctr} and some elements of the \GreenConfig namespace {\sffamily gs::cnf}.
+
+A \lstinline[language=TeX]|using namespace ctr;| statement in the \GreenAV global import file imports the control namespace to the {\sffamily gs::av} namespace (see \Datei{greencontrol/gav/plugin/gav\_globals.h}).
+
+\Note{Compatibility Note}{Namespace compativility to release 0.2}{
+	To be compatible to the old namespaces (tlm::gc, tlm::gc::config) the header
+	file \Datei{greencontrol/namespace\_compatibility.h} can be included!
+}
+
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+
+\section{API adapter GAV\_Api}
+\label{GAVUserAPI}
+
+This section is about the GAV user API. For a full API reference see the \hyperlink{GAVDoxygenRef08target}{doxygen API reference}. Here follows a brief description of the most important functions:
+
+
+\begin{tabularx}{\textwidth}{|X|} 
+  \hline
+  {\sffamily create\_OutputPlugin (OutputPluginType type, string ctor\_param)} \\
+  \hline
+  Creates a new OutputPlugin instance of the specified type in the plugin and provides the specified constructor parameter. The constructor parameter is interpreted dependent on the output plugin type (e.g. a file name or stream name or ignored). \\
+  \hline
+  Returns a pointer to the output plugin. \\
+  \hline
+  See section \ref{GAVOutputPlugins} for details. \\
+  \hline
+\end{tabularx} 
+
+\begin{tabularx}{\textwidth}{|X|} 
+  \hline
+  {\sffamily get\_default\_output (OutputPluginType type = DEFAULT\_OUT)} \\
+  \hline
+     Get the default output plugin of the specified type or the simulation-wide default.\newline
+     Not specifying the OutputPluginType will return the simulation-wide default one. \\
+  \hline
+  Returns a pointer to the default output plugin. \\
+  \hline
+  See section \ref{GAVOutputPlugins} for details. \\
+  \hline
+\end{tabularx} 
+
+\begin{tabularx}{\textwidth}{|X|} 
+  \hline
+  {\sffamily add\_to\_default\_output (OutputPluginType type, gs\_param\_base *par)} \newline 
+  {\sffamily add\_to\_default\_output (OutputPluginType type, gs\_param\_base \&par)} \\
+  \hline
+  Adds a gs\_param to be outputted by the (implicit existing) default output plugin of the specified type. The type {\sffamily DEFAULT\_OUT} may be used to add to the simulation-wide output plugin.
+   \newline 
+  For each {\sffamily OutputPluginType} type there is existing one object in the GAV plugin. (The object will be created at its first usage.)  \\
+  \hline
+  Returns a pointer to the output plugin. \\
+  \hline
+  See section \ref{GAVOutputPlugins} for details. \\
+  \hline
+\end{tabularx} 
+
+\begin{tabularx}{\textwidth}{|X|} 
+  \hline
+  {\sffamily add\_to\_output (OutputPlugin\_if* outputPluginID, gs\_param\_base *par)} \\
+  \hline
+  Adds a gs\_param to be outputted by the specified output plugin.\newline
+  The specified output plugin has to be created by calling \lstinline|create_OutputPlugin| or has to be set by calling \lstinline|get_default_output|.  \\
+  \hline
+  See section \ref{GAVOutputPlugins} for details. \\
+  \hline
+\end{tabularx} 
+
+\begin{tabularx}{\textwidth}{|X|} 
+  \hline
+  {\sffamily get\_event\_listener ()} \\
+  \hline
+  Returns an event listerner for triggers. \newline
+  May be used for any further purposes.\\
+  \hline
+  See sections \ref{GAVEventListener} and \ref{GAVTrigger} for details. \\
+  \hline
+\end{tabularx} 
+
+
+%%%%%%%%%%%%%%%
+\input{GAVOutputPlugins}
+
+
+%%%%%%%%%%%%%%%
+\section{Analysis and Visibility Service}
+\label{GAVService}
+
+
+%%%%
+\subsection{Service Plugin}
+\label{GAVServicePlugin}
+
+The service plugin (class \lstinline|GAV_Plugin|, file \Datei{gav\_plugin.h}) uses the enum member {\sffamily AV\_SERVICE} and the port plugin name {\sffamily GAV\_Plugin}.
+
+The main functionality of the plugin:
+\begin{itemize}
+  \item  Manage output plugins (see section \ref{GAVOutputPlugins}),
+  \item  Own two event listeners needed by output plugins and Statistics Calculator Triggers (see sections \ref{GAVOutputPlugins} and \ref{GAVStatisticsCalculator}).
+\end{itemize}
+
+
+
+%%%%
+\subsection{Commands}
+\label{GAVCommands}
+
+The analysis and visibility service {\sffamily AV\_SERVICE} uses the command enum {\sffamily GAVCommand} (see file \Datei{gav\_datatypes.h}).
+
+These commands may be used for the API -- Plugin communication:
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{5.1cm}|X|}
+	\cline{1-1}\cline{2-2}\multicolumn{2}{|l|}{  Direction:  \newline API $\rightarrow$ GAV Plugin    }\\ 
+	\cline{1-1}\cline{2-2} {\bf Command}    &  Usage   \\ 
+	\cline{1-1}\cline{2-2} \lstinline|CMD_ADD_TO_OUTPUT_PLUGIN|    &   
+		Adds a parameter to an output plugin. The output plugin can be either the default one of the 
+		specified type or a user API specified one. If the default one is being used for the first time 
+		the output plugin will be instantiated by the plugin. \\ 
+	\cline{1-1}\cline{2-2} \lstinline|CMD_CREATE_OUTPUT_PLUGIN|    &   
+		Creates a new output plugin of the specified type and returns the pointer to the API.  \\ 
+	\cline{1-1}\cline{2-2} \lstinline|CMD_GET_EVENT_LISTENER|    &   
+		Returns the pointer to the plugin's trigger event listener to the API.  \\ 
+	\hline
+\end{tabularx}
+
+The fields of the transaction are used for special commands on this way:\newline
+\noindent
+\begin{tabularx}{\textwidth}{|p{3.3cm}|p{2.3cm}|p{2cm}|X|}
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4} Command                &  Phase       &  Field             &  Description   \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4} \lstinline|CMD_ADD_TO_ OUTPUT_PLUGIN|&  REQUEST     &  
+		{\em AnyPointer}    &  $!= NULL$: 'Identifier' (pointer) of the output plugin the parameter should be added to.
+		\newline $== NULL$: add to the default output plugin.  \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  REQUEST    &  {\em AnyUint}       & 
+		If ({\em AnyPointer} $== NULL$): type of the default output plugin 
+		(member of enum {\sffamily OutputPluginType}).  \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  REQUEST    &  {\em AnyPointer2} & 
+		Optional: Pointer (void*) to the parameter that should be added. \newline
+		$== NULL$: and if $AnyPointer == NULL$: only return the default output plugin pointer without observing a parameter \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  RESPONSE  &  {\em AnyPointer} & 
+		Pointer ('identifier') to the output plugin the parameter was added. 
+		Can be used in this command for adding further parameters. \newline 
+		$= NULL$: on error. \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  RESPONSE  &  {\em Error}       & 
+		 $>0$ when adding fails.   \\ 
+	\hline
+\end{tabularx}
+
+\vspace{1 cm}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{3.3cm}|p{2.3cm}|p{2cm}|X|}
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4} Command                &  Phase       &  Field             &  Description   \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4} \lstinline|CMD_CREATE_ OUTPUT_PLUGIN| &  REQUEST & {\em AnyUint}       &  
+		Type of the OutputPlugin that should be created 
+		(member of enum {\sffamily OutputPluginType}). \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  REQUEST    &  {\em Value} & 
+		Constructor parameter (string) that should be given to the output plugin's constructor 
+		(containing e.g. filename dependent on the output plugin type). \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  RESPONSE  &  {\em AnyPointer} & 
+		Pointer ('identifier') to the created output plugin. Can be used in the 
+		{\sffamily CMD\_ADD\_TO\_OUTPUT\_PLUGIN} command for adding parameters. \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  RESPONSE  &  {\em Error}       &  
+		No error specified so long.   \\ 
+	\hline
+\end{tabularx}
+
+\vspace{1 cm}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{3.3cm}|p{2.3cm}|p{2cm}|X|}
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4} Command                &  Phase       &  Field             &  Description   \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4} \lstinline|CMD_GET_ EVENT_LISTENER| &  RESPONSE  &  {\em AnyPointer} &
+		Pointer to the plugin's trigger event listener. \\ 
+	\cline{1-1}\cline{2-2}\cline{3-3}\cline{4-4}                        &  RESPONSE  &  {\em Error}       &  
+		No error specified so long.   \\ 
+	\hline
+\end{tabularx}
+
+
+%%%%
+\subsection{Event Listener}
+\label{GAVEventListener}
+
+Some analysis objects have to wait for events. These objects may not be allowed to be an sc\_module because they may be created during simulation runtime (e.g. the trigger of the statistics calculator, see section \ref{GAVTrigger}). To be able to wait for \lstinline|sc_event|s anyway, that object may use {\em event listeners}.
+
+Event listeners are sc\_modules owned by the plugin doing dynamically spawned event waits: An event listener is is templated to the initiator who wants to wait for an event. When the initiator calls \lstinline|create_event_listener| the listener dynamically spawns a process being sensitive for the given event. When the event is notified the initiator is called back by the listener process.
+
+The plugin has two event listeners:\newline
+\lstinline|event_listener<trigger_if>| and \lstinline|event_listener<OutputPlugin_base>|. The one for triggers can be accessed using the GAV user API by calling \lstinline|get_event_listener| (see section \ref{GAVUserAPI}).
+
+The listener pointer templated to \lstinline|trigger_if| can be transported to the API via a transaction of command type {\sffamily \small CMD\_GET\_EVENT\_LISTENER}. The listener templated to \lstinline|OutputPlugin_base| is used by the plugin itself when instantiating output plugins.
+
+
+%%%%%%%%%%%%%%%
+\input{GAVStatCalc}
+
+
+%%%%%%%%%%%%%%%
+\section{Miscellaneous}
+\label{GAVMiscellaneous}
+
+%%%%%%%%%%%%%%%
+\subsection{Dynamic Processes}
+\label{GAVDynamicProcesses}
+
+\Note{Important}{Dynamic processes}{
+Use \lstinline[language=TeX]|#define SC_INCLUDE_DYNAMIC_PROCESSES| before including \Datei{systemc.h}
+or use the compiler flag \lstinline|-DSC_INCLUDE_DYNAMIC_PROCESSES| to enable dynamic processes needed by the GAV Plugin.
+}
+
+
+%%%%%%%%%%%%%%%
+\subsection{SystemC 2.1}
+\label{GAVSystemC2.1}
+
+Together with dynamic processes and boost tokenizer SystemC 2.1 produces compiler errors. 
+
+The parameter arrays use the boost tokenizer and this seems to have a bug in SystemC 2.1 (it seems already to be included by SystemC before \GreenAV includes it in the array class).
+
+As a work-around you have to include the boost tokenizer {\em before} including SystemC:
+
+\noindent
+\begin{minipage}{\textwidth}
+\begin{lstlisting}
+// Must be included BEFORE SystemC because SystemC 
+// has a buggy boost implementation included!!!!
+#include <boost/tokenizer.hpp> // for parameter array!
+
+#define SC_INCLUDE_DYNAMIC_PROCESSES
+#include <systemc.h>
+\end{lstlisting}
+\end{minipage}
+
+%%%%%%%%%%%%%%%
+\subsection{Regression Tests}
+\label{GAVRegressionTests}
+
+See the \hyperlink{GAVProjectWebPage}{project web page} for a list of regression tests. The positive and negative regression tests are mainly done in the examples \Verzeichnis{example greencontrol/examples/gav\_simple/} and \Verzeichnis{greencontrol/examples/gav\_StatCalc/}.
+
+In the files \Datei{simple\_analysis\_globals.h} and \Datei{analysis\_statcalc\_globals.h} the define \lstinline|SHOW_REGRESSION_TEST_RESULTS_ON| can be undefined to switch off the regression tests output.

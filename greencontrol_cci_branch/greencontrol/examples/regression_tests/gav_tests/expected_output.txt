@@ -1,0 +1,178 @@
+@0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
+@0 s /0 (static GAV_Api::getApiInstance): create new apiMap
+@0 s /0 (static GAV_Api::getApiInstance): create new GAV_Api
+@0 s /0 (AnalysisPlugin.__gav_api___0): constructor GAV_Api()
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): Constructor
+@0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam'
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter EnaMod.ExplicitParam
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam'
+
+Info: AnalysisPlugin.STDOUT_OUT_default: Parameter 'EnaMod.ImplicitParam' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam2'
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.top_param_expl'
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter top_param_expl
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.top_param_impl'
+
+Info: AnalysisPlugin.STDOUT_OUT_default: Parameter 'top_param_impl' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.top_param_impl2'
+
+-------- BEGIN SIMULATION ---------
+EnaMod main_action
+create output plugin 'any'
+.
+@0 s /0 (AnalysisPlugin.__gav_api___0): create_OutputPlugin(type=STDOUT_OUT, ctor='any')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Handle already existing (maybe implicit) child parameter 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB' of the output plugin (possibly enable params):
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): new (enabled) param callback for param 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB'
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): observe parameter EnaMod.ExplicitParamB
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Handle already existing (maybe implicit) child parameter 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB' of the output plugin (possibly enable params):
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): new (enabled) param callback for param 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB'
+
+Info: EnaMod.main_action.STDOUT_OUT_any: Parameter 'EnaMod.ImplicitParamB' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Handle already existing (maybe implicit) child parameter 'EnaMod.main_action.STDOUT_OUT_any.top_param_expl_B' of the output plugin (possibly enable params):
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): new (enabled) param callback for param 'EnaMod.main_action.STDOUT_OUT_any.top_param_expl_B'
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): observe parameter top_param_expl_B
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Handle already existing (maybe implicit) child parameter 'EnaMod.main_action.STDOUT_OUT_any.top_param_impl_B' of the output plugin (possibly enable params):
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): new (enabled) param callback for param 'EnaMod.main_action.STDOUT_OUT_any.top_param_impl_B'
+
+Info: EnaMod.main_action.STDOUT_OUT_any: Parameter 'top_param_impl_B' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Constructor
+@0 s /0 (AnalysisPlugin): Created OutputPlugin.
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type STDOUT_OUT (constructor param 'any') successfully.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if created output plugin created the parameters 
+             - EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB, 
+             - EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB, 
+             - EnaMod.main_action.STDOUT_OUT_any.top_param_expl_B, 
+             - EnaMod.main_action.STDOUT_OUT_any.top_param_impl_B 
+            and observes the existing related ones: 
+             - EnaMod.ExplicitParamB
+             - top_param_expl_B
+            to check this, see next tests:
+------------------------------------------------------------------------------------------
+
+change observation enabled param 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB' = true
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): observe parameter EnaMod.ExplicitParamB
+
+Info: EnaMod.main_action.STDOUT_OUT_any: Parameter already registered for output observation.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if message 'observe parameter EnaMod.ExplicitParamB' but already observed.
+------------------------------------------------------------------------------------------
+
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): EnaMod.ExplicitParamB = 10
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): EnaMod.ExplicitParamB = 20
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if changes =10, =20 outputted to STDOUT for param 'EnaMod.ExplicitParamB'.
+------------------------------------------------------------------------------------------
+
+change observation enabled param 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB' = false
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): remove observation of parameter EnaMod.ExplicitParamB
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if message 'remove observation of parameter EnaMod.ExplicitParamB'
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if change =30 NOT outputted to STDOUT for param 'EnaMod.ExplicitParamB'.
+------------------------------------------------------------------------------------------
+
+change observation enabled param 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB' which should fail.
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): The related parameter 'EnaMod.ImplicitParamB' to the enabled parameter 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB' cannot be handled because it is not existing. Enabled parameter has been resetted to false.
+
+Info: EnaMod.main_action.STDOUT_OUT_any: The related parameter to an enabled parameter cannot be handled because it is not existing. Enabled parameter has been resetted to false.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if changing failed with message 'The related parameter to an enabled parameter cannot be handled because it is not existing. Enabled parameter has been resetted to false.'.
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if nothing happened (no change message for enable param).
+------------------------------------------------------------------------------------------
+
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): top_param_expl = 50
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if param 'top_param_expl' change =50 is outputted to stdout by default output plugin.
+------------------------------------------------------------------------------------------
+
+Test disable
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter top_param_expl
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if param 'top_param_expl' change =60 is NOT outputted by default output plugin!
+------------------------------------------------------------------------------------------
+
+
+
+
+
+change observation enabled param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam' = true
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter EnaMod.ExplicitParam
+
+Info: AnalysisPlugin.STDOUT_OUT_default: Parameter already registered for output observation.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if message 'observe parameter EnaMod.ExplicitParam' but already observed.
+------------------------------------------------------------------------------------------
+
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): EnaMod.ExplicitParam = 11
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): EnaMod.ExplicitParam = 21
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if changes =11, =21 outputted to STDOUT for param 'EnaMod.ExplicitParam'.
+------------------------------------------------------------------------------------------
+
+change observation enabled param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam' = false
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter EnaMod.ExplicitParam
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if message 'remove observation of parameter EnaMod.ExplicitParam'
+------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if change =32 NOT outputted to STDOUT for param 'EnaMod.ExplicitParam'.
+------------------------------------------------------------------------------------------
+
+change observation enabled param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam' which should fail.
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): The related parameter 'EnaMod.ImplicitParam' to the enabled parameter 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam' cannot be handled because it is not existing. Enabled parameter has been resetted to false.
+
+Info: AnalysisPlugin.STDOUT_OUT_default: The related parameter to an enabled parameter cannot be handled because it is not existing. Enabled parameter has been resetted to false.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if changing failed with message 'The related parameter to an enabled parameter cannot be handled because it is not existing. Enabled parameter has been resetted to false.'.
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (EnaMod): PASSED if nothing happened (no change message for enable param).
+------------------------------------------------------------------------------------------
+
+--------- END SIMULATION ----------
+
+
+Parameter list:
+vector: size=14
+AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam
+AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam
+AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam2
+AnalysisPlugin.STDOUT_OUT_default.top_param_expl
+AnalysisPlugin.STDOUT_OUT_default.top_param_impl
+AnalysisPlugin.STDOUT_OUT_default.top_param_impl2
+EnaMod.ExplicitParam
+EnaMod.ExplicitParamB
+EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB
+EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB
+EnaMod.main_action.STDOUT_OUT_any.top_param_expl_B
+EnaMod.main_action.STDOUT_OUT_any.top_param_impl_B
+top_param_expl
+top_param_expl_B
+
+@18446744073709551615 ps /1 (EnaMod.main_action.STDOUT_OUT_any): remove observation of parameter top_param_expl_B

@@ -1,0 +1,14 @@
+Simulation time: Wed Oct 28 10:15:04 2009
+
+@0 s /0: AVTool.par_to_be_deleted = 10
+@1 ns /1: Owner.uint_param = 670
+@1 ns /1: Owner.str_param = Hello World!
+@2 ns /4: Owner.str_param = Hello Germany!
+@2 ns /5: Owner.str_param = Hello Arizona!
+@2 ns /6: Owner.str_param = Hello France!
+@3 ns /7: Owner.uint_param = 2000
+@5 ns /8: AVTool.par_to_be_deleted = 11
+@5 ns /8: Owner.uint_param = 3000
+@5 ns /8: Owner.str_param = new hello
+@5 ns /8: Owner.int_param = 222
+@106 ns /10: Owner.int_param = 133

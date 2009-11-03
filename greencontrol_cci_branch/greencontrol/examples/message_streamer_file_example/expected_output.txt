@@ -1,0 +1,318 @@
+
+** read in config file:
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_dbglvl' to '9'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_error_en' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_fatal_en' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_info_en' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_module_id' to '{"ModuleA", "ModuleB"}'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_name' to 'report_file_fix0.txt'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_printfile' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_printlevel' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_printname' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_printtime' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_starttime_en' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.0.msgconfig_warn_en' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_dbglvl' to '0'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_error_en' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_fatal_en' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_info_en' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_name' to 'report_file_fix1.txt'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_printfile' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_printlevel' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_printname' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_printtime' to 'true'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_starttime_en' to 'false'
+ConfigFile_Api: Applying value of param 'MessageStreamer_config.1.msgconfig_warn_en' to 'true'
+
+** create global message streamer:
+protected MessageConfiguration constructor with name 'MessageStreamer_config.0' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.0.msgconfig_name = report_file_fix0.txt
+MessageStreamer_config.0.msgconfig_starttime_en = 0
+MessageStreamer_config.0.msgconfig_starttime = 0 s
+MessageStreamer_config.0.msgconfig_endtime = 0 s
+MessageStreamer_config.0.msgconfig_dbglvl = 9
+MessageStreamer_config.0.msgconfig_info_en = 0
+MessageStreamer_config.0.msgconfig_warn_en = 0
+MessageStreamer_config.0.msgconfig_error_en = 0
+MessageStreamer_config.0.msgconfig_fatal_en = 0
+MessageStreamer_config.0.msgconfig_printtime = 1
+MessageStreamer_config.0.msgconfig_printname = 1
+MessageStreamer_config.0.msgconfig_printfile = 1
+MessageStreamer_config.0.msgconfig_printlevel = 1
+MessageStreamer_config.0.msgconfig_module_id = {"ModuleA","ModuleB"}
+
+protected MessageConfiguration constructor with name 'MessageStreamer_config.1' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.1.msgconfig_name = report_file_fix1.txt
+MessageStreamer_config.1.msgconfig_starttime_en = 0
+MessageStreamer_config.1.msgconfig_starttime = 0 s
+MessageStreamer_config.1.msgconfig_endtime = 0 s
+MessageStreamer_config.1.msgconfig_dbglvl = 0
+MessageStreamer_config.1.msgconfig_info_en = 1
+MessageStreamer_config.1.msgconfig_warn_en = 1
+MessageStreamer_config.1.msgconfig_error_en = 1
+MessageStreamer_config.1.msgconfig_fatal_en = 1
+MessageStreamer_config.1.msgconfig_printtime = 1
+MessageStreamer_config.1.msgconfig_printname = 1
+MessageStreamer_config.1.msgconfig_printfile = 0
+MessageStreamer_config.1.msgconfig_printlevel = 0
+MessageStreamer_config.1.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): constructor called on toplevel
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #0: 
+MessageStreamer_config.0.msgconfig_name = report_file_fix0.txt
+MessageStreamer_config.0.msgconfig_starttime_en = 0
+MessageStreamer_config.0.msgconfig_starttime = 0 s
+MessageStreamer_config.0.msgconfig_endtime = 0 s
+MessageStreamer_config.0.msgconfig_dbglvl = 9
+MessageStreamer_config.0.msgconfig_info_en = 0
+MessageStreamer_config.0.msgconfig_warn_en = 0
+MessageStreamer_config.0.msgconfig_error_en = 0
+MessageStreamer_config.0.msgconfig_fatal_en = 0
+MessageStreamer_config.0.msgconfig_printtime = 1
+MessageStreamer_config.0.msgconfig_printname = 1
+MessageStreamer_config.0.msgconfig_printfile = 1
+MessageStreamer_config.0.msgconfig_printlevel = 1
+MessageStreamer_config.0.msgconfig_module_id = {"ModuleA","ModuleB"}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #1: 
+MessageStreamer_config.1.msgconfig_name = report_file_fix1.txt
+MessageStreamer_config.1.msgconfig_starttime_en = 0
+MessageStreamer_config.1.msgconfig_starttime = 0 s
+MessageStreamer_config.1.msgconfig_endtime = 0 s
+MessageStreamer_config.1.msgconfig_dbglvl = 0
+MessageStreamer_config.1.msgconfig_info_en = 1
+MessageStreamer_config.1.msgconfig_warn_en = 1
+MessageStreamer_config.1.msgconfig_error_en = 1
+MessageStreamer_config.1.msgconfig_fatal_en = 1
+MessageStreamer_config.1.msgconfig_printtime = 1
+MessageStreamer_config.1.msgconfig_printname = 1
+MessageStreamer_config.1.msgconfig_printfile = 0
+MessageStreamer_config.1.msgconfig_printlevel = 0
+MessageStreamer_config.1.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+
+** read in config files and apply to MessageStreamer:
+@0 s /0 (MessageStreamer): Apply ConfigSet for file name report_file1.txt
+protected MessageConfiguration constructor with name 'MessageStreamer_config.2' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.2.msgconfig_name = 
+MessageStreamer_config.2.msgconfig_starttime_en = 0
+MessageStreamer_config.2.msgconfig_starttime = 0 s
+MessageStreamer_config.2.msgconfig_endtime = 0 s
+MessageStreamer_config.2.msgconfig_dbglvl = 0
+MessageStreamer_config.2.msgconfig_info_en = 0
+MessageStreamer_config.2.msgconfig_warn_en = 0
+MessageStreamer_config.2.msgconfig_error_en = 0
+MessageStreamer_config.2.msgconfig_fatal_en = 0
+MessageStreamer_config.2.msgconfig_printtime = 0
+MessageStreamer_config.2.msgconfig_printname = 0
+MessageStreamer_config.2.msgconfig_printfile = 0
+MessageStreamer_config.2.msgconfig_printlevel = 0
+MessageStreamer_config.2.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config report_file1.txt: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   check config #2: report_file1.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #2: 
+MessageStreamer_config.2.msgconfig_name = report_file1.txt
+MessageStreamer_config.2.msgconfig_starttime_en = 1
+MessageStreamer_config.2.msgconfig_starttime = 10 ns
+MessageStreamer_config.2.msgconfig_endtime = 1 s
+MessageStreamer_config.2.msgconfig_dbglvl = 5
+MessageStreamer_config.2.msgconfig_info_en = 1
+MessageStreamer_config.2.msgconfig_warn_en = 0
+MessageStreamer_config.2.msgconfig_error_en = 1
+MessageStreamer_config.2.msgconfig_fatal_en = 0
+MessageStreamer_config.2.msgconfig_printtime = 1
+MessageStreamer_config.2.msgconfig_printname = 1
+MessageStreamer_config.2.msgconfig_printfile = 1
+MessageStreamer_config.2.msgconfig_printlevel = 1
+MessageStreamer_config.2.msgconfig_module_id = {"ModuleA",""}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+@0 s /0 (MessageStreamer): Apply ConfigSet for file name report_file2.txt
+protected MessageConfiguration constructor with name 'MessageStreamer_config.3' and registration to db
+MessageConfiguration content after construction is:
+MessageStreamer_config.3.msgconfig_name = 
+MessageStreamer_config.3.msgconfig_starttime_en = 0
+MessageStreamer_config.3.msgconfig_starttime = 0 s
+MessageStreamer_config.3.msgconfig_endtime = 0 s
+MessageStreamer_config.3.msgconfig_dbglvl = 0
+MessageStreamer_config.3.msgconfig_info_en = 0
+MessageStreamer_config.3.msgconfig_warn_en = 0
+MessageStreamer_config.3.msgconfig_error_en = 0
+MessageStreamer_config.3.msgconfig_fatal_en = 0
+MessageStreamer_config.3.msgconfig_printtime = 0
+MessageStreamer_config.3.msgconfig_printname = 0
+MessageStreamer_config.3.msgconfig_printfile = 0
+MessageStreamer_config.3.msgconfig_printlevel = 0
+MessageStreamer_config.3.msgconfig_module_id = {}
+
+@0 s /0 (MessageStreamer): new file config report_file2.txt: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   check config #2: report_file1.txt
+@0 s /0 (MessageStreamer):   check config #3: report_file2.txt
+@0 s /0 (MessageStreamer):   set stream type and OutputPlugin for config #3: 
+MessageStreamer_config.3.msgconfig_name = report_file2.txt
+MessageStreamer_config.3.msgconfig_starttime_en = 0
+MessageStreamer_config.3.msgconfig_starttime = 0 s
+MessageStreamer_config.3.msgconfig_endtime = 0 s
+MessageStreamer_config.3.msgconfig_dbglvl = 2
+MessageStreamer_config.3.msgconfig_info_en = 0
+MessageStreamer_config.3.msgconfig_warn_en = 0
+MessageStreamer_config.3.msgconfig_error_en = 0
+MessageStreamer_config.3.msgconfig_fatal_en = 0
+MessageStreamer_config.3.msgconfig_printtime = 1
+MessageStreamer_config.3.msgconfig_printname = 1
+MessageStreamer_config.3.msgconfig_printfile = 1
+MessageStreamer_config.3.msgconfig_printlevel = 1
+MessageStreamer_config.3.msgconfig_module_id = {"ModuleA","ModuleB"}
+
+@0 s /0 (MessageStreamer):   Create new OutputPlugin
+
+** create module with streams:
+@0 s /0 (MessageStreamer): new registered stream ModuleA.dbgL2: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   check config #2: report_file1.txt
+@0 s /0 (MessageStreamer):   check config #3: report_file2.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.dbgL4: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   check config #2: report_file1.txt
+@0 s /0 (MessageStreamer):   check config #3: report_file2.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.dbgL9: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   check config #2: report_file1.txt
+@0 s /0 (MessageStreamer):   check config #3: report_file2.txt
+@0 s /0 (MessageStreamer): new registered stream ModuleA.sysINFO: update_stream_enables
+@0 s /0 (MessageStreamer):   check config #0: report_file_fix0.txt
+@0 s /0 (MessageStreamer):   check config #1: report_file_fix1.txt
+@0 s /0 (MessageStreamer):   check config #2: report_file1.txt
+@0 s /0 (MessageStreamer):   check config #3: report_file2.txt
+
+** start simulation **
+@10 ns /1 (ModuleA.dbgL2): end message
+@10 ns /1 (MessageStreamer): out( from module ModuleA, streamer id=dbgL2, level=dbg_msg_L2,
+                  filename=testbench_msg_str_file.cpp, line=89, parent_name=ModuleA
+                  message:  Hallo L2 after 10ns
+@10 ns /1 (MessageStreamer): check fileno 0 (report_file_fix0.txt) passed
+@10 ns /1 (MessageStreamer): check fileno 1 (report_file_fix1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 2 (report_file1.txt) passed
+@10 ns /1 (MessageStreamer): check fileno 3 (report_file2.txt) passed
+@10 ns /1 (ModuleA.dbgL9): end message
+@10 ns /1 (MessageStreamer): out( from module ModuleA, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_msg_str_file.cpp, line=91, parent_name=ModuleA
+                  message:  Hallo L9 after 10ns
+new line
+@10 ns /1 (MessageStreamer): check fileno 0 (report_file_fix0.txt) passed
+@10 ns /1 (MessageStreamer): check fileno 1 (report_file_fix1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 2 (report_file1.txt) failed
+@10 ns /1 (MessageStreamer): check fileno 3 (report_file2.txt) failed
+@20 ns /2 (ModuleA.dbgL4): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA, streamer id=dbgL4, level=dbg_msg_L4,
+                  filename=testbench_msg_str_file.cpp, line=95, parent_name=ModuleA
+                  message:  Hallo L4 after 20ns
+new line
+@20 ns /2 (MessageStreamer): check fileno 0 (report_file_fix0.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 1 (report_file_fix1.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_file1.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 3 (report_file2.txt) failed
+@20 ns /2 (ModuleA.sysINFO): end message
+@20 ns /2 (MessageStreamer): out( from module ModuleA, streamer id=sysINFO, level=sys_msg_INFO,
+                  filename=testbench_msg_str_file.cpp, line=97, parent_name=ModuleA
+                  message:  This is an sc_info!
+@20 ns /2 (MessageStreamer): check fileno 0 (report_file_fix0.txt) failed
+@20 ns /2 (MessageStreamer): check fileno 1 (report_file_fix1.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 2 (report_file1.txt) passed
+@20 ns /2 (MessageStreamer): check fileno 3 (report_file2.txt) failed
+@21 ns /3 (ModuleA.dbgL9): end message
+@21 ns /3 (MessageStreamer): out( from module ModuleA, streamer id=dbgL9, level=dbg_msg_L9,
+                  filename=testbench_msg_str_file.cpp, line=101, parent_name=ModuleA
+                  message:  Hallo L9 after 21ns
+@21 ns /3 (MessageStreamer): check fileno 0 (report_file_fix0.txt) passed
+@21 ns /3 (MessageStreamer): check fileno 1 (report_file_fix1.txt) failed
+@21 ns /3 (MessageStreamer): check fileno 2 (report_file1.txt) failed
+@21 ns /3 (MessageStreamer): check fileno 3 (report_file2.txt) failed
+@30 ns /4 (ModuleA.dbgL4): end message
+@30 ns /4 (MessageStreamer): out( from module ModuleA, streamer id=dbgL4, level=dbg_msg_L4,
+                  filename=testbench_msg_str_file.cpp, line=105, parent_name=ModuleA
+                  message:  Hallo L4 after 30ns
+@30 ns /4 (MessageStreamer): check fileno 0 (report_file_fix0.txt) passed
+@30 ns /4 (MessageStreamer): check fileno 1 (report_file_fix1.txt) failed
+@30 ns /4 (MessageStreamer): check fileno 2 (report_file1.txt) passed
+@30 ns /4 (MessageStreamer): check fileno 3 (report_file2.txt) failed
+
+** stopped simulation **
+** Parameter list:
+vector: size=61
+MessageStreamer_config
+MessageStreamer_config.0
+MessageStreamer_config.0.msgconfig_dbglvl
+MessageStreamer_config.0.msgconfig_endtime
+MessageStreamer_config.0.msgconfig_error_en
+MessageStreamer_config.0.msgconfig_fatal_en
+MessageStreamer_config.0.msgconfig_info_en
+MessageStreamer_config.0.msgconfig_module_id
+MessageStreamer_config.0.msgconfig_name
+MessageStreamer_config.0.msgconfig_printfile
+MessageStreamer_config.0.msgconfig_printlevel
+MessageStreamer_config.0.msgconfig_printname
+MessageStreamer_config.0.msgconfig_printtime
+MessageStreamer_config.0.msgconfig_starttime
+MessageStreamer_config.0.msgconfig_starttime_en
+MessageStreamer_config.0.msgconfig_warn_en
+MessageStreamer_config.1
+MessageStreamer_config.1.msgconfig_dbglvl
+MessageStreamer_config.1.msgconfig_endtime
+MessageStreamer_config.1.msgconfig_error_en
+MessageStreamer_config.1.msgconfig_fatal_en
+MessageStreamer_config.1.msgconfig_info_en
+MessageStreamer_config.1.msgconfig_module_id
+MessageStreamer_config.1.msgconfig_name
+MessageStreamer_config.1.msgconfig_printfile
+MessageStreamer_config.1.msgconfig_printlevel
+MessageStreamer_config.1.msgconfig_printname
+MessageStreamer_config.1.msgconfig_printtime
+MessageStreamer_config.1.msgconfig_starttime
+MessageStreamer_config.1.msgconfig_starttime_en
+MessageStreamer_config.1.msgconfig_warn_en
+MessageStreamer_config.2
+MessageStreamer_config.2.msgconfig_dbglvl
+MessageStreamer_config.2.msgconfig_endtime
+MessageStreamer_config.2.msgconfig_error_en
+MessageStreamer_config.2.msgconfig_fatal_en
+MessageStreamer_config.2.msgconfig_info_en
+MessageStreamer_config.2.msgconfig_module_id
+MessageStreamer_config.2.msgconfig_name
+MessageStreamer_config.2.msgconfig_printfile
+MessageStreamer_config.2.msgconfig_printlevel
+MessageStreamer_config.2.msgconfig_printname
+MessageStreamer_config.2.msgconfig_printtime
+MessageStreamer_config.2.msgconfig_starttime
+MessageStreamer_config.2.msgconfig_starttime_en
+MessageStreamer_config.2.msgconfig_warn_en
+MessageStreamer_config.3
+MessageStreamer_config.3.msgconfig_dbglvl
+MessageStreamer_config.3.msgconfig_endtime
+MessageStreamer_config.3.msgconfig_error_en
+MessageStreamer_config.3.msgconfig_fatal_en
+MessageStreamer_config.3.msgconfig_info_en
+MessageStreamer_config.3.msgconfig_module_id
+MessageStreamer_config.3.msgconfig_name
+MessageStreamer_config.3.msgconfig_printfile
+MessageStreamer_config.3.msgconfig_printlevel
+MessageStreamer_config.3.msgconfig_printname
+MessageStreamer_config.3.msgconfig_printtime
+MessageStreamer_config.3.msgconfig_starttime
+MessageStreamer_config.3.msgconfig_starttime_en
+MessageStreamer_config.3.msgconfig_warn_en

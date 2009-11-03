@@ -1,0 +1,28 @@
+IP6 test: scint_param (initial)=50
+IP6 test: 'scint_param = (unsigned int) 1000' (orig=1000) scint_param=1000
+IP6 test: 'scint_param = 500 - scint_param' : (orig=-500) scint_param=-500
+IP6 test: 'scint_param += 1500' : (orig=1000) scint_param=1000
+IP6 test: scint_param++=1000
+IP6 test: scint_param=1001
+IP6 test: ++scint_param=1002
+IP6 test: scint_param=1002
+IP6 test: scint_param--=1002
+IP6 test: scint_param=1001
+IP6 test: --scint_param=1000
+IP6 test: scint_param=1000
+
+IP6 test: 'scint_param += 1500' : scint_param=2500
+IP6 test: 'scint_param -= 200' : scint_param=2300
+IP6 test: 'scint_param /= 4' : scint_param=575
+IP6 test: 'scint_param *= 3' : scint_param=1725
+IP6 test: 'scint_param %= 6' : scint_param=3
+IP6 test: 'scint_param ^= 5' : scint_param=6
+IP6 test: 'scint_param &= 60' : scint_param=4
+IP6 test: 'scint_param |= 3' : scint_param=7
+IP6 test: 'scint_param <<= 2' : scint_param (28) =28
+IP6 test: 'scint_param >>= 2' : scint_param (7) =7
+
+IP6 test: 'scint_param != 6' 
+               true
+IP6 test: 'scint_param != 4' 
+               true

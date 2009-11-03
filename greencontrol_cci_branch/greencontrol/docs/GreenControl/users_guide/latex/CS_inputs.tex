@@ -1,0 +1,150 @@
+%\usepackage{verbatimfiles}
+%\usepackage[outline,light]{draftcopy}
+
+%\usepackage{ngerman}					% Regeln und Definitionen fuer deutschen Sprachraum
+%\usepackage[latin1]{inputenc} % Umlaute
+%\usepackage[T1]{fontenc}      % Woerter mit Umlauten richtig trennen
+%\usepackage{ae}%um Einbindung von Type1-Fonts in PDF zu ermoeglichen
+\usepackage{amsmath}						% Mathematik, fuer \text innerhalb $ $
+%\usepackage[pdftex]{graphicx}
+\usepackage{pifont} % needed for \ding{110} etc. (see new items)
+
+\usepackage{lscape}			% ermoeglicht Querformat-Seiten, zwischen \begin{landscape} \end{landscape}
+
+\usepackage{enumerate}	% ermoeglicht enumerate-Umgebung mit Option zu veraendern
+
+\usepackage{listings}   % Listing von Programmcode
+\lstloadlanguages{C}		% laedt die Regeln fuer Programmiersprache C
+\usepackage{marvosym}		% fuer \lstset prebreak={\Righttorque} (Pfeil beim Umbruch einer Zeile)
+\lstset{% general command to set parameter(s)
+	basicstyle=\normalsize\ttfamily, % print whole listing
+	stringstyle=\ttfamily, % typewriter type for strings
+	keywordstyle=\ttfamily,
+	showstringspaces=false,
+	language=C,
+	breaklines=true
+}
+\usepackage{color}			% fuer die Farbe der comments
+\definecolor{keywordblue}{RGB}{0,0,255}
+\definecolor{commentgreen}{RGB}{0,128,0}
+
+\usepackage{float}
+\restylefloat{table} % sorgt dafuer, dass [H] dafuer sorgt, dass Tabelle GENAU da ist, wo sie steht
+\restylefloat{figure} % sorgt dafuer, dass [H] dafuer sorgt, dass figure GENAU da ist, wo sie steht
+\usepackage{array}   % ermoeglicht komplexere Tabellen, vor allem mit automatischem Umbruch innerhalb der Zellen
+
+%\usepackage{scrpage2} % ermoeglicht eigene Kopf- und Fuﬂzeilen, gehoert zum KOMA
+%\usepackage{thumbindices} %create chapter thumb index on outer right side of pages (only works correct for pdfs)
+%\usepackage{chapterthumb}
+%create chapter thumb index on outer right side of pages (only works correct for pdfs)
+%\usepackage{thumb}
+\usepackage{longtable}
+\usepackage{multirow}
+
+\usepackage{xspace}
+\usepackage{fancybox}  % Schattierte oder sonstig besondere Rahmen
+\definecolor{dunkelgrau}{gray}{0.55}
+\definecolor{hellgrau}{gray}{0.9}
+\definecolor{hellhellgrau}{gray}{0.92}
+\definecolor{weiss}{gray}{1}
+\definecolor{schwarz}{gray}{0}
+\usepackage{hhline}
+\usepackage{colortbl}  % ermoeglicht farbige Tabellen
+
+% aus de-tex-faq 5.3.4
+% verhindert Hurenkinder und Schusterjungen (einzelne Zeilen nach/vor Seitenumbruch)
+%\clubpenalty = 10000                               % TODO: wohlueberlegt einsetzen!!
+%\widowpenalty = 10000 \displaywidowpenalty = 10000 % TODO: wohlueberlegt einsetzen!!
+
+% EIGENE MAKROS:
+
+% %%% ZwischenUberschrift %%%
+\setlength{\fboxrule}{0.05cm}
+%\newcommand{\ZwischenUberschrift}[1]{\vspace*{3ex}\textsf{\bfseries{#1}}\\[2ex]}
+\newcommand{\ZwischenUberschrift}[1]{\vspace*{3ex}
+	\noindent % nicht einruecken
+	\boxput{
+		\makebox(0,0)
+			{
+				\fcolorbox{weiss}{hellgrau}{\parbox[b]{\textwidth}{~}}
+			}
+	}
+	{\parbox[b]{\textwidth}{\hspace*{2em}\textsf{\bfseries{#1}}}
+	{	}
+	}\vspace*{1ex}
+	\nopagebreak
+}
+
+% %%% Verzeichnis %%%
+\newsavebox{\VerzeichnisBox}
+\newcommand{\Verzeichnis}[1]
+	{
+			\savebox{\VerzeichnisBox}{\includegraphics{csimages/verzeichnis.eps} \textsf{#1}}
+			\usebox{\VerzeichnisBox}
+	}
+	
+% %%% Datei %%%
+\newsavebox{\DateiBox}
+\newcommand{\Datei}[1]
+	{
+			\savebox{\DateiBox}{\includegraphics{csimages/datei.eps} \textsf{#1}}
+			\usebox{\DateiBox}
+	}
+\newcommand{\DateiNoImg}[1]
+	{
+			\textsf{#1}
+	}
+
+% %%% Menue %%%
+\newcommand{\Menue}[1]{\textsc{#1}}
+% %%% Button %%%
+\newcommand{\Button}[1]{\textsc{#1}}
+% %%% Eingabe %%%
+\newcommand{\Eingabe}[1]{
+	\fcolorbox{weiss}{schwarz}{\textcolor{weiss}{\ttfamily #1}}
+}
+
+\newcommand{\befehl}[1]{\protect\mbox{\textsf{\textbf{\footnotesize{#1}}}}}			% einheitliche Befehle meines Protokolls
+\newcommand{\Ohm}{$ \Omega $\xspace}										% Ohm fuer die Stueckliste
+\newcommand{\uF}{$ \mu \text{F} $\xspace}
+\setlength{\fboxrule}{0.05cm} % Rahmenbreite fuer box
+\newcommand{\Achtung}[1]{	
+	\begin{samepage}
+		\noindent % nicht einruecken
+		\fcolorbox{dunkelgrau}{hellhellgrau}{\parbox[b]{12cm}{#1}}
+	\end{samepage}
+}
+\newcommand{\Parameter}[1]{\textsc{#1}} % Fuers Protokoll
+
+\renewcommand{\labelitemi}{\textcolor{dunkelgrau}{\ding{110}}} % neues Zeichen fuer Aufzaehlunsebene 1
+\renewcommand{\labelitemii}{\textcolor{dunkelgrau}{\ding{108}}} % neues Zeichen fuer Aufzaehlunsebene 2
+\renewcommand{\labelitemiii}{\textcolor{dunkelgrau}{$\bullet$}} % neues Zeichen fuer Aufzaehlunsebene 2
+
+\usepackage{makeidx}
+
+\makeindex % ermoeglicht das erzeugen von Idizes mit \index{eintrag} Dann mit Makeindex weiterverarbeiten
+
+\newcommand{\Note}[3]{
+	\vspace{.5cm}
+	\begin{minipage}{15cm}
+		\noindent % nicht einruecken
+		\rule{\textwidth}{.3pt}
+		\Datei{} \textbf{\textsf{#1}}
+		
+		\textbf{#2}		
+		
+		#3
+		
+		\noindent % nicht einruecken
+		\rule{\textwidth}{.3pt}
+	\end{minipage}
+	\vspace{.5cm}
+}
+
+% %%% Warning %%%
+\newsavebox{\WarningSymbolBox}
+\newcommand{\WarningSymbol}[1]
+	{
+			\savebox{\WarningSymbolBox}{\includegraphics[height=1.7ex]{csimages/warning.eps} #1}
+			\usebox{\WarningSymbolBox}
+	}

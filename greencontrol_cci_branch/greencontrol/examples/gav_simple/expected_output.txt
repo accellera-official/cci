@@ -1,0 +1,443 @@
+@0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
+@0 s /0 (static GAV_Api::getApiInstance): create new apiMap
+@0 s /0 (static GAV_Api::getApiInstance): create new GAV_Api
+@0 s /0 (AnalysisPlugin.__gav_api___0): constructor GAV_Api()
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): Add file extension: default.log
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): Constructor
+@0 s /0 (AnalysisPlugin.CSV_FILE_OUT_default): Add file extension: default.csv
+@0 s /0 (Owner.__gav_api___0): constructor GAV_Api()
+@0 s /0 (AVTool.__gav_api___0): constructor GAV_Api()
+@0 s /0 (AVscvTool.__gav_api___0): constructor GAV_Api()
+
+
+Owner: set parameters to different values at different time points
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output(type=TXT_FILE_OUT, 'Owner.int_param')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): Init Output Plugin: Open file 'default.log' to write observed parameters to.
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): observe parameter Owner.int_param
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output: ... adding of param Owner.int_param to default Output Plugin TXT_FILE_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param Owner.int_param to default Output Plugin TXT_FILE_OUT successfull'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output(type=TXT_FILE_OUT, 'Owner.uint_param')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): observe parameter Owner.uint_param
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output: ... adding of param Owner.uint_param to default Output Plugin TXT_FILE_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param Owner.uint_param to default Output Plugin TXT_FILE_OUT successfull'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output(type=TXT_FILE_OUT, 'Owner.uint_param')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): observe parameter Owner.uint_param
+
+Info: AnalysisPlugin.TXT_FILE_OUT_default: Parameter already registered for output observation.
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output: ... adding of param Owner.uint_param to default Output Plugin TXT_FILE_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param Owner.uint_param to default Output Plugin TXT_FILE_OUT successfull BUT NOT adding it twice (the file must still only contain uint_par once per change)!'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output(type=DEFAULT_OUT, 'AVTool.param_for_default_op')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVTool.param_for_default_op
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output: ... adding of param AVTool.param_for_default_op to default Output Plugin DEFAULT_OUT successfull.
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): AVTool.param_for_default_op = 0
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): AVTool.param_for_default_op = 1
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param AVTool.param_for_default_op to default Output Plugin DEFAULT_OUT successfull' and value changes occured there (e.g. on stdout if this is the default).
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output(type=DEFAULT_OUT, 'AVTool.param_for_default_opB')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVTool.param_for_default_opB
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_default_output: ... adding of param AVTool.param_for_default_opB to default Output Plugin DEFAULT_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param AVTool.param_for_default_opB to default Output Plugin DEFAULT_OUT successfull'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): create_OutputPlugin(type=DEFAULT_OUT, ctor='any')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
+@0 s /0 (AVTool.main_action.STDOUT_OUT_any): Constructor
+@0 s /0 (AnalysisPlugin): Created OutputPlugin.
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type DEFAULT_OUT (constructor param 'any') successfully.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'created OutputPlugin of type DEFAULT_OUT (constructor param 'any') successfully'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): get_default_output(type=DEFAULT_OUT)
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): get_default_output: ... getting default Output Plugin DEFAULT_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASSED: Passed get_default_output() test! (Returned the default output plugin)
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): get_default_output(type=TXT_FILE_OUT)
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): get_default_output: ... getting default Output Plugin TXT_FILE_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASSED: Passed get_default_output(TXT_FILE_OUT) test! (Returned the default txt output plugin)
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): create_OutputPlugin(type=CSV_FILE_OUT, ctor='CSVexample.log')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): Add file extension: CSVexample.log.csv
+@0 s /0 (AnalysisPlugin): Created OutputPlugin.
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type CSV_FILE_OUT (constructor param 'CSVexample.log') successfully.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'created OutputPlugin of type CSV_FILE_OUT (constructor param 'CSVexample.log.csv') successfully'.
+------------------------------------------------------------------------------------------
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): Init Output Plugin: Open file 'CSVexample.log.csv' to write observed parameters to.
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe all parameters
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter AVTool.param_for_default_op
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter AVTool.param_for_default_opB
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.int_param
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.int_param1
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.int_param2
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.int_param3
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.str_param
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.sub.int_param4
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.sub.int_param5
+@0 s /0 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): observe parameter Owner.uint_param
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Call observe_all: Passed if file 'CSVexample.log.csv' contains all parameters existing at this point of time.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): create_OutputPlugin(type=TXT_FILE_OUT, ctor='secondFile.log')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
+@0 s /0 (AnalysisPlugin): Created OutputPlugin.
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type TXT_FILE_OUT (constructor param 'secondFile.log') successfully.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'created OutputPlugin of type TXT_FILE_OUT (constructor param 'secondFile.log') successfully'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_output(id=0x1816024, 'Owner.str_param')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): Init Output Plugin: Open file 'secondFile.log' to write observed parameters to.
+@0 s /0 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.str_param
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_output: ... adding of param Owner.str_param to Output Plugin with id 0x1816024 successfull
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param Owner.str_param to Output Plugin with id 0x... successfull'.
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_output(id=0x1816024, 'Owner.uint_param')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.uint_param
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_output: ... adding of param Owner.uint_param to Output Plugin with id 0x1816024 successfull
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if 'adding of param Owner.uint_param to Output Plugin with id 0x... successfull'.
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @0 s /0 (AVTool): PASS/FAIL: Passed if file scondFile.log contains changed parameters str_param and uint_param)!
+------------------------------------------------------------------------------------------
+.
+@0 s /0 (AVTool.__gav_api___0): add_to_output(id=0x1816024, 'AVTool.par_to_be_deleted')
+@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@0 s /0 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter AVTool.par_to_be_deleted
+@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
+@0 s /0 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AVTool.__gav_api___0): add_to_output: ... adding of param AVTool.par_to_be_deleted to Output Plugin with id 0x1816024 successfull
+.
+@1 ns /1 (AVscvTool.__gav_api___0): add_to_default_output(type=SCV_STREAM_OUT, 'Owner.int_param')
+@1 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@1 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): Init Output Plugin:
+@1 ns /1 (static init_scv_recording): scv database not yet initialized, create global scv database.
+TB Transaction Recording has started, file = transaction_text_db
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): default
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): Used SCV database: transaction_text_db
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): observe parameter Owner.int_param
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): Create scv transaction generator for parameter 'Owner.int_param' (value type string)
+@1 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
+@1 ns /1 (AVscvTool.__gav_api___0): got ControlResponse atom from slave
+@1 ns /1 (AVscvTool.__gav_api___0): add_to_default_output: ... adding of param Owner.int_param to default Output Plugin SCV_STREAM_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @1 ns /1 (AVscvTool): PASS/FAIL: Passed if 'adding of param Owner.int_param to default Output Plugin SCV_STREAM_OUT successfull'.
+------------------------------------------------------------------------------------------
+.
+@1 ns /1 (AVscvTool.__gav_api___0): add_to_default_output(type=SCV_STREAM_OUT, 'Owner.str_param')
+@1 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@1 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): observe parameter Owner.str_param
+@1 ns /1 (AnalysisPlugin.SCV_STREAM_OUT_default): Create scv transaction generator for parameter 'Owner.str_param' (value type string)
+@1 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
+@1 ns /1 (AVscvTool.__gav_api___0): got ControlResponse atom from slave
+@1 ns /1 (AVscvTool.__gav_api___0): add_to_default_output: ... adding of param Owner.str_param to default Output Plugin SCV_STREAM_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @1 ns /1 (AVscvTool): PASS/FAIL: Passed if 'adding of param Owner.str_param to default Output Plugin SCV_STREAM_OUT successfull'.
+------------------------------------------------------------------------------------------
+@2 ns /3 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 102, write string based to scv transaction generator
+@2 ns /3 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 103, write string based to scv transaction generator
+@2 ns /3 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 104, write string based to scv transaction generator
+@2 ns /4 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 105, write string based to scv transaction generator
+@2 ns /4 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 106, write string based to scv transaction generator
+@2 ns /4 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.str_param = Hello Germany!, write string based to scv transaction generator
+@2 ns /5 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.str_param = Hello Arizona!, write string based to scv transaction generator
+@2 ns /6 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.str_param = Hello France!, write string based to scv transaction generator
+
+
+.
+@3 ns /7 (AVscvTool.__gav_api___0): add_to_default_output(type=SCV_STREAM_OUT, 'Owner.uint_param')
+@3 ns /7 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@3 ns /7 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@3 ns /7 (AnalysisPlugin.SCV_STREAM_OUT_default): observe parameter Owner.uint_param
+@3 ns /7 (AnalysisPlugin.SCV_STREAM_OUT_default): Create scv transaction generator for parameter 'Owner.uint_param' (value type string)
+@3 ns /7 (AnalysisPlugin): send ControlResponse atom back to master
+@3 ns /7 (AVscvTool.__gav_api___0): got ControlResponse atom from slave
+@3 ns /7 (AVscvTool.__gav_api___0): add_to_default_output: ... adding of param Owner.uint_param to default Output Plugin SCV_STREAM_OUT successfull.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @3 ns /7 (AVscvTool): PASS/FAIL: Passed if 'adding of param Owner.uint_param to default Output Plugin SCV_STREAM_OUT successfull'.
+------------------------------------------------------------------------------------------
+@3 ns /7 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.uint_param = 2000, write string based to scv transaction generator
+@5 ns /8 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter AVTool.par_to_be_deleted
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @5 ns /8 (AVTool): PASS/FAIL: Passed if no error occurs because of deleted observes parameter par_to_be_deleted.
+------------------------------------------------------------------------------------------
+.
+@5 ns /8 (AVTool.__gav_api___0): add_to_output(id=0x1816024, 'Owner.int_param')
+@5 ns /8 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@5 ns /8 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@5 ns /8 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param
+@5 ns /8 (AnalysisPlugin): send ControlResponse atom back to master
+@5 ns /8 (AVTool.__gav_api___0): got ControlResponse atom from slave
+@5 ns /8 (AVTool.__gav_api___0): add_to_output: ... adding of param Owner.int_param to Output Plugin with id 0x1816024 successfull
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @5 ns /8 (AVTool): PASS/FAIL: Passed if file scondFile.log contains parameter int_param beginning after 5 ns)!
+------------------------------------------------------------------------------------------
+@5 ns /8 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.uint_param = 3000, write string based to scv transaction generator
+@5 ns /8 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.str_param = new hello, write string based to scv transaction generator
+@5 ns /8 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 222, write string based to scv transaction generator
+.
+@105 ns /9 (AVscvTool.__gav_api___0): create_OutputPlugin(type=SCV_STREAM_OUT, ctor='secondUserDefinedSCVop')
+@105 ns /9 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@105 ns /9 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
+@105 ns /9 (AnalysisPlugin): Created OutputPlugin.
+@105 ns /9 (AnalysisPlugin): send ControlResponse atom back to master
+@105 ns /9 (AVscvTool.__gav_api___0): got ControlResponse atom from slave
+@105 ns /9 (AVscvTool.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type SCV_STREAM_OUT (constructor param 'secondUserDefinedSCVop') successfully.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @105 ns /9 (AVscvTool): PASS/FAIL: Passed if 'adding of param Owner.str_param to default Output Plugin SCV_STREAM_OUT successfull'.
+------------------------------------------------------------------------------------------
+.
+@105 ns /9 (AVscvTool.__gav_api___0): add_to_output(id=0x18166e4, 'Owner.int_param')
+@105 ns /9 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@105 ns /9 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@105 ns /9 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): Init Output Plugin:
+@105 ns /9 (static init_scv_recording): scv database already initialized, return that.
+@105 ns /9 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): secondUserDefinedSCVop
+@105 ns /9 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): Used SCV database: transaction_text_db
+@105 ns /9 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): observe parameter Owner.int_param
+@105 ns /9 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): Create scv transaction generator for parameter 'Owner.int_param' (value type string)
+@105 ns /9 (AnalysisPlugin): send ControlResponse atom back to master
+@105 ns /9 (AVscvTool.__gav_api___0): got ControlResponse atom from slave
+@105 ns /9 (AVscvTool.__gav_api___0): add_to_output: ... adding of param Owner.int_param to Output Plugin with id 0x18166e4 successfull
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @105 ns /9 (AVscvTool): PASS/FAIL: Passed if 'adding of param Owner.int_param to Output Plugin secondUserDefinedSCVop successfull and changes occur on the output (file or tool)'.
+------------------------------------------------------------------------------------------
+@106 ns /10 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 133, write string based to scv transaction generator
+@106 ns /10 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback Owner.int_param = 133, write string based to scv transaction generator
+@107 ns /11 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): pause output for 2 ns
+@107 ns /11 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): pause output
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @107 ns /11 (AVTool): PASS/FAIL: Pause Output for 2 ns: Passed if file 'CSVexample.log.csv' does NOT contain parameter int_param at time point 107 ns!
+------------------------------------------------------------------------------------------
+@107 ns /11 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.int_param
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @107 ns /11 (AVTool): PASS/FAIL: Removed int_par: Passed if file scondFile.log contains parameter int_param only up to time point 106 ns)!
+------------------------------------------------------------------------------------------
+@107 ns /11 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.int_param
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @107 ns /11 (AVTool): PASS/FAIL: Removed int_par twice: Passed if file scondFile.log contains parameter int_param only up to time point 106 ns)!
+------------------------------------------------------------------------------------------
+@107 ns /11 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 42, write string based to scv transaction generator
+@107 ns /11 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback Owner.int_param = 42, write string based to scv transaction generator
+.
+@107 ns /11 (AVscvTool.__gav_api___0): add_to_output(id=0x18166e4, 'AVscvTool.tmp_par')
+@107 ns /11 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@107 ns /11 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
+@107 ns /11 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): observe parameter AVscvTool.tmp_par
+@107 ns /11 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): Create scv transaction generator for parameter 'AVscvTool.tmp_par' (value type string)
+@107 ns /11 (AnalysisPlugin): send ControlResponse atom back to master
+@107 ns /11 (AVscvTool.__gav_api___0): got ControlResponse atom from slave
+@107 ns /11 (AVscvTool.__gav_api___0): add_to_output: ... adding of param AVscvTool.tmp_par to Output Plugin with id 0x18166e4 successfull
+@109 ns /12 (AnalysisPlugin.OutpPlEventListener): spawned method called (id=0)
+@109 ns /12 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): start output
+@110 ns /13 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): pause output until event notified
+@110 ns /13 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): pause output
+@112 ns /14 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback AVscvTool.tmp_par = 77, write string based to scv transaction generator
+@117 ns /15 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback AVscvTool.tmp_par is destructing. Delete from scv output plugin!
+@117 ns /15 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): Delete param 'AVscvTool.tmp_par' from scv output plugin.
+@117 ns /15 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): remove observation of parameter AVscvTool.tmp_par
+@117 ns /15 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop):      end transaction due to removal from output plugin
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @117 ns /15 (AVscvTool): PASS/FAIL: Passed if parameter tmp_par is removed from the scv OutputPlugin 'secondUserDefinedSCVop' and the transaction has ended (see database!).
+------------------------------------------------------------------------------------------
+@117 ns /15 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 4422, write string based to scv transaction generator
+@117 ns /15 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback Owner.int_param = 4422, write string based to scv transaction generator
+@210 ns /17 (AnalysisPlugin.OutpPlEventListener): spawned method called (id=1)
+@210 ns /17 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): start output
+@210 ns /18 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param = 10000, write string based to scv transaction generator
+@210 ns /18 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback Owner.int_param = 10000, write string based to scv transaction generator
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @210 ns /18 (AVTool): PASS/FAIL: Pause Output until event notified: Passed if file 'CSVexample.log.csv' does contain parameter int_param at time point 210 ns!
+------------------------------------------------------------------------------------------
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameters given by vector
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param1
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param2
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param3
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.str_param
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.uint_param
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @210 ns /18 (AVTool): PASS/FAIL: Passed output plugin observes all direct child parameters of 'Owner'.
+------------------------------------------------------------------------------------------
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameters of 'Owner.*'
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameters given by vector
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param1
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param2
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.int_param3
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.str_param
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.sub.int_param4
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.sub.int_param5
+@210 ns /18 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): observe parameter Owner.uint_param
+
+Info: AVTool.main_action.TXT_FILE_OUT_secondFile_log: Parameter already registered for output observation.
+------------------------------------------------------------------------------------------
+    *** Regression test result: ***
+   @210 ns /18 (AVTool): PASS/FAIL: Passed output plugin observes all parameters of 'Owner.*' (including recursive childs). The sub-params were added.
+------------------------------------------------------------------------------------------
+@210 ns /18 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter AVTool.param_for_default_opB
+@210 ns /18 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter AVTool.param_for_default_opB
+@210 ns /18 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter AVTool.param_for_default_op
+@210 ns /18 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter AVTool.param_for_default_op
+-------------------- SIMULATION ENDED -----------------------
+
+vector: size=12
+AVTool.par_to_be_deleted
+AVTool.param_for_default_op
+AVTool.param_for_default_opB
+AVscvTool.tmp_par
+Owner.int_param
+Owner.int_param1
+Owner.int_param2
+Owner.int_param3
+Owner.str_param
+Owner.sub.int_param4
+Owner.sub.int_param5
+Owner.uint_param
+
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.sub.int_param5
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.sub.int_param5
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.sub.int_param4
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.sub.int_param4
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.int_param3
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.int_param3
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.int_param2
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.int_param2
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.int_param1
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.int_param1
+@18446744073709551615 ps /19 (AnalysisPlugin.TXT_FILE_OUT_default): remove observation of parameter Owner.uint_param
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.uint_param
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.uint_param
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.uint_param is destructing. Delete from scv output plugin!
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): Delete param 'Owner.uint_param' from scv output plugin.
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): remove observation of parameter Owner.uint_param
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default):      end transaction due to removal from output plugin
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.str_param
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.str_param
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.str_param is destructing. Delete from scv output plugin!
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): Delete param 'Owner.str_param' from scv output plugin.
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): remove observation of parameter Owner.str_param
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default):      end transaction due to removal from output plugin
+@18446744073709551615 ps /19 (AnalysisPlugin.TXT_FILE_OUT_default): remove observation of parameter Owner.int_param
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): remove observation of parameter Owner.int_param
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): callback Owner.int_param is destructing. Delete from scv output plugin!
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): Delete param 'Owner.int_param' from scv output plugin.
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default): remove observation of parameter Owner.int_param
+@18446744073709551615 ps /19 (AnalysisPlugin.SCV_STREAM_OUT_default):      end transaction due to removal from output plugin
+@18446744073709551615 ps /19 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): callback Owner.int_param is destructing. Delete from scv output plugin!
+@18446744073709551615 ps /19 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): Delete param 'Owner.int_param' from scv output plugin.
+@18446744073709551615 ps /19 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop): remove observation of parameter Owner.int_param
+@18446744073709551615 ps /19 (AVscvTool.main_action.SCV_STREAM_OUT_secondUserDefinedSCVop):      end transaction due to removal from output plugin
+@18446744073709551615 ps /19 (AVTool.main_action.TXT_FILE_OUT_secondFile_log): remove observation of parameter Owner.int_param
+@18446744073709551615 ps /19 (AVTool.main_action.CSV_FILE_OUT_CSVexample_log): Destructor, close file.

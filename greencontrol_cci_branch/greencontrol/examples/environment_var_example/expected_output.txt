@@ -1,0 +1,28 @@
+ConfigFile_Api: Applying value of param 'TestIP.param1' to '132'
+ConfigFile_Api: Applying value of param 'TestIP.param2' to '$(SHELL)'
+ConfigFile_Api: Applying value of param 'TestIP.param3' to '$(SHELL) again $(SHELL)'
+ConfigFile_Api: Applying value of param 'TestIP.param4' to 'test $(SHELL)/$foo $$(SHELL) dollar $$. $$$$(foo)'
+ConfigFile_Api: Applying value of param 'TestIP.param5' to 'this is error $(error here)'
+ConfigFile_Api: Applying value of param 'TestIP.param6' to 'another error $(foo/$(bar)'
+
+Warning: Variable Substitution: invalid char ' ' in variable name while defining parameter TestIP.param5: error here
+
+In file: ..//../../greencontrol/gcnf/apis/utils/envvar_subst.h:86
+
+Warning: Variable Substitution: invalid char '/' in variable name while defining parameter TestIP.param6: foo/$(bar
+
+In file: ..//../../greencontrol/gcnf/apis/utils/envvar_subst.h:86
+
+Warning: Variable Substitution: invalid char '$' in variable name while defining parameter TestIP.param6: foo/$(bar
+
+In file: ..//../../greencontrol/gcnf/apis/utils/envvar_subst.h:86
+
+Warning: Variable Substitution: invalid char '(' in variable name while defining parameter TestIP.param6: foo/$(bar
+
+In file: ..//../../greencontrol/gcnf/apis/utils/envvar_subst.h:86
+Get parameter param1: 132
+Get parameter param2: /bin/bash
+Get parameter param3: /bin/bash again /bin/bash
+Get parameter param4: test /bin/bash/$foo $(SHELL) dollar $. $$(foo)
+Get parameter param5: this is error $(error here)
+Get parameter param6: another error $(foo/$(bar)

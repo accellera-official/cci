@@ -1,0 +1,35 @@
+Template: shared/email
+Type: string
+Description: Please provide your email address: 
+ The provider of this package would like to keep in touch with those
+ people using it, in order to inform them of upgrades and bug fixes.
+ Some packages may refuse to install without providing a contact e-mail
+ address.
+ .
+ (Note: GSPM will remember this email address and will use it for
+ subsequent packages that require email addresses registration)
+
+Template: greencontrol/license-gsl
+Type: select
+Choices: No, This time only, Always
+Default: No
+Description: Do accept the terms of the dual GreenSocs Licence?
+ The contents of this package are copyright GreenSocs.
+ If you have no applicable agreement with GreenSocs Ltd, this software
+ is licensed to you, and you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version. Please see
+ http://www.gnu.org/copyleft/gpl.html for details. Note specifically
+ clause 2a) of the license: "You must cause any work that you distribute
+ or publish, that in whole or in part contains or is derived from the
+ Program or any part thereof, to be licensed as a whole at no charge to
+ all third parties under the terms of this License".
+ .
+ If this license is not suitable for your needs, then please contact
+ GreenSocs who will make available to you the same package with a
+ different license.
+ .
+ If you have a applicable agreement with GreenSocs Ltd, the terms of that
+ agreement prevail. Please visit http://www.greensocs.com for more
+ details.
