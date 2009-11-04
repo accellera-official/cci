@@ -146,6 +146,7 @@ public:
         if ((p->init_value).length() > 0) {
           GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): set init value to '"<<p->init_value.c_str()<<"'");
           par->setString(p->init_value);
+          // TODO: is_initial_value = true here
         }
         return false;
       } 
@@ -158,6 +159,7 @@ public:
         if ((p->init_value).length() > 0) {
           GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): set init value to '"<<p->init_value.c_str()<<"'");
           p->param->setString(p->init_value);
+          // TODO: is_initial_value = true here
         }
       }
     }
@@ -205,6 +207,7 @@ public:
     if (pos == m_parameter_database.end()) {
       GCNF_DUMP_N(name(), "setInitValue: parameter not yet exists: create implicit parameter.");
       m_parameter_database.insert( make_pair(hier_parname, parameter(NULL, ivalue)) );
+      // TODO: is_initial_value = true here
       return true; // parameter was new added to database
     }
     // If parameter exists
@@ -219,6 +222,7 @@ public:
         parameter *par = &pos->second;
         par->param->setString(ivalue);
       }
+      // TODO: is_initial_value = true here
     }
     return false; // parameter not new
   }

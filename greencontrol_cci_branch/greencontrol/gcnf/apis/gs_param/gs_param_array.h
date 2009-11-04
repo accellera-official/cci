@@ -474,7 +474,7 @@ protected:
    *   (if enabled in callback behavior map) and
    * - remove members when they are deleted.
    */
-  void array_config_callback(gs_param_base_T& changed_param, callback_type cb_reason) {
+  callback_return_type array_config_callback(gs_param_base_T& changed_param, callback_type cb_reason) {
     GS_PARAM_ARRAY_DUMP("param array '"<<m_par_name<<"' got internal callback (of type "<<callback_type_to_string(cb_reason)<<") for param '"<<changed_param.getName()<<"'");
     
     // Choose correct list depending on cb reason
@@ -498,8 +498,11 @@ protected:
       default:
         GCNF_DUMP_N(name(), "array_config_callback: Cannot handle given callback type reason: "<< callback_type_to_string(cb_reason)<<"!");
         SC_REPORT_ERROR(name(), "array_config_callback: Cannot handle given callback type reason!");
-        return;
+        return return_other_error;
     }
+    
+    callback_return_type ret = return_nothing;
+    callback_return_type tmp_ret;
     
     // go through all observers of this array's param base
     //   and call back IF enabled for that observer in the array's behavior map
@@ -516,7 +519,9 @@ protected:
         if ( beh_it->second == CallbackBehavior::CALLBACK_MEMBER_CHANGES) { 
           GS_PARAM_ARRAY_DUMP("observer "<<(unsigned long int)callb->get_observer()<<" is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back");
           // Make call with changed parameter
-          callb->call(changed_param, cb_reason);
+          tmp_ret = callb->call(changed_param, cb_reason);
+          if (tmp_ret == return_value_change_rejected && ret == return_nothing) ret = tmp_ret;
+          else if (tmp_ret == return_other_error) ret = tmp_ret;
         } 
         else {
           GS_PARAM_ARRAY_DUMP("observer "<<(unsigned long int)callb->get_observer()<<" is in behavior map - NOT_CALLBACK_MEMBER_CHANGES - NOT perform member call back");
@@ -525,7 +530,9 @@ protected:
       else {
         GS_PARAM_ARRAY_DUMP("default: observer "<<(unsigned long int)callb->get_observer()<<" is NOT in behavior map - perform member call back");
         // Make call with changed parameter
-        callb->call(changed_param, cb_reason);
+        tmp_ret = callb->call(changed_param, cb_reason);
+        if (tmp_ret == return_value_change_rejected && ret == return_nothing) ret = tmp_ret;
+        else if (tmp_ret == return_other_error) ret = tmp_ret;
       }
     }
     gs_param_base_T::m_currently_making_callbacks = false;
@@ -534,6 +541,7 @@ protected:
     if (changed_param.is_destructing()) {
       removeMember(changed_param.getName());
     }
+    return ret;
   }
   
   /// Removes a member out of this array. Called by the callback method.

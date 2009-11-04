@@ -27,6 +27,16 @@ void ParameterOwnerModule::main_action() {
 
   cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
   assert(mApi != NULL && "get_cnf_api_instance returned is NULL");
+
+  cout << name() << ": uint_param is_default_value()=" << uint_param.is_default_value()<<endl;
+  uint_param = 10;
+  cout << name() << ": uint_param is_default_value()=" << uint_param.is_default_value()<<endl<<endl;
+
+  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
+  bool_param = true;
+  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
+  bool_param.set_invalid_value();
+  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl<<endl;
   
   wait(1, SC_NS);
   cout << name() << ": set int_param = 100" << endl;

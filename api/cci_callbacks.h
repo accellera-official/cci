@@ -29,7 +29,7 @@ namespace cci {
   
   enum callback_type {
     pre_read,
-    post_read,
+    //post_read, // difficult/impossible to provide?
     pre_write,
     post_write,
     create_param,
@@ -103,17 +103,19 @@ namespace cci {
 #endif
         // remove this out of the parameter's callback list
         // Avoid repeated call during destruction by automatically setting caller_param = NULL
-        caller_param->unregister_param_callback(this);
+        bool succ = caller_param->unregister_param_callback(this);
+        //assert (succ && "Unregistering this callback at parameter failed!");
       }
     }
     
     /// Makes the callback, called by the base class callb_adapt_b.
-    void call(cci_base_param& changed_param, const callback_type& cb_reason) {
+    callback_return_type call(cci_base_param& changed_param, const callback_type& cb_reason) {
       if (func) {
-        func(changed_param, cb_reason);
+        return func(changed_param, cb_reason);
       } else {
         SC_REPORT_ERROR(OSCI_CCI_SC_REPORT_IDENT, "No callback registered yet.");
       }      
+      return return_nothing;
     }
 
     /// Returns the observer (pointer to the object where the method should be called)

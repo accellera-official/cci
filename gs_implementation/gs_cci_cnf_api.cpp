@@ -31,10 +31,11 @@ cci::gs_cci_cnf_api::~cci_cnf_api() {
 }
 
 cci::set_param_error_type cci::gs_cci_cnf_api::set_init_value(const std::string &parname, const std::string &value) {
-  if ( m_gcnf_api->setInitValue(parname, value) )
+  if ( m_gcnf_api->setInitValue(parname, value) ) {
     return cci::set_param_success;
-  else
+  } else {
     return cci::set_param_failed;
+  }
 }
 
 const std::string cci::gs_cci_cnf_api::get_json_string(const std::string &parname) {

@@ -212,7 +212,8 @@ namespace cci {
      * True if the value had never been set but only by the constructor.
      *
      * Note that this returns false even if the current value is 
-     * actually the same as the default one.
+     * actually the same as the default one. This returns also false
+     * if there had not been set a constructor default value.
      *
      * @return If the parameter's current value is the default one
      */
@@ -223,7 +224,7 @@ namespace cci {
      * TODO: Optional function
      *
      * True if the value has been set using the cnf_api's
-     * set_init_value function and not been modified since then.
+     * set_initial_value function and not been modified since then.
      *
      * @param If the parameter's current value is an initial value being set by the database
      */
@@ -311,8 +312,9 @@ namespace cci {
      *   }
      *
      *   // Callback function with default signature.
-     *   void config_callback(cci_base_param& changed_param, const callback_type& cb_reason) {
+     *   cci::callback_reason config_callback(cci_base_param& changed_param, const callback_type& cb_reason) {
      *     // some action
+     *     return cci::return_nothing;
      *   }
      * protected:
      *   boost::shared_ptr<callb_adapt_b> p1cb;
@@ -356,7 +358,8 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b> callb) = 0;
+    virtual bool unregister_param_callback(cci::callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;

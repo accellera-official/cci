@@ -70,11 +70,6 @@ namespace cci {
       return parname;
     }
    
-    const bool is_destructing() const {
-      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-      return false;
-    }
-
     void set(const val_type& val) {
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
     }

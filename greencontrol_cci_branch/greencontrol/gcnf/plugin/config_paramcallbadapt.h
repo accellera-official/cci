@@ -115,7 +115,7 @@ public:
   }
   
   /// Virtual call method to make the call in the template specialized class.
-  virtual void call(T_gs_param_base& changed_param, callback_type& reason) = 0;
+  virtual callback_return_type call(T_gs_param_base& changed_param, callback_type& reason) = 0;
   /// Returns the observer (pointer to the object where the method should be called)
   void* get_observer() {
     return (void*) observer_ptr;
@@ -190,8 +190,9 @@ public:
   callb_func_ptr ptr;
 
   /// Makes the callback, called by the base class CallbAdapt_b.
-  void call(gs_param_base& changed_param, callback_type& reason) {
+  callback_return_type call(gs_param_base& changed_param, callback_type& reason) {
     (obj->*ptr)(changed_param);
+    return return_nothing;
   }
   
 };
@@ -215,7 +216,7 @@ public:
     /**
      * Callback functions must have the signature: void method_name(gs_param_base& changed_param, callback_type reason)
      */
-    typedef void (T::*callb_func_w_reason_ptr)(gs_param_base& changed_param, callback_type reason);
+    typedef callback_return_type (T::*callb_func_w_reason_ptr)(gs_param_base& changed_param, callback_type reason);
     
   public:
     
@@ -247,12 +248,13 @@ public:
 #endif
     
     /// Makes the callback, called by the base class CallbAdapt_b.
-    void call(gs_param_base& changed_param, callback_type& reason) {
+    callback_return_type call(gs_param_base& changed_param, callback_type& reason) {
+      callback_return_type ret = return_nothing;
 #ifdef GCNF_AVOID_NESTED_CALLBACKS_IN_CALLBACK_ADAPTERS
       if (!m_calling) {
         m_calling = true; // To avoid multiple (nested) callbacks
 #endif
-        (obj->*ptr)(changed_param, reason);
+        ret = (obj->*ptr)(changed_param, reason);
 #ifdef GCNF_AVOID_NESTED_CALLBACKS_IN_CALLBACK_ADAPTERS
         m_calling = false;
       }
@@ -260,6 +262,7 @@ public:
         GS_PARAM_CALLBACK_DUMP_WITHNAME("call adapter "<<get_id(), " "<< callback_type_to_string(reason) <<" callback omitted.");
       }
 #endif
+      return ret;
     }
     
   };

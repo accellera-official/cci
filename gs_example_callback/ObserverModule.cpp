@@ -48,6 +48,13 @@ void ObserverModule::main_action() {
   assert(p != NULL);
   p->register_callback(cci::pre_write, this, 
                        boost::bind(&ObserverModule::config_callback, this, _1, _2));
+  std::string str; p->get_string(str);
+  cout << "int_param has value = " << str << endl;
+  cout << "int_param set value = 99" << endl;
+  p->set_string("99");
+  p->get_string(str);
+  cout << "int_param has value = " << str << endl;
+  p->unregister_all_callbacks(this);
   
   // show param list
   cout << "param list:" << endl;

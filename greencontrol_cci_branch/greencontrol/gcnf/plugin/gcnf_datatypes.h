@@ -219,6 +219,12 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
     no_callback
   };
   
+  enum callback_return_type {
+    return_nothing,
+    return_value_change_rejected, // may only be used in pre_write callbacks
+    return_other_error
+  };
+  
   /// returns string for callback_type
   static inline std::string callback_type_to_string(callback_type cbt) {
     switch (cbt) {
