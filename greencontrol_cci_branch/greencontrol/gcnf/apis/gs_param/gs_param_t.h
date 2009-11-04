@@ -233,7 +233,10 @@ public:
    * @param val  The new value for this parameter.
    */
   void setValue(const val_type &val) {
-    make_pre_write_callbacks();
+    if (make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("pre_write callback rejected value change!");
+      return;
+    }
     my_value = val;
     make_post_write_callbacks();
   }
@@ -265,7 +268,10 @@ public:
    * @return If setting was successful
    */ 
   bool setString(const std::string &str) {
-    make_pre_write_callbacks();
+    if (make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("pre_write callback rejected value change!");
+      return false;
+    }
     bool success = deserialize(my_value, envvar_subst(str, m_par_name));
     make_post_write_callbacks();
     return success;

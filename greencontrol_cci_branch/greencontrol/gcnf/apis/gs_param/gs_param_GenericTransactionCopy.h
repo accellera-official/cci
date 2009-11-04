@@ -199,9 +199,12 @@ namespace cnf {
     
     /// Operator= that allows GenericTransactions, Generic[Master|Slave|Router]Accesses to be assigned to this param
     my_type& operator= (const tlm::gp::GenericTransaction& src) {
-      make_pre_write_callbacks();
-      my_value = src;
-      make_post_write_callbacks();
+      if (make_pre_write_callbacks() == return_value_change_rejected) {
+        GS_PARAM_DUMP_WITHNAME("gs_param", "operator=: pre_write callback rejected value change!");
+      } else {
+        my_value = src;
+        make_post_write_callbacks();
+      }
       return *this;
     }
     

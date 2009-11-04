@@ -556,7 +556,10 @@ protected:
    */
   bool removeMember(const std::string name) {
     GS_PARAM_ARRAY_DUMP("removeMember("<<name<<")");
-    this->make_pre_write_callbacks();
+    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("  pre_write callback rejected remove member!");
+      return false;
+    }
     if (m_MemberMap.erase( name ) > 0) {
       this->make_post_write_callbacks();
       return true;
@@ -583,7 +586,10 @@ protected:
       return false;
     }
     // callback changes of this
-    this->make_pre_write_callbacks();
+    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("  pre_write callback rejected add member!");
+      return false;
+    }
     // add member
     m_MemberMap.insert(   make_pair( new_member.getName(), &new_member )   );
     // register this as an observer (for callbacks and for destruction info)
@@ -600,7 +606,10 @@ protected:
   
   /// Delete all members and the internal array
   void delete_array() {
-    this->make_pre_write_callbacks();
+    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("delete_array: pre_write callback rejected delete member!");
+      return;
+    }
     std::vector<gs_param_base*> pvec;
     // go through all members and store them to delete
     typename memberMapType::iterator it;

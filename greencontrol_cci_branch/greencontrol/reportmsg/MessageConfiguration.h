@@ -311,7 +311,10 @@ namespace cnf {
      * @return If setting was successful
      */ 
     bool setString(const std::string &str) {
-      make_pre_write_callbacks();
+      if (make_pre_write_callbacks() == return_value_change_rejected) {
+        GS_PARAM_DUMP("pre_write callback rejected value change!");
+        return false;
+      }
       bool success = deserialize(my_value, str);
       make_post_write_callbacks();
       return success;

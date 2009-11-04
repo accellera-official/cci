@@ -430,7 +430,10 @@ public:
    * @param sz  Size of the array.
    */
   void resize(unsigned int sz) {
-    this->make_pre_write_callbacks();
+    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("resize: pre_write callback rejected resize!");
+      return;
+    }
     // Delete unnecessary members if needed
     if (sz < internal_ArrVec.size()) {
       GS_PARAM_ARRAY_DUMP("resize: size ("<<sz<<") than existing size ("<<(unsigned int)internal_ArrVec.size()<<"): delete remaining members.");

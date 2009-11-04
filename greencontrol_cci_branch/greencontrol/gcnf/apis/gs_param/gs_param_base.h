@@ -687,21 +687,21 @@ protected:
 
 protected:
   /// Makes the pre read callbacks.
-  inline void make_pre_read_callbacks() const {
+  inline callback_return_type make_pre_read_callbacks() const {
     GS_PARAM_CALLBACK_DUMP("Make pre read callbacks"); 
-    make_enabled_callbacks_helper(m_callback_list_pre_read, pre_read);
+    return make_enabled_callbacks_helper(m_callback_list_pre_read, pre_read);
   }
 
   /// Makes the post read callbacks.
-  inline void make_post_read_callbacks() const {
+  inline callback_return_type make_post_read_callbacks() const {
     GS_PARAM_CALLBACK_DUMP("Make post read callbacks"); 
-    make_enabled_callbacks_helper(m_callback_list_post_read, post_read);
+    return make_enabled_callbacks_helper(m_callback_list_post_read, post_read);
   }
 
   /// Makes the pre write callbacks.
-  inline void make_pre_write_callbacks() {
+  inline callback_return_type make_pre_write_callbacks() {
     GS_PARAM_CALLBACK_DUMP("Make pre write callbacks"); 
-    make_enabled_callbacks_helper(m_callback_list_pre_write, pre_write);
+    return make_enabled_callbacks_helper(m_callback_list_pre_write, pre_write);
   }
 
   /// Makes the post write callbacks and notifies the update event.
@@ -715,9 +715,9 @@ protected:
    * Callbacks may be removed (using the removeCallback function)
    * during calls, but not modify the vector.
    */
-  inline void make_post_write_callbacks() {
+  inline callback_return_type make_post_write_callbacks() {
     GS_PARAM_CALLBACK_DUMP("Make post write callbacks and notify event"); 
-    make_enabled_callbacks_helper(m_callback_list_post_write, post_write);
+    return make_enabled_callbacks_helper(m_callback_list_post_write, post_write);
   }
   /// Deprecated, use make_post_write_callbacks() instead
   inline void makeCallbacks() {
@@ -732,7 +732,7 @@ protected:
   }
   
   /// Help function for make_..._callbacks() functions
-  inline void make_enabled_callbacks_helper( callback_list_type& callb_list, callback_type reason ) const {
+  inline callback_return_type make_enabled_callbacks_helper( callback_list_type& callb_list, callback_type reason ) const {
 // This should not be used, see comment in config_globals.h
 #ifdef GCNF_AVOID_NESTED_CALLBACKS_IN_PARAM
     // Avoid multiple (nested) callbacks
@@ -741,15 +741,19 @@ protected:
       return;
     }
 #endif
+    callback_return_type cb_return = return_nothing;
+    callback_return_type cb_return_tmp;
     m_currently_making_callbacks = true;
     for (unsigned int i = 0; i < callb_list.size(); i++ ) {
       if (callb_list[i].first) { // if not true, this has been disabled and will be removed outside this loop
         GS_PARAM_CALLBACK_DUMP("   call adapter "<< callb_list[i].second->get_id());
-        callb_list[i].second->call(*const_cast<gs_param_base*>(this), reason);
+        cb_return_tmp = callb_list[i].second->call(*const_cast<gs_param_base*>(this), reason);
+        if (cb_return < cb_return_tmp) cb_return = cb_return_tmp; // consider precedence!
       }
     }
     m_currently_making_callbacks = false;
     cleanup_callback_list();
+    return cb_return;
   }    
   
   /// Remove diabled callbacks

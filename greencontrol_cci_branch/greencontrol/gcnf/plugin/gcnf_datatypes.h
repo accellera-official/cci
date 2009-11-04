@@ -218,11 +218,16 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
     post_write_and_destroy,
     no_callback
   };
-  
+
+  /// Callback return types
+  /**
+   * Override precendence: higher numbers override smaller ones when multiple callback returns are combined to one. <br>
+   * Numbers are for internal use, NOT part of the API!
+   */
   enum callback_return_type {
-    return_nothing,
-    return_value_change_rejected, // may only be used in pre_write callbacks
-    return_other_error
+    return_nothing = 0, 
+    return_value_change_rejected = 1, // may only be used in pre_write callbacks
+    return_other_error = 2
   };
   
   /// returns string for callback_type
