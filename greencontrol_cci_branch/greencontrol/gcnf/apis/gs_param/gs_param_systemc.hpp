@@ -569,7 +569,7 @@ public:
    *
    * @param val  The new value for this parameter.
    */
-  void setValue(const sc_dt::sc_logic &val) {
+  bool setValue(const sc_dt::sc_logic &val) {
     val_type tmp;
     tmp = val;
     return setValue(tmp);

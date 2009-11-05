@@ -428,11 +428,12 @@ public:
    * of sz elements.
    *
    * @param sz  Size of the array.
+   * @return If resize was successfull (or not because e.g. read-only param)
    */
-  void resize(unsigned int sz) {
+  bool resize(unsigned int sz) {
     if (this->make_pre_write_callbacks() == return_value_change_rejected) {
       GS_PARAM_ARRAY_DUMP("resize: pre_write callback rejected resize!");
-      return;
+      return false;
     }
     // Delete unnecessary members if needed
     if (sz < internal_ArrVec.size()) {
@@ -456,6 +457,7 @@ public:
     }
     // callback for changed size
     this->make_post_write_callbacks();
+    return true;
   }
 
   /// Returns the number of parameter members in this array

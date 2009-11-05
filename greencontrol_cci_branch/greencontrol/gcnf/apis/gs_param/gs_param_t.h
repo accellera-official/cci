@@ -69,7 +69,6 @@ protected:
   mutable std::string return_string;
 
 public:
-  using gs_param_base::set;
 
   // templated operators
   my_type& operator +=  (val_type);
@@ -232,13 +231,14 @@ public:
    *
    * @param val  The new value for this parameter.
    */
-  void setValue(const val_type &val) {
+  bool setValue(const val_type &val) {
     if (make_pre_write_callbacks() == return_value_change_rejected) {
       GS_PARAM_DUMP("pre_write callback rejected value change!");
-      return;
+      return false;
     }
     my_value = val;
     make_post_write_callbacks();
+    return true;
   }
   
   /// Returns the value of this parameter.

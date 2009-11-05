@@ -107,29 +107,33 @@ namespace cci {
       return return_string;
     }
     
-    bool json_deserialize(const std::string& str) {
+    void json_deserialize(const std::string& str) {
       val_type t;
-      bool ret = json_deserialize(t, str);
-      if (ret) gs_cci_param_t<val_type>::set(t);
-      return ret;
+      json_deserialize(t, str);
+      gs_cci_param_t<val_type>::set(t);
     }
 
     std::string json_serialize(const val_type& val) const {
-      // TODO
+      // TODO: this is currently not a JSON but a GreenConfig specific string
+      // TODO: throw exception on error
       return gs::gs_param<val_type>::convertValueToString(val);
     }
 
-    const bool json_deserialize(val_type& target_val, const std::string& str) {
-      // TODO
-      return gs::gs_param<val_type>::deserialize(target_val, str);
+    void json_deserialize(val_type& target_val, const std::string& str) {
+      // TODO: this is currently not a JSON but a GreenConfig specific string
+      if (!gs::gs_param<val_type>::deserialize(target_val, str))
+        throw cci_exception_set_param(set_param_bad_value, "set failed (string conversion failed)"); // don't know why here
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //
     
-    set_param_error_type set_value(const cci_value& val) {
+    void set_value(const cci_value& val) {
+      // TODO
     }
 
     cci_value get_value() {
+      // TODO
+      
     }
     
     // //////////////// stuff /////////////////////////// //
@@ -217,29 +221,31 @@ namespace cci {
       return return_string;
     }
     
-    bool json_deserialize(const std::string& str) {
+    void json_deserialize(const std::string& str) {
       val_type t;
-      bool ret = json_deserialize(t, str);
-      if (ret) gs_cci_param_t<val_type>::set(t);
-      return ret;
+      json_deserialize(t, str);
+      gs_cci_param_t<val_type>::set(t);
     }
     
     std::string json_serialize(const val_type& val) const {
       return gs::gs_param<val_type>::convertValueToString(val);
     }
     
-    const bool json_deserialize(val_type& target_val, const std::string& str) {
-      return gs::gs_param<val_type>::deserialize(target_val, str);
+    void json_deserialize(val_type& target_val, const std::string& str) {
+      gs::gs_param<val_type>::deserialize(target_val, str);
     }    
     
-    set_param_error_type set_value(const cci_value& val) {
+    void set_value(const cci_value& val) {
+      // TODO
     }
     
     cci_value get_value() {
+      // TODO
     }
     
+    const basic_param_type get_basic_type() const { return partype_string; }
+
     /* To be implemented in specializations
-     const Param_JSON_type get_basic_type() const { return partype_not_available; }
      bool set_number(const sc_dt::uint64 value)   { return false; }
      bool set_double(const double value)      { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
      bool set_string(const std::string value) { return false; }

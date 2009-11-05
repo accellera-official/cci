@@ -58,15 +58,14 @@ namespace cci {
     class internal_callback_forwarder {
     public:
       internal_callback_forwarder(boost::shared_ptr<cci::callb_adapt_b> _adapt, const gs::cnf::callback_type _type, my_type& _par)
-      : adapt(_adapt)
+      : adapt(_adapt.get())
       , type(_type)
       , param(&_par)
       , calling_gs_adapter() {
       }
       ~internal_callback_forwarder() {
-        cout << "desttructor" << endl;
+        cout << "Destructing callback forwarder for param "<<param->get_name() << endl;
         if (calling_gs_adapter) {
-          cout << "desttructor unregister" << endl;
           calling_gs_adapter->unregister_at_parameter();
         }
       }
@@ -112,7 +111,7 @@ namespace cci {
         return type;
       }
 
-      boost::shared_ptr<cci::callb_adapt_b> adapt;
+      cci::callb_adapt_b* adapt;
       gs::cnf::callback_type type;
       my_type *param;
       boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
@@ -166,34 +165,28 @@ namespace cci {
     ~gs_cci_param_t() {
     }
     
-    /*void init(const val_type& default_val) {
-      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-    }
-    
-    void init() {
-      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-    }*/
-    
     const std::string& get_name() const {
       return gs::gs_param<T>::getName();
     }
    
     void set(const val_type& val) {
-      gs::gs_param<T>::setValue(val);
+      if (!gs::gs_param<T>::setValue(val))
+        throw cci_exception_set_param(set_param_bad_value, "set value failed");
     }
     
     const val_type& get() const {
       return gs::gs_param<T>::getValue();
     }
     
-    get_param_error_type get_string(std::string& retvalue) {
+    /*get_param_error_type get_string(std::string& retvalue) {
       retvalue = gs::gs_param<T>::getString();
       return get_param_success;
-    }
+    }*/
     
-    set_param_error_type set_string(const std::string& value) {
-      bool ret = gs::gs_param<T>::setString(value);
-    }
+    /*void set_string(const std::string& value) {
+      if (!gs::gs_param<T>::setString(value))
+        throw cci_exception_set_param(set_param_bad_value, "set string value failed"); // don't know why here
+    }*/
     
     // //////////////// stuff /////////////////////////// //
     
@@ -222,6 +215,8 @@ namespace cci {
     void set_invalid_value() {
       m_is_invalid_value = true;
     }
+    
+    // /////////////////// CALLBACKS ///////////////////// //
     
     boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
       gs::cnf::callback_type cb = gs::cnf::no_callback;
@@ -283,7 +278,7 @@ namespace cci {
     bool unregister_param_callback(cci::callb_adapt_b* callb)  {
       internal_callback_forwarder* fw;
       for (int i = 0; i < fw_vec.size(); ++i) {
-        if (fw_vec[i]->adapt.get() == callb) {
+        if (fw_vec[i]->adapt == callb) {
           fw = fw_vec[i];
           fw_vec.erase(fw_vec.begin()+i);
           delete fw;

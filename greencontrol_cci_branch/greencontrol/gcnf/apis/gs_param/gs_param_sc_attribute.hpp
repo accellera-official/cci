@@ -250,23 +250,25 @@ public:
   }
   
   /// Set the value of this parameter.
-  void setValue(const val_type &val) {
+  bool setValue(const val_type &val) {
     if (make_pre_write_callbacks() == return_value_change_rejected) {
       GS_PARAM_DUMP("pre_write callback rejected value change!");
-      return;
+      return false;
     }
     my_value.value = val.value;
     make_post_write_callbacks();
+    return true;
   }
   
   /// Set the value of this parameter.
-  void setValue(const T &val) {
+  bool setValue(const T &val) {
     if (make_pre_write_callbacks() == return_value_change_rejected) {
       GS_PARAM_DUMP("pre_write callback rejected value change!");
-      return;
+      return false;
     }
     my_value.value = val;
     make_post_write_callbacks();
+    return true;
   }
   
   /// Returns the value of this parameter.

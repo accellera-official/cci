@@ -201,6 +201,7 @@ namespace cnf {
     my_type& operator= (const tlm::gp::GenericTransaction& src) {
       if (make_pre_write_callbacks() == return_value_change_rejected) {
         GS_PARAM_DUMP_WITHNAME("gs_param", "operator=: pre_write callback rejected value change!");
+        throw string("Value change rejected"); // TODO: use exception
       } else {
         my_value = src;
         make_post_write_callbacks();

@@ -89,6 +89,9 @@ namespace cci {
     //                        const bool force_top_level_name = false);
     
     /// Destructor.
+    /**
+     *
+     */
     virtual ~cci_base_param() { }
     
     
@@ -96,15 +99,16 @@ namespace cci {
     // ///////   Set and Get with JSON String Representation   //////////// //
     
     
-    /// Sets the value of this parameter given by a JSON string.
+    /// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
     /** 
-     * @param str the new value represented as a JSON string.
-     * @return If setting was successful.
+     * @exception cci_exception_set_param Setting value failed
+     * @param json_string the new value, represented as a JSON string.
      */
-    virtual bool json_deserialize(const std::string& str) = 0;
+    virtual void json_deserialize(const std::string& json_string) = 0;
     
-    /// Get the JSON string representation of this parameter's value.
+    /// Get the JSON string representation of this parameter's value. @todo Alternative function name: get_json_string
     /**
+     * @exception cci_exception_get_param Getting value failed
      * @return  The value of this parameter represented as a JSON string.
      */
     virtual const std::string& json_serialize() const = 0;
@@ -114,7 +118,10 @@ namespace cci {
     // ///////////////   JSON Data Type and access   ////////////////////// //
 
     
-    /// Returns a basic type this parameter can be converted to (which is not necessarily the actual parameter type)
+    /// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type)
+    /**
+     * @return Type
+     */
     virtual const basic_param_type get_basic_type() const { return partype_not_available; }
     
 #define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(OSCI_CCI_SC_REPORT_IDENT, "Not supported for this parameter type!")
@@ -129,19 +136,20 @@ namespace cci {
      * In cases of overflows and not other mismatches the function 
      * should return false and shall not change the parameter!
      *
+     * @exception cci_exception_set_param Setting value failed
      * @param value  Value which the parameter should be set to.
      * @return       If the setting was successfull.
      */
-    virtual set_param_error_type set_number(const sc_dt::uint64 value) { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
+    //virtual void set_number(const sc_dt::uint64 value) { CCI_NOT_SUPPORTED_WRN; }
     /// Set the parameter value by trying to convert the given number to the param value.
     /** Details @see cci_base_param::set_number(const sc_dt::uint64 value) If the parameter does not implement this, it will call the set_number function. */
-    virtual set_param_error_type set_double(const double value)        { sc_dt::uint64 llval = (sc_dt::uint64)value; return set_number(llval); }
+    //virtual void set_double(const double value)        { sc_dt::uint64 llval = (sc_dt::uint64)value; set_number(llval); }
     /// Set the parameter value by trying to convert the given string to the param value.
     /** Details @see cci_base_param::set_number(const sc_dt::uint64 value) */
-    virtual set_param_error_type set_string(const std::string& value)   { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
+    //virtual void set_string(const std::string& value)   { CCI_NOT_SUPPORTED_WRN; }
     /// Set the parameter value by trying to convert the given bool to the param value.
     /** Details @see cci_base_param::set_number(const sc_dt::uint64 value) */
-    virtual set_param_error_type set_bool(const bool value)            { CCI_NOT_SUPPORTED_WRN; return set_param_failed; }
+    //virtual void set_bool(const bool value)            { CCI_NOT_SUPPORTED_WRN; }
 
     /// Get the parameter value by trying to convert it to the given number.
     /**
@@ -153,19 +161,19 @@ namespace cci {
      * In cases of overflows and not other mismatches the function 
      * should return false and shall not change the retalue!
      *
-     * @param value  Value which the parameter should be copied to.
-     * @return       If the getting was successfull.
+     * @exception cci_exception_get_param Getting value failed
+     * @param retvalue  Value which the parameter should be copied to.
      */
-    virtual get_param_error_type get_number(sc_dt::uint64& retvalue) { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
+    //virtual void get_number(sc_dt::uint64& retvalue) { CCI_NOT_SUPPORTED_WRN; }
     /// Get the parameter value by trying to convert it to the given number.
     /** Details @see cci_base_param::get_number(sc_dt::uint64& retvalue). If the parameter does not implement this, it will call the get_number function. */
-    virtual get_param_error_type get_double(double& retvalue)        { sc_dt::uint64 llval; get_param_error_type res=get_number(llval); if (res) retvalue=(double)llval; return res; }
+    //virtual void get_double(double& retvalue)        { sc_dt::uint64 llval; get_number(llval); retvalue=(double)llval; }
     /// Get the parameter value by trying to convert it to the given string.
     /** Details @see cci_base_param::get_number(sc_dt::uint64& retvalue) */
-    virtual get_param_error_type get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
+    //virtual void get_string(std::string& retvalue)   { CCI_NOT_SUPPORTED_WRN; }
     /// Get the parameter value by trying to convert it to the given bool.
     /** Details @see cci_base_param::get_number(sc_dt::uint64& retvalue) */
-    virtual get_param_error_type get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; return get_param_failed; }
+    //virtual void get_bool(bool& retvalue)            { CCI_NOT_SUPPORTED_WRN; }
     
     //
     // Alternatively??
@@ -173,13 +181,14 @@ namespace cci {
     
     /// Set the parameter's value to the given one
     /**
+     * @exception cci_exception_set_param Setting value failed
      * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
-     * @return    If the setting was successfull.
      */
-    virtual set_param_error_type set_value(const cci_value& val) = 0;
+    virtual void set_value(const cci_value& val) = 0;
     
     /// Get the parameter's value
     /**
+     * @exception cci_exception_get_param Getting value failed
      * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
     virtual cci_value get_value() = 0;
@@ -192,13 +201,15 @@ namespace cci {
     /// Set parameter meta data/documentation
     /**
      * Adds parameter meta data which should describe the 
-     * intended use, allowed value range etc.
+     * intended use, allowed value range etc. in a human readable way.
+     *
+     * @param doc Human readable documentation
      */
     virtual void set_documentation(const std::string& doc) = 0;
 
     /// Get the parameter's meta data/documentation
     /**
-     * @param  Documentation
+     * return Documentation
      */
     virtual std::string get_documentation() const = 0;
     
@@ -219,30 +230,28 @@ namespace cci {
      */
     virtual bool is_default_value() = 0;
     
-    /// Returns if the current value is an initial value being set by the database and not been modified
-    /**
-     * TODO: Optional function
-     *
-     * True if the value has been set using the cnf_api's
-     * set_initial_value function and not been modified since then.
-     *
-     * @param If the parameter's current value is an initial value being set by the database
-     */
-    virtual bool is_initial_value() = 0;
-
     /// Returns if the current value is invalid
     /**
      * Returns true if 
      *  - the parameter has no constructor default value and never been set or
-     * TODO: optional:
-     *  - the value has manually been set to be invalid (function set_invalid_value)
+     *  - OPTIONAL (currently implemented): the value has manually been
+     *    set to be invalid (using function set_invalid_value() ) @see set_invalid_value()
      *
-     * @param  If the parameter's current value is invalid
+     * @return  If the parameter's current value is invalid
      */
     virtual bool is_invalid_value() = 0;
 
     /// Marks the value to be invalid. (Does not impact the actual value.)
     virtual void set_invalid_value() = 0;
+    
+    /// OPTIONAL: Returns if the current value is an initial value being set by the database (OPTIONAL:) and not been modified
+    /**
+     * True if the value has been set using the cnf_api's
+     * set_initial_value function (OPTIONAL:) and not been modified since then.
+     *
+     * @return If the parameter's current value is an initial value being set by the database
+     */
+    virtual bool is_initial_value() = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -359,6 +368,7 @@ namespace cci {
      * @return       If the callback adapter existed in this parameter.
      */
     virtual bool unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b> callb) = 0;
+    /// @see unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b>) 
     virtual bool unregister_param_callback(cci::callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
@@ -367,7 +377,7 @@ namespace cci {
 
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////////   Parameter Lock   //////////////////////////// //
-    // optional! Could use a pre change callback instead which might be able to reject a param change
+    // OPTIONAL! Could use a pre change callback instead which might be able to reject a param change
     //virtual bool lock(const void* passwd) = 0;
     //virtual bool unlock(const void* passwd) = 0;
     

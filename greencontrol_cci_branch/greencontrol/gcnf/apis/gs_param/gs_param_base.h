@@ -120,7 +120,7 @@ public:
   {
     GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<(unsigned long) parent_array<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor");
 
-    // TODO: fill m_callback_lists with all callback lists this param has
+    // TODO: Make sure m_callback_lists is filled with all callback lists this param has
     m_callback_lists[pre_read]      = &m_callback_list_pre_read;
     m_callback_lists[post_read]     = &m_callback_list_post_read;
     m_callback_lists[pre_write]     = &m_callback_list_pre_write;
@@ -212,22 +212,12 @@ public:
    * @return If setting was successful.
    */
   virtual bool setString(const std::string &str) = 0;
-  /// Deprecated: use setString(stringval) instead
-  void set(const std::string &str) {
-    DEPRECATED_WARNING(name(), "DEPRECATED: set(stringval) is deprecated! Use 'setString(stringval)' instead.");
-    setString(str);
-  }
   
   /// Get the string representation of this parameter's value.
   /**
    * @return  The value of this parameter represented as a string.
    */
   virtual const std::string& getString() const = 0;
-  /// Deprecated: use getString(val) instead
-  const std::string& get() const {
-    DEPRECATED_WARNING(name(), "DEPRECATED: get() is deprecated! Use 'getString()' instead.");
-    return getString();
-  }
 
   /// Get this parameter's value converted to the type.
   /**

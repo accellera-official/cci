@@ -56,9 +56,9 @@ namespace cci {
     /**
      * The init value has priority to the initial value set by the owner!
      *
-     * @param parname Full hierarchical parameter name.
-     * @param value   JSON string representation of the init value the parameter has to be set to.
-     * @return        Success of the setting.
+     * @param parname    Full hierarchical parameter name.
+     * @param json_value JSON string representation of the init value the parameter has to be set to.
+     * @return           Success of the setting.
      */
     virtual set_param_error_type set_init_value(const std::string &parname, const std::string &json_value) = 0;
     
@@ -79,7 +79,7 @@ namespace cci {
     /// Checks whether a parameter exists (implicit or explicit).
     /**
      * @param parname  Full hierarchical parameter name.
-     * @return Whether the parameter <parname> exists in the registry.
+     * @return Whether the parameter < parname > exists in the registry.
      */
     virtual bool exists_param(const std::string &parname) = 0;
 

@@ -42,23 +42,31 @@ void ParamManipulateModule::main_action() {
 
   wait(10, SC_NS);
   
-  cci::cci_base_param *ptr = mApi->get_param("Owner.int_param");
-  if (ptr == NULL) return;
-  cci::gs_cci_param<int> &p = *static_cast<cci::gs_cci_param<int>* >(ptr);
-  //cci::gs_cci_param<std::string> &pu = *static_cast<cci::gs_cci_param<std::string>* >(mApi->get_param("Owner.str_param"));
+  cci::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
+  if (int_param_ptr == NULL) return;
+  cci::gs_cci_param<int> &int_param_p = *static_cast<cci::gs_cci_param<int>* >(int_param_ptr);
+
+  cci::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
+  if (uint_param_ptr == NULL) return;
+  cci::gs_cci_param<unsigned int> &uint_param_p = *static_cast<cci::gs_cci_param<unsigned int>* >(uint_param_ptr);
   
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
-  p.set_string("5000");
+  int_param_p.json_deserialize("5000");
   cout << endl;
   wait(SC_ZERO_TIME);
   
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5001");
-  p.set(5001);
+  int_param_p.set(5001);
   cout << endl;
   wait(SC_ZERO_TIME);
   
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5002");
-  p = 5002;
+  int_param_p = 5002;
+  cout << endl;
+  wait(SC_ZERO_TIME);
+
+  DEMO_DUMP(name(), "Set parameter Owner.uint_param to value=9000");
+  uint_param_p = 9000;
   cout << endl;
   wait(SC_ZERO_TIME);
   

@@ -605,10 +605,13 @@ protected:
   }
   
   /// Delete all members and the internal array
-  void delete_array() {
+  /**
+   * @return If delete was successfull (or not because e.g. read-only param)
+   */
+  bool delete_array() {
     if (this->make_pre_write_callbacks() == return_value_change_rejected) {
       GS_PARAM_ARRAY_DUMP("delete_array: pre_write callback rejected delete member!");
-      return;
+      return false;
     }
     std::vector<gs_param_base*> pvec;
     // go through all members and store them to delete
@@ -625,6 +628,7 @@ protected:
       delete *it;
     }
     this->make_post_write_callbacks();
+    return true;
   }
 
 protected:

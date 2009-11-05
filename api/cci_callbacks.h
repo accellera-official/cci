@@ -103,7 +103,7 @@ namespace cci {
 #endif
         // remove this out of the parameter's callback list
         // Avoid repeated call during destruction by automatically setting caller_param = NULL
-        bool succ = caller_param->unregister_param_callback(this);
+        /*bool succ = */caller_param->unregister_param_callback(this);
         //assert (succ && "Unregistering this callback at parameter failed!");
       }
     }

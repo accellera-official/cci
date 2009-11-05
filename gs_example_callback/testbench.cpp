@@ -31,7 +31,7 @@
 
 /// Testbench for the example GreenConfig
 int sc_main(int argc, char *argv[]) {
-  sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
+  //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
 
   GS_INIT_STANDARD_GREENCONTROL;
   
@@ -41,7 +41,14 @@ int sc_main(int argc, char *argv[]) {
   BaseParamModule       baseParTest("baseParTest");
 
   std::cout << "------ sc_start() ----------------" << std::endl;
-  sc_core::sc_start();
+  
+  try {
+    sc_core::sc_start(); 
+  } 
+  catch (cci::cci_exception &e) {
+    std::cout << "Catched exception: " << e.what() << std::endl;
+  }
+  
   std::cout << "------ sc_start() returned -------" << std::endl;
   
   return EXIT_SUCCESS; 

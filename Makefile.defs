@@ -15,7 +15,7 @@ endif
 CC = g++
 
 ## set some directories 
-GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol
+GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
 GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol
 CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
 BOOST = /cad/tools/boost

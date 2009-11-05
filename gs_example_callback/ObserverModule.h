@@ -44,8 +44,11 @@ public:
   /// Main action to make tests with parameters.
   void main_action();
 
-  /// Callback function with default signature.
+  /// Callback function with default signature showing changes.
   cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+
+  /// Callback function with default signature rejecting all changes.
+  cci::callback_return_type config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
   /// Callback function with default signature.
   cci::callback_return_type config_new_param_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
@@ -57,7 +60,7 @@ protected:
   /// Pointer the the module's configuration API
   cci::cci_cnf_api* mApi;
   
-  /// Vector of callbacks to ensure they can be unregistered when module is destructed
+  /// Vector of callbacks to keep them outside the local scope of main_action
   std::vector< boost::shared_ptr<cci::callb_adapt_b> > mCallbacks;
   
 };
