@@ -33,23 +33,27 @@
 int sc_main(int argc, char *argv[]) {
   //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
 
-  GS_INIT_STANDARD_GREENCONTROL;
-  
-  ParamManipulateModule manipulator("Manipulator");
-  ParameterOwnerModule  owner      ("Owner");
-  ObserverModule        observer   ("Observer");
-  BaseParamModule       baseParTest("baseParTest");
-
-  std::cout << "------ sc_start() ----------------" << std::endl;
-  
   try {
+
+    GS_INIT_STANDARD_GREENCONTROL;
+  
+    ParamManipulateModule manipulator("Manipulator");
+    ParameterOwnerModule  owner      ("Owner");
+    ObserverModule        observer   ("Observer");
+    BaseParamModule       baseParTest("baseParTest");
+
+    std::cout << "------ sc_start() ----------------" << std::endl;
     sc_core::sc_start(); 
+    std::cout << "------ sc_start() returned -------" << std::endl;
   } 
-  catch (cci::cci_exception &e) {
-    std::cout << "Catched exception: " << e.what() << std::endl;
+  catch (const cci::cci_exception &e) {
+    std::cout << "CAUGHT EXCEPTION: " << e.what() << std::endl;
+  }
+  catch (...) {
+    std::cout << "DID NOT CATCH EXCEPTION: " << std::endl;
+    throw;
   }
   
-  std::cout << "------ sc_start() returned -------" << std::endl;
   
   return EXIT_SUCCESS; 
   

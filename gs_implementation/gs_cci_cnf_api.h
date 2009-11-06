@@ -40,7 +40,7 @@ namespace cci {
     
     ~gs_cci_cnf_api();
 
-    set_param_error_type set_init_value(const std::string &parname, const std::string &value);
+    void set_init_value(const std::string &parname, const std::string &value);
     
     const std::string get_json_string(const std::string &parname);
 
@@ -58,9 +58,9 @@ namespace cci {
     
     bool has_callbacks(const std::string& parname);
     
-    add_param_error_type add_param(cci_base_param* par);
+    void add_param(cci_base_param* par);
     
-    remove_param_error_type remove_param(cci_base_param* par);
+    void remove_param(cci_base_param* par);
     
     void set_alias(std::string& orig_parname, std::string& alias_parname);
         
@@ -71,9 +71,10 @@ namespace cci {
   protected:
   
     gs::cnf::cnf_api* m_gcnf_api;
+
   };
 
-      
+
 } // end namespace cci
 
 #endif

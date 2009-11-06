@@ -159,7 +159,14 @@ namespace cci {
     , m_is_initial_value(false)
     , m_status_guard(*this)
     {
-      cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2));
+      cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      // This is just a test
+      cci_cnf_api* m_cci_api = get_cnf_api_instance(/*TODO*/NULL); 
+      /*try {
+        m_cci_api->add_param(this); // this fails because the param has already been added by the gs_param - which is ok! Just a test if calling the cci API's add works
+      } catch (cci_exception_add_param &e) {
+        std::cout << "CAUGHT EXCEPTION: " << e.what() << std::endl;
+      }*/
     }
     
     ~gs_cci_param_t() {
@@ -307,6 +314,7 @@ namespace cci {
     std::string my_documentation;
     
   };
+
 
 } // namespace cci
 

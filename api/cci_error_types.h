@@ -45,6 +45,7 @@ namespace cci {
     set_param_bad_type,     // provided value is of the wrong type
     set_param_bad_value,    // provided value is not useful (out of range or illegal for other reason)
     set_param_not_settable, // this parameter is not settable TODO: supported?
+    set_param_init_value_failed, // the setting of the initial value in the database failed
     set_param_failed        // other error like memory allocations inside the called object failed or something else just went bad
   };
   /// stream operator to return string for error type
@@ -123,64 +124,64 @@ namespace cci {
   };
   
   class cci_exception_set_param 
-    : public cci_exception {
-    public:
-      cci_exception_set_param (set_param_error_type _type, const char* _message) 
-      : m_message(_message)
-      , m_type(_type) {    }
-      virtual ~cci_exception_set_param() throw() { }
-      cci_exception_type general_type() const throw() { return cci_set_param_exception; }
-      set_param_error_type type() const throw() { return m_type; }
-      const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
-    protected:
-      std::string m_message;
-      set_param_error_type m_type;
-    };
+  : public cci_exception {
+  public:
+    cci_exception_set_param (set_param_error_type _type, const char* _message) 
+    : m_message(_message)
+    , m_type(_type) {    }
+    virtual ~cci_exception_set_param() throw() { }
+    cci_exception_type general_type() const throw() { return cci_set_param_exception; }
+    set_param_error_type type() const throw() { return m_type; }
+    const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
+  protected:
+    std::string m_message;
+    set_param_error_type m_type;
+  };
   
   class cci_exception_get_param 
-    : public cci_exception {
-    public:
-      cci_exception_get_param (get_param_error_type _type, const char* _message) 
-      : m_message(_message)
-      , m_type(_type) {    }
-      virtual ~cci_exception_get_param() throw() { }
-      cci_exception_type general_type() const throw() { return cci_get_param_exception; }
-      get_param_error_type type() const throw() { return m_type; }
-      const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
-    protected:
-      std::string m_message;
-      get_param_error_type m_type;
-    };
+  : public cci_exception {
+  public:
+    cci_exception_get_param (get_param_error_type _type, const char* _message) 
+    : m_message(_message)
+    , m_type(_type) {    }
+    virtual ~cci_exception_get_param() throw() { }
+    cci_exception_type general_type() const throw() { return cci_get_param_exception; }
+    get_param_error_type type() const throw() { return m_type; }
+    const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
+  protected:
+    std::string m_message;
+    get_param_error_type m_type;
+  };
   
   class cci_exception_add_param 
-    : public cci_exception {
-    public:
-      cci_exception_add_param (add_param_error_type _type, const char* _message) 
-      : m_message(_message)
-      , m_type(_type) {    }
-      virtual ~cci_exception_add_param() throw() { }
-      cci_exception_type general_type() const throw() { return cci_add_param_exception; }
-      add_param_error_type type() const throw() { return m_type; }
-      const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
-    protected:
-      std::string m_message;
-      add_param_error_type m_type;
-    };
+  : public cci_exception {
+  public:
+    cci_exception_add_param (add_param_error_type _type, const char* _message) 
+    : m_message(_message)
+    , m_type(_type) {    }
+    virtual ~cci_exception_add_param() throw() { }
+    cci_exception_type general_type() const throw() { return cci_add_param_exception; }
+    add_param_error_type type() const throw() { return m_type; }
+    const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
+  protected:
+    std::string m_message;
+    add_param_error_type m_type;
+  };
   
   class cci_exception_remove_param 
-    : public cci_exception {
-    public:
-      cci_exception_remove_param (remove_param_error_type _type, const char* _message) 
-      : m_message(_message)
-      , m_type(_type) {    }
-      virtual ~cci_exception_remove_param() throw() { }
-      cci_exception_type general_type() const throw() { return cci_remove_param_exception; }
-      remove_param_error_type type() const throw() { return m_type; }
-      const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
-    protected:
-      std::string m_message;
-      remove_param_error_type m_type;
-    };
+  : public cci_exception {
+  public:
+    cci_exception_remove_param (remove_param_error_type _type, const char* _message) 
+    : m_message(_message)
+    , m_type(_type) {    }
+    virtual ~cci_exception_remove_param() throw() { }
+    cci_exception_type general_type() const throw() { return cci_remove_param_exception; }
+    remove_param_error_type type() const throw() { return m_type; }
+    const char* what() const throw() { std::ostringstream s; s << m_type << ": " << m_message; return s.str().c_str(); }    
+  protected:
+    std::string m_message;
+    remove_param_error_type m_type;
+  };
   
 } // end namespace cci
 

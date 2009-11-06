@@ -39,6 +39,10 @@ namespace cci {
 
   
   /// CCI configuration API interface.
+  /**
+   * This can be used by a tool to access the database or parameter objects, set initial values etc.
+   * or can be used by the model itself to get access to configuration objects etc.
+   */
   class cci_cnf_api
   {
     
@@ -56,11 +60,11 @@ namespace cci {
     /**
      * The init value has priority to the initial value set by the owner!
      *
+     * @exception        cci_exception_set_param Setting parameter object failed
      * @param parname    Full hierarchical parameter name.
      * @param json_value JSON string representation of the init value the parameter has to be set to.
-     * @return           Success of the setting.
      */
-    virtual set_param_error_type set_init_value(const std::string &parname, const std::string &json_value) = 0;
+    virtual void set_init_value(const std::string &parname, const std::string &json_value) = 0;
     
     /// Get a parameter's value (JSON string representation). Independent of the implicit or explicit status.
     /**
@@ -72,7 +76,7 @@ namespace cci {
     /// Get a parameter pointer.
     /**
      * @param   parname   Full hierarchical parameter name.
-     * @return  Pointer to the parameter object (NULL if not existing).
+     * @return  Pointer to the parameter object (NULL if not existing). @todo return a vector/iterator over param objects, because there might be more than one
      */ 
     virtual cci_base_param* get_param(const std::string &parname) = 0;
     
@@ -88,7 +92,7 @@ namespace cci {
     // ////////////////   Get Parameter List   //////////////////////////// //
 
     
-    /// Return a list of all parameters existing (TODO implicit and explicit?) in the registry.
+    /// Returns a list of all parameters existing (TODO implicit and explicit?) in the registry.
     /**
      * @return Vector with full hierarchical parameter names.
      */
@@ -215,25 +219,25 @@ namespace cci {
   //protected:
   //  friend class cci_base_param;
     
-    /// Add a parameter to the registry.
+    /// Adds a parameter to the registry.
     /** 
      * Note: addPar (and all related methods) must not call any of the 
-     *       pure virtual functions in cci_base_param because this method is 
-     *       called by the cci_base_param constructor.
+     *       pure virtual functions in cci_base_param because this method 
+     *       may be called by the cci_base_param constructor.
      *
+     * @exception cci_exception_add_param Adding parameter object failed
      * @param par Parameter (including name and value).
-     * @return Success of the adding.
      */
-    virtual add_param_error_type add_param(cci_base_param* par) = 0;
+    virtual void add_param(cci_base_param* par) = 0;
     
-    /// Remove a parameter from the registry. May only be called by the parameter destructor.
+    /// Removes a parameter from the registry. May only be called by the parameter destructor.
     /**
-     * Should ensure not being called from elsewhere (e.g. by user).
+     * It should be ensured not being called from elsewhere (e.g. by user).
      *
+     * @exception cci_exception_remove_param Remove parameter object failed
      * @param par Parameter pointer.
-     * @return Success of remove.
      */
-    virtual remove_param_error_type remove_param(cci_base_param* par) = 0;
+    virtual void remove_param(cci_base_param* par) = 0;
     
 
   public:
@@ -279,6 +283,7 @@ namespace cci {
     /// Return a pointer list of all (explicit) parameters matching the pattern
     /**
      * pattern @see get_param_list
+     * @todo use iterator instead of vector?
      *
      * @param pattern Specifies the parameters to be returned.
      * @return Vector with parameter base object pointers.
