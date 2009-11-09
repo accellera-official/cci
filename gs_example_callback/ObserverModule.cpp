@@ -65,11 +65,7 @@ void ObserverModule::main_action() {
   std::string str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
   cout << "int_param set value = 99" << endl;
-  cout << "THROW NOW" << endl;
-  throw sc_report();
-  p->json_deserialize("99"); // TODO: this should be caught by try around sc_start, but isn't!
-  try { p->json_deserialize("99"); }
-  catch (cci::cci_exception &e) { cout << "CAUGHT EXCEPTION: " << e.what() << endl; }
+  p->json_deserialize("99");
   str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
   //p->unregister_all_callbacks(this);

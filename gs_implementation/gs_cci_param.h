@@ -122,7 +122,7 @@ namespace cci {
     void json_deserialize(val_type& target_val, const std::string& str) {
       // TODO: this is currently not a JSON but a GreenConfig specific string
       if (!gs::gs_param<val_type>::deserialize(target_val, str))
-        throw cci_exception_set_param(set_param_bad_value, "set failed (string conversion failed)"); // don't know why here
+        throw_error(cci_report_types::type().set_param_bad_value, "set failed (string conversion failed)"); // don't know why here
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //

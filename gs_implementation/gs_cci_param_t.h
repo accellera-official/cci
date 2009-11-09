@@ -178,7 +178,7 @@ namespace cci {
    
     void set(const val_type& val) {
       if (!gs::gs_param<T>::setValue(val))
-        throw cci_exception_set_param(set_param_bad_value, "set value failed");
+        throw_error(cci_report_types::type().set_param_bad_value, "set value failed");
     }
     
     const val_type& get() const {
