@@ -28,6 +28,7 @@
 #include "gs_cci_param_t.h"
 #include "gs_cci_param.h"
 #include "gs_cci_base_param.h"
+#include "gs_cci_value.h"
 
 namespace cci {
 

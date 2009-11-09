@@ -1,0 +1,31 @@
+Discussions about the prototype proposal:
+
+----------------------------------------------------------
+1.2 post_read callbacks?
+
+post_read callback discussion: We currently do NOT provide post_read callbacks since they are very hard to define and implement.
+
+----------------------------------------------------------
+1.1 cci_value implementation/definition
+
+An interesting point is how and where to implement the cci_value thing, which allows to set and get values in a generic way.
+
+Options are 
+a/ make it an interface (cci_value), which needs to be implemented by
+   a vendor (like gs_cci_value, as done for cci_param), or 
+b/ if to implement it directly in the standard header files (which
+   means no vendor specific implementation for the cci_value at all) - or 
+c/ define the class and let the vendor implement the functions
+   (not another class that implements the interface)
+
+
+a/   (-) results in vendor dependent code (like needed for cci_params,
+         too).
+     (+) most flexible for implementation
+b/c/ (+) allow the user/application code to use cci_value directly, 
+b/   (-) not flexible at all
+c/   (-) less flexible, since the standard must define the complete class
+         and class members, which cannot be changed by the implementation
+         any more
+----------------------------------------------------------
+

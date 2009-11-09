@@ -3,10 +3,9 @@ ChangeLog
 
 **** CCI-1.2-xxxx09.tar.gz ****
 
-- added explicit support for parameter locking to base param
 - added functions for value origin (is_default_value, is_initial_value, is_invalid_value, set_invalid_value to base param
 - added functions set/get_documentation for meta data to base param
-- cci_value parameter value representation (still TODO)
+- cci_value parameter value representation
 - added real number to basic data types
 - cci_base_param are objects that can be instantiated.
 - renamed cci_param_base to cci_base_param, because it will change from a base class to a param object

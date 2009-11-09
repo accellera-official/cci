@@ -53,12 +53,21 @@ namespace cci {
     
     basic_param_type type() const;
     
-    const std::string&      get_str()   const;
+    const std::string&      get_string()   const;
     const cci_value_list&   get_list() const;
     bool           get_bool()  const;
     int            get_int()   const;
     boost::int64_t get_int64() const;
     double         get_real()  const;
+
+  protected:
+    basic_param_type m_type;
+    std::string m_value_string;
+    bool m_value_bool;
+    boost::int64_t m_value_number;
+    double m_value_real;
+    cci_value_list m_value_list;
+    
   };
   
 } // end namespace cci

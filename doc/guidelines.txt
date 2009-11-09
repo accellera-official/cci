@@ -4,7 +4,9 @@ Requirements for the standard
 
 TOOL ACCESS IN USER CODE
 
-The library implementing the CCI configuration must provide the following function, which must work in the static code before sc_main is executed.
+The library implementing the CCI configuration must provide the 
+following function, which must work in the static code before 
+sc_main is executed.
 it is forward declared in cci.h
 cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
 
@@ -29,6 +31,9 @@ not rely on the given value to appear as the new one!
 
 TODO: Another option would be to introduce another callback type, e.g. a
 'reject_write' callback which is called before the pre_write callback.
+
+If the value change is rejected during pre_write, there will be no 
+post_write callback for this change.
 
 
 ----------------------------------------------------------------

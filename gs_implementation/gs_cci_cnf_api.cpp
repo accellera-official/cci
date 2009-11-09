@@ -33,7 +33,7 @@ cci::gs_cci_cnf_api::~cci_cnf_api() {
 void cci::gs_cci_cnf_api::set_init_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
   if ( !m_gcnf_api->setInitValue(parname, json_value) ) {
-    throw_error(cci_report_types::type().set_param_init_value_failed, "Setting initial value failed");
+    CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "Setting initial value failed.");
   }
 }
 
@@ -80,17 +80,17 @@ bool cci::gs_cci_cnf_api::has_callbacks(const std::string& parname) {
 void cci::gs_cci_cnf_api::add_param(cci_base_param* par) {
   gs::gs_param_base *p = dynamic_cast<gs::gs_param_base*> (par);
   if (!p) {
-    throw_error(cci_report_types::type().add_param_failed, "Adding parameter failed: Cannot cast given cci param to gs param");
+    CCI_THROW_ERROR(cci_report_types::type().add_param_failed, "Adding parameter failed: Cannot cast given cci param to gs param");
   }
   if (!m_gcnf_api->addPar(p)) {
-    throw_error(cci_report_types::type().add_param_failed, "Adding parameter failed");
+    CCI_THROW_ERROR(cci_report_types::type().add_param_failed, "Adding parameter failed");
   }
 }
 
 void cci::gs_cci_cnf_api::remove_param(cci_base_param* par) {
   gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
   if ( !m_gcnf_api->removePar(p) )
-    throw_error(cci_report_types::type().remove_param_failed, "Removing parameter failed");
+    CCI_THROW_ERROR(cci_report_types::type().remove_param_failed, "Removing parameter failed");
 }
 
 

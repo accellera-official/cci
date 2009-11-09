@@ -60,4 +60,15 @@ word length of exactly 64 bits."
 
 ----------------------------------------------------------------
 
+THROWING ERRORS
+
+The proposal uses sc_report to report errors/warnings/infos like 
+bad values, bad types etc. The used message type prefix is 
+"/OSCI/CCI/". These sc_reports can be handled by the application
+very elegant and SystemC-like, can be switched off or even catched
+locally.
+
+----------------------------------------------------------------
+
+
 

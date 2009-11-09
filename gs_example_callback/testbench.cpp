@@ -28,22 +28,25 @@
 #include "ObserverModule.h"
 #include "ParamManipulateModule.h"
 #include "BaseParamModule.h"
+#include "ValueModule.h"
 
 /// Testbench for the example GreenConfig
 int sc_main(int argc, char *argv[]) {
   //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
-  sc_core::sc_report_handler::set_actions("/OSCI/CCI/set_param_bad_value", sc_core::SC_DISPLAY);
+  sc_core::sc_report_handler::set_actions("/OSCI/CCI/set_param_failed",  sc_core::SC_DISPLAY);
+  sc_core::sc_report_handler::set_actions("/OSCI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
 
   GS_INIT_STANDARD_GREENCONTROL;
 
   ParamManipulateModule manipulator("Manipulator");
   ParameterOwnerModule  owner      ("Owner");
   ObserverModule        observer   ("Observer");
-  BaseParamModule       baseParTest("baseParTest");
+  BaseParamModule       baseParTest("BaseParTest");
+  ValueModule           valueMod   ("ValueMod");
 
-  std::cout << "------ sc_start() ----------------" << std::endl;
+  std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
   sc_core::sc_start(); 
-  std::cout << "------ sc_start() returned -------" << std::endl;
+  std::cout << std::endl << "------ sc_start() returned -------" << std::endl << std::endl;
   
   return EXIT_SUCCESS; 
   

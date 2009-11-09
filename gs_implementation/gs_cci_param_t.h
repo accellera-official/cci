@@ -138,35 +138,39 @@ namespace cci {
 
     using cci_param<T>::operator=;
 
-    /*explicit gs_cci_param_t(const std::string& n, 
-                            const val_type &val, 
-                            const bool force_top_level_name = false,
-                            const bool register_at_db = true)
-    : gs::gs_param<val_type>(n, val, NULL, force_top_level_name, register_at_db) 
-    , m_is_default_value(true)
-    , m_status_guard(*this)
-    {
-      cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2));
-    }*/
-
-    explicit gs_cci_param_t(const std::string& n 
-                            , const bool force_top_level_name /*= false*/
-                            , const bool register_at_db /*= true*/
+    explicit gs_cci_param_t(const std::string& n
+                            , const std::string &val
+                            , bool force_top_level_name /*= false*/
+                            , bool register_at_db /*= true*/
                             , bool has_default_value ) // if there is a default value
-    : gs::gs_param<val_type>(n, std::string(""), NULL, force_top_level_name, register_at_db) 
+    : gs::gs_param<val_type>(n, val, NULL, force_top_level_name, register_at_db) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
     , m_is_initial_value(false)
     , m_status_guard(*this)
     {
       cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+    }
+    
+    explicit gs_cci_param_t(const std::string& n 
+                            , const val_type &val
+                            , bool force_top_level_name /*= false*/
+                            , bool register_at_db /*= true*/ ) 
+    : gs::gs_param<val_type>((const std::string&)n, val, force_top_level_name) 
+    , m_is_default_value(true)
+    , m_is_invalid_value(false)
+    , m_is_initial_value(false)
+    , m_status_guard(*this)
+    {
+      assert(register_at_db && "Not supported with gs_param?");
+      cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
       // This is just a test
       cci_cnf_api* m_cci_api = get_cnf_api_instance(/*TODO*/NULL); 
       /*try {
-        m_cci_api->add_param(this); // this fails because the param has already been added by the gs_param - which is ok! Just a test if calling the cci API's add works
-      } catch (cci_exception_add_param &e) {
-        std::cout << "CAUGHT EXCEPTION: " << e.what() << std::endl;
-      }*/
+       m_cci_api->add_param(this); // this fails because the param has already been added by the gs_param - which is ok! Just a test if calling the cci API's add works
+       } catch (cci_exception_add_param &e) {
+       std::cout << "CAUGHT EXCEPTION: " << e.what() << std::endl;
+       }*/
     }
     
     ~gs_cci_param_t() {
@@ -178,7 +182,7 @@ namespace cci {
    
     void set(const val_type& val) {
       if (!gs::gs_param<T>::setValue(val))
-        throw_error(cci_report_types::type().set_param_bad_value, "set value failed");
+        CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "Bad value.");
     }
     
     const val_type& get() const {

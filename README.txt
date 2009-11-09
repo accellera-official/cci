@@ -12,5 +12,5 @@ Contained Files:
 ./
 doc/   :  Some further documentation
 api/   :  CCI interface files, only include cci.h in user code
-dummy_implementation/  :  Dummy implementation of CCI interfaces for compile test
-dummy_example/         :  Compile example
+gs_implementation/  :  GreenSocs implementation of CCI interfaces
+gs_example/         :  Example using the GreenSocs implementation

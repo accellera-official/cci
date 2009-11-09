@@ -80,7 +80,8 @@ void ObserverModule::main_action() {
   cout << endl;
   
   cout << "----------------------------" << endl;
-  
+  std::cout << std::endl;
+
 }
 
 
