@@ -1,28 +1,14 @@
-Done
+Status of the API proposal and the example implementation:
 
-- callbacks including return values (with reject_write in pre_write cb) 
-
-- status fields is_default_value and is_invalid_value are working
-
-- error return for param object accesses
-
-Important things left TODO:
-- value set and get with flat set/get_<fixType>
-   OR
-  cci_value set/get supporting hierarchical data
-  (which seems to be the more useful thing)
-
-
-(For now) not so important things left TODO:
-- Config API new param callbacks
-- is_initial_value status for parameter objects?
-- use JSON instead of own syntax
-- is_initial_value status
-- add further parameter specializations to support json and cci_value conversions
+Things left TODO:
+ - Config API new param callbacks
+ - is_initial_value status for parameter objects?
+ - use JSON instead of own string syntax (which is similar for 
+   many basic data types)
+ - add further parameter specializations to support json and cci_value conversions
 
 Further TODO:
-- Check that this API is sufficient to mix different vendor's 
-  database and parameter objects!
-- Support multiple parameter objects per parameter name
-- Do we need aliasing (cci_cnf_api::set_alias())?
-- we are currently NOT using JSON but our own format (which is similar for many basic data types)
+ - Check that this API is sufficient to mix different vendor's 
+   database and parameter objects!
+ - Support multiple parameter objects per parameter name
+ - Do we need aliasing (cci_cnf_api::set_alias())?

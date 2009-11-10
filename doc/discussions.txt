@@ -1,16 +1,16 @@
 Discussions about the prototype proposal:
 
 ----------------------------------------------------------
-1.2 post_read callbacks?
+1.1 post_read callbacks?
 
 post_read callback discussion: We currently do NOT provide post_read callbacks since they are very hard to define and implement.
 
 ----------------------------------------------------------
-1.1 cci_value implementation/definition
+1.2 cci_value implementation/definition
 
 An interesting point is how and where to implement the cci_value thing, which allows to set and get values in a generic way.
 
-Options are 
+Options are:
 a/ make it an interface (cci_value), which needs to be implemented by
    a vendor (like gs_cci_value, as done for cci_param), or 
 b/ if to implement it directly in the standard header files (which
@@ -27,5 +27,20 @@ b/   (-) not flexible at all
 c/   (-) less flexible, since the standard must define the complete class
          and class members, which cannot be changed by the implementation
          any more
+
+Currently we've chosen c/.
+
 ----------------------------------------------------------
 
+1.3 pre_write callbacks returning rejected value change
+
+(also see file guidelines.txt)
+
+Another option - than the chosen one where the pre_write callback can 
+return a reject value change - would be to introduce another callback 
+type, e.g. a 'reject_write' callback which is called before the pre_write
+callback.
+
+----------------------------------------------------------
+
+There are many more discussions of course...

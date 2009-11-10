@@ -6,9 +6,9 @@ TOOL ACCESS IN USER CODE
 
 The library implementing the CCI configuration must provide the 
 following function, which must work in the static code before 
-sc_main is executed.
-it is forward declared in cci.h
-cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
+sc_main is executed. It is forward declared in cci.h
+
+ cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
 
 Code for tool:
 
@@ -29,9 +29,6 @@ It is possible that any pre_write callback rejects the value (by returning
 the according enum item). Thus each observer getting such a callback must
 not rely on the given value to appear as the new one!
 
-TODO: Another option would be to introduce another callback type, e.g. a
-'reject_write' callback which is called before the pre_write callback.
-
 If the value change is rejected during pre_write, there will be no 
 post_write callback for this change.
 
@@ -51,6 +48,7 @@ CALLBACK RETURN STATUS
 
 The parameter implementation shall evaluate the enum returned by callback
 functions and perform the according action (e.g. reject a value).
+
 
 ----------------------------------------------------------------
 
@@ -75,8 +73,20 @@ Examples:
 
 PARAMETER CONSTRUCTORS
 
-The parameter vendor shall provide cci_base_param constructors as shown
+The parameter vendor shall provide cci_base_param constructors as listed
 in the file cci_base_param.h
 
 For typed parameters a parameter vendor shall provide at least
-the constructors shown in cci_param.h
+the constructors listed in cci_param.h
+
+
+----------------------------------------------------------------
+
+ERROR/WARNING/INFO THROWING
+
+The implementation shall throw sc_reports to report problems (warning/error)
+or status (info). The id prefix should be (TODO:) "/OSCI/CCI/" followed by
+one of the types defined in cci_error_types.h.
+
+
+----------------------------------------------------------------

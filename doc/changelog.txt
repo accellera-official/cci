@@ -1,9 +1,10 @@
 ChangeLog
 ---------
 
-**** CCI-1.2-xxxx09.tar.gz ****
+**** CCI-1.2-101109.tar.gz ****
 
-- added functions for value origin (is_default_value, is_initial_value, is_invalid_value, set_invalid_value to base param
+- error/warning/info throwing using sc_report mechanism
+- added functions for status fields/value origin (is_default_value, is_initial_value, is_invalid_value, set_invalid_value to base param
 - added functions set/get_documentation for meta data to base param
 - cci_value parameter value representation
 - added real number to basic data types
