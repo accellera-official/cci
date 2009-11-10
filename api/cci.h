@@ -24,10 +24,30 @@
 #define __CCI_H__
 
 
-#define OSCI_CCI_SC_REPORT_IDENT "/OSCI/CCI"
-
 #include <systemc>
 
+/**
+ * @mainpage Configuration, Control & Inspection (CCI) Config API proposal
+ * This is the working group internal API documentation of a proposal API for the configuration part of the CCI standard.
+ *
+ * Additionally to this documentation there are some text files documenting a changelog, discussions, rules etc.<br>
+ * <a href="../changelog.txt">changelog.txt</a> - ChangeLog for the different committed versions.<br>
+ * <a href="../discussions.txt">discussions.txt</a> - Motivation for some important discussions.<br>
+ * <a href="../guidelines.txt">guidelines.txt</a> - Guidelines for implementations of the proposed API.<br>
+ * <a href="../notes.txt">notes.txt</a> - Some general notes and hints on the API and the example implementation.<br>
+ * <a href="../proposal_status.txt">proposal_status.txt</a> - Status and TODOs of the example implementation.<br>
+ * 
+ *
+ *
+ * Surely there are unsufficient parts in this proposal which are all open for discussions and changes!
+ *
+ * Post discussions to the working group reflector.
+ *
+ * Christian Schröder
+ */
+
+
+/// Namespace for OSCI Configuration, Control & Inspection (CCI) standard
 namespace cci {
 
   
@@ -41,8 +61,8 @@ namespace cci {
 } // end namespace cci
 
 
-#include "cci_datatypes.h"
 #include "cci_error_types.h"
+#include "cci_datatypes.h"
 #include "cci_callbacks.h"
 #include "cci_base_param.h"
 #include "cci_param.h"

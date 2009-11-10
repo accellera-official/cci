@@ -124,7 +124,7 @@ namespace cci {
      */
     virtual const basic_param_type get_basic_type() const { return partype_not_available; }
     
-#define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(OSCI_CCI_SC_REPORT_IDENT, "Not supported for this parameter type!")
+#define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(CCI_SC_REPORT_MSG_TYPE_PREFIX, "Not supported for this parameter type!")
 
     /// Set the parameter value by trying to convert the given number to the param value.
     /**

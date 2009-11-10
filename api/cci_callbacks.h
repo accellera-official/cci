@@ -113,7 +113,7 @@ namespace cci {
       if (func) {
         return func(changed_param, cb_reason);
       } else {
-        SC_REPORT_ERROR(OSCI_CCI_SC_REPORT_IDENT, "No callback registered yet.");
+        SC_REPORT_ERROR(CCI_SC_REPORT_MSG_TYPE_PREFIX, "No callback registered yet.");
       }      
       return return_nothing;
     }
