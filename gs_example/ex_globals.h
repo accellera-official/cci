@@ -1,16 +1,11 @@
-//   GreenControl framework
-//
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
-//   Developed by :
-//   
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
+//   Developed by:
+//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
+//    Mark Burton, mark@greensocs.com
 //
 //
 //   This program is free software.
@@ -39,7 +34,8 @@
 #ifndef __callb_globals_h__
 #define __callb_globals_h__
 
-#define GS_PARAM_CALLBACK_VERBOSE
+// Some debug output for GrenConfig wrapped to CCI
+//#define GS_PARAM_CALLBACK_VERBOSE
 
 #define DEMO_VERBOSE
 

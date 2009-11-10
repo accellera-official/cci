@@ -1,31 +1,20 @@
-## target architecture (if not defined in Makefile)
-ifndef TARGET_ARCH
- TARGET_ARCH = macosx
-endif
-
-## Your SystemC installation path
-ifdef SYSTEMC21V1
- SYSTEMC = /cad/tools/systemc2.1
- SCCFLAG = -DSYSTEMC21V1
-else
- SYSTEMC = /cad/tools/systemc
-endif
-
-## Your compiler
-CC = g++
-
 ## set some directories 
 GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
 GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol
 CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
+GS_CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_implementation
 BOOST = /cad/tools/boost
+SYSTEMC = /cad/tools/systemc
 
-ifdef SYSTEMC21V1
- SCV_INCLUDE = /cad/tools/systemc2.1-scv/include
- SCV_LIB = /cad/tools/systemc2.1-scv/lib-$(TARGET_ARCH)
-else
- SCV_INCLUDE = /cad/tools/systemc-scv/include
- SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
+## Your compiler
+CC = g++
+
+#SCV_INCLUDE = /cad/tools/systemc-scv/include
+#SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
+
+## target architecture (if not defined in Makefile)
+ifndef TARGET_ARCH
+ TARGET_ARCH = macosx
 endif
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
@@ -35,7 +24,7 @@ DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 LDFLAGS =
 
 INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
-         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR)
+         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_DIR)
 LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH)
 
 ## here may be needed to write -lscv at the beginning - which also may cause problems!

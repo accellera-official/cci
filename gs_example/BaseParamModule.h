@@ -1,4 +1,3 @@
-
 // LICENSETEXT
 //
 //   Copyright (C) 2009 : GreenSocs Ltd
@@ -33,16 +32,36 @@
 // ENDLICENSETEXT
 
 
+#include <systemc>
+#include <cci.h>
 
-#ifndef __EX_GLOBALS_H__
-#define __EX_GLOBALS_H__
+#ifndef __BASEPARAMMODULE_H__
+#define __BASEPARAMMODULE_H__
 
-#define DEMO_VERBOSE
 
-#ifdef DEMO_VERBOSE
-# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
-#else
-# define DEMO_DUMP(name, msg)
-#endif
+#include <systemc>
+#include "ex_globals.h"
+#include "cci.h"
+#include "gs_cci.h"
+
+
+/// Module which demonstrates (untyped) base parameters
+class BaseParamModule
+: public sc_core::sc_module
+{
+public:
+  
+  SC_HAS_PROCESS(BaseParamModule);
+  BaseParamModule(sc_core::sc_module_name name);
+  
+  /// Main action to make tests with parameters.
+  void main_action();
+  
+protected:
+  /// Pointer the the module's configuration API
+  cci::cci_cnf_api* mApi;
+  
+};
+
 
 #endif

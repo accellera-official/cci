@@ -1,4 +1,3 @@
-
 // LICENSETEXT
 //
 //   Copyright (C) 2009 : GreenSocs Ltd
@@ -33,16 +32,33 @@
 // ENDLICENSETEXT
 
 
+#ifndef __PARAMMANIPULATEMODULE_H__
+#define __PARAMMANIPULATEMODULE_H__
 
-#ifndef __EX_GLOBALS_H__
-#define __EX_GLOBALS_H__
 
-#define DEMO_VERBOSE
+#include <systemc>
+#include "ex_globals.h"
+#include "cci.h"
+#include "gs_cci.h"
 
-#ifdef DEMO_VERBOSE
-# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
-#else
-# define DEMO_DUMP(name, msg)
-#endif
+
+/// Module which changes parameter values of the Module ParameterOwnerModule
+class ParamManipulateModule
+: public sc_core::sc_module
+{
+public:
+
+  SC_HAS_PROCESS(ParamManipulateModule);
+  ParamManipulateModule(sc_core::sc_module_name name);
+  
+  /// Main action to make tests with parameters.
+  void main_action();
+
+protected:
+  /// Pointer the the module's configuration API
+  cci::cci_cnf_api* mApi;
+
+};
+
 
 #endif

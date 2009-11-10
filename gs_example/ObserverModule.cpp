@@ -1,23 +1,35 @@
-/*****************************************************************************
-
-  The following code is derived, directly or indirectly, from the SystemC
-  source code Copyright (c) 1996-2009 by all Contributors.
-  All Rights reserved.
-
-  Developed by GreenSocs : http://www.greensocs.com/
-   Christian Schroeder, schroeder@eis.cs.tu-bs.de
-   Mark Burton, mark@greensocs.com
-
-  The contents of this file are subject to the restrictions and limitations
-  set forth in the SystemC Open Source License Version 3.0 (the "License");
-  You may not use this file except in compliance with such restrictions and
-  limitations. You may obtain instructions on how to receive a copy of the
-  License at http://www.systemc.org/. Software distributed by Contributors
-  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
-  ANY KIND, either express or implied. See the License for the specific
-  language governing rights and limitations under the License.
-
- *****************************************************************************/
+// LICENSETEXT
+//
+//   Copyright (C) 2009 : GreenSocs Ltd
+// 	 http://www.greensocs.com/ , email: info@greensocs.com
+//
+//   Developed by:
+//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
+//    Mark Burton, mark@greensocs.com
+//
+//
+//   This program is free software.
+// 
+//   If you have no applicable agreement with GreenSocs Ltd, this software
+//   is licensed to you, and you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation; either version 2 of the License, or
+//   (at your option) any later version.
+// 
+//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
+//   agreement prevail.
+// 
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+// 
+//   You should have received a copy of the GNU General Public License
+//   along with this program; if not, write to the Free Software
+//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+//   02110-1301  USA 
+// 
+// ENDLICENSETEXT
 
 
 #include "ObserverModule.h"
@@ -27,13 +39,14 @@
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
+  // get the config API which is responsible for this module
   mApi = cci::get_cnf_api_instance(this);
   SC_THREAD(main_action);
 }
 
 
 ObserverModule::~ObserverModule() {
-  // unregister all callbacks
+  // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
   std::vector< boost::shared_ptr<cci::callb_adapt_b> >::iterator iter;
   for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
     (*iter)->unregister_at_parameter();
@@ -44,6 +57,7 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   DEMO_DUMP(name(), "register pre write callback for int_param to lock it");
 
+  // get access to a foreign parameter using the module's config API
   cci::cci_base_param* p = mApi->get_param("Owner.int_param");
   assert(p != NULL);
 
@@ -68,8 +82,8 @@ void ObserverModule::main_action() {
   p->json_deserialize("99");
   str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
-  //p->unregister_all_callbacks(this);
-  p->unregister_param_callback(cb2);
+  //p->unregister_all_callbacks(this); // this would unregister all calbacks to this module
+  p->unregister_param_callback(cb2); // unregister a callback
   
   // ********* show param list **************
   cout << "param list:" << endl;

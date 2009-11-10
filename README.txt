@@ -4,6 +4,16 @@ README.txt
 OSCI CCI WG internal document / archive file with
 GreenSocs interface proposal.
 
+- extract both provided archive files
+  - CCI API proposal
+  - GreenSocs implementation and example
+
+- start looking at documentation in doc/API_ref/index.html
+
+- compile using Make in gs_example, 
+  first edit Makefiles.defs setting some directories on top
+  (currently there are compiler warnings)
+
 
 Contained Files:
 ----------------

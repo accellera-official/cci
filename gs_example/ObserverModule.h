@@ -1,4 +1,3 @@
-
 // LICENSETEXT
 //
 //   Copyright (C) 2009 : GreenSocs Ltd
@@ -33,16 +32,44 @@
 // ENDLICENSETEXT
 
 
+#ifndef __OBSERVERMODULE_H__
+#define __OBSERVERMODULE_H__
 
-#ifndef __EX_GLOBALS_H__
-#define __EX_GLOBALS_H__
+#include <systemc>
 
-#define DEMO_VERBOSE
+#include "ex_globals.h"
+#include "cci.h"
+#include "gs_cci.h"
 
-#ifdef DEMO_VERBOSE
-# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
-#else
-# define DEMO_DUMP(name, msg)
-#endif
+
+/// Module which registers for parameter changes
+class ObserverModule
+: public sc_core::sc_module
+{
+public:
+
+  SC_HAS_PROCESS(ObserverModule);
+  ObserverModule(sc_core::sc_module_name name);
+  
+  ~ObserverModule();
+  
+  /// Main action to make tests with parameters.
+  void main_action();
+
+  /// Callback function with default signature showing changes.
+  cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+
+  /// Callback function with default signature rejecting all changes.
+  cci::callback_return_type config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+
+protected:
+  /// Pointer the the module's configuration API
+  cci::cci_cnf_api* mApi;
+  
+  /// Vector of callbacks to keep them outside the local scope of main_action
+  std::vector< boost::shared_ptr<cci::callb_adapt_b> > mCallbacks;
+  
+};
+
 
 #endif

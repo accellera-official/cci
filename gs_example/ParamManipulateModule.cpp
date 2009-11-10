@@ -32,7 +32,6 @@
 // ENDLICENSETEXT
 
 
-
 #include "ParamManipulateModule.h"
 #include <systemc.h>
 
@@ -40,14 +39,17 @@
 ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
+  // get the config API which is responsible for this module
   mApi = cci::get_cnf_api_instance(this);
   SC_THREAD(main_action);
-  
+
+  // demonstrate setting of an initial value
   mApi->set_init_value("Owner.int_param", "11");
+  // demonstrate testing for existence
   if (mApi->exists_param("Owner.int_param"))
-    cout << "Owner.int_param esists (implicit or explicit)" << endl;
+    cout << "Owner.int_param exists (implicit or explicit)" << endl;
   else
-    SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT esists!");
+    SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT exists!");
 }
 
 
@@ -55,29 +57,36 @@ void ParamManipulateModule::main_action() {
 
   wait(10, SC_NS);
   
-  cci::cci_base_param *ptr = mApi->get_param("Owner.int_param");
-  if (ptr == NULL) return;
-  cci::dummy_cci_param<int> &p = *static_cast<cci::dummy_cci_param<int>* >(ptr);
-  //cci::dummy_cci_param<std::string> &pu = *static_cast<cci::dummy_cci_param<std::string>* >(mApi->get_param("Owner.str_param"));
-  
-  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
-  p.set_string("5000");
-  cout << endl;
-  wait(SC_ZERO_TIME);
-  
-  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5001");
-  p.set(5001);
-  cout << endl;
-  wait(SC_ZERO_TIME);
-  
-  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5002");
-  p = 5002;
-  cout << endl;
-  wait(SC_ZERO_TIME);
-  
-  /*DEMO_DUMP(name(), "Set parameter Owner.str_param to value=\"SHOW THIS\"");
-  pu = "SHOW THIS";
-  cout << endl;
-  wait(SC_ZERO_TIME);*/
+  // get a parameter using the local config API
+  cci::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
+  if (int_param_ptr == NULL) return;
+  // make it a reference for convenience
+  cci::gs_cci_param<int> &int_param_p = *static_cast<cci::gs_cci_param<int>* >(int_param_ptr);
 
+  // get a parameter using the local config API
+  cci::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
+  if (uint_param_ptr == NULL) return;
+  // make it a reference for convenience
+  cci::gs_cci_param<unsigned int> &uint_param_p = *static_cast<cci::gs_cci_param<unsigned int>* >(uint_param_ptr);
+  
+  // demonstrate json setting
+  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
+  int_param_p.json_deserialize("5000");
+  cout << endl;
+  wait(SC_ZERO_TIME);
+  
+  // demonstrate value setting
+  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5001");
+  int_param_p.set(5001);
+  cout << endl;
+  wait(SC_ZERO_TIME);
+  DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5002");
+  int_param_p = 5002;
+  cout << endl;
+  wait(SC_ZERO_TIME);
+  DEMO_DUMP(name(), "Set parameter Owner.uint_param to value=9000");
+  uint_param_p = 9000;
+  cout << endl;
+  wait(SC_ZERO_TIME);
+  
 }

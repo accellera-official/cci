@@ -1,23 +1,37 @@
-/*****************************************************************************
+// LICENSETEXT
+//
+//   Copyright (C) 2009 : GreenSocs Ltd
+// 	 http://www.greensocs.com/ , email: info@greensocs.com
+//
+//   Developed by:
+//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
+//    Mark Burton, mark@greensocs.com
+//
+//
+//   This program is free software.
+// 
+//   If you have no applicable agreement with GreenSocs Ltd, this software
+//   is licensed to you, and you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation; either version 2 of the License, or
+//   (at your option) any later version.
+// 
+//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
+//   agreement prevail.
+// 
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+// 
+//   You should have received a copy of the GNU General Public License
+//   along with this program; if not, write to the Free Software
+//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+//   02110-1301  USA 
+// 
+// ENDLICENSETEXT
 
-  The following code is derived, directly or indirectly, from the SystemC
-  source code Copyright (c) 1996-2009 by all Contributors.
-  All Rights reserved.
 
-  Developed by GreenSocs : http://www.greensocs.com/
-   Christian Schroeder, schroeder@eis.cs.tu-bs.de
-   Mark Burton, mark@greensocs.com
-
-  The contents of this file are subject to the restrictions and limitations
-  set forth in the SystemC Open Source License Version 3.0 (the "License");
-  You may not use this file except in compliance with such restrictions and
-  limitations. You may obtain instructions on how to receive a copy of the
-  License at http://www.systemc.org/. Software distributed by Contributors
-  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
-  ANY KIND, either express or implied. See the License for the specific
-  language governing rights and limitations under the License.
-
- *****************************************************************************/
 
 
 #ifndef __CCI_H__
@@ -31,6 +45,7 @@
  * This is the working group internal API documentation of a proposal API for the configuration part of the CCI standard.
  *
  * Additionally to this documentation there are some text files documenting a changelog, discussions, rules etc.<br>
+ * <a href="../../README.txt">README.txt</a> - ChangeLog for the different committed versions.<br>
  * <a href="../changelog.txt">changelog.txt</a> - ChangeLog for the different committed versions.<br>
  * <a href="../discussions.txt">discussions.txt</a> - Motivation for some important discussions.<br>
  * <a href="../guidelines.txt">guidelines.txt</a> - Guidelines for implementations of the proposed API.<br>

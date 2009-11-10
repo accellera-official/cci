@@ -1,4 +1,3 @@
-
 // LICENSETEXT
 //
 //   Copyright (C) 2009 : GreenSocs Ltd
@@ -33,16 +32,23 @@
 // ENDLICENSETEXT
 
 
+#include "BaseParamModule.h"
+#include <systemc.h>
 
-#ifndef __EX_GLOBALS_H__
-#define __EX_GLOBALS_H__
+BaseParamModule::BaseParamModule(sc_core::sc_module_name name)
+: sc_core::sc_module(name)
+{ 
+  // get the config API which is responsible for this module
+  mApi = cci::get_cnf_api_instance(this);
+  SC_THREAD(main_action);
+}
 
-#define DEMO_VERBOSE
 
-#ifdef DEMO_VERBOSE
-# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
-#else
-# define DEMO_DUMP(name, msg)
-#endif
+void BaseParamModule::main_action() {
+  
+  wait(100, SC_NS);
 
-#endif
+  // create a (local) base parameter
+  cci::gs_cci_base_param my_b_par("b_par", "this is a base param value stored by the base param");
+  
+}

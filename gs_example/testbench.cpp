@@ -1,4 +1,3 @@
-
 // LICENSETEXT
 //
 //   Copyright (C) 2009 : GreenSocs Ltd
@@ -33,16 +32,34 @@
 // ENDLICENSETEXT
 
 
+#include <systemc>
+#include <cci.h>
+#include "greencontrol/all.h"
 
-#ifndef __EX_GLOBALS_H__
-#define __EX_GLOBALS_H__
+#include "ParameterOwnerModule.h"
+#include "ObserverModule.h"
+#include "ParamManipulateModule.h"
+#include "BaseParamModule.h"
+#include "ValueModule.h"
 
-#define DEMO_VERBOSE
+/// Testbench for the CCI example application which uses the GreenSocs demo implemenation
+int sc_main(int argc, char *argv[]) {
+  //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
+  sc_core::sc_report_handler::set_actions("/OSCI/CCI/set_param_failed",  sc_core::SC_DISPLAY);
+  sc_core::sc_report_handler::set_actions("/OSCI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
 
-#ifdef DEMO_VERBOSE
-# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
-#else
-# define DEMO_DUMP(name, msg)
-#endif
+  GS_INIT_STANDARD_GREENCONTROL; // note this is optional
 
-#endif
+  ParamManipulateModule manipulator("Manipulator");
+  ParameterOwnerModule  owner      ("Owner");
+  ObserverModule        observer   ("Observer");
+  BaseParamModule       baseParTest("BaseParTest");
+  ValueModule           valueMod   ("ValueMod");
+
+  std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
+  sc_core::sc_start(); 
+  std::cout << std::endl << "------ sc_start() returned -------" << std::endl << std::endl;
+  
+  return EXIT_SUCCESS; 
+  
+}
