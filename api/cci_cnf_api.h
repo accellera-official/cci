@@ -71,9 +71,9 @@ namespace cci {
     
     /// Set a parameter's init value. 
     /**
-     * The init value has priority to the initial value set by the owner!
+     * The init value has priority to the default value being set by the owner!
      *
-     * @exception        cci_exception_set_param Setting parameter object failed
+     * @exception        cci::cci_report_types::set_param_failed Setting parameter object failed
      * @param parname    Full hierarchical parameter name.
      * @param json_value JSON string representation of the init value the parameter has to be set to.
      */
@@ -81,17 +81,34 @@ namespace cci {
     
     /// Get a parameter's value (JSON string representation). Independent of the implicit or explicit status.
     /**
+     * This accesses the parameter's NVP and works
+     * for implicit and explicit parameters.
+     *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  JSON string of the parameter's value
      */
     virtual const std::string get_json_string(const std::string &parname) = 0;
 
-    /// Get a parameter pointer.
+    /// Get a parameter pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
     /**
      * @param   parname   Full hierarchical parameter name.
      * @return  Pointer to the parameter object (NULL if not existing). @todo return a vector/iterator over param objects, because there might be more than one
      */ 
     virtual cci_base_param* get_param(const std::string &parname) = 0;
+    
+    /// Return a list of all parameters (implicit and explicit) for the given scope (matching the pattern)
+    /**
+     * TODO:
+     * e.g.
+     * - parameters of the specified module, pattern = module_name, e.g. "mymod.mysubmod";
+     * - pattern = module_name+'.*' to include the parameters of the childs, e.g. "mymod.mysubmod.*"
+     * - pattern = '*'.param_name to get all parameters with the name, e.g. "*.cache_size"
+     * - pattern = '*'.hierarchical.param_name to get all parameters with the name, e.g. "*.mysubmod.cache_size"
+     *
+     * @param pattern Specifies the parameters to be returned.
+     * @return Vector with full hierarchical parameter names.
+     */
+    virtual const std::vector<std::string> get_param_list(const std::string& pattern) = 0;
     
     /// Checks whether a parameter exists (implicit or explicit).
     /**
@@ -99,18 +116,27 @@ namespace cci {
      * @return Whether the parameter < parname > exists in the registry.
      */
     virtual bool exists_param(const std::string &parname) = 0;
+    
+    /// Returns if the parameter has ever been used.
+    /**
+     * A parameter has been used if there is either a parameter object
+     * or handle mapped to the NVP, or the NVP's value has ever been read.
+     *
+     * @param parname  Full hierarchical parameter name.
+     * @return If the parameter is used.
+     */
+    virtual bool is_used(const std::string &parname) = 0;
 
     
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////   Get Parameter List   //////////////////////////// //
 
     
-    /// Returns a list of all parameters existing (TODO implicit and explicit?) in the registry.
+    /// Returns a list of all parameters existing (implicit and explicit) in the registry.
     /**
      * @return Vector with full hierarchical parameter names.
      */
     virtual const std::vector<std::string> get_param_list() = 0;
-    // also see optional functions!
 
     
     // //////////////////////////////////////////////////////////////////// //
@@ -190,13 +216,13 @@ namespace cci {
       return register_callback(parname, type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, NULL)));
     }
     
-    /// Function handling the callback
+    /// Function handling the callback (should not be called by user)
     virtual boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, boost::shared_ptr< callb_adapt_b> callb) = 0;
 
     
     /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
     /**
-     * @param observer   Pointer to the observer module who did register parameter callbacks.
+     * @param observer   Pointer to the observer module who did register parameter callbacks. NULL shall be an error.
      */
     virtual void unregister_all_callbacks(void* observer) = 0;
     
@@ -238,16 +264,16 @@ namespace cci {
      *       pure virtual functions in cci_base_param because this method 
      *       may be called by the cci_base_param constructor.
      *
-     * @exception cci_exception_add_param Adding parameter object failed
+     * @exception cci::cci_report_types::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
     virtual void add_param(cci_base_param* par) = 0;
     
-    /// Removes a parameter from the registry. May only be called by the parameter destructor.
+    /// Removes a parameter from the registry. May only be called by the parameter destructor, must not be called by anone else.
     /**
-     * It should be ensured not being called from elsewhere (e.g. by user).
+     * It should be ensured this is not being called from elsewhere than the parameter destructor (e.g. by user).
      *
-     * @exception cci_exception_remove_param Remove parameter object failed
+     * @exception cci::cci_report_types::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
      */
     virtual void remove_param(cci_base_param* par) = 0;
@@ -255,8 +281,21 @@ namespace cci {
 
   public:
     // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Optional functions   ///////////////////////////// //
+    // ///////////////    Optional functions   //////////////////////////// //
+    // TODO: Optional Config API functions to be discussed
 
+    /// Return a pointer list of all (explicit) parameters in the given scope (matching the pattern)
+    /**
+     * pattern @see get_param_list
+     * + (in the case the Many-to-one Mapping should work):
+     *   pattern = full_param_name to get all param objects/handles (PH/PO) being mapped to the NVP
+     * @todo use iterator instead of vector?
+     *
+     * @param pattern Specifies the parameters to be returned.
+     * @return Vector with parameter base object pointers.
+     */
+    virtual const std::vector<cci_base_param*> get_params(const std::string& pattern = "") = 0;
+    
     
     /// Set an alias to a parameter name
     /**
@@ -279,30 +318,6 @@ namespace cci {
       return dynamic_cast<cci_param<T>*>(get_param(parname));
     }
     
-    /// Return a list of all parameters (TODO implicit and explicit?) matching the pattern
-    /**
-     * TODO:
-     * e.g.
-     * - parameters of the specified module, pattern = module_name, e.g. "mymod.mysubmod";
-     * - pattern = module_name+'.*' to include the parameters of the childs, e.g. "mymod.mysubmod.*"
-     * - pattern = '*'.param_name to get all parameters with the name, e.g. "*.cache_size"
-     * - pattern = '*'.hierarchical.param_name to get all parameters with the name, e.g. "*.mysubmod.cache_size"
-     *
-     * @param pattern Specifies the parameters to be returned.
-     * @return Vector with full hierarchical parameter names.
-     */
-    virtual const std::vector<std::string> get_param_list(const std::string& pattern) = 0;
-    
-    /// Return a pointer list of all (explicit) parameters matching the pattern
-    /**
-     * pattern @see get_param_list
-     * @todo use iterator instead of vector?
-     *
-     * @param pattern Specifies the parameters to be returned.
-     * @return Vector with parameter base object pointers.
-     */
-    virtual const std::vector<cci_base_param*> get_params(const std::string& pattern = "") = 0;
-
   };
 
       

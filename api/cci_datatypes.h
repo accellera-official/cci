@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -47,17 +47,24 @@ namespace cci {
   
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
   enum basic_param_type {
-    partype_not_available = 0, // default, type unknown
-    partype_number,   // used for all param data types that can handle integer numbers
-    partype_real,     // used for all param data types that can handle real numbers
-    partype_bool,     // used for all param data types that can handle bool
-    partype_string,   // used for all param data types that can handle strings
-    partype_list,     // used for all param lists 
-    partype_other     // used for all param other data types (objects etc.)
+    /// default, type unknown
+    partype_not_available = 0, 
+    /// used for all param data types that can handle integer numbers
+    partype_number,   
+    /// used for all param data types that can handle real numbers
+    partype_real,     
+    /// used for all param data types that can handle bool
+    partype_bool,     
+    /// used for all param data types that can handle strings
+    partype_string,   
+    /// used for all param lists 
+    partype_list,     
+    /// used for all param other data types (objects etc.)
+    partype_other     
   };
   
   
-  // Output of the parameter objects
+// Debug output of the parameter objects
 #ifdef CCI_PARAM_VERBOSE
 # define CCI_PARAM_DUMP(msg) { std::cout<<this->name()<<": "<<msg<<std::endl; } 
 # define CCI_PARAM_DUMP_WITHNAME(name, msg) { std::cout<<name<<": "<<msg<<std::endl; } 

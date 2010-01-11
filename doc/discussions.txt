@@ -1,19 +1,82 @@
-Discussions about the prototype proposal:
+Discussions about the API and prototype proposal:
 
 ----------------------------------------------------------
-1.1 post_read callbacks?
+Many-to-one Mapping
+
+contra:
+
+We propose a weak version of the Many-to-one Mapping:
+The Many-to-one Mapping - as it is currently required -
+complicates the API and the parameter handling significantly
+by requiring the cci_cnf_api to return multiple objects
+each time being asked for a parameter object (handle) and
+causing complex error handling when value setting cannot be
+applied seamlessly to all mapped objects/handles.
+Allowing only one Parameter Object or Handle being mapped to
+a NVP would keep it simple. Many-to-one mapping can be 
+realized with syncronized but dedicated parameters. 
+The difference would be that we had different names for the
+different POs/PHs. This BTW meets requirement 6 (Superset 
+Parameters) as well.
+
+An example for complex error handling - which would need to be specified by the standard - is this:
+Many PH/POs can be mapped to one NVP.
+When any value (PH/PO/NVP) is changed, the change is applied 
+immediately to all others.
+In detail this means for one NVP with a set of potentially many
+PHs and POs:
+ - Set one NVP/PH/PO of the set (e.g. by user, tool, model...)
+   - if not successfull, throw an set_param_failed error/warning
+   - if successfull, set all others 
+     (implementation note: e.g. using post_write callbacks)
+     foreach:
+     - if one fails due to value conversion error (which means that
+       the applied value cannot be mapped to a PO's value),
+       - make value invalid
+       - throw a set_param_failed warning (not an error, because
+         an error would not allow to resume with others)
+       - go on with others
+     - if one fails due to locked or other error,
+       - throw a set_param_failed error (leaving the set of
+         parameters in an inconsistent state)
+
+This could be swapped out to a synchronization mechanism to
+make it clean.
+
+pro:
+There is an advantage in usage: 
+It is possible to access a parameter regardingsless if it is explicit yet or not - just by making it explicit automatically e.g. by the API returning the PH.
+e.g.
+- Imagine a NVP does exist (param foo.a), but not yet a param object (which can be a PO or a PH)
+- then the user wants to access it somewhere using the cnf_api:
+  ph my_ph = my_cnf_api.get_param("foo.a");
+- now a PH can be instantiated by the API and returned to the user
+- when an owner creates the PO, there are two PHs: the first created PH and the PO (which is a PH as well)
+
+----------------------------------------------------------
+Locking Parameter Values (Req.14)
+
+I would prefer to drop the sentence "This does not restrict 
+updates to the mapped NVP that are made by other (presumably
+unlocked) POs." because (a) this asks for the Many-to-one Mapping
+and (b) it would be cleaner to reject the change of the NVP as 
+well if the mapped object is locked. That keeps the NVP and PH/PO
+consistent.
+
+----------------------------------------------------------
+post_read callbacks?
 
 post_read callback discussion: We currently do NOT provide post_read callbacks since they are very hard to define and implement.
 
 ----------------------------------------------------------
-1.2 cci_value implementation/definition
+cci_value implementation/definition
 
 An interesting point is how and where to implement the cci_value thing, which allows to set and get values in a generic way.
 
 Options are:
 a/ make it an interface (cci_value), which needs to be implemented by
    a vendor (like gs_cci_value, as done for cci_param), or 
-b/ if to implement it directly in the standard header files (which
+b/ to implement it directly in the standard header files (which
    means no vendor specific implementation for the cci_value at all) - or 
 c/ define the class and let the vendor implement the functions
    (not another class that implements the interface)
@@ -31,8 +94,7 @@ c/   (-) less flexible, since the standard must define the complete class
 Currently we've chosen c/.
 
 ----------------------------------------------------------
-
-1.3 pre_write callbacks returning rejected value change
+pre_write callbacks returning rejected value change
 
 (also see file guidelines.txt)
 

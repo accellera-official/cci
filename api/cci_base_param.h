@@ -354,7 +354,7 @@ namespace cci {
       return register_callback(type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
     }
     
-    /// Function handling the callback
+    /// Function registering a callback object (should not be called by user)
     virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr<callb_adapt_b> callb) = 0;
     
     
@@ -390,9 +390,10 @@ namespace cci {
 
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////////   Parameter Lock   //////////////////////////// //
-    // OPTIONAL! Could use a pre change callback instead which might be able to reject a param change
+    // OPTIONAL! Could use a pre write callback instead which is able to reject a param change
     //virtual bool lock(const void* passwd) = 0;
     //virtual bool unlock(const void* passwd) = 0;
+    //virtual bool locked() = 0;
     
     
   };

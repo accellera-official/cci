@@ -41,7 +41,7 @@
 #include <systemc>
 
 /**
- * @mainpage Configuration, Control & Inspection (CCI) Config API proposal
+ * @mainpage Configuration, Control & Inspection (CCI) Configuration API proposal
  * This is the working group internal API documentation of a proposal API for the configuration part of the CCI standard.
  *
  * Additionally to this documentation there are some text files documenting a changelog, discussions, rules etc.<br>
@@ -56,9 +56,10 @@
  *
  * Surely there are unsufficient parts in this proposal which are all open for discussions and changes!
  *
- * Post discussions to the working group reflector.
+ * Please post discussions to the working group reflector.
  *
  * Christian Schröder
+ * christian.schroeder@greensocs.com
  */
 
 
@@ -69,8 +70,14 @@ namespace cci {
   // forward declaration
   class cci_cnf_api;
   
-  // forward declaration, to be implemented by tool
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* = NULL);
+  /// Returns a configuration API instance responsible for handling the requests of the given module 
+  /**
+   * Forward declaration, to be implemented by the tool.
+   *
+   * @param mod Pointer to the module who wants access the config API, can be NULL if e.g. top-level or non-SystemC code is requesting the API.
+   * @return Configuration API.
+   */
+  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
   
   
 } // end namespace cci

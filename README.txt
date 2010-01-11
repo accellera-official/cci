@@ -10,7 +10,7 @@ GreenSocs interface proposal.
 
 - start looking at documentation in doc/API_ref/index.html
 
-- compile using Make in gs_example, 
+- compile using make in gs_example, 
   first edit Makefiles.defs setting some directories on top
   (currently there are compiler warnings)
 

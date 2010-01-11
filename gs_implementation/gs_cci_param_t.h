@@ -208,7 +208,7 @@ namespace cci {
     
     /*void set_string(const std::string& value) {
       if (!gs::gs_param<T>::setString(value))
-        throw cci_exception_set_param(set_param_bad_value, "set string value failed"); // don't know why here
+        CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "set string value failed"); // don't know why here
     }*/
     
     // //////////////// stuff /////////////////////////// //

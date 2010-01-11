@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -46,9 +46,13 @@ namespace cci {
   
   // ///////////////////// Error handling /////////////////////// //
 
-  /// Error/warning/info types class
+  /// Error/warning/info types class for sc_reports, using id prefix <code>/OSCI/CCI/</code>
   /**
-   * @todo: This report error/warning/info types class could be made more elegant!
+   * Usage:
+   * <code>
+   * CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Any report text");
+   * </code>
+   * @todo This report error/warning/info types class could be made more elegant!
    */
   class cci_report_types {
 
@@ -62,6 +66,7 @@ namespace cci {
     {}
     
   public:
+    /// Static function to be called to get accesses to the cci_report_types instances
     static const cci_report_types& type() {
       static cci_report_types t = cci_report_types();
       return t;

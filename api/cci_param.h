@@ -96,7 +96,7 @@ namespace cci {
     
     /// Set the value of this parameter to the value of another cci_param.
     /**
-     * @exception cci_exception_set_param Setting value failed
+     * @exception cci::cci_report_types::set_param_failed Setting value failed
      * @param v  Parameter where the value should be read from.
      * @return   Pointer to this.
      */
@@ -107,7 +107,7 @@ namespace cci {
     
     /// Set the value of this parameter.
     /**
-     * @exception cci_exception_set_param Setting value failed
+     * @exception cci::cci_report_types::set_param_failed Setting value failed
      * @param v  Value which has to be set.
      * @return   Pointer to this.
      */
@@ -118,7 +118,7 @@ namespace cci {
     
     /// Get the value of this parameter.
     /**
-     * @exception cci_exception_get_param Getting value failed
+     * @exception cci::cci_report_types::get_param_failed Getting value failed
      * @return Value of the parameter.
      */
     virtual operator const val_type& () const { 
@@ -132,14 +132,14 @@ namespace cci {
     
     /// Set the value of this parameter.
     /**
-     * @exception cci_exception_set_param Setting value failed
+     * @exception cci::cci_report_types::set_param_failed Setting value failed
      * @param val  The new value for this parameter.
      */
     virtual void set(const val_type& val) = 0;
     
     /// Returns the value of this parameter.
     /**
-     * @exception cci_exception_get_param Getting value failed
+     * @exception cci::cci_report_types::get_param_failed Getting value failed
      * @return Value
      */
     virtual const val_type& get() const = 0;
@@ -156,7 +156,7 @@ namespace cci {
     /**
      * Should not make use of m_par_name because it is possibly called inside constructor!
      *
-     * @exception cci_exception_get_param Converting value failed
+     * @exception cci::cci_report_types::get_param_failed Converting value failed
      * @param val  Value that should be converted.
      * @return JSON string representation of the value.
      */
@@ -170,7 +170,7 @@ namespace cci {
      * - Do not write to target_val if deserialization fails!
      * - Set target_val to the default value if str is empty (=="").
      *
-     * @exception cci_exception_set_param Converting value failed
+     * @exception cci::cci_report_types::set_param_failed Converting value failed
      * @param  target_val  Reference to the value that should be set.
      * @param  str         JSON string that should be converted to a value.
      */

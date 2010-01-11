@@ -1,6 +1,19 @@
 Notes
 -----
+The following definitions are in line with the requirements doc
+but making the words more concrete:
 
+Parameter Handle (PH): Parameter access object allowing typeless
+(JSON) string access. This is the cci_base_param.
+
+Parameter Object (PO): Parameter access object being typed. This
+is derived from the PH, thus it is the same object.
+
+Name-Value-Pair (NVP): Conceptional pair of the unique 
+hierarchical parameter name and the (JSON) string value. It is
+up to the implementation where this is stored (e.g. in a database
+or in PHs). The value is consistent with the PH/PO's one at any
+time.
 
 ----------------------------------------------------------------
 
@@ -57,6 +70,7 @@ type used.
 64 bits.", "uint64 is a native C++ unsigned integer type having a 
 word length of exactly 64 bits." 
 (IEEE Standard SystemC Language Reference Manual, March 2006).
+@todo We use the boost::uint64 type
 
 ----------------------------------------------------------------
 
@@ -65,10 +79,12 @@ THROWING ERRORS
 The proposal uses sc_report to report errors/warnings/infos like 
 bad values, bad types etc. The used message type prefix is 
 "/OSCI/CCI/". These sc_reports can be handled by the application
-very elegant and SystemC-like, can be switched off or even catched
-locally.
+very elegant and SystemC-like, and can be switched off or even 
+catched locally.
+Using sc_report for throwing exceptions is advisable because 
+catching other exceptions being thrown in e.g. sc_threads is
+hard to do for the user.
 
 ----------------------------------------------------------------
 
-
-
+christian.schroeder@greensocs.com

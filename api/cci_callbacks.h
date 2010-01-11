@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -40,18 +40,34 @@
 
 namespace cci {
   
+  /// Callback type
+  /**
+   * Used e.g. for callback registration and callbacks specifying the type.
+   */
   enum callback_type {
+    /// Callback prior to the value being read from
     pre_read,
     //post_read, // difficult/impossible to provide?
+    /// Callback prior to the value being written to
     pre_write,
+    /// Callback after to the value has been written to
     post_write,
+    /// Callback for a param being created
     create_param,
+    /// Callback for a param being destroyed
     destroy_param
   };
   
+  /// Return status for returning callback functions
   enum callback_return_type {
+    /// No special return status
     return_nothing,
-    return_value_change_rejected, // may only be used in pre_write callbacks
+    /// The callback function rejects a value change; may only be used in cci::pre_write callbacks
+    /**
+     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::pre_write.
+     */
+    return_value_change_rejected,
+    /// Some other error @todo specify reaction to be performed in calling parameter code
     return_other_error
   };
 
@@ -64,22 +80,26 @@ namespace cci {
   typedef boost::function2<callback_return_type, cci_base_param&, const callback_type&> callb_func_ptr;  // boost function portable syntax
   //typedef boost::function<callback_return_type (cci_base_param&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
   
-  /// Adapter base class which can be used to call an arbitrary parameter callback function.
+  /// Adapter base class which can be used to call an arbitrary parameter callback function (independently from template parameters).
   /**
-   * Base class for cci_callb_adapt to allow access by anyone without
-   * knowing the template parameter.
+   * Callback base class to allow access by anyone without
+   * knowing the template parameter of the actually called object (callee).
    *
-   * This class stores a param pointer to the caller. When unregistering this 
+   * This class also stores a param pointer to the caller. When unregistering this 
    * callback with the function <code>unregister_at_parameter</code> at the caller 
    * parameter, the pointer is set to NULL to avoid repeated unregistration during
    * destruction.
+   *
+   * Note the template T_cci_base_param is only needed for compiling (to break
+   * cyclic includes with cci_base_param), 
+   * Use the typedef cci::callb_adapt_b to access this class.
    */
   template<class T_cci_base_param>
   class callb_adapt_B
   {
   protected:
 
-    // allows cci_base_param to access the caller_param to set to NULL
+    /// Allows cci::cci_base_param to access the caller_param to set to NULL.
     friend class cci_base_param; 
         
   public:
