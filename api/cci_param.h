@@ -47,7 +47,7 @@
 namespace cci {
 
   /// The parameters class
-  template<typename T>
+  template<typename T, typename T_IMMUTABLE_TYPE>
   class cci_param 
   : public cci_base_param
   {
@@ -136,13 +136,21 @@ namespace cci {
      * @param val  The new value for this parameter.
      */
     virtual void set(const val_type& val) = 0;
-    
+
     /// Returns the value of this parameter.
     /**
      * @exception cci::cci_report_types::get_param_failed Getting value failed
      * @return Value
      */
     virtual const val_type& get() const = 0;
+    
+    /// Set the value of this parameter overriding a lock.
+    /**
+     * @exception cci::cci_report_types::set_param_failed Setting value failed
+     * @param val  The new value for this parameter.
+     * @param lock_pwd  Password needed for the lock (if needed, else NULL)
+     */
+    virtual void set(const val_type& val, void* lock_pwd) = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //

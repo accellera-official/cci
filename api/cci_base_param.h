@@ -390,11 +390,38 @@ namespace cci {
 
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////////   Parameter Lock   //////////////////////////// //
-    // OPTIONAL! Could use a pre write callback instead which is able to reject a param change
-    //virtual bool lock(const void* passwd) = 0;
-    //virtual bool unlock(const void* passwd) = 0;
-    //virtual bool locked() = 0;
     
+    // OPTIONAL! Could use a pre write callback instead which is able to reject a param change
+    
+    /// Locking this parameter, optionally with a password
+    /**
+     * Makes a parameter read-only.
+     *
+     * Returns false
+     * - if this parameter was already locked with a different password than pwd. Then it is still locked but not with this given/without password.
+     *
+     * Returns true 
+     * - if the parameter was not locked (and is locked now) or 
+     * - if the parameter was locked without a password. Then it is locked now with the given password
+     * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
+     *
+     * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
+     * @return If the lock was successfull. .
+     */
+    virtual bool lock(const void* pwd = NULL) = 0;
+
+    /// Unlocking this parameter, optionally with a password if needed
+    /**
+     * @param pwd Password to unlock the param (if needed), default = NULL.
+     * @return If the parameter is unlocked now.
+     */
+    virtual bool unlock(const void* pwd = NULL) = 0;
+
+    /// If this parameter is locked
+    /**
+     * @return If this parameter is locked
+     */
+    virtual bool locked() = 0;
     
   };
 

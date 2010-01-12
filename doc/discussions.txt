@@ -3,15 +3,15 @@ Discussions about the API and prototype proposal:
 ----------------------------------------------------------
 Many-to-one Mapping
 
-contra:
-
 We propose a weak version of the Many-to-one Mapping:
 The Many-to-one Mapping - as it is currently required -
-complicates the API and the parameter handling significantly
-by requiring the cci_cnf_api to return multiple objects
-each time being asked for a parameter object (handle) and
-causing complex error handling when value setting cannot be
-applied seamlessly to all mapped objects/handles.
+complicates the API and the parameter handling significantly:
+- requiring the cci_cnf_api to return multiple objects
+  each time being asked for a parameter object (handle) and
+- causing complex error handling when value setting cannot be
+  applied seamlessly to all mapped objects/handles.
+- causing complex callback handling, e.g. syncronizing rejected
+  pre_writes, handling callback registering.
 Allowing only one Parameter Object or Handle being mapped to
 a NVP would keep it simple. Many-to-one mapping can be 
 realized with syncronized but dedicated parameters. 
@@ -19,7 +19,8 @@ The difference would be that we had different names for the
 different POs/PHs. This BTW meets requirement 6 (Superset 
 Parameters) as well.
 
-An example for complex error handling - which would need to be specified by the standard - is this:
+An example for complex error handling - which would need to be 
+specified by the standard - is this:
 Many PH/POs can be mapped to one NVP.
 When any value (PH/PO/NVP) is changed, the change is applied 
 immediately to all others.
@@ -43,16 +44,6 @@ PHs and POs:
 This could be swapped out to a synchronization mechanism to
 make it clean.
 
-pro:
-There is an advantage in usage: 
-It is possible to access a parameter regardingsless if it is explicit yet or not - just by making it explicit automatically e.g. by the API returning the PH.
-e.g.
-- Imagine a NVP does exist (param foo.a), but not yet a param object (which can be a PO or a PH)
-- then the user wants to access it somewhere using the cnf_api:
-  ph my_ph = my_cnf_api.get_param("foo.a");
-- now a PH can be instantiated by the API and returned to the user
-- when an owner creates the PO, there are two PHs: the first created PH and the PO (which is a PH as well)
-
 ----------------------------------------------------------
 Locking Parameter Values (Req.14)
 
@@ -62,6 +53,24 @@ unlocked) POs." because (a) this asks for the Many-to-one Mapping
 and (b) it would be cleaner to reject the change of the NVP as 
 well if the mapped object is locked. That keeps the NVP and PH/PO
 consistent.
+
+----------------------------------------------------------
+Mutable/Immutable/Elaboration Time Parameters
+
+The requirements doc lists three different types of read-only params:
+- Mutable (Std.) P.
+  Mutable ones can be made immutable (locked) temporary 
+  by using functions lock(pwd) unlock(pwd) locked().
+- Immutable P.
+  should be not writable by a tool (but by the owner).
+  Can be realized by providing a special set function in the
+  PO, possibly requiring the lock pwd.
+- Elaboration Time P.
+  Elaboration Time P.s should be Mutable until eoe, then lock
+First the parameters are not different. They can be identified
+(even in static analysis) by an enum template parameter.
+We propose to leave it to the param vendor to define how to 
+create Immutable or Elaboration Time Parameters.
 
 ----------------------------------------------------------
 post_read callbacks?
