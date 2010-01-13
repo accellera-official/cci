@@ -53,7 +53,7 @@ namespace cci {
   
   template <typename T>
   class gs_cci_param_t
-  : public cci_param<T>
+  : public cci_param<T, cci::mutable_parameter>
   , public gs::gs_param<T>
   {
   protected:
@@ -148,7 +148,7 @@ namespace cci {
     
   public:
 
-    using cci_param<T>::operator=;
+    using cci_param<T,cci::mutable_parameter>::operator=;
 
     explicit gs_cci_param_t(const std::string& n
                             , const std::string &val
@@ -161,7 +161,7 @@ namespace cci {
     , m_is_initial_value(false)
     , m_status_guard(*this)
     {
-      cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      cci_param<T,cci::mutable_parameter>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
     
     explicit gs_cci_param_t(const std::string& n 
@@ -175,7 +175,7 @@ namespace cci {
     , m_status_guard(*this)
     {
       assert(register_at_db && "Not supported with gs_param?");
-      cci_param<T>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      cci_param<T,cci::mutable_parameter>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
       // This is just a test
       cci_cnf_api* m_cci_api = get_cnf_api_instance(/*TODO*/NULL); 
       /*try {

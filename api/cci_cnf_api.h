@@ -47,7 +47,7 @@ namespace cci {
   class cci_base_param;
     
   // forward declaration 
-  template <class T> 
+  template <class T, param_mutable_type TM> 
   class cci_param;
 
   
@@ -313,9 +313,9 @@ namespace cci {
      * @param   parname   Full hierarchical parameter name.
      * @return  Pointer to the parameter object (NULL if not existing).
      */ 
-    template<class T>
-    cci_param<T>* get_cci_param(const std::string &parname) {
-      return dynamic_cast<cci_param<T>*>(get_param(parname));
+    template<class T, param_mutable_type TM>
+    cci_param<T, TM>* get_cci_param(const std::string &parname) {
+      return dynamic_cast<cci_param<T, TM>*>(get_param(parname));
     }
     
   };

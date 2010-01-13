@@ -49,7 +49,7 @@
 
 namespace cci {
 
-  template <typename T> 
+  template <typename T, param_mutable_type TM> 
   class cci_param;
 
   /// Base param which stores string values (can be instantiated) or base class for all cci_param template specializations.

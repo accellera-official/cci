@@ -46,8 +46,9 @@
 
 namespace cci {
 
+  
   /// The parameters class
-  template<typename T, typename T_IMMUTABLE_TYPE>
+  template<typename T, param_mutable_type TM>
   class cci_param 
   : public cci_base_param
   {
@@ -55,7 +56,7 @@ namespace cci {
     /// Typedef for the value.
     typedef T val_type;
     /// Typedef for the param itself.
-    typedef cci_param<T> my_type;
+    typedef cci_param<T, TM> my_type;
 
   public:
 
@@ -186,15 +187,15 @@ namespace cci {
 
   };
     
-  template<class T> bool operator == (cci_param<T>& p1, cci_param<T>& p2) {
+  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2) {
     return p1.get() == p2.getValue();
   }
 
-  template<class T> bool operator == (cci_param<T>& p1, T& p2) {
+  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, T& p2) {
     return p1.get() == p2;
   }
 
-  template<class T> bool operator == (T& p1, cci_param<T>& p2) {
+  template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2) {
     return p1 == p2.get();
   }
   

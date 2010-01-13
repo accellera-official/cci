@@ -64,6 +64,19 @@ namespace cci {
   };
   
   
+  /// Enumeration for cci_param template specifying the parameter type according the lock behavior
+  enum param_mutable_type {
+    /// Muable Parameter
+    mutable_parameter = 0,
+    /// Immutable Parameter
+    immutable_parameter,
+    /// Elaboration Time Parameter (Mutable up to end_of_elaboration)
+    elaboration_time_parameter,
+    /// Vendor specific/other Parameter type
+    other_parameter
+  };
+  
+  
 // Debug output of the parameter objects
 #ifdef CCI_PARAM_VERBOSE
 # define CCI_PARAM_DUMP(msg) { std::cout<<this->name()<<": "<<msg<<std::endl; } 
