@@ -67,10 +67,17 @@ The requirements doc lists three different types of read-only params:
   PO, possibly requiring the lock pwd.
 - Elaboration Time P.
   Elaboration Time P.s should be Mutable until eoe, then lock
-First the parameters are not different. They can be identified
-(even in static analysis) by an enum template parameter.
-We propose to leave it to the param vendor to define how to 
-create Immutable or Elaboration Time Parameters.
+First the parameters are not different. 
+
+Our API proposal:
+They can be identified (even in static analysis) by an enum 
+template parameter. We propose to leave it to the param vendor 
+to define how to create Immutable or Elaboration Time Parameters.
+
+Different options are:
+- provide standard (empty) classes, a parameter implementation can
+  derive from, to allow static analysis
+- Define alternatives to cci_param<T>, e.g. immutable_cci_param<T>
 
 ----------------------------------------------------------
 post_read callbacks?
@@ -107,10 +114,22 @@ pre_write callbacks returning rejected value change
 
 (also see file guidelines.txt)
 
-Another option - than the chosen one where the pre_write callback can 
-return a reject value change - would be to introduce another callback 
-type, e.g. a 'reject_write' callback which is called before the pre_write
-callback.
+Theoretically the pre_write callback can ONLY be used for checking 
+and rejecting values. It cannot be used as a pre_write performing 
+any action prior to an actual write, because the called function 
+cannot know if the write will be rejected by any other called item.
+
+An option is to rename pre_write to e.g. 'reject_write'.
+
+In this case we could add another real pre_write callback if it is 
+nescessary to have such.
+
+----------------------------------------------------------
+Class names
+
+Currently the cci prefix is doubled: in the namespace and often in 
+the class names. E.g.: cci::cci_base_param.
+This is preliminary, to be discussed.
 
 ----------------------------------------------------------
 

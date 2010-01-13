@@ -391,8 +391,6 @@ namespace cci {
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////////   Parameter Lock   //////////////////////////// //
     
-    // OPTIONAL! Could use a pre write callback instead which is able to reject a param change
-    
     /// Locking this parameter, optionally with a password
     /**
      * Makes a parameter read-only.
@@ -423,6 +421,60 @@ namespace cci {
      */
     virtual bool locked() = 0;
     
+    // //////////////////////////////////////////////////////////////////// //
+    // ///////////////   Parameter syncronization   /////////////////////// //
+    
+    /// Syncronize this parameter with another on
+    /**
+     * Within this call this parameter's value gets overwritten with the other's.
+     *
+     * Successfull (return true) if the other parameter exists 
+     * (implicit or explicit).
+     * It is no reason to return true if the setting to this parameter 
+     * failed with a set_param_failed exception.
+     *
+     * @param parname Full hierarchical name of the other parameter.
+     * @return If the syncronization was set up successfully.
+     */
+    virtual bool sync(const std::string &parname) = 0;
+
+    /// Syncronize this parameter with another on
+    /**
+     * @see sync(const std::string&)
+     * @param parname Full hierarchical name of the other parameter.
+     * @return If the syncronization was set up successfully.
+     */
+    virtual bool sync(cci_base_param& par) = 0;
+
+    /// Remove syncronization with another parameter
+    /**
+     * Keeps the current value.
+     *
+     * Returns true if the parameter was syncronized with the given one
+     * and now is not longer syncronized.
+     * E.g. returns false if this parameter is not syncronized with the 
+     * given one.
+     *
+     * @param parname Full hierarchical name of the other parameter.
+     * @return If the remove syncronization was successful.
+     */
+    virtual bool unsync(const std::string &parname) = 0;
+    
+    /// Remove syncronization with another parameter
+    /**
+     * @see unsync(const std::string&)
+     * @param parname Full hierarchical name of the other parameter.
+     * @return If the remove syncronization was successful.
+     */
+    virtual bool unsync(cci_base_param& par) = 0;
+    
+    /// Returns all parameter names this parameter is syncronized with
+    /**
+     * @return Vector of full hierarchical parameter names this param is syncronized with.
+     */
+    virtual std::vector<std::string> get_sync_list() = 0;
+    
+
   };
 
 } // namespace cci

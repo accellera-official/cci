@@ -48,8 +48,7 @@ not rely on the given value to appear as the new one!
 
 If the value change is rejected during pre_write, there will be no 
 post_write callback for this change. If a pre_write callback rejects the 
-value, it is free to the implementation if to call any remaining pre_write 
-callbacks.
+value, all remaining pre_write callbacks shall still be called.
 
 
 ----------------------------------------------------------------
@@ -66,7 +65,8 @@ gets the add_param() call at parameter construction.
 CALLBACK RETURN STATUS
 
 The parameter implementation shall evaluate the enum returned by callback
-functions and perform the according action (e.g. reject a value).
+functions and perform the according action (e.g. reject a value and throw
+a set_param_failed exception).
 
 
 ----------------------------------------------------------------
