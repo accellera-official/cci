@@ -1,0 +1,151 @@
+
+
+
+
+IPLock test: ******************* ---------------- **************************
+IPLock test: ******************* INT (etc.) PARAM **************************
+IPLock test: ******************* ---------------- **************************
+
+
+IPLock test: 'int_param = (unsigned int) 1' int_param=1
+IPLock test: ***** int_param locked *****
+IPLock test: shall all fail:
+
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param = 2000' int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param += 1500' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: int_param++=1
+IPLock test: int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: ++int_param=1
+IPLock test: int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: int_param--=1
+IPLock test: int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: --int_param=1
+IPLock test: int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param += 1500' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param -= 200' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param /= 4' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param *= 3' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param %= 6' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param ^= 5' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param &= 60' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param |= 3' : int_param=1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param <<= 2' : int_param (4) =1
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param >>= 2' : int_param (1) =1
+
+IPLock test: Override lock shall work: int_param=2
+IPLock test: 'int_param = 2' : int_param =2
+
+IPLock test: ***** int_param locked with pwd *****
+
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked!
+IPLock test: 'int_param = 2000' shall fail: int_param=2
+
+IPLock test: Override lock without password shall FAIL:
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked with different password than given one!
+IPLock test: 'int_param = 3' : int_param =2
+
+IPLock test: Override lock with WRONG password shall FAIL:
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter is locked with different password than given one!
+IPLock test: 'int_param = 5' : int_param =2
+
+IPLock test: Override lock with correct pwd shall work:
+IPLock test: 'int_param = 4' : int_param =4
+
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter unlock failed!
+IPLock test: int_param unlock failed (and should fail) with wrong password
+
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.int_param: parameter lock failed!
+IPLock test: int_param lock with new pwd failed (and should have failed!)
+
+IPLock test: ***** int_param unlocked *****
+
+
+
+IPLock test: ******************* ---------------- **************************
+IPLock test: *******************   STRING PARAM   **************************
+IPLock test: ******************* ---------------- **************************
+
+
+IPLock test: str_param = unchanged
+
+IPLock test: ***** lock str_param *****
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.str_param: parameter is locked!
+IPLock test: 'str_param = "1000"' str_param=unchanged
+
+IPLock test: 'str_param != "1000"' 
+               true
+IPLock test: 'str_param == "1000"' 
+               false
+IPLock test: 'str_param != "test"' 
+               true
+IPLock test: 'str_param < "Hallo"' 
+               false
+IPLock test: str_param < str_param2
+               false
+IPLock test: "Hallo" < str_param 
+               true
+
+IPLock test: 'str_param > "Hallo"' 
+               true
+IPLock test: 'str_param <= "Hallo"' 
+               false
+IPLock test: 'str_param >= "Hallo"' 
+               true
+
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.str_param: parameter is locked!
+IPLock test: str_param = 'unchanged'
+IPLock test: str_param2 = 'it's me'
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.str_param: parameter is locked!
+IPLock test: 'str_param = str_param + str_param2' = 'unchanged'
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.str_param: parameter is locked!
+IPLock test: 'str_param = str_param + " after"' = 'unchanged'
+
+Info: /GreenSocs/GreenControl/GreenConfig/Lock_IP.str_param: parameter is locked!
+IPLock test: 'str_param = "before " + str_param' = 'unchanged'
+
+IPLock test: 'ss << str_param: ss = 'unchanged'
+IPLock test: 'ss >> str_param2: str_param2 ('unchanged')= 'unchanged'
+
+IPLock test: ***** unlock str_param *****
+
