@@ -60,6 +60,8 @@ namespace cci {
     
     bool exists_param(const std::string &parname);
     
+    bool is_used(const std::string &parname);
+    
     const std::vector<std::string> get_param_list();
     
     boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, boost::shared_ptr< callb_adapt_b> callb);

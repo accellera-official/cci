@@ -117,6 +117,8 @@ public:
   , m_register_at_db(register_at_db)
   //, m_parent_array(parent_array)
   , m_update_event_enabled(false)
+  , m_locked(false)
+  , m_lock_pwd(NULL)
   {
     GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<(unsigned long) parent_array<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor");
 
@@ -380,6 +382,83 @@ public:
   /// Returns if this is an Extended Parameter Array
   const bool is_extended_array() const {
     return m_is_extended_array;
+  }
+
+  /// Sets the documentation
+  /**
+   * Sets the documentation. It shall be a human readable.
+   * @param doc Documentation
+   */
+  void set_documentation(const std::string doc) {
+    m_documentation = doc;
+  }
+  
+  /// Gets the documentation
+  /**
+   * Gets the documentation. It shall be a human readable.
+   * @return Documentation
+   */
+  std::string get_documentation() const {
+    return m_documentation;
+  }
+  
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+  
+  /// Locking this parameter, optionally with a password
+  /**
+   * Makes a parameter read-only.
+   *
+   * Returns false
+   * - if this parameter was already locked with a different password than pwd. Then it is still locked but not with this given/without password.
+   *
+   * Returns true 
+   * - if the parameter was not locked (and is locked now) or 
+   * - if the parameter was locked without a password. Then it is locked now with the given password
+   * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
+   *
+   * This lock is only a value set lock. Other set functions like
+   * gs_param_base::set_documentation, gs_param_base::add_param_attribute etc. are not locked!
+   *
+   * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
+   * @return If the lock was successfull. .
+   */
+  virtual bool lock(void* pwd = NULL) {
+    // lock fails if already locked and current pwd is not NULL or not the same one as given so it can't be overwritten
+    if (m_locked && pwd != m_lock_pwd && m_lock_pwd != NULL) {
+      GS_PARAM_CALLBACK_DUMP("lock failed!");  
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter lock failed!");
+      return false; 
+    }
+    GS_PARAM_CALLBACK_DUMP("locked");      
+    m_lock_pwd = pwd;
+    m_locked = true;
+    return true;
+  }
+  
+  /// Unlocking this parameter, optionally with a password if needed
+  /**
+   * @param pwd Password to unlock the param (if needed), default = NULL.
+   * @return If the parameter is unlocked now.
+   */
+  virtual bool unlock(const void* pwd = NULL) {
+    if (pwd == m_lock_pwd) {
+      GS_PARAM_CALLBACK_DUMP("unlocked");      
+      m_locked = false;
+    } else {
+      GS_PARAM_CALLBACK_DUMP("unlock failed!");      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter unlock failed!");
+    }
+    return !m_locked;
+  }
+  
+#endif
+
+  /// If this parameter is locked
+  /**
+   * @return If this parameter is locked
+   */
+  bool locked() const {
+    return m_locked;
   }
   
   // ///////////   Observer and callbacks   //////////////
@@ -794,6 +873,9 @@ protected:
 
   /// Name of this parameter.
   std::string m_par_name;
+  
+  /// Human readable documentation ()
+  std::string m_documentation;
 
   /// Pointer to the API which has to be used.
   cnf_api* m_api;
@@ -833,6 +915,12 @@ protected:
   boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b> m_update_event_callbAdapt;
   /// Update event: notified when parameter value changed
   sc_event m_update_event;
+  
+  /// If this parameter is read-only
+  bool m_locked;
+  
+  /// Passwort needed to unlock the parameter or override the lock
+  void* m_lock_pwd;
   
   /// Parent array pointer if this is an array member
   //gs_param_array *m_parent_array;

@@ -66,7 +66,7 @@ public:
     m_cnf_api->getPar("OM.int_param")->setString("50");
   }
   
-  void callback_function(gs::gs_param_base& changed_param, gs::cnf::callback_type reason) {
+  gs::cnf::callback_return_type callback_function(gs::gs_param_base& changed_param, gs::cnf::callback_type reason) {
     std::cout << " callback function got: "<< callback_type_to_string(reason) <<" callback for param "<<changed_param.getName() << std::endl; 
     std::string val = changed_param.getString();
     if (reason == gs::cnf::pre_write) std::cout << "   callback function: (old value: "<<val<<")" << std::endl;

@@ -119,11 +119,11 @@ namespace cci {
     
     /// Returns if the parameter has ever been used.
     /**
-     * A parameter has been used if there is either a parameter object
+     * A parameter has been used if there is/was either a parameter object
      * or handle mapped to the NVP, or the NVP's value has ever been read.
      *
      * @param parname  Full hierarchical parameter name.
-     * @return If the parameter is used.
+     * @return If the parameter is or has been used.
      */
     virtual bool is_used(const std::string &parname) = 0;
 

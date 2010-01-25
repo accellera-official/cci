@@ -1,3 +1,5 @@
+  * added parameter lock
+
   * added gs_param callback types (enum data types, gs_param_base support)
   * added new callback adapter and callback register macro
   * post_write callbacks (for set_string) are called indepenently from success

@@ -122,7 +122,7 @@ cannot know if the write will be rejected by any other called item.
 An option is to rename pre_write to e.g. 'reject_write'.
 
 In this case we could add another real pre_write callback if it is 
-nescessary to have such.
+necessary to have such.
 
 ----------------------------------------------------------
 Class names

@@ -121,19 +121,28 @@ public:
   using gs_param_t<val_type>::operator =;
   // TODO: other operators??
 
+  /// Overloads gs_param_t<T>::deserialize in gs_param_t<T>
+  const bool deserialize(val_type &target_val, const std::string& str) {          
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (gs_param_base::m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                                                                             
+#endif
+    return static_deserialize(target_val, str);                                   
+  }                                                      
+
   using gs_param_t<val_type>::gs_param_base::name;
   using gs_param_t<val_type>::setString;
   using gs_param_t<val_type>::getString;
   using gs_param_t<val_type>::setValue;
   using gs_param_t<val_type>::getValue;
-
-  /// Overloads gs_param_t<T>::deserialize in gs_param_t<T>
-  const bool deserialize(val_type &target_val, const std::string& str) {
-    return static_deserialize(target_val, str);
-  }
+ 
  
 */
-
+  
 #define GS_PARAM_HEAD                                                  \
 protected:                                                             \
   typedef gs_param<val_type> my_type;                                  \
@@ -185,6 +194,13 @@ public:                                                                \
                                                                                   \
                                                                                   \
   const bool deserialize(val_type &target_val, const std::string& str) {          \
+    GCNF_ENABLE_GS_PARAM_LOCK_GUARD( \
+    if (m_locked) {                                                \
+      GS_PARAM_DUMP("parameter is locked!");                                      \
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");        \
+      return false;                                                               \
+    } \
+    ) \
     return static_deserialize(target_val, str);                                   \
   }                                                                               \
                                                                                   \
@@ -194,7 +210,7 @@ public:                                                                \
   using gs_param_t<val_type>::setString;                                          \
   using gs_param_t<val_type>::getString;                                          \
   using gs_param_t<val_type>::setValue;                                           \
-  using gs_param_t<val_type>::getValue                                           
+  using gs_param_t<val_type>::getValue                                                                                     
 
 
 /// The parameters, gs_param class, templated.
@@ -209,6 +225,9 @@ class gs_param
 {
   /// Typedef for the value.
   typedef T val_type;
+  
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
   
 public:
   GS_PARAM_HEAD;

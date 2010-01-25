@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007-2009 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -117,6 +117,10 @@ protected:
   using gs_param_t<val_type>::m_par_name;
 
   using gs_param_t<val_type>::convertStringToValue;
+
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 private:
   /// Not allowed constructor!
   explicit gs_param(const val_type &val) { sc_assert(false); }
@@ -302,6 +306,14 @@ public:
    * @return   Reference to this.
    */
   my_type& operator = (const my_type& v) {
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_ERROR(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return;                                                               
+    }                                                                             
+#endif
     this->delete_array();
     internal_ArrVec.resize(v.size());
     for (unsigned int i = 0; i < internal_ArrVec.size(); i++) {
@@ -318,6 +330,14 @@ public:
    * @return   Reference to this.
    */
   my_type& operator = (const std::vector<T>& v) {
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_ERROR(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return *this;                                                               
+    }                                                                             
+#endif
     this->resize(v.size());
     for (unsigned int i = 0; i < internal_ArrVec.size(); i++) {
       internal_ArrVec[i]->setValue(v[i]);
@@ -362,6 +382,14 @@ public:
    */
   bool setString(const std::string &str) {
     SC_REPORT_WARNING(this->name(), "setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.");
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                                                                             
+#endif
     std::vector<std::string> vec;
     if (!parse(vec, str)) {
       SC_REPORT_WARNING(this->name(), "setString parsing failed!");
@@ -405,6 +433,14 @@ public:
    * Use setString(str) instead!
    */
   const bool deserialize(val_type &target_val, const std::string& str) {
+    // Check the lock!
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    if (m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                                                                             
+#endif
     return static_deserialize(target_val, str);
   }
 
@@ -431,6 +467,14 @@ public:
    * @return If resize was successfull (or not because e.g. read-only param)
    */
   bool resize(unsigned int sz) {
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (m_locked) {
+      GS_PARAM_DUMP("parameter is locked!");
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;
+    }                                                                             
+#endif
     if (this->make_pre_write_callbacks() == return_value_change_rejected) {
       GS_PARAM_ARRAY_DUMP("resize: pre_write callback rejected resize!");
       return false;

@@ -359,6 +359,28 @@ namespace cnf {
       return false;
     }
 
+    /// @see gs::cnf::GCnf_Api::is_used
+    /**
+     * @TODO: implement is_used for private API
+     */
+    bool is_used(const std::string &parname, std::string meta_data = "") {
+      GCNF_DUMP_N(name(), "is_used("<<parname.c_str()<<")");      
+      SC_REPORT_ERROR(name(), "is_used not implemented for private config API!");
+      // TODO:
+      // First check in private plugin
+      //if (mPrivPlugin.cmd_CMD_PARAM_HAS_BEEN_ACCESSED(parname)) {
+      //  GCNF_DUMP_N(name(), "is_used (private): ... yes");
+      //  return true;
+      //}
+      GCNF_DUMP_N(name(), "is_used (private): ... no");
+      
+      // Try to find at parent (if not local or if public)
+      if (!is_local_param(parname) || is_public_param(parname))
+        return mApi->is_used(parname, meta_data = "");
+
+      return false;
+    }
+    
     /// @see gs::cnf::GCnf_Api::is_explicit
     /*bool is_explicit(const std::string &parname) {
       // try to get the param from parent if it is not local or if it is public

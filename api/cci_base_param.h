@@ -406,20 +406,20 @@ namespace cci {
      * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
      * @return If the lock was successfull. .
      */
-    virtual bool lock(const void* pwd = NULL) = 0;
+    virtual bool lock(void* pwd = NULL) = 0;
 
     /// Unlocking this parameter, optionally with a password if needed
     /**
      * @param pwd Password to unlock the param (if needed), default = NULL.
      * @return If the parameter is unlocked now.
      */
-    virtual bool unlock(const void* pwd = NULL) = 0;
+    virtual bool unlock(void* pwd = NULL) = 0;
 
     /// If this parameter is locked
     /**
      * @return If this parameter is locked
      */
-    virtual bool locked() = 0;
+    virtual bool locked() const = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Parameter syncronization   /////////////////////// //

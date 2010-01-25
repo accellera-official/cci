@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007-2009 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -68,6 +68,9 @@ protected:
   /// String whose reference can be returned as string value
   mutable std::string return_string;
 
+  using gs_param_base::m_locked;
+  using gs_param_base::m_lock_pwd;
+  
 public:
 
   // templated operators
@@ -236,10 +239,32 @@ public:
       GS_PARAM_DUMP("pre_write callback rejected value change!");
       return false;
     }
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    if (gs_param_base::m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                           
+#endif
     my_value = val;
     make_post_write_callbacks();
     return true;
   }
+  
+  // Set function overriding the lock
+  bool setValue(const val_type& val, void* lock_pwd) {                                 
+    if (gs_param_base::m_locked && gs_param_base::m_lock_pwd != lock_pwd) {
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked with different password than given one!");
+      return false;                                                                     
+    }
+    if (make_pre_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("pre_write callback rejected value change!");
+      return false;
+    }
+    my_value = val;
+    make_post_write_callbacks();
+    return true;
+  }                                                                               
   
   /// Returns the value of this parameter.
   /**
@@ -272,8 +297,15 @@ public:
       GS_PARAM_DUMP("pre_write callback rejected value change!");
       return false;
     }
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    if (gs_param_base::m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                           
+#endif
     bool success = deserialize(my_value, envvar_subst(str, m_par_name));
-    make_post_write_callbacks();
+    if (success) make_post_write_callbacks();
     return success;
   }
   

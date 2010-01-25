@@ -157,6 +157,17 @@ public:
    */
   virtual bool existsParam(const std::string &parname, std::string meta_data = "") = 0;
 
+  
+  /// Returns if the parameter has ever been used.
+  /**
+   * A parameter has been used if there is/was either a parameter object
+   * mapped to the initial value, or the initial value has ever been read.
+   *
+   * @param parname  Full hierarchical parameter name.
+   * @return If the parameter is or has been used.
+   */
+  virtual bool is_used(const std::string &parname, std::string meta_data = "") = 0;
+
   /// If a parameter is explicit.
   /**
    * @param   parname   Hierarchical parameter name.

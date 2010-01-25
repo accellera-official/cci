@@ -62,6 +62,10 @@ bool cci::gs_cci_cnf_api::exists_param(const std::string &parname) {
   return m_gcnf_api->existsParam(parname);
 }
 
+bool is_used(const std::string &parname) {
+  return m_gcnf_api->is_used(parname);
+}
+
 const std::vector<std::string> cci::gs_cci_cnf_api::get_param_list() {
   return m_gcnf_api->getParamList();
 }

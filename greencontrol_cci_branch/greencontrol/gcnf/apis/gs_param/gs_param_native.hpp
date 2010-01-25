@@ -55,6 +55,9 @@ class gs_param<int>
   /// Typedef for the value.
   typedef int val_type;
 
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
 
@@ -146,6 +149,9 @@ class gs_param<unsigned int>
   /// Typedef for the value.
   typedef unsigned int val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
 
@@ -240,6 +246,9 @@ class gs_param<bool>
   /// Typedef for the value.
   typedef bool val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
 
@@ -332,6 +341,9 @@ class gs_param<double>
   /// Typedef for the value.
   typedef double val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
 
@@ -407,6 +419,9 @@ class gs_param<float>
 {
   /// Typedef for the value.
   typedef float val_type;
+
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
 
 public:
   GS_PARAM_HEAD;
@@ -493,6 +508,9 @@ class gs_param<std::string>
 
   using gs_param_t<val_type>::convertStringToValue;
 
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 private:
   // String constructor is allowed for string parameter
 
@@ -541,6 +559,14 @@ public:
   
   /// Overloads gs_param_t<T>::deserialize in gs_param_t<T>
   const bool deserialize(val_type &target_val, const std::string& str) {
+    // Check the lock!
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    if (gs_param_base::m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                                                                             
+#endif
     return static_deserialize(target_val, str);
   }
   
@@ -694,6 +720,9 @@ class gs_param<unsigned long long>
   /// Typedef for the value.
   typedef unsigned long long val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   /// Constructor with unsigned int value
@@ -784,7 +813,10 @@ class gs_param<long long>
 {
   /// Typedef for the value.
   typedef long long val_type;
-  
+
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   /// Constructor with int value
@@ -889,6 +921,9 @@ class gs_param<unsigned char>
   /// Typedef for the value.
   typedef unsigned char val_type;
 
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
 
@@ -990,6 +1025,9 @@ class gs_param<signed char>
   /// Typedef for the value.
   typedef signed char val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -1091,6 +1129,9 @@ class gs_param<char>
   /// Typedef for the value.
   typedef char val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -1202,6 +1243,9 @@ class gs_param<unsigned short>
   /// Typedef for the value.
   typedef unsigned short val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   

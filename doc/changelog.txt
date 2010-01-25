@@ -1,6 +1,8 @@
 ChangeLog
 ---------
 
+- changed is_used semantic: also true if there WAS an object mapped to the NVP
+
 **** CCI-1.21-cci_api-130110.tar.gz ****
 
 - added syncronize API to base param

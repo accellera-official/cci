@@ -863,6 +863,40 @@ public:
     return true;
   }
   
+  /// Returns if the parameter has ever been used.
+  /**
+   * A parameter has been used if there is/was either a parameter object
+   * mapped to the initial value, or the initial value has ever been read.
+   *
+   * @param parname  Full hierarchical parameter name.
+   * @return If the parameter is or has been used.
+   */
+  bool is_used(const std::string &parname, std::string meta_data = "") {
+    GCNF_DUMP_N(name(), "is_used("<<parname.c_str()<<")");      
+    
+    // create Transaction an send it to config plugin
+    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    th->set_mService(CONFIG_SERVICE);
+    th->set_mCmd(CMD_PARAM_HAS_BEEN_ACCESSED);
+    th->set_mSpecifier(parname); // e.g. "TestIP1.TestParam1"
+    if (meta_data != "") {
+      GCNF_DUMP_N(name(), "Setting Meta Data with the value "<<meta_data.c_str());
+      th->set_mMetaData(meta_data);
+    }
+    
+    ControlPhase p(ControlPhase::CONTROL_REQUEST);
+    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
+    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    
+    if (th->get_mError() == 0) {
+      GCNF_DUMP_N(name(), "is_used: ... yes");
+    } else {
+      GCNF_DUMP_N(name(), "is_used: ... no");
+      return false;
+    }
+    return true;
+  }
+  
   /// If a parameter is explicit.
   /**
    * @param   parname   Hierarchical parameter name.

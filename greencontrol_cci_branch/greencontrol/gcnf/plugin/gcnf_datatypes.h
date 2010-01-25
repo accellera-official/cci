@@ -78,7 +78,9 @@ enum GCfgCommand {
   /// Command: remove parameter from plugin (API -> plugin)
   CMD_REMOVE_PARAM,
   /// Command: unregister all parameter callbacks for the specified observer module (API -> plugin)
-  CMD_UNREGISTER_PARAM_CALLBACKS
+  CMD_UNREGISTER_PARAM_CALLBACKS,
+  /// Command: check if a parameter has ever been accessed (meaning that there was/is an object or the implicit value has been read from at least once)
+  CMD_PARAM_HAS_BEEN_ACCESSED
 };
 
 #ifdef GC_VERBOSE
@@ -104,6 +106,10 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
       return std::string("CMD_NOTIFY_NEW_PARAM_OBSERVER");
     case CMD_REMOVE_PARAM:
       return std::string("CMD_REMOVE_PARAM");
+    case CMD_UNREGISTER_PARAM_CALLBACKS:
+      return std::string("CMD_UNREGISTER_PARAM_CALLBACKS");
+    case CMD_PARAM_HAS_BEEN_ACCESSED:
+      return std::string("CMD_PARAM_HAS_BEEN_ACCESSED");
     default:
       return std::string("unknown");
   }

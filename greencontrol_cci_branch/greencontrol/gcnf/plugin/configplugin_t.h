@@ -277,11 +277,19 @@ public:
       {
         GCNF_DUMP_N(name(), "CMD_EXISTS_PARAM: exists param");      
         if ( !m_param_db_port->existsParam(tr->get_mSpecifier())) {
-          tr->set_mError(1);
+          tr->set_mError(1); // this is a return=false
         }
         break;
       }
 
+      // ////////////   Command CMD_PARAM_HAS_BEEN_ACCESSED   ////////////////////// //
+    case CMD_PARAM_HAS_BEEN_ACCESSED:
+      {
+        GCNF_DUMP_N(name(), "CMD_PARAM_HAS_BEEN_ACCESSED: is/had been param used");      
+        SC_REPORT_ERROR(name(), "TODO: CMD_PARAM_HAS_BEEN_ACCESSED not yet supported!");
+        break;
+      }
+        
       // ////////////   Command CMD_GET_PARAM_LIST   /////////////////////////////// //
     case CMD_GET_PARAM_LIST:
       {

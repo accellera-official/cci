@@ -369,6 +369,14 @@ public:
    */
   void set_callback_behavior(void* observer, CallbackBehavior::CallbackBehavior behav) {
     {
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+      // Check the lock!
+      if (gs_param_base_T::m_locked) {                                                
+        GS_PARAM_ARRAY_DUMP("parameter is locked!");                                      
+        SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+        return;                                                               
+      }                                                                             
+#endif
       // check if already registered as an observer in any cb list and warn if not
       bool found = false;
       typename gs_param_base_T::callback_list_type::iterator observers_it;
@@ -560,6 +568,14 @@ protected:
       GS_PARAM_ARRAY_DUMP("  pre_write callback rejected remove member!");
       return false;
     }
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (gs_param_base_T::m_locked) {                                                
+      GS_PARAM_ARRAY_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                                                                             
+#endif
     if (m_MemberMap.erase( name ) > 0) {
       this->make_post_write_callbacks();
       return true;
@@ -590,6 +606,14 @@ protected:
       GS_PARAM_ARRAY_DUMP("  pre_write callback rejected add member!");
       return false;
     }
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (gs_param_base_T::m_locked) {                                                
+      GS_PARAM_ARRAY_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;
+    }                                                                             
+#endif
     // add member
     m_MemberMap.insert(   make_pair( new_member.getName(), &new_member )   );
     // register this as an observer (for callbacks and for destruction info)
@@ -613,6 +637,14 @@ protected:
       GS_PARAM_ARRAY_DUMP("delete_array: pre_write callback rejected delete member!");
       return false;
     }
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    // Check the lock!
+    if (gs_param_base_T::m_locked) {                                                
+      GS_PARAM_ARRAY_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;
+    }                                                                             
+#endif
     std::vector<gs_param_base*> pvec;
     // go through all members and store them to delete
     typename memberMapType::iterator it;

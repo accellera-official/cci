@@ -73,8 +73,17 @@ namespace cnf {
   # define USE_GETOPT
   #endif
   
+  // if to enable the lock feature (slows down write accesses to parameters a bit)
+  #define GCNF_ENABLE_GS_PARAM_LOCK
+  
   // ////////////////// END User defines ///////////////////////////////// //
 
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+  #define GCNF_ENABLE_GS_PARAM_LOCK_GUARD(arg) arg
+#else
+  #define GCNF_ENABLE_GS_PARAM_LOCK_GUARD(arg)
+#endif  
+  
 #define GCNF_SC_REPORT_PREFIX "/GreenSocs/GreenControl/GreenConfig"
 #define GCNF_SC_REPORTER(_postfix) (std::string(GCNF_SC_REPORT_PREFIX) + "/" + _postfix).c_str()
   

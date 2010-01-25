@@ -292,6 +292,14 @@ namespace cnf {
     
     /// Overloads gs_param_t<T>::deserialize in gs_param_t<T>
     const bool deserialize(val_type &target_val, const std::string& str) {
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+      // Check the lock!
+      if (gs_param_base::m_locked) {
+        GS_PARAM_DUMP("parameter is locked!");
+        SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+        return false;
+      }                                                                             
+#endif
       return static_deserialize(target_val, str);
     }
     

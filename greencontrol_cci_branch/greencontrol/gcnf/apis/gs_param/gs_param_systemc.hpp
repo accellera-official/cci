@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007-2009 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -58,6 +58,9 @@ class gs_param< sc_dt::sc_int_base >
   /// Typedef for the value.
   typedef sc_dt::sc_int_base val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -119,6 +122,9 @@ class gs_param< sc_dt::sc_int<W> >
   /// Typedef for the value.
   typedef sc_dt::sc_int<W> val_type;
 
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
 
@@ -179,6 +185,9 @@ class gs_param< sc_dt::sc_uint_base >
   /// Typedef for the value.
   typedef sc_dt::sc_uint_base val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -239,7 +248,11 @@ class gs_param< sc_dt::sc_uint<W> >
 {
   /// Typedef for the value.
   typedef sc_dt::sc_uint<W> val_type;
-  
+
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
+public:
   GS_PARAM_HEAD;
   
   // ///////////////////////
@@ -300,6 +313,9 @@ class gs_param< sc_dt::sc_signed >
   /// Typedef for the value.
   typedef sc_dt::sc_signed val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -361,6 +377,9 @@ class gs_param< sc_dt::sc_bigint<W> >
   /// Typedef for the value.
   typedef sc_dt::sc_bigint<W> val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -421,6 +440,9 @@ class gs_param< sc_dt::sc_unsigned >
   /// Typedef for the value.
   typedef sc_dt::sc_unsigned val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -482,6 +504,9 @@ class gs_param< sc_dt::sc_biguint<W> >
   /// Typedef for the value.
   typedef sc_dt::sc_biguint<W> val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -543,6 +568,9 @@ class gs_param<sc_dt::sc_bit>
   /// Typedef for the value.
   typedef sc_dt::sc_bit val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -646,6 +674,9 @@ class gs_param< sc_dt::sc_logic >
   /// Typedef for the value.
   typedef sc_dt::sc_logic val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -791,6 +822,9 @@ class gs_param< sc_core::sc_time >
   /// Typedef for the value.
   typedef sc_core::sc_time val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   GS_PARAM_HEAD;
   
@@ -902,6 +936,9 @@ class gs_param< sc_core::sc_event >
   /// Typedef for the value.
   typedef sc_core::sc_event val_type;
   
+  using gs_param_t<val_type>::m_locked;
+  using gs_param_t<val_type>::m_lock_pwd;
+
 public:
   //GS_PARAM_HEAD;
   //do not use macro: need special init()-function, because sc_event can not store any value
@@ -956,6 +993,13 @@ public:
   virtual ~gs_param() { gs_param_t<val_type>::destruct_gs_param(); }              
                                                                                   
   const bool deserialize(val_type &target_val, const std::string& str) {          
+#ifdef GCNF_ENABLE_GS_PARAM_LOCK
+    if (gs_param_base::m_locked) {                                                
+      GS_PARAM_DUMP("parameter is locked!");                                      
+      SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");
+      return false;                                                               
+    }                           
+#endif
     return static_deserialize(target_val, str);                                   
   }                                                                               
                                                                                   
@@ -971,6 +1015,15 @@ public:
   using gs_param_t<val_type>::setValue;                                           
   using gs_param_t<val_type>::getValue;
  
+  bool lock(void* pwd = NULL) {
+    SC_REPORT_WARNING(name(), "Lock not supported for sc_event parameter type!");
+    return false;
+  }
+  bool unlock(const void* pwd = NULL) {
+    SC_REPORT_WARNING(name(), "Lock not supported for sc_event parameter type!");
+    return true;
+  }
+    
   // eventthread is sensitive to intern_event; makes callback and notify my_value event
   void eventthread(void) {
       make_post_write_callbacks();

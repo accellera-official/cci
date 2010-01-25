@@ -66,7 +66,7 @@ namespace cci {
   
   /// Enumeration for cci_param template specifying the parameter type according the lock behavior
   enum param_mutable_type {
-    /// Muable Parameter
+    /// Mutable Parameter
     mutable_parameter = 0,
     /// Immutable Parameter
     immutable_parameter,
