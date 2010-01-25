@@ -1,6 +1,8 @@
 ChangeLog
 ---------
 
+- added locked status and checks to gs implementation
+- added is_used dummy to gs implementation
 - changed is_used semantic: also true if there WAS an object mapped to the NVP
 
 **** CCI-1.21-cci_api-130110.tar.gz ****

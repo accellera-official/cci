@@ -1,4 +1,5 @@
   * added parameter lock
+  * added CMD_PARAM_HAS_BEEN_ACCESSED GreenControl command 
 
   * added gs_param callback types (enum data types, gs_param_base support)
   * added new callback adapter and callback register macro
