@@ -1,6 +1,7 @@
 ChangeLog
 ---------
 
+- added is_invalid implementation, also for uninitialized params
 - added locked status and checks to gs implementation
 - added is_used dummy to gs implementation
 - changed is_used semantic: also true if there WAS an object mapped to the NVP

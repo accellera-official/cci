@@ -213,6 +213,18 @@ namespace cci {
     
     // //////////////// stuff /////////////////////////// //
     
+    bool lock(void* pwd = NULL)   { return gs::gs_param<T>::lock(pwd);    }
+    bool unlock(void* pwd = NULL) { return gs::gs_param<T>::unlock(pwd);  }
+    bool locked() const           { return gs::gs_param<T>::locked();     }
+    void set(const val_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
+
+    bool sync(const std::string &parname)    { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
+    bool sync(cci_base_param& par)           { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
+    bool unsync(const std::string &parname)  { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
+    bool unsync(cci_base_param& par)         { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
+    std::vector<std::string> get_sync_list() { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
+    
+    
     void set_documentation(const std::string& doc) {
       my_documentation = doc;
     }

@@ -62,7 +62,7 @@ bool cci::gs_cci_cnf_api::exists_param(const std::string &parname) {
   return m_gcnf_api->existsParam(parname);
 }
 
-bool is_used(const std::string &parname) {
+bool cci::gs_cci_cnf_api::is_used(const std::string &parname) {
   return m_gcnf_api->is_used(parname);
 }
 
