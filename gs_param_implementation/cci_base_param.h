@@ -267,7 +267,7 @@ namespace cci {
       internal_callback_forwarder* fw;
       while (succ) {
         succ = false;
-        for (int i = 0; i < fw_vec.size(); ++i) {
+        for (unsigned int i = 0; i < fw_vec.size(); ++i) {
           if (fw_vec[i]->adapt->get_observer() == observer) {
             fw = fw_vec[i];
             fw_vec.erase(fw_vec.begin()+i);
@@ -285,7 +285,7 @@ namespace cci {
     
     virtual bool unregister_param_callback(cci::callb_adapt_b* callb)  {
       internal_callback_forwarder* fw;
-      for (int i = 0; i < fw_vec.size(); ++i) {
+      for (unsigned int i = 0; i < fw_vec.size(); ++i) {
         if (fw_vec[i]->adapt == callb) {
           fw = fw_vec[i];
           fw_vec.erase(fw_vec.begin()+i);
@@ -307,14 +307,14 @@ namespace cci {
     
     std::vector<internal_callback_forwarder*> fw_vec;
     
+    gs::gs_param_base &m_gs_param_base;
+    
     bool m_is_default_value;
     bool m_is_invalid_value;
     bool m_is_initial_value;
     status_guard m_status_guard;
     
     std::string my_documentation;
-    
-    gs::gs_param_base &m_gs_param_base;
 
     bool m_init_called;
 

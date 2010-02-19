@@ -50,7 +50,7 @@
 
 #include <systemc>
 
-#include "../gs_implementation/json_spirit/json_spirit.h"
+#include "gs_param_implementation/json_spirit/json_spirit.h"
 
 
 namespace cci {
