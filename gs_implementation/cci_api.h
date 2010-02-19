@@ -32,31 +32,16 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_BASE_PARAM_H__
-#define __GS_CCI_BASE_PARAM_H__
+#ifndef __GS_CCI_H__
+#define __GS_CCI_H__
 
-#include "cci.h"
+
+#include <cci.h>
+
+#include "gs_cci_cnf_api.h"
 
 namespace cci {
-  
-  
-  class gs_cci_base_param
-  : public gs_cci_param<std::string>
-  {
-    
-  public:
-    
-    explicit gs_cci_base_param(const std::string& name,
-                               const std::string& value,
-                               const bool force_top_level_name = false) 
-    : gs_cci_param<std::string>(name, value, force_top_level_name)
-    {      
-    }
-    
-    virtual ~gs_cci_base_param() { }
-    
-  };
-  
+
   
 } // end namespace cci
 

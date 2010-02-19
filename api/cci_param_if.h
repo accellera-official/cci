@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -33,8 +33,8 @@
 
 
 
-#ifndef __CCI_PARAM_H__
-#define __CCI_PARAM_H__
+#ifndef __CCI_PARAM_IF_H__
+#define __CCI_PARAM_IF_H__
 
 
 #include <string>
@@ -47,16 +47,16 @@
 namespace cci {
 
   
-  /// The parameters class
+  /// Compiler Check Interface for the parameters class
   template<typename T, param_mutable_type TM>
-  class cci_param 
-  : public cci_base_param
+  class cci_param_if 
+  //: public cci_base_param_if
   {
-  protected:
+  /*protected:
     /// Typedef for the value.
     typedef T val_type;
     /// Typedef for the param itself.
-    typedef cci_param<T, TM> my_type;
+    typedef cci_param<T, TM> my_type;*/
 
   public:
 
@@ -88,7 +88,7 @@ namespace cci {
 */
     
     /// Destructor
-    virtual ~cci_param() { };
+    virtual ~cci_param_if() { };
     
 
     // //////////////////////////////////////////////////////////////////// //
@@ -101,10 +101,11 @@ namespace cci {
      * @param v  Parameter where the value should be read from.
      * @return   Pointer to this.
      */
-    virtual my_type& operator = (const my_type& v) { 
+    //virtual cci_param_if& operator = (const cci_param_if& v) = 0;
+    /* { 
       set(v.get());
       return *this;
-    }
+    }*/
     
     /// Set the value of this parameter.
     /**
@@ -112,19 +113,20 @@ namespace cci {
      * @param v  Value which has to be set.
      * @return   Pointer to this.
      */
-    virtual my_type& operator = (const val_type& v) { 
+    //virtual cci_param_if& operator = (const T& v) = 0;
+    /* { 
       set(v);
       return *this;
-    }
+    }*/
     
     /// Get the value of this parameter.
     /**
      * @exception cci::cci_report_types::get_param_failed Getting value failed
      * @return Value of the parameter.
      */
-    virtual operator const val_type& () const { 
+    virtual operator const T& () const = 0;/* { 
       return get(); 
-    }
+    }*/
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -136,14 +138,14 @@ namespace cci {
      * @exception cci::cci_report_types::set_param_failed Setting value failed
      * @param val  The new value for this parameter.
      */
-    virtual void set(const val_type& val) = 0;
+    virtual void set(const T& val) = 0;
 
     /// Returns the value of this parameter.
     /**
      * @exception cci::cci_report_types::get_param_failed Getting value failed
      * @return Value
      */
-    virtual const val_type& get() const = 0;
+    virtual const T& get() const = 0;
     
     /// Set the value of this parameter overriding a lock.
     /**
@@ -151,7 +153,7 @@ namespace cci {
      * @param val  The new value for this parameter.
      * @param lock_pwd  Password needed for the lock (if needed, else NULL)
      */
-    virtual void set(const val_type& val, void* lock_pwd) = 0;
+    virtual void set(const T& val, void* lock_pwd) = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -169,7 +171,7 @@ namespace cci {
      * @param val  Value that should be converted.
      * @return JSON string representation of the value.
      */
-    virtual std::string json_serialize(const val_type& val) const = 0;
+    virtual std::string json_serialize(const T& val) const = 0;
 
     /// Convertion JSON string --> value type
     /**
@@ -183,21 +185,21 @@ namespace cci {
      * @param  target_val  Reference to the value that should be set.
      * @param  str         JSON string that should be converted to a value.
      */
-    virtual void json_deserialize(val_type& target_val, const std::string& str) = 0;
+    virtual void json_deserialize(T& target_val, const std::string& str) = 0;
 
   };
     
-  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2) {
+  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2);/* {
     return p1.get() == p2.getValue();
-  }
+  }*/
 
-  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, T& p2) {
+  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, T& p2);/* {
     return p1.get() == p2;
-  }
+  }*/
 
-  template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2) {
+  template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2);/* {
     return p1 == p2.get();
-  }
+  }*/
   
   
 } // end namespace cci

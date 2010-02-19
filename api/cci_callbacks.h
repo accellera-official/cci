@@ -110,7 +110,7 @@ namespace cci {
      * @param _func  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, cci_base_param* _caller_param)
+    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param* _caller_param)
     : observer_ptr(_observer_ptr)
     , caller_param(_caller_param)
     , func(_func)

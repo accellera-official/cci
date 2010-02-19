@@ -35,7 +35,12 @@
 #ifndef __GS_CCI_VALUE_H__
 #define __GS_CCI_VALUE_H__
 
-#include <cci.h>
+
+#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#error "failed include check"
+#else
+#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#endif
 
 
 inline cci::cci_value::cci_value() 

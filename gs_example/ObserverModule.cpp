@@ -88,8 +88,7 @@ void ObserverModule::main_action() {
   // ********* show param list **************
   cout << "param list:" << endl;
   std::vector<std::string> vec = mApi->get_param_list();
-  std::vector<std::string>::iterator iter;
-  for (iter = vec.begin(); iter != vec.end(); iter++)
+  for (std::vector<std::string>::iterator iter = vec.begin(); iter != vec.end(); iter++)
     cout << *iter << " ";
   cout << endl;
   

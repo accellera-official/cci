@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -61,13 +61,13 @@ void ParamManipulateModule::main_action() {
   cci::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
   if (int_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::gs_cci_param<int> &int_param_p = *static_cast<cci::gs_cci_param<int>* >(int_param_ptr);
+  cci::cci_param<int> &int_param_p = *static_cast<cci::cci_param<int>* >(int_param_ptr);
 
   // get a parameter using the local config API
   cci::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
   if (uint_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::gs_cci_param<unsigned int> &uint_param_p = *static_cast<cci::gs_cci_param<unsigned int>* >(uint_param_ptr);
+  cci::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cci_param<unsigned int>* >(uint_param_ptr);
   
   // demonstrate json setting
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");

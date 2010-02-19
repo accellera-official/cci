@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -55,7 +55,7 @@ void ValueModule::main_action() {
   cci::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
   if (uint_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::gs_cci_param<unsigned int> &uint_param_p = *static_cast<cci::gs_cci_param<unsigned int>* >(uint_param_ptr);
+  cci::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cci_param<unsigned int>* >(uint_param_ptr);
 
   // demonstrate setting a parameter using a cci value
   DEMO_DUMP(name(), "Set parameter Owner.uint_param to value=555 using cci_value");
@@ -67,7 +67,7 @@ void ValueModule::main_action() {
   cci::cci_base_param *str_param_ptr = mApi->get_param("Owner.str_param");
   if (str_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::gs_cci_param<std::string> &str_param_p = *static_cast<cci::gs_cci_param<std::string>* >(str_param_ptr);
+  cci::cci_param<std::string> &str_param_p = *static_cast<cci::cci_param<std::string>* >(str_param_ptr);
   
   // show parameter's default value
   std::cout << std::endl << "str_param has value = " << str_param_p.json_serialize() << endl;

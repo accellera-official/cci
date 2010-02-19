@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,8 +32,16 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_PARAM_H__
-#define __GS_CCI_PARAM_H__
+#ifndef __CCI_PARAM_H__
+#define __CCI_PARAM_H__
+
+
+#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+  #error "failed include check"
+#else
+  #include "gs_cci_param_t.h"
+  #undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#endif
 
 
 #include <string>
@@ -42,26 +50,28 @@
 
 #include <systemc>
 
-#include "json_spirit/json_spirit.h"
+#include "../gs_implementation/json_spirit/json_spirit.h"
 
 
 namespace cci {
 
-  template<typename T>
-  class gs_cci_param 
-  : public gs_cci_param_t<T>
+  template<typename T, param_mutable_type TM = mutable_parameter>
+  class cci_param 
+  : public gs_cci_param_t <T, TM>
   {
   protected:
     /// Typedef for the value.
     typedef T val_type;
     /// Typedef for the param itself.
-    typedef gs_cci_param<val_type> my_type;
+    typedef cci_param<val_type, TM> my_type;
+    /// Typedef for base type
+    typedef gs_cci_param_t<val_type, TM> base_type;
 
   public:
     
-    using gs_cci_param_t<val_type>::return_string;
-    //using gs_cci_param_t<val_type>::my_value;
-    using gs_cci_param_t<val_type>::operator=;
+    using base_type::return_string;
+    //using base_type::my_value;
+    using base_type::operator=;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
@@ -69,27 +79,27 @@ namespace cci {
     // Explicit constructors to avoid implicit construction of parameters.
     
     /// Empty constructor. Name will be set in base
-    explicit gs_cci_param()                    : gs_cci_param_t<val_type>("", std::string(""), false, true, false) {  }
-    explicit gs_cci_param(const val_type& val) : gs_cci_param_t<val_type>("", val, false, true) {  }
+  explicit cci_param()                    : base_type("", std::string(""), false, true, false) { base_type::init(); }
+    explicit cci_param(const val_type& val) : base_type("", val, false, true) { base_type::init(); }
     
     /// Constructor with (local/hierarchical) name.
-    explicit gs_cci_param(const std::string& nam) : gs_cci_param_t<val_type>(nam, std::string(""), false, true, false) {  }
-    explicit gs_cci_param(const char* nam       ) : gs_cci_param_t<val_type>(nam, std::string(""), false, true, false) {  }
+    explicit cci_param(const std::string& nam) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
+    explicit cci_param(const char* nam       ) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
     
     /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, val, force_top_level_name, true, true) {  }
-    explicit gs_cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, std::string(val), force_top_level_name, true, true) {  }
-    explicit gs_cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, std::string(val), force_top_level_name, true, true) {  }
-    explicit gs_cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, val, force_top_level_name, true, true) {  }
+    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
+    explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
+    explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
+    explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
     
     /// Constructor with (local/hierarchical) name and initial value.
-    explicit gs_cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false) : gs_cci_param_t<val_type>(nam, val, force_top_level_name, true)   {  }
-    explicit gs_cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false) : gs_cci_param_t<val_type>(nam, val, force_top_level_name, true)   {  }
+    explicit cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false) : base_type(nam, val, force_top_level_name, true)   { base_type::init(); }
+    explicit cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false) : base_type(nam, val, force_top_level_name, true)   { base_type::init(); }
     
     // Constructors with register_at_db bool
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : gs_cci_param_t<val_type>(nam, val, force_top_level_name, register_at_db, true) {  }
+    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
 
-    ~gs_cci_param() {
+    ~cci_param() {
     }
     
     /*my_type& operator +=  (val_type);
@@ -115,25 +125,25 @@ namespace cci {
     // //////////////// JSON (DE)SERIALIZE /////////////////////////// //
 
     const std::string& json_serialize() const {
-      return_string = json_serialize(gs_cci_param_t<val_type>::get());
+      return_string = json_serialize(base_type::get());
       return return_string;
     }
     
     void json_deserialize(const std::string& str) {
       val_type t;
       json_deserialize(t, str);
-      gs_cci_param_t<val_type>::set(t);
+      base_type::set(t);
     }
 
     std::string json_serialize(const val_type& val) const {
       // TODO: this is currently not a JSON but a GreenConfig specific string
       // TODO: throw exception on error
-      return gs::gs_param<val_type>::convertValueToString(val);
+      return base_type::m_gs_param.convertValueToString(val);
     }
 
     void json_deserialize(val_type& target_val, const std::string& str) {
       // TODO: this is currently not a JSON but a GreenConfig specific string
-      if (!gs::gs_param<val_type>::deserialize(target_val, str))
+      if (!base_type::m_gs_param.deserialize(target_val, str))
         CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "String conversion failed.");
     }
 
@@ -155,21 +165,23 @@ namespace cci {
       
   
 
-  template<>
-  class gs_cci_param<std::string>
-  : public gs_cci_param_t<std::string>
+  template<param_mutable_type TM>
+  class cci_param<std::string, TM>
+  : public gs_cci_param_t<std::string, TM>
   {
   protected:
     /// Typedef for the value.
     typedef std::string val_type;
     /// Typedef for the param itself.
-    typedef gs_cci_param<val_type> my_type;
+    typedef cci_param<val_type, TM> my_type;
+    /// Typedef for base type
+    typedef gs_cci_param_t<val_type, TM> base_type;
     
   public:
     
-    using gs_cci_param_t<val_type>::return_string;
-    //using gs_cci_param_t<val_type>::my_value;
-    using gs_cci_param_t<val_type>::operator=;
+    using base_type::return_string;
+    //using base_type::my_value;
+    using base_type::operator=;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
@@ -177,24 +189,24 @@ namespace cci {
     // Explicit constructors to avoid implicit construction of parameters.
 
     /// Empty constructor. Name will be set in base
-    explicit gs_cci_param()                    : gs_cci_param_t<val_type>("", std::string(""), false, true, false) {  }
+    explicit cci_param()                    : base_type("", std::string(""), false, true, false) { base_type::init(); }
     
     /// Constructor with (local/hierarchical) name.
-    explicit gs_cci_param(const std::string& nam) : gs_cci_param_t<val_type>(nam, std::string(""), false, true, false) {  }
-    explicit gs_cci_param(const char* nam       ) : gs_cci_param_t<val_type>(nam, std::string(""), false, true, false) {  }
+    explicit cci_param(const std::string& nam) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
+    explicit cci_param(const char* nam       ) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
     
     /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, val, force_top_level_name, true, true) {  }
-    explicit gs_cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, std::string(val), force_top_level_name, true, true) {  }
-    explicit gs_cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, std::string(val), force_top_level_name, true, true) {  }
-    explicit gs_cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : gs_cci_param_t<val_type>(nam, val, force_top_level_name, true, true) {  }
+    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
+    explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
+    explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
+    explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
     
     /// Constructor with (local/hierarchical) name and initial value.
     
     // Constructors with register_at_db bool
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : gs_cci_param_t<val_type>(nam, val, force_top_level_name, register_at_db, true) {  }
+    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
     
-    ~gs_cci_param() {
+    ~cci_param() {
     }
     
     /*my_type& operator +=  (val_type);
@@ -218,22 +230,22 @@ namespace cci {
      val_type operator ++ (int); // postfix */ 
     
     const std::string& json_serialize() const {
-      return_string = json_serialize(gs_cci_param_t<val_type>::get());
+      return_string = json_serialize(base_type::get());
       return return_string;
     }
     
     void json_deserialize(const std::string& str) {
       val_type t;
       json_deserialize(t, str);
-      gs_cci_param_t<val_type>::set(t);
+      base_type::set(t);
     }
     
     std::string json_serialize(const val_type& val) const {
-      return gs::gs_param<val_type>::convertValueToString(val);
+      return base_type::m_gs_param.convertValueToString(val);
     }
     
     void json_deserialize(val_type& target_val, const std::string& str) {
-      gs::gs_param<val_type>::deserialize(target_val, str);
+      base_type::m_gs_param.deserialize(target_val, str);
     }    
     
     void set_value(const cci_value& val) {
@@ -262,7 +274,7 @@ namespace cci {
     }
     
     cci_value get_value() {
-      cci_value val(get());
+      cci_value val(base_type::get());
       return val;
     }
     

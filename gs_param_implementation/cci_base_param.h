@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,9 +32,14 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_PARAM_BASE_H__
-#define __GS_CCI_PARAM_BASE_H__
+#ifndef __GS_CCI_BASE_PARAM_H__
+#define __GS_CCI_BASE_PARAM_H__
 
+#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#error "failed include check"
+#else
+#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#endif
 
 #include <string>
 #include <iostream>
@@ -51,16 +56,12 @@ namespace cci {
   using std::cout;
   using std::endl;
   
-  template <typename T>
-  class gs_cci_param_t
-  : public cci_param<T, cci::mutable_parameter>
-  , public gs::gs_param<T>
+  class cci_base_param
+  : public cci_base_param_if
   {
   protected:
-    /// Typedef for the value.
-    typedef T val_type;
     /// Typedef for the param itself.
-    typedef gs_cci_param_t<T> my_type;
+    typedef cci_base_param my_type;
 
     /// Callback forwarder class
     /**
@@ -148,112 +149,83 @@ namespace cci {
     
   public:
 
-    using cci_param<T,cci::mutable_parameter>::operator=;
-
-    explicit gs_cci_param_t(const std::string& n
-                            , const std::string &val
+    explicit cci_base_param(gs::gs_param_base& gs_param_base
                             , bool force_top_level_name /*= false*/
                             , bool register_at_db /*= true*/
                             , bool has_default_value ) // if there is a default value
-    : gs::gs_param<val_type>(n, val, NULL, force_top_level_name, register_at_db) 
+    : m_gs_param_base(gs_param_base) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
     , m_is_initial_value(false)
     , m_status_guard(*this)
+    , m_init_called(false)
     {
-      cci_param<T,cci::mutable_parameter>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+    }
+
+  protected:
+    void init() {
+      bool m_init_called = true;
+      register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+    }
+
+  public:
+    virtual ~cci_base_param() {
+      assert(m_init_called && "If this happens, the construction did not call the base param init function!");
     }
     
-    explicit gs_cci_param_t(const std::string& n 
-                            , const val_type &val
-                            , bool force_top_level_name /*= false*/
-                            , bool register_at_db /*= true*/ ) 
-    : gs::gs_param<val_type>((const std::string&)n, val, force_top_level_name) 
-    , m_is_default_value(true)
-    , m_is_invalid_value(false)
-    , m_is_initial_value(false)
-    , m_status_guard(*this)
-    {
-      assert(register_at_db && "Not supported with gs_param?");
-      cci_param<T,cci::mutable_parameter>::register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
-      // This is just a test
-      cci_cnf_api* m_cci_api = get_cnf_api_instance(/*TODO*/NULL); 
-      /*try {
-       m_cci_api->add_param(this); // this fails because the param has already been added by the gs_param - which is ok! Just a test if calling the cci API's add works
-       } catch (cci_exception_add_param &e) {
-       std::cout << "CAUGHT EXCEPTION: " << e.what() << std::endl;
-       }*/
+    virtual const basic_param_type get_basic_type() const { return partype_not_available; }
+
+    virtual const std::string& get_name() const {
+      return m_gs_param_base.getName();
     }
     
-    ~gs_cci_param_t() {
-    }
+    // ///////   Set and Get with JSON String Representation   //////////// //
+
+    virtual void json_deserialize(const std::string& json_string) = 0;
     
-    const std::string& get_name() const {
-      return gs::gs_param<T>::getName();
-    }
-   
-    void set(const val_type& val) {
-      if (!gs::gs_param<T>::setValue(val))
-        CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "Bad value.");
-    }
-    
-    const val_type& get() const {
-      return gs::gs_param<T>::getValue();
-    }
-    
-    /*get_param_error_type get_string(std::string& retvalue) {
-      retvalue = gs::gs_param<T>::getString();
-      return get_param_success;
-    }*/
-    
-    /*void set_string(const std::string& value) {
-      if (!gs::gs_param<T>::setString(value))
-        CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "set string value failed"); // don't know why here
-    }*/
+    virtual const std::string& json_serialize() const = 0;
     
     // //////////////// stuff /////////////////////////// //
     
-    bool lock(void* pwd = NULL)   { return gs::gs_param<T>::lock(pwd);    }
-    bool unlock(void* pwd = NULL) { return gs::gs_param<T>::unlock(pwd);  }
-    bool locked() const           { return gs::gs_param<T>::locked();     }
-    void set(const val_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
+    virtual bool lock(void* pwd = NULL)   { return m_gs_param_base.lock(pwd);    }
+    virtual bool unlock(void* pwd = NULL) { return m_gs_param_base.unlock(pwd);  }
+    virtual bool locked() const           { return m_gs_param_base.locked();     }
+    //void set(const val_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
 
-    bool sync(const std::string &parname)    { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
-    bool sync(cci_base_param& par)           { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
-    bool unsync(const std::string &parname)  { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
-    bool unsync(cci_base_param& par)         { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
-    std::vector<std::string> get_sync_list() { SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "sync not implemented"); }
-    
-    
-    void set_documentation(const std::string& doc) {
+    virtual void set_documentation(const std::string& doc) {
       my_documentation = doc;
     }
     
-    std::string get_documentation() const {
+    virtual std::string get_documentation() const {
       return my_documentation;
     }
     
-    bool is_default_value() {
+    virtual bool is_default_value() {
       return m_is_default_value;
     }
     
-    bool is_initial_value() {
+    virtual bool is_initial_value() {
       // TODO: should be located where the init value is applied in the API (if object is already existing) and during param instantiation when database initial value is applied
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
       return m_is_initial_value;
     }
     
-    bool is_invalid_value() {
+    virtual bool is_invalid_value() {
       return m_is_invalid_value;
     }
     
-    void set_invalid_value() {
+    virtual void set_invalid_value() {
       m_is_invalid_value = true;
     }
     
     // /////////////////// CALLBACKS ///////////////////// //
+
+    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {
+      // call the pure virtual function performing the registration
+      return register_callback(type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
+    }
     
-    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
+    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
       gs::cnf::callback_type cb = gs::cnf::no_callback;
       switch(type) {
         case pre_read:
@@ -277,19 +249,19 @@ namespace cci {
         internal_callback_forwarder *fw = new internal_callback_forwarder(callb, cb, *this);
         fw_vec.push_back(fw);
         fw->calling_gs_adapter = 
-            gs::gs_param<T>::registerParamCallback( 
+            m_gs_param_base.registerParamCallback( 
                                                boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
                                                                                                 new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
                                                                                                 (fw, 
                                                                                                  &internal_callback_forwarder::call, 
                                                                                                  callb->get_observer(), 
-                                                                                                 const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(this)))
+                                                                                                 const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(&m_gs_param_base)))
                                                                                                 ), fw->get_type() );
       }
       return callb;
     }
     
-    void unregister_all_callbacks(void* observer) {
+    virtual void unregister_all_callbacks(void* observer) {
       bool succ = true;
       internal_callback_forwarder* fw;
       while (succ) {
@@ -306,11 +278,11 @@ namespace cci {
       }
     }
     
-    bool unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b> callb)  {
+    virtual bool unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b> callb)  {
       return unregister_param_callback(callb.get());
     }
     
-    bool unregister_param_callback(cci::callb_adapt_b* callb)  {
+    virtual bool unregister_param_callback(cci::callb_adapt_b* callb)  {
       internal_callback_forwarder* fw;
       for (int i = 0; i < fw_vec.size(); ++i) {
         if (fw_vec[i]->adapt == callb) {
@@ -323,7 +295,7 @@ namespace cci {
       return false;
     }
     
-    bool has_callbacks() {
+    virtual bool has_callbacks() {
       return (fw_vec.size() > 0);
     }
     
@@ -341,6 +313,10 @@ namespace cci {
     
     std::string my_documentation;
     
+    gs::gs_param_base &m_gs_param_base;
+
+    bool m_init_called;
+
   };
 
 

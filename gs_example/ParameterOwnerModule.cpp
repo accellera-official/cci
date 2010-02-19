@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -74,12 +74,16 @@ void ParameterOwnerModule::main_action() {
 
   // create and access a local parameter
   cout << name() << ": create param ";
-  cci::gs_cci_param<unsigned char> uchar_param("uchar_param");
+  cci::cci_param<unsigned char> uchar_param("uchar_param");
   cout << uchar_param.get_name() << endl;
   cout << name() << ": Set the new parameter uchar_param" << endl;
   uchar_param = 'u';
   cout << endl;
 
+  // copy operator
+  cout << name() << ": copy ";
+  uint_param = uint_param2;
+  
   wait(10, SC_SEC);
   
   // show a parameter list

@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,7 +32,7 @@
 // ENDLICENSETEXT
 
 
-#include "gs_cci_cnf_api.h"
+#include "cci_api.h"
 
 cci::gs_cci_cnf_api::gs_cci_cnf_api() 
 : m_gcnf_api(NULL) { 

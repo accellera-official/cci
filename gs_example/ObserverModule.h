@@ -39,7 +39,8 @@
 
 #include "ex_globals.h"
 #include "cci.h"
-#include "gs_cci.h"
+#include "cci_params.h"
+#include "cci_api.h"
 
 
 /// Module which registers for parameter changes

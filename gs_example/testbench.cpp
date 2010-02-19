@@ -34,12 +34,11 @@
 
 #include <systemc>
 #include <cci.h>
-#include "greencontrol/all.h"
+#include "cci_api.h"
 
 #include "ParameterOwnerModule.h"
 #include "ObserverModule.h"
 #include "ParamManipulateModule.h"
-#include "BaseParamModule.h"
 #include "ValueModule.h"
 
 /// Testbench for the CCI example application which uses the GreenSocs demo implemenation
@@ -48,12 +47,10 @@ int sc_main(int argc, char *argv[]) {
   sc_core::sc_report_handler::set_actions("/OSCI/CCI/set_param_failed",  sc_core::SC_DISPLAY);
   sc_core::sc_report_handler::set_actions("/OSCI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
 
-  GS_INIT_STANDARD_GREENCONTROL; // note this is optional
 
   ParamManipulateModule manipulator("Manipulator");
   ParameterOwnerModule  owner      ("Owner");
   ObserverModule        observer   ("Observer");
-  BaseParamModule       baseParTest("BaseParTest");
   ValueModule           valueMod   ("ValueMod");
 
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;

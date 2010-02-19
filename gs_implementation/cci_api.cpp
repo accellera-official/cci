@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,36 +32,19 @@
 // ENDLICENSETEXT
 
 
-#include <systemc>
 #include <cci.h>
+#include "gs_cci_cnf_api.h"
+#include "cci_api.h" // TODO: this is a bad dependency here!
 
-#ifndef __BASEPARAMMODULE_H__
-#define __BASEPARAMMODULE_H__
-
-
-#include <systemc>
-#include "ex_globals.h"
-#include "cci.h"
-#include "gs_cci.h"
+namespace cci {
 
 
-/// Module which demonstrates (untyped) base parameters
-class BaseParamModule
-: public sc_core::sc_module
-{
-public:
+  cci_cnf_api* singleton_api = NULL;
+
+  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module*) {
+    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
+    return singleton_api;
+  }
+
   
-  SC_HAS_PROCESS(BaseParamModule);
-  BaseParamModule(sc_core::sc_module_name name);
-  
-  /// Main action to make tests with parameters.
-  void main_action();
-  
-protected:
-  /// Pointer the the module's configuration API
-  cci::cci_cnf_api* mApi;
-  
-};
-
-
-#endif
+} // end namespace cci

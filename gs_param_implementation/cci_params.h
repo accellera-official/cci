@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,23 +32,26 @@
 // ENDLICENSETEXT
 
 
-#include "BaseParamModule.h"
-#include <systemc.h>
+#ifndef __CCI_PARAMS_H__
+#define __CCI_PARAMS_H__
 
-BaseParamModule::BaseParamModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-{ 
-  // get the config API which is responsible for this module
-  mApi = cci::get_cnf_api_instance(this);
-  SC_THREAD(main_action);
-}
+#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#endif
+#include "cci_base_param.h"
+#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 
+#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#endif
+#include "cci_param.h"
+#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 
-void BaseParamModule::main_action() {
-  
-  wait(100, SC_NS);
+#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+#endif
+#include "cci_value.h"
+#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 
-  // create a (local) base parameter
-  cci::gs_cci_base_param my_b_par("b_par", "this is a base param value stored by the base param");
-  
-}
+#endif
+

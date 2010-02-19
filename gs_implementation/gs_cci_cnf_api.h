@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -37,10 +37,12 @@
 
 
 #include <cci.h>
+#include "cci_params.h"
 #include "greencontrol/config.h"
 
 namespace cci {
 
+  class cci_base_param;
 
   class gs_cci_cnf_api
   : public cci_cnf_api
