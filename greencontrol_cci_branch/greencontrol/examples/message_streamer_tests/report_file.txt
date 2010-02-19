@@ -1,4 +1,4 @@
-Simulation time: Wed Oct 28 10:15:48 2009
+Simulation time: Tue Jan 19 14:57:44 2010
 
 dbg_msg_L4: testbench_message_streamer_tests.cpp:109: @20 ns /2: (ModuleA): Hallo L4 after 20ns
 new line

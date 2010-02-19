@@ -1,4 +1,4 @@
-Simulation time: Wed Oct 28 10:15:30 2009
+Simulation time: Tue Jan 19 14:57:26 2010
 
 testbench_message_streamer.cpp:92: @20 ns /2: (ModuleA): Hallo L4 after 20ns
 new line

@@ -1,4 +1,4 @@
-Simulation time: Wed Oct 28 10:15:57 2009
+Simulation time: Tue Jan 19 14:57:53 2010
 
 dbg_msg_L2: testb_rep_msg_lua.cpp:92: @10 ns /1: (ModuleA): Hallo L2 after 10ns
 dbg_msg_L9: testb_rep_msg_lua.cpp:94: @10 ns /1: (ModuleA): Hallo L9 after 10ns

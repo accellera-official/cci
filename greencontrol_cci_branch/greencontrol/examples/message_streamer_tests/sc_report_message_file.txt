@@ -1,4 +1,4 @@
-Simulation time: Wed Oct 28 10:15:48 2009
+Simulation time: Tue Jan 19 14:57:44 2010
 
 sys_msg_INFO: testbench_message_streamer_tests.cpp:111: @20 ns /2: (ModuleA): This is an sc_info!
 sys_msg_WARNING: testbench_message_streamer_tests.cpp:112: @20 ns /2: (ModuleA): This is an sc_warning!
