@@ -87,6 +87,8 @@ namespace cci {
   protected:
   
     gs::cnf::cnf_api* m_gcnf_api;
+    
+    std::map<std::string, cci_base_param*> m_mirrored_registry;
 
   };
 

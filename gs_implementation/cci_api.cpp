@@ -33,8 +33,7 @@
 
 
 #include <cci.h>
-#include "gs_cci_cnf_api.h"
-#include "cci_api.h" // TODO: this is a bad dependency here!
+#include "cci_api.h"
 
 namespace cci {
 

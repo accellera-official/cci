@@ -84,7 +84,6 @@ namespace cci {
       }
       // This gets called by the base gs_param
       gs::cnf::callback_return_type call(gs::gs_param_base& par, gs::cnf::callback_type cbtype) {
-        assert (param == dynamic_cast<cci_base_param*>(&par) && "Got a wrong parameter type");
         gs::cnf::callback_return_type returned_gs_message = gs::cnf::return_nothing;
         cci::callback_return_type returned_cci_message = return_nothing;
         switch(cbtype) {
@@ -164,12 +163,14 @@ namespace cci {
 
   protected:
     void init() {
-      bool m_init_called = true;
+      m_init_called = true;
+      cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
       register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
     virtual ~cci_base_param() {
+      cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");
     }
     

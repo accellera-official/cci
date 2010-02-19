@@ -55,7 +55,10 @@ const std::string cci::gs_cci_cnf_api::get_json_string(const std::string &parnam
 }
 
 cci::cci_base_param* cci::gs_cci_cnf_api::get_param(const std::string &parname) {
-  return dynamic_cast<cci::cci_base_param*> (m_gcnf_api->getPar(parname));
+  std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
+  if( iter != m_mirrored_registry.end() )
+    return iter->second;
+  else return NULL;
 }
 
 bool cci::gs_cci_cnf_api::exists_param(const std::string &parname) {
@@ -94,19 +97,11 @@ bool cci::gs_cci_cnf_api::has_callbacks(const std::string& parname) {
 }
 
 void cci::gs_cci_cnf_api::add_param(cci_base_param* par) {
-  gs::gs_param_base *p = dynamic_cast<gs::gs_param_base*> (par);
-  if (!p) {
-    CCI_THROW_ERROR(cci_report_types::type().add_param_failed, "Adding parameter failed: Cannot cast given cci param to gs param");
-  }
-  if (!m_gcnf_api->addPar(p)) {
-    CCI_THROW_ERROR(cci_report_types::type().add_param_failed, "Adding parameter failed");
-  }
+  m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par));
 }
 
 void cci::gs_cci_cnf_api::remove_param(cci_base_param* par) {
-  gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
-  if ( !m_gcnf_api->removePar(p) )
-    CCI_THROW_ERROR(cci_report_types::type().remove_param_failed, "Removing parameter failed");
+  m_mirrored_registry.erase(par->get_name());
 }
 
 
