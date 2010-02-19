@@ -78,7 +78,7 @@ namespace cci {
     
     void remove_param(cci_base_param* par);
     
-    void set_alias(std::string& orig_parname, std::string& alias_parname);
+    //void set_alias(std::string& orig_parname, std::string& alias_parname);
         
     const std::vector<std::string> get_param_list(const std::string& pattern);
     

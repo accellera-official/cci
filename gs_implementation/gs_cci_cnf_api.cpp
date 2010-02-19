@@ -104,12 +104,6 @@ void cci::gs_cci_cnf_api::remove_param(cci_base_param* par) {
   m_mirrored_registry.erase(par->get_name());
 }
 
-
-void cci::gs_cci_cnf_api::set_alias(std::string& orig_parname, std::string& alias_parname) {
-  // TODO
-  SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-}
-    
 const std::vector<std::string> cci::gs_cci_cnf_api::get_param_list(const std::string& pattern) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "pattern limited to GreenConfig capabilities");
   return m_gcnf_api->getParamList(pattern);

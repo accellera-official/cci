@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -297,6 +297,7 @@ namespace cci {
     virtual const std::vector<cci_base_param*> get_params(const std::string& pattern = "") = 0;
     
     
+    // Dropped due to conf call discussion in February
     /// Set an alias to a parameter name
     /**
      * TODO: Guideline for other CCI functions, e.g.:
@@ -306,7 +307,7 @@ namespace cci {
      * @param orig_parname    Full hierarchical name of the original parameter (or another alias).
      * @param alias_parname   Full hierarchical (full user chosen) alias name.
      */
-    virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
+    //virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
         
     /// Convenience function to get a typed parameter pointer.
     /**
