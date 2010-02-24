@@ -1,8 +1,9 @@
 ## set some directories 
 GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
-GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol
+GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore
 CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
-GS_CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_implementation
+GS_CCI_PARAM_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
+GS_CCI_API_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
 BOOST = /cad/tools/boost
 SYSTEMC = /cad/tools/systemc
 
@@ -24,7 +25,7 @@ DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 LDFLAGS =
 
 INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
-         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_DIR)
+         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_PARAM_DIR) -I$(GS_CCI_API_DIR)
 LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH)
 
 ## here may be needed to write -lscv at the beginning - which also may cause problems!

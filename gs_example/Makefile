@@ -15,8 +15,8 @@ SRCS = testbench.cpp \
        ObserverModule.cpp \
        BaseParamModule.cpp \
        ValueModule.cpp \
-       ../gs_implementation/gs_cci.cpp \
-       ../gs_implementation/gs_cci_cnf_api.cpp 
+       ../gs_param_implementation/gs_cci.cpp \
+       ../gs_param_implementation/gs_cci_cnf_api.cpp 
 
 OBJS = testbench.o \
        ParameterOwnerModule.o \

@@ -18,9 +18,9 @@ GreenSocs interface proposal.
 Contained Files:
 ----------------
 
-
 ./
 doc/   :  Some further documentation
 api/   :  CCI interface files, only include cci.h in user code
-gs_implementation/  :  GreenSocs implementation of CCI interfaces
+gs_api_implementation/    :  GreenSocs Config API implementation
+gs_param_implementation/  :  GreenSocs parameter implementation
 gs_example/         :  Example using the GreenSocs implementation

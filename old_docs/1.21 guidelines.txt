@@ -27,7 +27,7 @@ It is forward declared in cci.h
 
  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
 
-Code for tool vendor:
+Code for tool:
 
 namespace cci {
   /**
@@ -90,22 +90,13 @@ Examples:
 
 ----------------------------------------------------------------
 
-HEADER FILES
-
-OSCI header files are provided by the include file cci.h
-
-Parameter headers shall be provided by the (parameter) vendor (e.g. OSCI) in 
-the include file cci_params.h
-
-API headers shall be provided by the (API) vendor in the include file
-cci_api.h
-
-----------------------------------------------------------------
-
 PARAMETER CONSTRUCTORS
 
-For parameters, a parameter vendor shall provide the constructors
-listed in cci_param_if.h
+The parameter vendor shall provide cci_base_param constructors as listed
+in the file cci_base_param.h
+
+For typed parameters a parameter vendor shall provide at least
+the constructors listed in cci_param.h
 
 
 ----------------------------------------------------------------

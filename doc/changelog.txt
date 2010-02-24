@@ -1,6 +1,9 @@
 ChangeLog
 ---------
 
+**** CCI-1.3-cci_api-240210.tar.gz ****
+
+- changed param hierarchy to be defined by the document and directly implemented thus being used directly by user (without pure virtual interface) (interfaces are just for compile checks)
 - added is_invalid implementation, also for uninitialized params
 - added locked status and checks to gs implementation
 - added is_used dummy to gs implementation
