@@ -99,9 +99,25 @@ namespace cci {
 //#include "cci_param.h"
 #include "cci_cnf_api.h"
 
-// only for compiler checks!
 #include "cci_base_param_if.h"
+#include "cci_base_param.h"
+
 #include "cci_param_if.h"
+
+namespace cci_impl {
+  
+  template<class T, cci::param_mutable_type TM>
+  cci::cci_param_if<T, TM>* CreateParam(const char* nam, T& val, bool force_top_level_name);
+
+  template<class T, cci::param_mutable_type TM>
+  cci::cci_param_if<T, TM>* CreateParam(const char* nam, bool force_top_level_name);
+
+  template<class T, cci::param_mutable_type TM>
+  void DestroyParam(cci::cci_param_if<T, TM>* param);
+
+} // end namespace cci_impl
+
+#include "cci_param.h"
 
 #include "cci_broker_module.h"
 

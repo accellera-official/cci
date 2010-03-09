@@ -189,15 +189,18 @@ namespace cci {
 
   };
     
-  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2);/* {
+  //template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2);
+  /* {
     return p1.get() == p2.getValue();
   }*/
 
-  template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, T& p2);/* {
+  //template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, T& p2);
+  /* {
     return p1.get() == p2;
   }*/
 
-  template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2);/* {
+  //template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2);
+  /* {
     return p1 == p2.get();
   }*/
   
