@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,20 +32,27 @@
 // ENDLICENSETEXT
 
 
+#include <systemc>
 #include <cci.h>
 #include "cci_api.h"
 
-namespace cci {
+#include "ModuleA.h"
+#include "ObserverModule.h"
+
+/// Testbench for the CCI example application which uses the GreenSocs demo implemenation
+int sc_main(int argc, char *argv[]) {
+  //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
+  //sc_core::sc_report_handler::set_actions("/OSCI/CCI/set_param_failed",  sc_core::SC_DISPLAY);
+  //sc_core::sc_report_handler::set_actions("/OSCI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
 
 
-  cci_cnf_api* singleton_api = NULL;
+  ModuleA a("ModuleA");
+  ObserverModule        observer   ("Observer");
 
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
-    CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
-    return singleton_api;
-  }
-
+  std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
+  sc_core::sc_start(); 
+  std::cout << std::endl << "------ sc_start() returned -------" << std::endl << std::endl;
   
-} // end namespace cci
+  return EXIT_SUCCESS; 
+  
+}

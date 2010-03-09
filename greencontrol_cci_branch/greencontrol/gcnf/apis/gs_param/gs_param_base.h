@@ -135,6 +135,7 @@ public:
     // Set the api pointer
     sc_core::sc_module *mod = get_parent_sc_module(this);
     m_api = GCnf_Api::getApiInstance(mod);
+    assert(m_api != NULL);
 
     if (isHierarchicalParameterName(n) && parent_array != NULL) {
       SC_REPORT_FATAL(name(), "Do not use hierarchical parameter names for Extended Parameter Array members!");
@@ -200,6 +201,7 @@ public:
 
     make_destroy_param_callbacks();
 
+    CCI_CNF_DUMP("Destruct broker"<< typeid(m_api).name()<<" 0x"<<(std::hex)<<m_api<<(std::dec));
     // remove this from database
     if (m_register_at_db)
       m_api->removePar(this);

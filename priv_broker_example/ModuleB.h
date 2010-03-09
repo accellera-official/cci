@@ -32,20 +32,53 @@
 // ENDLICENSETEXT
 
 
-#include <cci.h>
+#ifndef __MODULEB_H__
+#define __MODULEB_H__
+
+
+#include <systemc>
+#include "ex_globals.h"
+#include "cci.h"
+#include "cci_params.h"
 #include "cci_api.h"
 
-namespace cci {
 
-
-  cci_cnf_api* singleton_api = NULL;
-
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
-    CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
-    return singleton_api;
-  }
-
+/// Module which owns some cci parameters.
+class ModuleB
+: public sc_core::sc_module
+{
   
-} // end namespace cci
+public:
+  
+  SC_HAS_PROCESS(ModuleB);
+	
+  /// Constructor
+  ModuleB(sc_core::sc_module_name name)
+  : sc_core::sc_module(name)
+  , int_param ("int_param", 50 )
+  , uint_param("uint_param", 12000)
+  , uint_param2("uint_param2", 12)
+  , str_param ("str_param", "This is a test string.")
+  , bool_param("bool_param") // no default value
+  { 
+    SC_THREAD(main_action);
+  }
+  
+  /// Main action to make tests with parameters.
+  void main_action();
+  
+  /// Example parameter.
+  cci::cci_param<int>             int_param;
+  /// Example parameter.
+  cci::cci_param<unsigned int>    uint_param;
+  /// Example parameter.
+  cci::cci_param<unsigned int>    uint_param2;
+  /// Example parameter.
+  cci::cci_param<std::string>     str_param;
+  /// Example parameter.
+  cci::cci_param<bool>            bool_param;
+  
+};
+
+
+#endif

@@ -32,44 +32,67 @@
 // ENDLICENSETEXT
 
 
-#ifndef __OBSERVERMODULE_H__
-#define __OBSERVERMODULE_H__
+#ifndef __MODULEA_H__
+#define __MODULEA_H__
+
 
 #include <systemc>
-
 #include "ex_globals.h"
 #include "cci.h"
 #include "cci_params.h"
 #include "cci_api.h"
 
+#include "gs_cci_cnf_private_broker.h"
 
-/// Module which registers for parameter changes
-class ObserverModule
+#include "ModuleB.h"
+
+/// Module which owns some cci parameters.
+class ModuleA
 : public sc_core::sc_module
+, public cci::cci_broker_module
 {
-public:
-
-  SC_HAS_PROCESS(ObserverModule);
-  ObserverModule(sc_core::sc_module_name name);
   
-  ~ObserverModule();
+public:
+  
+  SC_HAS_PROCESS(ModuleA);
+	
+  /// Constructor
+  ModuleA(sc_core::sc_module_name name)
+  : sc_core::sc_module(name)
+  , cci::cci_broker_module(new cci::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
+  , int_param ("int_param", 50 )
+  , uint_param("uint_param", 12000)
+  , uint_param2("uint_param2", 12)
+  , str_param ("str_param", "This is a test string.")
+  , bool_param("bool_param") // no default value
+  , m_modB("ModuleB")
+  { 
+    SC_THREAD(main_action);
+  }
+  
+  ~ModuleA() {
+    // Don't delete while params existing!
+    /*cci::cci_cnf_api* pb = get_broker();
+    register_private_broker(NULL);
+    delete pb;*/
+  }
   
   /// Main action to make tests with parameters.
   void main_action();
-
-  /// Callback function with default signature showing changes.
-  cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
-
-  /// Callback function with default signature rejecting all changes.
-  cci::callback_return_type config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason);
-
+  
+  /// Example parameter.
+  cci::cci_param<int>             int_param;
+  /// Example parameter.
+  cci::cci_param<unsigned int>    uint_param;
+  /// Example parameter.
+  cci::cci_param<unsigned int>    uint_param2;
+  /// Example parameter.
+  cci::cci_param<std::string>     str_param;
+  /// Example parameter.
+  cci::cci_param<bool>            bool_param;
+  
 protected:
-  /// Pointer the the module's configuration API
-  cci::cci_cnf_api* mApi;
-  
-  /// Vector of callbacks to keep them outside the local scope of main_action
-  std::vector< cci::shared_ptr<cci::callb_adapt_b> > mCallbacks;
-  
+  ModuleB m_modB;
 };
 
 

@@ -56,8 +56,6 @@
 namespace gs {
 namespace ctr {
   
-
-using gs::shared_ptr;
   
 /// Target port for APIs to connect to GC Core.
 /**

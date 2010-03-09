@@ -45,7 +45,6 @@
 #include <iostream>
 #include <map>
 #include <set>
-#include <boost/shared_ptr.hpp>
 
 #include "cci.h"
 #include "greencontrol/config.h"
@@ -70,7 +69,7 @@ namespace cci {
      */
     class internal_callback_forwarder {
     public:
-      internal_callback_forwarder(boost::shared_ptr<cci::callb_adapt_b> _adapt, const gs::cnf::callback_type _type, my_type& _par)
+      internal_callback_forwarder(cci::shared_ptr<cci::callb_adapt_b> _adapt, const gs::cnf::callback_type _type, my_type& _par)
       : adapt(_adapt.get())
       , type(_type)
       , param(&_par)
@@ -126,7 +125,7 @@ namespace cci {
       cci::callb_adapt_b* adapt;
       gs::cnf::callback_type type;
       my_type *param;
-      boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
+      cci::shared_ptr< ::gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
     };
     
     /// Internal guard which is called on a value change to update the value status variable(s)
@@ -165,7 +164,7 @@ namespace cci {
     void init() {
       m_init_called = true;
       cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
-      register_callback(post_write, &m_status_guard, boost::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      register_callback(post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
@@ -221,12 +220,12 @@ namespace cci {
     
     // /////////////////// CALLBACKS ///////////////////// //
 
-    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {
+    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
+      return register_callback(type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
     }
     
-    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr< cci::callb_adapt_b> callb) {
+    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr< cci::callb_adapt_b> callb) {
       gs::cnf::callback_type cb = gs::cnf::no_callback;
       switch(type) {
         case pre_read:
@@ -251,13 +250,13 @@ namespace cci {
         fw_vec.push_back(fw);
         fw->calling_gs_adapter = 
             m_gs_param_base.registerParamCallback( 
-                                               boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
-                                                                                                new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
-                                                                                                (fw, 
-                                                                                                 &internal_callback_forwarder::call, 
-                                                                                                 callb->get_observer(), 
-                                                                                                 const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(&m_gs_param_base)))
-                                                                                                ), fw->get_type() );
+                                                  shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
+                                                                                            new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
+                                                                                            (fw, 
+                                                                                             &internal_callback_forwarder::call, 
+                                                                                             callb->get_observer(), 
+                                                                                             const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(&m_gs_param_base)))
+                                                                                            ), fw->get_type() );
       }
       return callb;
     }
@@ -279,7 +278,7 @@ namespace cci {
       }
     }
     
-    virtual bool unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b> callb)  {
+    virtual bool unregister_param_callback(shared_ptr<cci::callb_adapt_b> callb)  {
       return unregister_param_callback(callb.get());
     }
     

@@ -42,8 +42,7 @@
 #include <map>
 #include <set>
 
-#include <boost/shared_ptr.hpp>
-
+#include "cci_shared_ptr.h"
 #include "cci_value.h"
 
 
@@ -281,16 +280,16 @@ namespace cci {
     // /////////////////   Callback Handling   //////////////////////////// //
     
     
-    /// Registers an observer callback function (a boost function with the signature of callback_func_ptr).
+    /// Registers an observer callback function (a callback_func_ptr).
     /**
      * For further callback types @see cci::cci_cnf_api::register_callback
      *
      * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
      *
-     * The user may register any boost function for callbacks which have
+     * The user may register any function for callbacks which have
      * the following signature:
      * \code
-     * boost::function<void (cci_base_param& changed_param)>
+     * cci::function<void (cci_base_param& changed_param)>
      * \endcode
      * e.g.
      * \code
@@ -328,8 +327,8 @@ namespace cci {
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     p1cb = my_param.register_callback(cci::post_write   , this, boost::bind(&MyIP_Class::config_callback, this, _1, _2));
-     *     p2cb = my_param.register_callback(cci::destroy_param, this, boost::bind(&MyIP_Class::config_callback, this, _1, _2));
+     *     p1cb = my_param.register_callback(cci::post_write   , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2));
+     *     p2cb = my_param.register_callback(cci::destroy_param, this, cci::bind(&MyIP_Class::config_callback, this, _1, _2));
      *   }
      *
      *   // Callback function with default signature.
@@ -338,23 +337,23 @@ namespace cci {
      *     return cci::return_nothing;
      *   }
      * protected:
-     *   boost::shared_ptr<callb_adapt_b> p1cb;
-     *   boost::shared_ptr<callb_adapt_b> p2cb;
+     *   cci::shared_ptr<callb_adapt_b> p1cb;
+     *   cci::shared_ptr<callb_adapt_b> p2cb;
      * };
      * \endcode
      *
      * @param type        Type of the callback.
      * @param observer    Pointer to the observing object (the one being called).
-     * @param function    Boost function pointer to the function being called.
-     * @return            Boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
+     * @param function    Function pointer to the function being called.
+     * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) = 0;/* {
+    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) = 0;/* {
       // call the pure virtual function performing the registration
-      return register_callback(type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
+      return register_callback(type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
     }*/
     
     /// Function registering a callback object (should not be called by user)
-    virtual boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, boost::shared_ptr<callb_adapt_b> callb) = 0;
+    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr<callb_adapt_b> callb) = 0;
     
     
     /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
@@ -379,8 +378,8 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b> callb) = 0;
-    /// @see unregister_param_callback(boost::shared_ptr<cci::callb_adapt_b>) 
+    virtual bool unregister_param_callback(shared_ptr<cci::callb_adapt_b> callb) = 0;
+    /// @see unregister_param_callback(shared_ptr<cci::callb_adapt_b>) 
     virtual bool unregister_param_callback(cci::callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks

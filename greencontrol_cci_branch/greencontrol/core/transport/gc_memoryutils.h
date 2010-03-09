@@ -43,7 +43,7 @@
 //#define BOOST_SP_DISABLE_THREADS
 //#include "boost/shared_array.hpp"
 #include "boost/bind.hpp"
-#include "shared_ptr.h"
+#include "boost/shared_ptr.hpp"
 
 
 namespace gs {
@@ -147,7 +147,8 @@ namespace ctr {
     }
   };
 
-#define PTRTYPE gs::shared_ptr
+//#define PTRTYPE gs::shared_ptr
+#define PTRTYPE boost::shared_ptr
 
   //---------------------------------------------------------------------------
   /**

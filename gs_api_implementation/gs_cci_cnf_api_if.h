@@ -32,20 +32,20 @@
 // ENDLICENSETEXT
 
 
-#include <cci.h>
-#include "cci_api.h"
+#ifndef __GS_CCI_CNF_API_IF_H__
+#define __GS_CCI_CNF_API_IF_H__
 
 namespace cci {
-
-
-  cci_cnf_api* singleton_api = NULL;
-
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
-    CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
-    return singleton_api;
-  }
-
   
-} // end namespace cci
+  class  gs_cci_cnf_api_if {
+  public:
+
+    virtual ~gs_cci_cnf_api_if() { }
+    
+    virtual gs::cnf::cnf_api* get_gcnf_api() = 0;
+    
+  };
+  
+} // end namespace
+
+#endif

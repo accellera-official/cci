@@ -173,7 +173,7 @@ inline int cci::cci_value::get_int()   const {
   return static_cast<int>(m_value_number);
 }
 
-inline boost::int64_t cci::cci_value::get_int64() const {
+inline sc_dt::int64 cci::cci_value::get_int64() const {
   if (m_type != cci::partype_number)
     CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Wrong cci value type (no number).");
   return m_value_number;
@@ -219,7 +219,7 @@ namespace cci {
     , m_value_number(value) {
     }
     
-    gs_cci_value(boost::int64_t        value)
+    gs_cci_value(sc_dt::int64          value)
     : my_type(partype_number)
     , m_value_number(value) {
     }
@@ -329,7 +329,7 @@ namespace cci {
       return static_cast<int>(m_value_number);
     }
     
-    boost::int64_t get_int64() const {
+    sc_dt::int64 get_int64() const {
       if (my_type != partype_number)
         throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no number).");
       return m_value_number;
@@ -346,7 +346,7 @@ namespace cci {
 
     std::string m_value_string;
     bool m_value_bool;
-    boost::int64_t m_value_number;
+    sc_dt::int64 m_value_number;
     double m_value_real;
     cci_value_list m_value_list;
     

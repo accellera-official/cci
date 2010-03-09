@@ -158,7 +158,9 @@ public:
     // Note: Don't call GCnf_Api_t::getApiInstance(NULL) here, because this ConfigPlugin constructor
     //       is possibly called by exactly this function (the GCnf_Api_T constructor), the 
     //       create_default_instance() function has a guard to prevent this.
-    GCnf_Api_t<gs_param_base, GCnf_private_Api_T<gs_param_base, gs_param, ConfigPlugin>, gs_param, ConfigPlugin>::create_default_instance();
+    
+    // TODO: CCI modifications:
+    //GCnf_Api_t<gs_param_base, GCnf_private_Api_T<gs_param_base, gs_param, ConfigPlugin>, gs_param, ConfigPlugin>::create_default_instance();
   }
 
   /// Destructor

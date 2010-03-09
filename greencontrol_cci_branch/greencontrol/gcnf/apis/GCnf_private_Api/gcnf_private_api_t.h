@@ -610,8 +610,9 @@ namespace cnf {
       }
 #endif
       /// register this API
-      GCNF_DUMP_N(name(), "  register this private API");
-      GCnf_Api_TMPL::register_private_ApiInstance(this);
+      //GCNF_DUMP_N(name(), "  register this private API");
+      // TODO: CCI modifications:
+      //GCnf_Api_TMPL::register_private_ApiInstance(this);
     }
     
     /// Returns if the given parameter is a public one within this private API.

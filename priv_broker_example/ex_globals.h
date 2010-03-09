@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -31,21 +31,18 @@
 // 
 // ENDLICENSETEXT
 
+#ifndef __callb_globals_h__
+#define __callb_globals_h__
 
-#include <cci.h>
-#include "cci_api.h"
+// Some debug output for GrenConfig wrapped to CCI
+//#define GS_PARAM_CALLBACK_VERBOSE
 
-namespace cci {
+#define DEMO_VERBOSE
 
+#ifdef DEMO_VERBOSE
+# define DEMO_DUMP(name, msg) { printf("@%s /%d (%s): ", sc_core::sc_time_stamp().to_string().c_str(), (unsigned)sc_core::sc_delta_count(), name); std::cout << msg; printf("\n"); } 
+#else
+# define DEMO_DUMP(name, msg)
+#endif
 
-  cci_cnf_api* singleton_api = NULL;
-
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
-    CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
-    return singleton_api;
-  }
-
-  
-} // end namespace cci
+#endif

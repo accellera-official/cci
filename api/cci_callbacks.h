@@ -36,7 +36,7 @@
 #ifndef __CCI_CALLBACKS_H__
 #define __CCI_CALLBACKS_H__
 
-#include <boost/function.hpp>
+#include "cci_function.h"
 
 namespace cci {
   
@@ -77,8 +77,8 @@ namespace cci {
   /**
    * Callback functions must have the signature: callback_return_type method_name(cci_base_param& changed_param, const callback_type& cb_reason)
    */
-  typedef boost::function2<callback_return_type, cci_base_param&, const callback_type&> callb_func_ptr;  // boost function portable syntax
-  //typedef boost::function<callback_return_type (cci_base_param&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
+  typedef function2<callback_return_type, cci_base_param&, const callback_type&> callb_func_ptr;  // boost function portable syntax
+  //typedef function<callback_return_type (cci_base_param&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
   
   /// Adapter base class which can be used to call an arbitrary parameter callback function (independently from template parameters).
   /**
@@ -171,7 +171,7 @@ namespace cci {
     /// Caller parameter
     T_cci_base_param *caller_param;
     
-    /// Boost function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
+    /// Function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
     callb_func_ptr func;
     
   };

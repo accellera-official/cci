@@ -50,7 +50,4 @@
 
 #include "greencontrol/config.h"
 
-} // end namespace cnf
-} // end namespace gs
-
 #endif

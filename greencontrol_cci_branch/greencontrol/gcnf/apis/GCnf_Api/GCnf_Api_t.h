@@ -60,6 +60,9 @@
 #undef DUMMY_NAME
 #define DUMMY_NAME "**dummy.NewParamObservers**"
 
+// TODO: CCI modification
+#include <cci.h>
+#include "gs_cci_cnf_api_if.h"
 
 namespace gs {
 namespace cnf {
@@ -156,195 +159,18 @@ public:
     // ensure the plugin is existing
     ConfigPlugin_T::get_instance();
 
-    if (!mod) {
-      GCNF_DUMP_N("static GCnf_Api::getApiInstance", "No pointer address to parent module, use/create default GCnf_Api.");
-      // TODO: Kann man testen, ob der caller ein module ist? Dann naemlich DEPRECATED WARNING weil nicht auf private API ueberprüft werden kann
-      //       wenn test nicht moeglich, SC_INFO ausgeben. (Fuer toplevel APIs ist der call mit NULL erlaubt.)
-      create_default_instance();
-    }
-    else {
-      GCNF_DUMP_N("static GCnf_Api::getApiInstance", "module pointer: "<<(void*)mod<<" and name: "<<mod->name());
-    }
-    
-    return handleApiInstances(mod, NULL);
+    // TODO: CCI modifications:
+
+    cci::cci_cnf_api* a = cci::get_cnf_api_instance(mod);
+    cci::gs_cci_cnf_api_if* gs_cci_a = dynamic_cast<cci::gs_cci_cnf_api_if*> (a);
+    assert(gs_cci_a && "All APIs in this system are gs_cci_cnf_apis, what is wrong here?");
+    cnf_api* gs_a = gs_cci_a->get_gcnf_api();
+    assert(gs_a && "All APIs in this System are cnf_apis! What happened here?");
+    return gs_a;
   }
   
-  /// Static function to create a private GCnf_API.
-  /**
-   * Creates a private GCnf_Api instance (class GCnf_private_Api)
-   * which registers the instance.
-   *
-   * Cannot set not-private parameters. Create an private 
-   * API directly instead.
-   *
-   * The caller must take care to delete the returned instance
-   * after all child modules have been destructed!
-   *
-   * @param owner_module  Module who creates and owns the private API.
-   * @return  Pointer to the new created private API.
-   */
-  static GCnf_private_Api_TMPL* create_private_ApiInstance(const sc_core::sc_module* owner_module) {
-    assert(owner_module); // TODO: SC_REPORT_WARNING
-    return new GCnf_private_Api_TMPL(owner_module);
-  }
 
 protected:
-
-  /// Guarded function being called by the ConfigPlugin constructor
-  /*
-   * This function guards the problem of cyclic creations:
-   * default Api -> creates Plugin -> creates default Api
-   */
-  static void create_default_instance() {
-    static bool currently_creating_default_instance = false;
-    if (!currently_creating_default_instance) {
-      currently_creating_default_instance = true;
-      handleApiInstances(NULL, NULL);
-    }
-    currently_creating_default_instance = false;
-  }
-  
-  /*
-   * Why may we support shared pointers here? To cover the unlikely
-   * case that an owner module is destructed while other modules
-   * are still using the API. (Should not happen since only childs
-   * of the owning module should use the private API.)
-   *  Issue: during construction a priv API cannot add itself with 
-   *         a shared pointer!
-   */
-  
-  /// Static function to register a private GCnf_API (contained in a shared pointer).
-  /**
-   * Register a private GCnf_Api instance (class GCnf_private_Api)
-   * to make it available to be returned in the getApiInstance 
-   * function.
-   *
-   * This function does not get a shared pointer?
-   * This should be no problem since only childs of the owning 
-   * module should use the private API. Accordingly the API will
-   * be living at least as long as the childs do (as long as the
-   * API is a member of the owning module).
-   *
-   * @param privApi  Pointer to the private API. Must be a private API of type gs::cnf::GCnf_private_Api !
-   * @return If creation was successfull (if there was not already an existing API for this name).
-   */
-  static bool register_private_ApiInstance(GCnf_private_Api_TMPL* privApi) {
-    if (handleApiInstances(NULL, privApi)) return true;
-    else return false;        
-  }
-  
-  /// Static function to handle (register and get) GCnf_[private_]Api instances (default or private).
-  /**
-   * This method can be used either to
-   * - get the default API instance (normal case) or to
-   * - get an existing private API instance instead or to
-   * - create the default API instance (mod = NULL) (called by the plugin)
-   * - register private API instances
-   *
-   * @param mod_to_get  User module pointer which identifies the needed API instance.
-   * @param privApi_to_register  Pointer to private API that should be registered.
-   * @return     Pointer to the API instance.
-   */ 
-  static cnf_api* handleApiInstances(sc_core::sc_module *mod_to_get, 
-                                     GCnf_private_Api_TMPL* privApi_to_register) 
-  {
-    // ensure the plugin is existing
-    ConfigPlugin_T::get_instance();
-
-    // ********* Preparing work *************
-    ModuleApiMap::iterator it;
-    static PrivApiMap* mPrivInstanceMap = NULL;
-    static GCnf_Api *mDefApi = NULL;
-    /// Map to save the Api returned corresponding to each module
-    static ModuleApiMap m_module_api_map;
-    cnf_api* gcapi = NULL;
-
-    if (!initialize_mode && !mDefApi) { // Check if the default is not already after ene_of_elab 
-      SC_REPORT_ERROR("static GCnf_Api::handleApiInstance", "The default GCnf_Api has not been created before end_of_elaboration! You have to instantiate the ConfigPlugin first (or call at least once this function during elaboration)!");
-      return NULL;
-    }
-    if (!mDefApi) {
-      GCNF_DUMP_N("static GCnf_Api::handleApiInstance", "create new default API");
-      mDefApi = new GCnf_Api_t(true);
-    }
-  
-    if (!mPrivInstanceMap) {
-      GCNF_DUMP_N("static GCnf_Api::handleApiInstance", "create new PrivApiMap");
-      mPrivInstanceMap = new PrivApiMap();
-    } // TODO: delete this instance!?
-    
-    // ********* Registering private APIs *************
-    if (privApi_to_register) {
-      GCNF_DUMP_N("static GCnf_Api::register_private_ApiInstance", "Register private API for owner module '"<<privApi_to_register->get_owner_name().c_str()<<"'");
-      std::pair<typename PrivApiMap::iterator, bool> ret;
-      // Add this new API to the map
-      ret = mPrivInstanceMap->insert(make_pair(privApi_to_register->get_owner_name(), privApi_to_register));
-      // Check for a already existing private API for this owner
-      if (!ret.second) {
-        GCNF_DUMP_N("static GCnf_Api::register_private_ApiInstance", "Failed! There is already existing a private API for this owner!");
-        SC_REPORT_ERROR("static GCnf_Api::register_private_ApiInstance", "Failed! There is already existing a private API for this owner!");
-        return gcapi; // = false
-      }
-      return privApi_to_register; // = true
-    }
-
-    if(mod_to_get)
-    {
-        // If for the overgiven module <mod> (or a parent) a private API exists, return that
-        typename PrivApiMap::iterator pos;
-        const std::string mod_name = mod_to_get->name();
-        std::size_t search_length = mod_name.length();
-        //cout << "search for private APIs for module '"<<mod_name<<"'" << endl;
-        // try with the hierarchical name - shortened at each iteration - until no hierarchy is left
-        //  finds the private API with the longest name match!
-        while(search_length > 0 && search_length != string::npos) 
-        {
-          if (gcapi) break;
-          //cout << "  search for API responsible for module '"<< mod_name.substr(0, search_length) <<"'" << endl;
-          for (pos = mPrivInstanceMap->begin(); pos != mPrivInstanceMap->end(); pos++) {
-            //cout << "    try '"<< pos->first <<"'"<<endl;
-            if (pos->first.compare(mod_name.substr(0,search_length)) == 0 ) {
-              gcapi = pos->second;
-              //cout << "  found private API '"<<pos->first<<"'!" << endl;
-              GCNF_DUMP_N("static GCnf_Api::getApiInstance", "Return private API '"<<pos->first.c_str()<<"'.");
-              break;
-            }
-           }
-          // cut off last hierarchy of mod_name (for find call)
-          search_length = mod_name.find_last_of(SC_NAME_DELIMITER, search_length-1);
-        }
-        if (gcapi) {
-           return gcapi;
-        }
-    }
-    else
-    {
-       // no module, return the default API
-       GCNF_DUMP_N("static GCnf_Api::getApiInstance", "Return default API.");
-       return mDefApi;
-    }
-
-    // if no private API for this module, find if there is already gcapi 
-    // registered for this module
-    it = m_module_api_map.find(mod_to_get);
-    if (it != m_module_api_map.end())
-    {
-       return it->second;
-    }
-    else {
-      // TODO: remove this limitation by not using SystemC ports that can only be bound before simulation
-      // see task http://www.greensocs.com/en/node/2152/
-      if (initialize_mode) {
-        gcapi = new GCnf_Api_t(mod_to_get);
-        m_module_api_map.insert(std::pair<sc_module *, cnf_api *>(mod_to_get,gcapi));
-        return gcapi;
-      }
-      else {
-        GCNF_DUMP_N("static GCnf_Api::getApiInstance", "Cannot new API during simulation: return default API.");
-        return mDefApi;
-      }
-    }
-  }
 
   // Deprecated workaround: for the organization of callbacks calling the deprecated callbacks
   //GC_HAS_CALLBACKS();
@@ -407,11 +233,13 @@ public:
 
     // add this Api instance to the static ApiMap to allow parameters to use it!
     //getApiInstance(get_parent_sc_module(this), this);
-    DEPRECATED_WARNING(name(), "GCnf_Api(name) is deprecated! Use the static gs::cnf::getApiInstance(sc_core::sc_module*) instead!");
-    if (check_for_private_Api()) {
-      SC_REPORT_FATAL(name(), "There is existing a private config API for a module that wants to instantiate a not-private API! Use GCnf_Api::getApiInstance(sc_core::sc_module*) instead!");
-      assert(false);
-    }
+    // TODO: CCI modifications:
+    //DEPRECATED_WARNING(name(), "GCnf_Api(name) is deprecated! Use the static gs::cnf::getApiInstance(sc_core::sc_module*) instead!");
+    // TODO: removed for CCI demo
+    //if (check_for_private_Api()) {
+    //  SC_REPORT_FATAL(name(), "There is existing a private config API for a module that wants to instantiate a not-private API! Use GCnf_Api::getApiInstance(sc_core::sc_module*) instead!");
+    //  assert(false);
+    //}
   }
 
   // Constructor to be called by static function getApiInstance

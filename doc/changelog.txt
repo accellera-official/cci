@@ -1,6 +1,12 @@
 ChangeLog
 ---------
 
+- removed boost version dependency of implementation
+- replaced boost int64 with SystemC int64
+- replaced boost shared_ptr and function 
+- private Broker API and example
+
+
 **** CCI-1.3-cci_api-240210.tar.gz ****
 
 - changed param hierarchy to be defined by the document and directly implemented thus being used directly by user (without pure virtual interface) (interfaces are just for compile checks)

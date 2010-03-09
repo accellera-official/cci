@@ -43,7 +43,7 @@
 
 #include <sstream>
 
-#include "transport/shared_ptr.h"
+#include "boost/shared_ptr.hpp"
 #include "transport/unevenpair.h"
 #include "transport/gs_datatypes.h"
 
@@ -56,6 +56,7 @@
 namespace gs {
 namespace ctr {
 
+using boost::shared_ptr;
   
 // based on the GernericTransaction
 
@@ -349,7 +350,7 @@ public:
 
 
 /// Shared pointer type for GenericTransaction. 
-typedef gs::shared_ptr<ControlTransaction>               ControlTransactionHandle;
+typedef shared_ptr<ControlTransaction>               ControlTransactionHandle;
 typedef gs::ctr::unevenpair<ControlTransactionHandle,ControlPhase> ControlTransactionContainer;
 
 

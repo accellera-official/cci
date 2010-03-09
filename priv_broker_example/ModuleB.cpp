@@ -32,20 +32,26 @@
 // ENDLICENSETEXT
 
 
-#include <cci.h>
-#include "cci_api.h"
+#include "ModuleB.h"
+#include <systemc.h>
 
-namespace cci {
+void ModuleB::main_action() {
 
-
-  cci_cnf_api* singleton_api = NULL;
-
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
-    CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
-    return singleton_api;
-  }
-
+  // get the config API which is responsible for this module
+  cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
+  assert(mApi != NULL && "get_cnf_api_instance returned is NULL");
+  wait(10, SC_SEC);
   
-} // end namespace cci
+  // show a parameter list
+  cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
+  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string>::iterator iter;
+  std::stringstream ss_show;
+  for (iter = vec.begin() ; iter < vec.end(); iter++) {
+    ss_show << "   " << *iter << std::endl;
+  }
+  std::cout << ss_show.str() << std::endl<<std::endl;
+  
+  std::cout << "----------------------------" << std::endl;
+
+}

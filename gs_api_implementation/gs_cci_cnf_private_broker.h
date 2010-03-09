@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,28 +32,30 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_CNF_API_H__
-#define __GS_CCI_CNF_API_H__
+#ifndef __GS_CCI_CNF_PRIVATE_BROKER_H__
+#define __GS_CCI_CNF_PRIVATE_BROKER_H__
 
 
 #include <cci.h>
 #include "cci_params.h"
 #include "greencontrol/config.h"
-#include "gs_cci_cnf_api_if.h"
+
 
 namespace cci {
 
   class cci_base_param;
 
-  class gs_cci_cnf_api
+  class gs_cci_private_broker
   : public cci_cnf_api
-  , public gs_cci_cnf_api_if
+  , public cci::gs_cci_cnf_api_if
   {
+    
   public:
     
-    gs_cci_cnf_api();
+    gs_cci_private_broker(sc_core::sc_module* owner, std::vector<std::string> pub_params);
+    gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...);
     
-    ~gs_cci_cnf_api();
+    ~gs_cci_private_broker();
 
     void set_init_value(const std::string &parname, const std::string &value);
     

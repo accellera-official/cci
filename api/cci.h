@@ -63,6 +63,15 @@
  */
 
 
+#define CCI_CNF_VERBOSE
+
+#ifdef CCI_CNF_VERBOSE
+# define CCI_CNF_DUMP(msg) { std::cout<<msg<<std::endl; } 
+#else
+# define CCI_CNF_DUMP(msg) {  } 
+#endif
+
+
 /// Namespace for OSCI Configuration, Control & Inspection (CCI) standard
 namespace cci {
 
@@ -93,6 +102,8 @@ namespace cci {
 // only for compiler checks!
 #include "cci_base_param_if.h"
 #include "cci_param_if.h"
+
+#include "cci_broker_module.h"
 
 
 #endif

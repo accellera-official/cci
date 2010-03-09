@@ -37,7 +37,7 @@
 #define __CCI_CNF_API_H__
 
 
-#include <boost/shared_ptr.hpp>
+#include <cci_shared_ptr.h>
 
 
 namespace cci {
@@ -182,18 +182,18 @@ namespace cci {
      *   void main_action() {
      *     // some code, parameters etc...
      *
-     *     my_callbacks.push_back( my_param.register_callback(cci::post_write,  this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( my_param.register_callback(cci::post_write,  this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *     //   equal to
-     *     my_callbacks.push_back( m_api.register_callback(cci::post_write   , my_param.get_name(), this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::post_write   , my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *
-     *     my_callbacks.push_back( my_param.register_callback(cci::destroy_param, this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( my_param.register_callback(cci::destroy_param, this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *     //   equal to
-     *     my_callbacks.push_back( m_api.register_callback(cci::destroy_param, my_param.get_name(), this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::destroy_param, my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *
-     *     my_callbacks.push_back( m_api.register_callback(cci::create_param , "*"                , this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::create_param , "*"                , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *  OPTIONAL:
-     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "*.my_param"  , this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
-     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "MyIP_Class.*", this, boost::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "*.my_param"  , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "MyIP_Class.*", this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *   }
      *
      *   // Callback function with default signature.
@@ -201,23 +201,23 @@ namespace cci {
      *     // some action
      *   }
      *
-     *   std::vector< boost::shared_ptr<callb_adapt_b> > my_callbacks;
+     *   std::vector< shared_ptr<callb_adapt_b> > my_callbacks;
      * };
      * \endcode
      *
      * @param type        Type of the callback.
      * @param parname     Parameter name or pattern the callback should be applied to.
      * @param observer    Pointer to the observing object (the one being called).
-     * @param function    Boost function pointer to the function being called.
-     * @return            Boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
+     * @param function    Function pointer to the function being called.
+     * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-    boost::shared_ptr<callb_adapt_b> register_callback(const callback_type type, const std::string& parname, void* observer, callb_func_ptr function) {
+    shared_ptr<callb_adapt_b> register_callback(const callback_type type, const std::string& parname, void* observer, callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(parname, type, boost::shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, NULL)));
+      return register_callback(parname, type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, NULL)));
     }
     
     /// Function handling the callback (should not be called by user)
-    virtual boost::shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, boost::shared_ptr< callb_adapt_b> callb) = 0;
+    virtual shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb) = 0;
 
     
     /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 

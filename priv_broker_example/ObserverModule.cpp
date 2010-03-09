@@ -55,42 +55,18 @@ ObserverModule::~ObserverModule() {
 
 
 void ObserverModule::main_action() {
-  DEMO_DUMP(name(), "register pre write callback for int_param to lock it");
 
-  // get access to a foreign parameter using the module's config API
-  cci::cci_base_param* p = mApi->get_param("Owner.int_param");
-  assert(p != NULL);
+  cout << "----------------------------" << endl<< endl;
 
-  // ******** register for parameter change callback ***************
-  cci::shared_ptr<cci::callb_adapt_b> cb1, cb3;
-  cb1 = p->register_callback(cci::post_write, this, 
-                             cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  cci::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
-  assert(p2 != NULL);
-  cb3 = p2->register_callback(cci::post_write, this, 
-                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  mCallbacks.push_back(cb3);// This will not be deleted after end of main_action()
-
-  // ******* Testing parameter lock with callback returns *************
-  // Register Callback for parameter int_param in module other_ip (IP1)
-  cci::shared_ptr<cci::callb_adapt_b> cb2;
-  cb2 = p->register_callback(cci::pre_write, this, 
-                             cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
-  std::string str = p->json_serialize();
-  cout << "int_param has value = " << str << endl;
-  cout << "int_param set value = 99" << endl;
-  p->json_deserialize("99");
-  str = p->json_serialize();
-  cout << "int_param has value = " << str << endl;
-  //p->unregister_all_callbacks(this); // this would unregister all calbacks to this module
-  p->unregister_param_callback(cb2); // unregister a callback
-  
-  // ********* show param list **************
-  cout << "param list:" << endl;
+  // show a parameter list
+  cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
   std::vector<std::string> vec = mApi->get_param_list();
-  for (std::vector<std::string>::iterator iter = vec.begin(); iter != vec.end(); iter++)
-    cout << *iter << " ";
-  cout << endl;
+  std::vector<std::string>::iterator iter;
+  std::stringstream ss_show;
+  for (iter = vec.begin() ; iter < vec.end(); iter++) {
+    ss_show << "   " << *iter << std::endl;
+  }
+  std::cout << ss_show.str() << std::endl<<std::endl;
   
   cout << "----------------------------" << endl;
   std::cout << std::endl;

@@ -37,7 +37,6 @@
 #define __CCI_DATATYPES_H__
 
 
-#include <boost/cstdint.hpp>
 #include <string>
 #include <iostream>
 

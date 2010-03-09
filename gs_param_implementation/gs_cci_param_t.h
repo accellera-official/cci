@@ -45,7 +45,6 @@
 #include <iostream>
 #include <map>
 #include <set>
-#include <boost/shared_ptr.hpp>
 
 #include "cci.h"
 #include "greencontrol/config.h"

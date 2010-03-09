@@ -73,7 +73,7 @@ namespace cci {
     /// Constructor setting the number value (sets type to cci::partype_number)
     cci_value(int                   value);
     /// Constructor setting the number value (sets type to cci::partype_number)
-    cci_value(boost::int64_t        value);
+    cci_value(sc_dt::int64          value);
     /// Constructor setting the real value (sets type to cci::partype_real)
     cci_value(double                value);
 
@@ -124,7 +124,7 @@ namespace cci {
      * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's int64 representation.
      */
-    boost::int64_t get_int64() const;
+    sc_dt::int64 get_int64() const;
     
     /// Returns the value's double representation
     /**
@@ -140,8 +140,8 @@ namespace cci {
     std::string m_value_string;
     /// bool value (if this is of type bool)
     bool m_value_bool;
-    /// boost::int64 value (if this is of type number / int / boost::int64)
-    boost::int64_t m_value_number;
+    /// sc_dt::int64 value (if this is of type number / int / sc_dt::int64)
+    sc_dt::int64 m_value_number;
     /// double value (if this is of type double / real)
     double m_value_real;
     /// list value (if this is of type cci::cci_value_list)

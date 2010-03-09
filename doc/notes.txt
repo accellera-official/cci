@@ -19,11 +19,11 @@ time.
 
 CALLBACKS
 
-Callback registration methods return boost shared pointers 
+Callback registration methods return shared pointers 
 to callback adapters. Advantage: the callback will automatically 
 destroyed when no smart pointer to the callback adapter exists 
 any longer. The only rule is: 
-Rule: Store the returned boost pointer and keep it until you want
+Rule: Store the returned shared pointer and keep it until you want
       the callback to be deleted.
 
 BTW: The shared pointer handling does not cause any memory leak.
@@ -54,7 +54,7 @@ cci_base_param object and a callback_type. It will therefore look
 and feel similar, but will have the added benefits we need in CCI 
 (more callback types and different objects given to the called 
 functions).
-I prefer the boost::shared_ptr approach (the register/add method 
+I prefer the shared_ptr approach (the register/add method 
 returns such a pointer instead of an SCV-like callback ID) to 
 reduce the danger of memory leaks which may occur when just 
 newing callback objects.
@@ -70,7 +70,6 @@ type used.
 64 bits.", "uint64 is a native C++ unsigned integer type having a 
 word length of exactly 64 bits." 
 (IEEE Standard SystemC Language Reference Manual, March 2006).
-@todo We use the boost::uint64 type
 
 ----------------------------------------------------------------
 

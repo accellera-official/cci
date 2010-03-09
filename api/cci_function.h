@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,20 +32,17 @@
 // ENDLICENSETEXT
 
 
-#include <cci.h>
-#include "cci_api.h"
+#ifndef __CCI_FUNCTION_H__
+#define __CCI_FUNCTION_H__
+
+#include <boost/function.hpp>
 
 namespace cci {
-
-
-  cci_cnf_api* singleton_api = NULL;
-
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
-    CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
-    return singleton_api;
-  }
-
+  
+  using boost::function;
+  using boost::function2;
+  using boost::bind;
   
 } // end namespace cci
+
+#endif
