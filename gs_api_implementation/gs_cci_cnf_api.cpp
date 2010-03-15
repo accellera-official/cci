@@ -57,9 +57,12 @@ const std::string cci::gs_cci_cnf_api::get_json_string(const std::string &parnam
 }
 
 cci::cci_base_param* cci::gs_cci_cnf_api::get_param(const std::string &parname) {
-  std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
-  if( iter != m_mirrored_registry.end() )
-    return iter->second;
+  std::map<std::string,cci_base_param_if*>::iterator iter = m_mirrored_registry.find(parname);
+  if( iter != m_mirrored_registry.end() ) {
+    cci::cci_base_param* ret = dynamic_cast<cci::cci_base_param*>(iter->second);
+    assert(ret != NULL && "This param shall be a cci::cci_base_param!");
+    return ret;
+  }
   else return NULL;
 }
 
@@ -98,11 +101,11 @@ bool cci::gs_cci_cnf_api::has_callbacks(const std::string& parname) {
   return false;
 }
 
-void cci::gs_cci_cnf_api::add_param(cci_base_param* par) {
-  m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par));
+void cci::gs_cci_cnf_api::add_param(cci_base_param_if* par) {
+  m_mirrored_registry.insert(std::pair<std::string, cci_base_param_if*>(par->get_name(), par));
 }
 
-void cci::gs_cci_cnf_api::remove_param(cci_base_param* par) {
+void cci::gs_cci_cnf_api::remove_param(cci_base_param_if* par) {
   m_mirrored_registry.erase(par->get_name());
 }
 

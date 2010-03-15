@@ -45,6 +45,7 @@ namespace cci {
 
   // forward declaration 
   class cci_base_param;
+  class cci_base_param_if;
     
   // forward declaration 
   template <class T, param_mutable_type TM> 
@@ -267,7 +268,7 @@ namespace cci {
      * @exception cci::cci_report_types::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
-    virtual void add_param(cci_base_param* par) = 0;
+    virtual void add_param(cci_base_param_if* par) = 0;
     
     /// Removes a parameter from the registry. May only be called by the parameter destructor, must not be called by anone else.
     /**
@@ -276,7 +277,7 @@ namespace cci {
      * @exception cci::cci_report_types::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
      */
-    virtual void remove_param(cci_base_param* par) = 0;
+    virtual void remove_param(cci_base_param_if* par) = 0;
     
 
   public:

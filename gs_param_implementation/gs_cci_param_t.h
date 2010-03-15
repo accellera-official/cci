@@ -49,22 +49,24 @@
 #include "cci.h"
 #include "greencontrol/config.h"
 
-namespace cci {
+namespace cci_impl {
   
   // TODO: remove
   using std::cout;
   using std::endl;
   
-  template <typename T, param_mutable_type TM>
+  template <typename T, cci::param_mutable_type TM>
   class gs_cci_param_t
-  : public cci_base_param,
-    public cci_param_if<T, TM>
+  : public cci_impl::cci_base_param,
+    public cci::cci_param_if<T, TM>
   {
   protected:
     /// Typedef for the value.
     typedef T val_type;
     /// Typedef for the param itself.
     typedef gs_cci_param_t<T, TM> my_type;
+    /// Typedef for the param itself.
+    typedef cci::cci_param<T, TM> my_return_type;
     /// Typedef for the owned gs_param
     typedef gs::gs_param<T> gs_param_type;
 
@@ -72,22 +74,26 @@ namespace cci {
 
     //using cci_param<T,TM>::operator=;
 
-    explicit gs_cci_param_t(const std::string& n
+    explicit gs_cci_param_t(my_return_type& owner_par
+                            , const std::string& n
                             , const std::string &val
                             , bool force_top_level_name /*= false*/
                             , bool register_at_db /*= true*/
                             , bool has_default_value ) // if there is a default value
     : m_gs_param(n, val, NULL, force_top_level_name, register_at_db) 
-    , cci_base_param(m_gs_param, force_top_level_name, register_at_db, has_default_value)
+    , m_owner_par(owner_par)
+    , cci_base_param(owner_par, m_gs_param, force_top_level_name, register_at_db, has_default_value)
     {
     }
     
-    explicit gs_cci_param_t(const std::string& n 
+    explicit gs_cci_param_t(my_return_type& owner_par
+                            , const std::string& n 
                             , const val_type &val
                             , bool force_top_level_name /*= false*/
                             , bool register_at_db /*= true*/ ) 
     : m_gs_param((const std::string&)n, val, force_top_level_name) 
-    , cci_base_param(m_gs_param, force_top_level_name, register_at_db, true)
+    , m_owner_par(owner_par)
+    , cci_base_param(owner_par, m_gs_param, force_top_level_name, register_at_db, true)
     {
       assert(register_at_db && "Not supported with gs_param?");
     }
@@ -95,16 +101,23 @@ namespace cci {
     ~gs_cci_param_t() {
     }
     
-    virtual const basic_param_type get_basic_type() const { return partype_not_available; }
+    /// Implicit cast operator
+    operator my_return_type* () { return &m_owner_par; }
+    my_return_type* get_cci_param() { return &m_owner_par; }
+    operator my_return_type& () { return m_owner_par; }
+    
+    virtual const cci::basic_param_type get_basic_type() const { return cci::partype_not_available; }
    
-    virtual my_type& operator = (const my_type& v) { 
+    virtual my_return_type& operator = (const my_return_type& v) { 
       set(v.get());
-      return *this;
+      //return *this;
+      return m_owner_par;
     }
-     
-    virtual my_type& operator = (const val_type& v) { 
+
+    virtual my_return_type& operator = (const val_type& v) { 
       set(v);
-      return *this;
+      //return *this;
+      return m_owner_par;
     }
     
 
@@ -114,7 +127,7 @@ namespace cci {
     
     virtual void set(const val_type& val) {
       if (!m_gs_param.setValue(val))
-        CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "Bad value.");
+        CCI_THROW_ERROR(cci::cci_report_types::type().set_param_failed, "Bad value.");
     }
     
     virtual const val_type& get() const {
@@ -130,9 +143,12 @@ namespace cci {
 
     gs_param_type m_gs_param;
     
+    /// Owning parameter, to allow implicit casting to the parent
+    my_return_type &m_owner_par;
+    
   };
 
 
-} // namespace cci
+} // namespace cci_impl
 
 #endif

@@ -106,11 +106,17 @@ namespace cci {
 
 namespace cci_impl {
   
-  template<class T, cci::param_mutable_type TM>
-  cci::cci_param_if<T, TM>* CreateParam(const char* nam, T& val, bool force_top_level_name);
-
-  template<class T, cci::param_mutable_type TM>
-  cci::cci_param_if<T, TM>* CreateParam(const char* nam, bool force_top_level_name);
+  template<typename T, cci::param_mutable_type TM>
+  static cci::cci_param_if<T, TM>* CreateParam(cci::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
+  
+  template<typename T, cci::param_mutable_type TM>
+  static cci::cci_param_if<T, TM>* CreateParam(cci::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
+  
+  template<typename T, cci::param_mutable_type TM>
+  static cci::cci_param_if<T, TM>* CreateParam(cci::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
+  
+  template<typename T, cci::param_mutable_type TM>
+  static void InitParam(cci::cci_param_if<T, TM> *owner_par);
 
   template<class T, cci::param_mutable_type TM>
   void DestroyParam(cci::cci_param_if<T, TM>* param);

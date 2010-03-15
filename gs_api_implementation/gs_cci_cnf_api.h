@@ -75,9 +75,9 @@ namespace cci {
     
     bool has_callbacks(const std::string& parname);
     
-    void add_param(cci_base_param* par);
+    void add_param(cci_base_param_if* par);
     
-    void remove_param(cci_base_param* par);
+    void remove_param(cci_base_param_if* par);
     
     //void set_alias(std::string& orig_parname, std::string& alias_parname);
         
@@ -91,7 +91,7 @@ namespace cci {
   
     gs::cnf::cnf_api* m_gcnf_api;
     
-    std::map<std::string, cci_base_param*> m_mirrored_registry;
+    std::map<std::string, cci_base_param_if*> m_mirrored_registry;
 
   };
 

@@ -90,11 +90,11 @@ namespace cci {
    * parameter, the pointer is set to NULL to avoid repeated unregistration during
    * destruction.
    *
-   * Note the template T_cci_base_param is only needed for compiling (to break
+   * Note the template T_cci_base_param_if is only needed for compiling (to break
    * cyclic includes with cci_base_param), 
    * Use the typedef cci::callb_adapt_b to access this class.
    */
-  template<class T_cci_base_param>
+  template<class T_cci_base_param_if>
   class callb_adapt_B
   {
   protected:
@@ -110,7 +110,7 @@ namespace cci {
      * @param _func  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param* _caller_param)
+    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param_if* _caller_param)
     : observer_ptr(_observer_ptr)
     , caller_param(_caller_param)
     , func(_func)
@@ -160,7 +160,7 @@ namespace cci {
     /**
      * @return Caller parameter. NULL if not existing.
      */
-    T_cci_base_param* get_caller_param() {
+    T_cci_base_param_if* get_caller_param() {
       return caller_param;
     }
     
@@ -169,7 +169,7 @@ namespace cci {
     void* observer_ptr;
     
     /// Caller parameter
-    T_cci_base_param *caller_param;
+    T_cci_base_param_if *caller_param;
     
     /// Function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
     callb_func_ptr func;

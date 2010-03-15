@@ -49,14 +49,14 @@
 #include "cci.h"
 #include "greencontrol/config.h"
 
-namespace cci {
+namespace cci_impl {
   
   // TODO: remove
   using std::cout;
   using std::endl;
   
   class cci_base_param
-  : public cci_base_param_if
+  : virtual public cci::cci_base_param_if
   {
   protected:
     /// Typedef for the param itself.
@@ -84,7 +84,7 @@ namespace cci {
       // This gets called by the base gs_param
       gs::cnf::callback_return_type call(gs::gs_param_base& par, gs::cnf::callback_type cbtype) {
         gs::cnf::callback_return_type returned_gs_message = gs::cnf::return_nothing;
-        cci::callback_return_type returned_cci_message = return_nothing;
+        cci::callback_return_type returned_cci_message = cci::return_nothing;
         switch(cbtype) {
           case gs::cnf::destroy_param:
             assert(par.is_destructing());
@@ -103,14 +103,14 @@ namespace cci {
             returned_cci_message = adapt->call(*param, cci::post_write);
             break;
           default:
-            returned_cci_message = return_other_error;
+            returned_cci_message = cci::return_other_error;
             assert(false);
         }
         switch (returned_cci_message) {
-          case return_value_change_rejected:
+          case cci::return_value_change_rejected:
             returned_gs_message = gs::cnf::return_value_change_rejected;
             break;
-          case return_other_error:
+          case cci::return_other_error:
             returned_gs_message = gs::cnf::return_other_error;
             break;
           default:
@@ -134,11 +134,11 @@ namespace cci {
       : owner(&_owner) {
       }
       // This gets called by the base gs_param
-      callback_return_type call(cci_base_param& changed_param, const callback_type& cb_reason) {
+      cci::callback_return_type call(cci::cci_base_param& changed_param, const cci::callback_type& cb_reason) {
         owner->m_is_default_value = false;
         owner->m_is_invalid_value = false;
         owner->m_is_initial_value = false;
-        return return_nothing;
+        return cci::return_nothing;
       }
       my_type* owner;
     };
@@ -147,11 +147,13 @@ namespace cci {
     
   public:
 
-    explicit cci_base_param(gs::gs_param_base& gs_param_base
+    explicit cci_base_param(cci::cci_base_param& owner_par
+                            , gs::gs_param_base& gs_param_base
                             , bool force_top_level_name /*= false*/
                             , bool register_at_db /*= true*/
                             , bool has_default_value ) // if there is a default value
-    : m_gs_param_base(gs_param_base) 
+    : m_owner_par(owner_par)
+    , m_gs_param_base(gs_param_base) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
     , m_is_initial_value(false)
@@ -160,20 +162,28 @@ namespace cci {
     {
     }
 
-  protected:
+  //protected:
     void init() {
+      assert(m_init_called == false && "init() function called more than once!");
       m_init_called = true;
-      cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
-      register_callback(post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
+      //cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
+      register_callback(cci::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
     virtual ~cci_base_param() {
-      cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(this);
+      cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(get_cci_base_param());
+      //cci::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");
     }
     
-    virtual const basic_param_type get_basic_type() const { return partype_not_available; }
+    /// Implicit cast operator
+    operator cci::cci_base_param* () { return &m_owner_par; }
+    cci::cci_base_param* get_cci_base_param() { return &m_owner_par; }
+    operator cci::cci_base_param& () { return m_owner_par; }
+    
+    virtual const cci::basic_param_type get_basic_type() const { return cci::partype_not_available; }
 
     virtual const std::string& get_name() const {
       return m_gs_param_base.getName();
@@ -220,28 +230,28 @@ namespace cci {
     
     // /////////////////// CALLBACKS ///////////////////// //
 
-    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {
+    virtual cci::shared_ptr<cci::callb_adapt_b> register_callback(const cci::callback_type type, void* observer, cci::callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
+      return register_callback(type, cci::shared_ptr< cci::callb_adapt_b>(new cci::callb_adapt_b(observer, function, get_cci_base_param())));
     }
     
-    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr< cci::callb_adapt_b> callb) {
+    virtual cci::shared_ptr<cci::callb_adapt_b> register_callback(const cci::callback_type type, cci::shared_ptr< cci::callb_adapt_b> callb) {
       gs::cnf::callback_type cb = gs::cnf::no_callback;
       switch(type) {
-        case pre_read:
+        case cci::pre_read:
           cb = gs::cnf::pre_read;
           break;
         //case post_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
-        case pre_write:
+        case cci::pre_write:
           cb = gs::cnf::pre_write;
           break;
-        case create_param:
+        case cci::create_param:
           cb = gs::cnf::create_param;
           break;
-        case post_write:
+        case cci::post_write:
           cb = gs::cnf::post_write;
           break;
-        case destroy_param:
+        case cci::destroy_param:
           cb = gs::cnf::destroy_param;
           break;
       }
@@ -250,7 +260,7 @@ namespace cci {
         fw_vec.push_back(fw);
         fw->calling_gs_adapter = 
             m_gs_param_base.registerParamCallback( 
-                                                  shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
+                                                  cci::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
                                                                                             new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
                                                                                             (fw, 
                                                                                              &internal_callback_forwarder::call, 
@@ -278,7 +288,7 @@ namespace cci {
       }
     }
     
-    virtual bool unregister_param_callback(shared_ptr<cci::callb_adapt_b> callb)  {
+    virtual bool unregister_param_callback(cci::shared_ptr<cci::callb_adapt_b> callb)  {
       return unregister_param_callback(callb.get());
     }
     
@@ -306,6 +316,9 @@ namespace cci {
     
     std::vector<internal_callback_forwarder*> fw_vec;
     
+    /// Owning parameter, to allow implicit casting to the parent
+    cci::cci_base_param &m_owner_par;
+    
     gs::gs_param_base &m_gs_param_base;
     
     bool m_is_default_value;
@@ -320,6 +333,6 @@ namespace cci {
   };
 
 
-} // namespace cci
+} // namespace cci_impl
 
 #endif

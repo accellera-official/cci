@@ -114,6 +114,7 @@ inline bool cci::cci_value::operator==(const cci::cci_value& lhs) const {
       assert(false && "This should never happen!");
       CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "not implemented");
   }
+  return false;
 }
 
 inline cci::cci_value& cci::cci_value::operator=(const cci::cci_value& lhs) {
@@ -143,6 +144,7 @@ inline cci::cci_value& cci::cci_value::operator=(const cci::cci_value& lhs) {
       assert(false && "This should never happen!");
       CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Not implemented.");
   }
+  return *this;
 }
 
 inline cci::basic_param_type cci::cci_value::type() const { return m_type; }

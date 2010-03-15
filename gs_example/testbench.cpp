@@ -35,6 +35,7 @@
 #include <systemc>
 #include <cci.h>
 #include "cci_api.h"
+#include "cci_params.h"
 
 #include "ParameterOwnerModule.h"
 #include "ObserverModule.h"

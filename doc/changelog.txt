@@ -1,6 +1,7 @@
 ChangeLog
 ---------
 
+- Pimpl idiom / Opaque Pointer concept for params
 - removed boost version dependency of implementation
 - replaced boost int64 with SystemC int64
 - replaced boost shared_ptr and function 

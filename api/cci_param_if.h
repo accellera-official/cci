@@ -50,7 +50,7 @@ namespace cci {
   /// Compiler Check Interface for the parameters class
   template<typename T, param_mutable_type TM>
   class cci_param_if 
-  //: public cci_base_param_if
+  : virtual public cci_base_param_if
   {
   /*protected:
     /// Typedef for the value.
@@ -101,7 +101,7 @@ namespace cci {
      * @param v  Parameter where the value should be read from.
      * @return   Pointer to this.
      */
-    //virtual cci_param_if& operator = (const cci_param_if& v) = 0;
+    virtual cci_param<T, TM>& operator = (const cci_param<T, TM>& v) = 0;
     /* { 
       set(v.get());
       return *this;
@@ -113,7 +113,7 @@ namespace cci {
      * @param v  Value which has to be set.
      * @return   Pointer to this.
      */
-    //virtual cci_param_if& operator = (const T& v) = 0;
+    virtual cci_param<T, TM>& operator = (const T& v) = 0;
     /* { 
       set(v);
       return *this;
@@ -163,9 +163,11 @@ namespace cci {
     // the parameter.
     
     
-    /// Conversion value type --> JSON string. To be implemented by the specialization.
+    /// Conversion value type --> JSON string. (Not using the parameter value as source)
     /**
      * Should not make use of m_par_name because it is possibly called inside constructor!
+     *
+     * Direct parameter access @see cci_base_param::json_serialize
      *
      * @exception cci::cci_report_types::get_param_failed Converting value failed
      * @param val  Value that should be converted.
@@ -173,9 +175,9 @@ namespace cci {
      */
     virtual std::string json_serialize(const T& val) const = 0;
 
-    /// Convertion JSON string --> value type
+    /// Convertion JSON string --> value type (without affecting the parameter value directly)
     /**
-     * Implemented for each template specialization of cci_param:
+     * Direct parameter access @see cci_base_param::json_deserialize
      *
      * Guidelines:
      * - Do not write to target_val if deserialization fails!
@@ -186,7 +188,7 @@ namespace cci {
      * @param  str         JSON string that should be converted to a value.
      */
     virtual void json_deserialize(T& target_val, const std::string& str) = 0;
-
+    
   };
     
   //template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2);
