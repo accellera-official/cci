@@ -1,5 +1,10 @@
 Status of the API proposal and the example implementation:
 
+1.31
+- Private broker mechanism works with one example private broker
+- opaque pointer parameters
+
+
 Things left TODO:
  - Config API new param callbacks
  - is_initial_value status for parameter objects?
