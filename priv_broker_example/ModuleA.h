@@ -49,7 +49,7 @@
 /// Module which owns some cci parameters.
 class ModuleA
 : public sc_core::sc_module
-, public cci::cci_broker_module
+, public cci::cnf::cci_broker_module
 {
   
 public:
@@ -59,7 +59,7 @@ public:
   /// Constructor
   ModuleA(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
-  , cci::cci_broker_module(new cci::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
+  , cci::cnf::cci_broker_module(new cci::cnf::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
   , int_param ("int_param", 50 )
   , uint_param("uint_param", 12000)
   , uint_param2("uint_param2", 12)
@@ -72,7 +72,7 @@ public:
   
   ~ModuleA() {
     // Don't delete while params existing!
-    /*cci::cci_cnf_api* pb = get_broker();
+    /*cci::cnf::cci_cnf_api* pb = get_broker();
     register_private_broker(NULL);
     delete pb;*/
   }
@@ -81,15 +81,15 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cci_param<int>             int_param;
+  cci::cnf::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cci_param<unsigned int>    uint_param;
+  cci::cnf::cci_param<unsigned int>    uint_param;
   /// Example parameter.
-  cci::cci_param<unsigned int>    uint_param2;
+  cci::cnf::cci_param<unsigned int>    uint_param2;
   /// Example parameter.
-  cci::cci_param<std::string>     str_param;
+  cci::cnf::cci_param<std::string>     str_param;
   /// Example parameter.
-  cci::cci_param<bool>            bool_param;
+  cci::cnf::cci_param<bool>            bool_param;
   
 protected:
   ModuleB m_modB;

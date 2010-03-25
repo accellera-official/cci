@@ -39,7 +39,8 @@
 #include "cci_datatypes.h"
 
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
+
 
   class cci_value;
   
@@ -144,11 +145,12 @@ namespace cci {
     sc_dt::int64 m_value_number;
     /// double value (if this is of type double / real)
     double m_value_real;
-    /// list value (if this is of type cci::cci_value_list)
+    /// list value (if this is of type cci::cnf::cci_value_list)
     cci_value_list m_value_list;
     
   };
   
-} // end namespace cci
+
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif

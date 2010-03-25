@@ -57,7 +57,7 @@ public:
 
 protected:
   /// Pointer the the module's configuration API
-  cci::cci_cnf_api* mApi;
+  cci::cnf::cci_cnf_api* mApi;
 
 };
 

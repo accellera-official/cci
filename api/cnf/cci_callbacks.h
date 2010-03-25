@@ -36,9 +36,9 @@
 #ifndef __CCI_CALLBACKS_H__
 #define __CCI_CALLBACKS_H__
 
-#include "cci_function.h"
+#include "core/cci_function.h"
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
   
   /// Callback type
   /**
@@ -62,9 +62,9 @@ namespace cci {
   enum callback_return_type {
     /// No special return status
     return_nothing,
-    /// The callback function rejects a value change; may only be used in cci::pre_write callbacks
+    /// The callback function rejects a value change; may only be used in cci::cnf::pre_write callbacks
     /**
-     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::pre_write.
+     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::cnf::pre_write.
      */
     return_value_change_rejected,
     /// Some other error @todo specify reaction to be performed in calling parameter code
@@ -92,14 +92,14 @@ namespace cci {
    *
    * Note the template T_cci_base_param_if is only needed for compiling (to break
    * cyclic includes with cci_base_param), 
-   * Use the typedef cci::callb_adapt_b to access this class.
+   * Use the typedef  to access this class.
    */
   template<class T_cci_base_param_if>
   class callb_adapt_B
   {
   protected:
 
-    /// Allows cci::cci_base_param to access the caller_param to set to NULL.
+    /// Allows cci::cnf::cci_base_param to access the caller_param to set to NULL.
     friend class cci_base_param; 
         
   public:
@@ -179,6 +179,6 @@ namespace cci {
   typedef callb_adapt_B<cci_base_param> callb_adapt_b;
   
       
-} // end namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif

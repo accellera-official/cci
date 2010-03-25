@@ -35,7 +35,7 @@
 #define __CCI_PARAM_H___
 
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
   
   
   /// Parameter class, internally forwarding calls to the implementation
@@ -134,8 +134,8 @@ public:
   virtual ~cci_param() { cci_impl::DestroyParam<val_type, TM>(m_pImpl); };
   
   
-  virtual cci::cci_param<val_type, TM>& operator = (const cci::cci_param<val_type, TM>& v) { return m_pImpl->operator=(v);}
-  virtual cci::cci_param<val_type, TM>& operator = (const val_type& v) { return m_pImpl->operator=(v);}
+  virtual cci::cnf::cci_param<val_type, TM>& operator = (const cci::cnf::cci_param<val_type, TM>& v) { return m_pImpl->operator=(v);}
+  virtual cci::cnf::cci_param<val_type, TM>& operator = (const val_type& v) { return m_pImpl->operator=(v);}
   virtual operator const val_type& () const { return (val_type)(*m_pImpl); }
   virtual void set(const val_type& val) { m_pImpl->set(val); }
   virtual const val_type& get() const { return m_pImpl->get(); }
@@ -166,7 +166,6 @@ template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, T
 }
 
 
-
-} // end namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif

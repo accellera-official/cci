@@ -161,7 +161,7 @@ public:
 
     // TODO: CCI modifications:
 
-    cci::cci_cnf_api* a = cci::get_cnf_api_instance(mod);
+    cci::cnf::cci_cnf_api* a = cci::cnf::get_cnf_api_instance(mod);
     cci::gs_cci_cnf_api_if* gs_cci_a = dynamic_cast<cci::gs_cci_cnf_api_if*> (a);
     assert(gs_cci_a && "All APIs in this system are gs_cci_cnf_apis, what is wrong here?");
     cnf_api* gs_a = gs_cci_a->get_gcnf_api();

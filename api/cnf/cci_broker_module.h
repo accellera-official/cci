@@ -34,7 +34,7 @@
 #ifndef __CCI_BROKER_MODULE_H__
 #define __CCI_BROKER_MODULE_H__
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
   
   /// Class identifying a module which provides a (private) broker
   /**
@@ -81,7 +81,7 @@ namespace cci {
     
     /// Recursive search in SystemC hierarchy for a broker
     static cci_cnf_api* search_for_broker(sc_core::sc_object* ob) {
-      if (ob == NULL) return cci::get_cnf_api_instance();
+      if (ob == NULL) return cci::cnf::get_cnf_api_instance();
       CCI_CNF_DUMP("search_for_broker in: "<<ob->name());
       cci_broker_module* m = dynamic_cast<cci_broker_module*>(ob);
       if (m) {
@@ -96,6 +96,6 @@ namespace cci {
     
   };
 
-} // end namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif /* __CCI_BROKER_MODULE_H__ */

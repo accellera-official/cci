@@ -38,7 +38,7 @@
 void ModuleB::main_action() {
 
   // get the config API which is responsible for this module
-  cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
+  cci::cnf::cci_cnf_api* mApi = cci::cnf::get_cnf_api_instance(this);
   assert(mApi != NULL && "get_cnf_api_instance returned is NULL");
   wait(10, SC_SEC);
   

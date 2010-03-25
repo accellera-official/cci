@@ -40,14 +40,14 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config API which is responsible for this module
-  mApi = cci::get_cnf_api_instance(this);
+  mApi = cci::cnf::get_cnf_api_instance(this);
   SC_THREAD(main_action);
 }
 
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector< cci::shared_ptr<cci::callb_adapt_b> >::iterator iter;
+  std::vector< cci::shared_ptr<cci::cnf::callb_adapt_b> >::iterator iter;
   for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
     (*iter)->unregister_at_parameter();
   }
@@ -58,23 +58,23 @@ void ObserverModule::main_action() {
   DEMO_DUMP(name(), "register pre write callback for int_param to lock it");
 
   // get access to a foreign parameter using the module's config API
-  cci::cci_base_param* p = mApi->get_param("Owner.int_param");
+  cci::cnf::cci_base_param* p = mApi->get_param("Owner.int_param");
   assert(p != NULL);
 
   // ******** register for parameter change callback ***************
-  cci::shared_ptr<cci::callb_adapt_b> cb1, cb3;
-  cb1 = p->register_callback(cci::post_write, this, 
+  cci::shared_ptr<cci::cnf::callb_adapt_b> cb1, cb3;
+  cb1 = p->register_callback(cci::cnf::post_write, this, 
                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  cci::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
+  cci::cnf::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
   assert(p2 != NULL);
-  cb3 = p2->register_callback(cci::post_write, this, 
+  cb3 = p2->register_callback(cci::cnf::post_write, this, 
                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
   mCallbacks.push_back(cb3);// This will not be deleted after end of main_action()
 
   // ******* Testing parameter lock with callback returns *************
   // Register Callback for parameter int_param in module other_ip (IP1)
-  cci::shared_ptr<cci::callb_adapt_b> cb2;
-  cb2 = p->register_callback(cci::pre_write, this, 
+  cci::shared_ptr<cci::cnf::callb_adapt_b> cb2;
+  cb2 = p->register_callback(cci::cnf::pre_write, this, 
                              cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
   std::string str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
@@ -99,19 +99,19 @@ void ObserverModule::main_action() {
 
 
 /// Callback function with default signature showing changes.
-cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
-  assert(cb_reason == cci::post_write);
+cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
+  assert(cb_reason == cci::cnf::post_write);
   std::string str = par.json_serialize();
   DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
-  return cci::return_nothing;
+  return cci::cnf::return_nothing;
 }
 
 /// Callback function with default signature rejecting all changes.
-cci::callback_return_type ObserverModule::config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
-  assert(cb_reason == cci::pre_write);
+cci::cnf::callback_return_type ObserverModule::config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
+  assert(cb_reason == cci::cnf::pre_write);
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
   cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;
   cout << endl;
-  return cci::return_value_change_rejected;
+  return cci::cnf::return_value_change_rejected;
 }

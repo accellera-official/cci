@@ -42,12 +42,13 @@
 
 
 namespace cci {
+  namespace cnf {
 
   class cci_base_param;
 
   class gs_cci_private_broker
   : public cci_cnf_api
-  , public cci::gs_cci_cnf_api_if
+  , public gs_cci_cnf_api_if
   {
     
   public:
@@ -69,7 +70,7 @@ namespace cci {
     
     const std::vector<std::string> get_param_list();
     
-    shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb);
+    shared_ptr<cci::cnf::callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb);
 
     void unregister_all_callbacks(void* observer);
     
@@ -77,9 +78,9 @@ namespace cci {
     
     bool has_callbacks(const std::string& parname);
     
-    void add_param(cci_base_param* par);
+    void add_param(cci_base_param_if* par);
     
-    void remove_param(cci_base_param* par);
+    void remove_param(cci_base_param_if* par);
     
     //void set_alias(std::string& orig_parname, std::string& alias_parname);
         
@@ -98,6 +99,7 @@ namespace cci {
   };
 
 
+  } // end namespace cci
 } // end namespace cci
 
 #endif

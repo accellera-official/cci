@@ -55,10 +55,10 @@ namespace cci_impl {
   using std::cout;
   using std::endl;
   
-  template <typename T, cci::param_mutable_type TM>
+  template <typename T, cci::cnf::param_mutable_type TM>
   class gs_cci_param_t
   : public cci_impl::cci_base_param,
-    public cci::cci_param_if<T, TM>
+    public cci::cnf::cci_param_if<T, TM>
   {
   protected:
     /// Typedef for the value.
@@ -66,7 +66,7 @@ namespace cci_impl {
     /// Typedef for the param itself.
     typedef gs_cci_param_t<T, TM> my_type;
     /// Typedef for the param itself.
-    typedef cci::cci_param<T, TM> my_return_type;
+    typedef cci::cnf::cci_param<T, TM> my_return_type;
     /// Typedef for the owned gs_param
     typedef gs::gs_param<T> gs_param_type;
 
@@ -106,7 +106,7 @@ namespace cci_impl {
     my_return_type* get_cci_param() { return &m_owner_par; }
     operator my_return_type& () { return m_owner_par; }
     
-    virtual const cci::basic_param_type get_basic_type() const { return cci::partype_not_available; }
+    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::partype_not_available; }
    
     virtual my_return_type& operator = (const my_return_type& v) { 
       set(v.get());
@@ -127,7 +127,7 @@ namespace cci_impl {
     
     virtual void set(const val_type& val) {
       if (!m_gs_param.setValue(val))
-        CCI_THROW_ERROR(cci::cci_report_types::type().set_param_failed, "Bad value.");
+        CCI_THROW_ERROR(cci::cnf::cci_report_types::type().set_param_failed, "Bad value.");
     }
     
     virtual const val_type& get() const {

@@ -42,11 +42,11 @@
 #include <map>
 #include <set>
 
-#include "cci_shared_ptr.h"
+#include "core/cci_shared_ptr.h"
 #include "cci_value.h"
 
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
 
   template <typename T, param_mutable_type TM> 
   class cci_param;
@@ -282,7 +282,7 @@ namespace cci {
     
     /// Registers an observer callback function (a callback_func_ptr).
     /**
-     * For further callback types @see cci::cci_cnf_api::register_callback
+     * For further callback types @see cci::cnf::cci_cnf_api::register_callback
      *
      * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
      *
@@ -327,14 +327,14 @@ namespace cci {
      *   // Example code to register callback function
      *   void main_action() {
      *     // some code, parameters etc...
-     *     p1cb = my_param.register_callback(cci::post_write   , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2));
+     *     p1cb = my_param.register_callback(cci::cnf::post_write   , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2));
      *     p2cb = my_param.register_callback(cci::destroy_param, this, cci::bind(&MyIP_Class::config_callback, this, _1, _2));
      *   }
      *
      *   // Callback function with default signature.
      *   cci::callback_reason config_callback(cci_base_param& changed_param, const callback_type& cb_reason) {
      *     // some action
-     *     return cci::return_nothing;
+     *     return cci::cnf::return_nothing;
      *   }
      * protected:
      *   cci::shared_ptr<callb_adapt_b> p1cb;
@@ -378,9 +378,9 @@ namespace cci {
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(shared_ptr<cci::callb_adapt_b> callb) = 0;
-    /// @see unregister_param_callback(shared_ptr<cci::callb_adapt_b>) 
-    virtual bool unregister_param_callback(cci::callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt_b> callb) = 0;
+    /// @see unregister_param_callback(shared_ptr<>) 
+    virtual bool unregister_param_callback(cci::cnf::callb_adapt_b* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;
@@ -480,6 +480,6 @@ namespace cci {
 
   };
 
-} // namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif

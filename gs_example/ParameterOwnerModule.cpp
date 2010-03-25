@@ -38,7 +38,7 @@
 void ParameterOwnerModule::main_action() {
 
   // get the config API which is responsible for this module
-  cci::cci_cnf_api* mApi = cci::get_cnf_api_instance(this);
+  cci::cnf::cci_cnf_api* mApi = cci::cnf::get_cnf_api_instance(this);
   assert(mApi != NULL && "get_cnf_api_instance returned is NULL");
 
   // demonstrate is_default_value
@@ -74,7 +74,7 @@ void ParameterOwnerModule::main_action() {
 
   // create and access a local parameter
   cout << name() << ": create param ";
-  cci::cci_param<unsigned char> uchar_param("uchar_param");
+  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param");
   cout << uchar_param.get_name() << endl;
   cout << name() << ": Set the new parameter uchar_param" << endl;
   uchar_param = 'u';

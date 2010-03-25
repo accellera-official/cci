@@ -68,15 +68,15 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cci_param<int>             int_param;
+  cci::cnf::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cci_param<unsigned int>    uint_param;
+  cci::cnf::cci_param<unsigned int>    uint_param;
   /// Example parameter.
-  cci::cci_param<unsigned int>    uint_param2;
+  cci::cnf::cci_param<unsigned int>    uint_param2;
   /// Example parameter.
-  cci::cci_param<std::string>     str_param;
+  cci::cnf::cci_param<std::string>     str_param;
   /// Example parameter.
-  cci::cci_param<bool>            bool_param;
+  cci::cnf::cci_param<bool>            bool_param;
   
 };
 

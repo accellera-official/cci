@@ -36,6 +36,7 @@
 #include "cci_api.h"
 
 namespace cci {
+  namespace cnf {
 
 
   cci_cnf_api* singleton_api = NULL;
@@ -48,4 +49,5 @@ namespace cci {
   }
 
   
+  } // end namespace cci
 } // end namespace cci

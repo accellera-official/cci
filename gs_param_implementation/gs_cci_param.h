@@ -55,7 +55,7 @@
 
 namespace cci_impl {
 
-  template<typename T, cci::param_mutable_type TM = cci::mutable_parameter>
+  template<typename T, cci::cnf::param_mutable_type TM = cci::cnf::mutable_parameter>
   class cci_param 
   : public gs_cci_param_t <T, TM>
   {
@@ -99,8 +99,8 @@ namespace cci_impl {
     // Constructors with register_at_db bool
     explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
 */
-    explicit cci_param(cci::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
-    explicit cci_param(cci::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name = false) : base_type(owner_par, nam, val, force_top_level_name, true)   { /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name = false) : base_type(owner_par, nam, val, force_top_level_name, true)   { /*base_type::init(); Done with InitParam function*/ }
   
     ~cci_param() {
     }
@@ -147,20 +147,20 @@ namespace cci_impl {
     void json_deserialize(val_type& target_val, const std::string& str) {
       // TODO: this is currently not a JSON but a GreenConfig specific string
       if (!base_type::m_gs_param.deserialize(target_val, str))
-        CCI_THROW_ERROR(cci::cci_report_types::type().set_param_failed, "String conversion failed.");
+        CCI_THROW_ERROR(cci::cnf::cci_report_types::type().set_param_failed, "String conversion failed.");
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //
     
-    void set_value(const cci::cci_value& val) {
-      CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Set cci value not implemented for not specialized parameter types.");
+    void set_value(const cci::cnf::cci_value& val) {
+      CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Set cci value not implemented for not specialized parameter types.");
       // TODO: this could use a cci value's json representation to set the parameter
     }
 
-    cci::cci_value get_value() {
-      CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Get cci value not implemented for not specialized parameter types.");
+    cci::cnf::cci_value get_value() {
+      CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Get cci value not implemented for not specialized parameter types.");
       // TODO: this could use a cci value's json representation to get the parameter
-      cci::cci_value val;
+      cci::cnf::cci_value val;
       return val;
     }
     
@@ -168,7 +168,7 @@ namespace cci_impl {
       
   
 
-  template<cci::param_mutable_type TM>
+  template<cci::cnf::param_mutable_type       TM>
   class cci_param<std::string, TM>
   : public gs_cci_param_t<std::string, TM>
   {
@@ -209,8 +209,8 @@ namespace cci_impl {
     // Constructors with register_at_db bool
     explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
      */
-    explicit cci_param(cci::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
-    explicit cci_param(cci::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name = false) : base_type(owner_par, nam, val, force_top_level_name, true)   { /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name = false) : base_type(owner_par, nam, val, force_top_level_name, true)   { /*base_type::init(); Done with InitParam function*/ }
     
     ~cci_param() {
     }
@@ -254,37 +254,37 @@ namespace cci_impl {
       base_type::m_gs_param.deserialize(target_val, str);
     }    
     
-    void set_value(const cci::cci_value& val) {
+    void set_value(const cci::cnf::cci_value& val) {
       if (val.type() != get_basic_type()) {
-        CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Wrong cci value type applied to parameter.");
-        CCI_THROW_INFO(cci::cci_report_types::type().cci_value_failure, "  cci value type: "<<val.type()<<" != parameter type: "<<get_basic_type());
+        CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type applied to parameter.");
+        CCI_THROW_INFO(cci::cnf::cci_report_types::type().cci_value_failure, "  cci value type: "<<val.type()<<" != parameter type: "<<get_basic_type());
       }
       switch (val.type()) {
-        case cci::partype_not_available:
-          CCI_THROW_WARNING(cci::cci_report_types::type().cci_value_failure, "Applied cci value has no type.");
+        case cci::cnf::partype_not_available:
+          CCI_THROW_WARNING(cci::cnf::cci_report_types::type().cci_value_failure, "Applied cci value has no type.");
           break;
-        case cci::partype_number:
-        case cci::partype_real:
-        case cci::partype_bool:
-        case cci::partype_list:
-        case cci::partype_other:
-          CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Applied cci value not available for this param type.");
+        case cci::cnf::partype_number:
+        case cci::cnf::partype_real:
+        case cci::cnf::partype_bool:
+        case cci::cnf::partype_list:
+        case cci::cnf::partype_other:
+          CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Applied cci value not available for this param type.");
           break;
-        case cci::partype_string:
+        case cci::cnf::partype_string:
           set(val.get_string());
           break;
         default:
           assert(false && "This should never happen!");
-          CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Not implemented.");
+          CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Not implemented.");
       }
     }
     
-    cci::cci_value get_value() {
-      cci::cci_value val(base_type::get());
+    cci::cnf::cci_value get_value() {
+      cci::cnf::cci_value val(base_type::get());
       return val;
     }
     
-    const cci::basic_param_type get_basic_type() const { return cci::partype_string; }
+    const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::partype_string; }
 
   };
   

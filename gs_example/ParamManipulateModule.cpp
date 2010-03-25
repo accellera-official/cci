@@ -40,7 +40,7 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config API which is responsible for this module
-  mApi = cci::get_cnf_api_instance(this);
+  mApi = cci::cnf::get_cnf_api_instance(this);
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value
@@ -58,16 +58,16 @@ void ParamManipulateModule::main_action() {
   wait(10, SC_NS);
   
   // get a parameter using the local config API
-  cci::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
+  cci::cnf::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
   if (int_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::cci_param<int> &int_param_p = *static_cast<cci::cci_param<int>* >(int_param_ptr);
+  cci::cnf::cci_param<int> &int_param_p = *static_cast<cci::cnf::cci_param<int>* >(int_param_ptr);
 
   // get a parameter using the local config API
-  cci::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
+  cci::cnf::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
   if (uint_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cci_param<unsigned int>* >(uint_param_ptr);
+  cci::cnf::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cnf::cci_param<unsigned int>* >(uint_param_ptr);
   
   // demonstrate json setting
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");

@@ -35,8 +35,7 @@
 #ifndef __CCI_BASE_PARAM_H___
 #define __CCI_BASE_PARAM_H___
 
-namespace cci {
-      
+__CCI_OPEN_CONFIG_NAMESPACE__
 
   // The shell class to make instantiation and access easier
   class cci_base_param : virtual public cci_base_param_if
@@ -61,8 +60,8 @@ namespace cci {
     virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
     virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()-> register_callback(type, callb);}
     virtual void unregister_all_callbacks(void* observer) {get_pImpl()->unregister_all_callbacks(observer);}
-    virtual bool unregister_param_callback(cci::shared_ptr<cci::callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
-    virtual bool unregister_param_callback(cci::callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
+    virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
+    virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
     virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
     virtual bool lock(void* pwd = NULL){return get_pImpl()->lock();}
     virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock();}
@@ -72,6 +71,6 @@ namespace cci {
     virtual cci_base_param_if* get_pImpl() const = 0;
   };
 
-} // end namespace cci
-
+__CCI_CLOSE_CONFIG_NAMESPACE__
+  
 #endif

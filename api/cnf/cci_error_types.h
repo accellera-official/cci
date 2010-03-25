@@ -42,7 +42,7 @@
 
 #define CCI_SC_REPORT_MSG_TYPE_PREFIX "/OSCI/CCI/"
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
   
   // ///////////////////// Error handling /////////////////////// //
 
@@ -50,7 +50,7 @@ namespace cci {
   /**
    * Usage:
    * <code>
-   * CCI_THROW_ERROR(cci::cci_report_types::type().cci_value_failure, "Any report text");
+   * CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Any report text");
    * </code>
    * @todo This report error/warning/info types class could be made more elegant!
    */
@@ -124,7 +124,7 @@ namespace cci {
     SC_REPORT_INFO(sid.str().c_str(), smsg.str().c_str());
   }*/
   
-} // end namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 
 #endif

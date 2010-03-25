@@ -37,10 +37,10 @@
 #define __CCI_CNF_API_H__
 
 
-#include <cci_shared_ptr.h>
+#include "core/cci_shared_ptr.h"    
 
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
 
 
   // forward declaration 
@@ -74,7 +74,7 @@ namespace cci {
     /**
      * The init value has priority to the default value being set by the owner!
      *
-     * @exception        cci::cci_report_types::set_param_failed Setting parameter object failed
+     * @exception        cci::cnf::cci_report_types::set_param_failed Setting parameter object failed
      * @param parname    Full hierarchical parameter name.
      * @param json_value JSON string representation of the init value the parameter has to be set to.
      */
@@ -146,7 +146,7 @@ namespace cci {
     
     /// Registers an observer callback function (with the signature of callback_func_ptr).
     /**
-     * Same as @see cci::cci_base_param::register_callback but additional
+     * Same as @see cci::cnf::cci_base_param::register_callback but additional
      * - create param callbacks
      * - callbacks to not yet existing params
      * - (optionally) callbacks for regex names
@@ -183,9 +183,9 @@ namespace cci {
      *   void main_action() {
      *     // some code, parameters etc...
      *
-     *     my_callbacks.push_back( my_param.register_callback(cci::post_write,  this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( my_param.register_callback(cci::cnf::post_write,  this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *     //   equal to
-     *     my_callbacks.push_back( m_api.register_callback(cci::post_write   , my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::cnf::post_write   , my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *
      *     my_callbacks.push_back( my_param.register_callback(cci::destroy_param, this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *     //   equal to
@@ -193,8 +193,8 @@ namespace cci {
      *
      *     my_callbacks.push_back( m_api.register_callback(cci::create_param , "*"                , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *  OPTIONAL:
-     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "*.my_param"  , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
-     *     my_callbacks.push_back( m_api.register_callback(cci::post_write, "MyIP_Class.*", this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::cnf::post_write, "*.my_param"  , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_api.register_callback(cci::cnf::post_write, "MyIP_Class.*", this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *   }
      *
      *   // Callback function with default signature.
@@ -265,7 +265,7 @@ namespace cci {
      *       pure virtual functions in cci_base_param because this method 
      *       may be called by the cci_base_param constructor.
      *
-     * @exception cci::cci_report_types::add_param_failed Adding parameter object failed
+     * @exception cci::cnf::cci_report_types::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
     virtual void add_param(cci_base_param_if* par) = 0;
@@ -274,7 +274,7 @@ namespace cci {
     /**
      * It should be ensured this is not being called from elsewhere than the parameter destructor (e.g. by user).
      *
-     * @exception cci::cci_report_types::remove_param_failed Remove parameter object failed
+     * @exception cci::cnf::cci_report_types::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
      */
     virtual void remove_param(cci_base_param_if* par) = 0;
@@ -323,6 +323,6 @@ namespace cci {
   };
 
       
-} // end namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif

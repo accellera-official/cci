@@ -41,7 +41,7 @@
 #include <iostream>
 
 
-namespace cci {
+__CCI_OPEN_CONFIG_NAMESPACE__
 
   
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
@@ -86,6 +86,6 @@ namespace cci {
 #endif
 
   
-} // end namespace cci
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif
