@@ -65,7 +65,7 @@ public:
 
 protected:
   /// Pointer the the module's configuration API
-  cci::cnf::cci_cnf_api* mApi;
+  cci::cnf::cci_cnf_broker* mApi;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
   std::vector< cci::shared_ptr<cci::cnf::callb_adapt_b> > mCallbacks;

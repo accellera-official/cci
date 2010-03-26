@@ -32,20 +32,22 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_CNF_API_IF_H__
-#define __GS_CCI_CNF_API_IF_H__
+#ifndef __GS_CCI_CNF_BROKER_IF_H__
+#define __GS_CCI_CNF_BROKER_IF_H__
 
 namespace cci {
+  namespace cnf {
   
-  class  gs_cci_cnf_api_if {
+  class  gs_cci_cnf_broker_if {
   public:
 
-    virtual ~gs_cci_cnf_api_if() { }
+    virtual ~gs_cci_cnf_broker_if() { }
     
     virtual gs::cnf::cnf_api* get_gcnf_api() = 0;
     
   };
   
+  } // end namespace
 } // end namespace
 
 #endif

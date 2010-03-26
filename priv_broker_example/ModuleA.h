@@ -48,8 +48,9 @@
 
 /// Module which owns some cci parameters.
 class ModuleA
+//: public cci::cnf::cci_broker_manager_module
 : public sc_core::sc_module
-, public cci::cnf::cci_broker_module
+, public cci::cnf::cci_broker_manager
 {
   
 public:
@@ -58,8 +59,9 @@ public:
 	
   /// Constructor
   ModuleA(sc_core::sc_module_name name)
+  //: cci::cnf::cci_broker_manager_module(name, new cci::cnf::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
   : sc_core::sc_module(name)
-  , cci::cnf::cci_broker_module(new cci::cnf::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
+  , cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
   , int_param ("int_param", 50 )
   , uint_param("uint_param", 12000)
   , uint_param2("uint_param2", 12)
@@ -72,7 +74,7 @@ public:
   
   ~ModuleA() {
     // Don't delete while params existing!
-    /*cci::cnf::cci_cnf_api* pb = get_broker();
+    /*cci::cnf::cci_cnf_broker* pb = get_broker();
     register_private_broker(NULL);
     delete pb;*/
   }

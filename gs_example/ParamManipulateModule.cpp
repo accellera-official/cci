@@ -40,7 +40,7 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config API which is responsible for this module
-  mApi = cci::cnf::get_cnf_api_instance(this);
+  mApi = cci::cnf::get_cnf_broker_instance(this);
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value

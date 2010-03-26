@@ -15,7 +15,7 @@ SRCS = testbench.cpp \
        ObserverModule.cpp \
        ValueModule.cpp \
        ../gs_api_implementation/cci_api.cpp \
-       ../gs_api_implementation/gs_cci_cnf_api.cpp 
+       ../gs_api_implementation/gs_cci_cnf_broker.cpp 
 
 OBJS = testbench.o \
        ParameterOwnerModule.o \
@@ -23,7 +23,7 @@ OBJS = testbench.o \
        ObserverModule.o \
        ValueModule.o \
        cci_api.o \
-       gs_cci_cnf_api.o
+       gs_cci_cnf_broker.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 

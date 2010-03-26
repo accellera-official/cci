@@ -47,8 +47,8 @@ namespace cci {
   class cci_base_param;
 
   class gs_cci_private_broker
-  : public cci_cnf_api
-  , public gs_cci_cnf_api_if
+  : public cci_cnf_broker
+  , public gs_cci_cnf_broker_if
   {
     
   public:

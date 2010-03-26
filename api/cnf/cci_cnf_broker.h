@@ -33,8 +33,8 @@
 
 
 
-#ifndef __CCI_CNF_API_H__
-#define __CCI_CNF_API_H__
+#ifndef __CCI_CNF_BROKER_H__
+#define __CCI_CNF_BROKER_H__
 
 
 #include "core/cci_shared_ptr.h"    
@@ -52,18 +52,18 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   class cci_param;
 
   
-  /// CCI configuration API interface.
+  /// CCI configuration broker interface.
   /**
    * This can be used by a tool to access the database or parameter objects, set initial values etc.
    * or can be used by the model itself to get access to configuration objects etc.
    */
-  class cci_cnf_api
+  class cci_cnf_broker
   {
     
   public:
     
     // Destructor
-    virtual ~cci_cnf_api() { };
+    virtual ~cci_cnf_broker() { };
 
     
     // //////////////////////////////////////////////////////////////////// //
@@ -176,7 +176,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *
      *   clean_my_callbacks() {
      *     // will unregister the callbacks being registered within this module for all parameters
-     *     m_api.unregister_all_callbacks(this);
+     *     m_broker.unregister_all_callbacks(this);
      *   }
      *
      *   // Example code to register callback function
@@ -185,16 +185,16 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *
      *     my_callbacks.push_back( my_param.register_callback(cci::cnf::post_write,  this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *     //   equal to
-     *     my_callbacks.push_back( m_api.register_callback(cci::cnf::post_write   , my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_broker.register_callback(cci::cnf::post_write   , my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *
      *     my_callbacks.push_back( my_param.register_callback(cci::destroy_param, this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *     //   equal to
-     *     my_callbacks.push_back( m_api.register_callback(cci::destroy_param, my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_broker.register_callback(cci::destroy_param, my_param.get_name(), this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *
-     *     my_callbacks.push_back( m_api.register_callback(cci::create_param , "*"                , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_broker.register_callback(cci::create_param , "*"                , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *  OPTIONAL:
-     *     my_callbacks.push_back( m_api.register_callback(cci::cnf::post_write, "*.my_param"  , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
-     *     my_callbacks.push_back( m_api.register_callback(cci::cnf::post_write, "MyIP_Class.*", this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_broker.register_callback(cci::cnf::post_write, "*.my_param"  , this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
+     *     my_callbacks.push_back( m_broker.register_callback(cci::cnf::post_write, "MyIP_Class.*", this, cci::bind(&MyIP_Class::config_callback, this, _1, _2)) );
      *   }
      *
      *   // Callback function with default signature.
@@ -283,7 +283,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   public:
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////    Optional functions   //////////////////////////// //
-    // TODO: Optional Config API functions to be discussed
+    // TODO: Optional Config broker functions to be discussed
 
     /// Return a pointer list of all (explicit) parameters in the given scope (matching the pattern)
     /**

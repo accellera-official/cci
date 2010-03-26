@@ -25,7 +25,7 @@ sc_main is executed. It shall be available no later than the
 start of elaboration (e.g. sc_main).
 It is forward declared in cci.h
 
- cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
+ cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod = NULL);
 
 Code for tool vendor:
 
@@ -34,7 +34,7 @@ namespace cci {
    * @param mod  (Optional:) The sc module that wants an API
    * @return     Pointer to a configuration API
    */
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod);
+  cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod);
 } // end namespace cci
 
 

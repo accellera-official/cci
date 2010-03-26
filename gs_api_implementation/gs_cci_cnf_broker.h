@@ -32,29 +32,29 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_CNF_API_H__
-#define __GS_CCI_CNF_API_H__
+#ifndef __GS_CCI_CNF_BROKER_H__
+#define __GS_CCI_CNF_BROKER_H__
 
 
 #include <cci.h>
 #include "cci_params.h"
 #include "greencontrol/config.h"
-#include "gs_cci_cnf_api_if.h"
+#include "gs_cci_cnf_broker_if.h"
 
 namespace cci {
   namespace cnf {
 
   class cci_base_param;
 
-  class gs_cci_cnf_api
-  : public cci::cnf::cci_cnf_api
-  , public gs_cci_cnf_api_if
+  class gs_cci_cnf_broker
+  : public cci::cnf::cci_cnf_broker
+  , public gs_cci_cnf_broker_if
   {
   public:
     
-    gs_cci_cnf_api();
+    gs_cci_cnf_broker();
     
-    ~gs_cci_cnf_api();
+    ~gs_cci_cnf_broker();
 
     void set_init_value(const std::string &parname, const std::string &value);
     

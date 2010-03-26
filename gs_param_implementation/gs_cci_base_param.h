@@ -166,15 +166,15 @@ namespace cci_impl {
     void init() {
       assert(m_init_called == false && "init() function called more than once!");
       m_init_called = true;
-      cci::cnf::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
-      //cci::cnf::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
+      cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
+      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
       register_callback(cci::cnf::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
     virtual ~cci_base_param() {
-      cci::cnf::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(get_cci_base_param());
-      //cci::cnf::get_cnf_api_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(this);
+      cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(get_cci_base_param());
+      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");
     }
     

@@ -62,7 +62,7 @@
 
 // TODO: CCI modification
 #include <cci.h>
-#include "gs_cci_cnf_api_if.h"
+#include "gs_cci_cnf_broker_if.h"
 
 namespace gs {
 namespace cnf {
@@ -161,9 +161,9 @@ public:
 
     // TODO: CCI modifications:
 
-    cci::cnf::cci_cnf_api* a = cci::cnf::get_cnf_api_instance(mod);
-    cci::gs_cci_cnf_api_if* gs_cci_a = dynamic_cast<cci::gs_cci_cnf_api_if*> (a);
-    assert(gs_cci_a && "All APIs in this system are gs_cci_cnf_apis, what is wrong here?");
+    cci::cnf::cci_cnf_broker* a = cci::cnf::get_cnf_broker_instance(mod);
+    cci::cnf::gs_cci_cnf_broker_if* gs_cci_a = dynamic_cast<cci::cnf::gs_cci_cnf_broker_if*> (a);
+    assert(gs_cci_a && "All APIs in this system are gs_cci_cnf_brokers, what is wrong here?");
     cnf_api* gs_a = gs_cci_a->get_gcnf_api();
     assert(gs_a && "All APIs in this System are cnf_apis! What happened here?");
     return gs_a;

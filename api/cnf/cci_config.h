@@ -57,26 +57,32 @@
 #define __CCI_OPEN_CONFIG_NAMESPACE__  namespace cci { namespace cnf {
 #define __CCI_CLOSE_CONFIG_NAMESPACE__ } }
 
+/// Main CCI namespace
+namespace cci {
+  /// Namespace for CCI configuration part
+  namespace cnf {
+  }
+}
 __CCI_OPEN_CONFIG_NAMESPACE__
 
   // forward declaration
-  class cci_cnf_api;
+  class cci_cnf_broker;
 
-  /// Returns a configuration API instance responsible for handling the requests of the given module 
+  /// Returns a configuration broker instance responsible for handling the requests of the given module 
   /**
    * Forward declaration, to be implemented by the tool.
    *
-   * @param mod Pointer to the module who wants access the config API, can be NULL if e.g. top-level or non-SystemC code is requesting the API.
-   * @return Configuration API.
+   * @param mod Pointer to the module who wants access the config broker, can be NULL if e.g. top-level or non-SystemC code is requesting the broker.
+   * @return Configuration broker.
    */
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod = NULL);
+  cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod = NULL);
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
 
 #include "cci_error_types.h"
 #include "cci_datatypes.h"
 #include "cci_callbacks.h"
-#include "cci_cnf_api.h"
+#include "cci_cnf_broker.h"
 
 #include "cci_base_param_if.h"
 #include "cci_base_param.h"

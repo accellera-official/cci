@@ -38,8 +38,8 @@
 void ModuleA::main_action() {
 
   // get the config API which is responsible for this module
-  cci::cnf::cci_cnf_api* mApi = cci::cnf::get_cnf_api_instance(this);
-  assert(mApi != NULL && "get_cnf_api_instance returned is NULL");
+  cci::cnf::cci_cnf_broker* mApi = cci::cnf::get_cnf_broker_instance(this);
+  assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
 
   
   

@@ -257,7 +257,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// OPTIONAL: Returns if the current value is an initial value being set by the database (OPTIONAL:) and not been modified
     /**
-     * True if the value has been set using the cnf_api's
+     * True if the value has been set using the cnf_broker's
      * set_initial_value function (OPTIONAL:) and not been modified since then.
      *
      * @return If the parameter's current value is an initial value being set by the database
@@ -282,7 +282,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Registers an observer callback function (a callback_func_ptr).
     /**
-     * For further callback types @see cci::cnf::cci_cnf_api::register_callback
+     * For further callback types @see cci::cnf::cci_cnf_broker::register_callback
      *
      * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
      *

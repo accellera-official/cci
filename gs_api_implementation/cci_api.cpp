@@ -39,11 +39,11 @@ namespace cci {
   namespace cnf {
 
 
-  cci_cnf_api* singleton_api = NULL;
+  cci_cnf_broker* singleton_api = NULL;
 
-  cci_cnf_api* get_cnf_api_instance(sc_core::sc_module* mod) {
-    if (!singleton_api) singleton_api = new gs_cci_cnf_api();
-    if (mod != NULL) return cci_broker_module::search_for_broker(mod);
+  cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod) {
+    if (!singleton_api) singleton_api = new gs_cci_cnf_broker();
+    if (mod != NULL) return cci_broker_manager::search_for_broker(mod);
     CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));
     return singleton_api;
   }

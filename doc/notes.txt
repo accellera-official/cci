@@ -86,4 +86,15 @@ hard to do for the user.
 
 ----------------------------------------------------------------
 
+PRIVATE BROKERS
+
+The user can derive from cci_broker_manager_module to create an 
+sc_module which can hold a private broker.
+This private broker either can be given during construction to 
+the constructor or later using a function call. If none is given,
+the broker manager will automatically search for the responsible
+one in the hierarchy upwards.
+
+----------------------------------------------------------------
+
 christian.schroeder@greensocs.com

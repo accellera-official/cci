@@ -38,7 +38,7 @@
 
 #include <cci.h>
 
-#include "gs_cci_cnf_api.h"
+#include "gs_cci_cnf_broker.h"
 
 namespace cci {
 
