@@ -72,6 +72,10 @@ public:
   }
 
   /// Register a private broker to be used and returned by this module
+  /**
+   * TODO: Problem: all params created before this call did not use this broker to register themselves!
+   *       So maybe don't provide this function? In that case, how shall the cci_broker_manager_module class work if it cannot get a private broker?
+   */
   virtual void register_private_broker(cci_cnf_broker* broker) {
     if (m_broker && broker) SC_REPORT_WARNING("CCI/broker_module", "Overwriting currently registered broker module!");
     m_broker = broker;
@@ -104,15 +108,18 @@ class cci_broker_manager_module
 : public sc_core::sc_module 
 , public cci_broker_manager {
 public:
-  /// Constructor with sc_module_name and optional broker
+  /// Constructor with sc_module_name
   /**
+   * This constructor has _not_ a broker parameter because the owning sc_module 
+   * shall be already constructed before the private broker mechanism can be 
+   * used, to ensure the mechanism is allowed to use (e.g. cast) the module.
+   *
    * @param name sc_module name
-   * @param broker Optional private broker
    * @see cci_broker_manager
    */
-  cci_broker_manager_module(sc_core::sc_module_name name, cci_cnf_broker* broker = NULL)
+  cci_broker_manager_module(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
-  , cci_broker_manager(broker) 
+  , cci_broker_manager(NULL) 
   {
   }
 };

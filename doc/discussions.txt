@@ -2,6 +2,16 @@ Discussions about the API and prototype proposal:
 
 ----------------------------------------------------------
 
+Private broker manager
+
+To be discussed:
+The cci_broker_manager_module constructor has _not_ a broker parameter because the owning sc_module shall be already constructed before the private broker mechanism can be used, to ensure the mechanism is allowed to use access the owner module. 
+E.g. the private broker should be allowed to get the owning module as a constructor parameter _and use it_ - which it cannot do if the owner is not yet constructed completely. Example: in our implementation the private broker tries to get the next broker upwards the hierarchy which is used to forward _not_ private calls. This fails with a segfault when trying to dynamic cast the owner to get the parent if it is not yet constructed.
+Possible option: Don't care for this problem, it has to be solved by the implementation: it cannot rely on the owniner pointer to be valid on construction.
+
+To be discussed as well:
+When we provide a function "register_private_broker" which e.g. could be called within the module constructor, this will fail to work for all class member parameters - which is dangerous. Do we want to allow this dangerous behavior? If not: how to support the convenience cci_broker_manager_module which cannot get a (e.g. newed) private broker within the constructor due to previous discussion?
+
 ----------------------------------------------------------
 Locking Parameter Values (Req.14)
 

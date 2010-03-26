@@ -48,7 +48,6 @@
 
 /// Module which owns some cci parameters.
 class ModuleA
-//: public cci::cnf::cci_broker_manager_module
 : public sc_core::sc_module
 , public cci::cnf::cci_broker_manager
 {
@@ -59,7 +58,6 @@ public:
 	
   /// Constructor
   ModuleA(sc_core::sc_module_name name)
-  //: cci::cnf::cci_broker_manager_module(name, new cci::cnf::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
   : sc_core::sc_module(name)
   , cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, "int_param", END_OF_PUBLIC_PARAM_LIST))
   , int_param ("int_param", 50 )
