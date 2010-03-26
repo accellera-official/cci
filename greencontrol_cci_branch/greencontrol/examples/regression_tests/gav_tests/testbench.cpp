@@ -59,15 +59,17 @@
  */
 int sc_main(int argc, char *argv[]) {
   
+  sc_core::sc_report_handler::set_actions(sc_core::SC_ERROR, sc_core::SC_ABORT);
+  
   // GreenControl Core instance
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
   
   // GreenConfig Plugin
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
   
   // GreenAV Plugin
-  gs::av::GAV_Plugin analysisPlugin("AnalysisPlugin", gs::av::STDOUT_OUT);
+  gs::av::GAV_Plugin analysisPlugin(gs::av::STDOUT_OUT);
   
   
   // Modules

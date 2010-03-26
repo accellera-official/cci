@@ -55,6 +55,8 @@ void AVOwner::main_action() {
   uint_param = 670;
   str_param = "Hello World!";
   int_param = 101;
+  uint64_param = 18446744073709551615ULL;
+  logic_param = 'z';
   wait(SC_ZERO_TIME);
   
   wait(1, SC_NS);
@@ -70,6 +72,9 @@ void AVOwner::main_action() {
   str_param = "Hello Arizona!";
   wait(SC_ZERO_TIME);
   str_param = "Hello France!";
+
+  uint64_param = 18446744073709551614ULL;
+  logic_param = 1;
 
   cout << endl << endl;
 

@@ -497,6 +497,7 @@ template<>
 class gs_param<std::string>
 : public gs_param_t<std::string>
 {
+protected:
   /// Typedef for this specialized class.
   typedef gs_param<std::string> my_type;
   /// Typedef for the value.

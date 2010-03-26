@@ -240,19 +240,20 @@ inline void TG::write(gs_uint32 write_size, gs_uint64 addr) {
 
 inline void TG::read() {
   //DEMO_TRACE(sc_core::sc_module::name(), "Reading %d bytes from address 0x%x", (gs_uint32)read_size, (gs_uint32)read_addr[target]);
-  tm.startMeasure();
+  if (do_time_measure) tm.startMeasure();
   for (gs_uint32 i=0; i<read_count; i++) {
     read(read_size, read_addr[target]);
     sc_core::wait(getRandom(delay_max)*clk_period, SC_NS);     
     //sc_core::wait(delay_max*clk_period, SC_NS);
   }
   cout << name() << ": read (# transactions, bytes, us, cycles), " << dec << (gs_uint32)read_count << ", " << dec << (gs_uint32)read_size << ", ";
-  tm.stopMeasure();
+  if (do_time_measure) tm.stopMeasure();
+  else cout << "omitted";
 }
 
 inline void TG::write() {
   //DEMO_TRACE(sc_core::sc_module::name(), "Sending %d bytes to address 0x%x", (gs_uint32)write_size, (gs_uint32)write_addr[target]);
-  tm.startMeasure();
+  if (do_time_measure) tm.startMeasure();
   for (gs_uint32 i=0; i<write_count; i++) {
     write(write_size, write_addr[target]);
     sc_core::wait(getRandom(delay_max)*clk_period, SC_NS);
@@ -261,7 +262,8 @@ inline void TG::write() {
   static gs_uint32 write_count_overall = 0;
   write_count_overall+=write_count;
   cout << name() << ": write (# transactions, bytes, us, cycles), " << dec << (gs_uint32)write_count << "("<<write_count_overall<<"), " << dec << (gs_uint32)write_size << ", ";
-  tm.stopMeasure();
+  if (do_time_measure) tm.stopMeasure();
+  else cout << "omitted";
 }
 
 inline bool TG::doWrite() {

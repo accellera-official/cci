@@ -64,14 +64,14 @@
 int sc_main(int argc, char *argv[]) {
   
   // GreenControl Core instance
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
   // GreenConfig Plugin
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
 
   // GreenAV Plugin
-  gs::av::GAV_Plugin analysisPlugin("AnalysisPlugin", gs::av::STDOUT_OUT);
+  gs::av::GAV_Plugin analysisPlugin(gs::av::STDOUT_OUT);
   // negative test:
   //gs::av::GAV_Plugin analysisPlugin("AnalysisPlugin"); // will fail adding params to DEFAULT_OUT type
   
@@ -114,9 +114,9 @@ SC_MODULE(topSimpleAnalysis)
   AVscvAnalyserTool  scvtool;
 
   SC_CTOR(topSimpleAnalysis) 
-  : core("ControlCore"),
+  : core,
     cnfdatabase("ConfigDatabase"),
-    configPlugin("ConfigPlugin", &cnfdatabase), // This is not recommended coding style!! May lead to SystemC module stack error!
+    configPlugin(&cnfdatabase), // This is not recommended coding style!! May lead to SystemC module stack error!
     analysisPlugin("AnalysisPlugin"),
     owner ("Owner"),
     tool  ("AVTool"),

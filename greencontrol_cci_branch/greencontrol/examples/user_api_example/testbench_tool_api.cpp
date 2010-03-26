@@ -47,6 +47,9 @@
 #include "testtool2.h"
 #include "tool_api/tool_api.h" // include user defined API
 
+//
+// OUTDATED example
+//
 
 /// Testbench for the example GreenConfig
 /**
@@ -55,11 +58,11 @@
 int sc_main(int argc, char *argv[]) {
   
   /// GreenControl Core instance
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
   // GreenConfig Plugin
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
 
   TestIP4      ip("IP4");
   TestTool2    tool("TestTool2");

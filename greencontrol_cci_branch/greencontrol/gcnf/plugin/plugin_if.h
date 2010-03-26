@@ -48,15 +48,16 @@ namespace gs {
 namespace cnf {
 
 
-/// SystemC interface to allow the observer database to get access to the parameter database of the ConfigPlugin.
+/// Interface to allow the observer database to get access to the parameter database of the ConfigPlugin.
 /**
  * The ConfigPlugin has to implement this interface to be connected to the port of the
  * observer database.
  */
 struct plugin_if
-: virtual public sc_interface
 {
 public:
+
+  virtual ~plugin_if() { }
 
   /// @see gs::cnf::param_database_if::setParam
   //virtual bool setParam(const std::string &hier_parname, const std::string &value) = 0;

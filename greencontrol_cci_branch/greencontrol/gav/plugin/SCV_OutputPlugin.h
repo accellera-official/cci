@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -226,17 +226,21 @@ namespace av {
    * <code>init_scv_recording()</code>. The default is a text database written to the
    * file transaction_text_db. Add <code>define</code> areas to use other databases (like ModelSim).
    *
-   * If a tool is only able to handle one stream, use the <code>define ONLY_ONE_GLOBAL_STREAM</code>.
+   * If a tool is only able to handle one stream, use the <code>#define ONLY_ONE_GLOBAL_STREAM</code>.
    * Then all SCV_OutputPlugin instances write to the same stream.
    *
    * The OutputPlugin is able to create transactions with values of the type 'string' (default)
    * The user may 
-   * <code>define USE_CORRECT_TYPE_TRANSACTIONS true</code>
+   * <code>#define USE_CORRECT_TYPE_TRANSACTIONS true</code>
    * to enable transactions containing
    * values of the correct type (as long as the type is listed in the enumeration
    * gs::cnf::Param_type and is implemented here). This is slower because of 
    * some additional switch statements and casts. 
    * @todo: check if using correct data types is really slower or if the not used string output speeds up.
+   *
+   * By default this plugin will begin logging and writing at the moment the parameter is added for observation.
+   * A constructor option allows to start on the automatic end_of_elaboration call.
+   * See OutputPlugin_base for details on how to handle and influence running behavior.
    */ 
   class SCV_OutputPlugin 
   : public OutputPlugin_base 
@@ -254,19 +258,23 @@ namespace av {
      *
      * @param opname Name of the output plugin.
      * @param ev_listn  Pointer to event listener that may be used by this.
+     * @param start_running  If this output plugin (start_running=true, default) starts running immediately on first param adding or (start_running=false:) begins to output on end_of_elaboreation 
      */
-    SCV_OutputPlugin(const char* opname, event_listener<OutputPlugin_base> *ev_listn)
-    : OutputPlugin_base(opname, ev_listn, SCV_STREAM_OUT),
-      txdb(NULL)
-    {   }
+    SCV_OutputPlugin(const char* opname, event_listener<OutputPlugin_base> *ev_listn, bool start_running = true)
+    : OutputPlugin_base(opname, ev_listn, SCV_STREAM_OUT, start_running)
+    , txdb(NULL)
+    , m_scv_initialized(false)
+    { }
     
   protected:
-    /// Init function called on first usage, not called during construction!
+    /// Init function called on first output and (internally) on first action (which is earlier than the fist output), not called during construction!
     /**
      * Creates the stream etc.
      */
-    void init() {
-      GAV_DUMP_N(name(), "Init Output Plugin:");
+    virtual void init() {
+      if (m_scv_initialized) return;
+      m_scv_initialized = true;
+      GAV_DUMP_N(name(), "Init SCV Output Plugin:");
       txdb = init_scv_recording();
       // globalTrGen("trGen", scvTransactionStream) 
 #ifdef ONLY_ONE_GLOBAL_STREAM
@@ -287,12 +295,13 @@ namespace av {
        ps.nam = "glob"; ps.val = 0;
        global_txh = globalTrGen.begin_transaction(ps);*/
       //cnt = 0; cnt2 = 0;
-    }  
+    }
+
   public:
     
     /// Destructor
     ~SCV_OutputPlugin() {
-      if (is_used) {
+      if (m_scv_initialized) {
         // end all running transactions!
         scv_gen_handle_pair_type *parpair;
         scv_tr_generator_base *trGenBase;
@@ -349,6 +358,7 @@ namespace av {
    = &((scvTrGenMap.find(cpar->getName()))->second); \
   scv_tr_generator<param_struct<typ> >* trGen =      \
   dynamic_cast<scv_tr_generator<param_struct<typ> >* >(parpair->first);  \
+  assert(trGen != NULL && "This is an scv failure!?"); \
   scv_tr_handle *trh = parpair->second;              \
   if (trh != NULL) trGen->end_transaction(*trh);     \
   else parpair->second = new scv_tr_handle();        \
@@ -375,6 +385,7 @@ namespace av {
                                  = &((scvTrGenMap.find(par.getName()))->second);
           scv_tr_generator<param_struct<std::string> >* trGen =
             dynamic_cast<scv_tr_generator<param_struct<std::string> >* >(parpair->first);
+          assert(trGen != NULL && "This is an scv failure!?");
           scv_tr_handle *trh = parpair->second;
           // end old transaction if there is one
           if (trh != NULL) trGen->end_transaction(*trh);
@@ -430,8 +441,8 @@ namespace av {
     
     /// Implements base class function to catch all observed parameters
     virtual bool observe(gs_param_base& par) {
-      // call base class function
-      if (OutputPlugin_base::observe(par)) {
+      init();
+      if (OutputPlugin_base::observed_param_cb_adapters.find(par.getName()) == OutputPlugin_base::observed_param_cb_adapters.end()) {
         // create transaction generator for this parameter
         if (!is_type_output_enabled) {
           // create transaction generators of value type string
@@ -515,12 +526,14 @@ namespace av {
             }
           }
         }
-        return true;
-      }      
+        // call base class function
+        return OutputPlugin_base::observe(par);
+      }
       return false;
     }
 
     virtual bool remove(gs_param_base& par) {
+      init();
       GAV_DUMP_N(name(), "Delete param '"<<par.getName().c_str()<<"' from scv output plugin.");
       // call base funtion
       if (OutputPlugin_base::remove(par)) {
@@ -561,9 +574,11 @@ namespace av {
     /// Map containing a transaction generator and the potential running transaction handle for each parameter
     scv_gen_map_type scvTrGenMap; 
     
-    // if to enable the output of correct typed transaction instead of string transactions
+    /// if to enable the output of correct typed transaction instead of string transactions
     bool is_type_output_enabled;
 
+    /// If the my_init function has been called
+    bool m_scv_initialized;
   };
   
 } // end namespace av

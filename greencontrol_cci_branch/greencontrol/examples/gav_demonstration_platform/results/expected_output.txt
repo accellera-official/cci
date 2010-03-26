@@ -1,58 +1,52 @@
-
-[Session started at 2008-04-22 13:27:20 +0200.]
-
-             SystemC 2.2.0 --- Jul  9 2007 11:52:11
-        Copyright (c) 1996-2006 by all Contributors
-                    ALL RIGHTS RESERVED
-ConfigFile_Api: Configuring value of param 'TG1.init_size' to '1048576'
-ConfigFile_Api: Configuring value of param 'TG1.write_size' to '1000'
-ConfigFile_Api: Configuring value of param 'TG1.write_inc' to '10'
-ConfigFile_Api: Configuring value of param 'TG1.read_size' to '100'
-ConfigFile_Api: Configuring value of param 'TG1.read_inc' to '10'
-ConfigFile_Api: Configuring value of param 'TG1.write_count' to '1'
-ConfigFile_Api: Configuring value of param 'TG1.read_count' to '1'
-ConfigFile_Api: Configuring value of param 'TG1.loops' to '10'
-ConfigFile_Api: Configuring value of param 'TG2.init_size' to '1048576'
-ConfigFile_Api: Configuring value of param 'TG2.write_size' to '1000'
-ConfigFile_Api: Configuring value of param 'TG2.write_inc' to '10'
-ConfigFile_Api: Configuring value of param 'TG2.read_size' to '100'
-ConfigFile_Api: Configuring value of param 'TG2.read_inc' to '10'
-ConfigFile_Api: Configuring value of param 'TG2.write_count' to '1'
-ConfigFile_Api: Configuring value of param 'TG2.read_count' to '1'
-ConfigFile_Api: Configuring value of param 'TG2.loops' to '10'
-ConfigFile_Api: Configuring value of param 'TG3.init_size' to '1048576'
-ConfigFile_Api: Configuring value of param 'TG3.write_size' to '2048'
-ConfigFile_Api: Configuring value of param 'TG3.write_inc' to '0'
-ConfigFile_Api: Configuring value of param 'TG3.read_size' to '1200'
-ConfigFile_Api: Configuring value of param 'TG3.read_inc' to '0'
-ConfigFile_Api: Configuring value of param 'TG3.write_count' to '1'
-ConfigFile_Api: Configuring value of param 'TG3.read_count' to '1'
-ConfigFile_Api: Configuring value of param 'TG3.loops' to '10'
-ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_size' to '256'
-ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_line_size' to '64'
-ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_cache_lines' to '4'
-ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.param_write_back' to 'true'
-ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_size' to '1024'
-ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_line_size' to '128'
-ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_cache_lines' to '8'
-ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.param_write_back' to 'true'
-ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_size' to '64'
-ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_line_size' to '8'
-ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_cache_lines' to '8'
-ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.param_write_back' to 'true'
-ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.hitrate_lower_addr' to '0x200'
-ConfigFile_Api: Configuring value of param 'Cache1.LRUCache.hitrate_upper_addr' to '0xFFFFFF'
-ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.hitrate_lower_addr' to '0x200'
-ConfigFile_Api: Configuring value of param 'Cache2.LRUCache.hitrate_upper_addr' to '0x10FFFFF'
-ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.hitrate_lower_addr' to '0x2000000'
-ConfigFile_Api: Configuring value of param 'Cache3.LRUCache.hitrate_upper_addr' to '0x20000F0'
-ConfigFile_Api: Configuring value of param 'Mem.base_addr' to '0x200'
-ConfigFile_Api: Configuring value of param 'Mem.high_addr' to '0xFFFFFF'
-ConfigFile_Api: Configuring value of param 'PCIeDevice1.base_addr' to '0x1000000'
-ConfigFile_Api: Configuring value of param 'PCIeDevice1.mem_size' to '0xFFFFFF'
-ConfigFile_Api: Configuring value of param 'PCIeDevice2.base_addr' to '0x2000000'
-ConfigFile_Api: Configuring value of param 'PCIeDevice2.mem_size' to '0xFF'
-#0: /Users/schroede/mydev/greensocs_greencontrol/build/Debug/analysis_demoplatform.app/Contents/MacOS/analysis_demoplatform
+ConfigFile_Api: Applying value of param 'Cache1.LRUCache.hitrate_lower_addr' to '0x200'
+ConfigFile_Api: Applying value of param 'Cache1.LRUCache.hitrate_upper_addr' to '0xFFFFFF'
+ConfigFile_Api: Applying value of param 'Cache1.LRUCache.param_cache_line_size' to '64'
+ConfigFile_Api: Applying value of param 'Cache1.LRUCache.param_cache_lines' to '4'
+ConfigFile_Api: Applying value of param 'Cache1.LRUCache.param_cache_size' to '256'
+ConfigFile_Api: Applying value of param 'Cache1.LRUCache.param_write_back' to 'true'
+ConfigFile_Api: Applying value of param 'Cache2.LRUCache.hitrate_lower_addr' to '0x200'
+ConfigFile_Api: Applying value of param 'Cache2.LRUCache.hitrate_upper_addr' to '0x10FFFFF'
+ConfigFile_Api: Applying value of param 'Cache2.LRUCache.param_cache_line_size' to '128'
+ConfigFile_Api: Applying value of param 'Cache2.LRUCache.param_cache_lines' to '8'
+ConfigFile_Api: Applying value of param 'Cache2.LRUCache.param_cache_size' to '1024'
+ConfigFile_Api: Applying value of param 'Cache2.LRUCache.param_write_back' to 'true'
+ConfigFile_Api: Applying value of param 'Cache3.LRUCache.hitrate_lower_addr' to '0x2000000'
+ConfigFile_Api: Applying value of param 'Cache3.LRUCache.hitrate_upper_addr' to '0x20000F0'
+ConfigFile_Api: Applying value of param 'Cache3.LRUCache.param_cache_line_size' to '8'
+ConfigFile_Api: Applying value of param 'Cache3.LRUCache.param_cache_lines' to '8'
+ConfigFile_Api: Applying value of param 'Cache3.LRUCache.param_cache_size' to '64'
+ConfigFile_Api: Applying value of param 'Cache3.LRUCache.param_write_back' to 'true'
+ConfigFile_Api: Applying value of param 'Mem.base_addr' to '0x200'
+ConfigFile_Api: Applying value of param 'Mem.high_addr' to '0xFFFFFF'
+ConfigFile_Api: Applying value of param 'PCIeDevice1.base_addr' to '0x1000000'
+ConfigFile_Api: Applying value of param 'PCIeDevice1.mem_size' to '0xFFFFFF'
+ConfigFile_Api: Applying value of param 'PCIeDevice2.base_addr' to '0x2000000'
+ConfigFile_Api: Applying value of param 'PCIeDevice2.mem_size' to '0xFF'
+ConfigFile_Api: Applying value of param 'TG1.init_size' to '1048576'
+ConfigFile_Api: Applying value of param 'TG1.loops' to '10'
+ConfigFile_Api: Applying value of param 'TG1.read_count' to '1'
+ConfigFile_Api: Applying value of param 'TG1.read_inc' to '10'
+ConfigFile_Api: Applying value of param 'TG1.read_size' to '100'
+ConfigFile_Api: Applying value of param 'TG1.write_count' to '1'
+ConfigFile_Api: Applying value of param 'TG1.write_inc' to '10'
+ConfigFile_Api: Applying value of param 'TG1.write_size' to '1000'
+ConfigFile_Api: Applying value of param 'TG2.init_size' to '1048576'
+ConfigFile_Api: Applying value of param 'TG2.loops' to '10'
+ConfigFile_Api: Applying value of param 'TG2.read_count' to '1'
+ConfigFile_Api: Applying value of param 'TG2.read_inc' to '10'
+ConfigFile_Api: Applying value of param 'TG2.read_size' to '100'
+ConfigFile_Api: Applying value of param 'TG2.write_count' to '1'
+ConfigFile_Api: Applying value of param 'TG2.write_inc' to '10'
+ConfigFile_Api: Applying value of param 'TG2.write_size' to '1000'
+ConfigFile_Api: Applying value of param 'TG3.init_size' to '1048576'
+ConfigFile_Api: Applying value of param 'TG3.loops' to '10'
+ConfigFile_Api: Applying value of param 'TG3.read_count' to '1'
+ConfigFile_Api: Applying value of param 'TG3.read_inc' to '0'
+ConfigFile_Api: Applying value of param 'TG3.read_size' to '1200'
+ConfigFile_Api: Applying value of param 'TG3.write_count' to '1'
+ConfigFile_Api: Applying value of param 'TG3.write_inc' to '0'
+ConfigFile_Api: Applying value of param 'TG3.write_size' to '2048'
+#0: ./testbench_demo_platform.x
 @0 s /0 (Mem.memory): I am a ddr memory block!
 @0 s /0 (PCIeDevice1.registers): I am a ddr memory block!
 @0 s /0 (PCIeDevice2.registers): I am a ddr memory block!
@@ -85,7 +79,7 @@ overall_hit_rate parameter name: Cache3.LRUCache.overall_hit_rate_result_2
 addr_range_hit_rate parameter name: Cache3.LRUCache.addr_range_hit_rate_result_2
 WARNING: A function with this operator sign were already registered. Ignoring redefinition of "private_transaction_count_diff".
 WARNING: A function with this operator sign were already registered. Ignoring redefinition of "per_second".
-only record transactions from master Cache1 (mID=0xbfff3a14) at the Mem port (see file recorded_tr.log.txt)
+only record transactions from master Cache1 (mID=0xbfff6de0) at the Mem port (see file recorded_tr.log.txt)
 //////////////////////// SIMULATION START ////////////////////////////
 @0 s /0 (TG1): Demo action
 parameters:
@@ -104,7 +98,7 @@ parameters:
   read_count_rnd  = 0
   delay_max       = 10000
 
-Switch to target #1 (PCIeDevice2):
+(TG1) Switch to target #1 (PCIeDevice2):
 @0 s /0 (TG2): Demo action
 parameters:
   init_size  = 1048576
@@ -122,7 +116,7 @@ parameters:
   read_count_rnd  = 0
   delay_max       = 10000
 
-Switch to target #1 (PCIeDevice2):
+(TG2) Switch to target #1 (PCIeDevice2):
 @0 s /0 (TG3): Demo action
 parameters:
   init_size  = 1048576
@@ -140,24 +134,24 @@ parameters:
   read_count_rnd  = 0
   delay_max       = 10000
 
-Switch to target #1 (PCIeDevice2):
+(TG3) Switch to target #1 (PCIeDevice2):
 @0 s /1 (TG3): loop 8
 
-Switch to target #2 (Mem):
+(TG3) Switch to target #2 (Mem):
 
 
 @0 s /1 (TG3): Sending 2048 bytes to address 0x756782
 
 @0 s /1 (TG2): loop 8
 
-Switch to target #2 (Mem):
+(TG2) Switch to target #2 (Mem):
 
 
 @0 s /1 (TG2): Sending 1010 bytes to address 0x886244
 
 @0 s /1 (TG1): loop 8
 
-Switch to target #2 (Mem):
+(TG1) Switch to target #2 (Mem):
 
 
 @0 s /1 (TG1): Sending 1010 bytes to address 0x380e68
@@ -444,7 +438,7 @@ Switch to target #2 (Mem):
 @54770 ns /2541 (Mem.memory): Writing 8 bytes to memory address 0x7566a0, takes 80 ns
 @54850 ns /2543 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x7568a8 from memory (at address 0x7568a8)
 @54860 ns /2544 (Mem.memory): Reading 8 bytes from memory address 0x7566a8, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(1), 1010, 184045 (184045), 5540
+TG2: write (# transactions, bytes, us, cycles), 1(1), 1010, 230299 (230299), 5540
 
 
 @55400 ns /2556 (TG2): Reading 110 bytes from address 0xade6b8
@@ -923,7 +917,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(1), 1010, 184045 (184045), 554
 @118590 ns /4218 (Mem.memory): Writing 8 bytes to memory address 0x756988, takes 80 ns
 @118670 ns /4220 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x756b90 from memory (at address 0x756b90)
 @118680 ns /4221 (Mem.memory): Reading 8 bytes from memory address 0x756990, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(2), 1010, 320897 (320897), 11894
+TG1: write (# transactions, bytes, us, cycles), 1(2), 1010, 235540 (235540), 11894
 
 
 @118940 ns /4224 (TG1): Reading 110 bytes from address 0x622e42
@@ -1225,10 +1219,10 @@ TG1: write (# transactions, bytes, us, cycles), 1(2), 1010, 320897 (320897), 118
 @157950 ns /5302 (Cache3.LRUCache): write: Cache-Miss
 @157950 ns /5302 (Cache3.LRUCache): writeLineBack: write back line 0 to memory.
 @157960 ns /5304 (Mem.memory): Writing 8 bytes to memory address 0x756b58, takes 80 ns
-TG2: read (# transactions, bytes, us, cycles), 1, 110, 255147 (439192), 10260
+TG2: read (# transactions, bytes, us, cycles), 1, 110, 23784 (254083), 10260
 @158 us /5305 (TG2): loop 6
 
-Switch to target #0 (PCIeDevice1):
+(TG2) Switch to target #0 (PCIeDevice1):
 
 
 @158 us /5305 (TG2): Sending 1020 bytes to address 0x1d4b6d5
@@ -1353,10 +1347,10 @@ Switch to target #0 (PCIeDevice1):
 @178390 ns /6037 (Mem.memory): Writing 8 bytes to memory address 0x756bf8, takes 80 ns
 @178410 ns /6038 (Cache2.LRUCache): write: Cache-Miss
 @178410 ns /6038 (Cache2.LRUCache): writeLineBack: write back line 1 to memory.
-TG1: read (# transactions, bytes, us, cycles), 1, 110, 347616 (668513), 5951
+TG1: read (# transactions, bytes, us, cycles), 1, 110, 186899 (422439), 5951
 @178450 ns /6040 (TG1): loop 6
 
-Switch to target #0 (PCIeDevice1):
+(TG1) Switch to target #0 (PCIeDevice1):
 
 
 @178450 ns /6040 (TG1): Sending 1020 bytes to address 0x108d994
@@ -1537,7 +1531,7 @@ Switch to target #0 (PCIeDevice1):
 @212250 ns /7690 (Cache1.LRUCache): readLine: read line 1 (64 words) for address 0x108dc40 from memory (at address 0x108dc40)
 @212265 ns /7694 (PCIeDevice1.registers): Reading 64 bytes from memory address 0x8dc40, takes 90 ns
 @213215 ns /7699 (Mem.memory): Reading 8 bytes from memory address 0x756c90, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(3), 1020, 277094 (716286), 5569.5
+TG2: write (# transactions, bytes, us, cycles), 1(3), 1020, 217155 (471238), 5569.5
 
 
 @213695 ns /7724 (TG2): Reading 120 bytes from address 0x1879a2e
@@ -1637,7 +1631,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(3), 1020, 277094 (716286), 556
 @229770 ns /8382 (Mem.memory): Writing 8 bytes to memory address 0x756ce8, takes 80 ns
 @229850 ns /8384 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x756ef0 from memory (at address 0x756ef0)
 @229860 ns /8385 (Mem.memory): Reading 8 bytes from memory address 0x756cf0, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(4), 1020, 61218 (729731), 5188
+TG1: write (# transactions, bytes, us, cycles), 1(4), 1020, 65919 (488358), 5188
 
 
 @230330 ns /8395 (TG1): Reading 120 bytes from address 0x1622759
@@ -1747,10 +1741,10 @@ TG1: write (# transactions, bytes, us, cycles), 1(4), 1020, 61218 (729731), 5188
 @244660 ns /8817 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x756f80 from memory (at address 0x756f80)
 @244670 ns /8818 (Mem.memory): Reading 8 bytes from memory address 0x756d80, takes 20 ns
 @245010 ns /8824 (TG3): Sending finished
-TG1: read (# transactions, bytes, us, cycles), 1, 120, 10793 (740524), 1588
+TG1: read (# transactions, bytes, us, cycles), 1, 120, 13525 (501883), 1588
 @246210 ns /8825 (TG1): loop 4
 
-Switch to target #1 (PCIeDevice2):
+(TG1) Switch to target #1 (PCIeDevice2):
 
 
 @246210 ns /8825 (TG1): Sending 255 bytes to address 0x2000000
@@ -1774,7 +1768,7 @@ Switch to target #1 (PCIeDevice2):
 @255355 ns /9057 (Cache1.LRUCache): readLine: read line 3 (64 words) for address 0x20000c0 from memory (at address 0x20000c0)
 @255370 ns /9061 (PCIeDevice2.registers): Reading 64 bytes from memory address 0xc0, takes 90 ns
 @258170 ns /9129 (TG1): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(5), 2048, 771166 (771166), 28676
+TG3: write (# transactions, bytes, us, cycles), 1(5), 2048, 535675 (535675), 28676
 
 
 @286760 ns /9130 (TG3): Reading 1200 bytes from address 0x96c53c
@@ -1800,10 +1794,10 @@ TG3: write (# transactions, bytes, us, cycles), 1(5), 2048, 771166 (771166), 286
 @289680 ns /9190 (Mem.memory): Writing 8 bytes to memory address 0x756590, takes 80 ns
 @289760 ns /9192 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x96c558 from memory (at address 0x96c558)
 @289770 ns /9193 (Mem.memory): Reading 8 bytes from memory address 0x96c358, takes 20 ns
-TG2: read (# transactions, bytes, us, cycles), 1, 120, 39446 (755732), 7677.5
+TG2: read (# transactions, bytes, us, cycles), 1, 120, 55419 (526657), 7677.5
 @290470 ns /9205 (TG2): loop 4
 
-Switch to target #1 (PCIeDevice2):
+(TG2) Switch to target #1 (PCIeDevice2):
 
 
 @290470 ns /9205 (TG2): Sending 255 bytes to address 0x2000000
@@ -1965,7 +1959,7 @@ Switch to target #1 (PCIeDevice2):
 @326490 ns /10043 (Cache3.LRUCache): read: Cache-Miss
 @326490 ns /10043 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x96c6c8 from memory (at address 0x96c6c8)
 @326500 ns /10044 (Mem.memory): Reading 8 bytes from memory address 0x96c4c8, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(6), 1030, 14369 (754893), 8064
+TG1: write (# transactions, bytes, us, cycles), 1(6), 1030, 56242 (558125), 8064
 
 
 @326850 ns /10049 (TG1): Reading 130 bytes from address 0x200006a
@@ -2236,10 +2230,10 @@ TG1: write (# transactions, bytes, us, cycles), 1(6), 1030, 14369 (754893), 8064
 @389115 ns /11292 (Cache3.LRUCache): read: Cache-Miss
 @389115 ns /11292 (Cache3.LRUCache): readLine: read line 6 (8 words) for address 0x96c968 from memory (at address 0x96c968)
 @389125 ns /11293 (Mem.memory): Reading 8 bytes from memory address 0x96c768, takes 20 ns
-TG1: read (# transactions, bytes, us, cycles), 1, 130, 118947 (873840), 6239.5
+TG1: read (# transactions, bytes, us, cycles), 1, 130, 16191 (574316), 6239.5
 @389245 ns /11295 (TG1): loop 2
 
-Switch to target #2 (Mem):
+(TG1) Switch to target #2 (Mem):
 
 
 @389245 ns /11295 (TG1): Sending 1040 bytes to address 0x178c74
@@ -2272,7 +2266,7 @@ Switch to target #2 (Mem):
 @394015 ns /11443 (Cache3.LRUCache): read: Cache-Miss
 @394015 ns /11443 (Cache3.LRUCache): readLine: read line 3 (8 words) for address 0x96c990 from memory (at address 0x96c990)
 @394895 ns /11447 (Mem.memory): Reading 8 bytes from memory address 0x96c790, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(7), 1030, 135626 (891358), 10459
+TG2: write (# transactions, bytes, us, cycles), 1(7), 1030, 69952 (596609), 10459
 
 
 @395060 ns /11454 (TG2): Reading 130 bytes from address 0x2000052
@@ -2388,10 +2382,10 @@ TG2: write (# transactions, bytes, us, cycles), 1(7), 1030, 135626 (891358), 104
 @439385 ns /12779 (Cache1.LRUCache): readLine: read line 2 (64 words) for address 0x179080 from memory (at address 0x179080)
 @439395 ns /12780 (Mem.memory): Reading 64 bytes from memory address 0x178e80, takes 90 ns
 @440425 ns /12788 (TG1): Sending finished
-TG2: read (# transactions, bytes, us, cycles), 1, 130, 22626 (913984), 4810
+TG2: read (# transactions, bytes, us, cycles), 1, 130, 45168 (641777), 4810
 @443160 ns /12789 (TG2): loop 2
 
-Switch to target #2 (Mem):
+(TG2) Switch to target #2 (Mem):
 
 
 @443160 ns /12789 (TG2): Sending 1040 bytes to address 0xc31cca
@@ -2431,10 +2425,10 @@ Switch to target #2 (Mem):
 @475480 ns /13541 (Mem.memory): Writing 128 bytes to memory address 0xc31d00, takes 230 ns
 @475710 ns /13543 (Cache2.LRUCache): readLine: read line 3 (128 words) for address 0xc31f80 from memory (at address 0xc31f80)
 @475720 ns /13544 (Mem.memory): Reading 128 bytes from memory address 0xc31d80, takes 170 ns
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 175404 (946570), 18924.5
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 121634 (657309), 18924.5
 @476005 ns /13546 (TG3): loop 6
 
-Switch to target #0 (PCIeDevice1):
+(TG3) Switch to target #0 (PCIeDevice1):
 
 
 @476005 ns /13546 (TG3): Sending 2048 bytes to address 0x1432e05
@@ -2573,7 +2567,7 @@ Switch to target #0 (PCIeDevice1):
 @496450 ns /14325 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x432eb8, takes 80 ns
 @496530 ns /14327 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1432ec0 from memory (at address 0x1432ec0)
 @496545 ns /14331 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x432ec0, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(8), 1040, 76499 (990483), 5343.5
+TG2: write (# transactions, bytes, us, cycles), 1(8), 1040, 16582 (658359), 5343.5
 
 
 @496595 ns /14333 (TG2): Reading 140 bytes from address 0xbc6ffc
@@ -2817,7 +2811,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(8), 1040, 76499 (990483), 5343
 @530960 ns /15450 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433020, takes 80 ns
 @531040 ns /15452 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433028 from memory (at address 0x1433028)
 @531055 ns /15456 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433028, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(9), 1040, 191939 (1065779), 14222
+TG1: write (# transactions, bytes, us, cycles), 1(9), 1040, 73632 (647948), 14222
 
 
 @531465 ns /15465 (TG1): Reading 140 bytes from address 0xa1f4fd
@@ -2894,7 +2888,7 @@ TG1: write (# transactions, bytes, us, cycles), 1(9), 1040, 191939 (1065779), 14
 @541445 ns /15836 (Cache3.LRUCache): write: Cache-Miss
 @541445 ns /15836 (Cache3.LRUCache): writeLineBack: write back line 7 to memory.
 @542310 ns /15842 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433080, takes 80 ns
-TG2: read (# transactions, bytes, us, cycles), 1, 140, 126863 (1117346), 4575
+TG2: read (# transactions, bytes, us, cycles), 1, 140, 12614 (670973), 4575
 @542390 ns /15845 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433088 from memory (at address 0x1433088)
 @542405 ns /15849 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433088, takes 20 ns
 @542695 ns /15856 (TG1): Reading finished
@@ -3473,7 +3467,7 @@ TG2: read (# transactions, bytes, us, cycles), 1, 140, 126863 (1117346), 4575
 @618210 ns /18378 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433418, takes 80 ns
 @618290 ns /18380 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433420 from memory (at address 0x1433420)
 @618305 ns /18384 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433420, takes 20 ns
-TG1: read (# transactions, bytes, us, cycles), 1, 140, 289343 (1355122), 8688
+TG1: read (# transactions, bytes, us, cycles), 1, 140, 24038 (671986), 8688
 @618855 ns /18398 (Cache3.LRUCache): write: Cache-Miss
 @618855 ns /18398 (Cache3.LRUCache): writeLineBack: write back line 7 to memory.
 @618870 ns /18401 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433420, takes 80 ns
@@ -3775,7 +3769,7 @@ TG1: read (# transactions, bytes, us, cycles), 1, 140, 289343 (1355122), 8688
 @657890 ns /19701 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433600 from memory (at address 0x1433600)
 @657905 ns /19705 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433600, takes 20 ns
 @658335 ns /19715 (TG3): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(10), 2048, 533801 (1480371), 28144
+TG3: write (# transactions, bytes, us, cycles), 1(10), 2048, 56507 (713816), 28144
 
 
 @757445 ns /19716 (TG3): Reading 1200 bytes from address 0x15d851f
@@ -4236,10 +4230,10 @@ TG3: write (# transactions, bytes, us, cycles), 1(10), 2048, 533801 (1480371), 2
 @865990 ns /21968 (Cache3.LRUCache): readLine: read line 1 (8 words) for address 0x15d89c8 from memory (at address 0x15d89c8)
 @866005 ns /21970 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x5d89c8, takes 20 ns
 @866615 ns /21981 (TG3): Reading finished
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 183876 (1664247), 13388
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 15712 (729528), 13388
 @891325 ns /21982 (TG3): loop 4
 
-Switch to target #1 (PCIeDevice2):
+(TG3) Switch to target #1 (PCIeDevice2):
 
 
 @891325 ns /21982 (TG3): Sending 255 bytes to address 0x2000000
@@ -4389,7 +4383,7 @@ Switch to target #1 (PCIeDevice2):
 @911150 ns /22615 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x20000f8 from memory (at address 0x20000f8)
 @911165 ns /22619 (PCIeDevice2.registers): Reading 8 bytes from memory address 0xf8, takes 20 ns
 @911655 ns /22631 (TG3): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(11), 2048, 47419 (1711666), 11859
+TG3: write (# transactions, bytes, us, cycles), 1(11), 2048, 5661 (735189), 11859
 
 
 @1009915 ns /22632 (TG3): Reading 255 bytes from address 0x2000000
@@ -4472,10 +4466,10 @@ TG3: write (# transactions, bytes, us, cycles), 1(11), 2048, 47419 (1711666), 11
 @1030260 ns /23057 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x20000f8 from memory (at address 0x20000f8)
 @1030275 ns /23059 (PCIeDevice2.registers): Reading 8 bytes from memory address 0xf8, takes 20 ns
 @1030885 ns /23070 (TG3): Reading finished
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 51368 (1763034), 9324
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 3361 (738550), 9324
 @1103155 ns /23071 (TG3): loop 2
 
-Switch to target #2 (Mem):
+(TG3) Switch to target #2 (Mem):
 
 
 @1103155 ns /23071 (TG3): Sending 2048 bytes to address 0xc0d664
@@ -5764,7 +5758,7 @@ Switch to target #2 (Mem):
 @1269465 ns /27421 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0xc0de60 from memory (at address 0xc0de60)
 @1269475 ns /27422 (Mem.memory): Reading 8 bytes from memory address 0xc0dc60, takes 20 ns
 @1269875 ns /27430 (TG3): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(12), 2048, 451127 (2214161), 23188
+TG3: write (# transactions, bytes, us, cycles), 1(12), 2048, 51987 (790537), 23188
 
 
 @1335035 ns /27431 (TG3): Reading 1200 bytes from address 0x129d0e
@@ -6231,7 +6225,7 @@ TG3: write (# transactions, bytes, us, cycles), 1(12), 2048, 451127 (2214161), 2
 @1443160 ns /29399 (Cache3.LRUCache): readLine: read line 5 (8 words) for address 0x12a1b8 from memory (at address 0x12a1b8)
 @1443170 ns /29400 (Mem.memory): Reading 8 bytes from memory address 0x129fb8, takes 20 ns
 @1443730 ns /29409 (TG3): Reading finished
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 200159 (2414320), 17186.5
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 32576 (823113), 17186.5
 //////////////////////// SIMULATION END //////////////////////////////
 Simulation runtime: 10001 ms
 
@@ -6239,16 +6233,21 @@ Simulation runtime: 10001 ms
 --------------------------------------------------------
 Parameter list: 
 
+  AnalysisPlugin.CSV_FILE_OUT_default.first_log_output_when_added_for_observation
+  AnalysisPlugin.STDOUT_OUT_default.first_log_output_when_added_for_observation
+  AnalysisPlugin.TXT_FILE_OUT_default.first_log_output_when_added_for_observation
+  Cache1.LRUCache.addr_range_hit_rate.activated
   Cache1.LRUCache.addr_range_hit_rate_default_0
   Cache1.LRUCache.addr_range_hit_rate_result_0
   Cache1.LRUCache.addr_range_hit_rate_result_1
   Cache1.LRUCache.addr_range_hit_rate_result_2
   Cache1.LRUCache.addr_range_hits
   Cache1.LRUCache.addr_range_misses
-  Cache1.LRUCache.const_temp_var_0
-  Cache1.LRUCache.const_temp_var_1
+  Cache1.LRUCache.const_temp_var_0_0
+  Cache1.LRUCache.const_temp_var_1_1
   Cache1.LRUCache.hitrate_lower_addr
   Cache1.LRUCache.hitrate_upper_addr
+  Cache1.LRUCache.overall_hit_rate.activated
   Cache1.LRUCache.overall_hit_rate_default_0
   Cache1.LRUCache.overall_hit_rate_result_0
   Cache1.LRUCache.overall_hit_rate_result_1
@@ -6261,25 +6260,29 @@ Parameter list:
   Cache1.LRUCache.param_write_back
   Cache1.enable_cache
   Cache1.iport.transaction_latency_start_timepoint
+  Cache1.iport.transaction_overall_latency_StatCalc.activated
   Cache1.iport.transaction_overall_latency_default_0
   Cache1.iport.transaction_overall_latency_end_timepoint
   Cache1.iport.transaction_overall_latency_result_0
+  Cache1.iport.transaction_transport_latency_StatCalc.activated
   Cache1.iport.transaction_transport_latency_default_0
   Cache1.iport.transaction_transport_latency_end_timepoint
   Cache1.iport.transaction_transport_latency_result_0
   Cache1.tport.record_transaction_master_id_filter
   Cache1.tport.record_transactions_enabled
   Cache1.tport.recorded_transaction
+  Cache2.LRUCache.addr_range_hit_rate.activated
   Cache2.LRUCache.addr_range_hit_rate_default_0
   Cache2.LRUCache.addr_range_hit_rate_result_0
   Cache2.LRUCache.addr_range_hit_rate_result_1
   Cache2.LRUCache.addr_range_hit_rate_result_2
   Cache2.LRUCache.addr_range_hits
   Cache2.LRUCache.addr_range_misses
-  Cache2.LRUCache.const_temp_var_0
-  Cache2.LRUCache.const_temp_var_1
+  Cache2.LRUCache.const_temp_var_0_2
+  Cache2.LRUCache.const_temp_var_1_3
   Cache2.LRUCache.hitrate_lower_addr
   Cache2.LRUCache.hitrate_upper_addr
+  Cache2.LRUCache.overall_hit_rate.activated
   Cache2.LRUCache.overall_hit_rate_default_0
   Cache2.LRUCache.overall_hit_rate_result_0
   Cache2.LRUCache.overall_hit_rate_result_1
@@ -6292,25 +6295,29 @@ Parameter list:
   Cache2.LRUCache.param_write_back
   Cache2.enable_cache
   Cache2.iport.transaction_latency_start_timepoint
+  Cache2.iport.transaction_overall_latency_StatCalc.activated
   Cache2.iport.transaction_overall_latency_default_0
   Cache2.iport.transaction_overall_latency_end_timepoint
   Cache2.iport.transaction_overall_latency_result_0
+  Cache2.iport.transaction_transport_latency_StatCalc.activated
   Cache2.iport.transaction_transport_latency_default_0
   Cache2.iport.transaction_transport_latency_end_timepoint
   Cache2.iport.transaction_transport_latency_result_0
   Cache2.tport.record_transaction_master_id_filter
   Cache2.tport.record_transactions_enabled
   Cache2.tport.recorded_transaction
+  Cache3.LRUCache.addr_range_hit_rate.activated
   Cache3.LRUCache.addr_range_hit_rate_default_0
   Cache3.LRUCache.addr_range_hit_rate_result_0
   Cache3.LRUCache.addr_range_hit_rate_result_1
   Cache3.LRUCache.addr_range_hit_rate_result_2
   Cache3.LRUCache.addr_range_hits
   Cache3.LRUCache.addr_range_misses
-  Cache3.LRUCache.const_temp_var_0
-  Cache3.LRUCache.const_temp_var_1
+  Cache3.LRUCache.const_temp_var_0_4
+  Cache3.LRUCache.const_temp_var_1_5
   Cache3.LRUCache.hitrate_lower_addr
   Cache3.LRUCache.hitrate_upper_addr
+  Cache3.LRUCache.overall_hit_rate.activated
   Cache3.LRUCache.overall_hit_rate_default_0
   Cache3.LRUCache.overall_hit_rate_result_0
   Cache3.LRUCache.overall_hit_rate_result_1
@@ -6323,9 +6330,11 @@ Parameter list:
   Cache3.LRUCache.param_write_back
   Cache3.enable_cache
   Cache3.iport.transaction_latency_start_timepoint
+  Cache3.iport.transaction_overall_latency_StatCalc.activated
   Cache3.iport.transaction_overall_latency_default_0
   Cache3.iport.transaction_overall_latency_end_timepoint
   Cache3.iport.transaction_overall_latency_result_0
+  Cache3.iport.transaction_transport_latency_StatCalc.activated
   Cache3.iport.transaction_transport_latency_default_0
   Cache3.iport.transaction_transport_latency_end_timepoint
   Cache3.iport.transaction_transport_latency_result_0
@@ -6342,15 +6351,18 @@ Parameter list:
   Mem.simplebus_slaveport.record_transaction_master_id_filter
   Mem.simplebus_slaveport.record_transactions_enabled
   Mem.simplebus_slaveport.recorded_transaction
-  PCIeBridge_SimpleBus.const_temp_var_0
-  PCIeBridge_SimpleBus.const_temp_var_1
+  PCIeBridge_SimpleBus.ProcessMasterAccess.out_port_tr_p_sec_StC_PCIeDevice1.activated
+  PCIeBridge_SimpleBus.ProcessMasterAccess.out_port_tr_p_sec_StC_PCIeDevice2.activated
+  PCIeBridge_SimpleBus.const_temp_var_0_14
+  PCIeBridge_SimpleBus.const_temp_var_1_15
   PCIeBridge_SimpleBus.out_port_tr_counter_PCIeDevice1
   PCIeBridge_SimpleBus.out_port_tr_counter_PCIeDevice2
   PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice1_default_0
   PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice1_result_0
   PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice2_default_0
   PCIeBridge_SimpleBus.out_port_tr_p_sec_PCIeDevice2_result_0
-  PCIeBridge_SimpleBus.tport.payload_event_queue_0.const_temp_var_0
+  PCIeBridge_SimpleBus.tport.payload_event_queue_0.const_temp_var_0_13
+  PCIeBridge_SimpleBus.tport.payload_event_queue_0.fec.in_port_tr_p_sec_StC_Router_SimpleBus.activated
   PCIeBridge_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Router_SimpleBus
   PCIeBridge_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Router_SimpleBus_default_0
   PCIeBridge_SimpleBus.tport.payload_event_queue_0.in_port_tr_p_sec_Router_SimpleBus_result_0
@@ -6374,31 +6386,40 @@ Parameter list:
   PCIeDevice2.simplebus_slaveport.record_transaction_master_id_filter
   PCIeDevice2.simplebus_slaveport.record_transactions_enabled
   PCIeDevice2.simplebus_slaveport.recorded_transaction
-  Protocol_PCIeBridge_SimpleBus.const_temp_var_0
-  Protocol_PCIeBridge_SimpleBus.const_temp_var_1
+  Protocol_PCIeBridge_SimpleBus.const_temp_var_0_1
+  Protocol_PCIeBridge_SimpleBus.const_temp_var_1_7
+  Protocol_PCIeBridge_SimpleBus.dynamic_overall_trans_per_sec_StC.activated
   Protocol_PCIeBridge_SimpleBus.dynamic_tr_p_sec_overall_default_0
   Protocol_PCIeBridge_SimpleBus.dynamic_tr_p_sec_overall_result_0
+  Protocol_PCIeBridge_SimpleBus.overall_trans_per_sec_StC.activated
   Protocol_PCIeBridge_SimpleBus.tr_cnt
   Protocol_PCIeBridge_SimpleBus.tr_p_sec_overall_default_0
   Protocol_PCIeBridge_SimpleBus.tr_p_sec_overall_result_0
-  Protocol_SimpleBus.const_temp_var_0
-  Protocol_SimpleBus.const_temp_var_1
+  Protocol_SimpleBus.const_temp_var_0_0
+  Protocol_SimpleBus.const_temp_var_1_6
+  Protocol_SimpleBus.dynamic_overall_trans_per_sec_StC.activated
   Protocol_SimpleBus.dynamic_tr_p_sec_overall_default_0
   Protocol_SimpleBus.dynamic_tr_p_sec_overall_result_0
+  Protocol_SimpleBus.overall_trans_per_sec_StC.activated
   Protocol_SimpleBus.tr_cnt
   Protocol_SimpleBus.tr_p_sec_overall_default_0
   Protocol_SimpleBus.tr_p_sec_overall_result_0
-  Router_SimpleBus.const_temp_var_0
-  Router_SimpleBus.const_temp_var_1
+  Router_SimpleBus.ProcessMasterAccess.out_port_tr_p_sec_StC_Mem.activated
+  Router_SimpleBus.ProcessMasterAccess.out_port_tr_p_sec_StC_PCIeBridge_SimpleBus.activated
+  Router_SimpleBus.const_temp_var_0_11
+  Router_SimpleBus.const_temp_var_1_12
   Router_SimpleBus.out_port_tr_counter_Mem
   Router_SimpleBus.out_port_tr_counter_PCIeBridge_SimpleBus
   Router_SimpleBus.out_port_tr_p_sec_Mem_default_0
   Router_SimpleBus.out_port_tr_p_sec_Mem_result_0
   Router_SimpleBus.out_port_tr_p_sec_PCIeBridge_SimpleBus_default_0
   Router_SimpleBus.out_port_tr_p_sec_PCIeBridge_SimpleBus_result_0
-  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_0
-  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_1
-  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_2
+  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_0_8
+  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_1_9
+  Router_SimpleBus.tport.payload_event_queue_0.const_temp_var_2_10
+  Router_SimpleBus.tport.payload_event_queue_0.fec.in_port_tr_p_sec_StC_Cache1.activated
+  Router_SimpleBus.tport.payload_event_queue_0.fec.in_port_tr_p_sec_StC_Cache2.activated
+  Router_SimpleBus.tport.payload_event_queue_0.fec.in_port_tr_p_sec_StC_Cache3.activated
   Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Cache1
   Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Cache2
   Router_SimpleBus.tport.payload_event_queue_0.in_port_tr_counter_Cache3
@@ -6412,9 +6433,11 @@ Parameter list:
   TG1.delay_max
   TG1.init_size
   TG1.iport.transaction_latency_start_timepoint
+  TG1.iport.transaction_overall_latency_StatCalc.activated
   TG1.iport.transaction_overall_latency_default_0
   TG1.iport.transaction_overall_latency_end_timepoint
   TG1.iport.transaction_overall_latency_result_0
+  TG1.iport.transaction_transport_latency_StatCalc.activated
   TG1.iport.transaction_transport_latency_default_0
   TG1.iport.transaction_transport_latency_end_timepoint
   TG1.iport.transaction_transport_latency_result_0
@@ -6433,9 +6456,11 @@ Parameter list:
   TG2.delay_max
   TG2.init_size
   TG2.iport.transaction_latency_start_timepoint
+  TG2.iport.transaction_overall_latency_StatCalc.activated
   TG2.iport.transaction_overall_latency_default_0
   TG2.iport.transaction_overall_latency_end_timepoint
   TG2.iport.transaction_overall_latency_result_0
+  TG2.iport.transaction_transport_latency_StatCalc.activated
   TG2.iport.transaction_transport_latency_default_0
   TG2.iport.transaction_transport_latency_end_timepoint
   TG2.iport.transaction_transport_latency_result_0
@@ -6454,9 +6479,11 @@ Parameter list:
   TG3.delay_max
   TG3.init_size
   TG3.iport.transaction_latency_start_timepoint
+  TG3.iport.transaction_overall_latency_StatCalc.activated
   TG3.iport.transaction_overall_latency_default_0
   TG3.iport.transaction_overall_latency_end_timepoint
   TG3.iport.transaction_overall_latency_result_0
+  TG3.iport.transaction_transport_latency_StatCalc.activated
   TG3.iport.transaction_transport_latency_default_0
   TG3.iport.transaction_transport_latency_end_timepoint
   TG3.iport.transaction_transport_latency_result_0
@@ -6471,6 +6498,8 @@ Parameter list:
   TG3.write_count_rnd
   TG3.write_inc
   TG3.write_size
+  TXT_FILE_OUT_recorded_tr_log_txt.first_log_output_when_added_for_observation
+  TXT_FILE_OUT_tr_latency_log_txt.first_log_output_when_added_for_observation
 
 
 --------------------------------------------------------
@@ -6525,5 +6554,3 @@ Transaction recording at Mem slave port recording transactions from Cache1:
 
 --------------------------------------------------------
 
-
-The Debugger has exited with status 0.

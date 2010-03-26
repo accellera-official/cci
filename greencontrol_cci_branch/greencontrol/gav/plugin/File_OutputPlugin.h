@@ -85,7 +85,7 @@ namespace av {
      * Opens the file, prints time and date in it.
      */
     void init() {
-      GAV_DUMP_N(name(), "Init Output Plugin: Open file '"<<filename.c_str()<<"' to write observed parameters to.");
+      GAV_DUMP_N(name(), "Init TXT file Output Plugin: Open file '"<<filename.c_str()<<"' to write observed parameters to.");
       // create time
       time_t rawtime;
       struct tm * timeinfo;

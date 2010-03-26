@@ -51,16 +51,17 @@ namespace cnf {
 // forward declaration
 class gs_param_base;
 
-/// SystemC interface to allow the ConfigPlugin to get access to a parameter database.
+/// Interface to allow the ConfigPlugin to get access to a parameter database.
 /**
  * Each database that should be used by the ConfigPlugin has implement this interface
  * to be used as channel in the port in the ConfigPlugin.
  */
 struct param_db_if
-: virtual public sc_interface
 {
 public:
 
+  virtual ~param_db_if() { }
+  
   /// Add an explicit parameter to the database (or change implicit->explicit).
   /** 
    * If the parameter does not yet exist as implicit parameter, create an new parameter.

@@ -134,7 +134,7 @@ public:
     return static_deserialize(target_val, str);                                   
   }                                                      
 
-  using gs_param_t<val_type>::gs_param_base::name;
+  using gs_param_t<val_type>::name;
   using gs_param_t<val_type>::setString;
   using gs_param_t<val_type>::getString;
   using gs_param_t<val_type>::setValue;
@@ -206,7 +206,7 @@ public:                                                                \
                                                                                   \
   using gs_param_t<val_type>::operator =;                                         \
                                                                                   \
-  using gs_param_t<val_type>::gs_param_base::name;                                \
+  using gs_param_t<val_type>::name;                                \
   using gs_param_t<val_type>::setString;                                          \
   using gs_param_t<val_type>::getString;                                          \
   using gs_param_t<val_type>::setValue;                                           \

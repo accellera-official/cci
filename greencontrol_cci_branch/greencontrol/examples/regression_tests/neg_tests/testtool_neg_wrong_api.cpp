@@ -53,7 +53,7 @@ void TestTool_Wrong_Api::main_action() {
     gs::ctr::ControlTransactionHandle th = directUserApi.getTransaction();
     th->set_mService(gs::ctr::CONFIG_SERVICE);
     th->set_mCmd(gs::cnf::CMD_SET_INIT_VAL);
-    th->set_mTarget((void*)123123123); // WRONG!!! 
+    th->set_mTarget((gs::ctr::gc_port_if*)123123123); // WRONG!!! 
     th->set_mSpecifier(hier_param_name);
     th->set_mValue(value);
     //directUserApi.sendTransaction(th);  // add comment here to avoid error

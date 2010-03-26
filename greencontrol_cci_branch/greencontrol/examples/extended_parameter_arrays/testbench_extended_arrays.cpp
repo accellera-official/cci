@@ -60,11 +60,11 @@
 int sc_main(int argc, char *argv[]) {
   
   /// GreenControl Core instance
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
   // GreenConfig Plugin
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
 
   // Configuration with GreenConfig config files
   gs::cnf::ConfigFile_Tool configTool("ConfigFileTool");

@@ -3,14 +3,14 @@ ConfigFile_Api: Applying value of param 'Owner.myTopArr.my2ndArray0.myIntPar0' t
 ConfigFile_Api: Applying value of param 'Owner.myTopArr.my2ndArray0.myIntPar1' to '30'
 ConfigFile_Api: Applying value of param 'Owner.myTopArr.my2ndArray0.myStringPar' to '_I_N_I_T_'
 ConfigFile_Api: Applying value of param 'Owner.myTopArr.my2ndArray0.myUIntArrPar.init_size' to '10'
-Owner.gs_param_base_0: gs_param_base(name='myTopArr', register_at_db=1, parent_array=0, force_top_level_name=0) constructor
+Owner.gs_param_base_0: gs_param_base(name='myTopArr', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 Owner.gs_param_base_0: Setting parent name: 'Owner.'
 Owner.gs_param_base_0: Set parameter name = 'Owner.myTopArr',
-Owner.gs_param_base_1: gs_param_base(name='my2ndArray0', register_at_db=1, parent_array=3221221160, force_top_level_name=0) constructor
+Owner.gs_param_base_1: gs_param_base(name='my2ndArray0', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_1: Set parameter array member name = 'Owner.myTopArr.my2ndArray0',
 Owner.gs_param_base_1: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr'.
 Owner.gs_param_base_0: addMember(Owner.myTopArr.my2ndArray0)
-Owner.gs_param_base_2: gs_param_base(name='myIntPar0', register_at_db=1, parent_array=2121680, force_top_level_name=0) constructor
+Owner.gs_param_base_2: gs_param_base(name='myIntPar0', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_2: Set parameter array member name = 'Owner.myTopArr.my2ndArray0.myIntPar0',
 Owner.gs_param_base_2: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray0'.
 Owner.gs_param_base_1: addMember(Owner.myTopArr.my2ndArray0.myIntPar0)
@@ -20,14 +20,14 @@ gs_param: deserialize: string='10'
 gs_param: (int) stream eof and not fail
 Owner.gs_param_base_2: Init gs_param_t Owner.myTopArr.my2ndArray0.myIntPar0
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 gs_param: deserialize: string='20'
 gs_param: (int) stream eof and not fail
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_3: gs_param_base(name='myIntPar1', register_at_db=1, parent_array=2121680, force_top_level_name=0) constructor
+Owner.gs_param_base_3: gs_param_base(name='myIntPar1', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_3: Set parameter array member name = 'Owner.myTopArr.my2ndArray0.myIntPar1',
 Owner.gs_param_base_3: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray0'.
 Owner.gs_param_base_1: addMember(Owner.myTopArr.my2ndArray0.myIntPar1)
@@ -37,14 +37,14 @@ gs_param: deserialize: string='12'
 gs_param: (int) stream eof and not fail
 Owner.gs_param_base_3: Init gs_param_t Owner.myTopArr.my2ndArray0.myIntPar1
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 gs_param: deserialize: string='30'
 gs_param: (int) stream eof and not fail
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_4: gs_param_base(name='myStringPar', register_at_db=1, parent_array=2121680, force_top_level_name=0) constructor
+Owner.gs_param_base_4: gs_param_base(name='myStringPar', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_4: Set parameter array member name = 'Owner.myTopArr.my2ndArray0.myStringPar',
 Owner.gs_param_base_4: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray0'.
 Owner.gs_param_base_1: addMember(Owner.myTopArr.my2ndArray0.myStringPar)
@@ -52,71 +52,71 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_4: Init gs_param_t Owner.myTopArr.my2ndArray0.myStringPar
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_5: gs_param_base(name='myUIntArrPar', register_at_db=1, parent_array=2121680, force_top_level_name=0) constructor
+Owner.gs_param_base_5: gs_param_base(name='myUIntArrPar', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_5: Set parameter array member name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar',
 Owner.gs_param_base_5: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray0'.
 Owner.gs_param_base_1: addMember(Owner.myTopArr.my2ndArray0.myUIntArrPar)
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_5: init parameter array Owner.myTopArr.my2ndArray0.myUIntArrPar: with size=0 (user_chosen=0)
-Owner.gs_param_base_6: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.init_size', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_6: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.init_size', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_6: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.init_size',
 Owner.gs_param_base_6: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.init_size
 gs_param: deserialize: string='10'
 gs_param: (unsigned int) stream eof and not fail
 Owner.gs_param_base_5:   init array size in database = 10
 Owner.gs_param_base_5:   Found 0 implicit array members in database
-Owner.gs_param_base_7: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.0', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_7: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.0', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_7: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.0',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_7: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.0
-Owner.gs_param_base_8: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.1', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_8: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.1', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_8: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.1',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_8: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.1
-Owner.gs_param_base_9: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_9: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_9: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.2',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_9: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.2
-Owner.gs_param_base_10: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_10: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_10: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.3',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_10: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.3
-Owner.gs_param_base_11: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_11: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_11: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.4',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_11: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.4
-Owner.gs_param_base_12: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_12: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_12: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.5',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_12: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.5
-Owner.gs_param_base_13: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_13: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_13: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.6',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_13: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.6
-Owner.gs_param_base_14: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_14: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_14: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.7',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_14: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.7
-Owner.gs_param_base_15: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_15: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_15: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_15: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.8
-Owner.gs_param_base_16: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_16: gs_param_base(name='Owner.myTopArr.my2ndArray0.myUIntArrPar.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_16: Set parameter name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -124,7 +124,7 @@ Owner.gs_param_base_16: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar.
 Owner.gs_param_base_5: init array of parameter Owner.myTopArr.my2ndArray0.myUIntArrPar done
 
 Owner.gs_param_base_5: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar
-Owner.gs_param_base_17: gs_param_base(name='myUIntArrPar2', register_at_db=1, parent_array=2121680, force_top_level_name=0) constructor
+Owner.gs_param_base_17: gs_param_base(name='myUIntArrPar2', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_17: Set parameter array member name = 'Owner.myTopArr.my2ndArray0.myUIntArrPar2',
 Owner.gs_param_base_17: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray0'.
 Owner.gs_param_base_1: addMember(Owner.myTopArr.my2ndArray0.myUIntArrPar2)
@@ -136,11 +136,11 @@ Owner.gs_param_base_17:   Found 0 implicit array members in database
 Owner.gs_param_base_17: init array of parameter Owner.myTopArr.my2ndArray0.myUIntArrPar2 done
 
 Owner.gs_param_base_17: Init gs_param_t Owner.myTopArr.my2ndArray0.myUIntArrPar2
-Owner.gs_param_base_18: gs_param_base(name='my2ndArray1', register_at_db=1, parent_array=3221221160, force_top_level_name=0) constructor
+Owner.gs_param_base_18: gs_param_base(name='my2ndArray1', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_18: Set parameter array member name = 'Owner.myTopArr.my2ndArray1',
 Owner.gs_param_base_18: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr'.
 Owner.gs_param_base_0: addMember(Owner.myTopArr.my2ndArray1)
-Owner.gs_param_base_19: gs_param_base(name='myIntPar0', register_at_db=1, parent_array=2132464, force_top_level_name=0) constructor
+Owner.gs_param_base_19: gs_param_base(name='myIntPar0', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_19: Set parameter array member name = 'Owner.myTopArr.my2ndArray1.myIntPar0',
 Owner.gs_param_base_19: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray1'.
 Owner.gs_param_base_18: addMember(Owner.myTopArr.my2ndArray1.myIntPar0)
@@ -149,7 +149,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 gs_param: deserialize: string='100'
 gs_param: (int) stream eof and not fail
 Owner.gs_param_base_19: Init gs_param_t Owner.myTopArr.my2ndArray1.myIntPar0
-Owner.gs_param_base_20: gs_param_base(name='myIntPar1', register_at_db=1, parent_array=2132464, force_top_level_name=0) constructor
+Owner.gs_param_base_20: gs_param_base(name='myIntPar1', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_20: Set parameter array member name = 'Owner.myTopArr.my2ndArray1.myIntPar1',
 Owner.gs_param_base_20: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray1'.
 Owner.gs_param_base_18: addMember(Owner.myTopArr.my2ndArray1.myIntPar1)
@@ -158,7 +158,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 gs_param: deserialize: string='120'
 gs_param: (int) stream eof and not fail
 Owner.gs_param_base_20: Init gs_param_t Owner.myTopArr.my2ndArray1.myIntPar1
-Owner.gs_param_base_21: gs_param_base(name='myStringPar', register_at_db=1, parent_array=2132464, force_top_level_name=0) constructor
+Owner.gs_param_base_21: gs_param_base(name='myStringPar', register_at_db=1, parent_array=yes, force_top_level_name=0) constructor
 Owner.gs_param_base_21: Set parameter array member name = 'Owner.myTopArr.my2ndArray1.myStringPar',
 Owner.gs_param_base_21: Init this parameter as a member of the Extended Parameter Array 'Owner.myTopArr.my2ndArray1'.
 Owner.gs_param_base_18: addMember(Owner.myTopArr.my2ndArray1.myStringPar)
@@ -170,29 +170,29 @@ Owner.gs_param_base_21: Init gs_param_t Owner.myTopArr.my2ndArray1.myStringPar
 EArrayOwnerModule action
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
 Array 'Owner.myTopArr' = {
    my2ndArray0 = '{
@@ -212,29 +212,29 @@ Array 'Owner.myTopArr' = {
 EArrayUserModule action
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
 Array 'Owner.myTopArr': {
    my2ndArray0 = '{
@@ -256,11 +256,11 @@ User ********** Register this as an observer of topArr.
 
 
 myTopArr: ********** Set callback behavior to CALLBACK_MEMBER_CHANGES
-Owner.gs_param_base_0: set_callback_behavior(0, 3221221476): inserted new behavior entry!
+Owner.gs_param_base_0: set_callback_behavior(0, <omitted ptr addr for diff>): inserted new behavior entry!
   Owner.gs_param_base_0 'Owner.myTopArr' CallbackBehaviorMap: 
-    observer 3221221476, CALLBACK_MEMBER_CHANGES
+    observer <omitted ptr addr for diff>, CALLBACK_MEMBER_CHANGES
   Owner.gs_param_base_0 'Owner.myTopArr' ObserverVector (observer_ptr): 
-    3221221476,     3221221476, 
+    <omitted ptr addr for diff>,     <omitted ptr addr for diff>, 
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
    @1 ns /1 (User): PASS/FAIL: Passed if behavior is stored in callback behavior map
@@ -271,17 +271,17 @@ myTopArr: ********** Change value of member my2ndArray0.myIntPar0 which should b
                      Checks if callback of changed members is forwarded by the array.
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_0: observer 3221221476 is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
+Owner.gs_param_base_0: observer <omitted ptr addr for diff> is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
 User: Callback method called:
   Parameter 'Owner.myTopArr.my2ndArray0.myIntPar0'
     of type 'int'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
     changed to value '200'.
 
@@ -294,7 +294,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
@@ -303,11 +303,11 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 
 
 myTopArr: ********** Set callback behavior to CALLBACK_MEMBER_CHANGES
-Owner.gs_param_base_0: set_callback_behavior(0, 3221221476): no change in behavior!
+Owner.gs_param_base_0: set_callback_behavior(0, <omitted ptr addr for diff>): no change in behavior!
   Owner.gs_param_base_0 'Owner.myTopArr' CallbackBehaviorMap: 
-    observer 3221221476, CALLBACK_MEMBER_CHANGES
+    observer <omitted ptr addr for diff>, CALLBACK_MEMBER_CHANGES
   Owner.gs_param_base_0 'Owner.myTopArr' ObserverVector (observer_ptr): 
-    3221221476,     3221221476, 
+    <omitted ptr addr for diff>,     <omitted ptr addr for diff>, 
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
    @1 ns /1 (User): PASS/FAIL: Passed if callback behavior is NOT changed
@@ -315,11 +315,11 @@ Owner.gs_param_base_0: set_callback_behavior(0, 3221221476): no change in behavi
 
 
 myTopArr: ********** Set callback behavior to NOT_CALLBACK_MEMBER_CHANGES
-Owner.gs_param_base_0: set_callback_behavior(1, 3221221476): changed behavior!
+Owner.gs_param_base_0: set_callback_behavior(1, <omitted ptr addr for diff>): changed behavior!
   Owner.gs_param_base_0 'Owner.myTopArr' CallbackBehaviorMap: 
-    observer 3221221476, NOT_CALLBACK_MEMBER_CHANGES
+    observer <omitted ptr addr for diff>, NOT_CALLBACK_MEMBER_CHANGES
   Owner.gs_param_base_0 'Owner.myTopArr' ObserverVector (observer_ptr): 
-    3221221476,     3221221476, 
+    <omitted ptr addr for diff>,     <omitted ptr addr for diff>, 
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
    @1 ns /1 (User): PASS/FAIL: Passed if callback behavior is changed to NOT_CALLBACK_CHANGES
@@ -328,12 +328,12 @@ Owner.gs_param_base_0: set_callback_behavior(1, 3221221476): changed behavior!
 
 myTopArr: ********** Change value of member my2ndArray0.myIntPar0 which should NOT be called back!
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_0: observer 3221221476 is in behavior map - NOT_CALLBACK_MEMBER_CHANGES - NOT perform member call back
+Owner.gs_param_base_0: observer <omitted ptr addr for diff> is in behavior map - NOT_CALLBACK_MEMBER_CHANGES - NOT perform member call back
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
    @1 ns /1 (User): PASS/FAIL: Passed if this change is NOT submitted to this module 'User'
@@ -341,11 +341,11 @@ Owner.gs_param_base_0: observer 3221221476 is in behavior map - NOT_CALLBACK_MEM
 
 
 myTopArr: ********** Set callback behavior to CALLBACK_MEMBER_CHANGES
-Owner.gs_param_base_0: set_callback_behavior(0, 3221221476): changed behavior!
+Owner.gs_param_base_0: set_callback_behavior(0, <omitted ptr addr for diff>): changed behavior!
   Owner.gs_param_base_0 'Owner.myTopArr' CallbackBehaviorMap: 
-    observer 3221221476, CALLBACK_MEMBER_CHANGES
+    observer <omitted ptr addr for diff>, CALLBACK_MEMBER_CHANGES
   Owner.gs_param_base_0 'Owner.myTopArr' ObserverVector (observer_ptr): 
-    3221221476,     3221221476, 
+    <omitted ptr addr for diff>,     <omitted ptr addr for diff>, 
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
    @1 ns /1 (User): PASS/FAIL: Passed if callback behavior is changed to CALLBACK_CHANGES
@@ -353,47 +353,47 @@ Owner.gs_param_base_0: set_callback_behavior(0, 3221221476): changed behavior!
 
 
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_0: observer 3221221476 is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
+Owner.gs_param_base_0: observer <omitted ptr addr for diff> is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
 User: Callback method called:
   Parameter 'Owner.myTopArr.my2ndArray0.myIntPar0'
     of type 'int'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
     changed to value '444'.
 
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_0: observer 3221221476 is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
+Owner.gs_param_base_0: observer <omitted ptr addr for diff> is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
 User: Callback method called:
   Parameter 'Owner.myTopArr.my2ndArray0.myIntPar1'
     of type 'int'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
     changed to value '555'.
 
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_0: observer 3221221476 is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
+Owner.gs_param_base_0: observer <omitted ptr addr for diff> is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back
 User: Callback method called:
   Parameter 'Owner.myTopArr.my2ndArray1.myStringPar'
     of type 'string'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
     changed to value 'HELLO NEW WORLD!'.
 
@@ -405,29 +405,29 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
 Array 'Owner.myTopArr': {
    my2ndArray0 = '{
@@ -448,19 +448,19 @@ Array 'Owner.myTopArr': {
 myTopArr: ********** Test iterator
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
 Owner.myTopArr.my2ndArray0={
    myIntPar0 = '444',
@@ -471,13 +471,13 @@ Owner.myTopArr.my2ndArray0={
 }
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
 Owner.myTopArr.my2ndArray1={
    myIntPar0 = '100',
@@ -492,23 +492,23 @@ Owner.myTopArr.my2ndArray1={
 
 my2ndArray0: ********** 2nd Test iterator
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.myTopArr.my2ndArray0.myIntPar0=444
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.myTopArr.my2ndArray0.myIntPar1=555
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.myTopArr.my2ndArray0.myStringPar=_I_N_I_T_
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
 Owner.myTopArr.my2ndArray0.myUIntArrPar={"0" "0" "0" "0" "0" "0" "0" "0" "0" "0"}
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_read) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
 Owner.myTopArr.my2ndArray0.myUIntArrPar2={}
 ------------------------------------------------------------------------------------------
@@ -529,7 +529,7 @@ find(myIntPar1) -> iterator points to member 'Owner.myTopArr.my2ndArray0.myIntPa
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_2: Destructing param 'Owner.myTopArr.my2ndArray0.myIntPar0'.
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myIntPar0'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray0.myIntPar0)
 Owner.gs_param_base_1: removeMember(Owner.myTopArr.my2ndArray0.myIntPar0)
@@ -537,7 +537,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_3: Destructing param 'Owner.myTopArr.my2ndArray0.myIntPar1'.
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myIntPar1'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray0.myIntPar1)
 Owner.gs_param_base_1: removeMember(Owner.myTopArr.my2ndArray0.myIntPar1)
@@ -545,7 +545,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray0'
 Owner.gs_param_base_4: Destructing param 'Owner.myTopArr.my2ndArray0.myStringPar'.
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myStringPar'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray0.myStringPar)
 Owner.gs_param_base_1: removeMember(Owner.myTopArr.my2ndArray0.myStringPar)
@@ -563,7 +563,7 @@ Owner.gs_param_base_15: Destructing param 'Owner.myTopArr.my2ndArray0.myUIntArrP
 Owner.gs_param_base_16: Destructing param 'Owner.myTopArr.my2ndArray0.myUIntArrPar.9'.
 Owner.gs_param_base_5: Destructing param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'.
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray0.myUIntArrPar)
 Owner.gs_param_base_1: removeMember(Owner.myTopArr.my2ndArray0.myUIntArrPar)
@@ -572,7 +572,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_6: Destructing param 'Owner.myTopArr.my2ndArray0.myUIntArrPar.init_size'.
 Owner.gs_param_base_17: Destructing param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'.
 Owner.gs_param_base_1: param array 'Owner.myTopArr.my2ndArray0' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
-Owner.gs_param_base_1: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_1: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray0.myUIntArrPar2'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray0.myUIntArrPar2)
 Owner.gs_param_base_1: removeMember(Owner.myTopArr.my2ndArray0.myUIntArrPar2)
@@ -585,7 +585,7 @@ Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray0)
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type pre_write) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_19: Destructing param 'Owner.myTopArr.my2ndArray1.myIntPar0'.
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray1.myIntPar0'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray1.myIntPar0)
 Owner.gs_param_base_18: removeMember(Owner.myTopArr.my2ndArray1.myIntPar0)
@@ -593,7 +593,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_20: Destructing param 'Owner.myTopArr.my2ndArray1.myIntPar1'.
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray1.myIntPar1'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray1.myIntPar1)
 Owner.gs_param_base_18: removeMember(Owner.myTopArr.my2ndArray1.myIntPar1)
@@ -601,7 +601,7 @@ Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of ty
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type post_write) for param 'Owner.myTopArr.my2ndArray1'
 Owner.gs_param_base_21: Destructing param 'Owner.myTopArr.my2ndArray1.myStringPar'.
 Owner.gs_param_base_18: param array 'Owner.myTopArr.my2ndArray1' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
-Owner.gs_param_base_18: default: observer 3221221160 is NOT in behavior map - perform member call back
+Owner.gs_param_base_18: default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back
 Owner.gs_param_base_0: param array 'Owner.myTopArr' got internal callback (of type destroy_param) for param 'Owner.myTopArr.my2ndArray1.myStringPar'
 Owner.gs_param_base_0: removeMember(Owner.myTopArr.my2ndArray1.myStringPar)
 Owner.gs_param_base_18: removeMember(Owner.myTopArr.my2ndArray1.myStringPar)

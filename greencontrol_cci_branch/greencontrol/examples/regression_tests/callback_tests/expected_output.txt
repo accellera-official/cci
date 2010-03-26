@@ -6,8 +6,8 @@ OM.gs_param_base_0: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
 OM.gs_param_base_0:    param 'OM.int_param' registerParamCallback(ParamCallbAdapt callb=2, type=post_read)
 OM.gs_param_base_0:    Given callback type (post_read) cannot be handled by a gs_param!
 
-Warning: /GreenSocs/GreenControl/GreenConfig/callback: Given callback type cannot be handled by a gs_param!
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_base.h:491
+Warning: /GreenSocs/GreenControl/GreenConfig/callback: Given callback type (post_read) cannot be handled by a gs_param!
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_base.h:523
 In process: TM.main_action @ 0 s
 ParamCallbAdapt_b: Create parameter callback adapter 3 for caller parameter 'OM.int_param'.
 OM.gs_param_base_0: registerParamCallback(shared_ptr<ParamCallbAdapt_b>)
@@ -39,21 +39,21 @@ END SIMULATION
 Parameter list:
 vector: size=1
 OM.int_param
-ParamCallbAdapt_b: Unregister parameter callback adapter 4 at caller parameter 'OM.int_param'.
-OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=4)
-OM.gs_param_base_0:              removed parameter callback adapter 4
-ParamCallbAdapt_b: Unregister parameter callback adapter 2 at caller parameter 'OM.int_param'.
-OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=2)
-ParamCallbAdapt_b: Unregister parameter callback adapter 3 at caller parameter 'OM.int_param'.
-OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=3)
-OM.gs_param_base_0:              removed parameter callback adapter 3
 ParamCallbAdapt_b: Unregister parameter callback adapter 1 at caller parameter 'OM.int_param'.
 OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=1)
 OM.gs_param_base_0:              removed parameter callback adapter 1
-ParamCallbAdapt_b: Deleting parameter callback adapter 1 (shared pointer deleted)
-ParamCallbAdapt_b: Deleting parameter callback adapter 3 (shared pointer deleted)
+ParamCallbAdapt_b: Unregister parameter callback adapter 3 at caller parameter 'OM.int_param'.
+OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=3)
+OM.gs_param_base_0:              removed parameter callback adapter 3
+ParamCallbAdapt_b: Unregister parameter callback adapter 2 at caller parameter 'OM.int_param'.
+OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=2)
+ParamCallbAdapt_b: Unregister parameter callback adapter 4 at caller parameter 'OM.int_param'.
+OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=4)
+OM.gs_param_base_0:              removed parameter callback adapter 4
+ParamCallbAdapt_b: Deleting parameter callback adapter 4 (shared pointer deleted)
 ParamCallbAdapt_b: Deleting parameter callback adapter 2 (shared pointer deleted)
 ParamCallbAdapt_b: Unregister parameter callback adapter 2 at caller parameter 'OM.int_param'.
 OM.gs_param_base_0: param 'OM.int_param' unregisterParamCallback(ParamCallbAdapt callb=2)
-ParamCallbAdapt_b: Deleting parameter callback adapter 4 (shared pointer deleted)
+ParamCallbAdapt_b: Deleting parameter callback adapter 3 (shared pointer deleted)
+ParamCallbAdapt_b: Deleting parameter callback adapter 1 (shared pointer deleted)
 OM.gs_param_base_0: Make destroy param callbacks

@@ -147,7 +147,6 @@ namespace ctr {
     }
   };
 
-//#define PTRTYPE gs::shared_ptr
 #define PTRTYPE boost::shared_ptr
 
   //---------------------------------------------------------------------------

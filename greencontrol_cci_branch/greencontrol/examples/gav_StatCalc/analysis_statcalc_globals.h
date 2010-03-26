@@ -43,7 +43,9 @@
 // has a buggy boost implementation included!!!!
 #include <boost/tokenizer.hpp> // for parameter array!
 
-#define SC_INCLUDE_DYNAMIC_PROCESSES
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
+  #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
 #include <systemc>
 
 

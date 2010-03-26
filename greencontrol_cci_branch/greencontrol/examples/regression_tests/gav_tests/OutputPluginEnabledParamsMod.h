@@ -44,6 +44,7 @@
 #include "greencontrol/gav/apis/gav_api/GAV_Api.h"
 // include the output plugin(s) that are needed
 #include "greencontrol/gav/plugin/Stdout_OutputPlugin.h"
+#include "greencontrol/gav/plugin/File_OutputPlugin.h"
 
 
 /// Test IP.

@@ -505,7 +505,7 @@ namespace cnf {
       register_as_new_param_observer(); // automatically checks if already done
       
       // Add object and function pointer to multimap
-      m_observer_callback_map.insert( pair<std::string, CallbAdapt_b*>( string(parname), callb ) );
+      m_observer_callback_map.insert( std::pair<std::string, CallbAdapt_b*>( string(parname), callb ) );
       
       return true;
     }
@@ -635,10 +635,10 @@ namespace cnf {
     void makeCallbacks(const std::string &search, const std::string &par_name, const std::string &value) {
       CallbAdapt_b *callb;
       observerCallbackMap::iterator it;
-      pair<observerCallbackMap::iterator, observerCallbackMap::iterator> begin_end;        
+      std::pair<observerCallbackMap::iterator, observerCallbackMap::iterator> begin_end;        
       begin_end = m_observer_callback_map.equal_range(search);
       for (it = begin_end.first;  it != begin_end.second;   ++it) {
-        GCNF_DUMP_N(name(), "masterAccess: callback for parameter "<<search.c_str());      
+        GCNF_DUMP_N(name(), "transport: callback for parameter "<<search.c_str());      
         callb = (*it).second;
         // Make call
         callb->call(par_name, value);

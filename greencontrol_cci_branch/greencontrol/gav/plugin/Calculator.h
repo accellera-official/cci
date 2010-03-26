@@ -117,6 +117,7 @@ namespace av {
       o << const_1;
       if (m_constmap.find(o.str()) == m_constmap.end()) {
         m_constmap[o.str()]=new gs_param<T>(generate_unique_name("const_temp_var"),const_1);
+        m_constmap[o.str()]->add_param_attribute(cnf::param_attributes::temp);
       }
       return calc(func, *m_constmap[o.str()],second_comp);
     }
@@ -134,6 +135,7 @@ namespace av {
       o << const_2;
       if (m_constmap.find(o.str()) == m_constmap.end()) {
         m_constmap[o.str()]=new gs_param<T>(generate_unique_name("const_temp_var"),const_2);
+        m_constmap[o.str()]->add_param_attribute(cnf::param_attributes::temp);
       }
       return calc(func,second_comp, *m_constmap[o.str()]);
     }
@@ -154,9 +156,11 @@ namespace av {
       o2 << const_2;
       if (m_constmap.find(o1.str()) == m_constmap.end()) {
         m_constmap[o1.str()]=new gs_param<T>(generate_unique_name("const_temp_var"),const_1);
+        m_constmap[o1.str()]->add_param_attribute(cnf::param_attributes::temp);
       }
       if (m_constmap.find(o2.str()) == m_constmap.end()) {
         m_constmap[o2.str()]=new gs_param<T>(generate_unique_name("const_temp_var"),const_2);
+        m_constmap[o2.str()]->add_param_attribute(cnf::param_attributes::temp);
       }
       return calc(func,*m_constmap[o1.str()], *m_constmap[o2.str()]);
     }
@@ -198,6 +202,7 @@ namespace av {
       bool save_second=true;
       // create a new object for the result
       gs_param<T> *ans = new gs_param<T>(sc_gen_unique_name((m_name+"_result").c_str()));
+      ans->add_param_attribute(cnf::param_attributes::output);
       // now do an initial calculating
       // *ans=Calculator<T>::m_func_vec[Calculator<T>::m_op_map[func]](convert(first_comp), convert(second_comp), m_sloppy);
       // save the result for callbacks and destructor
@@ -380,6 +385,7 @@ namespace av {
           //std::cout << "sliding window elements: " << sliding_window_elements.size() << std::endl;
           if (sliding_window_result == NULL) {
             sliding_window_result = new gs_param<T>(string(name())+"_SlidingWindow");
+            sliding_window_result->add_param_attribute(cnf::param_attributes::output);
           }
         }
         // resize sliding window

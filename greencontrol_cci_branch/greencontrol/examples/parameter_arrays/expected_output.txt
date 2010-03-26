@@ -17,7 +17,7 @@ ConfigFile_Api: Applying value of param 'Owner.uint_arr.7' to '8000'
 ConfigFile_Api: Applying value of param 'Owner.uint_arr.8' to '9000'
 ConfigFile_Api: Applying value of param 'Owner.uint_arr.9' to '10000'
 ConfigFile_Api: Applying value of param 'Owner.uint_arr.init_size' to '12'
-Owner.gs_param_base_0: gs_param_base(name='normal_uint_param', register_at_db=1, parent_array=0, force_top_level_name=0) constructor
+Owner.gs_param_base_0: gs_param_base(name='normal_uint_param', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 Owner.gs_param_base_0: Setting parent name: 'Owner.'
 Owner.gs_param_base_0: Set parameter name = 'Owner.normal_uint_param',
 Owner.gs_param_base_0: Init gs_param_t Owner.normal_uint_param
@@ -25,63 +25,63 @@ gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 gs_param: deserialize: string='10'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_1: gs_param_base(name='int_arr', register_at_db=1, parent_array=0, force_top_level_name=0) constructor
+Owner.gs_param_base_1: gs_param_base(name='int_arr', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 Owner.gs_param_base_1: Setting parent name: 'Owner.'
 Owner.gs_param_base_1: Set parameter name = 'Owner.int_arr',
 Owner.gs_param_base_1: init parameter array Owner.int_arr: with size=0 (user_chosen=0)
-Owner.gs_param_base_2: gs_param_base(name='Owner.int_arr.init_size', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_2: gs_param_base(name='Owner.int_arr.init_size', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_2: Set parameter name = 'Owner.int_arr.init_size',
 Owner.gs_param_base_2: Init gs_param_t Owner.int_arr.init_size
 gs_param: deserialize: string='10'
 gs_param: (unsigned int) stream eof and not fail
 Owner.gs_param_base_1:   init array size in database = 10
 Owner.gs_param_base_1:   Found 0 implicit array members in database
-Owner.gs_param_base_3: gs_param_base(name='Owner.int_arr.0', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_3: gs_param_base(name='Owner.int_arr.0', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_3: Set parameter name = 'Owner.int_arr.0',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_3: Init gs_param_t Owner.int_arr.0
-Owner.gs_param_base_4: gs_param_base(name='Owner.int_arr.1', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_4: gs_param_base(name='Owner.int_arr.1', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_4: Set parameter name = 'Owner.int_arr.1',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_4: Init gs_param_t Owner.int_arr.1
-Owner.gs_param_base_5: gs_param_base(name='Owner.int_arr.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_5: gs_param_base(name='Owner.int_arr.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_5: Set parameter name = 'Owner.int_arr.2',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_5: Init gs_param_t Owner.int_arr.2
-Owner.gs_param_base_6: gs_param_base(name='Owner.int_arr.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_6: gs_param_base(name='Owner.int_arr.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_6: Set parameter name = 'Owner.int_arr.3',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_6: Init gs_param_t Owner.int_arr.3
-Owner.gs_param_base_7: gs_param_base(name='Owner.int_arr.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_7: gs_param_base(name='Owner.int_arr.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_7: Set parameter name = 'Owner.int_arr.4',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_7: Init gs_param_t Owner.int_arr.4
-Owner.gs_param_base_8: gs_param_base(name='Owner.int_arr.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_8: gs_param_base(name='Owner.int_arr.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_8: Set parameter name = 'Owner.int_arr.5',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_8: Init gs_param_t Owner.int_arr.5
-Owner.gs_param_base_9: gs_param_base(name='Owner.int_arr.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_9: gs_param_base(name='Owner.int_arr.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_9: Set parameter name = 'Owner.int_arr.6',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_9: Init gs_param_t Owner.int_arr.6
-Owner.gs_param_base_10: gs_param_base(name='Owner.int_arr.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_10: gs_param_base(name='Owner.int_arr.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_10: Set parameter name = 'Owner.int_arr.7',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_10: Init gs_param_t Owner.int_arr.7
-Owner.gs_param_base_11: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_11: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_11: Set parameter name = 'Owner.int_arr.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_11: Init gs_param_t Owner.int_arr.8
-Owner.gs_param_base_12: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_12: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_12: Set parameter name = 'Owner.int_arr.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -89,45 +89,45 @@ Owner.gs_param_base_12: Init gs_param_t Owner.int_arr.9
 Owner.gs_param_base_1: init array of parameter Owner.int_arr done
 
 Owner.gs_param_base_1: Init gs_param_t Owner.int_arr
-Owner.gs_param_base_13: gs_param_base(name='string_arr', register_at_db=1, parent_array=0, force_top_level_name=0) constructor
+Owner.gs_param_base_13: gs_param_base(name='string_arr', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 Owner.gs_param_base_13: Setting parent name: 'Owner.'
 Owner.gs_param_base_13: Set parameter name = 'Owner.string_arr',
 Owner.gs_param_base_13: init parameter array Owner.string_arr: with size=0 (user_chosen=0)
-Owner.gs_param_base_14: gs_param_base(name='Owner.string_arr.init_size', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_14: gs_param_base(name='Owner.string_arr.init_size', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_14: Set parameter name = 'Owner.string_arr.init_size',
 Owner.gs_param_base_14: Init gs_param_t Owner.string_arr.init_size
 gs_param: deserialize: string='10'
 gs_param: (unsigned int) stream eof and not fail
 Owner.gs_param_base_13:   init array size in database = 10
 Owner.gs_param_base_13:   Found 0 implicit array members in database
-Owner.gs_param_base_15: gs_param_base(name='Owner.string_arr.0', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_15: gs_param_base(name='Owner.string_arr.0', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_15: Set parameter name = 'Owner.string_arr.0',
 Owner.gs_param_base_15: Init gs_param_t Owner.string_arr.0
-Owner.gs_param_base_16: gs_param_base(name='Owner.string_arr.1', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_16: gs_param_base(name='Owner.string_arr.1', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_16: Set parameter name = 'Owner.string_arr.1',
 Owner.gs_param_base_16: Init gs_param_t Owner.string_arr.1
-Owner.gs_param_base_17: gs_param_base(name='Owner.string_arr.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_17: gs_param_base(name='Owner.string_arr.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_17: Set parameter name = 'Owner.string_arr.2',
 Owner.gs_param_base_17: Init gs_param_t Owner.string_arr.2
-Owner.gs_param_base_18: gs_param_base(name='Owner.string_arr.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_18: gs_param_base(name='Owner.string_arr.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_18: Set parameter name = 'Owner.string_arr.3',
 Owner.gs_param_base_18: Init gs_param_t Owner.string_arr.3
-Owner.gs_param_base_19: gs_param_base(name='Owner.string_arr.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_19: gs_param_base(name='Owner.string_arr.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_19: Set parameter name = 'Owner.string_arr.4',
 Owner.gs_param_base_19: Init gs_param_t Owner.string_arr.4
-Owner.gs_param_base_20: gs_param_base(name='Owner.string_arr.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_20: gs_param_base(name='Owner.string_arr.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_20: Set parameter name = 'Owner.string_arr.5',
 Owner.gs_param_base_20: Init gs_param_t Owner.string_arr.5
-Owner.gs_param_base_21: gs_param_base(name='Owner.string_arr.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_21: gs_param_base(name='Owner.string_arr.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_21: Set parameter name = 'Owner.string_arr.6',
 Owner.gs_param_base_21: Init gs_param_t Owner.string_arr.6
-Owner.gs_param_base_22: gs_param_base(name='Owner.string_arr.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_22: gs_param_base(name='Owner.string_arr.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_22: Set parameter name = 'Owner.string_arr.7',
 Owner.gs_param_base_22: Init gs_param_t Owner.string_arr.7
-Owner.gs_param_base_23: gs_param_base(name='Owner.string_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_23: gs_param_base(name='Owner.string_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_23: Set parameter name = 'Owner.string_arr.8',
 Owner.gs_param_base_23: Init gs_param_t Owner.string_arr.8
-Owner.gs_param_base_24: gs_param_base(name='Owner.string_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_24: gs_param_base(name='Owner.string_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_24: Set parameter name = 'Owner.string_arr.9',
 Owner.gs_param_base_24: Init gs_param_t Owner.string_arr.9
 Owner.gs_param_base_13: init array of parameter Owner.string_arr done
@@ -135,7 +135,7 @@ Owner.gs_param_base_13: init array of parameter Owner.string_arr done
 Owner.gs_param_base_13: Init gs_param_t Owner.string_arr
 
 Warning: Owner.gs_param_base_13: setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
 Owner.gs_param_base_13: setString in array new size (3) not equal existing size (10): resize.
 Owner.gs_param_base_13: resize: size (3) than existing size (10): delete remaining members.
 Owner.gs_param_base_18: Destructing param 'Owner.string_arr.3'.
@@ -145,11 +145,11 @@ Owner.gs_param_base_21: Destructing param 'Owner.string_arr.6'.
 Owner.gs_param_base_22: Destructing param 'Owner.string_arr.7'.
 Owner.gs_param_base_23: Destructing param 'Owner.string_arr.8'.
 Owner.gs_param_base_24: Destructing param 'Owner.string_arr.9'.
-Owner.gs_param_base_25: gs_param_base(name='uint_arr', register_at_db=1, parent_array=0, force_top_level_name=0) constructor
+Owner.gs_param_base_25: gs_param_base(name='uint_arr', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 Owner.gs_param_base_25: Setting parent name: 'Owner.'
 Owner.gs_param_base_25: Set parameter name = 'Owner.uint_arr',
 Owner.gs_param_base_25: init parameter array Owner.uint_arr: with size=0 (user_chosen=0)
-Owner.gs_param_base_26: gs_param_base(name='Owner.uint_arr.init_size', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_26: gs_param_base(name='Owner.uint_arr.init_size', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_26: Set parameter name = 'Owner.uint_arr.init_size',
 Owner.gs_param_base_26: Init gs_param_t Owner.uint_arr.init_size
 gs_param: deserialize: string='12'
@@ -157,84 +157,84 @@ gs_param: (unsigned int) stream eof and not fail
 Owner.gs_param_base_25:   init array size in database = 12
 Owner.gs_param_base_25:   Found 21 implicit array members in database
 Owner.gs_param_base_25:   Warning: different amount of implicit members (21) than given by init_size in database (12): not change array size
-Owner.gs_param_base_27: gs_param_base(name='Owner.uint_arr.0', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_27: gs_param_base(name='Owner.uint_arr.0', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_27: Set parameter name = 'Owner.uint_arr.0',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_27: Init gs_param_t Owner.uint_arr.0
 gs_param: deserialize: string='1000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_28: gs_param_base(name='Owner.uint_arr.1', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_28: gs_param_base(name='Owner.uint_arr.1', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_28: Set parameter name = 'Owner.uint_arr.1',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_28: Init gs_param_t Owner.uint_arr.1
 gs_param: deserialize: string='2000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_29: gs_param_base(name='Owner.uint_arr.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_29: gs_param_base(name='Owner.uint_arr.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_29: Set parameter name = 'Owner.uint_arr.2',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_29: Init gs_param_t Owner.uint_arr.2
 gs_param: deserialize: string='3000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_30: gs_param_base(name='Owner.uint_arr.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_30: gs_param_base(name='Owner.uint_arr.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_30: Set parameter name = 'Owner.uint_arr.3',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_30: Init gs_param_t Owner.uint_arr.3
 gs_param: deserialize: string='4000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_31: gs_param_base(name='Owner.uint_arr.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_31: gs_param_base(name='Owner.uint_arr.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_31: Set parameter name = 'Owner.uint_arr.4',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_31: Init gs_param_t Owner.uint_arr.4
 gs_param: deserialize: string='5000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_32: gs_param_base(name='Owner.uint_arr.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_32: gs_param_base(name='Owner.uint_arr.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_32: Set parameter name = 'Owner.uint_arr.5',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_32: Init gs_param_t Owner.uint_arr.5
 gs_param: deserialize: string='6000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_33: gs_param_base(name='Owner.uint_arr.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_33: gs_param_base(name='Owner.uint_arr.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_33: Set parameter name = 'Owner.uint_arr.6',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_33: Init gs_param_t Owner.uint_arr.6
 gs_param: deserialize: string='7000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_34: gs_param_base(name='Owner.uint_arr.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_34: gs_param_base(name='Owner.uint_arr.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_34: Set parameter name = 'Owner.uint_arr.7',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_34: Init gs_param_t Owner.uint_arr.7
 gs_param: deserialize: string='8000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_35: gs_param_base(name='Owner.uint_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_35: gs_param_base(name='Owner.uint_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_35: Set parameter name = 'Owner.uint_arr.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_35: Init gs_param_t Owner.uint_arr.8
 gs_param: deserialize: string='9000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_36: gs_param_base(name='Owner.uint_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_36: gs_param_base(name='Owner.uint_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_36: Set parameter name = 'Owner.uint_arr.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_36: Init gs_param_t Owner.uint_arr.9
 gs_param: deserialize: string='10000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_37: gs_param_base(name='Owner.uint_arr.10', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_37: gs_param_base(name='Owner.uint_arr.10', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_37: Set parameter name = 'Owner.uint_arr.10',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 Owner.gs_param_base_37: Init gs_param_t Owner.uint_arr.10
 gs_param: deserialize: string='11000'
 gs_param: (unsigned int) stream eof and not fail
-Owner.gs_param_base_38: gs_param_base(name='Owner.uint_arr.11', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+Owner.gs_param_base_38: gs_param_base(name='Owner.uint_arr.11', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 Owner.gs_param_base_38: Set parameter name = 'Owner.uint_arr.11',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -273,7 +273,7 @@ User********** Test setting members
 User: set int_arr {0 1 2 3 4 5 6 7 8 9}
 
 Warning: Owner.gs_param_base_1: setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
 In process: User.main_action @ 10 ns
 gs_param: deserialize: string='0'
 gs_param: (int) stream eof and not fail
@@ -304,27 +304,27 @@ User: int_arr: {"0" "1" "2" "3" "4" "5" "6" "7" "8" "9"}
 User********** Test resize -> bigger
 User: int_arr.resize(15)
 Owner.gs_param_base_1: resize: size (15) larger than existing size (10): create new members.
-User.main_action.gs_param_base_0: gs_param_base(name='Owner.int_arr.10', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_0: gs_param_base(name='Owner.int_arr.10', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_0: Set parameter name = 'Owner.int_arr.10',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_0: Init gs_param_t Owner.int_arr.10
-User.main_action.gs_param_base_1: gs_param_base(name='Owner.int_arr.11', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_1: gs_param_base(name='Owner.int_arr.11', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_1: Set parameter name = 'Owner.int_arr.11',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_1: Init gs_param_t Owner.int_arr.11
-User.main_action.gs_param_base_2: gs_param_base(name='Owner.int_arr.12', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_2: gs_param_base(name='Owner.int_arr.12', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_2: Set parameter name = 'Owner.int_arr.12',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_2: Init gs_param_t Owner.int_arr.12
-User.main_action.gs_param_base_3: gs_param_base(name='Owner.int_arr.13', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_3: gs_param_base(name='Owner.int_arr.13', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_3: Set parameter name = 'Owner.int_arr.13',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_3: Init gs_param_t Owner.int_arr.13
-User.main_action.gs_param_base_4: gs_param_base(name='Owner.int_arr.14', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_4: gs_param_base(name='Owner.int_arr.14', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_4: Set parameter name = 'Owner.int_arr.14',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -406,16 +406,16 @@ User********** Test setting members
 User: set int_arr {0 1 2 3 4 5 6 7 8 9}
 
 Warning: Owner.gs_param_base_1: setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
 In process: User.main_action @ 10 ns
 Owner.gs_param_base_1: setString in array new size (10) not equal existing size (8): resize.
 Owner.gs_param_base_1: resize: size (10) larger than existing size (8): create new members.
-User.main_action.gs_param_base_5: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_5: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_5: Set parameter name = 'Owner.int_arr.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_5: Init gs_param_t Owner.int_arr.8
-User.main_action.gs_param_base_6: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_6: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_6: Set parameter name = 'Owner.int_arr.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -587,7 +587,7 @@ User********** Test reduction of member number
 User: set int_arr {10 12 13 14}
 
 Warning: Owner.gs_param_base_1: setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
 In process: User.main_action @ 10 ns
 Owner.gs_param_base_1: setString in array new size (4) not equal existing size (10): resize.
 Owner.gs_param_base_1: resize: size (4) than existing size (10): delete remaining members.
@@ -772,46 +772,46 @@ User********** Test increasment of member number
 User: set int_arr {"11" "22" "33" "44" "55" "66" "77" "88" "99" "1010" "1111" "1212"}
 
 Warning: Owner.gs_param_base_1: setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
 In process: User.main_action @ 10 ns
 Owner.gs_param_base_1: setString in array new size (12) not equal existing size (4): resize.
 Owner.gs_param_base_1: resize: size (12) larger than existing size (4): create new members.
-User.main_action.gs_param_base_7: gs_param_base(name='Owner.int_arr.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_7: gs_param_base(name='Owner.int_arr.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_7: Set parameter name = 'Owner.int_arr.4',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_7: Init gs_param_t Owner.int_arr.4
-User.main_action.gs_param_base_8: gs_param_base(name='Owner.int_arr.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_8: gs_param_base(name='Owner.int_arr.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_8: Set parameter name = 'Owner.int_arr.5',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_8: Init gs_param_t Owner.int_arr.5
-User.main_action.gs_param_base_9: gs_param_base(name='Owner.int_arr.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_9: gs_param_base(name='Owner.int_arr.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_9: Set parameter name = 'Owner.int_arr.6',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_9: Init gs_param_t Owner.int_arr.6
-User.main_action.gs_param_base_10: gs_param_base(name='Owner.int_arr.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_10: gs_param_base(name='Owner.int_arr.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_10: Set parameter name = 'Owner.int_arr.7',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_10: Init gs_param_t Owner.int_arr.7
-User.main_action.gs_param_base_11: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_11: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_11: Set parameter name = 'Owner.int_arr.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_11: Init gs_param_t Owner.int_arr.8
-User.main_action.gs_param_base_12: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_12: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_12: Set parameter name = 'Owner.int_arr.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_12: Init gs_param_t Owner.int_arr.9
-User.main_action.gs_param_base_13: gs_param_base(name='Owner.int_arr.10', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_13: gs_param_base(name='Owner.int_arr.10', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_13: Set parameter name = 'Owner.int_arr.10',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_13: Init gs_param_t Owner.int_arr.10
-User.main_action.gs_param_base_14: gs_param_base(name='Owner.int_arr.11', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_14: gs_param_base(name='Owner.int_arr.11', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_14: Set parameter name = 'Owner.int_arr.11',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -997,7 +997,7 @@ User********** Test different set string style
 User: set int_arr {"152" "9154"}
 
 Warning: Owner.gs_param_base_1: setString for Simple Parameter Arrays is experimental!! Use the lua config file parser or set the values with operator=(vector) or set the members individually with strings or values.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_array.hpp:364
 In process: User.main_action @ 10 ns
 Owner.gs_param_base_1: setString in array new size (2) not equal existing size (12): resize.
 Owner.gs_param_base_1: resize: size (2) than existing size (12): delete remaining members.
@@ -1196,92 +1196,92 @@ member #1 = 9154
 
 User********** Test operator=(vector)
 Owner.gs_param_base_1: resize: size (20) larger than existing size (2): create new members.
-User.main_action.gs_param_base_15: gs_param_base(name='Owner.int_arr.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_15: gs_param_base(name='Owner.int_arr.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_15: Set parameter name = 'Owner.int_arr.2',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_15: Init gs_param_t Owner.int_arr.2
-User.main_action.gs_param_base_16: gs_param_base(name='Owner.int_arr.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_16: gs_param_base(name='Owner.int_arr.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_16: Set parameter name = 'Owner.int_arr.3',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_16: Init gs_param_t Owner.int_arr.3
-User.main_action.gs_param_base_17: gs_param_base(name='Owner.int_arr.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_17: gs_param_base(name='Owner.int_arr.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_17: Set parameter name = 'Owner.int_arr.4',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_17: Init gs_param_t Owner.int_arr.4
-User.main_action.gs_param_base_18: gs_param_base(name='Owner.int_arr.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_18: gs_param_base(name='Owner.int_arr.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_18: Set parameter name = 'Owner.int_arr.5',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_18: Init gs_param_t Owner.int_arr.5
-User.main_action.gs_param_base_19: gs_param_base(name='Owner.int_arr.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_19: gs_param_base(name='Owner.int_arr.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_19: Set parameter name = 'Owner.int_arr.6',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_19: Init gs_param_t Owner.int_arr.6
-User.main_action.gs_param_base_20: gs_param_base(name='Owner.int_arr.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_20: gs_param_base(name='Owner.int_arr.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_20: Set parameter name = 'Owner.int_arr.7',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_20: Init gs_param_t Owner.int_arr.7
-User.main_action.gs_param_base_21: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_21: gs_param_base(name='Owner.int_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_21: Set parameter name = 'Owner.int_arr.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_21: Init gs_param_t Owner.int_arr.8
-User.main_action.gs_param_base_22: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_22: gs_param_base(name='Owner.int_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_22: Set parameter name = 'Owner.int_arr.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_22: Init gs_param_t Owner.int_arr.9
-User.main_action.gs_param_base_23: gs_param_base(name='Owner.int_arr.10', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_23: gs_param_base(name='Owner.int_arr.10', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_23: Set parameter name = 'Owner.int_arr.10',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_23: Init gs_param_t Owner.int_arr.10
-User.main_action.gs_param_base_24: gs_param_base(name='Owner.int_arr.11', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_24: gs_param_base(name='Owner.int_arr.11', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_24: Set parameter name = 'Owner.int_arr.11',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_24: Init gs_param_t Owner.int_arr.11
-User.main_action.gs_param_base_25: gs_param_base(name='Owner.int_arr.12', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_25: gs_param_base(name='Owner.int_arr.12', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_25: Set parameter name = 'Owner.int_arr.12',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_25: Init gs_param_t Owner.int_arr.12
-User.main_action.gs_param_base_26: gs_param_base(name='Owner.int_arr.13', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_26: gs_param_base(name='Owner.int_arr.13', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_26: Set parameter name = 'Owner.int_arr.13',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_26: Init gs_param_t Owner.int_arr.13
-User.main_action.gs_param_base_27: gs_param_base(name='Owner.int_arr.14', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_27: gs_param_base(name='Owner.int_arr.14', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_27: Set parameter name = 'Owner.int_arr.14',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_27: Init gs_param_t Owner.int_arr.14
-User.main_action.gs_param_base_28: gs_param_base(name='Owner.int_arr.15', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_28: gs_param_base(name='Owner.int_arr.15', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_28: Set parameter name = 'Owner.int_arr.15',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_28: Init gs_param_t Owner.int_arr.15
-User.main_action.gs_param_base_29: gs_param_base(name='Owner.int_arr.16', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_29: gs_param_base(name='Owner.int_arr.16', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_29: Set parameter name = 'Owner.int_arr.16',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_29: Init gs_param_t Owner.int_arr.16
-User.main_action.gs_param_base_30: gs_param_base(name='Owner.int_arr.17', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_30: gs_param_base(name='Owner.int_arr.17', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_30: Set parameter name = 'Owner.int_arr.17',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_30: Init gs_param_t Owner.int_arr.17
-User.main_action.gs_param_base_31: gs_param_base(name='Owner.int_arr.18', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_31: gs_param_base(name='Owner.int_arr.18', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_31: Set parameter name = 'Owner.int_arr.18',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_31: Init gs_param_t Owner.int_arr.18
-User.main_action.gs_param_base_32: gs_param_base(name='Owner.int_arr.19', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_32: gs_param_base(name='Owner.int_arr.19', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_32: Set parameter name = 'Owner.int_arr.19',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -1460,70 +1460,70 @@ Array = {"110" "111" "112" "113" "114" "115" "116" "117" "118" "119" "120" "121"
 ------------------------------------------------------------------------------------------
 
 User********** Test constructor with default vector values
-User.main_action.gs_param_base_33: gs_param_base(name='my_new_arr', register_at_db=1, parent_array=0, force_top_level_name=0) constructor
+User.main_action.gs_param_base_33: gs_param_base(name='my_new_arr', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 User.main_action.gs_param_base_33: Setting parent name: 'User.'
 User.main_action.gs_param_base_33: Set parameter name = 'User.my_new_arr',
 User.main_action.gs_param_base_33: init parameter array User.my_new_arr: with size=20 (user_chosen=1)
 User.main_action.gs_param_base_33:   no init array size in database, use 20
 User.main_action.gs_param_base_33:   Found 0 implicit array members in database
-User.main_action.gs_param_base_34: gs_param_base(name='User.my_new_arr.0', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_34: gs_param_base(name='User.my_new_arr.0', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_34: Set parameter name = 'User.my_new_arr.0',
 User.main_action.gs_param_base_34: Init gs_param_t User.my_new_arr.0
-User.main_action.gs_param_base_35: gs_param_base(name='User.my_new_arr.1', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_35: gs_param_base(name='User.my_new_arr.1', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_35: Set parameter name = 'User.my_new_arr.1',
 User.main_action.gs_param_base_35: Init gs_param_t User.my_new_arr.1
-User.main_action.gs_param_base_36: gs_param_base(name='User.my_new_arr.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_36: gs_param_base(name='User.my_new_arr.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_36: Set parameter name = 'User.my_new_arr.2',
 User.main_action.gs_param_base_36: Init gs_param_t User.my_new_arr.2
-User.main_action.gs_param_base_37: gs_param_base(name='User.my_new_arr.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_37: gs_param_base(name='User.my_new_arr.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_37: Set parameter name = 'User.my_new_arr.3',
 User.main_action.gs_param_base_37: Init gs_param_t User.my_new_arr.3
-User.main_action.gs_param_base_38: gs_param_base(name='User.my_new_arr.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_38: gs_param_base(name='User.my_new_arr.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_38: Set parameter name = 'User.my_new_arr.4',
 User.main_action.gs_param_base_38: Init gs_param_t User.my_new_arr.4
-User.main_action.gs_param_base_39: gs_param_base(name='User.my_new_arr.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_39: gs_param_base(name='User.my_new_arr.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_39: Set parameter name = 'User.my_new_arr.5',
 User.main_action.gs_param_base_39: Init gs_param_t User.my_new_arr.5
-User.main_action.gs_param_base_40: gs_param_base(name='User.my_new_arr.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_40: gs_param_base(name='User.my_new_arr.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_40: Set parameter name = 'User.my_new_arr.6',
 User.main_action.gs_param_base_40: Init gs_param_t User.my_new_arr.6
-User.main_action.gs_param_base_41: gs_param_base(name='User.my_new_arr.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_41: gs_param_base(name='User.my_new_arr.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_41: Set parameter name = 'User.my_new_arr.7',
 User.main_action.gs_param_base_41: Init gs_param_t User.my_new_arr.7
-User.main_action.gs_param_base_42: gs_param_base(name='User.my_new_arr.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_42: gs_param_base(name='User.my_new_arr.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_42: Set parameter name = 'User.my_new_arr.8',
 User.main_action.gs_param_base_42: Init gs_param_t User.my_new_arr.8
-User.main_action.gs_param_base_43: gs_param_base(name='User.my_new_arr.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_43: gs_param_base(name='User.my_new_arr.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_43: Set parameter name = 'User.my_new_arr.9',
 User.main_action.gs_param_base_43: Init gs_param_t User.my_new_arr.9
-User.main_action.gs_param_base_44: gs_param_base(name='User.my_new_arr.10', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_44: gs_param_base(name='User.my_new_arr.10', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_44: Set parameter name = 'User.my_new_arr.10',
 User.main_action.gs_param_base_44: Init gs_param_t User.my_new_arr.10
-User.main_action.gs_param_base_45: gs_param_base(name='User.my_new_arr.11', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_45: gs_param_base(name='User.my_new_arr.11', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_45: Set parameter name = 'User.my_new_arr.11',
 User.main_action.gs_param_base_45: Init gs_param_t User.my_new_arr.11
-User.main_action.gs_param_base_46: gs_param_base(name='User.my_new_arr.12', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_46: gs_param_base(name='User.my_new_arr.12', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_46: Set parameter name = 'User.my_new_arr.12',
 User.main_action.gs_param_base_46: Init gs_param_t User.my_new_arr.12
-User.main_action.gs_param_base_47: gs_param_base(name='User.my_new_arr.13', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_47: gs_param_base(name='User.my_new_arr.13', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_47: Set parameter name = 'User.my_new_arr.13',
 User.main_action.gs_param_base_47: Init gs_param_t User.my_new_arr.13
-User.main_action.gs_param_base_48: gs_param_base(name='User.my_new_arr.14', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_48: gs_param_base(name='User.my_new_arr.14', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_48: Set parameter name = 'User.my_new_arr.14',
 User.main_action.gs_param_base_48: Init gs_param_t User.my_new_arr.14
-User.main_action.gs_param_base_49: gs_param_base(name='User.my_new_arr.15', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_49: gs_param_base(name='User.my_new_arr.15', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_49: Set parameter name = 'User.my_new_arr.15',
 User.main_action.gs_param_base_49: Init gs_param_t User.my_new_arr.15
-User.main_action.gs_param_base_50: gs_param_base(name='User.my_new_arr.16', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_50: gs_param_base(name='User.my_new_arr.16', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_50: Set parameter name = 'User.my_new_arr.16',
 User.main_action.gs_param_base_50: Init gs_param_t User.my_new_arr.16
-User.main_action.gs_param_base_51: gs_param_base(name='User.my_new_arr.17', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_51: gs_param_base(name='User.my_new_arr.17', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_51: Set parameter name = 'User.my_new_arr.17',
 User.main_action.gs_param_base_51: Init gs_param_t User.my_new_arr.17
-User.main_action.gs_param_base_52: gs_param_base(name='User.my_new_arr.18', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_52: gs_param_base(name='User.my_new_arr.18', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_52: Set parameter name = 'User.my_new_arr.18',
 User.main_action.gs_param_base_52: Init gs_param_t User.my_new_arr.18
-User.main_action.gs_param_base_53: gs_param_base(name='User.my_new_arr.19', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_53: gs_param_base(name='User.my_new_arr.19', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_53: Set parameter name = 'User.my_new_arr.19',
 User.main_action.gs_param_base_53: Init gs_param_t User.my_new_arr.19
 User.main_action.gs_param_base_33: init array of parameter User.my_new_arr done
@@ -1536,33 +1536,33 @@ Array 'User.my_new_arr' = {"110" "111" "112" "113" "114" "115" "116" "117" "118"
 ------------------------------------------------------------------------------------------
 
 User********** Test setting members (get wit at() and operator[]) with = operator
-User.main_action.gs_param_base_54: gs_param_base(name='my_new_arr2', register_at_db=0, parent_array=0, force_top_level_name=0) constructor
+User.main_action.gs_param_base_54: gs_param_base(name='my_new_arr2', register_at_db=1, parent_array=no, force_top_level_name=0) constructor
 User.main_action.gs_param_base_54: Setting parent name: 'User.'
 User.main_action.gs_param_base_54: Set parameter name = 'User.my_new_arr2',
 User.main_action.gs_param_base_54: init parameter array User.my_new_arr2: with size=5 (user_chosen=1)
 User.main_action.gs_param_base_54:   no init array size in database, use 5
 User.main_action.gs_param_base_54:   Found 0 implicit array members in database
-User.main_action.gs_param_base_55: gs_param_base(name='User.my_new_arr2.0', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_55: gs_param_base(name='User.my_new_arr2.0', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_55: Set parameter name = 'User.my_new_arr2.0',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_55: Init gs_param_t User.my_new_arr2.0
-User.main_action.gs_param_base_56: gs_param_base(name='User.my_new_arr2.1', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_56: gs_param_base(name='User.my_new_arr2.1', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_56: Set parameter name = 'User.my_new_arr2.1',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_56: Init gs_param_t User.my_new_arr2.1
-User.main_action.gs_param_base_57: gs_param_base(name='User.my_new_arr2.2', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_57: gs_param_base(name='User.my_new_arr2.2', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_57: Set parameter name = 'User.my_new_arr2.2',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_57: Init gs_param_t User.my_new_arr2.2
-User.main_action.gs_param_base_58: gs_param_base(name='User.my_new_arr2.3', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_58: gs_param_base(name='User.my_new_arr2.3', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_58: Set parameter name = 'User.my_new_arr2.3',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_58: Init gs_param_t User.my_new_arr2.3
-User.main_action.gs_param_base_59: gs_param_base(name='User.my_new_arr2.4', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_59: gs_param_base(name='User.my_new_arr2.4', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_59: Set parameter name = 'User.my_new_arr2.4',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -1581,7 +1581,7 @@ Array (5 default members) 'User.my_new_arr2' = {"0" "0" "200" "300" "0"}
 
 my_new_arr2.at(5) = 555
 User.main_action.gs_param_base_54: resize: size (6) larger than existing size (5): create new members.
-User.main_action.gs_param_base_60: gs_param_base(name='User.my_new_arr2.5', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_60: gs_param_base(name='User.my_new_arr2.5', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_60: Set parameter name = 'User.my_new_arr2.5',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
@@ -1589,22 +1589,22 @@ User.main_action.gs_param_base_60: Init gs_param_t User.my_new_arr2.5
 Array 'User.my_new_arr2' = {"0" "0" "200" "300" "0" "555"}
 my_new_arr2.at(9) = 555
 User.main_action.gs_param_base_54: resize: size (10) larger than existing size (6): create new members.
-User.main_action.gs_param_base_61: gs_param_base(name='User.my_new_arr2.6', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_61: gs_param_base(name='User.my_new_arr2.6', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_61: Set parameter name = 'User.my_new_arr2.6',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_61: Init gs_param_t User.my_new_arr2.6
-User.main_action.gs_param_base_62: gs_param_base(name='User.my_new_arr2.7', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_62: gs_param_base(name='User.my_new_arr2.7', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_62: Set parameter name = 'User.my_new_arr2.7',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_62: Init gs_param_t User.my_new_arr2.7
-User.main_action.gs_param_base_63: gs_param_base(name='User.my_new_arr2.8', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_63: gs_param_base(name='User.my_new_arr2.8', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_63: Set parameter name = 'User.my_new_arr2.8',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value
 User.main_action.gs_param_base_63: Init gs_param_t User.my_new_arr2.8
-User.main_action.gs_param_base_64: gs_param_base(name='User.my_new_arr2.9', register_at_db=1, parent_array=0, force_top_level_name=1) constructor
+User.main_action.gs_param_base_64: gs_param_base(name='User.my_new_arr2.9', register_at_db=1, parent_array=no, force_top_level_name=1) constructor
 User.main_action.gs_param_base_64: Set parameter name = 'User.my_new_arr2.9',
 gs_param: deserialize: string=''
 gs_param: deserialize: set default value

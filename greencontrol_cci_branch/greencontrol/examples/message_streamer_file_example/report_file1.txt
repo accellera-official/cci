@@ -1,4 +1,4 @@
-Simulation time: Tue Jan 19 14:57:34 2010
+Simulation time: Tue Mar  9 14:29:32 2010
 
 dbg_msg_L2: testbench_msg_str_file.cpp:89: @10 ns /1: (ModuleA): Hallo L2 after 10ns
 dbg_msg_L4: testbench_msg_str_file.cpp:95: @20 ns /2: (ModuleA): Hallo L4 after 20ns

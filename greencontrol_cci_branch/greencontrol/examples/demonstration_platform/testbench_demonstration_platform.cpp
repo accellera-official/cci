@@ -69,16 +69,13 @@
 #include "Cache.h"
 #include "PCIeDevice.h"
 
-/// Testbench for the Demonstration Platform for GreenConfig release 0.3
+/// Testbench for the Demonstration Platform for GreenConfig
 /**
- * This example uses the release 0.3 where the values are stored inside the 
- * parameter objects, not inside the database.
- *
  * If there is still a deprecated warning this is the addParam of the scml
  * API which is not yet ported to use directly gs_param objects!
  *
  * The testbench instantiates the GreenCotrol Core and the needed user modules.
- * The user modules communicate over GreenBus
+ * The user modules communicate over GreenBus.
  *
  * Usage e.g.:
  * \code
@@ -92,7 +89,7 @@ int sc_main(int argc, char *argv[]) {
 
   // ////////////////////////////////////////////////////
   // GreenControl Core
-  //gs::ctr::GC_Core       core("ControlCore");
+  //gs::ctr::GC_Core       core;
   //  or
   //gs::ctr::GC_Core::get_instance(); // optional, done automatically by gc_ports
   //  or
@@ -101,7 +98,7 @@ int sc_main(int argc, char *argv[]) {
   // ////////////////////////////////////////////////////
   // GreenConfig Service Plugin
   //gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  //gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  //gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
   //  or
   //gs::cnf::ConfigPlugin configPlugin("ConfigPlugin");
   //  or
@@ -115,7 +112,7 @@ int sc_main(int argc, char *argv[]) {
   configTool.config("demoplatform.cfg");   // reads in a config file
   
   // Configuration with GreenConfig command line options
-  gs::cnf::CommandLineConfigParser configParser("ConfigParser");
+  gs::cnf::CommandLineConfigParser configParser;
   configParser.parse(argc, argv); // parses the command line
 
   // Command line tool which provides a command line to access parameters

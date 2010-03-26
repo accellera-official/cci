@@ -93,14 +93,14 @@
  */
 int sc_main(int argc, char *argv[]) {
 
-  //sc_report_handler::set_actions(SC_ERROR, SC_ABORT);  // make a breakpoint in SystemC file sc_stop_here.cpp
-  //sc_report_handler::set_actions(SC_WARNING, SC_ABORT);  // make a breakpoint in SystemC file sc_stop_here.cpp
+  sc_report_handler::set_actions(SC_ERROR, SC_ABORT);  // make a breakpoint in SystemC file sc_stop_here.cpp
+  sc_report_handler::set_actions(SC_WARNING, SC_ABORT);  // make a breakpoint in SystemC file sc_stop_here.cpp
   sc_report_handler::set_actions(SC_INFO, SC_DO_NOTHING);
 
   
   // ////////////////////////////////////////////////////
   // GreenControl Core
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
 
   // ////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ int sc_main(int argc, char *argv[]) {
   
   // ConfigPlugin
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
   
   // Configuration with GreenConfig config files
   gs::cnf::ConfigFile_Tool configTool("ConfigFileTool");
@@ -117,7 +117,7 @@ int sc_main(int argc, char *argv[]) {
   configTool.parseCommandLine(argc, argv); // parses the command line for --configfile
   
   // Configuration with GreenConfig command line options
-  gs::cnf::CommandLineConfigParser configParser("ConfigParser");
+  gs::cnf::CommandLineConfigParser configParser;
   configParser.parse(argc, argv); // parses the command line
 
   // Command line tool which provides a command line to access parameters

@@ -38,16 +38,13 @@
 
 #include "scml_test_ip.h"
 
-#define ScmlTest(a) { std::cout << "Scml test: " << a <<std::endl; }
-#define SPACE {std::cout << std::endl; }
-
 void Scml_Test_IP::main_action() {
   
   std::cout << std::endl;
-  ScmlTest("Get not existing parameter my.name");
+  DumpScmlTest("Get not existing parameter my.name");
   api->getParam("my.name");
 
-  //ScmlTest("Set not existing parameter my.notExistingParam");
+  //DumpScmlTest("Set not existing parameter my.notExistingParam");
   //api->setParam("my.notExistingParam", "HelloWorld");
 
 
@@ -58,17 +55,17 @@ void Scml_Test_IP::main_action() {
   
   std::cout << std::endl;
 
-  ScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.intProp' = 1");
-  api->setParam("ScmlOriginalPropertyIP.intProp", "1");
+  DumpScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.m_string_prop' = 'value written to registry'");
+  api->setParam("ScmlOriginalPropertyIP.m_string_prop", "value written to registry");
+  
+  DumpScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.m_int_prop' = 1");
+  api->setParam("ScmlOriginalPropertyIP.m_int_prop", "1");
 
-  ScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.boolProp' = 1");
-  api->setParam("ScmlOriginalPropertyIP.boolProp", "1");
+  DumpScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.m_bool_prop' = 1");
+  api->setParam("ScmlOriginalPropertyIP.m_bool_prop", "1");
 
-  ScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.doubleProp' = 1");
-  api->setParam("ScmlOriginalPropertyIP.doubleProp", "1");
-
-  ScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.stringProp' = hello world");
-  api->setParam("ScmlOriginalPropertyIP.stringProp", "hello world");
+  DumpScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.m_double_prop' = 1");
+  api->setParam("ScmlOriginalPropertyIP.m_double_prop", "1");
 
 #endif
 

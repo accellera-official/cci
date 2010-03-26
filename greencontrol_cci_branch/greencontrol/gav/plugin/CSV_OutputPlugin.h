@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -61,8 +61,11 @@ namespace av {
  
   /// Output Plugin which observes GreenConfig gs_param parameters and prints out changes to a CSV file that can be used by Excel
   /**
-   * Due to the structure of CSV files all parameters should be registered before
-   * writing the file! The plugin will begin writing the file on the first parameter change.
+   * Due to the structure of CSV files (first line (header) should contain all param names)
+   * all parameters should be registered before writing the file! 
+   * That's why this plugin will begin logging and writing the file on the automatic end_of_elaboration call.
+   * Optionally it can be switched to begin logging and running immediately on first param adding. 
+   * See OutputPlugin_base for details on how to handle and influence running behavior.
    *
    * The behavior how to react to newly added parameters after began writing can be
    * adapted with the <code>define ALLOW_ADDING_PARAMETERS_AFTER_HEADER_WRITTEN</code>.
@@ -100,9 +103,10 @@ namespace av {
      *
      * @param file_name Filename of the output file.
      * @param ev_listn  Pointer to event listener that may be used by this.
+     * @param start_running  If this output plugin (start_running=false:) begins to output on end_of_elaboreation (default) or (start_running=true) starts running immediately on first param adding
      */
-    CSV_OutputPlugin(const char* file_name, event_listener<OutputPlugin_base> *ev_listn)
-    : OutputPlugin_base(file_name, ev_listn, CSV_FILE_OUT),
+    CSV_OutputPlugin(const char* file_name, event_listener<OutputPlugin_base> *ev_listn, bool start_running = false)
+    : OutputPlugin_base(file_name, ev_listn, CSV_FILE_OUT, start_running),
       filename(file_name),
       started_once(false),
       current_time(sc_time(0,SC_NS)),
@@ -120,12 +124,12 @@ namespace av {
     }
 
   protected:
-    /// Init function called on first usage, not called during construction!
+    /// Init function called before first output, not called during construction!
     /**
      * Opens the file, prints time and date in it.
      */
     void init() {
-      GAV_DUMP_N(name(), "Init Output Plugin: Open file '"<<filename.c_str()<<"' to write observed parameters to.");
+      GAV_DUMP_N(name(), "Init CSV Output Plugin: Open file '"<<filename.c_str()<<"' to write observed parameters to.");
       current_time = sc_core::sc_time_stamp();
       current_delta = sc_core::sc_delta_count();
       // create time
@@ -187,7 +191,7 @@ namespace av {
           write_time_slot();
         
         // Store current value into current_storage
-        pair<std::map<std::string, std::string>::iterator, bool> mp
+        std::pair<std::map<std::string, std::string>::iterator, bool> mp
           = current_line_values.insert(make_pair(par.getName(), par.getString()));
         if (!mp.second)
           (mp.first)->second = par.getString();

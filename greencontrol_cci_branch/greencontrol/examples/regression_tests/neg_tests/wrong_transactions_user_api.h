@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -41,8 +41,7 @@
 #ifndef __WRONG_TRANSACTIONS_USER_API_H__
 #define __WRONG_TRANSACTIONS_USER_API_H__
 
-#include "greencontrol/core/gc_core.h"
-#include "greencontrol/gcnf/plugin/gcnf_datatypes.h"
+#include "greencontrol/config.h"
 
 #define WRONG_TRANSACTIONS_USER_API_NAME "Wrong_Transactions_User_Api"
 
@@ -65,57 +64,25 @@ public:
   /// Constructor
   Wrong_Transactions_User_Api()
     : sc_object(sc_gen_unique_name("__wrong_transactions_user_api__")),
-      m_gc_port(CONFIG_SERVICE, WRONG_TRANSACTIONS_USER_API_NAME, false)
+      m_gc_port(CONFIG_SERVICE, WRONG_TRANSACTIONS_USER_API_NAME, false, this)
   { 
-    m_gc_port.api_port(*this);  // bind sc_port of m_gc_port
   }
 
   // //////////////////// GC_PORT_IF ///////////////////////////////////
   /**
    * Implements gc_port_if.
-   * This method starts whenever a master triggers a payload-event.
+   * This method starts whenever a master sends a transaction.
    */
-  void masterAccess(ControlTransactionContainer &t_p)
+  void transport(ControlTransactionHandle &tr)
   {
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GC_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from master");      
-  }
-  
-  /**
-   * Implements gc_port_if.
-   * This method starts whenever a slave triggers a payload-event.
-   */
-  void slaveAccess(ControlTransactionContainer &t_p)
-  {  
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GC_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from slave");      
-
-    switch (ph.state) {
-    case ControlPhase::CONTROL_RESPONSE:
-      {
-        // processed directly in the method which initiated the transaction
-        break;
-      }
-    case ControlPhase::CONTROL_ERROR:
-      {
-        SC_REPORT_WARNING(name(), "slaveAccess got phase ControlError!");
-        break;
-      }
-    default:
-      {
-        SC_REPORT_WARNING(name(), "slaveAccess got not processed phase!");
-      }
-    }
+    GCNF_DUMP_N(name(), "got transaction atom from master");      
+    GCNF_DUMP_N(name(), "  received transaction: "<<(tr->toString()).c_str());      
   }
 
   // ////// API methods //////////////////////////////////////////////////
 
   ControlTransactionHandle getTransaction() {
-    return m_gc_port.init_port.create_transaction();
+    return m_gc_port.createTransaction();
   }
 
   /// Creates a transaction which has a (hopefully) not existing target field.
@@ -123,10 +90,9 @@ public:
     GC_DUMP_N(name(), "sendTransaction()");
     bool success = false;
 
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
     GC_DUMP_N(name(), "createWrongTargetField: notify init_port");
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc);
+    //ControlTransactionHandle th = m_gc_port.createTransaction();
+    m_gc_port->transport(th);
 
     if (th->get_mError() == 0) {
       GC_DUMP_N(name(), "createWrongTargetField: ... successfull");

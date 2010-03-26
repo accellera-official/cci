@@ -229,7 +229,7 @@ bool LRU_cache::write(const word_size &data, const addr_size addr) {
 
 int LRU_cache::getLine(const addr_size address) {
   // find LRU line
-  unsigned int lineToUse;
+  unsigned int lineToUse = 0;
   unsigned int recentestUsage = 0xFFFFFFFF;
   for (unsigned int i = 0; i < cache_lines; i++) {
     if (!cache_mem[i]->used) { // use line if unused

@@ -13,7 +13,7 @@ OPT  = -g -Wall -lpthread -D_REENTRANT
 #OTHER  = -Wno-deprecated
 CFLAGS = $(OPT) $(OTHER) -DSC_INCLUDE_DYNAMIC_PROCESSES
 # CFLAGS = $(DEBUG) $(OTHER)
-EXTRA_LIBS = -lscv -llua5.1 # -lboost_program_options
+EXTRA_LIBS = -lscv -llua # -lboost_program_options
 
 MODULE = testb_rep_msg_lua
 SRCS = testb_rep_msg_lua.cpp

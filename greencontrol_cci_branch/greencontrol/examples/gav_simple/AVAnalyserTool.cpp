@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -40,6 +40,7 @@
 #include "AVAnalyserTool.h"
 #include "greencontrol/analysis_file_outputplugin.h"
 #include "greencontrol/analysis_csv_outputplugin.h"
+#include "greencontrol/analysis_vcd_outputplugin.h"
 
 using namespace std;
 using namespace sc_core;
@@ -91,10 +92,17 @@ void AVAnalyserTool::main_action() {
   }
   
   // test different output types
+  gs::av::OutputPlugin_if* vcdFileOP = m_analysisAPI.create_OutputPlugin(gs::av::VCD_FILE_OUT, "VCDexample.log");
+  GAV_REGR_TEST("PASS/FAIL: Passed if 'created OutputPlugin of type VCD_FILE_OUT (constructor param 'VCDexample.log.vcd') successfully'.");
+  vcdFileOP->observe_all(*m_configAPI);
+  GAV_REGR_TEST("PASS/FAIL: Call observe_all: Passed if file 'VCDexample.log.vcd' contains all parameters existing at this point of time.");
+  vcdFileOP->resume(); // This type of output plugin needs the resume call to start
+  
   gs::av::OutputPlugin_if* csvFileOP = m_analysisAPI.create_OutputPlugin(gs::av::CSV_FILE_OUT, "CSVexample.log");
   GAV_REGR_TEST("PASS/FAIL: Passed if 'created OutputPlugin of type CSV_FILE_OUT (constructor param 'CSVexample.log.csv') successfully'.");
   csvFileOP->observe_all(*m_configAPI);
   GAV_REGR_TEST("PASS/FAIL: Call observe_all: Passed if file 'CSVexample.log.csv' contains all parameters existing at this point of time.");
+  csvFileOP->resume(); // This type of output plugin needs the resume call to start
   
   gs::av::OutputPlugin_if* fileOP = m_analysisAPI.create_OutputPlugin(gs::av::TXT_FILE_OUT, "secondFile.log");
   GAV_REGR_TEST("PASS/FAIL: Passed if 'created OutputPlugin of type TXT_FILE_OUT (constructor param 'secondFile.log') successfully'.");
@@ -117,6 +125,8 @@ void AVAnalyserTool::main_action() {
 
   wait(102, SC_NS);
 
+  vcdFileOP->pause(2, SC_NS);
+  GAV_REGR_TEST("PASS/FAIL: Pause Output for 2 ns: Passed if file 'VCDexample.log.vcd' does NOT contain parameter int_param at time point 107 ns!");
   csvFileOP->pause(2, SC_NS);
   GAV_REGR_TEST("PASS/FAIL: Pause Output for 2 ns: Passed if file 'CSVexample.log.csv' does NOT contain parameter int_param at time point 107 ns!");
   
@@ -127,6 +137,7 @@ void AVAnalyserTool::main_action() {
 
   wait (3, SC_NS);
   sc_event ev;
+  vcdFileOP->pause(ev);
   csvFileOP->pause(ev);
   wait(100, SC_NS);
   ev.notify();

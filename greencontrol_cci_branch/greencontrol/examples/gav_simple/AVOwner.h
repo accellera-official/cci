@@ -66,7 +66,9 @@ public:
       int_param2("int_param2", 2),
       int_param3("int_param3", 3),
       int_param4("sub.int_param4", 4),
-      int_param5("sub.int_param5", 5)
+      int_param5("sub.int_param5", 5),
+      logic_param("logic_param", 'X'),
+      uint64_param("uint64_param", 10)
   { 
     SC_THREAD(main_action);
   }
@@ -83,6 +85,8 @@ public:
   gs::gs_param<int>             int_param3;
   gs::gs_param<int>             int_param4;
   gs::gs_param<int>             int_param5;
+  gs::gs_param<sc_dt::sc_logic> logic_param;
+  gs::gs_param<uint64_t>        uint64_param;
 
   gs::av::GAV_Api m_GAV_Api;
 };

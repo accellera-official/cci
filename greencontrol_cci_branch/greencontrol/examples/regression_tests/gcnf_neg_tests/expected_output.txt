@@ -1,3 +1,4 @@
+***** THIS TEST IS PASSED IF THERE ARE ERRORS!!! ***** (error depending on #defines)
 
 Warning: (W505) object already exists: ConfigPlugin. Latter declaration will be renamed to ConfigPlugin_0
 In file: ../../../../src/sysc/kernel/sc_object.cpp:196

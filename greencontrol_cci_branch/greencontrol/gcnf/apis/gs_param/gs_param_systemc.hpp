@@ -1009,7 +1009,7 @@ private:
   }
 
 public:                                                                                   
-  using gs_param_t<val_type>::gs_param_base::name;                                
+  using gs_param_t<val_type>::name;                                
   using gs_param_t<val_type>::setString;                                          
   using gs_param_t<val_type>::getString;                                          
   using gs_param_t<val_type>::setValue;                                           
@@ -1033,10 +1033,10 @@ public:
   void init(){
     GS_PARAM_DUMP("Init gs_param_t "<< m_par_name.c_str());
     
-    sc_spawn_options opt;
+    sc_core::sc_spawn_options opt;
     opt.dont_initialize();
     opt.set_sensitivity(&intern_event);
-    sc_spawn(sc_bind(&gs::cnf::gs_param<sc_core::sc_event>::eventthread,this), sc_gen_unique_name("gsparam_scevent_internevent"), &opt);
+    sc_core::sc_spawn(sc_bind(&gs::cnf::gs_param<sc_core::sc_event>::eventthread,this), sc_core::sc_gen_unique_name("gsparam_scevent_internevent"), &opt);
 
     // add to plugin database
     if (m_register_at_db) {

@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -89,14 +89,22 @@ namespace av {
     /**
      * Do not create any files, streams or other memory consuming things 
      * in the constructor! Use the init() function for that!
+     *
+     * @param _constructor_param  Generic constructor string
+     * @param ev_listn            Event listener helpclass instance that can be used by this Output Plugin
+     * @param type                Output plugin type
+     * @param start_running       If this output plugin should start running
      */
-    OutputPlugin_base(const char* _constructor_param, event_listener<OutputPlugin_base> *ev_listn, OutputPluginType type)
+    OutputPlugin_base(const char* _constructor_param, event_listener<OutputPlugin_base> *ev_listn, OutputPluginType type, bool start_running = true)
     : sc_object((outputPluginTypeToString(type) + "_" + convert_to_sc_name(_constructor_param)).c_str()),
       constructor_param(_constructor_param),
       is_used(false),
-      is_running(true),
+      is_running(start_running),
+      m_automatic_start_enabled(true),
       ev_listener(ev_listn),
-      pause_event_registered(false)
+      pause_event_registered(false),
+      m_currently_calling_initial_add_for_observation_callback(false),
+      m_constructing(true)
     {   
       mCnfApi = cnf::GCnf_Api::getApiInstance(cnf::get_parent_sc_module(this));
       // register callbacks for new added child parameters
@@ -107,25 +115,55 @@ namespace av {
         GAV_DUMP_N(name(), "Handle already existing (maybe implicit) child parameter '"<<(*it).c_str()<<"' of the output plugin (possibly enable params):");
         new_param_callback(*it, mCnfApi->getValue(*it));
       }
+      m_constructing = false;
+      // TODO register the e_o_elab cb
     }
     
     
     /// Destructor
+    /**
+     * The destructor puts out an info if this output plugin was never used
+     * (if it is not a default one).
+     */
     virtual ~OutputPlugin_base() {
       GC_UNREGISTER_CALLBACKS();
       // delete enabled parameters of this
       for (std::vector<gs_param<bool>*>::iterator it = enabled_params.begin(); it != enabled_params.end(); it++) {
         delete *it;
       }
+      // Check if ever run
+      if (!is_used && constructor_param != "default") {
+        GAV_DUMP_N(name(), "Info: The output plugin "<<get_id()<<" was never running!");
+        SC_REPORT_INFO(name(), "The output plugin was never running!");
+      }
     }
     
+    
+    /// Callback function for observed parameters; calls init() if needed and forwards the call to config_callbacks.
+    inline void internal_config_callback(gs_param_base &par) {
+      if (!is_used) { 
+        GAV_DUMP_N(name(), "Init Output Plugin (id="<<get_id()<<")");
+        this->init();
+        is_used = true; 
+      }
+      config_callback(par);
+    }
+
     /// Callback function for observed parameters; to be implemented by the OutputPlugins!
     /**
      * This function performs the output action!
      *
+     * This function gets called the first time for each parameter at the moment
+     * when the parameter gets registered for observation. This can be checked 
+     * using the bool member m_currently_calling_initial_add_for_observation_callback.
+     *
      * This function should handle deleted parameters that are just being
-     * destroyed by calling remove to remove it from the 
+     * destroyed by calling the remove function to remove it from the 
      * observed-list.
+     *
+     * It may happen that this function is called during base class construction 
+     * when there are child parameters of this output plugin existing. The user can 
+     * check/filter using the bool member m_constructing.
      * 
      * This function must only do the output action when
      * <code>is_running == true</code>!!
@@ -179,7 +217,7 @@ namespace av {
         } 
         else {
           GAV_DUMP_N(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
-          SC_REPORT_WARNING(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
+          SC_REPORT_INFO(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
         }
       }
     }
@@ -209,13 +247,15 @@ namespace av {
         } // no else with message, otherwise two messages when disabling it automatically above
       }
     }
-
+    
   protected:
-    /// Init function to be called the first time the plugin is accessed.
+    
+    /// Init function is called before the first time the plugin outputs anything using the config_callback function.
     /**
-     * Create output (file, stream etc.) here, not in the constructor
+     * This function should create needed data structures and create outputs (file, stream etc.) 
+     * (as a replacement for the constructor,
      * because the constructor is called for each output plugin
-     * during construction of the GAV Plugin independently if is is used.
+     * during construction of the GAV Plugin independently if it is ever used).
      */
     virtual void init() {};
     
@@ -228,7 +268,6 @@ namespace av {
      * @see gs::av::OutputPlugin_if::observe(gs::gs_param_base&)
      */
     virtual bool observe(gs_param_base& par) {
-      if (!is_used) { this->init(); is_used = true; }
       GAV_DUMP_N(name(), "observe parameter "<<par.getName().c_str());
       // if already observed, print and return
       if (observed_param_cb_adapters.find(par.getName()) != observed_param_cb_adapters.end()) {
@@ -237,8 +276,12 @@ namespace av {
       }
       // register callback
       observed_param_cb_adapters.insert( std::make_pair(par.getName(), 
-                                           GC_REGISTER_PARAM_CALLBACK(&par, OutputPlugin_base, config_callback) )
+                                           GC_REGISTER_PARAM_CALLBACK(&par, OutputPlugin_base, internal_config_callback) )
                                            );
+      // make first output call NOW
+      m_currently_calling_initial_add_for_observation_callback = true;
+      if (!m_constructing) internal_config_callback(par); // TODO: dirty hack
+      m_currently_calling_initial_add_for_observation_callback = false;
       return true;
     }
     
@@ -247,7 +290,6 @@ namespace av {
      * @see gs::av::OutputPlugin_if::observe_all
      */
     virtual void observe_all(cnf::cnf_api& config_api) {
-      if (!is_used) { this->init(); is_used = true; }
       GAV_DUMP_N(name(), "observe all parameters");
       std::vector<std::string> plist = config_api.getParamList();
       gs_param_base *p;
@@ -263,7 +305,6 @@ namespace av {
      * @see gs::av::OutputPlugin_if::observe(std::vector<gs::gs_param_base*>)
      */
     virtual void observe(std::vector<gs::gs_param_base*> params) {
-      if (!is_used) { this->init(); is_used = true; }
       GAV_DUMP_N(name(), "observe parameters given by vector");
       std::vector<gs::gs_param_base*>::iterator iter;
       for (iter = params.begin(); iter !=params.end(); iter++) {
@@ -286,7 +327,6 @@ namespace av {
      * @see gs::av::OutputPlugin_if::remove
      */
     virtual bool remove(gs_param_base& par) {
-      if (!is_used) { this->init(); is_used = true; }
       GAV_DUMP_N(name(), "remove observation of parameter "<<par.getName().c_str());
       cb_adapter_map_type::iterator iter = observed_param_cb_adapters.find(par.getName());
       // If map element exists
@@ -303,12 +343,31 @@ namespace av {
       return false;
     }
     
+    /// end_of_elaboration callback to run the output plugin automatically now
+    void gc_end_of_elaboration() {
+      if (m_automatic_start_enabled) { 
+        if (!is_running) {
+          GAV_DUMP_N(name(), "GreenAV output plugin "<<get_id()<<" starting automatically at end_of_elaboration.");
+          is_running = true;
+        } else {
+          GAV_DUMP_N(name(), "GreenAV output plugin "<<get_id()<<" has already been started.");
+        }
+      } else {
+        GAV_DUMP_N(name(), "GreenAV output plugin "<<get_id()<<" NOT starting automatically at end_of_elaboration.");
+      }
+    }
+    
+    /// Call this to prevent the output plugin from automatically starting at end_of_elaboration
+    virtual void dont_start() {
+      GAV_DUMP_N(name(), "Prevent this from starting automatically");
+      m_automatic_start_enabled = false;
+    }
+    
     /// implements gs::av::OutputPlugin_if::resume
     /**
      * @see gs::av::OutputPlugin_if::resume
      */
     virtual bool resume() {
-      if (!is_used) { this->init(); is_used = true; }
       if (!is_running) {
         GAV_DUMP_N(name(), "start output");
         is_running = true;
@@ -323,7 +382,6 @@ namespace av {
      * @see gs::av::OutputPlugin_if::pause
      */
     virtual bool pause() {
-      if (!is_used) { this->init(); is_used = true; }
       if (!is_running)
         return false;
       GAV_DUMP_N(name(), "pause output");
@@ -336,7 +394,6 @@ namespace av {
      * @see gs::av::OutputPlugin_if::pause
      */
     virtual bool pause(sc_event& ev) {
-      if (!is_used) { this->init(); is_used = true; }
       GAV_DUMP_N(name(), "pause output until event notified");
       // use event_listener
       ev_listener->create_event_listener(this, &OutputPlugin_base::pause_end_callback, ev);
@@ -351,7 +408,6 @@ namespace av {
      * pause_event (if not yet done).
      */
     virtual bool pause(sc_time& t) {
-      if (!is_used) { this->init(); is_used = true; }
       GAV_DUMP_N(name(), "pause output for "<<t.to_string().c_str());
       if (!pause_event_registered)
         ev_listener->create_event_listener(this, &OutputPlugin_base::pause_end_callback, pause_event);
@@ -361,16 +417,18 @@ namespace av {
     }
     /// implements gs::av::OutputPlugin_if::pause
     virtual bool pause(double t, sc_time_unit u) {
-      if (!is_used) { this->init(); is_used = true; }
       sc_time tu = sc_time(t, u);
       return pause(tu);
     }
+    
+    /// implements gs::av::OutputPlugin_if::running
+    virtual bool running() { return is_running; }
+
     
     // /////////////// END implementation of OutputPlugin_if ///////////////////// //
     
     /// Callback function to be called by the event listener
     void pause_end_callback() {
-      if (!is_used) { this->init(); is_used = true; }
       resume();
     }
     
@@ -379,14 +437,16 @@ namespace av {
     /// String that was used to construct this.
     std::string constructor_param;
     
-    /// If this Output Plugin has been used at least once (needed for calling init() on first usage)
+    /// If this Output Plugin has been used (was running) at least once (needed for calling init() on first usage)
     bool is_used;
     
     /// Vector of observed parameters
     cb_adapter_map_type observed_param_cb_adapters;
 
-    /// running = true: callbacks are registered and output is activated; = false: see bool stopped
+    /// is_running = true: callbacks are registered and output is activated;
     bool is_running;
+    /// If this output plugin will automatically start at end_of_elaboration
+    bool m_automatic_start_enabled;
 
     /// Pointer to the event listener sc_core::sc_module
     event_listener<OutputPlugin_base> *ev_listener;
@@ -401,6 +461,12 @@ namespace av {
     
     /// Vector containing pointers to the enabled (enable/disable) parameters of this
     std::vector<gs_param<bool>*> enabled_params;
+    
+    /// If this output plugin currently calls the callback function with a param that has been 
+    bool m_currently_calling_initial_add_for_observation_callback;
+    
+    /// If this is currently constructing and must not call the pure virtual functions
+    bool m_constructing;
   };
       
       

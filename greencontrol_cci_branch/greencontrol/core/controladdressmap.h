@@ -8,7 +8,8 @@
 //   Developed by :
 //   
 //   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
+//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>,
+//   Michael Ruetz <m.ruetz@tu-bs.de>
 //     Technical University of Braunschweig, Dept. E.I.S.
 //     http://www.eis.cs.tu-bs.de
 //
@@ -36,7 +37,7 @@
 // 
 // ENDLICENSETEXT
 
-// doygen comments
+// doxygen comments
 
 #ifndef __CONTROLADDRESSMAP_H__
 #define __CONTROLADDRESSMAP_H__
@@ -45,123 +46,139 @@
 
 #include "gc_globals.h"
 #include "gc_transaction.h"
-//#include "initialize_if.h"
 
 
 namespace gs {
 namespace ctr {
-  
+
+// forward declarations for typedef
+template <typename gc_port_T> class ControlAddressMap_T;
+class gc_port;
+
+/// ControlAddressMap
+typedef ControlAddressMap_T<gc_port> ControlAddressMap;
 
 /// Address map for the GreenControl Core.
 /**
- * Address map for the GreenControl Core which resolves the
- * addresses (pointer to target APIs) to the port number
+ * Address map for the GreenControl Core which resolves the addresses (pointer to target APIs) to the names and services
+ * and the services to the addresses of the plugins.
  */
-class ControlAddressMap {
-  
-  typedef sc_export<payload_event_queue_if<ControlTransactionContainer> > * destinationPort;  
-
-  typedef std::map<cport_address_type, unsigned int>    addressMapType;
+template <typename gc_port_T>
+class ControlAddressMap_T
+{
   typedef std::map<cport_address_type, ControlService>  addressServiceMapType;
   typedef std::map<cport_address_type, std::string>     addressNameMapType;
   typedef std::multimap<ControlService, cport_address_type>  serviceAddressMapType;
 
 public:
 
-  ControlAddressMap() {}
+  ControlAddressMap_T() {}
 
   /// Destructor.
-  ~ControlAddressMap() {
-  }
+  ~ControlAddressMap_T() {}
 
-  /// Generate the address map.
+  /// Inserts the gc_port into the address map.
   /**
-   * Generate an address map from the connected targets.
+   * Gets supported ConstrolService, plugin or API name etc. and inserts it into map.
    *
-   * @param port The control_initiator_port which has the target ports.
+   * @param pPort  gc_port which should be inserted.
    */
-  void generateMap(control_initiator_multi_port* port)
+  void addPort(gc_port_T* pPort)
   {
-    if(port == NULL) 
-    {
-      SC_REPORT_ERROR("ControlAddressMap", "Null pointer passed to generateMap(port).");
-    }
-    
-    GC_DUMP_N("ControlAddressMap", "Generating address map:");
-    GC_DUMP_N("ControlAddressMap", "Number of connected slaves: "<<(int)( *port ).connected_in_ports.size());
-    
-    // Go through all connected ports of the multi_port and insert them in one of the addressMaps
-    //  read out the supported service and plugin names 
-    for (unsigned int i=0; i<(*port).connected_in_ports.size(); i++) {
-      // get target_port
-      destinationPort destination = (*port).connected_in_ports[i];
-
-      // get name
-      sc_object *o = dynamic_cast<sc_object*>(destination->get_parent());
-      if (!o->get_parent()){
-        SC_REPORT_WARNING("ControlAddressMap", "Port has no parent..");
-      }
-
-      control_target_port *tport = dynamic_cast<control_target_port*>(o);
-      //control_initiator_port *iport = dynamic_cast<control_initiator_port*>(o);
-      if (tport) // TODO: is this if needed?
-        insert_port(tport, i);
-
-    }
-  }
-
-  /// Inserts the target port into the address map.
-  /**
-   * Gets supported ConstrolService, plugin or API name etc. and
-   * inserts it with port i into map.
-   *
-   * @param tport  Target port which should be inserted.
-   * @param i      The number of the port (in the core) which belongs to the address.
-   */
-  void insert_port(control_target_port *tport, unsigned int i) {
     const char* target_name = NULL;
     cport_address_type target_address;
     bool is_plugin;
     ControlService service = NO_SERVICE;
+    std::string target_string;
 
-      // get supported ControlService  and  plugin name or API name
-      if (tport) {
-        service = tport->m_supported_ControlService;
-        target_address = tport->m_parent_target_address;
-        target_name = tport->m_parent_name.c_str();
-        is_plugin = tport->m_is_plugin;
+    // get supported ControlService  and  plugin name or API name
+    if(pPort)
+    {
+      target_address = pPort->getParent();
+      target_string = pPort->getParentName(); // a temp var is used due to limitations caused by forward template declaration of gc_port
+      target_name = target_string.c_str();    // otherwise target_name won't be filled
+      service = pPort->getSupportedControlService();
+      is_plugin = pPort->isPlugin();
 
-        GC_DUMP_N("ControlAddressMap", "           Target ["<<target_name<<"] is connected to port number "<<i);
-        GC_DUMP_N("ControlAddressMap", "                Target port supports control service "<<service<<" ("<<getControlServiceString(service).c_str()<<")");
-        if (!tport->m_is_plugin) {
-          GC_DUMP_N("ControlAddressMap", "                Target port belongs to plugin "<<tport->m_parent_name.c_str() );
-        }
+      if(pPort->isPlugin())
+        GC_DUMP_N("ControlAddressMap", "           Target-Plugin ["<<target_name<<"] is connected to core");
+      else
+        GC_DUMP_N("ControlAddressMap", "           Target-API ["<<target_name<<"] is connected to core");
+      GC_DUMP_N("ControlAddressMap", "                Target port supports control service "<<service<<" ("<<getControlServiceString(service).c_str()<<")");
         
-        // insert into map if not yet in it
-        if (!is_in_maps(target_address)) {
+      // insert into map if not yet in it
+      if(!is_in_maps(target_address))
+      {
           GC_DUMP_N("ControlAddressMap", "                Insert port in map.");
-          insert(service, target_address, i, target_name, is_plugin); 
-        } else {
-          GC_DUMP_N("ControlAddressMap", "                Port is already in map.");
+          insert(service, target_address, target_name, is_plugin); 
+      }
+      else
+        GC_DUMP_N("ControlAddressMap", "                Port is already in map.");
+    }
+    else
+      SC_REPORT_WARNING("ControlAddressMap", "Tried to add gc_port, but was NULL.");
+  }
+
+  /// Removes the gc_port from the address map.
+  /**
+   * @param pPort gc_port which should be removed.
+   */
+  void removePort(gc_port_T* pPort)
+  {
+    const char* target_name = NULL;
+    cport_address_type target_address;
+    ControlService service = NO_SERVICE;
+    std::string target_string;
+
+    if(pPort)
+    {
+      target_address = pPort->getParent();
+      target_string = pPort->getParentName(); // a temp var is used due to limitations caused by forward template declaration of gc_port
+      target_name = target_string.c_str();    // otherwise target_name won't be filled
+      service = pPort->getSupportedControlService();
+
+      if(pPort->isPlugin())
+        GC_DUMP_N("ControlAddressMap", "           Plugin ["<<target_name<<"] supporting control service "<<service<<" ("<<getControlServiceString(service).c_str()<<") is removed from core");
+      else
+        GC_DUMP_N("ControlAddressMap", "           API ["<<target_name<<"] supporting control service "<<service<<" ("<<getControlServiceString(service).c_str()<<") is removed from core");
+
+      // remove port from internal maps
+      if(m_address_service_map.erase(target_address) != 1)
+        SC_REPORT_WARNING("ControlAddressMap", "Tried to remove gc_port, but was not in address/service map.");
+      if(m_address_name_map.erase(target_address) != 1)
+        SC_REPORT_WARNING("ControlAddressMap", "Tried to remove gc_port, but was not in address/name map.");
+
+      // service/address map contains only plugins
+      if(pPort->isPlugin())
+      {
+        serviceAddressMapType::iterator it, lastElement;
+        // find first and last element (since this is a multimap)
+        it = m_service_address_map.find(service);
+        if(it == m_service_address_map.end())
+          SC_REPORT_WARNING("ControlAddressMap", "Tried to remove gc_port, but was not in service/address map.");
+        else
+        {
+          lastElement = m_service_address_map.upper_bound(service);
+          // find the one element containing the target_address of the gc_port
+          // iterator is increased by hand in for-loop, because erase() invalidates the iterator
+          for( ; it != lastElement; )
+          {
+            if(it->second == target_address)
+              m_service_address_map.erase(it++);
+            else
+              ++it;
+          }
         }
       }
-      /*else if (iport) {
-        service = iport->m_supported_ControlService;
-        GC_DUMP_N("ControlAddressMap", "                Initiator port supports control service "<<service );
-        if (!iport->m_plugin_name.empty()) {
-        GC_DUMP_N("ControlAddressMap", "                Initiator port belongs to plugin (gc_service.)%s", 
-        iport->m_plugin_name.c_str() );
-        std::stringstream ss;
-        ss << "gc_service." << iport->m_plugin_name;
-        target_name = ss.str().c_str();
-        }
-        if (!iport->m_api_type.empty()) {
-        // TODO
-        }
-        }*/
-      else {
-        SC_REPORT_WARNING("ControlAddressMap", "Unexpected port type (no control_target_port or control_initiator_port).");
-      }
+    }
+    else
+      SC_REPORT_WARNING("ControlAddressMap", "Tried to remove gc_port, but was NULL.");
+  }
+
+  /// Method to check if there are any ports connected.
+  bool isEmpty()
+  {
+    return m_address_service_map.empty();
   }
 
   /// Print the address map.
@@ -175,61 +192,28 @@ public:
     ControlService service;
     cport_address_type addr;
     addressNameMapType::iterator nameIter;
-    addressServiceMapType::iterator serviceIter;
-    addressMapType::iterator iter;
-    for( iter = m_address_port_map.begin(); iter != m_address_port_map.end(); iter++ ) {
+    addressServiceMapType::iterator iter;
+    for( iter = m_address_service_map.begin(); iter != m_address_service_map.end(); ++iter )
+    {
       addr = iter->first;
-      serviceIter = m_address_service_map.find(addr);
-      service = serviceIter->second;
+      service = iter->second;
       nameIter = m_address_name_map.find(addr);
       name = nameIter->second;
-      std::cout << "       Address: " << iter->first << ",  port: " << iter->second <<
-        ", name: " << name << ", control service: "<< service << " ("<< getControlServiceString(service) << ")" << std::endl;
+      std::cout << "       Address: " << iter->first << ", name: " << name << ", control service: "<< service
+        << " ("<< getControlServiceString(service) << ")" << std::endl;
     }
   }
  
-  /// Decode an address to a port.
-  /**
-   * If the address is '0' the decoding is done with the service.
-   *
-   * @param _addr    A target address.
-   * @param service  The expected service.
-   * @return The decoded target port number.
-   */
-  std::vector<unsigned int> decode(const cport_address_type _addr, ControlService service)
-  {
-    cport_address_type addr;
-    std::vector<unsigned int> ret_vec_int;
-    if (_addr == 0) {
-      //GC_DUMP_N("ControlAddressMap", "Service "<<service<<" is supported by address "<<addr);
-      return decode(service);
-    } else {
-      addr = _addr;
-    }
-
-    if (m_address_port_map.count(addr) < 1) {
-      dumpMap();
-      std::stringstream ss;
-      ss << "Decode attempt for address "<< addr << " failed. Address not in port map.\n";
-      SC_REPORT_ERROR("ControlAddressMap", ss.str().c_str());
-    }
-    addressMapType::iterator iter = m_address_port_map.find(addr);
-
-    ret_vec_int.push_back(iter->second);
-    return ret_vec_int;
-  }
-
-  /// Decode a service to a port(s).
+  /// Decode a service to an address.
   /**
    * @param service  The expected service.
-   * @return The decoded target port number in a vector.
+   * @return The decoded target addresses in a vector.
    */
-  std::vector<unsigned int> decode(ControlService service)
+  std::vector<cport_address_type> decode(ControlService service)
   {
     std::pair<serviceAddressMapType::iterator, serviceAddressMapType::iterator> addr_range;
     serviceAddressMapType::iterator serv_addr_iter;
-    addressMapType::iterator addr_port_iter;
-    std::vector<unsigned int> ret_vec_int;
+    std::vector<cport_address_type> ret_vec_addr;
 
     addr_range = getAddrFromService(service);
 
@@ -240,14 +224,12 @@ public:
       SC_REPORT_ERROR("ControlAddressMap", "Service not in name map.");
     }
 
-    for (serv_addr_iter = addr_range.first; serv_addr_iter!=addr_range.second; ++serv_addr_iter) 
-    {
-      addr_port_iter = m_address_port_map.find(serv_addr_iter->second);
-      ret_vec_int.push_back(addr_port_iter->second);
+    for (serv_addr_iter = addr_range.first; serv_addr_iter!=addr_range.second; ++serv_addr_iter) {
+      ret_vec_addr.push_back(serv_addr_iter->second);
     }
 
-    // return all the port number in a vector
-    return ret_vec_int;
+    // return all the addresses in a vector
+    return ret_vec_addr;
   }
 
   /// Decode an address to it's supported control service.
@@ -339,7 +321,7 @@ public:
     return ret_vec_str;
   }
 
-  /// Decode an service to the address of the supporting plugin.
+  /// Decode a service to the address of the supporting plugin.
   /**
    * @param service Service to which the address should be returned.
    * @return The address range which belongs to all the plugins which supports the service.
@@ -356,28 +338,37 @@ public:
     return m_service_address_map.equal_range(service);
   }
 
+  /// Method to check if address is already in the maps.
+  /**
+   * @param addr   Address of the target which should be checked.
+   */
+  bool is_in_maps(const cport_address_type addr) const
+  {
+    if (m_address_service_map.count(addr) > 0) 
+      return true;
+    else
+      return false;
+  }
+
 protected:
 
-  /// Insert a slave into the address map.
+  /// Insert the port info into the address map.
   /**
-   * - Add the port to the address-port-map.
    * - Add the address with the service to the address-service-map.
    * - Add the address with the name to the address-name-map.
+   * - Add the service with the address to the service-address-map.
    *
    * @param service      The service the port provides.
    * @param addr         The address of the port (of the port's parent).
-   * @param port_number  The number of the port which belongs to the address.
    * @param target_name  Name of the port's parent (for debug information).
    * @param is_plugin    If the slave port belongs to a plugin.
    */
-  void insert(ControlService service, const cport_address_type addr, 
-              unsigned int port_number, const char* target_name, bool is_plugin)
+  void insert(ControlService service, const cport_address_type addr, const char* target_name, bool is_plugin)
   {
-    if (m_address_port_map.count(addr) > 0) {
+    if (m_address_service_map.count(addr) > 0) {
       SC_REPORT_ERROR("ControlAddressMap", "insert: Address already exists.");
     }
     // add the entry to the different maps
-    m_address_port_map.   insert( addressMapType::       value_type(addr, port_number)  );
     m_address_service_map.insert( addressServiceMapType::value_type(addr, service)     );
     m_address_name_map.   insert( addressNameMapType::   value_type(addr, target_name) );
 
@@ -390,17 +381,6 @@ protected:
     }
   }
 
-  /// Internal method to check if port is already in the maps.
-  /**
-   * @param addr   Address of the target port which should be checked.
-   */
-  bool is_in_maps(const cport_address_type addr) const {
-    if (m_address_port_map.count(addr) > 0) 
-      return true;
-    else
-      return false;
-  }
-
 protected:
 
   /// Map to resolve address -> ConfigService for debug and future use.
@@ -409,12 +389,8 @@ protected:
   /// Map to resolve ConfigService -> address
   serviceAddressMapType m_service_address_map;
 
-  /// Map to resolve target address -> port number.
-  addressMapType m_address_port_map;
-
   /// Map to resolve target address -> target name.
   addressNameMapType m_address_name_map;
-
 };
 
 

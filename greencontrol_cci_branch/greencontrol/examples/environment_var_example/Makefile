@@ -9,7 +9,7 @@ OPT  = -g -Wall #-D SYSTEMC21V1
 #OTHER  = -Wno-deprecated
 CFLAGS = $(OPT) $(OTHER)
 # CFLAGS = $(DEBUG) $(OTHER)
-EXTRA_LIBS = -llua -ldl # -lboost_program_options
+EXTRA_LIBS = -llua5.1 -ldl # -lboost_program_options
 
 MODULE = testbench
 SRCS = testbench.cpp test_ip.cpp

@@ -51,11 +51,11 @@ using std::istream;
 inline gcnfScmlProperty_base::gcnfScmlProperty_base(const string &par_name)
 : sc_object(sc_gen_unique_name("__scml_par__"))
 //: sc_object()
+, m_local_par_name(par_name)
 {
   std::stringstream ss;
   ss << name() << SC_NAME_DELIMITER << par_name;
-  m_par_name = ss.str().c_str();
-
+  m_full_par_name = ss.str().c_str();
 }
 
 inline gcnfScmlProperty_base::~gcnfScmlProperty_base()
@@ -121,3 +121,8 @@ inline std::string gcnfScmlProperty_base::getType() const
 {
   return "UNKNOWN";
 }
+
+inline std::string gcnfScmlProperty_base::getName() const {
+  return m_local_par_name;
+}
+

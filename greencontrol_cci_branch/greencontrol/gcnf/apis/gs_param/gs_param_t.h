@@ -72,6 +72,7 @@ protected:
   using gs_param_base::m_lock_pwd;
   
 public:
+  using gs_param_base::set;
 
   // templated operators
   my_type& operator +=  (val_type);

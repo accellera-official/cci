@@ -2,20 +2,20 @@
 Info: (I804) /IEEE_Std_1666/deprecated: sc_bit is deprecated, use bool instead
 
 Warning: gs_param<sc_bit>: DEPRECATED: sc_bit is deprecated use bool instead.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:580
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:610
 
 Warning: gs_param<sc_bit>: DEPRECATED: sc_bit is deprecated use bool instead.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:580
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:610
 ConfigFile_Api: Applying value of param 'IP_neg.int_param' to 'String to set to integer'
 
 Warning: deserialize: Conversion error: 'String to set to integer'
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:120
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 ConfigFile_Api: Applying value of param 'IP_neg.str_param' to 'value'
 ConfigFile_Api: Applying value of param 'IP_neg.str_param2' to 'additional token value'
 ConfigFile_Api: Applying value of param 'IP_neg.uint_param' to 'additional token 123'
 
 Warning: deserialize: Conversion error: 'additional token 123'
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:211
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:217
 #0: ./testbench.x
 .
 @0 s /0 (IP_neg): This is the main action in TestIP_neg for negative regression tests
@@ -28,32 +28,32 @@ int_param = 0
 Get not existing parameter
 
 Warning: WrongTestTool.__gcnf_api___0: DEPRECATED: getParam is deprecated due to simulation overhead! Use 'value = getPar("par_name")' or 'getPar(...)->getValue()' or 'getPar(...)->getString()' instead.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:729
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:718
 In process: WrongTestTool.main_action @ 0 s
 
 Info: WrongTestTool.__gcnf_api___0: getPar: ... getting failed!
 Register observer for not existing parameter
 
 Warning: WrongTestTool.__gcnf_api___0: DEPRECATED: getUpdateEvent is deprecated! Use 'my_param.getUpdateEvent()' or use callback 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:988
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:969
 In process: WrongTestTool.main_action @ 0 s
 
 Info: WrongTestTool.__gcnf_api___0: getPar: ... getting failed!
 Add parameter twice
 
 Warning: WrongTestTool.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:534
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:531
 In process: WrongTestTool.main_action @ 0 s
 
 Warning: WrongTestTool.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:544
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 In process: WrongTestTool.main_action @ 0 s
 #1 done
 #1 done?
 Register observer for not existing parameter
 
 Warning: WrongTestTool.__gcnf_api___0: DEPRECATED: setParam is deprecated due to simulation overhead! Use 'getPar("par_name") = value' or 'setInitValue("par_name", "init_value")' instead.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:676
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:667
 In process: WrongTestTool.main_action @ 0 s
 
 Info: WrongTestTool.__gcnf_api___0: getPar: ... getting failed!

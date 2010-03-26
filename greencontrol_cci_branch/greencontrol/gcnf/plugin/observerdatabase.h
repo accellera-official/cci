@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -66,8 +66,7 @@ namespace cnf {
  * are stored under the dummy entry parameter name DUMMY_NAME (see define).
  */
 class ObserverDatabase
-: public sc_object,
-  public observer_db_if
+: public observer_db_if
 {
 
 public:
@@ -79,8 +78,8 @@ public:
   typedef std::map<std::string, addressSet > observer_map;
   typedef observer_map::iterator             observer_iterator;
 
-  /// Port to access the parameter database of the ConfigPlugin
-  sc_port<plugin_if> m_plugin_port;
+  /// Pointer to access the parameter database of the ConfigPlugin
+  plugin_if* m_plugin;
 
   /// Constructor with name and parameter database
   /**
@@ -88,10 +87,10 @@ public:
    * @param plugin  Pointer to the config plugin.
    */
   ObserverDatabase(const char* name, plugin_if *plugin)
-  : sc_object(name)
+  : m_plugin(plugin)
+  , m_name(name)
   {
-    // bind port to ConfigPlugin acting as channel
-    m_plugin_port(*plugin);
+    assert(plugin != NULL && "Plugin pointer must not be NULL");
   }
   
 private:
@@ -104,9 +103,9 @@ public:
 /*  bool registerObserver(const std::string &hier_parname, const cport_address_type observer) {
     GCNF_DUMP_N(name(), "registerObserver("<<hier_parname.c_str()<<", "<<observer<<")");
     // TODO: What happens when a not existing parameter is observed?
-    //if (!m_plugin_port->existsParam(hier_parname)) {
+    //if (!m_plugin->existsParam(hier_parname)) {
     //  GCNF_DUMP_N(name(), "registerObserver: parameter not yet exists: create implicit parameter (set with empty value).");
-    //  m_plugin_port->setParam(hier_parname, "");
+    //  m_plugin->setParam(hier_parname, "");
     //}
     if (m_observer_db.count(hier_parname) == 0) {
       GCNF_DUMP_N(name(), "registerObserver: Parameter not found in observer map, add it.");
@@ -148,7 +147,7 @@ public:
     }
     observer_iterator pos = m_observer_db.find(dummyParName);
     addressSet *obset = &pos->second;
-    pair< addressSet::iterator, bool > result;
+    std::pair< addressSet::iterator, bool > result;
     result = obset->insert(observer);
     // If address already in set: warning!
     if (!result.second) {
@@ -175,10 +174,16 @@ public:
     return pos->second;
   }
 
+  /// Return this name for debug purpose
+  const char* name() { return m_name.c_str(); }
+  
 protected:
  
   /// Observer database
   observer_map m_observer_db;
+  
+  /// Name of this for debug
+  std::string m_name;
 
 #ifdef GC_VERBOSE
   void show_observer_set(observer_iterator &obs) { 

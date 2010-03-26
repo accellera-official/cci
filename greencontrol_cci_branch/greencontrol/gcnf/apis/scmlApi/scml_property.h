@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -82,6 +82,8 @@ public:
   virtual void setStringValue(const        std::string &val);
   virtual void   setUIntValue(unsigned int val);
 
+  std::string getName() const;
+
   /// Exception class for wrong types in scml_properties.
   class WrongTypeException {
   public:
@@ -122,7 +124,8 @@ protected:
     //return "TODOscml_property";//(dynamic_cast<sc_core::sc_object*>(this))->name();
   }
 
-  std::string m_par_name;
+  std::string m_local_par_name;
+  std::string m_full_par_name;
   shared_ptr<Scml_Api> m_api;  // Pointer to Scml API
 
 };
@@ -322,7 +325,7 @@ public:
   int getIntValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getIntParam(m_par_name);
+    return this->m_api->getIntParam(m_full_par_name);
   }
   
   /// Set the int value.
@@ -334,7 +337,7 @@ public:
     std::stringstream ss;
     ss << value;
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    this->m_api->setParam(m_par_name, ss.str());
+    this->m_api->setParam(m_full_par_name, ss.str());
   }
   
   /// Returns a string representation of the type.
@@ -353,7 +356,7 @@ public:
   /*inline const val_type& getValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getIntParam(m_par_name);
+    m_ret_value = this->m_api->getIntParam(m_full_par_name);
     return m_ret_value;
     }*/
   
@@ -361,7 +364,7 @@ public:
   inline int& getValue()
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getIntParam(m_par_name);
+    m_ret_value = this->m_api->getIntParam(m_full_par_name);
     return m_ret_value;
   }
   
@@ -437,7 +440,7 @@ public:
   unsigned int getUIntValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getUIntParam(m_par_name);
+    return this->m_api->getUIntParam(m_full_par_name);
   }
   
   /// Set the unsigned int value.
@@ -449,7 +452,7 @@ public:
     std::stringstream ss;
     ss << value;
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    this->m_api->setParam(m_par_name, ss.str());
+    this->m_api->setParam(m_full_par_name, ss.str());
   }
   
   /// Returns a string representation of the type.
@@ -468,7 +471,7 @@ public:
   /*inline const val_type& getValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getUIntParam(m_par_name);
+    m_ret_value = this->m_api->getUIntParam(m_full_par_name);
     return m_ret_value;
     }*/
   
@@ -476,7 +479,7 @@ public:
   inline unsigned int& getValue()
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getUIntParam(m_par_name);
+    m_ret_value = this->m_api->getUIntParam(m_full_par_name);
     return m_ret_value;
   }
   
@@ -494,7 +497,7 @@ public:
   inline operator val_type() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getUIntParam(m_par_name);
+    return this->m_api->getUIntParam(m_full_par_name);
   }
   
 };
@@ -552,7 +555,7 @@ public:
   bool getBoolValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getBoolParam(m_par_name);
+    return this->m_api->getBoolParam(m_full_par_name);
   }
   
   /// Set the bool value.
@@ -564,7 +567,7 @@ public:
     std::stringstream ss;
     ss << value;
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    this->m_api->setParam(m_par_name, ss.str());
+    this->m_api->setParam(m_full_par_name, ss.str());
   }
   
   /// Returns a string representation of the type.
@@ -583,7 +586,7 @@ public:
   /*inline const val_type& getValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getBoolParam(m_par_name);
+    m_ret_value = this->m_api->getBoolParam(m_full_par_name);
     return m_ret_value;
     }*/
   
@@ -591,7 +594,7 @@ public:
   inline bool& getValue()
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getBoolParam(m_par_name);
+    m_ret_value = this->m_api->getBoolParam(m_full_par_name);
     return m_ret_value;
   }
 
@@ -614,7 +617,7 @@ public:
   inline operator val_type() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getBoolParam(m_par_name);
+    return this->m_api->getBoolParam(m_full_par_name);
   }
   
 };
@@ -672,7 +675,7 @@ public:
   double getDoubleValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getBoolParam(m_par_name);
+    return this->m_api->getBoolParam(m_full_par_name);
   }
   
   /// Set the double value.
@@ -684,7 +687,7 @@ public:
     std::stringstream ss;
     ss << value;
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    this->m_api->setParam(m_par_name, ss.str());
+    this->m_api->setParam(m_full_par_name, ss.str());
   }
   
   /// Returns a string representation of the type.
@@ -703,7 +706,7 @@ public:
   /*inline const val_type& getValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getDoubleParam(m_par_name);
+    m_ret_value = this->m_api->getDoubleParam(m_full_par_name);
     return m_ret_value;
     }*/
   
@@ -711,7 +714,7 @@ public:
   inline double& getValue()
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getDoubleParam(m_par_name);
+    m_ret_value = this->m_api->getDoubleParam(m_full_par_name);
     return m_ret_value;
   }
 
@@ -730,7 +733,7 @@ public:
   inline operator val_type() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getDoubleParam(m_par_name);
+    return this->m_api->getDoubleParam(m_full_par_name);
   }
   
 };
@@ -790,7 +793,7 @@ public:
   std::string getStringValue() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getStringParam(m_par_name);
+    return this->m_api->getStringParam(m_full_par_name);
   }
   
   /// Set the std::string value.
@@ -802,7 +805,7 @@ public:
     std::stringstream ss;
     ss << value;
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    this->m_api->setParam(m_par_name, ss.str());
+    this->m_api->setParam(m_full_par_name, ss.str());
   }
   
   /// Returns a string representation of the type.
@@ -822,7 +825,7 @@ public:
   /*inline const val_type& getValue() const
     {    
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    val_type tmp = this->m_api->getStringParam(m_par_name);
+    val_type tmp = this->m_api->getStringParam(m_full_par_name);
     return tmp;
     }*/
   
@@ -830,7 +833,7 @@ public:
   inline val_type& getValue()
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR(name(), "m_api is NULL. Error in constructing this instance."); } );
-    m_ret_value = this->m_api->getStringParam(m_par_name);
+    m_ret_value = this->m_api->getStringParam(m_full_par_name);
     return m_ret_value;
   }
 
@@ -838,7 +841,7 @@ public:
   inline operator val_type() const
   {
     IF_VERBOSE( if (!this->m_api) { SC_REPORT_ERROR("scml_property<...>", "m_api is NULL. Error in constructing this instance."); } );
-    return this->m_api->getStringParam(m_par_name);
+    return this->m_api->getStringParam(m_full_par_name);
   }
 
   // not allowed for string:

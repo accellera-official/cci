@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007-2009 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -49,6 +49,8 @@
 #include "observerdatabase.h"  // with typedef address_set
 #include "configdatabase.h" // ConfigDatabase for automatic creation to be bound to port of this plugin
 
+#include "greencontrol/core/command_if.h"
+#include "string_vector.h"
 
 
 namespace gs {
@@ -61,9 +63,9 @@ namespace cnf {
  * The plugin provides the service "ConfigPlugin" (enumeration entry CONFIG_SERVICE).
  */
 class ConfigPlugin
-: public sc_core::sc_module,
-  public gc_port_if,
-  public plugin_if  // to provide the parameter database to the observer database
+: public gc_port_if,
+  public plugin_if,  // to provide the parameter database to the observer database
+  public command_if
 {
 protected:
   
@@ -98,62 +100,91 @@ public:
     if (access_plugin_singleton() == NULL) {
       assert(!access_plugin_instantiated() && "Config Plugin has already been destroyed. Make sure you destroy the plugin after all confiuration objects (like APIs and parameters).");
       GCNF_DUMP_N("static ConfigPlugin::get_instance()", "Create not yet existing ConfigPlugin!");
-      new ConfigPlugin("ConfigPlugin"); // will register itself with plugin_singleton 
+      new ConfigPlugin(); // will register itself with plugin_singleton 
     }
     return *access_plugin_singleton();
   }
 
-  /// Port to communicate over the Core with the configurable modules.
-  gc_port m_gc_port;
   
-  /// Port to get access to the parameter database which implements the param_db_if and acts as channel.
-  sc_port<param_db_if> m_param_db_port;
-
-  /// Port to get access to the observer database which implements the observer_db_if and acts as channel.
-  sc_port<observer_db_if> m_observer_db_port;
+  /// DEPRECATED Constructor
+  ConfigPlugin(const char* n, param_db_if *db = NULL)
+  : m_gc_port(CONFIG_SERVICE, "ConfigPlugin", true, this)
+  , m_param_db_created(NULL)
+  , m_name("ConfigPlugin")
+  { 
+    DEPRECATED_WARNING("ConfigPlugin", "DEPRECATED: ConfigPlugin Constructor with name is deprecated, use without name instead!");
+    GCNF_DUMP_N("ConfigPlugin", "ConfigPlugin constructor!");
+    
+    // ensure singleton
+    if (access_plugin_singleton() != NULL) {
+      SC_REPORT_FATAL(name(), "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
+    }
+    assert(access_plugin_singleton() == NULL && "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
+    assert(access_plugin_instantiated() == false && "Config Plugin has already been instantiated and destroyed!");
+    access_plugin_singleton(this, true);
+    
+    if (db == NULL) {
+      GCNF_DUMP_N(name(), "No parameter database given by user, create default one!");
+      m_param_db_created = new ConfigDatabase("ConfigDatabase");
+      db = m_param_db_created;
+    }
+    
+    // Check if the database pointer is valid
+    std::string test = db->getParameters();
+    assert(test.length() == 0);
+    
+    // bind the (in the toplevel) user chosen database to the port
+    m_param_db = db;
+    
+    /// Observer database
+    m_observer_db = new ObserverDatabase("ObserverDatabase", this);
+    
+    // create the default GCnf_Api instance which is accessible via the NULL pointer
+    // Note: Don't call GCnf_Api_t::getApiInstance(NULL) here, because this ConfigPlugin constructor
+    //       is possibly called by exactly this function (the GCnf_Api_T constructor), the 
+    //       create_default_instance() function has a guard to prevent this.
+    // TODO: CCI modifications:
+    //GCnf_Api_t<gs_param_base, GCnf_private_Api_T<gs_param_base, gs_param, ConfigPlugin>, gs_param, ConfigPlugin>::create_default_instance();
+  }
 
   /// Constructor
   /**
    * Constructor 
    * The service name is fixed to "ConfigPlugin" (not the module name is used).
    *
-   * @param name  Name of the instance. 
    * @param db    Pointer to the parameter database, if NULL, default is instantiated automatically.
    */
-  ConfigPlugin(sc_core::sc_module_name name, param_db_if *db = NULL)
-  : sc_core::sc_module(name)
-  , m_gc_port(CONFIG_SERVICE, "ConfigPlugin", true)
+  ConfigPlugin(param_db_if *db = NULL)
+  : m_gc_port(CONFIG_SERVICE, "ConfigPlugin", true, this)
   , m_param_db_created(NULL)
+  , m_name("ConfigPlugin")
   { 
-    GCNF_DUMP_N(sc_core::sc_module::name(), "ConfigPlugin constructor!");
+    GCNF_DUMP_N("ConfigPlugin", "ConfigPlugin constructor!");
 
     // ensure singleton
     if (access_plugin_singleton() != NULL) {
-      SC_REPORT_FATAL(sc_core::sc_module::name(), "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
+      SC_REPORT_FATAL(name(), "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
     }
     assert(access_plugin_singleton() == NULL && "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
     assert(access_plugin_instantiated() == false && "Config Plugin has already been instantiated and destroyed!");
     access_plugin_singleton(this, true);
 
     if (db == NULL) {
-      GCNF_DUMP_N(sc_core::sc_module::name(), "No parameter database given by user, create default one!");
+      GCNF_DUMP_N(name(), "No parameter database given by user, create default one!");
       m_param_db_created = new ConfigDatabase("ConfigDatabase");
       db = m_param_db_created;
     }
     
-    m_gc_port.api_port(*this); // bind sc_port of m_gc_port
-
     // Check if the database pointer is valid
     std::string test = db->getParameters();
     assert(test.length() == 0);
     
     // bind the (in the toplevel) user chosen database to the port
-    m_param_db_port(*db);
+    m_param_db = db;
     
     /// Observer database
     m_observer_db = new ObserverDatabase("ObserverDatabase", this);
-    m_observer_db_port(*m_observer_db);
-    
+     
     // create the default GCnf_Api instance which is accessible via the NULL pointer
     // Note: Don't call GCnf_Api_t::getApiInstance(NULL) here, because this ConfigPlugin constructor
     //       is possibly called by exactly this function (the GCnf_Api_T constructor), the 
@@ -178,20 +209,15 @@ public:
    * Implements pc_port_if. 
    * This method starts whenever a master triggers a payload-event.
    */
-  void masterAccess(ControlTransactionContainer &t_p)
+  void transport(ControlTransactionHandle &tr)
   {
-    
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GCNF_DUMP_N(name(), "got "<<ph.toString()<<" atom from master");      
+    GCNF_DUMP_N(name(), "got transaction atom from core");      
     // show received Transaction
     //GCNF_DUMP_N(name(), "  received transaction: "<< tr->toString().c_str());      
 
     //bool notify_observers = false;     // if a parameter was changed and notifiers need to notified (if existing)
     bool notify_new_parameter = false; // if a NEW parameter was added or set
 
-    ControlPhase p(ControlPhase::CONTROL_RESPONSE);
     
     // According to the command fill the transaction or make actions
     switch (tr->get_mCmd()) {
@@ -205,18 +231,18 @@ public:
     case CMD_ADD_PARAM:
       {
         GCNF_DUMP_N(name(), "CMD_ADD_PARAM: add param");
-        gs_param_base *par = static_cast<gs_param_base*>(tr->get_mAnyPointer());
+        gs_param_base *par = static_cast<gs_param_base*>(tr->get_mLogPointer());
         notify_new_parameter = true;
         if (par != NULL) {
-          if ( m_param_db_port->existsParam(par->getName())) notify_new_parameter = false;
+          if ( m_param_db->existsParam(par->getName())) notify_new_parameter = false;
         } else {
-          if ( m_param_db_port->existsParam(tr->get_mSpecifier()) ) notify_new_parameter = false;
+          if ( m_param_db->existsParam(tr->get_mSpecifier()) ) notify_new_parameter = false;
           GCNF_DUMP_N(name(), "Create new gs_param<string>: "<<tr->get_mSpecifier().c_str());
           // use special parameter constructor with register_at_db=false:
           par = new gs_param<std::string>(tr->get_mSpecifier(), tr->get_mValue(), NULL, true, false);
         }
 
-        if ( ! m_param_db_port->addParam(par) ) {
+        if ( ! m_param_db->addParam(par) ) {
           tr->set_mError(1);
         }
         break;
@@ -226,9 +252,9 @@ public:
     case CMD_REMOVE_PARAM:
       {
         GCNF_DUMP_N(name(), "CMD_REMOVE_PARAM: remove param");
-        gs_param_base *par = static_cast<gs_param_base*>(tr->get_mAnyPointer());
+        gs_param_base *par = static_cast<gs_param_base*>(tr->get_mLogPointer());
         if (par != NULL) {
-          if ( !m_param_db_port->removeParam(par) ) {
+          if ( !m_param_db->removeParam(par) ) {
             tr->set_mError(1);
           }
         } else
@@ -240,7 +266,7 @@ public:
     case CMD_SET_INIT_VAL:
       {
         GCNF_DUMP_N(name(), "CMD_SET_INIT_VAL: set init value to param");
-        bool newAdded = m_param_db_port->setInitValue(tr->get_mSpecifier(), tr->get_mValue());
+        bool newAdded = m_param_db->setInitValue(tr->get_mSpecifier(), tr->get_mValue());
         if (newAdded) {
           notify_new_parameter = true;
         }
@@ -251,8 +277,8 @@ public:
     case CMD_GET_VAL:
       {
         GCNF_DUMP_N(name(), "CMD_GET_VAL: get value of param");
-        if ( m_param_db_port->existsParam(tr->get_mSpecifier())) {
-          tr->set_mValue(m_param_db_port->getValue(tr->get_mSpecifier()));
+        if ( m_param_db->existsParam(tr->get_mSpecifier())) {
+          tr->set_mValue(m_param_db->getValue(tr->get_mSpecifier()));
         } else {
           tr->set_mError(1);
           tr->set_mValue("");
@@ -264,12 +290,12 @@ public:
     case CMD_GET_PARAM: 
       {
         GCNF_DUMP_N(name(), "CMD_GET_PARAM: get param");      
-        if ( m_param_db_port->existsParam(tr->get_mSpecifier())) {
-          gs_param_base *par = m_param_db_port->getParam( tr->get_mSpecifier() );
-          tr->set_mAnyPointer(par);
+        if ( m_param_db->existsParam(tr->get_mSpecifier())) {
+          gs_param_base *par = m_param_db->getParam( tr->get_mSpecifier() );
+          tr->set_mLogPointer(par);
         } else {
           tr->set_mError(1);
-          tr->set_mAnyPointer(NULL);
+          tr->set_mLogPointer(NULL);
         }
         break;
       }
@@ -278,8 +304,8 @@ public:
     case CMD_EXISTS_PARAM:
       {
         GCNF_DUMP_N(name(), "CMD_EXISTS_PARAM: exists param");      
-        if ( !m_param_db_port->existsParam(tr->get_mSpecifier())) {
-          tr->set_mError(1); // this is a return=false
+        if ( !m_param_db->existsParam(tr->get_mSpecifier())) {
+          tr->set_mError(1);
         }
         break;
       }
@@ -308,7 +334,7 @@ public:
         // all parameters
         if (tr->get_mSpecifier().empty()) {
           GCNF_DUMP_N(name(), "     All parameters");      
-          tr->set_mValue(m_param_db_port->getParameters());
+          tr->set_mValue(m_param_db->getParameters());
         } 
 
         // module's parameters with children
@@ -316,7 +342,7 @@ public:
           // Search all parameter including childrennames beginning with <modulename> (without ".*")
           mod = tr->get_mSpecifier().substr(0,  tr->get_mSpecifier().length() -x -1);
           GCNF_DUMP_N(name(), "     Parameters (incl. children) of the module "<< mod.c_str());      
-          vec = m_param_db_port->getParametersVector();
+          vec = m_param_db->getParametersVector();
           std::stringstream ss; bool first = true;
           std::vector<std::string>::iterator iter = vec.begin();
           while( iter != vec.end() ) {
@@ -335,7 +361,7 @@ public:
         else {
           std::string mod = tr->get_mSpecifier();
           // Search all parameter names beginning with <modulename> and no further point in the remaining part
-          std::vector<std::string> vec = m_param_db_port->getParametersVector();
+          std::vector<std::string> vec = m_param_db->getParametersVector();
           GCNF_DUMP_N(name(), "     Parameters (without children) of the module "<<mod.c_str());      
           std::stringstream ss; bool first = true;
           std::vector<std::string>::iterator iter = vec.begin();
@@ -369,16 +395,16 @@ public:
         // mAnyPointer will return a pointer to a newed vector<string>
         // This has to be deleted after being used!
         //
-        
-        std::vector<std::string>* return_vec = new std::vector<std::string>();
-        std::vector<std::string> vec;
+
+        string_vector* return_vec = new string_vector();
+        string_vector vec;
         std::string mod;
         
         // all parameters
         if (tr->get_mSpecifier().empty()) {
           GCNF_DUMP_N(name(), "     All parameters");      
-          *return_vec = m_param_db_port->getParametersVector(); // copies vector to newed vec
-          tr->set_mAnyPointer(return_vec);
+          *return_vec = m_param_db->getParametersVector(); // copies vector to newed vec
+          tr->set_mLogPointer(return_vec);
         } 
         
         // module's parameters with children
@@ -386,8 +412,8 @@ public:
           // Search all parameter including childrennames beginning with <modulename> (without ".*")
           mod = tr->get_mSpecifier().substr(0,  tr->get_mSpecifier().length() -x -1);
           GCNF_DUMP_N(name(), "     Parameters (incl. children) of the module "<< mod.c_str());      
-          vec = m_param_db_port->getParametersVector();
-          std::vector<std::string>::iterator iter = vec.begin();
+          vec = m_param_db->getParametersVector();
+          string_vector::iterator iter = vec.begin();
           while( iter != vec.end() ) {
             // if parametername begins with <mod>
             if (((std::string)*iter).find(mod) == 0) {
@@ -395,7 +421,7 @@ public:
             }
             iter++;
           }
-          tr->set_mAnyPointer(return_vec);
+          tr->set_mLogPointer(return_vec);
         } 
         
         // named parameter from all modules
@@ -404,8 +430,8 @@ public:
           std::string paramname;
           paramname = tr->get_mSpecifier().substr(2);
           GCNF_DUMP_N(name(), "     All parameters named "<< paramname.c_str());      
-          vec = m_param_db_port->getParametersVector();
-          std::vector<std::string>::iterator iter = vec.begin();
+          vec = m_param_db->getParametersVector();
+          string_vector::iterator iter = vec.begin();
           while( iter != vec.end() ) {
             // if parameter name ends with <paramname>
             if (iter->length() - iter->rfind(paramname) == paramname.length()) {
@@ -413,16 +439,16 @@ public:
             }
             iter++;
           }
-          tr->set_mAnyPointer(return_vec);
+          tr->set_mLogPointer(return_vec);
         } 
         
         // module's parameters without children
         else {
           std::string mod = tr->get_mSpecifier();
           // Search all parameter names beginning with <modulename> and no further point in the remaining part
-          std::vector<std::string> vec = m_param_db_port->getParametersVector();
+          vec = m_param_db->getParametersVector();
           GCNF_DUMP_N(name(), "     Parameters (without children) of the module "<< mod.c_str());      
-          std::vector<std::string>::iterator iter = vec.begin();
+          string_vector::iterator iter = vec.begin();
           while( iter != vec.end() ) {
             // if parametername begins with <mod>   AND  last '.'(SC_NAME_DELIMITER) is inside '<mod>.'
             if (  ((std::string)*iter).find(mod) == 0 
@@ -431,7 +457,7 @@ public:
             }
             iter++;
           }
-          tr->set_mAnyPointer(return_vec);
+          tr->set_mLogPointer(return_vec);
         }
         
         break;
@@ -442,7 +468,7 @@ public:
      /*case CMD_REGISTER_PARAM_OBSERVER:
       {
         GCNF_DUMP_N(name(), "CMD_REGISTER_PARAM_OBSERVER: register observer");      
-        if ( !m_observer_db_port->registerObserver(tr->get_mSpecifier(), tr->get_mID()) ) {
+        if ( !m_observer_db->registerObserver(tr->get_mSpecifier(), tr->get_mID()) ) {
           tr->set_mError(1);
         }
         break;
@@ -452,7 +478,7 @@ public:
     case CMD_REGISTER_NEW_PARAM_OBSERVER:
       {
         GCNF_DUMP_N(name(), "CMD_REGISTER_NEW_PARAM_OBSERVER: register observer for new parameters");
-        if ( !m_observer_db_port->registerNewParamObserver( tr->get_mID()) ) {
+        if ( !m_observer_db->registerNewParamObserver( tr->get_mID()) ) {
           tr->set_mError(1);
         }
         break;
@@ -461,11 +487,11 @@ public:
       // ////////////   Command CMD_UNREGISTER_PARAM_CALLBACKS   ////////////////// //
     case CMD_UNREGISTER_PARAM_CALLBACKS:
       {
-        std::vector<std::string> vec = m_param_db_port->getParametersVector();
+        std::vector<std::string> vec = m_param_db->getParametersVector();
         std::vector<std::string>::iterator iter;
         for( iter = vec.begin(); iter != vec.end(); iter++ ) {
-          if (m_param_db_port->is_explicit(*iter)) {
-            m_param_db_port->getParam(*iter)->unregisterParamCallbacks(tr->get_mAnyPointer());
+          if (m_param_db->is_explicit(*iter)) {
+            m_param_db->getParam(*iter)->unregisterParamCallbacks(tr->get_mAnyPointer());
           }
         }      
         break;
@@ -474,28 +500,18 @@ public:
       // ////////////   No Command (error)   ////////////////////////////////////// //
     default:
       {
-        SC_REPORT_WARNING(name(), "masterAccess: unknown command!");
-        p.state = ControlPhase::CONTROL_ERROR;
+        SC_REPORT_WARNING(name(), "transport: unknown command!");
+        tr->set_mError(1);
       }
     }
-    
-    // Answer with a CONTROL_RESPONSE or CONTROL_ERROR phase
-    GCNF_DUMP_N(name(), "send "<<p.toString()<<" atom back to master");      
 
-    // Do not Ack the transaction if command was a remove, because sender could already be destructed
-    // TODO: What is with the notifications of these?
-    if (tr->get_mCmd() != CMD_REMOVE_PARAM) {
-      ControlTransactionContainer ctc = ControlTransactionContainer(t_p.first, p);
-      // Ack transaction
-      m_gc_port.target_port.out->notify(ctc, PEQ_IMMEDIATE);
-    }
 
     // If observers for new parameters have to be notified, do that.
     if (notify_new_parameter) {
-      sendNewParameterNotify(  static_cast<gs_param_base*>(tr->get_mAnyPointer()),
+      sendNewParameterNotify(  static_cast<gs_param_base*>(tr->get_mLogPointer()),
                                tr->get_mSpecifier(), tr->get_mValue()  );
     }
-    
+
     // moved to parameter themseves!
     // If observers have to be notified, do that.
     //if (notify_observers) {
@@ -503,42 +519,123 @@ public:
     //}
 
   }
-  
-  /// Called by gc_port through gc_port_if when notification arrives.
-  /**
-   * Implements pc_port_if. 
-   * This method starts whenever a slave triggers a payload-event.
-   * That happens when one of the GC-API methods below send a transaction
-   */
-  void slaveAccess(ControlTransactionContainer &t_p)
-  {  
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
 
-    GCNF_DUMP_N(name(), "got "<<ph.toString()<<" atom from slave");      
-    
-    switch (ph.state) {
-    case ControlPhase::CONTROL_RESPONSE:
-      // processed in the initiating methods
-      break;
+  // //////////////// command_if methods ////////////////////////////////////
+
+  /// Returns the name of the plugin.
+  std::string getName()
+  {
+    return name();
+  }
+
+  /// Returns the name of the specified command.
+  std::string getCommandName(unsigned int cmd)
+  {
+    return getCmdName(cmd);
+  }
+
+  /// Return a description of the specified command.
+  std::string getCommandDescription(unsigned int cmd)
+  {
+    return getCmdDesc(cmd);
+  }
+
+  /// Returns the name of the specified command.
+  /**
+   * This method is used by the non-static getCommandName() methods of the API and the plugin.
+   */
+  static std::string getCmdName(unsigned int cmd)
+  {
+    switch (cmd) {
+      case CMD_NONE:
+        return std::string("CMD_NONE");
+      case CMD_ADD_PARAM:
+        return std::string("CMD_ADD_PARAM");
+      case CMD_SET_INIT_VAL:
+        return std::string("CMD_SET_INIT_VAL");
+      case CMD_GET_VAL:
+        return std::string("CMD_GET_VAL");
+      case CMD_GET_PARAM:
+        return std::string("CMD_GET_PARAM");
+      case CMD_EXISTS_PARAM:
+        return std::string("CMD_EXISTS_PARAM");
+      case CMD_GET_PARAM_LIST:
+        return std::string("CMD_GET_PARAM_LIST, DEPRECATED, use CMD_GET_PARAM_LIST_VEC instead.");
+      case CMD_GET_PARAM_LIST_VEC:
+        return std::string("CMD_GET_PARAM_LIST_VEC");
+      case CMD_REGISTER_NEW_PARAM_OBSERVER:
+        return std::string("CMD_REGISTER_NEW_PARAM_OBSERVER");
+      case CMD_NOTIFY_NEW_PARAM_OBSERVER:
+        return std::string("CMD_NOTIFY_NEW_PARAM_OBSERVER");
+      case CMD_REMOVE_PARAM:
+        return std::string("CMD_REMOVE_PARAM");
+      case CMD_UNREGISTER_PARAM_CALLBACKS:
+        return std::string("CMD_UNREGISTER_PARAM_CALLBACKS");
+      default:
+        return std::string("unknown");
     }
   }
+
+  /// Returns a description of the specified command.
+  /**
+   * This method is used by the non-static getCommandDescription() methods of the API and the plugin.
+   */
+  static std::string getCmdDesc(unsigned int cmd)
+  {
+    switch (cmd) {
+      case CMD_NONE:
+        return std::string("No command.");
+      case CMD_ADD_PARAM:
+        return std::string("Add an explicit parameter. May only be used by parameter owning API (API -> plugin).");
+      case CMD_SET_INIT_VAL:
+        return std::string("Set the init value of a parameter (API -> plugin).");
+      case CMD_GET_VAL:
+        return std::string("Get the value of a parameter (API -> plugin).");
+      case CMD_GET_PARAM:
+        return std::string("Get the pointer to a parameter (API -> plugin).");
+      case CMD_EXISTS_PARAM:
+        return std::string("Check if the parameter exists (API -> plugin).");
+      case CMD_PARAM_HAS_BEEN_ACCESSED:
+        return std::string("Check if the parameter has been accessed (API -> plugin).");
+      case CMD_GET_PARAM_LIST:
+        return std::string("DEPRECTATED: get a list of the parameters (API -> plugin), use CMD_GET_PARAM_LIST_VEC instead.");
+      case CMD_GET_PARAM_LIST_VEC:
+        return std::string("Get a vector of the existing parameters (API -> plugin).");
+      case CMD_REGISTER_NEW_PARAM_OBSERVER:
+        return std::string("Register observer for new added or new set parameters (API -> plugin).");
+      case CMD_NOTIFY_NEW_PARAM_OBSERVER:
+        return std::string("Notify an observer about new added (or without add first time set) parameters (Plugin -> API).");
+      case CMD_REMOVE_PARAM:
+        return std::string("Remove parameter from plugin (API -> plugin).");
+      case CMD_UNREGISTER_PARAM_CALLBACKS:
+        return std::string("Unregister all parameter callbacks for the specified observer module (API -> plugin).");
+      default:
+        return std::string("unknown");
+    }
+  }
+
+  // ///////////////////////////////////////////////////////////////////////// //
 
 
   // ////////// PLUGIN_IF Interface ///////////////////////////////////// //
 
   /// This gs::cnf::plugin_if method provides the gs::cnf::param_db_if::setParam method of the gs::cnf::param_db_if to the observer database.
   //bool setParam(const std::string &hier_parname, const std::string &value) {
-  //  return m_param_db_port->setParam(hier_parname, value);
+  //  return m_param_db->setParam(hier_parname, value);
   //}
 
   /// This gs::cnf::plugin_if method provides the gs::cnf::param_db_if::existsParam method of the gs::cnf::param_db_if to the observer database.
   bool existsParam(const std::string &hier_parname) {
-    return m_param_db_port->existsParam(hier_parname);
+    return m_param_db->existsParam(hier_parname);
   }
 
   // /////////////////////////////////////////////////////////////////// //
 
+  /// Returns the name of this Plugin
+  const char* name() {
+    return m_name.c_str();
+  }
+  
 protected:
 
   /// Sends all notify transactions to APIs which observe new parameters.
@@ -564,7 +661,7 @@ protected:
 #endif
 
     // Go through set and notify each new parameter observer (saved under name "**newParamObserver**")
-    ObserverDatabase::addressSet observers = m_observer_db_port->getNewParamObservers();
+    ObserverDatabase::addressSet observers = m_observer_db->getNewParamObservers();
     cport_address_type addr = 0;
 
     for (ObserverDatabase::addressSet::iterator iter = observers.begin(); iter!=observers.end(); ++iter) {
@@ -572,19 +669,17 @@ protected:
       addr = *iter;
 
       // create Transaction an send it to API
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(CONFIG_SERVICE);
       th->set_mCmd(CMD_NOTIFY_NEW_PARAM_OBSERVER);
       th->set_mTarget(addr);
-      th->set_mAnyPointer(par);
+      th->set_mLogPointer(par);
       if (par == NULL) {
         th->set_mSpecifier(par_name);
         th->set_mValue(init_value);
       }
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
 
       if (th->get_mError() > 0) {
 #ifdef GC_VERBOSE
@@ -609,9 +704,9 @@ protected:
     GCNF_DUMP_N(name(), "sendObserverNotifies: notify observers for parameter "<< parname.c_str());
 
     // Go through set and notify each observer
-    ObserverDatabase::addressSet observers = m_observer_db_port->getObservers(parname);
+    ObserverDatabase::addressSet observers = m_observer_db->getObservers(parname);
     cport_address_type addr = 0;
-    std::string value = m_param_db_port->getParam( parname );
+    std::string value = m_param_db->getParam( parname );
 
     for (ObserverDatabase::addressSet::iterator iter = observers.begin(); iter!=observers.end(); ++iter) {
       
@@ -638,6 +733,14 @@ protected:
 
   }*/
 
+public: // TODO: needs this to be public?
+  
+  /// Port to communicate over the Core with the configurable modules.
+  gc_port m_gc_port;
+  
+  /// Pointer get access to the parameter database which implements the param_db_if
+  param_db_if* m_param_db;
+
 protected:
 
   /// Observer database
@@ -645,6 +748,9 @@ protected:
 
   /// Pointer to the param db if created automatically, NULL else
   param_db_if* m_param_db_created;
+  
+  /// Plugin name for debug
+  const std::string m_name;
   
 };
 

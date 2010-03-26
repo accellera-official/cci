@@ -53,12 +53,12 @@
 // Operator = with val_type
 #define SPECIALISATIONS_EQUAL_OPERATORS                      \
   my_type& operator= (const scml_property<val_type>& v) {    \
-    m_api->setParam( m_par_name, v.getStringValue() );       \
+    m_api->setParam( m_full_par_name, (val_type)*const_cast<scml_property<val_type>*>(&v) );       \
     return *this;                                            \
   }                                                          \
                                                              \
   my_type& operator= (val_type v) {                          \
-    m_api->setParam( m_par_name, v );                        \
+    m_api->setParam( m_full_par_name, v );                        \
     return *this;                                            \
   }                                                          \
 
@@ -70,7 +70,7 @@
   {                                                                  \
     val_type tmp_val = getValue();                                   \
     --tmp_val;                                                       \
-    m_api->setParam( m_par_name, tmp_val );                          \
+    m_api->setParam( m_full_par_name, tmp_val );                          \
     return *this;                                                    \
   }                                                                  \
                                                                      \
@@ -80,7 +80,7 @@
     val_type tmp_old_val = getValue();                               \
     val_type tmp_set_val = tmp_old_val;                              \
     tmp_set_val--;                                                   \
-    m_api->setParam( m_par_name, tmp_set_val );                      \
+    m_api->setParam( m_full_par_name, tmp_set_val );                      \
     return tmp_old_val;                                              \
   }                                                                  \
   
@@ -92,7 +92,7 @@
   {                                                                  \
     val_type tmp_val = getValue();                                   \
     ++tmp_val;                                                       \
-    m_api->setParam( m_par_name, tmp_val );                          \
+    m_api->setParam( m_full_par_name, tmp_val );                          \
     return *this;                                                    \
   }                                                                  \
                                                                      \
@@ -102,7 +102,7 @@
     val_type tmp_old_val = getValue();                               \
     val_type tmp_set_val = tmp_old_val;                              \
     tmp_set_val++;                                                   \
-    m_api->setParam( m_par_name, tmp_set_val);                       \
+    m_api->setParam( m_full_par_name, tmp_set_val);                       \
     return tmp_old_val;                                              \
   }
 
@@ -115,7 +115,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp += val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -124,7 +124,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp -= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -133,7 +133,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp /= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -142,7 +142,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp *= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
   
@@ -158,7 +158,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp %= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -167,7 +167,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp ^= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -176,7 +176,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp |= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -185,7 +185,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp &= val;                                                         \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -194,7 +194,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp <<= val;                                                        \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     \
                                                                         \
@@ -203,7 +203,7 @@
   {                                                                     \
     val_type tmp = getValue();                                          \
     tmp >>= val;                                                        \
-    m_api->setParam( m_par_name, tmp );                                 \
+    m_api->setParam( m_full_par_name, tmp );                                 \
     return *this;                                                       \
   }                                                                     
 

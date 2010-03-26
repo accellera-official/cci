@@ -1,5 +1,8 @@
-Simulation time: Tue Jan 19 14:57:03 2010
+Simulation time: Tue Mar  9 14:28:33 2010
 
+@0 s /0: Owner.str_param = This is a test string.
+@0 s /0: Owner.uint_param = 1
+@0 s /0: AVTool.par_to_be_deleted = 0
 @0 s /0: AVTool.par_to_be_deleted = 10
 @1 ns /1: Owner.uint_param = 670
 @1 ns /1: Owner.str_param = Hello World!
@@ -8,7 +11,16 @@ Simulation time: Tue Jan 19 14:57:03 2010
 @2 ns /6: Owner.str_param = Hello France!
 @3 ns /7: Owner.uint_param = 2000
 @5 ns /8: AVTool.par_to_be_deleted = 11
+@5 ns /8: Owner.int_param = 106
 @5 ns /8: Owner.uint_param = 3000
 @5 ns /8: Owner.str_param = new hello
 @5 ns /8: Owner.int_param = 222
 @106 ns /10: Owner.int_param = 133
+@210 ns /18: Owner.int_param = 10000
+@210 ns /18: Owner.int_param1 = 1
+@210 ns /18: Owner.int_param2 = 2
+@210 ns /18: Owner.int_param3 = 3
+@210 ns /18: Owner.logic_param = 1
+@210 ns /18: Owner.uint64_param = 18446744073709551614
+@210 ns /18: Owner.sub.int_param4 = 4
+@210 ns /18: Owner.sub.int_param5 = 5

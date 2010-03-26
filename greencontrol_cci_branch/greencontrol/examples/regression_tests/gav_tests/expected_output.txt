@@ -2,27 +2,33 @@
 @0 s /0 (static GAV_Api::getApiInstance): create new apiMap
 @0 s /0 (static GAV_Api::getApiInstance): create new GAV_Api
 @0 s /0 (AnalysisPlugin.__gav_api___0): constructor GAV_Api()
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): Add file extension: default.log
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): Constructor
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam'
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter EnaMod.ExplicitParam
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): Init Output Plugin (id=1)
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): EnaMod.ExplicitParam = 344
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam'
 
 Info: AnalysisPlugin.STDOUT_OUT_default: Parameter 'EnaMod.ImplicitParam' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam2'
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.top_param_expl'
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): observe parameter top_param_expl
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): top_param_expl = 22
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.top_param_impl'
 
 Info: AnalysisPlugin.STDOUT_OUT_default: Parameter 'top_param_impl' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): new (enabled) param callback for param 'AnalysisPlugin.STDOUT_OUT_default.top_param_impl2'
 
 -------- BEGIN SIMULATION ---------
+@0 s /0 (AnalysisPlugin.TXT_FILE_OUT_default): GreenAV output plugin 2 has already been started.
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): GreenAV output plugin 1 has already been started.
 EnaMod main_action
 create output plugin 'any'
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): create_OutputPlugin(type=STDOUT_OUT, ctor='any')
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
 @0 s /0 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
 @0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Handle already existing (maybe implicit) child parameter 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB' of the output plugin (possibly enable params):
 @0 s /0 (EnaMod.main_action.STDOUT_OUT_any): new (enabled) param callback for param 'EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB'
@@ -39,9 +45,7 @@ Info: EnaMod.main_action.STDOUT_OUT_any: Parameter 'EnaMod.ImplicitParamB' canno
 
 Info: EnaMod.main_action.STDOUT_OUT_any: Parameter 'top_param_impl_B' cannot be observed because it is not existing. Enabled parameter has been resetted to false.
 @0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Constructor
-@0 s /0 (AnalysisPlugin): Created OutputPlugin.
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): Created OutputPlugin (id=3).
 @0 s /0 (AnalysisPlugin.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type STDOUT_OUT (constructor param 'any') successfully.
 ------------------------------------------------------------------------------------------
     *** Regression test result: ***
@@ -65,6 +69,7 @@ Info: EnaMod.main_action.STDOUT_OUT_any: Parameter already registered for output
    @0 s /0 (EnaMod): PASSED if message 'observe parameter EnaMod.ExplicitParamB' but already observed.
 ------------------------------------------------------------------------------------------
 
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_any): Init Output Plugin (id=3)
 @0 s /0 (EnaMod.main_action.STDOUT_OUT_any): EnaMod.ExplicitParamB = 10
 @0 s /0 (EnaMod.main_action.STDOUT_OUT_any): EnaMod.ExplicitParamB = 20
 ------------------------------------------------------------------------------------------
@@ -103,6 +108,7 @@ Info: EnaMod.main_action.STDOUT_OUT_any: The related parameter to an enabled par
    @0 s /0 (EnaMod): PASSED if param 'top_param_expl' change =50 is outputted to stdout by default output plugin.
 ------------------------------------------------------------------------------------------
 
+param "AnalysisPlugin.STDOUT_OUT_default.top_param_expl" existing explicit= yes
 Test disable
 @0 s /0 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter top_param_expl
 ------------------------------------------------------------------------------------------
@@ -155,11 +161,32 @@ Info: AnalysisPlugin.STDOUT_OUT_default: The related parameter to an enabled par
    @0 s /0 (EnaMod): PASSED if nothing happened (no change message for enable param).
 ------------------------------------------------------------------------------------------
 
+create output plugin 'immediate' which logs added params immediately
+.
+@0 s /0 (AnalysisPlugin.__gav_api___0): create_OutputPlugin(type=STDOUT_OUT, ctor='immediate')
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_CREATE_OUTPUT_PLUGIN
+@0 s /0 (AnalysisPlugin): CMD_CREATE_OUTPUT_PLUGIN: create new output plugin
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): Constructor
+@0 s /0 (AnalysisPlugin): Created OutputPlugin (id=4).
+@0 s /0 (AnalysisPlugin.__gav_api___0): create_OutputPlugin: ... created OutputPlugin of type STDOUT_OUT (constructor param 'immediate') successfully.
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): observe parameter EnaMod.immediateStringParamWInitial
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): Init Output Plugin (id=4)
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): EnaMod.immediateStringParamWInitial = this is my initial value
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): observe parameter EnaMod.immediateStringParam
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): EnaMod.immediateStringParam = 
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): observe parameter EnaMod.laterImmediateStringParamWInitial
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): EnaMod.laterImmediateStringParamWInitial = this is my later initial value
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): EnaMod.immediateStringParamWInitial = New string for immediateStringParamWInitial
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): EnaMod.immediateStringParam = New string for immediateStringParam
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): EnaMod.laterImmediateStringParamWInitial = New string for laterImmediateStringParamWInitial
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): remove observation of parameter EnaMod.immediateStringParam
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): remove observation of parameter EnaMod.laterImmediateStringParamWInitial
+@0 s /0 (EnaMod.main_action.STDOUT_OUT_immediate): remove observation of parameter EnaMod.immediateStringParamWInitial
 --------- END SIMULATION ----------
 
 
 Parameter list:
-vector: size=14
+vector: size=17
 AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam
 AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam
 AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam2
@@ -168,6 +195,9 @@ AnalysisPlugin.STDOUT_OUT_default.top_param_impl
 AnalysisPlugin.STDOUT_OUT_default.top_param_impl2
 EnaMod.ExplicitParam
 EnaMod.ExplicitParamB
+EnaMod.immediateStringParam
+EnaMod.immediateStringParamWInitial
+EnaMod.laterImmediateStringParamWInitial
 EnaMod.main_action.STDOUT_OUT_any.EnaMod.ExplicitParamB
 EnaMod.main_action.STDOUT_OUT_any.EnaMod.ImplicitParamB
 EnaMod.main_action.STDOUT_OUT_any.top_param_expl_B
@@ -176,3 +206,6 @@ top_param_expl
 top_param_expl_B
 
 @18446744073709551615 ps /1 (EnaMod.main_action.STDOUT_OUT_any): remove observation of parameter top_param_expl_B
+@18446744073709551615 ps /1 (AnalysisPlugin): Delete created Output Plugins:
+  (id=3) name: EnaMod.main_action.STDOUT_OUT_any
+  (id=4) name: EnaMod.main_action.STDOUT_OUT_immediate

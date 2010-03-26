@@ -66,10 +66,10 @@
 #include "transport/gs_datatypes.h"
 
 #define GS_INIT_STANDARD_GREENCONTROL \
-  gs::ctr:: GC_Core         core("ControlCore"); \
+  gs::ctr::GC_Core       core; \
   gs::cnf:: ConfigDatabase  cnfdatabase("ConfigDatabase"); \
-  gs::cnf:: ConfigPlugin    configPlugin("ConfigPlugin", &cnfdatabase); \
-  gs::av::  GAV_Plugin      analysisPlugin("AnalysisPlugin", gs::av::STDOUT_OUT)
+  gs::cnf:: ConfigPlugin    configPlugin(&cnfdatabase); \
+  gs::av::  GAV_Plugin      analysisPlugin(gs::av::STDOUT_OUT)
 
 
 #define SC_NAME_DELIMITER '.'

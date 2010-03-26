@@ -68,11 +68,11 @@ int sc_main(int argc, char *argv[]) {
   // change order of these three instantiations to test instantiation order
   // <change order>
   // GreenControl Core
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
   // GreenConfig Plugin
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
 
   // IP
   TestIP_neg   ip_neg("IP_neg");
@@ -89,7 +89,7 @@ int sc_main(int argc, char *argv[]) {
   configTool.config("configtest_wrong2.cfg"); // config file with failure leading to warning
   configTool.parseCommandLine(argc, argv);
   
-  gs::cnf::CommandLineConfigParser configParser("ConfigParser");
+  gs::cnf::CommandLineConfigParser configParser;
   configParser.parse(argc, argv);
 
   //gs::cnf::CommandLine_Tool commandLineTool("CommandLineTool");

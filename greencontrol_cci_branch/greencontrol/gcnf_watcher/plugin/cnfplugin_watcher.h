@@ -79,10 +79,8 @@ public:
    */
   ConfigPluginWatcher(sc_core::sc_module_name name)
     : sc_core::sc_module(name),
-      m_gc_port(CONFIG_SERVICE, "ConfigPluginWatcher", true)
+      m_gc_port(CONFIG_SERVICE, "ConfigPluginWatcher", true, this)
   { 
-    m_gc_port.api_port(*this); // bind sc_port of m_gc_port
-
     // create the default GCnf_Api instance which is accessible via the NULL pointer
     GCnf_Api::getApiInstance(NULL);
   }
@@ -95,43 +93,28 @@ public:
 
   /// Called by gc_port through gc_port_if when notification arrives.
   /**
-   * Implements pc_port_if. 
+   * Implements gc_port_if. 
    * This method starts whenever a master triggers a payload-event.
    */
-  void masterAccess(ControlTransactionContainer &t_p)
+  void transport(ControlTransactionHandle &tr)
   {
-	//sc_object *port_addr; 
-	sc_module *port_addr; 
-	// control_target_port *port_addr; 
+    //sc_object *port_addr; 
+    //sc_module *port_addr; 
+    // control_target_port *port_addr; 
 
-   	std::cout<< "ConfigPluginWatcher :: masterAccess called "  << std::endl;
+    std::cout<< "ConfigPluginWatcher :: transport called "  << std::endl;
 
-	std::cout<< "Service name = " << gs::ctr::getControlServiceString((t_p.first)->get_mService()) << std::endl;
+    std::cout<< "Service name = " << gs::ctr::getControlServiceString(tr->get_mService()) << std::endl;
 
-	port_addr = reinterpret_cast<sc_module * > ((t_p.first)->get_mID());
-	//std::cout<< "ID = " << (t_p.first)->get_mID() << std::endl;
-	//std::cout<< "Port Name = " << (port_addr->get_parent())->name() << std::endl;
-
-	while (port_addr != NULL)
-	{
-		std::cout<< "Port Name = " << port_addr->name() << std::endl;
-		port_addr = get_parent_sc_module(port_addr);
-	}
+    /* This does not work any longer with new gc_ports:
+    port_addr = reinterpret_cast<sc_module * > (tr->get_mID());
+    while (port_addr != NULL) {
+      std::cout<< "Port Name = " << port_addr->name() << std::endl;
+      port_addr = get_parent_sc_module(port_addr);
+    }*/
 
 
   }
-  
-  /// Called by gc_port through gc_port_if when notification arrives.
-  /**
-   * Implements pc_port_if. 
-   * This method starts whenever a slave triggers a payload-event.
-   * That happens when one of the GC-API methods below send a transaction
-   */
-  void slaveAccess(ControlTransactionContainer &t_p)
-  {  
-   	std::cout<< "ConfigPluginWatcher :: slaveAccess called "  << std::endl;
-  }
-
 };
 
   

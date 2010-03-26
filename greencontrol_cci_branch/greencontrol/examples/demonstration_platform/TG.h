@@ -96,6 +96,8 @@ private:
   gs_uint64 read_addr[2];       // addresses were to read from
   gs_uint64 write_addr_size[2]; // size of the address space write_addr[i]
   gs_uint64 read_addr_size[2];  // size of the address space read_addr[i]
+  
+  gs::gs_param<bool> do_time_measure; // if to do and show time measurement (disabled for output diff reason); if true: rand() will use a random seed, if false: rand() will use same seed
 
   unsigned int target;      // target which is addressed
 
@@ -120,11 +122,19 @@ public:
       read_count_inc("read_count_inc", 0),
       write_count_rnd("write_count_rnd", 0),
       read_count_rnd("read_count_rnd", 0),
-      delay_max("delay_max", 10000)
+      delay_max("delay_max", 10000),
+      do_time_measure("do_time_measure", false)
   { 
     m_GCnf_Api = gs::cnf::GCnf_Api::getApiInstance(this);
 
-    srand(rand()); // random seed to make multiple master behaviour differ
+    if (do_time_measure) {
+      srand(rand()); // real random seed to make multiple master behaviour differ
+      cout << "("<<this->name()<<"): Do random seed for testing and show time measurement" << endl;
+    }
+    else {
+      srand(1000); // instructs the pseudo-random generator to generate the same succession of results for the subsequent calls to rand
+      cout << "("<<this->name()<<"): Do same seed allowing diff and disable time measurement" << endl;
+    }
     //tcount = 0;
 
     // Pointer to a gs_uint64 parameter
@@ -133,22 +143,22 @@ public:
     gs::gs_param<gs_uint32> *tmp_param32;
     
     // Addresses for PCIeDevice2
-    tmp_param64 = dynamic_cast<gs::gs_param<gs_uint64>* >( m_GCnf_Api->getPar("PCIeDevice2.base_addr") );
+    tmp_param64 = m_GCnf_Api->getPar("PCIeDevice2.base_addr")->get_gs_param<gs_uint64>();
     write_addr[0] = read_addr[0] = *tmp_param64;
-    cout << "("<<this->name()<<"):" << "write and read address for PCIeDevice set to " << tmp_param64<<"="<<write_addr[0] << endl;
+    cout << "("<<this->name()<<"):" << "write and read address for PCIeDevice set to " << *tmp_param64<<"="<<write_addr[0] << endl;
     
     // size of device at address write_addr[i]    
-    tmp_param32 = dynamic_cast<gs::gs_param<gs_uint32>* >( m_GCnf_Api->getPar("PCIeDevice2.mem_size") );
+    tmp_param32 = m_GCnf_Api->getPar("PCIeDevice2.mem_size")->get_gs_param<gs_uint32>();
     write_addr_size[0] = read_addr_size[0] = *tmp_param32;
     cout << "("<<this->name()<<"):" << "write and read size for PCIeDevice set to " << write_addr_size[0] << endl;
     
     // Addresses for Mem
-    tmp_param64 = dynamic_cast<gs::gs_param<gs_uint64>* >( m_GCnf_Api->getPar("Mem.base_addr") );
+    tmp_param64 = m_GCnf_Api->getPar("Mem.base_addr")->get_gs_param<gs_uint64>();
     write_addr[1] = read_addr[1] = *tmp_param64;
-    cout << "("<<this->name()<<"):" << "write and read address for Mem set to "<<tmp_param64<<"="<<write_addr[1] << endl;
+    cout << "("<<this->name()<<"):" << "write and read address for Mem set to "<<*tmp_param64<<"="<<write_addr[1] << endl;
     
     // size of device at address write_addr[i]    
-    tmp_param64 = dynamic_cast<gs::gs_param<gs_uint64>* >( m_GCnf_Api->getPar("Mem.high_addr") );
+    tmp_param64 = m_GCnf_Api->getPar("Mem.high_addr")->get_gs_param<gs_uint64>();
     write_addr_size[1] = read_addr_size[1] = *tmp_param64 - read_addr[1];
     cout << "("<<this->name()<<"):" << "write and read size for Mem set to " << *tmp_param64 <<"-"<< read_addr[1] << "="<< write_addr_size[1] << endl;
     

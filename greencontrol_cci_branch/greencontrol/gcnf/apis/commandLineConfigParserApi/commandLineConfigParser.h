@@ -98,26 +98,39 @@ class CommandLineConfigParser
 
 public:
 
+  /// DEPRECATED Constructor with parse.
+  CommandLineConfigParser(char* name, const int argc, const char* const* argv)
+  { 
+    DEPRECATED_WARNING("CommandLineConfigParser", "DEPRECATED: CommandLineConfigParser Constructor with name is deprecated, use without name instead.");
+    gcnf_api = GCnf_Api::getApiInstance(NULL);
+    parse(argc, argv);  
+  }
+  /// DEPRECATED Constructor without parse.
+  CommandLineConfigParser(char* name)
+  { 
+    DEPRECATED_WARNING("CommandLineConfigParser", "DEPRECATED: CommandLineConfigParser Constructor with name is deprecated, use without name instead.");
+    gcnf_api = GCnf_Api::getApiInstance(NULL);
+  }
+  
   /// Constructor with parse.
   /**
-   * Constructor which calls the parse method immeadiately.
+   * Constructor which calls the parse method immediately.
    *
-   * @param name Module name.cout
    * @param argc The argc of main(...).
    * @param argv The argv of main(...).
    */
-  CommandLineConfigParser(char* name, const int argc, const char* const* argv)
+  CommandLineConfigParser(const int argc, const char* const* argv)
   { 
     gcnf_api = GCnf_Api::getApiInstance(NULL);
     parse(argc, argv);  
   }
-
+  
   /// Constructor without parse.
   /**
-   * Constructor which does not calls the parse method immeadiately.
+   * Constructor which does not call the parse method immediately.
    * Parsing has to be done by calling the parse(...)-method.
    */
-  CommandLineConfigParser(sc_core::sc_module_name name)
+  CommandLineConfigParser()
   { 
     gcnf_api = GCnf_Api::getApiInstance(NULL);
   }

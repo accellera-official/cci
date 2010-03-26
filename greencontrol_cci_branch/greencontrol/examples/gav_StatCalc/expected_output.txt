@@ -6,6 +6,7 @@
 @0 s /0 (AVnewStatCalc.__gav_api___0): constructor GAV_Api()
 @0 s /0 (AVnewStatCalcFormulaTest.__gav_api___0): constructor GAV_Api()
 -------------------- SIMULATION START -----------------------
+@0 s /0 (AnalysisPlugin.STDOUT_OUT_default): GreenAV output plugin 1 has already been started.
 --------------------------------------------------------
 ***************  TEST 1: Formula with POD types  *****************
 @0 s /0 (AVnewStatCalcFormulaTest.main_action.StatCalc1): Constructor StatCalc 'AVnewStatCalcFormulaTest.main_action.StatCalc1'.
@@ -13,9 +14,7 @@
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_0):     enable on-change-callbacks.
 @0 s /0 (Trigger_0): activate
@@ -54,9 +53,7 @@ Result StCalc s1 = 801.5
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_1):     enable on-change-callbacks.
 @0 s /0 (Trigger_1): activate
@@ -67,12 +64,12 @@ Result StCalc sB = 0
 @0 s /0 (Trigger_1): Calculate formula.
 
 Warning: StatisticsCalculator: Size of sc_bigint greater than 64: Loose of precision.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gav/plugin/Calculator.h:536
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gav/plugin/Calculator.h:540
 In process: AVnewStatCalcFormulaTest.main_action @ 0 s
 @0 s /0 (no2): calculate: 1000000000 - 100 = 999999900
 
 Warning: StatisticsCalculator: Size of sc_biguint greater than 64: Loose of precision.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gav/plugin/Calculator.h:544
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gav/plugin/Calculator.h:548
 In process: AVnewStatCalcFormulaTest.main_action @ 0 s
 @0 s /0 (no2): calculate: 999999900 / 2 = 499999950
 Callback
@@ -84,12 +81,12 @@ Result StCalc sB = 499999960
 @0 s /0 (Trigger_1): Calculate formula.
 
 Warning: StatisticsCalculator: Size of sc_bigint greater than 64: Loose of precision.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gav/plugin/Calculator.h:536
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gav/plugin/Calculator.h:540
 In process: AVnewStatCalcFormulaTest.main_action @ 0 s
 @0 s /0 (no2): calculate: 1000000000 - 100 = 999999900
 
 Warning: StatisticsCalculator: Size of sc_biguint greater than 64: Loose of precision.
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gav/plugin/Calculator.h:544
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gav/plugin/Calculator.h:548
 In process: AVnewStatCalcFormulaTest.main_action @ 0 s
 @0 s /0 (no2): calculate: 999999900 / 2 = 499999950
 Callback
@@ -109,9 +106,7 @@ Result StCalc sB = 499999980
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_2):     enable on-change-callbacks.
 @0 s /0 (Trigger_2): activate
@@ -151,9 +146,7 @@ Parameter AVnewStatCalcFormulaTest.no1_result_3 = 753.667
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_3):     enable on-change-callbacks.
 @0 s /0 (Trigger_3): activate
@@ -187,9 +180,7 @@ In process: AVnewStatCalcFormulaTest.main_action @ 0 s
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_4):     enable on-change-callbacks.
 @0 s /0 (Trigger_4): activate
@@ -222,9 +213,7 @@ result calcA2 = -3
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_5):     enable on-change-callbacks.
 @0 s /0 (Trigger_5): activate
@@ -291,9 +280,7 @@ manually (((56+63) + 30.5*63) / 2.5) = 816.2
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_6):     enable on-change-callbacks.
 @0 s /0 (Trigger_6): activate
@@ -322,9 +309,7 @@ result calc = 816.2
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_7):     enable on-change-callbacks.
 @0 s /0 (Trigger_7): activate
@@ -367,9 +352,7 @@ result calcC = 417
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_8):     enable on-change-callbacks.
 @0 s /0 (AVnewStatCalcFormulaTest.main_action.StcD): Constructor StatCalc 'AVnewStatCalcFormulaTest.main_action.StcD'.
@@ -388,9 +371,7 @@ result calcC = 417
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_9):     enable on-change-callbacks.
 @0 s /0 (Trigger_9): activate
@@ -460,9 +441,7 @@ result calcE = 52
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_10):     enable on-change-callbacks.
 @0 s /0 (Trigger_10): activate
@@ -508,9 +487,7 @@ result calcF = 52
 @0 s /0 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@0 s /0 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@0 s /0 (AnalysisPlugin): send ControlResponse atom back to master
-@0 s /0 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@0 s /0 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @0 s /0 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @0 s /0 (Trigger_11):     enable on-change-callbacks.
 @0 s /0 (Trigger_11): activate
@@ -596,19 +573,18 @@ Callback
 Parameter AVnewStatCalcFormulaTest.no1_result_3 is destructing.
 .
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.int_par')
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @100 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.int_par
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): Init Output Plugin (id=1)
+@100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.int_par = 0
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.int_par to default Output Plugin STDOUT_OUT successfull.
 .
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.uint_par')
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @100 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.uint_par
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.uint_par = 0
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.uint_par to default Output Plugin STDOUT_OUT successfull.
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.int_par = 0
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.uint_par = 0
@@ -616,9 +592,7 @@ Parameter AVnewStatCalcFormulaTest.no1_result_3 is destructing.
 @100 ns /1 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @100 ns /1 (Trigger_0):     enable on-change-callbacks.
 @100 ns /1 (AVnewStatCalc.main_action.StatCalcTom): Constructor StatCalc 'AVnewStatCalc.main_action.StatCalcTom'.
@@ -633,9 +607,7 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @100 ns /1 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @100 ns /1 (Trigger_1):     enable on-change-callbacks.
 @100 ns /1 (Trigger_1): activate
@@ -648,11 +620,10 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @100 ns /1 (Trigger_1): Handling activation param callback (=0).
 .
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.Tom_result_0')
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @100 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.Tom_result_0
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Tom_result_0 = 0
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.Tom_result_0 to default Output Plugin STDOUT_OUT successfull.
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.int_par = 1
 @100 ns /1 (Trigger_0): Calculate formula.
@@ -719,9 +690,7 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @100 ns /1 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @100 ns /1 (Trigger_2):     enable on-change-callbacks.
 @100 ns /1 (Trigger_2):     set condition.
@@ -730,11 +699,10 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @100 ns /1 (Trigger_2): Handling activation param callback (=1).
 .
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.Regina_result_0')
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @100 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.Regina_result_0
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Regina_result_0 = 0
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.Regina_result_0 to default Output Plugin STDOUT_OUT successfull.
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.int_par = 1000
 @100 ns /1 (Trigger_2): Calculate formula.
@@ -793,9 +761,7 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @100 ns /1 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @100 ns /1 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @100 ns /1 (Trigger_3):     set sc_event.
 @100 ns /1 (AVnewStatCalc.main_action.StatCalcCordula): Constructor StatCalc 'AVnewStatCalc.main_action.StatCalcCordula'.
@@ -803,11 +769,10 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @100 ns /1 (Trigger_3): Handling activation param callback (=1).
 .
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.Cordula_result_0')
-@100 ns /1 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@100 ns /1 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @100 ns /1 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.Cordula_result_0
-@100 ns /1 (AnalysisPlugin): send ControlResponse atom back to master
-@100 ns /1 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Cordula_result_0 = 0
 @100 ns /1 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.Cordula_result_0 to default Output Plugin STDOUT_OUT successfull.
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.int_par = 99
 @100 ns /1 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.uint_par = 1000
@@ -831,9 +796,7 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @111 ns /5 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @111 ns /5 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@111 ns /5 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@111 ns /5 (AnalysisPlugin): send ControlResponse atom back to master
-@111 ns /5 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@111 ns /5 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @111 ns /5 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @111 ns /5 (Trigger_4):     set sample interval 10 ns.
 @111 ns /5 (Trigger_4): Set sample interval 10 ns!
@@ -842,11 +805,10 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @111 ns /5 (Trigger_4): Handling activation param callback (=1).
 .
 @111 ns /5 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.Bob_result_0')
-@111 ns /5 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@111 ns /5 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @111 ns /5 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @111 ns /5 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.Bob_result_0
-@111 ns /5 (AnalysisPlugin): send ControlResponse atom back to master
-@111 ns /5 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@111 ns /5 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Bob_result_0 = 0
 @111 ns /5 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.Bob_result_0 to default Output Plugin STDOUT_OUT successfull.
 @116 ns /6 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.int_par = 1
 @121 ns /7 (AnalysisPlugin.TriggerEventListener): spawned method called (id=1)
@@ -888,9 +850,7 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @166 ns /13 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @166 ns /13 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@166 ns /13 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@166 ns /13 (AnalysisPlugin): send ControlResponse atom back to master
-@166 ns /13 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@166 ns /13 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @166 ns /13 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @166 ns /13 (Trigger_5):     enable on-change-callbacks.
 @166 ns /13 (AVnewStatCalc.main_action.StatCalcBruce): Constructor StatCalc 'AVnewStatCalc.main_action.StatCalcBruce'.
@@ -898,11 +858,10 @@ In process: AVnewStatCalc.main_action @ 100 ns
 @166 ns /13 (Trigger_5): Handling activation param callback (=1).
 .
 @166 ns /13 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.Bruce_result_0')
-@166 ns /13 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@166 ns /13 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @166 ns /13 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @166 ns /13 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.Bruce_result_0
-@166 ns /13 (AnalysisPlugin): send ControlResponse atom back to master
-@166 ns /13 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@166 ns /13 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Bruce_result_0 = 0
 @166 ns /13 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.Bruce_result_0 to default Output Plugin STDOUT_OUT successfull.
 @166 ns /13 (Trigger_5): Calculate formula.
 @166 ns /13 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Bruce_result_0 = 10
@@ -928,9 +887,7 @@ Info: Trigger_5: Deactivating StCalc because of destructed input/sensitivity par
 @167 ns /14 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @167 ns /14 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@167 ns /14 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@167 ns /14 (AnalysisPlugin): send ControlResponse atom back to master
-@167 ns /14 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@167 ns /14 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @167 ns /14 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @167 ns /14 (Trigger_6):     set sample interval 10 ns.
 @167 ns /14 (Trigger_6): Set sample interval 10 ns!
@@ -940,11 +897,10 @@ Info: Trigger_5: Deactivating StCalc because of destructed input/sensitivity par
 @167 ns /14 (Trigger_6): Handling activation param callback (=1).
 .
 @167 ns /14 (AVnewStatCalc.__gav_api___0): add_to_default_output(type=STDOUT_OUT, 'AVnewStatCalc.Danny_SlidingWindow')
-@167 ns /14 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
+@167 ns /14 (AnalysisPlugin): got transaction atom from master, command=CMD_ADD_TO_OUTPUT_PLUGIN
 @167 ns /14 (AnalysisPlugin): CMD_ADD_TO_OUTPUT_PLUGIN: add param to output plugin
 @167 ns /14 (AnalysisPlugin.STDOUT_OUT_default): observe parameter AVnewStatCalc.Danny_SlidingWindow
-@167 ns /14 (AnalysisPlugin): send ControlResponse atom back to master
-@167 ns /14 (AVnewStatCalc.__gav_api___0): got ControlResponse atom from slave
+@167 ns /14 (AnalysisPlugin.STDOUT_OUT_default): AVnewStatCalc.Danny_SlidingWindow = 0
 @167 ns /14 (AVnewStatCalc.__gav_api___0): add_to_default_output: ... adding of param AVnewStatCalc.Danny_SlidingWindow to default Output Plugin STDOUT_OUT successfull.
 
 ***** sliding window sample interval BEGIN ********
@@ -1015,9 +971,7 @@ Info: Trigger_6: Deactivating StCalc because of destructed input parameter!
 @10237 ns /25 (static GAV_Api::getApiInstance): No pointer address to parent module, use/create default GAV_Api.
 .
 @10237 ns /25 (AnalysisPlugin.__gav_api___0): get_event_listener()
-@10237 ns /25 (AnalysisPlugin): got ControlRequest atom from master, command=CMD_GET_EVENT_LISTENER
-@10237 ns /25 (AnalysisPlugin): send ControlResponse atom back to master
-@10237 ns /25 (AnalysisPlugin.__gav_api___0): got ControlResponse atom from slave
+@10237 ns /25 (AnalysisPlugin): got transaction atom from master, command=CMD_GET_EVENT_LISTENER
 @10237 ns /25 (AnalysisPlugin.__gav_api___0): get_event_listener: ... got event listener successfully.
 @10237 ns /25 (Trigger_7):     enable on-change-callbacks.
 @10237 ns /25 (Trigger_7): activate
@@ -1053,10 +1007,6 @@ AVnewStCalc end
 @10237 ns /25 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter AVnewStatCalc.Regina_result_0
 @10237 ns /25 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter AVnewStatCalc.uint_par
 
-Info: Trigger_7: Deactivating StCalc because of destructed input/sensitivity parameter!
-@10237 ns /25 (Trigger_7): deactivate
-@10237 ns /25 (Trigger_7): Handling activation param callback (=0).
-
 Info: Trigger_3: Deactivating StCalc because of destructed input parameter!
 @10237 ns /25 (Trigger_3): deactivate
 @10237 ns /25 (Trigger_3): Handling activation param callback (=0).
@@ -1064,5 +1014,10 @@ Info: Trigger_3: Deactivating StCalc because of destructed input parameter!
 Info: Trigger_4: Deactivating StCalc because of destructed input parameter!
 @10237 ns /25 (Trigger_4): deactivate
 @10237 ns /25 (Trigger_4): Handling activation param callback (=0).
+
+Info: Trigger_7: Deactivating StCalc because of destructed input/sensitivity parameter!
+@10237 ns /25 (Trigger_7): deactivate
+@10237 ns /25 (Trigger_7): Handling activation param callback (=0).
 @10237 ns /25 (AnalysisPlugin.STDOUT_OUT_default): remove observation of parameter AVnewStatCalc.int_par
 -------------------- SIMULATION ENDED -----------------------
+@18446744073709551615 ps /26 (AnalysisPlugin): Delete created Output Plugins:

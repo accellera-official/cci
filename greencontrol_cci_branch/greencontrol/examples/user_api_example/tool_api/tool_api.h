@@ -50,17 +50,12 @@ namespace my_tool_api {
 using namespace gs::ctr;
 using namespace gs::cnf;
 
-/// Simple Tool API for configuration during runtime.
+/// Simple Tool API for configuration during runtime. OUTDATED!
 /**
  * This is an simple GreenControl Tool API which allows simple configuration.
- * The API should support configuration during elaboration and runtime. 
- * TODO: TEST elaboration configuration!
  *
  * This API uses directly the gc_port and is a simple example how wo use it:
- * This API has a gc_port whose two control ports (initiator and target) have
- * to be used directly by calling notify or getting notifies through calls 
- * of masterAccess and slaveAccess methods. The later methods are called 
- * through the gc_port_if.
+ * This API has a gc_port which can be used with the transport method.
  */
 class Tool_Api
 : public sc_object,
@@ -80,9 +75,8 @@ public:
    */
   Tool_Api()
     : sc_object(sc_gen_unique_name("__tool_api__")),
-      m_gc_port(CONFIG_SERVICE, TOOL_API_NAME, false)
+      m_gc_port(CONFIG_SERVICE, TOOL_API_NAME, false, this)
   { 
-    m_gc_port.api_port(*this);  // bind sc_port of m_gc_port
   }
 
   // //////////////////// GC_PORT_IF ///////////////////////////////////
@@ -90,41 +84,9 @@ public:
    * Implements gc_port_if.
    * This method starts whenever a master triggers a payload-event.
    */
-  void masterAccess(ControlTransactionContainer &t_p)
+  void transport(ControlTransactionHandle &tr)
   {
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GC_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from master");      
-  }
-  
-  /**
-   * Implements gc_port_if.
-   * This method starts whenever a slave triggers a payload-event.
-   */
-  void slaveAccess(ControlTransactionContainer &t_p)
-  {  
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GC_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from slave");      
-
-    switch (ph.state) {
-    case ControlPhase::CONTROL_RESPONSE:
-      {
-        // processed directly in the method which initiated the transaction
-        break;
-      }
-    case ControlPhase::CONTROL_ERROR:
-      {
-        SC_REPORT_WARNING(name(), "slaveAccess got phase ControlError!");
-        break;
-      }
-    default:
-      {
-        SC_REPORT_WARNING(name(), "slaveAccess got not processed phase!");
-      }
-    }
+    GC_DUMP_N(name(), "got transaction atom from master");      
   }
 
   // ////// TOOL-API methods //////////////////////////////////////////////////
@@ -134,7 +96,12 @@ public:
    */
   bool setParam(const char* hier_param_name, const char* value) {
     GC_DUMP_N(name(), "setParam("<<hier_param_name<<", "<<value<<")");
-    return getPar(hier_param_name)->setString(value);
+    gs::gs_param_base* p = getPar(hier_param_name);
+    if (p == NULL) {
+      GC_DUMP_N(name(), "  setParam failed because param is not existing");
+      return false;
+    }
+    return p->setString(value);
   }
 
   /**
@@ -145,16 +112,14 @@ public:
     bool success = false;
     
     // create Transaction and send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_SET_INIT_VAL);
     // Target will be set in the core (with service information)
     th->set_mSpecifier(hier_param_name); // e.g. "TestIP1.Param1"
     th->set_mValue(value);  // e.g. "TestValue1"
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     
     if (th->get_mError() == 0) {
       GC_DUMP_N(name(), "setInitValue: ... setting successfull");
@@ -172,7 +137,9 @@ public:
    */
   const char* getParam(const char* hier_param_name) {
     GC_DUMP_N(name(), "getParam("<<hier_param_name<<")");
-    return getPar(hier_param_name)->getString().c_str();
+    gs::gs_param_base* p = getPar(hier_param_name);
+    if (p == NULL) return "";
+    return p->getString().c_str();
   }
 
   /**
@@ -182,14 +149,12 @@ public:
     GC_DUMP_N(name(), "getPar("<<hier_param_name<<")");
     
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_GET_PARAM);
     th->set_mSpecifier(hier_param_name); // e.g. "TestIP1.TestParam1"
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     
     gs::gs_param_base *par = static_cast<gs::gs_param_base*>(th->get_mAnyPointer());
     if (th->get_mError() == 0 && par != NULL) {
@@ -207,16 +172,14 @@ public:
     GC_DUMP_N(name(), "getParamList()");
 
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_GET_PARAM_LIST);
     // Target will be set in the core (with service information)
     th->set_mValue(""); // module
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
     GC_DUMP_N(name(), "getParamList: notify init_port");
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
 
     std::string token = th->get_mValue();
     std::vector<std::string> vec;

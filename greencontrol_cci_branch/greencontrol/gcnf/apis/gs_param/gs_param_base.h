@@ -69,11 +69,12 @@ namespace cnf {
  */
 class gs_param_base
 : public sc_object  
+, public log_if
 {
 protected:
 
   /// Typedef to store a callback pointer
-  typedef pair<bool, boost::shared_ptr<ParamCallbAdapt_b> > observer_and_callback_type;
+  typedef std::pair<bool, boost::shared_ptr<ParamCallbAdapt_b> > observer_and_callback_type;
   /// Typedef for a multimap saving pointers to callback functions with the void* pointer of the observer module as key.
   //typedef std::multimap<void*, boost::shared_ptr<ParamCallbAdapt_b> > observerParamCallback_type;
   /// Typedef for a vector saving observer_and_callback_types; vector to remember the registering order
@@ -120,9 +121,10 @@ public:
   , m_locked(false)
   , m_lock_pwd(NULL)
   {
-    GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<(unsigned long) parent_array<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor");
+    //GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<(unsigned long) parent_array<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor");
+    GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<((parent_array!=NULL)?"yes":"no")<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor"); // <omitted ptr addr for diff>
 
-    // TODO: Make sure m_callback_lists is filled with all callback lists this param has
+    // TODO: fill m_callback_lists with all callback lists this param has
     m_callback_lists[pre_read]      = &m_callback_list_pre_read;
     m_callback_lists[post_read]     = &m_callback_list_post_read;
     m_callback_lists[pre_write]     = &m_callback_list_pre_write;
@@ -216,12 +218,22 @@ public:
    * @return If setting was successful.
    */
   virtual bool setString(const std::string &str) = 0;
+  /// Deprecated: use setString(stringval) instead
+  void set(const std::string &str) {
+    DEPRECATED_WARNING(name(), "DEPRECATED: set(stringval) is deprecated! Use 'setString(stringval)' instead.");
+    setString(str);
+  }
   
   /// Get the string representation of this parameter's value.
   /**
    * @return  The value of this parameter represented as a string.
    */
   virtual const std::string& getString() const = 0;
+  /// Deprecated: use getString(val) instead
+  const std::string& get() const {
+    DEPRECATED_WARNING(name(), "DEPRECATED: get() is deprecated! Use 'getString()' instead.");
+    return getString();
+  }
 
   /// Get this parameter's value converted to the type.
   /**
@@ -338,6 +350,33 @@ public:
     m_attributes.clear();
   }
   
+  
+  // ////////   log_if    /////////// //
+  
+  /// Returns a string representation of the gs_param.
+  std::string toString() {
+    std::stringstream ss;
+    ss << getTypeLog() << " " << getNameLog() << " = " << getValueLog();
+    return ss.str();
+  }
+  
+  /// Returns a string representation of the gs_param value.
+  std::string getValueLog() {
+    return getString();
+  }
+  
+  /// Returns a string representation of the gs_param type
+  std::string getTypeLog() {
+    std::stringstream ss;
+    ss << "gs_param<" << getTypeString() << ">";
+    return ss.str();
+  }
+  
+  /// Returns a string representation of the gs_param name.
+  std::string getNameLog() {
+    return getName();
+  }
+
   
   // ////////   diverse   /////////// //
 
@@ -561,7 +600,7 @@ public:
         break;
       default: // create_param
         std::stringstream ss; ss << "Given callback type ("<<callback_type_to_string(type)<<") cannot be handled by a gs_param!";
-        GS_PARAM_CALLBACK_DUMP("   "<< ss);
+        GS_PARAM_CALLBACK_DUMP("   "<< ss.str().c_str());
         SC_REPORT_WARNING(GCNF_SC_REPORTER("callback"), ss.str().c_str());
     }
     //show_callbacks();
@@ -692,7 +731,7 @@ public:
    *
    * @return  Event which is notified when this parameter changes.
    */
-  sc_event& getUpdateEvent() {
+  sc_core::sc_event& getUpdateEvent() {
     if (!m_update_event_enabled) {
       GS_PARAM_CALLBACK_DUMP("Param '"<<getName()<<"': create callback for update event");
       m_update_event_callbAdapt = boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(new ::gs::cnf::ParamCallbAdapt<gs_param_base>(this, &gs_param_base::update_event_callback, this, (this)));
@@ -714,10 +753,22 @@ public:
    * time the function getUpdateEvent is being called. This reduces the
    * overhead to zero if no update event has been asked for by the user.
    *
+   * This checks if simulation is running, if not, it does NOT notify
+   * the event but throw a warning.
+   *
    * @param changed_param param that has been changed .
    */
   void update_event_callback(gs_param_base& changed_param) {
-    m_update_event.notify();
+    // Check if simulation is running, if not, do NOT notify but cause a warning
+    //SC_REPORT_WARNING(name(), "OSCI SystemC 2.1 does not provide sc_is_running() though it cannot be checked here, this might lead to misbehavior.");
+#if SYSTEMC_VERSION == 20050714
+    if (simcontext()->is_running()) // This is not standard conform thus _only_ for the OSCI version 20050714 needed
+#else
+    if (sc_core::sc_is_running())
+#endif
+      m_update_event.notify();
+    else
+      SC_REPORT_WARNING(name(), "The update event is not notified although the value changed, because simulation is not running!");
   }
   
 protected:

@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -50,14 +50,23 @@ namespace av {
   
   /// OutputPlugin interface.
   class OutputPlugin_if
+  : public gs::ctr::initialize_if
   {
   public:
 
+    OutputPlugin_if() : m_id(0) { }
+    
     virtual ~OutputPlugin_if() { };
     
     /// Adds a parameter which has to be observed by this Output Plugin
     /**
-     * @param par  Reference to the parameter which should be observed
+     * This function calls the config_callback immediately!
+     *
+     * Important: When overloading this manually, remember to set  
+     *            m_currently_calling_initial_observe_callback when
+     *            calling the config_callback function.
+     *
+     * @param par               Reference to the parameter which should be observed
      * @return     If the parameter was added (true) or it was already existing (false).
      */
     virtual bool observe(gs::gs_param_base& par) =0;
@@ -66,6 +75,10 @@ namespace av {
     /**
      * Does not register for new param callback! 
      * TODO: extensibility for future; problem: GCnf_Api instance must be valid!
+     *
+     * This function calls the config_callback immediately for each added param!
+     *
+     * Note: This might be usefull to be used with private config APIs.
      *
      * @param config_api  Reference to a GreenConfig API where to get the 
      *                    list of all parameters.
@@ -76,6 +89,8 @@ namespace av {
     /**
      * Adds all parameters given in the vector to be observed by this 
      * output plugin.
+     *
+     * This function calls the config_callback immediately for each added param!
      *
      * Use example: Observe all parameters (including parameters of childs etc.)
      * underneath the hierarchy level "anyModule.subModule":
@@ -92,6 +107,8 @@ namespace av {
      * underneath the hierarchy level "anyModule.subModule":
      *
      * <code>outpPlugin.observe("anyModule.subModule.*");</code>
+     *
+     * This function calls the config_callback immediately for each added param!
      *
      * The given string is given directly to the getParams function of the config API.
      *
@@ -110,6 +127,9 @@ namespace av {
      */
     virtual bool remove(gs::gs_param_base& par) =0;
     
+    /// Avoids automatic resume during end_of_elaboration
+    virtual void dont_start() =0; // TODO how to register for the e_o_elab cb?
+    
     /// Resumes the output after pause.
     virtual bool resume() =0;
     
@@ -121,7 +141,29 @@ namespace av {
     virtual bool pause(sc_time&) =0;
     /// Pauses the output for the given time. (Callbacks should be kept, not unregistered.)
     virtual bool pause(double t, sc_time_unit u) =0;
+    // if the output plugin is running (each output plugin can decide if starting paused or not!)
+    virtual bool running() =0;
     
+    /// initialize_if dummy
+    virtual void start_initial_configuration() { }
+    /// initialize_if dummy
+    virtual void end_initialize_mode() { }
+    // initialize_if implementation to get called on end_of_elaboration
+    //virtual void gc_end_of_elaboration() { }; // is already implemented empty in interface
+    
+    // ////////////////////// Unique Output Plugin ID /////////////////////////
+    
+    /// Returns the unique Ouput Plugin ID
+    unsigned int get_id() { if (m_id == 0) m_id = inc_max_id(); return m_id; }
+    
+  private:
+    /// System-wide unique Output Plugin ID 
+    unsigned int m_id;
+    /// Increment and return the maximum id to identify an Output Plugin
+    static unsigned int inc_max_id() {
+      static unsigned int max_id = 0;
+      return ++max_id;
+    }
   };
   
 

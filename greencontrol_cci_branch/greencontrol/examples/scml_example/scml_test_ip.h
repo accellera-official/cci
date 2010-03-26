@@ -49,6 +49,10 @@
 #include "greencontrol/config.h"
 
 
+#define DumpScmlTest(a) { std::cout << "Scml test: " << a <<std::endl; }
+#define SPACE {std::cout << std::endl; }
+
+
 /// Test IP which uses tests the scml database adaptor.
 /**
  * This is a SystemC module which tests the scml database adaptor.
@@ -63,16 +67,25 @@ public:
 	
   /// Constructor
   Scml_Test_IP(sc_core::sc_module_name name)
-    : sc_core::sc_module(name)
+  : sc_core::sc_module(name)
   { 
     api = gs::cnf::GCnf_Api::getApiInstance(this);
     SC_THREAD(main_action);
+
+    // Initial values
+    DumpScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.m_string_prop' = 'initial value written to registry prior to existence'");
+    api->setInitValue("ScmlOriginalPropertyIP.m_string_prop", "initial value written to registry prior to existence");
+    
+    DumpScmlTest("Set scml_property parameter 'ScmlOriginalPropertyIP.m_int_prop' = 10");
+    api->setInitValue("ScmlOriginalPropertyIP.m_int_prop", "10");
+    
   }
   
   /// Main action to make tests.
   void main_action();
 
 private:
+  
   gs::cnf::cnf_api *api;
   
 };

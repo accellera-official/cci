@@ -1,47 +1,47 @@
 
 Warning: IP1.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP1.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP1.SUB_IP_2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP1.SUB_IP_2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP1.SUB_IP_2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP1.SUB_IP_2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP1.SUB_IP_2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Warning: IP2.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
 Info: (I804) /IEEE_Std_1666/deprecated: sc_bit is deprecated, use bool instead
 
 Warning: gs_param<sc_bit>: DEPRECATED: sc_bit is deprecated use bool instead.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:610
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:610
 
 Warning: gs_param<sc_bit>: DEPRECATED: sc_bit is deprecated use bool instead.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:610
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:610
 IP1.scmlIntParam=1000
 .
 .
@@ -55,26 +55,26 @@ IP1.scmlIntParam=1000
 create top-level parameter 'Toplevel_Param_Tests'
 create top-level parameter 'toplevel.sub.topLevelParam2'
 
-Warning: ConfigPlugin.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+Warning: __gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 
-Info: ConfigPlugin.__gcnf_api___0: Parameter names should be hierarchical names (expect this is a top-level parameter)!
+Info: __gcnf_api___0: Parameter names should be hierarchical names (expect this is a top-level parameter)!
 
-Warning: ConfigPlugin.__gcnf_api___0: DEPRECATED: setParam is deprecated due to simulation overhead! Use 'getPar("par_name") = value' or 'setInitValue("par_name", "init_value")' instead.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:708
+Warning: __gcnf_api___0: DEPRECATED: setParam is deprecated due to simulation overhead! Use 'getPar("par_name") = value' or 'setInitValue("par_name", "init_value")' instead.
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:667
 
-Warning: ConfigPlugin.__gcnf_api___0: DEPRECATED: getParam is deprecated due to simulation overhead! Use 'value = getPar("par_name")' or 'getPar(...)->getValue()' or 'getPar(...)->getString()' instead.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:761
+Warning: __gcnf_api___0: DEPRECATED: getParam is deprecated due to simulation overhead! Use 'value = getPar("par_name")' or 'getPar(...)->getValue()' or 'getPar(...)->getString()' instead.
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:718
 value of Toplevel_Param_Tests should be 40 == 40
 existsPar test passed
 existsPar test passed
 existsPar test passed
 
-Warning: ConfigPlugin.__gcnf_api___0: DEPRECATED: getUpdateEvent is deprecated! Use 'my_param.getUpdateEvent()' or use callback 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1020
+Warning: __gcnf_api___0: DEPRECATED: getUpdateEvent is deprecated! Use 'my_param.getUpdateEvent()' or use callback 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:969
 
-Warning: ConfigPlugin.__gcnf_api___0: DEPRECATED: registerCallback (and macro REGISTER_CALLBACK) is deprecated due to simulation overhead! Use 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1097
+Warning: __gcnf_api___0: DEPRECATED: registerCallback (and macro REGISTER_CALLBACK) is deprecated due to simulation overhead! Use 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1046
 
 ** Test top-level parameters passed if no errors **
 
@@ -93,7 +93,7 @@ ConfigFile_Api: Applying value of param 'IP2.zw.implicitFirstParam' to '333'
 ConfigFile_Api: Applying value of param 'IP3.char_param1' to ''A''
 
 Warning: deserialize: A 'char' parameter gets numbers assigned. Note that the behavior is not specified by the C standard, use 'signed char' or 'unsigned char' instead!
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:1151
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:1151
 ConfigFile_Api: Applying value of param 'IP3.time_param1' to '52 SC_MS'
 ConfigFile_Api: Applying value of param 'IP3.time_param2' to '5 s'
 ConfigFile_Api: Applying value of param 'IP3.uchar_param' to ''D''
@@ -127,7 +127,7 @@ ConfigFileMacroMod has been configured with these params:
 IP3 test: register new param event and callback
 
 Warning: GCnf_Api: DEPRECATED: The getNewParamEvent function is deprecated due to performance reasons! Register a callback instead using mApi.REGISTER_NEW_PARAM_CALLBACK(class_name, callback_function);
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1141
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:1090
 In process: IP3.main_action @ 0 s
 TestIP3::new_param_callback: Callback for NEW PARAMETERS: Parameter IP3.Test.newParam, value: TestParam should result in new param callback
 TestIP3::new_param_callback: Callback for NEW PARAMETERS: Parameter IP3.local_int, value: 50
@@ -399,7 +399,7 @@ IP3 test: Api call getValue('IP3.int_param') = 1234  (should be 1234)
 IP3 test: Api call getValue('IP3.uint_param') = 5678  (should be 5678)
 
 Warning: IP3.__gcnf_api___0: getPar: ... getting value failed!
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:796
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:751
 In process: IP3.main_action @ 0 s
 IP3 test: Api call getValue('not.existing') returned false as expected
 TestIP3::new_param_callback: Callback for NEW PARAMETERS: Parameter IP3.short_param, value: 0
@@ -525,11 +525,11 @@ TestIP3::new_param_callback: Callback for NEW PARAMETERS: Parameter IP1.param4No
 .
 
 Warning: TestTool.__tool_gcnf_api___0: BEWARE: ADD must not be used for foreign parameters, only for own one's
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/toolApi/tool_gcnf_api.h:93
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/toolApi/tool_gcnf_api.h:93
 In process: TestTool.main_action @ 0 s
 
 Warning: TestTool.__gcnf_api___0: DEPRECATED: addParam is deprecated due to simulation overhead! Use 'setInitValue("par_name", "value")' instead or create a gs_param<type> object.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:575
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:541
 In process: TestTool.main_action @ 0 s
 .
 .

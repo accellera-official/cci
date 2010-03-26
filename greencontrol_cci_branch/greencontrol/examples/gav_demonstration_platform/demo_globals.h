@@ -58,6 +58,7 @@
 
 #define DEMO_VERBOSE
 #define LRU_VERBOSE
+//#define GAV_VERBOSE
 
 #define NO_DEPRECATED_WARNINGS
 

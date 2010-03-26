@@ -48,15 +48,16 @@ namespace gs {
 namespace cnf {
 
 
-/// SystemC interface to allow the ConfigPlugin to get access to the observer database.
+/// Interface to allow the ConfigPlugin to get access to the observer database.
 /**
  * The observer database has to implement this interface to be connected to the port of the
  * observer_port of the ConfigPlugin.
  */
 struct observer_db_if
-: virtual public sc_interface
 {
 public:
+
+  virtual ~observer_db_if() { }
 
   /// Adds an observer to the observer list of the parameter.
   /**

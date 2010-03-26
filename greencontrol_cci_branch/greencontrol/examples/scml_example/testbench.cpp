@@ -64,7 +64,7 @@
 int sc_main(int argc, char *argv[]) {
   
   /// GreenControl Core instance
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
 #ifdef USE_SCML_DATABASE_ADAPTER
   cout << "Use database 'Scml_database_adaptor'"<<endl;
@@ -73,7 +73,7 @@ int sc_main(int argc, char *argv[]) {
   std::cout << "Use standart database 'ConfigDatabase'"<<std::endl;
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
 #endif
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
  
   Scml_Test_IP tip("ScmlTestIP");
   Scml_Orig_IP oip("ScmlOriginalPropertyIP");

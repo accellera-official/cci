@@ -49,11 +49,13 @@
 #include "greencontrol/core/gc_port_if.h"
 #include "greencontrol/core/gc_port.h"
 #include "greencontrol/core/initialize_if.h"
+#include "greencontrol/core/command_if.h"
 #include "greencontrol/core/gc_transaction.h"
 #include "greencontrol/gcnf/plugin/gcnf_datatypes.h"  // Command enumeration
 #include "greencontrol/gcnf/plugin/config_callbadapt.h"
 #include "greencontrol/gcnf/plugin/config_paramcallbadapt.h"
 #include "greencontrol/gcnf/plugin/utils.h"
+#include "greencontrol/gcnf/plugin/string_vector.h"
 #include "cnf_api.h"
 
 #define GCNF_API_NAME "GCnf_Api"
@@ -190,11 +192,10 @@ public:
    */
   GCnf_Api_t()
   : sc_object(sc_gen_unique_name("__gcnf_api__"))
-  , m_gc_port(CONFIG_SERVICE, GCNF_API_NAME, false)
+  , m_gc_port(CONFIG_SERVICE, GCNF_API_NAME, false, this)
   , m_registered_as_new_param_observer(false)
   , m_new_param_event(NULL)
   {     
-    m_gc_port.api_port(*this);  // bind sc_port of m_gc_port
     GCNF_DUMP_N(name(), "constructor GCnf_Api()");
     
     // ensure the plugin is existing
@@ -221,12 +222,11 @@ public:
    */
   explicit GCnf_Api_t(const char* api_name)
   : sc_object(sc_gen_unique_name("__gcnf_api__"))
-  , m_gc_port(CONFIG_SERVICE, api_name, false)
+  , m_gc_port(CONFIG_SERVICE, api_name, false, this)
   , m_registered_as_new_param_observer(false)
   , m_new_param_event(NULL)
   { 
     GCNF_DUMP_N(name(), "constructor GCnf_Api("<<api_name<<")");
-    m_gc_port.api_port(*this);  // bind sc_port of m_gc_port
     
     // ensure the plugin is existing
     ConfigPlugin_T::get_instance();
@@ -250,7 +250,7 @@ public:
    */
   explicit GCnf_Api_t(const bool called_by_static)
   : sc_object(sc_gen_unique_name("__gcnf_api__"))
-  , m_gc_port(CONFIG_SERVICE, GCNF_API_NAME, false)
+  , m_gc_port(CONFIG_SERVICE, GCNF_API_NAME, false, this)
   , m_registered_as_new_param_observer(false)
   , m_new_param_event(NULL)
   { 
@@ -259,7 +259,6 @@ public:
     }
     assert(called_by_static);
     GCNF_DUMP_N(name(), "constructor GCnf_Api(true)");
-    m_gc_port.api_port(*this);  // bind sc_port of m_gc_port
 
     // ensure the plugin is existing
     ConfigPlugin_T::get_instance();
@@ -298,13 +297,10 @@ public:
    * Implements pc_port_if.
    * This method starts whenever a master triggers a payload-event.
    */
-  void masterAccess(ControlTransactionContainer &t_p)
+  void transport(ControlTransactionHandle &tr)
   {
     
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GCNF_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from master");      
+    GCNF_DUMP_N(name(), "got transaction atom from master");      
 
     // show received Transaction
     GCNF_DUMP_N(name(), "  received transaction: "<<(tr->toString()).c_str());      
@@ -319,10 +315,10 @@ public:
         const std::string dummyParName = DUMMY_NAME;
 
         // Notify the oberserver events
-        GCNF_DUMP_N(name(), "masterAccess: notify event for new added parameter "<<tr->get_mSpecifier().c_str());      
+        GCNF_DUMP_N(name(), "transports: notify event for new added parameter "<<tr->get_mSpecifier().c_str());      
         
         if (!m_registered_as_new_param_observer) {
-          GCNF_DUMP_N(name(), "masterAccess: error: no event for new parameters");
+          GCNF_DUMP_N(name(), "transport: error: no event for new parameters");
           tr->set_mError(1);
         } else {
           if (m_new_param_event != NULL) {
@@ -332,10 +328,10 @@ public:
           }
 
           // Call back all the callback observer methods for this parameter
-          if (tr->get_mAnyPointer() != NULL)
+          if (tr->get_mLogPointer() != NULL)
             makeCallbacks(dummyParName, 
-                          static_cast<gs_param_base_T*>(tr->get_mAnyPointer())->getName(), 
-                          static_cast<gs_param_base_T*>(tr->get_mAnyPointer())->getString()  );
+                          static_cast<gs_param_base_T*>(tr->get_mLogPointer())->getName(), 
+                          static_cast<gs_param_base_T*>(tr->get_mLogPointer())->getString()  );
           else
             makeCallbacks(dummyParName, tr->get_mSpecifier(), tr->get_mValue() );
         }
@@ -347,38 +343,7 @@ public:
       SC_REPORT_WARNING(name(), "Unknown command in transaction");
       success = false;
     }
-
-    ControlPhase p(ControlPhase::CONTROL_RESPONSE);
-    if (!success) p.state = ControlPhase::CONTROL_ERROR;
-    // Answer with a CONTROL_RESPONSE or CONTROL_ERROR phase
-    GCNF_DUMP_N(name(), "send "<<p.toString().c_str()<<" atom back to master");      
-
-    ControlTransactionContainer ctc = ControlTransactionContainer(t_p.first, p);
-    m_gc_port.target_port.out->notify(ctc, PEQ_IMMEDIATE);
-
   }
-  
-  /// Called by gc_port through gc_port_if when notification arrives.
-  /**
-   * Implements pc_port_if.
-   * This method starts whenever a slave triggers a payload-event.
-   * That happens when one of the GC-API methods below send a transaction.
-   */
-  void slaveAccess(ControlTransactionContainer &t_p)
-  {  
-#ifdef GCNF_VERBOSE
-    ControlTransactionHandle tr = t_p.first;
-    ControlPhase ph = t_p.second;
-
-    GCNF_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from slave");      
-
-    switch (ph.state) {
-      // No notification for response state is needed because caller directly gets the 
-      // changes in the transaction since it is immediate communication
-    }
-#endif
-  }
-
 
   // /////////////////    GC-API methods   ////////////////////////////////////////// //
 
@@ -407,7 +372,7 @@ public:
     }
 
     // Create Transaction and send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_ADD_PARAM);
     //th->set_mAnyPointer(par);
@@ -419,9 +384,7 @@ public:
     }
     
     // Different behavior during initilize-mode: use immediate call
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     if (th->get_mError() == 0) {
       GCNF_DUMP_N(name(), "addParam: ... adding of param "<<parname.c_str()<<" successfull");
     } else {
@@ -449,10 +412,10 @@ public:
     GCNF_DUMP_N(name(), "addPar(par) name="<<par->getName().c_str());
 
     // Create Transaction and send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_ADD_PARAM);
-    th->set_mAnyPointer(par);
+    th->set_mLogPointer(par);
     //th->set_mSpecifier(parname); // e.g. "TestIP1.Param1"
     //th->set_mValue(init_val);  // e.g. "TestValue1"
     if (meta_data != "") {
@@ -461,10 +424,7 @@ public:
     }
     
     // Different behavior during initilize-mode: use immediate call
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    assert(m_gc_port.init_port.is_Bound() && "The API port needs to be bound when accessing it by adding a new parameter. Make sure the Core exists when creataing parameters");
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     if (th->get_mError() == 0) {
       GCNF_DUMP_N(name(), "addPar: ... adding of param "<<par->getName().c_str()<<" successfull");
     } else {
@@ -503,17 +463,15 @@ public:
     //}
     
     // Create Transaction and send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_REMOVE_PARAM);
-    th->set_mAnyPointer(par);
+    th->set_mLogPointer(par);
     if (meta_data != "") {
       GCNF_DUMP_N(name(), "Setting Meta Data with the value "<<meta_data.c_str());
       th->set_mMetaData(meta_data);
     }
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
 
     // handle returned errors
     if (th->get_mError() == 0) {
@@ -555,7 +513,7 @@ public:
 
     {
       // Create Transaction and send it to config plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(CONFIG_SERVICE);
       th->set_mCmd(CMD_SET_INIT_VAL);
       th->set_mSpecifier(parname); // e.g. "TestIP1.Param1"
@@ -565,9 +523,7 @@ public:
         th->set_mMetaData(meta_data);
       }
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
 
       if (th->get_mError() == 0) {
         GCNF_DUMP_N(name(), "setInitValue: ... setting successfull");
@@ -604,7 +560,7 @@ public:
   const std::string getValue(const std::string &parname, std::string meta_data = "") {
     GCNF_DUMP_N(name(), "getValue("<<parname.c_str()<<")");      
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_GET_VAL);
     th->set_mSpecifier(parname); // e.g. "TestIP1.TestParam1"
@@ -613,9 +569,7 @@ public:
       th->set_mMetaData(meta_data);
     }
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     
     if (th->get_mError() == 0) {
       GCNF_DUMP_N(name(), "getValue: ... got value = "<<th->get_mValue().c_str());
@@ -626,7 +580,7 @@ public:
     
     return th->get_mValue();
   }
-  
+
   /// Get a parameter pointer.
   /**
    * @param   parname   Hierarchical parameter name.
@@ -636,7 +590,7 @@ public:
     GCNF_DUMP_N(name(), "getPar("<<parname.c_str()<<")");
 
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_GET_PARAM);
     th->set_mSpecifier(parname); // e.g. "TestIP1.TestParam1"
@@ -645,11 +599,9 @@ public:
       th->set_mMetaData(meta_data);
     }
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     
-    gs_param_base_T *par = static_cast<gs_param_base_T*>(th->get_mAnyPointer());
+    gs_param_base_T *par = static_cast<gs_param_base_T*>(th->get_mLogPointer());
     if (th->get_mError() == 0) {
       GCNF_DUMP_N(name(), "getPar: ... got parameter");
     } else {
@@ -669,7 +621,7 @@ public:
     GCNF_DUMP_N(name(), "existsParam("<<parname.c_str()<<")");      
 
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_EXISTS_PARAM);
     th->set_mSpecifier(parname); // e.g. "TestIP1.TestParam1"
@@ -678,9 +630,7 @@ public:
       th->set_mMetaData(meta_data);
     }
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
 
     if (th->get_mError() == 0) {
       GCNF_DUMP_N(name(), "existsParam: ... yes");
@@ -703,7 +653,7 @@ public:
     GCNF_DUMP_N(name(), "is_used("<<parname.c_str()<<")");      
     
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_PARAM_HAS_BEEN_ACCESSED);
     th->set_mSpecifier(parname); // e.g. "TestIP1.TestParam1"
@@ -712,9 +662,7 @@ public:
       th->set_mMetaData(meta_data);
     }
     
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     
     if (th->get_mError() == 0) {
       GCNF_DUMP_N(name(), "is_used: ... yes");
@@ -789,7 +737,7 @@ public:
     GCNF_DUMP_N(name(), "getParamList(...)");      
 
     // create Transaction an send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_GET_PARAM_LIST_VEC);
     if (meta_data != "") {
@@ -801,12 +749,10 @@ public:
     if (including_childs) ss << ".*";
     th->set_mSpecifier(ss.str()); // module
 
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
 
     std::vector<std::string> vec;    
-    std::vector<std::string>* v = static_cast<std::vector<std::string>*>(th->get_mAnyPointer());
+    string_vector* v = static_cast<string_vector*>(th->get_mLogPointer());
     if (th->get_mError() != 0 || v == NULL) {
       GCNF_DUMP_N(name(), "getParamList: ... getting list failed (error "<<th->get_mError()<<" or cast failed)!");
       SC_REPORT_WARNING(name(), "getParamList: ... getting list failed!");
@@ -972,11 +918,11 @@ public:
       //    and let the parameter call the method legacy_callback_adapter_method
       //    which calls the original method / event
       //GC_REGISTER_PARAM_CALLBACK(getPar(parname), GCnf_Api_t, legacy_callback_adapter_method);
-      getPar(parname)->registerParamCallback( gc_add_ParamCallbAdapt(boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(new ::gs::cnf::ParamCallbAdapt<GCnf_Api_t>(this, &GCnf_Api_t::legacy_callback_adapter_method, this, (getPar(parname))))), post_write_and_destroy );
+      getPar(parname)->registerParamCallback( gc_add_ParamCallbAdapt(boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(new ::gs::cnf::ParamCallbAdapt<GCnf_Api_t>(this, &GCnf_Api_t::legacy_callback_adapter_method, this, (getPar(parname))))) );
     }
 
     // Add object and function pointer to multimap
-    m_observer_callback_map.insert( pair<std::string, CallbAdapt_b*>( string(parname), callb ) );
+    m_observer_callback_map.insert( std::pair<std::string, CallbAdapt_b*>( string(parname), callb ) );
     
     return true;
   }
@@ -1065,7 +1011,7 @@ public:
     register_as_new_param_observer(); // automatically checks if already done
     
     // Add object and function pointer to multimap
-    m_observer_callback_map.insert( pair<std::string, CallbAdapt_b*>( string(parname), callb ) );
+    m_observer_callback_map.insert( std::pair<std::string, CallbAdapt_b*>( string(parname), callb ) );
     
     return true;
   }
@@ -1117,7 +1063,7 @@ public:
     //}
     
     // Create Transaction and send it to config plugin
-    ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+    ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
     th->set_mCmd(CMD_UNREGISTER_PARAM_CALLBACKS);
     th->set_mAnyPointer(observer);
@@ -1125,9 +1071,7 @@ public:
       GCNF_DUMP_N(name(), "Setting Meta Data with the value "<<meta_data.c_str());
       th->set_mMetaData(meta_data);
     }
-    ControlPhase p(ControlPhase::CONTROL_REQUEST);
-    ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-    m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+    m_gc_port->transport(th);
     
     // handle returned errors
     if (th->get_mError() == 0) {
@@ -1149,10 +1093,10 @@ protected:
   void makeCallbacks(const std::string &search, const std::string &par_name, const std::string &value) {
     CallbAdapt_b *callb;
     observerCallbackMap::iterator it;
-    pair<observerCallbackMap::iterator, observerCallbackMap::iterator> begin_end;        
+    std::pair<observerCallbackMap::iterator, observerCallbackMap::iterator> begin_end;        
     begin_end = m_observer_callback_map.equal_range(search);
     for (it = begin_end.first;  it != begin_end.second;   ++it) {
-      GCNF_DUMP_N(name(), "masterAccess: callback for parameter "<<search.c_str());      
+      GCNF_DUMP_N(name(), "transport: callback for parameter "<<search.c_str());      
       callb = (*it).second;
       // Make call
       callb->call(par_name, value);
@@ -1179,14 +1123,12 @@ protected:
     // If we are not yet registered for observing new parameters
     if (!m_registered_as_new_param_observer) {
       // create Transaction an send it to config plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(CONFIG_SERVICE);
       th->set_mCmd(CMD_REGISTER_NEW_PARAM_OBSERVER);
       th->set_mSpecifier(DUMMY_NAME); // e.g. "TestIP1.TestParam1"
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
       
       ControlValue val = th->get_mValue();
       if (th->get_mError() == 0) {
@@ -1214,6 +1156,26 @@ public:
     initialize_mode = false;
   }
 
+  // //////////////// command_if methods ////////////////////////////////////
+
+  /// Returns the name of the API.
+  std::string getName()
+  {
+    return name();
+  }
+
+  /// Returns the name of the specified command.
+  std::string getCommandName(unsigned int cmd)
+  {
+    return ConfigPlugin_T::getCmdName(cmd);
+  }
+
+  /// Return a description of the specified command.
+  std::string getCommandDescription(unsigned int cmd)
+  {
+    return ConfigPlugin_T::getCmdDesc(cmd);
+  }
+
   // ///////////////////////////////////////////////////////////////////////// //
 
 protected:
@@ -1223,10 +1185,6 @@ protected:
   
   /// Map to save an observer callback function pointer for each parameter (if needed).
   observerCallbackMap m_observer_callback_map;
-
-
-  /// Used by slaveAccess for return submission in immediate mode.
-  ControlTransactionHandle m_return_th;
 
   /// If this API is registered to observe new parameters
   bool m_registered_as_new_param_observer;

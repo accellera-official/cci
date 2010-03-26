@@ -79,7 +79,7 @@ overall_hit_rate parameter name: Cache3.LRUCache.overall_hit_rate_result_2
 addr_range_hit_rate parameter name: Cache3.LRUCache.addr_range_hit_rate_result_2
 WARNING: A function with this operator sign were already registered. Ignoring redefinition of "private_transaction_count_diff".
 WARNING: A function with this operator sign were already registered. Ignoring redefinition of "per_second".
-only record transactions from master Cache1 (mID=0xbfff7dc8) at the Mem port (see file recorded_tr.log.txt)
+only record transactions from master Cache1 (mID=0xbfff7d90) at the Mem port (see file recorded_tr.log.txt)
 //////////////////////// SIMULATION START ////////////////////////////
 @0 s /0 (TG1): Demo action
 parameters:
@@ -438,7 +438,7 @@ parameters:
 @54770 ns /2541 (Mem.memory): Writing 8 bytes to memory address 0x7566a0, takes 80 ns
 @54850 ns /2543 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x7568a8 from memory (at address 0x7568a8)
 @54860 ns /2544 (Mem.memory): Reading 8 bytes from memory address 0x7566a8, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(1), 1010, 172490 (172490), 5540
+TG2: write (# transactions, bytes, us, cycles), 1(1), 1010, 203578 (203578), 5540
 
 
 @55400 ns /2556 (TG2): Reading 110 bytes from address 0xade6b8
@@ -917,7 +917,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(1), 1010, 172490 (172490), 554
 @118590 ns /4218 (Mem.memory): Writing 8 bytes to memory address 0x756988, takes 80 ns
 @118670 ns /4220 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x756b90 from memory (at address 0x756b90)
 @118680 ns /4221 (Mem.memory): Reading 8 bytes from memory address 0x756990, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(2), 1010, 176408 (176408), 11894
+TG1: write (# transactions, bytes, us, cycles), 1(2), 1010, 207697 (207697), 11894
 
 
 @118940 ns /4224 (TG1): Reading 110 bytes from address 0x622e42
@@ -1219,7 +1219,7 @@ TG1: write (# transactions, bytes, us, cycles), 1(2), 1010, 176408 (176408), 118
 @157950 ns /5302 (Cache3.LRUCache): write: Cache-Miss
 @157950 ns /5302 (Cache3.LRUCache): writeLineBack: write back line 0 to memory.
 @157960 ns /5304 (Mem.memory): Writing 8 bytes to memory address 0x756b58, takes 80 ns
-TG2: read (# transactions, bytes, us, cycles), 1, 110, 21151 (193641), 10260
+TG2: read (# transactions, bytes, us, cycles), 1, 110, 22482 (226060), 10260
 @158 us /5305 (TG2): loop 6
 
 (TG2) Switch to target #0 (PCIeDevice1):
@@ -1347,7 +1347,7 @@ TG2: read (# transactions, bytes, us, cycles), 1, 110, 21151 (193641), 10260
 @178390 ns /6037 (Mem.memory): Writing 8 bytes to memory address 0x756bf8, takes 80 ns
 @178410 ns /6038 (Cache2.LRUCache): write: Cache-Miss
 @178410 ns /6038 (Cache2.LRUCache): writeLineBack: write back line 1 to memory.
-TG1: read (# transactions, bytes, us, cycles), 1, 110, 162872 (339280), 5951
+TG1: read (# transactions, bytes, us, cycles), 1, 110, 156707 (364404), 5951
 @178450 ns /6040 (TG1): loop 6
 
 (TG1) Switch to target #0 (PCIeDevice1):
@@ -1531,7 +1531,7 @@ TG1: read (# transactions, bytes, us, cycles), 1, 110, 162872 (339280), 5951
 @212250 ns /7690 (Cache1.LRUCache): readLine: read line 1 (64 words) for address 0x108dc40 from memory (at address 0x108dc40)
 @212265 ns /7694 (PCIeDevice1.registers): Reading 64 bytes from memory address 0x8dc40, takes 90 ns
 @213215 ns /7699 (Mem.memory): Reading 8 bytes from memory address 0x756c90, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(3), 1020, 162411 (356052), 5569.5
+TG2: write (# transactions, bytes, us, cycles), 1(3), 1020, 159242 (385302), 5569.5
 
 
 @213695 ns /7724 (TG2): Reading 120 bytes from address 0x1879a2e
@@ -1631,7 +1631,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(3), 1020, 162411 (356052), 556
 @229770 ns /8382 (Mem.memory): Writing 8 bytes to memory address 0x756ce8, takes 80 ns
 @229850 ns /8384 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x756ef0 from memory (at address 0x756ef0)
 @229860 ns /8385 (Mem.memory): Reading 8 bytes from memory address 0x756cf0, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(4), 1020, 11671 (350951), 5188
+TG1: write (# transactions, bytes, us, cycles), 1(4), 1020, 15910 (380314), 5188
 
 
 @230330 ns /8395 (TG1): Reading 120 bytes from address 0x1622759
@@ -1741,7 +1741,7 @@ TG1: write (# transactions, bytes, us, cycles), 1(4), 1020, 11671 (350951), 5188
 @244660 ns /8817 (Cache3.LRUCache): readLine: read line 0 (8 words) for address 0x756f80 from memory (at address 0x756f80)
 @244670 ns /8818 (Mem.memory): Reading 8 bytes from memory address 0x756d80, takes 20 ns
 @245010 ns /8824 (TG3): Sending finished
-TG1: read (# transactions, bytes, us, cycles), 1, 120, 3074 (354025), 1588
+TG1: read (# transactions, bytes, us, cycles), 1, 120, 3467 (383781), 1588
 @246210 ns /8825 (TG1): loop 4
 
 (TG1) Switch to target #1 (PCIeDevice2):
@@ -1768,7 +1768,7 @@ TG1: read (# transactions, bytes, us, cycles), 1, 120, 3074 (354025), 1588
 @255355 ns /9057 (Cache1.LRUCache): readLine: read line 3 (64 words) for address 0x20000c0 from memory (at address 0x20000c0)
 @255370 ns /9061 (PCIeDevice2.registers): Reading 64 bytes from memory address 0xc0, takes 90 ns
 @258170 ns /9129 (TG1): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(5), 2048, 374338 (374338), 28676
+TG3: write (# transactions, bytes, us, cycles), 1(5), 2048, 410409 (410409), 28676
 
 
 @286760 ns /9130 (TG3): Reading 1200 bytes from address 0x96c53c
@@ -1794,7 +1794,7 @@ TG3: write (# transactions, bytes, us, cycles), 1(5), 2048, 374338 (374338), 286
 @289680 ns /9190 (Mem.memory): Writing 8 bytes to memory address 0x756590, takes 80 ns
 @289760 ns /9192 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x96c558 from memory (at address 0x96c558)
 @289770 ns /9193 (Mem.memory): Reading 8 bytes from memory address 0x96c358, takes 20 ns
-TG2: read (# transactions, bytes, us, cycles), 1, 120, 9456 (365508), 7677.5
+TG2: read (# transactions, bytes, us, cycles), 1, 120, 10716 (396018), 7677.5
 @290470 ns /9205 (TG2): loop 4
 
 (TG2) Switch to target #1 (PCIeDevice2):
@@ -1959,7 +1959,7 @@ TG2: read (# transactions, bytes, us, cycles), 1, 120, 9456 (365508), 7677.5
 @326490 ns /10043 (Cache3.LRUCache): read: Cache-Miss
 @326490 ns /10043 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x96c6c8 from memory (at address 0x96c6c8)
 @326500 ns /10044 (Mem.memory): Reading 8 bytes from memory address 0x96c4c8, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(6), 1030, 7402 (361427), 8064
+TG1: write (# transactions, bytes, us, cycles), 1(6), 1030, 7993 (391774), 8064
 
 
 @326850 ns /10049 (TG1): Reading 130 bytes from address 0x200006a
@@ -2230,7 +2230,7 @@ TG1: write (# transactions, bytes, us, cycles), 1(6), 1030, 7402 (361427), 8064
 @389115 ns /11292 (Cache3.LRUCache): read: Cache-Miss
 @389115 ns /11292 (Cache3.LRUCache): readLine: read line 6 (8 words) for address 0x96c968 from memory (at address 0x96c968)
 @389125 ns /11293 (Mem.memory): Reading 8 bytes from memory address 0x96c768, takes 20 ns
-TG1: read (# transactions, bytes, us, cycles), 1, 130, 7404 (368831), 6239.5
+TG1: read (# transactions, bytes, us, cycles), 1, 130, 7878 (399652), 6239.5
 @389245 ns /11295 (TG1): loop 2
 
 (TG1) Switch to target #2 (Mem):
@@ -2266,7 +2266,7 @@ TG1: read (# transactions, bytes, us, cycles), 1, 130, 7404 (368831), 6239.5
 @394015 ns /11443 (Cache3.LRUCache): read: Cache-Miss
 @394015 ns /11443 (Cache3.LRUCache): readLine: read line 3 (8 words) for address 0x96c990 from memory (at address 0x96c990)
 @394895 ns /11447 (Mem.memory): Reading 8 bytes from memory address 0x96c790, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(7), 1030, 13767 (379275), 10459
+TG2: write (# transactions, bytes, us, cycles), 1(7), 1030, 14584 (410602), 10459
 
 
 @395060 ns /11454 (TG2): Reading 130 bytes from address 0x2000052
@@ -2382,7 +2382,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(7), 1030, 13767 (379275), 1045
 @439385 ns /12779 (Cache1.LRUCache): readLine: read line 2 (64 words) for address 0x179080 from memory (at address 0x179080)
 @439395 ns /12780 (Mem.memory): Reading 64 bytes from memory address 0x178e80, takes 90 ns
 @440425 ns /12788 (TG1): Sending finished
-TG2: read (# transactions, bytes, us, cycles), 1, 130, 7523 (386798), 4810
+TG2: read (# transactions, bytes, us, cycles), 1, 130, 8967 (419569), 4810
 @443160 ns /12789 (TG2): loop 2
 
 (TG2) Switch to target #2 (Mem):
@@ -2425,7 +2425,7 @@ TG2: read (# transactions, bytes, us, cycles), 1, 130, 7523 (386798), 4810
 @475480 ns /13541 (Mem.memory): Writing 128 bytes to memory address 0xc31d00, takes 230 ns
 @475710 ns /13543 (Cache2.LRUCache): readLine: read line 3 (128 words) for address 0xc31f80 from memory (at address 0xc31f80)
 @475720 ns /13544 (Mem.memory): Reading 128 bytes from memory address 0xc31d80, takes 170 ns
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 25803 (400141), 18924.5
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 28989 (439398), 18924.5
 @476005 ns /13546 (TG3): loop 6
 
 (TG3) Switch to target #0 (PCIeDevice1):
@@ -2567,7 +2567,7 @@ TG3: read (# transactions, bytes, us, cycles), 1, 1200, 25803 (400141), 18924.5
 @496450 ns /14325 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x432eb8, takes 80 ns
 @496530 ns /14327 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1432ec0 from memory (at address 0x1432ec0)
 @496545 ns /14331 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x432ec0, takes 20 ns
-TG2: write (# transactions, bytes, us, cycles), 1(8), 1040, 9246 (396044), 5343.5
+TG2: write (# transactions, bytes, us, cycles), 1(8), 1040, 13376 (432945), 5343.5
 
 
 @496595 ns /14333 (TG2): Reading 140 bytes from address 0xbc6ffc
@@ -2811,7 +2811,7 @@ TG2: write (# transactions, bytes, us, cycles), 1(8), 1040, 9246 (396044), 5343.
 @530960 ns /15450 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433020, takes 80 ns
 @531040 ns /15452 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433028 from memory (at address 0x1433028)
 @531055 ns /15456 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433028, takes 20 ns
-TG1: write (# transactions, bytes, us, cycles), 1(9), 1040, 29151 (397982), 14222
+TG1: write (# transactions, bytes, us, cycles), 1(9), 1040, 34134 (433786), 14222
 
 
 @531465 ns /15465 (TG1): Reading 140 bytes from address 0xa1f4fd
@@ -2888,7 +2888,7 @@ TG1: write (# transactions, bytes, us, cycles), 1(9), 1040, 29151 (397982), 1422
 @541445 ns /15836 (Cache3.LRUCache): write: Cache-Miss
 @541445 ns /15836 (Cache3.LRUCache): writeLineBack: write back line 7 to memory.
 @542310 ns /15842 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433080, takes 80 ns
-TG2: read (# transactions, bytes, us, cycles), 1, 140, 14015 (410059), 4575
+TG2: read (# transactions, bytes, us, cycles), 1, 140, 15376 (448321), 4575
 @542390 ns /15845 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433088 from memory (at address 0x1433088)
 @542405 ns /15849 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433088, takes 20 ns
 @542695 ns /15856 (TG1): Reading finished
@@ -3467,7 +3467,7 @@ TG2: read (# transactions, bytes, us, cycles), 1, 140, 14015 (410059), 4575
 @618210 ns /18378 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433418, takes 80 ns
 @618290 ns /18380 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433420 from memory (at address 0x1433420)
 @618305 ns /18384 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433420, takes 20 ns
-TG1: read (# transactions, bytes, us, cycles), 1, 140, 22173 (420155), 8688
+TG1: read (# transactions, bytes, us, cycles), 1, 140, 28546 (462332), 8688
 @618855 ns /18398 (Cache3.LRUCache): write: Cache-Miss
 @618855 ns /18398 (Cache3.LRUCache): writeLineBack: write back line 7 to memory.
 @618870 ns /18401 (PCIeDevice1.registers): Writing 8 bytes to memory address 0x433420, takes 80 ns
@@ -3769,7 +3769,7 @@ TG1: read (# transactions, bytes, us, cycles), 1, 140, 22173 (420155), 8688
 @657890 ns /19701 (Cache3.LRUCache): readLine: read line 7 (8 words) for address 0x1433600 from memory (at address 0x1433600)
 @657905 ns /19705 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x433600, takes 20 ns
 @658335 ns /19715 (TG3): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(10), 2048, 50264 (450405), 28144
+TG3: write (# transactions, bytes, us, cycles), 1(10), 2048, 59327 (498725), 28144
 
 
 @757445 ns /19716 (TG3): Reading 1200 bytes from address 0x15d851f
@@ -4230,7 +4230,7 @@ TG3: write (# transactions, bytes, us, cycles), 1(10), 2048, 50264 (450405), 281
 @865990 ns /21968 (Cache3.LRUCache): readLine: read line 1 (8 words) for address 0x15d89c8 from memory (at address 0x15d89c8)
 @866005 ns /21970 (PCIeDevice1.registers): Reading 8 bytes from memory address 0x5d89c8, takes 20 ns
 @866615 ns /21981 (TG3): Reading finished
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 14054 (464459), 13388
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 15167 (513892), 13388
 @891325 ns /21982 (TG3): loop 4
 
 (TG3) Switch to target #1 (PCIeDevice2):
@@ -4383,7 +4383,7 @@ TG3: read (# transactions, bytes, us, cycles), 1, 1200, 14054 (464459), 13388
 @911150 ns /22615 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x20000f8 from memory (at address 0x20000f8)
 @911165 ns /22619 (PCIeDevice2.registers): Reading 8 bytes from memory address 0xf8, takes 20 ns
 @911655 ns /22631 (TG3): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(11), 2048, 5026 (469485), 11859
+TG3: write (# transactions, bytes, us, cycles), 1(11), 2048, 6653 (520545), 11859
 
 
 @1009915 ns /22632 (TG3): Reading 255 bytes from address 0x2000000
@@ -4466,7 +4466,7 @@ TG3: write (# transactions, bytes, us, cycles), 1(11), 2048, 5026 (469485), 1185
 @1030260 ns /23057 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0x20000f8 from memory (at address 0x20000f8)
 @1030275 ns /23059 (PCIeDevice2.registers): Reading 8 bytes from memory address 0xf8, takes 20 ns
 @1030885 ns /23070 (TG3): Reading finished
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 2913 (472398), 9324
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 4378 (524923), 9324
 @1103155 ns /23071 (TG3): loop 2
 
 (TG3) Switch to target #2 (Mem):
@@ -5758,7 +5758,7 @@ TG3: read (# transactions, bytes, us, cycles), 1, 1200, 2913 (472398), 9324
 @1269465 ns /27421 (Cache3.LRUCache): readLine: read line 2 (8 words) for address 0xc0de60 from memory (at address 0xc0de60)
 @1269475 ns /27422 (Mem.memory): Reading 8 bytes from memory address 0xc0dc60, takes 20 ns
 @1269875 ns /27430 (TG3): Sending finished
-TG3: write (# transactions, bytes, us, cycles), 1(12), 2048, 33678 (506076), 23188
+TG3: write (# transactions, bytes, us, cycles), 1(12), 2048, 102414 (627337), 23188
 
 
 @1335035 ns /27431 (TG3): Reading 1200 bytes from address 0x129d0e
@@ -6225,7 +6225,7 @@ TG3: write (# transactions, bytes, us, cycles), 1(12), 2048, 33678 (506076), 231
 @1443160 ns /29399 (Cache3.LRUCache): readLine: read line 5 (8 words) for address 0x12a1b8 from memory (at address 0x12a1b8)
 @1443170 ns /29400 (Mem.memory): Reading 8 bytes from memory address 0x129fb8, takes 20 ns
 @1443730 ns /29409 (TG3): Reading finished
-TG3: read (# transactions, bytes, us, cycles), 1, 1200, 11740 (517816), 17186.5
+TG3: read (# transactions, bytes, us, cycles), 1, 1200, 24162 (651499), 17186.5
 //////////////////////// SIMULATION END //////////////////////////////
 Simulation runtime: 10001 ms
 

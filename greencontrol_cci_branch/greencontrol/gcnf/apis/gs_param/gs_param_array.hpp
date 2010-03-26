@@ -201,7 +201,7 @@ public:
    * @param default_size_low_priority  If set to true, the default size is of low priority and even overridden by implicit member in the db.
    */
   explicit gs_param(const char *nam, const unsigned int default_size, gs_param_array* parent_array = NULL, bool force_top_level_name = false, bool default_size_low_priority = false)
-  : gs_param_t<val_type>(string(nam), false, parent_array, force_top_level_name),
+  : gs_param_t<val_type>(string(nam), force_top_level_name, parent_array, true),
     m_init_size(NULL)
   {
     init_array(!default_size_low_priority, default_size, NULL);
@@ -209,7 +209,7 @@ public:
   }
   /// Constructor with (local) name and NO default size (and optional parent array pointer).
   explicit gs_param(const char *nam, gs_param_array* parent_array, bool force_top_level_name)
-  : gs_param_t<val_type>(string(nam), false, parent_array, force_top_level_name),
+  : gs_param_t<val_type>(string(nam), force_top_level_name, parent_array, true),
     m_init_size(NULL)
   {
     init_array(false, DEFAULT_ARRAY_SIZE, NULL);

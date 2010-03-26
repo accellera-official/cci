@@ -110,7 +110,7 @@ public:
     // if it does not yet exist, create one
     else {
       shared_ptr<Scml_Api> newscmlapi_sp(new Scml_Api());
-      mInstanceMap->insert(pair<sc_module*, shared_ptr<Scml_Api> >(mod, newscmlapi_sp));
+      mInstanceMap->insert(std::pair<sc_module*, shared_ptr<Scml_Api> >(mod, newscmlapi_sp));
       //mInstanceMap.insert( make_pair(mod, scmlapi) );      
       return newscmlapi_sp;
     }
@@ -221,7 +221,7 @@ public:
     } else {
       s = "0";
     }
-    return setParam(parname, s.c_str());
+    return setParam(parname, (std::string) s.c_str());
   }
 
   /// Set a parameter's value. 

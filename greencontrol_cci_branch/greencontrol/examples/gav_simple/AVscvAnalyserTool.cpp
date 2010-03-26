@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2009 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -65,13 +65,14 @@ void AVscvAnalyserTool::main_action() {
   uint_par->setString("3000");
 
   str_par->setString("new hello");
-  int_par->setString("222");	
+  int_par->setString("222");  
 
   wait(100, SC_NS);
 
   gs::av::OutputPlugin_if* op = m_analysisAPI.create_OutputPlugin(gs::av::SCV_STREAM_OUT, "secondUserDefinedSCVop");
   GAV_REGR_TEST("PASS/FAIL: Passed if 'adding of param Owner.str_param to default Output Plugin SCV_STREAM_OUT successfull'.");
-
+  op->resume(); // start output
+  
   m_analysisAPI.add_to_output(op, int_par);
   GAV_REGR_TEST("PASS/FAIL: Passed if 'adding of param Owner.int_param to Output Plugin secondUserDefinedSCVop successfull and changes occur on the output (file or tool)'.");
 

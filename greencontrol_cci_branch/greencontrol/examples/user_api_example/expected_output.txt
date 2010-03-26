@@ -1,21 +1,21 @@
 @0 s /0 (TestTool2): This is the main action in TestTool2.
 
 Warning: ConfigPlugin: DEPRECATED: One API you are using does use the deprectaed command 'CMD_GET_PARAM_LIST'. Use 'CMD_GET_PARAM_LIST_VEC' instead!
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/plugin/configplugin.h:233
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/plugin/configplugin_t.h:283
 In process: TestTool2.main_action @ 0 s
 vector: size=3
 IP4.int_param
 IP4.str_param
 IP4.uint_param
-@0 s /0 (TestTool2): IP4.int_param = 50
-@0 s /0 (TestTool2): set IP4.int_param = 1200 => 1200
-@0 s /0 (TestTool2): IP4.int_param = This is a test string.
-@0 s /0 (TestTool2): set IP4.str_param = 'Another test string.' => Another test string.
-@0 s /0 (TestTool2): IP4.int_param = 12000
-@0 s /0 (TestTool2): set IP4.str_param = 1280003699 => 1280003699
+@0 s /0 (TestTool2): IP4.int_param = 
+@0 s /0 (TestTool2): set IP4.int_param = 1200 => 
+@0 s /0 (TestTool2): IP4.int_param = 
+@0 s /0 (TestTool2): set IP4.str_param = 'Another test string.' => 
+@0 s /0 (TestTool2): IP4.int_param = 
+@0 s /0 (TestTool2): set IP4.str_param = 1280003699 => 
 
 Warning: ConfigPlugin: DEPRECATED: One API you are using does use the deprectaed command 'CMD_GET_PARAM_LIST'. Use 'CMD_GET_PARAM_LIST_VEC' instead!
-In file: /scratch/schroede/private/greensocs_greencontrol/greencontrol/gcnf/plugin/configplugin.h:233
+In file: /Users/schroede/mydev/greensocs_greencontrol/branches/tmp_greencontrol/greencontrol/gcnf/plugin/configplugin_t.h:283
 In process: TestTool2.main_action @ 0 s
 vector: size=1
 IP4.uint_param

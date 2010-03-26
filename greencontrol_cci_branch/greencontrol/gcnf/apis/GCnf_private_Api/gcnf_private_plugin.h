@@ -78,24 +78,18 @@ namespace cnf {
     
   public:
     
-    /// Port to get access to the parameter database which implements the param_db_if and acts as channel.
-    sc_port<param_db_if> m_param_db_port;
-    
     /// Constructor
     ConfigPrivatePlugin_T(GCnf_private_Api_T* parent_api)
     : m_parent_api(parent_api)
     , m_new_params_observed_by_API(false)
     { 
       assert(parent_api != NULL);
-      
-      m_db = new ConfigDatabase("ConfigDatabase"); // TODO: should not be an sc_core::sc_module!!!!!
-      // bind the database to the port
-      m_param_db_port(*m_db);
+      m_param_db = new ConfigDatabase("ConfigDatabase");
     }
     
     /// Destructor
     ~ConfigPrivatePlugin_T() {
-      delete m_db;
+      delete m_param_db;
     }
     
     // ////////// Functions related to commands ////////////////////////////// //
@@ -110,15 +104,15 @@ namespace cnf {
       GCNF_DUMP_N(name(), "cmd_ADD_PARAM: add param");
       bool notify_new_parameter = true;
       if (par != NULL) {
-        if ( m_param_db_port->existsParam(par->getName())) notify_new_parameter = false;
+        if ( m_param_db->existsParam(par->getName())) notify_new_parameter = false;
       } else {
-        if ( m_param_db_port->existsParam(pname) ) notify_new_parameter = false;
+        if ( m_param_db->existsParam(pname) ) notify_new_parameter = false;
         GCNF_DUMP_N(name(), "Create new gs_param<string>: "<<pname.c_str());
         // use special parameter constructor with register_at_db=false:
         par = new gs_param_STRING_T(pname, def_val, NULL, true, false);
       }
       
-      if ( ! m_param_db_port->addParam(par) ) {
+      if ( ! m_param_db->addParam(par) ) {
         return 1;
       }
 
@@ -132,7 +126,7 @@ namespace cnf {
     unsigned int cmd_REMOVE_PARAM(gs_param_base_T* par) {
       GCNF_DUMP_N(name(), "CMD_REMOVE_PARAM: remove param");
       if (par != NULL) {
-        if ( !m_param_db_port->removeParam(par) ) {
+        if ( !m_param_db->removeParam(par) ) {
           return 1;
         }
       } else
@@ -143,7 +137,7 @@ namespace cnf {
     // ////////////   Command CMD_SET_INIT_VAL   ////////////////////////////////// //
     void cmd_SET_INIT_VAL(const std::string& pname, const std::string& val) {
       GCNF_DUMP_N(name(), "CMD_SET_INIT_VAL: set init value to param");
-      if (  m_param_db_port->setInitValue(pname, val)  ) {
+      if (  m_param_db->setInitValue(pname, val)  ) {
         sendNewParameterNotify(NULL, pname, val);
       }
     }
@@ -151,8 +145,8 @@ namespace cnf {
     // ////////////   Command CMD_GET_VAL   ////////////////////////////////// //
     bool cmd_GET_VAL(const std::string& pname, std::string& val) {
       GCNF_DUMP_N(name(), "CMD_GET_VAL: get value of param");
-      if ( m_param_db_port->existsParam(pname)) {
-        val = m_param_db_port->getValue(pname);
+      if ( m_param_db->existsParam(pname)) {
+        val = m_param_db->getValue(pname);
       } else {
         val = "";
         return false;
@@ -163,8 +157,8 @@ namespace cnf {
     // ////////////   Command CMD_GET_PARAM   ////////////////////////////////////// //
     gs_param_base_T* cmd_GET_PARAM(const std::string& pname) {
       GCNF_DUMP_N(name(), "CMD_GET_PARAM: get param");      
-      if ( m_param_db_port->existsParam(pname)) {
-        return m_param_db_port->getParam( pname );
+      if ( m_param_db->existsParam(pname)) {
+        return m_param_db->getParam( pname );
       }
       return NULL;
     }
@@ -172,7 +166,7 @@ namespace cnf {
     // ////////////   Command CMD_EXISTS_PARAM   ////////////////////////////////// //
     bool cmd_EXISTS_PARAM (const std::string pname) {
       GCNF_DUMP_N(name(), "CMD_EXISTS_PARAM: exists param");      
-      if ( !m_param_db_port->existsParam(pname))
+      if ( !m_param_db->existsParam(pname))
         return false;
       return true;
     }
@@ -189,7 +183,7 @@ namespace cnf {
       // all parameters
       if (spec.empty()) {
         GCNF_DUMP_N(name(), "     All parameters");      
-        return m_param_db_port->getParametersVector();
+        return m_param_db->getParametersVector();
       } 
       
       // module's parameters with children
@@ -197,7 +191,7 @@ namespace cnf {
         // Search all parameter including childrennames beginning with <modulename> (without ".*")
         string mod = spec.substr(0,  spec.length() -x -1);
         GCNF_DUMP_N(name(), "     Parameters (incl. children) of the module "<< mod.c_str());      
-        vector<string> vec = m_param_db_port->getParametersVector();
+        vector<string> vec = m_param_db->getParametersVector();
         vector<string> result;
         vector<string>::iterator iter = vec.begin();
         while( iter != vec.end() ) {
@@ -214,7 +208,7 @@ namespace cnf {
       else {
         // Search all parameter names beginning with <modulename> and no further point in the remaining part
         GCNF_DUMP_N(name(), "     Parameters (without children) of the module "<<spec.c_str());      
-        vector<string> vec = m_param_db_port->getParametersVector();
+        vector<string> vec = m_param_db->getParametersVector();
         std::vector<std::string> result;
         std::vector<std::string>::iterator iter = vec.begin();
         while( iter != vec.end() ) {
@@ -237,11 +231,11 @@ namespace cnf {
       
     // ////////////   Command CMD_UNREGISTER_PARAM_CALLBACKS   ////////////////// //
     void cmd_UNREGISTER_PARAM_CALLBACKS(void* observer) {
-      std::vector<std::string> vec = m_param_db_port->getParametersVector();
+      std::vector<std::string> vec = m_param_db->getParametersVector();
       std::vector<std::string>::iterator iter;
       for( iter = vec.begin(); iter != vec.end(); iter++ ) {
-        if (m_param_db_port->is_explicit(*iter))
-          static_cast<gs_param_base_T*>(m_param_db_port->getParam(*iter))->unregisterParamCallbacks(observer);
+        if (m_param_db->is_explicit(*iter))
+          static_cast<gs_param_base_T*>(m_param_db->getParam(*iter))->unregisterParamCallbacks(observer);
       }      
     }
      
@@ -249,7 +243,7 @@ namespace cnf {
     
     /// This gs::cnf::plugin_if method provides the gs::cnf::param_db_if::existsParam method of the gs::cnf::param_db_if to the observer database.
     bool existsParam(const std::string &hier_parname) {
-      return m_param_db_port->existsParam(hier_parname);
+      return m_param_db->existsParam(hier_parname);
     }
     
     // /////////////////////////////////////////////////////////////////// //
@@ -292,7 +286,7 @@ namespace cnf {
   protected:
     
     /// Parameter database
-    param_db_if* m_db;
+    param_db_if* m_param_db;
     
     /// Parent private API
     GCnf_private_Api_T* m_parent_api;

@@ -55,12 +55,11 @@ namespace gs {
 namespace cnf {
 
 
-/// Database channel for configurable parameters, used by the ConfigPlugin.
+/// Database for configurable parameters, used by the ConfigPlugin.
 /**
  * Parameter database which stores parameters for the ConfigPlugin.
  *
- * This is a SystemC channel which implements param_db_if to be bound
- * to a port sc_port<param_db_if> in the ConfigPlugin.
+ * This implements param_db_if to be used in the ConfigPlugin.
  *
  * Storage is done in a std::map of type string, string.
  * The key is the hierarchical parameter name, the value is its
@@ -71,8 +70,7 @@ namespace cnf {
  */
 template<typename gs_param_base_T>
 class ConfigDatabase_T
-: public sc_core::sc_module,
-  public param_db_if
+: public param_db_if
 {
   typedef std::set<cport_address_type> addressSet;
 
@@ -95,7 +93,7 @@ protected:
     /// Contructor with init value
     parameter(gs_param_base_T* par, const std::string ivalue) {
       if (par != NULL) SC_REPORT_ERROR("ConfigDtabase::parameter constructor", "When creating implicit parameter with init value you cannot set the parmeter pointer!");
-      sc_assert(par == NULL);
+      assert(par == NULL);
       init_value = ivalue;
       param = NULL;
     }
@@ -111,8 +109,8 @@ public:
   /**
    * @param name  Name of this object.
    */
-  ConfigDatabase_T(sc_core::sc_module_name name) 
-  : sc_core::sc_module(name)
+  ConfigDatabase_T(const char* name) 
+  : m_name(name)
   {  }
   
   ~ConfigDatabase_T() {
@@ -121,7 +119,7 @@ public:
   
 private:
   /// Constructor without parameter must not be used!
-  ConfigDatabase_T() { sc_assert(false); }
+  ConfigDatabase_T() { assert(false); }
   
 public:
 
@@ -130,7 +128,7 @@ public:
    *       pure virtual functions in gs_param_base because this method is 
    *       called by the gs_param_base constructor.*/
   bool addParam(gs_param_base_T* par) {
-    sc_assert(par != NULL);
+    assert(par != NULL);
     // if( isHierarchicalParameterName(par->getName()) ) { // now allowed for top-level params
     param_iterator pos;
     pos = m_parameter_database.find(par->getName());
@@ -333,6 +331,14 @@ public:
     //cout << "ss_return: " << ss_return.str() << endl;
     return ss_return.str();//vec;//ss.str();
   }
+
+  /// Return this name for debug purpose
+  const char* name() const { return m_name.c_str(); }
+
+protected: 
+
+  /// Name of this for debug
+  std::string m_name;
 
 };
 

@@ -48,6 +48,8 @@
 #include "greencontrol/gav/plugin/event_listener.h"
 #include "greencontrol/gav/plugin/trigger_if.h"
 
+#include "greencontrol/core/command_if.h"
+
 #define GAV_API_NAME "GAV_Api"
 
 
@@ -67,7 +69,8 @@ namespace av {
    */
   class GAV_Api
   : public sc_object,
-    public gc_port_if
+    public gc_port_if,
+    public command_if
   {
     // Typedef for static map containing pointers to the Apis
     //        sc_core::sc_module-pointer, Api-instance-smart-pointer
@@ -118,7 +121,7 @@ namespace av {
             return getApiInstance(NULL);
           }
           shared_ptr<GAV_Api> newapi_sp(new GAV_Api());
-          mInstanceMap->insert(pair<sc_module*, shared_ptr<GAV_Api> >(mod, newapi_sp));
+          mInstanceMap->insert(std::pair<sc_module*, shared_ptr<GAV_Api> >(mod, newapi_sp));
           return newapi_sp;
         /*} else {
           GAV_DUMP_N("static GAV_Api::getApiInstance", "register existing GAV_Api");
@@ -139,9 +142,8 @@ namespace av {
      */
     GAV_Api()
       : sc_object(sc_gen_unique_name("__gav_api__")),
-        m_gc_port(AV_SERVICE, GAV_API_NAME, false)
+        m_gc_port(AV_SERVICE, GAV_API_NAME, false, this)
     { 
-      m_gc_port.api_port(*this);  // bind sc_port of m_gc_port
       GAV_DUMP_N(name(), "constructor GAV_Api()");
     }
 
@@ -157,13 +159,9 @@ namespace av {
      * Implements pc_port_if.
      * This method starts whenever a master triggers a payload-event.
      */
-    void masterAccess(ControlTransactionContainer &t_p)
+    void transport(ControlTransactionHandle &tr)
     {
-      
-      ControlTransactionHandle tr = t_p.first;
-      ControlPhase ph = t_p.second;
-
-      GAV_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from master");      
+      GAV_DUMP_N(name(), "got transaction atom from master");      
 
       // show received Transaction
       GAV_DUMP_N(name(), "  received transaction: "<<(tr->toString()).c_str());      
@@ -179,37 +177,10 @@ namespace av {
         success = false;
       }
 
-      ControlPhase p(ControlPhase::CONTROL_RESPONSE);
-      if (!success) p.state = ControlPhase::CONTROL_ERROR;
-      // Answer with a CONTROL_RESPONSE or CONTROL_ERROR phase
-      GAV_DUMP_N(name(), "send "<<p.toString().c_str()<<" atom back to master");      
-
-      ControlTransactionContainer ctc = ControlTransactionContainer(t_p.first, p);
-      m_gc_port.target_port.out->notify(ctc, PEQ_IMMEDIATE);
-
+      if (!success)
+        tr->set_mError(1);
     }
     
-    /// Called by gc_port through gc_port_if when notification arrives.
-    /**
-     * Implements pc_port_if.
-     * This method starts whenever a slave triggers a payload-event.
-     * That happens when one of the GC-API methods below send a transaction.
-     */
-    void slaveAccess(ControlTransactionContainer &t_p)
-    {  
-  #ifdef GAV_VERBOSE
-      ControlTransactionHandle tr = t_p.first;
-      ControlPhase ph = t_p.second;
-
-      GAV_DUMP_N(name(), "got "<<ph.toString().c_str()<<" atom from slave");      
-
-      switch (ph.state) {
-        // No notification for response state is needed because caller directly gets the 
-        // changes in the transaction since it is immediate communication
-      }
-  #endif
-    }
-
 
     // /////////////////    BEGIN GAV-API methods   /////////////////////////////////// //
 
@@ -228,7 +199,7 @@ namespace av {
       GAV_DUMP_N(name(), "create_OutputPlugin(type="<<outputPluginTypeToString(type).c_str()<<", ctor='"<<ctor_param.c_str()<<"')");
       
       // Create Transaction and send it to analysis plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(AV_SERVICE);
       th->set_mCmd(CMD_CREATE_OUTPUT_PLUGIN);
       //th->set_mAnyPointer();
@@ -237,9 +208,7 @@ namespace av {
       //th->set_mSpecifier();
       th->set_mValue(ctor_param);
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
       if (th->get_mError() == 0) {
         GAV_DUMP_N(name(), "create_OutputPlugin: ... created OutputPlugin of type "<<outputPluginTypeToString(type).c_str()<<" (constructor param '"<<ctor_param.c_str()<<"') successfully.");
         return static_cast<OutputPlugin_if*>(th->get_mAnyPointer());
@@ -281,7 +250,7 @@ namespace av {
       GAV_DUMP_N(name(), "add_to_default_output(type="<<outputPluginTypeToString(type).c_str()<<", '"<<par->getName().c_str()<<"')");
       
       // Create Transaction and send it to analysis plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(AV_SERVICE);
       th->set_mCmd(CMD_ADD_TO_OUTPUT_PLUGIN);
       th->set_mAnyPointer(NULL);
@@ -290,9 +259,7 @@ namespace av {
       //th->set_mSpecifier();
       //th->set_mValue();
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
       if (th->get_mError() == 0) {
         GAV_DUMP_N(name(), "add_to_default_output: ... adding of param "<<par->getName().c_str()<<" to default Output Plugin "<<outputPluginTypeToString(type).c_str()<<" successfull.");
         return static_cast<OutputPlugin_if*>(th->get_mAnyPointer());
@@ -323,16 +290,14 @@ namespace av {
       GAV_DUMP_N(name(), "get_default_output(type="<<outputPluginTypeToString(type).c_str()<<")");
       
       // Create Transaction and send it to analysis plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(AV_SERVICE);
       th->set_mCmd(CMD_ADD_TO_OUTPUT_PLUGIN);
       th->set_mAnyPointer(NULL);
       th->set_mAnyPointer2(NULL);
       th->set_mAnyUint(type);
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
       if (th->get_mError() == 0) {
         GAV_DUMP_N(name(), "get_default_output: ... getting default Output Plugin "<<outputPluginTypeToString(type).c_str()<<" successfull.");
         return static_cast<OutputPlugin_if*>(th->get_mAnyPointer());
@@ -354,19 +319,15 @@ namespace av {
      * @return                Pointer to the OutputPlugin, NULL if adding failed
      */
     OutputPlugin_if* add_to_output(OutputPlugin_if* outputPluginID, gs_param_base *par) {
-      if (par == NULL) {
-        SC_REPORT_WARNING(name(), "add_to_output: parameter is NULL.");
+      if (par == NULL || outputPluginID == NULL) {
+        SC_REPORT_WARNING(name(), "add_to_output: parameter or Output Plugin is NULL.");
         return NULL;
       }
       GAV_PRINT_SPACE;
-      GAV_DUMP_N(name(), "add_to_output(id="<<(void*)outputPluginID<<", '"<<par->getName().c_str()<<"')");
-      if (outputPluginID == 0) {
-        SC_REPORT_WARNING(name(), "add_to_output failed because of invalid OutputPlugin ID (=0)!");
-        return NULL;
-      }
+      GAV_DUMP_N(name(), "add_to_output(id="<<outputPluginID->get_id()<<", '"<<par->getName().c_str()<<"')");
       
       // Create Transaction and send it to analysis plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(AV_SERVICE);
       th->set_mCmd(CMD_ADD_TO_OUTPUT_PLUGIN);
       th->set_mAnyPointer(reinterpret_cast<void*>(outputPluginID));
@@ -375,14 +336,12 @@ namespace av {
       //th->set_mSpecifier();
       //th->set_mValue();
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
       if (th->get_mError() == 0) {
-        GAV_DUMP_N(name(), "add_to_output: ... adding of param "<<par->getName().c_str()<<" to Output Plugin with id "<<(void*)outputPluginID<<" successfull");
+        GAV_DUMP_N(name(), "add_to_output: ... adding of param "<<par->getName().c_str()<<" to Output Plugin with id "<<outputPluginID->get_id()<<" successfull");
         return static_cast<OutputPlugin_if*>(th->get_mAnyPointer());
       } else {
-        GAV_DUMP_N(name(), "add_to_output: ... adding of param "<<par->getName().c_str()<<" to Output Plugin with if "<<(void*)outputPluginID<<" failed (error "<<th->get_mError()<<")!");
+        GAV_DUMP_N(name(), "add_to_output: ... adding of param "<<par->getName().c_str()<<" to Output Plugin with if "<<outputPluginID->get_id()<<" failed (error "<<th->get_mError()<<")!");
         SC_REPORT_WARNING(name(), "add_to_output failed!");
         return NULL;
       }
@@ -398,7 +357,7 @@ namespace av {
       GAV_DUMP_N(name(), "get_event_listener()");
       
       // Create Transaction and send it to analysis plugin
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
+      ControlTransactionHandle th = m_gc_port.createTransaction();
       th->set_mService(AV_SERVICE);
       th->set_mCmd(CMD_GET_EVENT_LISTENER);
       //th->set_mAnyPointer();
@@ -407,9 +366,7 @@ namespace av {
       //th->set_mSpecifier();
       //th->set_mValue();
       
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc, PEQ_IMMEDIATE);
+      m_gc_port->transport(th);
       
       if (th->get_mError() != 0) {
         GAV_DUMP_N(name(), "get_event_listener: ... getting list failed!");
@@ -421,6 +378,56 @@ namespace av {
     }
 
     // /////////////////    END GAV-API methods     /////////////////////////////////// //
+
+    // //////////////// command_if methods ////////////////////////////////////
+
+    /// Returns the name of the API.
+    std::string getName()
+    {
+      return name();
+    }
+
+    // This method should call a static method in the GAV_Plugin class, so the code providing the name- and description-strings exists only once. However this
+    // is not possible, since GAV_Api.h would have to include gav_plugin.h, but gav_plugin.h already includes GAV_Plugin.h. So this would lead to a cyclic
+    // inclusion. It could be solved by using the template technique like it is used in GCnf, but that wouldn't be reasonable. So the code exists twice, in
+    // GAV_Api.h and in gav_plugin.h.
+    /// Returns the name of the specified command.
+    std::string getCommandName(unsigned int cmd)
+    {
+      // Remember to repeat any changes made here in gav_plugin.h!
+      switch (cmd) {
+        case CMD_NONE:
+          return std::string("CMD_NONE");
+        case CMD_ADD_TO_OUTPUT_PLUGIN:
+          return std::string("CMD_ADD_TO_OUTPUT_PLUGIN");
+        case CMD_CREATE_OUTPUT_PLUGIN:
+          return std::string("CMD_CREATE_OUTPUT_PLUGIN");
+        case CMD_GET_EVENT_LISTENER:
+          return std::string("CMD_GET_EVENT_LISTENER");
+        default:
+          return std::string("unknown");
+      }
+    }
+
+    /// Return a description of the specified command.
+    std::string getCommandDescription(unsigned int cmd)
+    {
+      // Remember to repeat any changes made here in gav_plugin.h!
+      switch (cmd) {
+        case CMD_NONE:
+          return std::string("No command.");
+        case CMD_ADD_TO_OUTPUT_PLUGIN:
+          return std::string("Adds a parameter to an OutputPlugin.");
+        case CMD_CREATE_OUTPUT_PLUGIN:
+          return std::string("Creates an OutputPlugin instance of the specified type.");
+        case CMD_GET_EVENT_LISTENER:
+          return std::string("Return an event listener for Trigger objects.");
+        default:
+          return std::string("unknown");
+      }
+    }
+
+    // ///////////////////////////////////////////////////////////////////////// //
      
   protected:
 

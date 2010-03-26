@@ -74,10 +74,10 @@
 int sc_main(int argc, char *argv[]) {
   
   /// GreenControl Core instance
-  gs::ctr::GC_Core       core("ControlCore");
+  gs::ctr::GC_Core       core;
 
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
-  gs::cnf::ConfigPlugin configPlugin("ConfigPlugin", &cnfdatabase);
+  gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
 
   TestIP       ip1("IP1");
   TestIP2      ip2("IP2");
@@ -103,7 +103,7 @@ int sc_main(int argc, char *argv[]) {
   configTool.config("configmacros.cfg");
   configTool.parseCommandLine(argc, argv);
   
-  gs::cnf::CommandLineConfigParser configParser("ConfigParser");
+  gs::cnf::CommandLineConfigParser configParser;
   configParser.parse(argc, argv);
 
   gs::cnf::CommandLine_Tool commandLineTool("CommandLineTool");

@@ -1,18 +1,17 @@
+//   GreenAV framework
+//
 // LICENSETEXT
-// 
-//   Copyright (C) 2007-2008 : GreenSocs Ltd
-//       http://www.greensocs.com/ , email: info@greensocs.com
-// 
+//
+//   Copyright (C) 2009 : GreenSocs Ltd
+// 	 http://www.greensocs.com/ , email: info@greensocs.com
+//
 //   Developed by :
-// 
-//   Wolfgang Klingauf, Robert Guenzel, Christian Schroeder
+//   
+//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
 //     Technical University of Braunschweig, Dept. E.I.S.
 //     http://www.eis.cs.tu-bs.de
-// 
-//   Mark Burton, Marcus Bartholomeu
-//     GreenSocs Ltd
-// 
-// 
+//
+//
 //   This program is free software.
 // 
 //   If you have no applicable agreement with GreenSocs Ltd, this software
@@ -37,26 +36,9 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GC_B_IF_H__
-#define __GC_B_IF_H__
+//
+// This file is the recommended file to include the 
+// GreenAV VCD File Output Plugin.
+//
 
-#include <systemc>
-
-
-namespace gs {
-namespace ctr {
-
-
-  template <class TRANSACTION>
-  class gc_b_if : public virtual sc_core::sc_interface
-  {
-  public:
-    virtual void b_transact( TRANSACTION) = 0;
-    virtual ~gc_b_if(){}
-  };
-  
-
-} // end of namespace ctr
-} // end of namespace gs
-
-#endif
+#include "greencontrol/gav/plugin/VCD_OutputPlugin.h"

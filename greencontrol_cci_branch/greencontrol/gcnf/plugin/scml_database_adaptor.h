@@ -2,13 +2,12 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
 //   
 //   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
 //     Technical University of Braunschweig, Dept. E.I.S.
 //     http://www.eis.cs.tu-bs.de
 //
@@ -47,7 +46,8 @@
 
 #include "greencontrol/gcnf/plugin/config_globals.h"
 #include "greencontrol/gcnf/plugin/utils.h"
-#include "param_db_if.h"
+#include "greencontrol/gcnf/plugin/param_db_if.h"
+#include "greencontrol/gcnf/plugin/configdatabase.h"
 
 #include <scml.h>
 
@@ -56,172 +56,205 @@ namespace gs {
 namespace cnf {
 
 
-/// Database channel which connects to CoWare scml library, used by the ConfigPlugin.
+/// Database for the Config Plugin, which connects to the CoWare scml registry.
 /**
- * Parameter database which reads scml parameters and provides them to the 
- * GreenConfig framework. writing parameters is forbidden.
+ * Parameter database which extends the default GreenConfig database with
+ * scml parameters being read from the CoWare scml registry to set initial
+ * values.
  *
- * This is a SystemC channel which implements param_db_if to be bound
- * to a port sc_port<param_db_if> in the ConfigPlugin.
+ * This implements param_db_if to be used in the ConfigPlugin.
  */
-class Scml_database_adaptor
-: public sc_core::sc_module,
-  public param_db_if
+template<typename gs_param_base_T>
+class Scml_database_adaptor_T
+: public ConfigDatabase
 {
 
 public:
 
-  class DatabaseException: public std::exception {
-    virtual const char* what() const throw()
-    {
-      return "Param does not exist!";
-    }
-  };
-
-  /// Constructor with name
+  /// Constructor SCML database adaptor
   /**
    * @param name  Name of this object.
+   * @param overwrite_initial_values_with_scml_value If an scml database value shall overwrite another GreenConfig initial value (default=true)
    */
-  Scml_database_adaptor(sc_core::sc_module_name name) 
-  : sc_core::sc_module(name)
-  { 
-    // Get the (only) registry instance
-    scml_reg = &scml_property_registry::inst();
-  }
+  Scml_database_adaptor_T(const char* name, bool overwrite_initial_values_with_scml_value = true) 
+  : ConfigDatabase(name)
+  , scml_reg(scml_property_registry::inst()) // Get the scml registry instance
+  , m_overwrite_initial_values_with_scml_value(overwrite_initial_values_with_scml_value)
+  {  }
   
 private:
   /// Constructor without parameter must not be used!
-  Scml_database_adaptor() { sc_assert(false); }
+  Scml_database_adaptor_T() { sc_assert(false && "Constructor not allowed"); }
   
 public:
 
   /// @see gs::cnf::param_db_if::addParam
-  bool addParam(const std::string &hier_parname, const std::string &value) {
-    GCNF_DUMP_N(name(), "addParam("<<hier_parname.c_str()<<")");
-    //SC_REPORT_WARNING(name(), "addParam: Scml database adaptor does not provide writing to parameters.");
-    return true;
+  bool addParam(gs_param_base_T* par) {
+    assert(par != NULL);
+    GCNF_DUMP_N(name(), "addParam("<<par->getName()<<")");
+    // get initial values from scml database if existing
+    processSCMLinitValue(par->getName());
+    return ConfigDatabase::addParam(par);
   }
-
+  
+ /*
+  /// @see gs::cnf::param_db_if::addParam
+  bool addParam(gs_param_base_T* par) {
+    GCNF_DUMP_N(name(), "addParam("<<par.getName()<<")");
+    return ConfigDatabase::addParam(par);
+  }
+  
   /// @see gs::cnf::param_db_if::setParam
-  bool setParam(const std::string &hier_parname, const std::string &value) {
-    GCNF_DUMP_N(name(), "setParam("<<hier_parname.c_str()<<", "<<value.c_str()<<")");      
-    //SC_REPORT_WARNING(name(), "setParam: Scml database adaptor does not provide writing to parameters.");
-    return true;
+  bool removeParam(gs_param_base_T* param) {
+    GCNF_DUMP_N(name(), "removeParam("<<gs_param_base_T.getName()<<")");      
+    return ConfigDatabase::removeParam(param);
+  }
+  
+  /// @see gs::cnf::param_db_if::setInitValue
+  bool setInitValue(const std::string &hier_parname, const std::string &value) {
+    GCNF_DUMP_N(name(), "setInitValue("<<hier_parname<<", "<<value<<")");
+    return ConfigDatabase::setInitValue(hier_parname, value);
+  }
+  
+  /// @see gs::cnf::param_db_if::getValue
+  std::string getValue(const std::string &hier_parname) {
+    GCNF_DUMP_N(name(), "getValue("<<hier_parname<<")");
+    return ConfigDatabase::getValue(hier_parname);
   }
 
   /// @see gs::cnf::param_db_if::getParam
-  const std::string getParam(const std::string &hier_parname) {
+  gs_param_base_T* getParam(const std::string &hier_parname) {
     GCNF_DUMP_N(name(), "getParam("<<hier_parname.c_str()<<")");
-    try {
-      return getValue(hier_parname);
-    }
-    catch (DatabaseException &e) {
-      GCNF_DUMP_N(name(), "Parameter not existing.");
-      return string("");
-    }
+    return ConfigDatabase::getParam(hier_parname);
   }
   
   /// @see gs::cnf::param_db_if::existsParam
   bool existsParam(const std::string &hier_parname) {
     GCNF_DUMP_N(name(), "existsParam("<<hier_parname.c_str()<<")");
-    try {
-      getValue(hier_parname);
-    } 
-    catch (DatabaseException &e) {
-      GCNF_DUMP_N(name(), "Parameter not existing.");
-      return false;
-    }
-    return true;
+    return ConfigDatabase::existsParam(hier_parname);
   }
 
   /// @see gs::cnf::param_db_if::is_explicit
-  /**
-   * All scml parameters are explicit.
-   */
   bool is_explicit(const std::string &hier_parname) {
     GCNF_DUMP_N(name(), "is_explicit("<<hier_parname.c_str()<<")");
-    return true;
+    return ConfigDatabase::is_explicit(hier_parname);
   }
 
   /// @see gs::cnf::param_db_if::getParametersVector
   const std::vector<std::string> getParametersVector() {
     GCNF_DUMP_N(name(), "getParameters()");      
-    SC_REPORT_ERROR(name(), "getParameters: Scml database adaptor does not provide parameter listing.");
-    return std::vector<std::string>();
+    return ConfigDatabase::getParametersVector();
   }
 
   /// @see gs::cnf::param_db_if::getParameters
   const std::string getParameters() {
     GCNF_DUMP_N(name(), "getParameters()");      
-    SC_REPORT_ERROR(name(), "getParameters: Scml database adaptor does not provide parameter listing.");
-    return string("");
-  }
+    return ConfigDatabase::getParameters();
+  }*/
 
+  const char* name() const { return ConfigDatabase::m_name.c_str(); }
+  
 protected:
 
-  const std::string getValue(const std::string &nam) throw(DatabaseException) {
-    GCNF_DUMP_N(name(), "getValue("<<nam.c_str()<<")");
+  const bool processSCMLinitValue(const std::string &nam) {
+    GCNF_DUMP_N(name(), "processSCMLinitValue("<<nam.c_str()<<")");
     #ifdef DEBUG
       if( !isHierarchicalParameterName(nam) ) {
         SC_REPORT_ERROR(name(), "getValue: Tried to get a parameter which is not hierarchical given.");
       }
     #endif
     
-    bool existing = false;
     std::string value;
 
     const std::string moduleName = nam.substr(0, nam.find_last_of(SC_NAME_DELIMITER));
-    const std::string name = nam.substr(nam.find_last_of(SC_NAME_DELIMITER)+1, nam.length()-nam.find_last_of(SC_NAME_DELIMITER)-1);
+    const std::string lname = nam.substr(nam.find_last_of(SC_NAME_DELIMITER)+1, nam.length()-nam.find_last_of(SC_NAME_DELIMITER)-1);
 
     // get parameter out of registry (Property arbitrary)
     // Try all types
     // Try int
-    if (scml_reg->hasProperty(scml_property_registry::MODULE, scml_property_registry::INTEGER, moduleName, name)) {
-      int tmp = scml_reg->getIntProperty(scml_property_registry::MODULE, moduleName, name);
-      existing = true;
-      std::stringstream s;
-      s << tmp;
-      value = s.str();
-      GCNF_DUMP_N("Scml_database_adaptor", "getValue Int: '"<<value.c_str()<<"'");
+    if (scml_reg.hasProperty(scml_property_registry::MODULE, scml_property_registry::INTEGER, moduleName, lname)) {
+      if (!check_if_overwrite(nam)) return false;
+      int tmp = scml_reg.getIntProperty(scml_property_registry::MODULE, moduleName, lname);
+      std::stringstream s; s << tmp; value = s.str();
+      GCNF_DUMP_N(name(), "processSCMLinitValue: got value '"<<value<<"' from scml database for param '"<<nam<<"'");
+      if (!setInitValue(nam, value)) {
+        std::stringstream ss;
+        ss << "Parameter '"<<nam<<"' init value from scml registry overwrites existing init value!";
+        GCNF_DUMP_N(name(), ss.str());
+        SC_REPORT_INFO(name(), ss.str().c_str());
+      }
+      return true;
     }
     // Try bool
-    else if (scml_reg->hasProperty(scml_property_registry::MODULE, scml_property_registry::BOOL, moduleName, name)) {
-      bool tmp = scml_reg->getBoolProperty(scml_property_registry::MODULE, moduleName, name);
-      existing = true;
-      std::stringstream s;
-      s << tmp;
-      value = s.str();
-      GCNF_DUMP_N("Scml_database_adaptor", "getValue Int: '"<<value.c_str()<<"'");
+    else if (scml_reg.hasProperty(scml_property_registry::MODULE, scml_property_registry::BOOL, moduleName, lname)) {
+      if (!check_if_overwrite(nam)) return false;
+      bool tmp = scml_reg.getBoolProperty(scml_property_registry::MODULE, moduleName, lname);
+      std::stringstream s; s << tmp; value = s.str();
+      GCNF_DUMP_N(name(), "processSCMLinitValue: got value '"<<value<<"' from scml database for param '"<<nam<<"'");
+      if (!setInitValue(nam, value)) {
+        std::stringstream ss;
+        ss << "Parameter '"<<nam<<"' init value from scml registry overwrites existing init value!";
+        GCNF_DUMP_N(name(), ss.str());
+        SC_REPORT_INFO(name(), ss.str().c_str());
+      }
+      return true;
     }
     // Try double
-    else if (scml_reg->hasProperty(scml_property_registry::MODULE, scml_property_registry::DOUBLE, moduleName, name)) {
-      double tmp = scml_reg->getDoubleProperty(scml_property_registry::MODULE, moduleName, name);
-      existing = true;
-      std::stringstream s;
-      s << tmp;
-      value = s.str();
-      GCNF_DUMP_N("Scml_database_adaptor", "getValue Int: '"<<value.c_str()<<"'");
+    else if (scml_reg.hasProperty(scml_property_registry::MODULE, scml_property_registry::DOUBLE, moduleName, lname)) {
+      if (!check_if_overwrite(nam)) return false;
+      double tmp = scml_reg.getDoubleProperty(scml_property_registry::MODULE, moduleName, lname);
+      std::stringstream s; s << tmp; value = s.str();
+      GCNF_DUMP_N(name(), "processSCMLinitValue: got value '"<<value<<"' from scml database for param '"<<nam<<"'");
+      if (!setInitValue(nam, value)) {
+        std::stringstream ss;
+        ss << "Parameter '"<<nam<<"' init value from scml registry overwrites existing init value!";
+        GCNF_DUMP_N(name(), ss.str());
+        SC_REPORT_INFO(name(), ss.str().c_str());
+      }
+      return true;
     }
     // Try string
-    else if (scml_reg->hasProperty(scml_property_registry::MODULE, scml_property_registry::STRING, moduleName, name)) {
-      value = scml_reg->getStringProperty(scml_property_registry::MODULE, moduleName, name);
-      existing = true;
-      GCNF_DUMP_N("Scml_database_adaptor", "getValue Int: '"<<value.c_str()<<"'");
+    else if (scml_reg.hasProperty(scml_property_registry::MODULE, scml_property_registry::STRING, moduleName, lname)) {
+      if (!check_if_overwrite(nam)) return false;
+      value = scml_reg.getStringProperty(scml_property_registry::MODULE, moduleName, lname);
+      GCNF_DUMP_N(name(), "processSCMLinitValue: got value '"<<value<<"' from scml database for param '"<<nam<<"'");
+      if (!setInitValue(nam, value)) {
+        std::stringstream ss;
+        ss << "Parameter '"<<nam<<"' init value from scml registry overwrites existing init value!";
+        GCNF_DUMP_N(name(), ss.str());
+        SC_REPORT_INFO(name(), ss.str().c_str());
+      }
+      return true;
     }
-    
-    if (!existing) {
-      SC_REPORT_WARNING(this->name(), "Param does not exist!");
-      throw DatabaseException();
+    else {
+      GCNF_DUMP_N(name(), "processSCMLinitValue: Param '"<<nam<<"' does not exist in scml database.");
+      return false;
     }
-
-    return value;
+  }
+  
+  inline bool check_if_overwrite(const std::string& nam) {
+    if (!m_overwrite_initial_values_with_scml_value) {
+      if (existsParam(nam)) {
+        std::stringstream ss;
+        ss << "Parameter '"<<nam<<"' has already an init value, which will NOT be overwritten by an scml database value!";
+        GCNF_DUMP_N(name(), ss.str());
+        SC_REPORT_INFO(name(), ss.str().c_str());
+        return false; // Do not overwrite it
+      }
+    }
+    return true; // Do overwrite it
   }
   
   /// scml registry
-  scml_property_registry *scml_reg;
-
+  scml_property_registry &scml_reg;
+  
+  /// If a previously set initial value shall be overwritten by the scml registry initial value
+  bool m_overwrite_initial_values_with_scml_value;
 };
 
+class gs_param_base;
+template<class T> class gs_param;
+typedef Scml_database_adaptor_T<gs_param_base> Scml_database_adaptor;
 
 } // end namespace cnf
 } // end namespace gs

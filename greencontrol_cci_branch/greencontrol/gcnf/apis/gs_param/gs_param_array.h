@@ -399,14 +399,18 @@ public:
     if (m_CallbackBehaviorMap.find(observer) != m_CallbackBehaviorMap.end()) {
       if (m_CallbackBehaviorMap.find(observer)->second != behav) {
         m_CallbackBehaviorMap.find(observer)->second = behav;
-        GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", "<<(unsigned long int) observer<<"): changed behavior!");
-      } else
-        GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", "<<(unsigned long int) observer<<"): no change in behavior!");
+        //GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", "<<(unsigned long int) observer<<"): changed behavior!");
+        GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", <omitted ptr addr for diff>): changed behavior!");
+      } else {
+        //GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", "<<(unsigned long int) observer<<"): no change in behavior!");
+        GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", <omitted ptr addr for diff>): no change in behavior!");
+      }
     }
     // if new observer entry
     else {
       m_CallbackBehaviorMap.insert(  std::make_pair<void*, CallbackBehavior::CallbackBehavior>(observer, behav) );
-      GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", "<<(unsigned long int) observer<<"): inserted new behavior entry!");
+      //GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", "<<(unsigned long int) observer<<"): inserted new behavior entry!");
+      GS_PARAM_ARRAY_DUMP("set_callback_behavior("<<(unsigned int)behav<<", <omitted ptr addr for diff>): inserted new behavior entry!");
     }
 #ifdef GS_PARAM_ARRAY_VERBOSE
     dbg_show_CallbackBehaviorMap();
@@ -441,7 +445,8 @@ public:
     std::cout << "  " << name() << " '"<<m_par_name<<"' CallbackBehaviorMap: "<< std::endl;
     callbackBehaviorMapType::iterator it;
     for (it = m_CallbackBehaviorMap.begin(); it != m_CallbackBehaviorMap.end(); ++it) {
-      std::cout << "    observer "<< (unsigned long int)(*it).first << ", ";
+      //std::cout << "    observer "<< (unsigned long int)(*it).first << ", ";
+      std::cout << "    observer <omitted ptr addr for diff>, ";
       if ( it->second == CallbackBehavior::CALLBACK_MEMBER_CHANGES)
         std::cout << "CALLBACK_MEMBER_CHANGES" << std::endl;       
       else
@@ -455,7 +460,8 @@ public:
     typename gs_param_base_T::all_callback_lists_type::iterator map_iter;
     for ( map_iter=m_callback_lists.begin(); map_iter != m_callback_lists.end(); map_iter++ ) {
       for (it =  map_iter->second->begin(); it != map_iter->second->end(); ++it) {
-        std::cout << "    "<< (unsigned long int)(*it).second->get_observer() << ", ";
+        //std::cout << "    "<< (unsigned long int)(*it).second->get_observer() << ", ";
+        std::cout << "    <omitted ptr addr for diff>, ";
       }
     }
     std::cout << std::endl;
@@ -525,18 +531,21 @@ protected:
       callbackBehaviorMapType::iterator beh_it = m_CallbackBehaviorMap.find(callb->get_observer());
       if (  beh_it != m_CallbackBehaviorMap.end()  ) {
         if ( beh_it->second == CallbackBehavior::CALLBACK_MEMBER_CHANGES) { 
-          GS_PARAM_ARRAY_DUMP("observer "<<(unsigned long int)callb->get_observer()<<" is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back");
+          //GS_PARAM_ARRAY_DUMP("observer "<<(unsigned long int)callb->get_observer()<<" is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back");
+          GS_PARAM_ARRAY_DUMP("observer <omitted ptr addr for diff> is in behavior map - CALLBACK_MEMBER_CHANGES - perform member call back");
           // Make call with changed parameter
           tmp_ret = callb->call(changed_param, cb_reason);
           if (tmp_ret == return_value_change_rejected && ret == return_nothing) ret = tmp_ret;
           else if (tmp_ret == return_other_error) ret = tmp_ret;
         } 
         else {
-          GS_PARAM_ARRAY_DUMP("observer "<<(unsigned long int)callb->get_observer()<<" is in behavior map - NOT_CALLBACK_MEMBER_CHANGES - NOT perform member call back");
+          //GS_PARAM_ARRAY_DUMP("observer "<<(unsigned long int)callb->get_observer()<<" is in behavior map - NOT_CALLBACK_MEMBER_CHANGES - NOT perform member call back");
+          GS_PARAM_ARRAY_DUMP("observer <omitted ptr addr for diff> is in behavior map - NOT_CALLBACK_MEMBER_CHANGES - NOT perform member call back");
         }
       }
       else {
-        GS_PARAM_ARRAY_DUMP("default: observer "<<(unsigned long int)callb->get_observer()<<" is NOT in behavior map - perform member call back");
+        //GS_PARAM_ARRAY_DUMP("default: observer "<<(unsigned long int)callb->get_observer()<<" is NOT in behavior map - perform member call back");
+        GS_PARAM_ARRAY_DUMP("default: <omitted ptr addr for diff> observer is NOT in behavior map - perform member call back");
         // Make call with changed parameter
         tmp_ret = callb->call(changed_param, cb_reason);
         if (tmp_ret == return_value_change_rejected && ret == return_nothing) ret = tmp_ret;

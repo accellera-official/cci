@@ -156,7 +156,7 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
   
   namespace param_attributes {
     /// Enumeration for parameter attributes
-    enum param_attribute_enum {
+    enum param_attribute_enum { // When changing, please also add the string to function param_attributeToString below!
       undefined = 0,
       config,
       runtime_config,
@@ -196,6 +196,8 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
         return std::string("output");
       case param_attributes::internal:
         return std::string("internal");
+      case param_attributes::state:
+        return std::string("state");
       case param_attributes::gr_attribute:
         return std::string("gr_attribute");
       case param_attributes::gr_register:

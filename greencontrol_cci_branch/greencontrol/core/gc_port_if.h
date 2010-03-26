@@ -41,37 +41,23 @@
 #ifndef __GC_PORT_IF_H__
 #define __GC_PORT_IF_H__
 
-
 #include "gc_globals.h"        // global settings
 #include "gc_transaction.h"
-
 
 namespace gs {
 namespace ctr {
 
   
-/// Interface to be implemented by APIs which use the gc_port.
+/// Interface to be implemented by APIs and Plugins which use the gc_port.
 /**
- * This interface is to be implemented by each API which uses the gc_port directly
- * (and then acts as channel).
- * That API can be either the GCnf_Api or an User API adaptor (e.g. Tool_Api)
+ * This interface is to be implemented by each API/Plugin which uses the gc_port directly.
  */
 class gc_port_if
-: public sc_interface
 {
 public:
+  virtual ~gc_port_if() {};
 
-  /// Called by master connector in the gc_port.
-  /**
-   * Called by payload event queue instead of being notified by the default_event (faster).
-   */
-  virtual void masterAccess(ControlTransactionContainer& t_p) = 0;
-
-  /// Called by slave connector in the gc_port.
-  /**
-   * Called by payload event queue instead of being notified by the default_event (faster).
-   */
-  virtual void slaveAccess(ControlTransactionContainer& t_p) = 0;
+  virtual void transport(ControlTransactionHandle& tr) = 0;
 };
 
 
