@@ -57,7 +57,7 @@ const std::string cci::cnf::gs_cci_cnf_broker::get_json_string(const std::string
 }
 
 cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param(const std::string &parname) {
-  std::map<std::string,cci_base_param_if*>::iterator iter = m_mirrored_registry.find(parname);
+  std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
   if( iter != m_mirrored_registry.end() ) {
     cci::cnf::cci_base_param* ret = dynamic_cast<cci::cnf::cci_base_param*>(iter->second);
     assert(ret != NULL && "This param shall be a cci::cnf::cci_base_param!");
@@ -101,11 +101,12 @@ bool cci::cnf::gs_cci_cnf_broker::has_callbacks(const std::string& parname) {
   return false;
 }
 
-void cci::cnf::gs_cci_cnf_broker::add_param(cci_base_param_if* par) {
-  m_mirrored_registry.insert(std::pair<std::string, cci_base_param_if*>(par->get_name(), par));
+void cci::cnf::gs_cci_cnf_broker::add_param(cci_base_param* par) {
+  bool new_element = m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par)).second;
+  assert(new_element && "The same parameter had been added twice!!");
 }
 
-void cci::cnf::gs_cci_cnf_broker::remove_param(cci_base_param_if* par) {
+void cci::cnf::gs_cci_cnf_broker::remove_param(cci_base_param* par) {
   m_mirrored_registry.erase(par->get_name());
 }
 

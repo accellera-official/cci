@@ -166,7 +166,8 @@ namespace cci_impl {
     void init() {
       assert(m_init_called == false && "init() function called more than once!");
       m_init_called = true;
-      cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
+      // This has already been done in the cci_param constructor!
+      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
       register_callback(cci::cnf::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }

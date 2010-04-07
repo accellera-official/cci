@@ -110,59 +110,24 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param _func  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param_if* _caller_param)
-    : observer_ptr(_observer_ptr)
-    , caller_param(_caller_param)
-    , func(_func)
-    {
-#ifdef CCI_PARAM_CALLBACK_VERBOSE
-      if (caller_param) printf("callb_adapt_B: Create parameter callback adapter %p for caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
-      else printf("callb_adapt_B: Create parameter callback adapter %p for no parameter.\n", (void*)this);
-#endif
-    }
+    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param_if* _caller_param);
     
-    ~callb_adapt_B() {
-      unregister_at_parameter();
-#ifdef CCI_PARAM_CALLBACK_VERBOSE
-      printf("callb_adapt_B: Deleting parameter callback adapter %p (shared pointer deleted)\n", (void*)this);
-#endif
-    }
+    ~callb_adapt_B();
     
     /// Unregisters at caller parameter and sets it to NULL to avoid unregistering during destruction.
-    void unregister_at_parameter() {
-      if (caller_param != NULL) {
-#ifdef CCI_PARAM_CALLBACK_VERBOSE
-        printf("callb_adapt_B: Unregister parameter callback adapter %p at caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
-#endif
-        // remove this out of the parameter's callback list
-        // Avoid repeated call during destruction by automatically setting caller_param = NULL
-        /*bool succ = */caller_param->unregister_param_callback(this);
-        //assert (succ && "Unregistering this callback at parameter failed!");
-      }
-    }
+    void unregister_at_parameter();
     
     /// Makes the callback, called by the base class callb_adapt_b.
-    callback_return_type call(cci_base_param& changed_param, const callback_type& cb_reason) {
-      if (func) {
-        return func(changed_param, cb_reason);
-      } else {
-        SC_REPORT_ERROR(CCI_SC_REPORT_MSG_TYPE_PREFIX, "No callback registered yet.");
-      }      
-      return return_nothing;
-    }
+    callback_return_type call(cci_base_param& changed_param, const callback_type& cb_reason);
 
     /// Returns the observer (pointer to the object where the method should be called)
-    void* get_observer() {
-      return (void*) observer_ptr;
-    }
+    void* get_observer();
     
     /// Returns the caller param pointer
     /**
      * @return Caller parameter. NULL if not existing.
      */
-    T_cci_base_param_if* get_caller_param() {
-      return caller_param;
-    }
+    T_cci_base_param_if* get_caller_param();
     
   protected:
     /// Pointer to the observer
@@ -180,5 +145,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   
       
 __CCI_CLOSE_CONFIG_NAMESPACE__
+
+#include "cci_callbacks.hpp"
 
 #endif

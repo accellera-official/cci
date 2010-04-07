@@ -114,14 +114,14 @@ bool cci::cnf::gs_cci_private_broker::has_callbacks(const std::string& parname) 
   return false;
 }
 
-void cci::cnf::gs_cci_private_broker::add_param(cci_base_param_if* par) {
-  cci::cnf::cci_base_param* bpar = dynamic_cast<cci::cnf::cci_base_param*>(par);
-  assert(bpar != NULL && "This should never happen, a cci_base_param_if shall be a cci_base_param!");
+void cci::cnf::gs_cci_private_broker::add_param(cci_base_param* par) {
+  //cci::cnf::cci_base_param* bpar = dynamic_cast<cci::cnf::cci_base_param*>(par);
+  //assert(bpar != NULL && "This should never happen, a cci_base_param shall be a cci_base_param!");
 
-  m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(bpar->get_name(), bpar));
+  m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par));
 }
 
-void cci::cnf::gs_cci_private_broker::remove_param(cci::cnf::cci_base_param_if* par) {
+void cci::cnf::gs_cci_private_broker::remove_param(cci::cnf::cci_base_param* par) {
   m_mirrored_registry.erase(par->get_name());
 }
 

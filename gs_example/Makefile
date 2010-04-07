@@ -13,19 +13,17 @@ SRCS = testbench.cpp \
        ParameterOwnerModule.cpp \
        ParamManipulateModule.cpp \
        ObserverModule.cpp \
-       ValueModule.cpp \
-       ../gs_api_implementation/cci_api.cpp \
-       ../gs_api_implementation/gs_cci_cnf_broker.cpp 
+       ValueModule.cpp
 
 OBJS = testbench.o \
        ParameterOwnerModule.o \
        ParamManipulateModule.o \
        ObserverModule.o \
-       ValueModule.o \
-       cci_api.o \
-       gs_cci_cnf_broker.o
+       ValueModule.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
+
+EXTRA_LIBS = -lcciapiimpl -lcciparamimpl
 
 #include ../Makefile.gspm
 include ../Makefile.defs

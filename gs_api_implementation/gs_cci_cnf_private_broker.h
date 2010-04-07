@@ -78,9 +78,9 @@ namespace cci {
     
     bool has_callbacks(const std::string& parname);
     
-    void add_param(cci_base_param_if* par);
+    void add_param(cci_base_param* par);
     
-    void remove_param(cci_base_param_if* par);
+    void remove_param(cci_base_param* par);
     
     //void set_alias(std::string& orig_parname, std::string& alias_parname);
         

@@ -1,6 +1,9 @@
 ChangeLog
 ---------
 
+- changed broker.add_param to be called by cci_header class
+- added optional broker parameter to param constructors
+- separated header from implementation into different files
 - introduced new path substructure in api path
 - introduced cci::cnf namespace
 - changed cci.h to be main include file and

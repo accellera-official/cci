@@ -49,13 +49,10 @@ public:
   /**
    * @param broker Broker this should use and return (Default=NULL)
    */
-  cci_broker_manager(cci_cnf_broker* broker = NULL)
-  : m_broker(broker) 
-  { 
-  }
+  cci_broker_manager(cci_cnf_broker* broker = NULL);
   
   /// Destructor
-  virtual ~cci_broker_manager() { }
+  virtual ~cci_broker_manager();
 
   /// Returns the broker being responsible for this module
   /**
@@ -65,36 +62,19 @@ public:
    *
    * @return Broker (config broker), is never NULL
    */
-  virtual cci_cnf_broker* get_broker() {
-    if (m_broker) return m_broker;
-    CCI_CNF_DUMP("   "<<dynamic_cast<sc_core::sc_object*>(this)->name() << ".get_broker() has not (yet) a private broker, search for other one");
-    return search_for_broker(dynamic_cast<sc_core::sc_object*>(this)->get_parent_object());
-  }
+  virtual cci_cnf_broker* get_broker();
 
   /// Register a private broker to be used and returned by this module
   /**
    * TODO: Problem: all params created before this call did not use this broker to register themselves!
    *       So maybe don't provide this function? In that case, how shall the cci_broker_manager_module class work if it cannot get a private broker?
    */
-  virtual void register_private_broker(cci_cnf_broker* broker) {
-    if (m_broker && broker) SC_REPORT_WARNING("CCI/broker_module", "Overwriting currently registered broker module!");
-    m_broker = broker;
-  }
+  virtual void register_private_broker(cci_cnf_broker* broker);
 
 public:
   
   /// Recursive search in SystemC hierarchy for a broker
-  static cci_cnf_broker* search_for_broker(sc_core::sc_object* ob) {
-    if (ob == NULL) return cci::cnf::get_cnf_broker_instance();
-    CCI_CNF_DUMP("search_for_broker in: "<<ob->name());
-    cci_broker_manager* m = dynamic_cast<cci_broker_manager*>(ob);
-    if (m) {
-      CCI_CNF_DUMP("   got private broker"<< typeid(m->get_broker()).name()<<" 0x"<<(std::hex)<<m->get_broker()<<(std::dec));
-      return m->get_broker();
-    }
-    sc_core::sc_object* o = ob->get_parent_object();
-    return search_for_broker(o);
-  }
+  static cci_cnf_broker* search_for_broker(sc_core::sc_object* ob);
   
   cci_cnf_broker* m_broker;
   
@@ -117,13 +97,11 @@ public:
    * @param name sc_module name
    * @see cci_broker_manager
    */
-  cci_broker_manager_module(sc_core::sc_module_name name)
-  : sc_core::sc_module(name)
-  , cci_broker_manager(NULL) 
-  {
-  }
+  cci_broker_manager_module(sc_core::sc_module_name name);
 };
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
+
+//#include "cci_broker_module.hpp"
 
 #endif /* __CCI_BROKER_MANAGER_MODULE_H__ */

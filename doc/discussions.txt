@@ -90,7 +90,7 @@ Class names
 
 Currently the cci prefix is doubled: in the namespace and often in 
 the class names. E.g.: cci::cci_base_param.
-This is preliminary, to be discussed.
+We discussed and this is OSCI pratice thus ok this way.
 
 ----------------------------------------------------------
 

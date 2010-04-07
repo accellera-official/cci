@@ -1,4 +1,9 @@
 ## set some directories 
+CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
+CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
+CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
+CCI_PARAM_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
+
 GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
 GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore
 CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
@@ -25,8 +30,11 @@ DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 LDFLAGS =
 
 INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
-         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_PARAM_DIR) -I$(GS_CCI_API_DIR)
-LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH)
+         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_PARAM_DIR) -I$(GS_CCI_API_DIR) \
+         -I$(CCI_API_IMPLEMENTATION_INC_DIR) -I$(CCI_PARAM_IMPLEMENTATION_INC_DIR)
+LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH) \
+         -L$(CCI_API_IMPLEMENTATION_LIB_DIR) -L$(CCI_PARAM_IMPLEMENTATION_LIB_DIR)
+
 
 ## here may be needed to write -lscv at the beginning - which also may cause problems!
 LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
