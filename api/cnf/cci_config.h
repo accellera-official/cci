@@ -58,8 +58,14 @@
 #define __CCI_CLOSE_CONFIG_NAMESPACE__ } }
 
 /// Main CCI namespace
+/**
+ * This is the OSCI CCI namespace
+ */
 namespace cci {
   /// Namespace for CCI configuration part
+  /**
+   * This is the OSCI CCI config namespace
+   */
   namespace cnf {
   }
 }
