@@ -1,6 +1,7 @@
 ChangeLog
 ---------
 
+- changed global static factory function names and namespaces
 - changed broker.add_param to be called by cci_header class
 - added optional broker parameter to param constructors
 - separated header from implementation into different files

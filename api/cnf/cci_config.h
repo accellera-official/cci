@@ -89,24 +89,64 @@ __CCI_CLOSE_CONFIG_NAMESPACE__
 
 #include "cci_param_if.h"
 
-namespace cci_impl {
+__CCI_OPEN_CONFIG_NAMESPACE__
   
-  template<typename T, cci::cnf::param_mutable_type TM>
-  static cci::cnf::cci_param_if<T, TM>* CreateParam(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
-  
-  template<typename T, cci::cnf::param_mutable_type TM>
-  static cci::cnf::cci_param_if<T, TM>* CreateParam(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
-  
-  template<typename T, cci::cnf::param_mutable_type TM>
-  static cci::cnf::cci_param_if<T, TM>* CreateParam(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
-  
-  template<typename T, cci::cnf::param_mutable_type TM>
-  static void InitParam(cci::cnf::cci_param_if<T, TM> *owner_par);
+/// Parameter factory function being called from the cci param constructor to construct the underlying parameter
+/**
+ * The implementation shall return a new parameter object.
+ *
+ * @param owner_par CCI Parameter which will store the returned param
+ * @param nam The (local or top-level) name the parameter shall get
+ * @param force_top_level_name If the given name shall be a top-level name
+ */
+template<typename T, cci::cnf::param_mutable_type TM>
+static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
 
-  template<class T, cci::cnf::param_mutable_type TM>
-  void DestroyParam(cci::cnf::cci_param_if<T, TM>* param);
+/// Parameter factory function being called from the cci param constructor to construct the underlying parameter
+/**
+ * The implementation shall return a new parameter object.
+ *
+ * @param owner_par CCI Parameter which will store the returned param
+ * @param nam       The (local or top-level) name the parameter shall get
+ * @param val       Default value for this parameter
+ * @param force_top_level_name If the given name shall be a top-level name
+ */
+template<typename T, cci::cnf::param_mutable_type TM>
+static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
 
-} // end namespace cci_impl
+/// Parameter factory function being called from the cci param constructor to construct the underlying parameter
+/**
+ * The implementation shall return a new parameter object.
+ *
+ * @param owner_par CCI Parameter which will store the returned param
+ * @param nam       The (local or top-level) name the parameter shall get
+ * @param val       Default value (as JSON string) for this parameter
+ * @param force_top_level_name If the given name shall be a top-level name
+ */
+template<typename T, cci::cnf::param_mutable_type TM>
+static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
+
+/// Parameter factory function that is called after construction and after adding to the broker from within the cci param constructor
+/**
+ * The implementation is free to use this function for initialization.
+ * Note that the registration with the broker had already been done.
+ *
+ * @param owner_par CCI Parameter which shall be initialized
+ */
+template<typename T, cci::cnf::param_mutable_type TM>
+static void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par);
+
+/// Parameter factory function that is called by the cci_param wrapper
+/**
+ * This shall never be called anywhere else that the cci_param destructor. 
+ * The implementation shall delete (or free) the underlying parameter.
+ *
+ * @param param CCI Parameter which is destructed, whose underlying parameter can be deleted.
+ */
+template<class T, cci::cnf::param_mutable_type TM>
+void destroy_cci_param(cci::cnf::cci_param<T, TM>* param);
+
+__CCI_CLOSE_CONFIG_NAMESPACE__
 
 #include "cci_param.h"
 

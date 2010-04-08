@@ -39,31 +39,31 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 // General Parameter Implementation
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const std::string& nam) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const char* nam       ) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const char* nam       ) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
   
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
   
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const T& val          , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const std::string& nam, const T& val          , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const char* nam,        const T& val          , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<T,TM>::cci_param(const char* nam,        const T& val          , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::~cci_param() { cci_impl::DestroyParam<T, TM>(m_pImpl); }
+cci_param<T,TM>::~cci_param() { destroy_cci_param<T, TM>(this); }
   
 template<typename T, param_mutable_type TM>
 cci_param<T, TM>& cci_param<T,TM>::operator = (const cci_param<T, TM>& v) { return m_pImpl->operator=(v);}
@@ -82,7 +82,6 @@ std::string cci_param<T,TM>::json_serialize(const T& val) const { return m_pImpl
 template<typename T, param_mutable_type TM>
 void cci_param<T,TM>::json_deserialize(T& target_val, const std::string& str) { m_pImpl->json_deserialize(target_val, str); }
 
-// protected:
 template<typename T, param_mutable_type TM>
 cci_base_param_if* cci_param<T,TM>::get_pImpl() const { assert(m_pImpl != NULL && "must not be called before m_pImpl has been set in constructor!"); std::cout << (std::hex) << "m_pImpl=" << m_pImpl << std::endl; return static_cast<cci_base_param_if* >(m_pImpl); }
 
@@ -90,25 +89,25 @@ cci_base_param_if* cci_param<T,TM>::get_pImpl() const { assert(m_pImpl != NULL &
 // String Parameter Specialization Implementation
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<std::string, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<std::string,TM>::cci_param(const std::string& nam) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const char* nam       ) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<std::string, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<std::string,TM>::cci_param(const char* nam       ) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
   
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<std::string,TM>::cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = cci_impl::CreateParam<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); cci_impl::InitParam(m_pImpl); }
+cci_param<std::string,TM>::cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, force_top_level_name); if (private_broker) private_broker->add_param(this); else cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
   
 template<param_mutable_type TM>
-cci_param<std::string,TM>::~cci_param() { cci_impl::DestroyParam<std::string, TM>(m_pImpl); }
+cci_param<std::string,TM>::~cci_param() { destroy_cci_param<std::string, TM>(this); }
 
 template<param_mutable_type TM>
 cci::cnf::cci_param<std::string, TM>& cci_param<std::string,TM>::operator = (const cci::cnf::cci_param<std::string, TM>& v) { return m_pImpl->operator=(v);}
@@ -127,7 +126,6 @@ std::string cci_param<std::string,TM>::json_serialize(const std::string& val) co
 template<param_mutable_type TM>
 void cci_param<std::string,TM>::json_deserialize(std::string& target_val, const std::string& str) { m_pImpl->json_deserialize(target_val, str); }
 
-//protected:
 template<param_mutable_type TM>
 cci_base_param_if* cci_param<std::string,TM>::get_pImpl() const { assert(m_pImpl != NULL && "must not be called before m_pImpl has been set in constructor!"); return m_pImpl; }
 

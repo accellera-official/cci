@@ -86,9 +86,9 @@ public:
   virtual void json_deserialize(val_type& target_val, const std::string& str);
   using cci_base_param::json_deserialize;
 
-protected:
-  
   virtual cci_base_param_if* get_pImpl() const;
+
+protected:
 
   mutable cci_param_if<val_type, TM> *m_pImpl;
   
@@ -133,9 +133,9 @@ public:
   virtual void json_deserialize(val_type& target_val, const std::string& str);
   using cci_base_param::json_deserialize;
   
-protected:
-  
   virtual cci_base_param_if* get_pImpl() const;
+
+protected:
 
   cci_param_if<val_type, TM> *m_pImpl;
   
