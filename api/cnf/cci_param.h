@@ -58,6 +58,9 @@ public:
   // //////////////////////////////////////////////////////////////////// //
   // ///////////////   Construction / Destruction   ///////////////////// //
   
+  /// Constructor with a complete parameter
+  explicit cci_param(cci_param_if<val_type, TM>* param);
+
   /// Constructor with (local/hierarchical) name.
   explicit cci_param(const std::string& nam);
   explicit cci_param(const char* nam       );
@@ -108,6 +111,9 @@ public:
   
   // //////////////////////////////////////////////////////////////////// //
   // ///////////////   Construction / Destruction   ///////////////////// //
+
+  /// Constructor with a complete parameter
+  explicit cci_param(cci_param_if<val_type, TM>* param);
   
   /// Constructor with (local/hierarchical) name.
   explicit cci_param(const std::string& nam);

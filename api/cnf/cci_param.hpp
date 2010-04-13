@@ -39,6 +39,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 // General Parameter Implementation
 
 template<typename T, param_mutable_type TM>
+cci_param<T,TM>::cci_param(cci_param_if<val_type, TM>* param) : m_pImpl(param) { cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
+
+template<typename T, param_mutable_type TM>
 cci_param<T,TM>::cci_param(const std::string& nam) : m_pImpl(NULL) { m_pImpl = create_cci_param<T, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<typename T, param_mutable_type TM>
@@ -87,6 +90,9 @@ cci_base_param_if* cci_param<T,TM>::get_pImpl() const { assert(m_pImpl != NULL &
 
 
 // String Parameter Specialization Implementation
+
+template<param_mutable_type TM>
+cci_param<std::string,TM>::cci_param(cci_param_if<std::string, TM>* param) : m_pImpl(param) { cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
 
 template<param_mutable_type TM>
 cci_param<std::string,TM>::cci_param(const std::string& nam) : m_pImpl(NULL) { m_pImpl = create_cci_param<std::string, TM>(this, nam, false); cci::cnf::get_cnf_broker_instance(NULL)->add_param(this); init_cci_param(this); }
