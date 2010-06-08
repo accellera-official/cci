@@ -12,26 +12,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -124,13 +107,29 @@ public:
   
   /// Set a parameter's init value. 
   /**
-   * The init value has priority to the initial value set by the owner!
+   * The init value has priority to the default value set by the owner!
    *
    * @param parname Hierarchical parameter name.
    * @param value   Init value the parameter has to be set to.
    * @return        Success of the setting.
    */
   virtual bool setInitValue(const std::string &parname, const std::string &value, std::string meta_data = "") = 0;
+
+  /// Lock a parameter's init value. 
+  /**
+   * Lock so that this parameter's init value cannot be overwritten by
+   * any subsequent setInitValue call. This allows to emulate a hierarchical
+   * precendence since a top-level module can prevent the childs from setting
+   * init values by locking the init value before creating the subsystem.
+   *
+   * Returns false (and does not lock) if no initial value is existing
+   * that can be locked or if an initial value is already locked or if the
+   * parameter is already existing as object (explicit parameter).
+   *
+   * @param parname Hierarchical parameter name.
+   * @return        Success of the lock (false if already locked).
+   */
+  virtual bool lockInitValue(const std::string &parname, std::string meta_data = "") = 0;
   
   /// Get a parameter's value (string representation). Independent of the implicit or explicit status.
   /**

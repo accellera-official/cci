@@ -97,4 +97,16 @@ one in the hierarchy upwards.
 
 ----------------------------------------------------------------
 
+INIT VALUE PRECEDENCE (TIME ORDERED / HIERARCHICAL)
+
+The porposal default is time ordered precedence for initial values. This means the latest call to set_init_value on the broker for a specific parameter is the one that actually get applied when the parameter comes to existence.
+To emulate a hierarchical precedence (like e.g. the OVM mechanism uses), the following can be done with the proposed standard (also see file discussions.txt):
+- before creating the subsystem which creates the parameter,
+- Set the initial value using broker->set_init_value()
+- lock the initial value  using broker->lock_init_value()
+- instantiate the subsystem
+Effect: When any module in the subsystem tries to set the initial value again, this is locked, thus the second setting being ignored. Hence the hierachically highest module has the control over the initial value. (Remark this has no influence on writes to the parameter object.)
+
+----------------------------------------------------------------
+
 christian.schroeder@greensocs.com

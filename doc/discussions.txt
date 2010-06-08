@@ -93,5 +93,87 @@ the class names. E.g.: cci::cci_base_param.
 We discussed and this is OSCI pratice thus ok this way.
 
 ----------------------------------------------------------
+Emulating OVM hierarchical precedence
+
+Discussion how to emulate the OVM hierarchical setting
+mechanism with the parameter object proposal
+
+
+For Parameters being used during construction:
+
+All alternatives need the subsystem to be created after some initial 
+value being set or the lock or cb can be applied/called before the 
+param construction within the child module.
+
+Alternatives 
+ discussion on 5/26: #2. or #3. is favorite, 
+ decision on 6/2: choose #2 because keeps things simple and clean
+ with very easy rules
+
+1. Coding:
+    - Set init value (optionally)
+    - register new param cb
+    - instantiate the child module
+    - on new param cb, (if it is the desired param)
+       - set the value (to overwrite other's init values)
+       - and lock the param
+    - unlock at end of constructor again
+   Preconditions:
+    - none (possible with current proposal, because new param callbacks
+            are called in the order of their registration order)
+   Drawbacks:
+    - set_init_value call cannot be used, since the value
+      needs to be set within the callback function
+
+2. Coding:
+    - Set initial value
+    - lock the initial value
+    - instantiate the child module
+   Preconditions:
+    - needs the option to lock init values within the broker
+   Drawback:
+    - complicates broker API:
+      inconsequent because the 'lock' feature is duplicated in the broker
+      *and* the object
+      (we discussed: not too bad)
+   Summary:
+    The broker has an additional API function allowing to lock an 
+    initial value.
+
+3. Coding:
+    - set_init_value_not_overriding_existing_initial_value("C.p", 0);
+    - instantiate the child module
+   Preconditions:
+    - additional broker function that locks the init value from being 
+      overwritten by later set_init_value calls
+   Drawback:
+    - complicates broker API:
+      two different set_init_value functions
+      (one like current one, allowing overwrites
+      + one additional function locking the init value)
+   Summary:
+    Similar to #2.
+    The broker has an additional API function implcitily locking the 
+    initial value.
+
+4. Coding rule:
+    - When a module sets a parameter
+      (e.g. C.p by calling set_init_value("C.p", 0)), it must first 
+      check if there is already an initial value being set (e.g. by 
+      calling getValue(paramname) )
+   Preconditions:
+    - none (possible with current proposal)
+   Drawback:
+    - highly unreliable because any module can easily ignore this rule
+   Summary:
+    Not an option at all, very bad
+
+
+For Parameters being used later than construction:
+  Coding rule:
+    - Just set the parameter value after the construction call.
+    - The hierarchically most top level will overwrite all previous settings.
+
+----------------------------------------------------------
 
 There are many more discussions of course...

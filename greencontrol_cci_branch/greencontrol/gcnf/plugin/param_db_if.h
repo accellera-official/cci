@@ -13,26 +13,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -104,12 +87,31 @@ public:
    *
    * If the parameter already exists, update (overwrite) the value.
    *
+   * If the init value is locked, do nothing.
+   *
    * @param hier_parname Hierarchical parameter name (Delimiter-separated).
    * @param value        init value which has to be set. The default value of an implicit parameter has priority to the initial value of a new added parameter.
    * @return             true: parameter was not yet existing in database and was added
-   *                     false: parameter exists and was updated
+   *                     false: parameter exists and was updated or is locked
    */
   virtual bool setInitValue(const std::string &hier_parname, const std::string &value) = 0;
+
+  /// Lock a parameter's init value. 
+  /**
+   * Lock so that this parameter's init value cannot be overwritten by
+   * any subsequent setInitValue call. This allows to emulate a hierarchical
+   * precendence since a top-level module can prevent the childs from setting
+   * init values by locking the init value before creating the subsystem.
+   *
+   * Returns false (and does not lock) if parameter is already existing 
+   * explicitely.
+   * Returns false (and does not lock) if no initial value is existing
+   * that can be locked.
+   *
+   * @param parname Hierarchical parameter name.
+   * @return        Success of the lock (false if already locked or already explicitely existing).
+   */
+  virtual bool lockInitValue(const std::string &parname) = 0;
   
   /// Get a parameter's value (independent of the implicit/explicit state of the parameter).
   /**

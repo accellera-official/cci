@@ -1,6 +1,10 @@
 ChangeLog
 ---------
 
+- moved license to own file (not changed the license)
+- added hierarchical precendence support by 
+- adding lock to initial values
+
 - added cci_param constructor with implementation pointer
 - changed global static factory function names and namespaces
 - changed broker.add_param to be called by cci_header class

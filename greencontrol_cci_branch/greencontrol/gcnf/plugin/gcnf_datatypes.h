@@ -13,26 +13,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -57,6 +40,8 @@ enum GCfgCommand {
   CMD_ADD_PARAM,
   /// Command: set the init value of a parameter (API -> plugin).
   CMD_SET_INIT_VAL,
+  /// Command: lock the init value of a parameter (API -> plugin).
+  CMD_LOCK_INIT_VAL,
   /// Command: get the value of a parameter (API -> plugin).
   CMD_GET_VAL,
   /// Command: get the pointer to a parameter (API -> plugin).
@@ -92,6 +77,8 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
       return std::string("CMD_ADD_PARAM");
     case CMD_SET_INIT_VAL:
       return std::string("CMD_SET_INIT_VAL");
+    case CMD_LOCK_INIT_VAL:
+      return std::string("CMD_LOCK_INIT_VAL");
     case CMD_GET_PARAM:
       return std::string("CMD_GET_PARAM");
     case CMD_EXISTS_PARAM:

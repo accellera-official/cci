@@ -12,26 +12,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -288,6 +271,21 @@ namespace cnf {
       mPrivPlugin.cmd_SET_INIT_VAL(parname, value);
       
       GCNF_DUMP_N(name(), "setInitValue: ... setting successfull");
+      return true;
+    }
+
+    /// @see gs::cnf::GCnf_Api::setInitValue
+    bool lockInitValue(const std::string &parname, std::string meta_data = "") {
+      if (!is_local_param(parname) || is_public_param(parname))
+        return mApi->lockInitValue(parname, meta_data);
+      GCNF_DUMP_N(name(), "lockInitValue("<<parname.c_str()<<")");      
+      
+      if (mPrivPlugin.cmd_LOCK_INIT_VAL(parname)) {      
+        GCNF_DUMP_N(name(), "lockInitValue: ... locking successfull");
+        return false;
+      } else {
+        GCNF_DUMP_N(name(), "lockInitValue: ... locking not successfull");
+      }
       return true;
     }
     

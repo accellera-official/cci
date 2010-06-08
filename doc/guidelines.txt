@@ -59,6 +59,13 @@ The callback order must match the registration order. This allows the
 tool to register all desired callbacks prior to all others, because it 
 gets the add_param() call at parameter construction.
 
+Note:
+This also allows to lock a parameter just on its creation on the highest
+hierarchical level, to allow OVM-like precedence (because the highest 
+level is able to register for new param callbacks before the lower ones).
+(This is true for all callbacks being registered with the same broker,
+which is usually the case, private brokers hide private params anyway.)
+
 
 ----------------------------------------------------------------
 

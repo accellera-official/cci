@@ -13,26 +13,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -81,6 +64,9 @@ protected:
 
     /// The init value (string representation) of the parameter.
     std::string init_value;
+    
+    /// Lock for the init value (only of interest if param == NULL)
+    bool init_value_locked;
 
     /// The parameter pointer (NULL if implicit)
     gs_param_base_T* param;
@@ -214,6 +200,12 @@ public:
       if (!is_explicit(hier_parname)) {
         GCNF_DUMP_N(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
         SC_REPORT_WARNING(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
+        // Check for lock
+        if (pos->second.init_value_locked) {
+          GCNF_DUMP_N(name(), "setInitValue: Parameter init value is locked!");
+          SC_REPORT_WARNING(name(), "setInitValue: Parameter init value is locked!");
+          return false;
+        } 
         pos->second.init_value = ivalue;
       }
       else {
@@ -225,6 +217,37 @@ public:
     return false; // parameter not new
   }
 
+  /// @see gs::cnf::param_db_if::lockInitValue
+  bool lockInitValue(const std::string &hier_parname) {
+    GCNF_DUMP_N(name(), "lockInitValue("<<hier_parname.c_str()<<")");      
+    param_iterator pos;
+    pos = m_parameter_database.find(hier_parname);
+    // If parameter not exists
+    if (pos == m_parameter_database.end()) {
+      SC_REPORT_WARNING(name(), "lockInitValue: Parameter no yet exists! Cannot lock a not existing init value!");
+      GCNF_DUMP_N(name(), "lockInitValue: Parameter not yet exists! Cannot lock a not existing init value!");
+      return false;
+    }
+    // If parameter exists
+    else {
+      // if parameter is implicit: warning
+      if (is_explicit(hier_parname)) {
+        SC_REPORT_WARNING(name(), "lockInitValue: Parameter already exists explicitely! Cannot lock an init value of an explicit parameter!");
+        GCNF_DUMP_N(name(), "lockInitValue: Parameter already exists explicitely! Cannot lock an init value of an explicit parameter!");
+        return false;
+      }
+      else {
+        if (pos->second.init_value_locked) {
+          SC_REPORT_WARNING(name(), "lockInitValue: Parameter init value already locked!");
+          GCNF_DUMP_N(name(), "lockInitValue: Parameter init value already locked!");
+          return false;
+        }
+        pos->second.init_value_locked = true;
+      }
+    }
+    return true;
+  }
+  
   /// @see gs::cnf::param_db_if::getValue
   std::string getValue(const std::string &hier_parname) {
     GCNF_DUMP_N(name(), "getValue("<<hier_parname.c_str()<<")");

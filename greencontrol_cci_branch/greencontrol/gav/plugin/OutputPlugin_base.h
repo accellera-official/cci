@@ -13,26 +13,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -192,10 +175,9 @@ namespace av {
     void new_param_callback(const std::string parname, const std::string value) {
       // check if the new parameter is a child of this
       if (parname.find(name()) == 0) {
-        GAV_DUMP_N(name(), "new (enabled) param callback for param '"<<parname.c_str()<<"'");
         // 1/ Check if only implicit
-        //     (if not: warning)
         if (mCnfApi->getPar(parname) == NULL) {
+          GAV_DUMP_N(name(), "new (enabled) param callback for implicit param '"<<parname.c_str()<<"'");
           // 2/ Create the parameter as bool
           gs_param<bool>* par = new gs_param<bool>(parname, value, true);
           enabled_params.push_back(par);
@@ -216,8 +198,10 @@ namespace av {
           GC_REGISTER_PARAM_CALLBACK(par, OutputPlugin_base, enabled_param_changed_callback);
         } 
         else {
-          GAV_DUMP_N(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
-          SC_REPORT_INFO(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
+          GAV_DUMP_N(name(), "new param callback for explicit param '"<<parname.c_str()<<"'");
+          // This propably has just been created by myself thus this function has been called again
+          //GAV_DUMP_N(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
+          //SC_REPORT_INFO(name(), "Notfied a new (enabled?) parameter which was not created by the OutputPlugin!");
         }
       }
     }

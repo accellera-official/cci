@@ -13,26 +13,9 @@
 //     http://www.eis.cs.tu-bs.de
 //
 //
-//   This program is free software.
-// 
-//   If you have no applicable agreement with GreenSocs Ltd, this software
-//   is licensed to you, and you can redistribute it and/or modify
-//   it under the terms of the GNU General Public License as published by
-//   the Free Software Foundation; either version 2 of the License, or
-//   (at your option) any later version.
-// 
-//   If you have a applicable agreement with GreenSocs Ltd, the terms of that
-//   agreement prevail.
-// 
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of the GNU General Public License
-//   along with this program; if not, write to the Free Software
-//   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-//   02110-1301  USA 
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
 // 
 // ENDLICENSETEXT
 
@@ -269,6 +252,16 @@ public:
         bool newAdded = m_param_db->setInitValue(tr->get_mSpecifier(), tr->get_mValue());
         if (newAdded) {
           notify_new_parameter = true;
+        }
+        break;
+      }
+        
+        // ////////////   Command CMD_LOCK_INIT_VAL   ////////////////////////////////// //
+    case CMD_LOCK_INIT_VAL:
+      {
+        GCNF_DUMP_N(name(), "CMD_LOCK_INIT_VAL: lock init value");
+        if (!m_param_db->lockInitValue(tr->get_mSpecifier())) {
+          tr->set_mError(1);
         }
         break;
       }
@@ -589,6 +582,8 @@ public:
         return std::string("Add an explicit parameter. May only be used by parameter owning API (API -> plugin).");
       case CMD_SET_INIT_VAL:
         return std::string("Set the init value of a parameter (API -> plugin).");
+      case CMD_LOCK_INIT_VAL:
+        return std::string("Lock the init value of a parameter (API -> plugin).");
       case CMD_GET_VAL:
         return std::string("Get the value of a parameter (API -> plugin).");
       case CMD_GET_PARAM:
