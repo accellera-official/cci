@@ -152,7 +152,7 @@ namespace cci_impl {
       // This has already been done in the cci_param constructor!
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
-      register_callback(cci::cnf::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      m_post_write_callback = register_callback(cci::cnf::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
@@ -201,14 +201,17 @@ namespace cci_impl {
     virtual bool is_initial_value() {
       // TODO: should be located where the init value is applied in the API (if object is already existing) and during param instantiation when database initial value is applied
       SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+      assert(!m_init_called && "init must have been called on construction");
       return m_is_initial_value;
     }
     
     virtual bool is_invalid_value() {
+      assert(!m_init_called && "init must have been called on construction");
       return m_is_invalid_value;
     }
     
     virtual void set_invalid_value() {
+      assert(!m_init_called && "init must have been called on construction");
       m_is_invalid_value = true;
     }
     
@@ -314,6 +317,8 @@ namespace cci_impl {
 
     bool m_init_called;
 
+    cci::shared_ptr<cci::cnf::callb_adapt_b> m_post_write_callback;
+    
   };
 
 
