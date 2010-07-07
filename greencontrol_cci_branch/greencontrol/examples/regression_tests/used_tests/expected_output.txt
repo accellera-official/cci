@@ -1,0 +1,102 @@
+** set init OM.int_param2
+** set init OM.int_param3
+** set init OM.int_param4
+** set init OM.int_param5
+** set init OMP.pint_param1_pub
+
+is_used check:
+   OM.int_param1 is_used = 0
+   OM.int_param2 is_used = 0
+   OM.int_param3 is_used = 0
+   OM.int_param4 is_used = 0
+   OM.int_param5 is_used = 0
+   OMP.pint_param1_pub is_used = 0
+
+All parameters in the GreenConfig database:
+  Number of parameters: 5
+   <implicit> : OM.int_param2       = 12    , UNCONSUMED!
+   <implicit> : OM.int_param3       = 13    , UNCONSUMED!
+   <implicit> : OM.int_param4       = 14    , UNCONSUMED!
+   <implicit> : OM.int_param5       = 15    , UNCONSUMED!
+   <implicit> : OMP.pint_param1_pub = 1001  , UNCONSUMED!
+
+** create module OM
+** create module OMP with private params
+** set init OMP.pint_param1_pub
+
+is_used check:
+   OM.int_param1 is_used = 1
+   OM.int_param2 is_used = 1
+   OM.int_param3 is_used = 1
+   OM.int_param4 is_used = 0
+   OM.int_param5 is_used = 0
+   OMP.pint_param1_pub is_used = 1
+
+All parameters in the GreenConfig database:
+  Number of parameters: 6
+   int        : OM.int_param1       = 0     , no attributes
+   int        : OM.int_param2       = 12    , no attributes
+   int        : OM.int_param3       = 13    , no attributes
+   <implicit> : OM.int_param4       = 14    , UNCONSUMED!
+   <implicit> : OM.int_param5       = 15    , UNCONSUMED!
+   int        : OMP.pint_param1_pub = 1001  , no attributes
+
+** get OM.int_param4
+** get OM.int_param5 (not_impact_is_used_status=true)
+
+is_used check:
+   OM.int_param1 is_used = 1
+   OM.int_param2 is_used = 1
+   OM.int_param3 is_used = 1
+   OM.int_param4 is_used = 1
+   OM.int_param5 is_used = 0
+   OMP.pint_param1_pub is_used = 1
+
+All parameters in the GreenConfig database:
+  Number of parameters: 6
+   int        : OM.int_param1       = 0     , no attributes
+   int        : OM.int_param2       = 12    , no attributes
+   int        : OM.int_param3       = 13    , no attributes
+   <implicit> : OM.int_param4       = 14
+   <implicit> : OM.int_param5       = 15    , UNCONSUMED!
+   int        : OMP.pint_param1_pub = 1001  , no attributes
+
+
+START SIMULATION
+END SIMULATION
+
+
+is_used check:
+   OM.int_param1 is_used = 1
+   OM.int_param2 is_used = 1
+   OM.int_param3 is_used = 1
+   OM.int_param4 is_used = 1
+   OM.int_param5 is_used = 0
+   OMP.pint_param1_pub is_used = 1
+
+All parameters in the GreenConfig database:
+  Number of parameters: 6
+   int        : OM.int_param1       = 0     , no attributes
+   int        : OM.int_param2       = 12    , no attributes
+   int        : OM.int_param3       = 13    , no attributes
+   <implicit> : OM.int_param4       = 14
+   <implicit> : OM.int_param5       = 15    , UNCONSUMED!
+   int        : OMP.pint_param1_pub = 1001  , no attributes
+
+** from view of private module
+All parameters in the GreenConfig database:
+  Number of parameters: 9
+
+Info: OMP.__gcnf_api___0: getPar: ... getting failed!
+
+Info: OMP.__gcnf_api___0: getPar: ... getting failed!
+   int        : OMP.pint_param2              = 0     , no attributes
+   int        : OMP.pint_param3              = 0     , no attributes
+   <implicit> : OMP.pint_param5_not_existing = 1005  , UNCONSUMED!
+   int        : OM.int_param1                = 0     , no attributes
+   int        : OM.int_param2                = 12    , no attributes
+   int        : OM.int_param3                = 13    , no attributes
+   <implicit> : OM.int_param4                = 14
+   <implicit> : OM.int_param5                = 15    , UNCONSUMED!
+   int        : OMP.pint_param1_pub          = 1001  , no attributes
+
