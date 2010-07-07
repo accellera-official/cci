@@ -47,28 +47,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     // ///////////////   Construction / Destruction   ///////////////////// //
 
     // Constructors shall be provided by the derived class:
-/*    
-    /// Empty constructor. Name will be set in base
-    explicit cci_param(); // TODO: make private?
-    explicit cci_param(const val_type& val); // TODO: allow this one?
-    
-    /// Constructor with (local/hierarchical) name.
-    explicit cci_param(const std::string& nam);
-    explicit cci_param(const char* nam       );
-    
-    /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false);
-    explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false);
-    explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false);
-    explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false);
-    
-    /// Constructor with (local/hierarchical) name and initial value.
-    explicit cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false);
-    explicit cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false);
-    
-    // Constructors with register_at_db bool
-    explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db);
-*/
+    // TODO: Copy as comment from cci_param.h
     
     /// Destructor
     virtual ~cci_param_if() { };
@@ -171,6 +150,18 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param  str         JSON string that should be converted to a value.
      */
     virtual void json_deserialize(T& target_val, const std::string& str) = 0;
+    
+
+    // //////////////////////////////////////////////////////////////////// //
+    // ///////////////   Get default Value   ////////////////////////////// //
+
+    
+    /// Get the parameter's original default value
+    /**
+     * @exception cci_exception_get_param Getting default value failed (if this parameter does not have a default value)
+     * @return This value is the default value being set in the constructor
+     */
+    virtual const T& get_default_value() = 0;
     
   };
     

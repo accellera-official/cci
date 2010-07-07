@@ -201,7 +201,6 @@ public:
     //bool notify_observers = false;     // if a parameter was changed and notifiers need to notified (if existing)
     bool notify_new_parameter = false; // if a NEW parameter was added or set
 
-    
     // According to the command fill the transaction or make actions
     switch (tr->get_mCmd()) {
 
@@ -215,11 +214,15 @@ public:
       {
         GCNF_DUMP_N(name(), "CMD_ADD_PARAM: add param");
         gs_param_base *par = static_cast<gs_param_base*>(tr->get_mLogPointer());
-        notify_new_parameter = true;
+        //notify_new_parameter = true;
         if (par != NULL) {
+#ifdef GCNF_OLD_NEW_PARAM_CALLBACK_BEHAVIOR_ENABLED
           if ( m_param_db->existsParam(par->getName())) notify_new_parameter = false;
+#endif
         } else {
+#ifdef GCNF_OLD_NEW_PARAM_CALLBACK_BEHAVIOR_ENABLED
           if ( m_param_db->existsParam(tr->get_mSpecifier()) ) notify_new_parameter = false;
+#endif
           GCNF_DUMP_N(name(), "Create new gs_param<string>: "<<tr->get_mSpecifier().c_str());
           // use special parameter constructor with register_at_db=false:
           par = new gs_param<std::string>(tr->get_mSpecifier(), tr->get_mValue(), NULL, true, false);
@@ -227,6 +230,10 @@ public:
 
         if ( ! m_param_db->addParam(par) ) {
           tr->set_mError(1);
+          notify_new_parameter = false;
+        }
+        else {
+          notify_new_parameter = true;
         }
         break;
       }
@@ -249,9 +256,14 @@ public:
     case CMD_SET_INIT_VAL:
       {
         GCNF_DUMP_N(name(), "CMD_SET_INIT_VAL: set init value to param");
-        bool newAdded = m_param_db->setInitValue(tr->get_mSpecifier(), tr->get_mValue());
-        if (newAdded) {
-          notify_new_parameter = true;
+        if (m_param_db->initValueLocked(tr->get_mSpecifier())) {
+          GCNF_DUMP_N(name(), "CMD_SET_INIT_VAL: init value was locked, thus not being set!");
+          tr->set_mError(2);
+        } else {
+          bool newAdded = m_param_db->setInitValue(tr->get_mSpecifier(), tr->get_mValue());
+          if (newAdded) {
+            notify_new_parameter = true;
+          }
         }
         break;
       }
@@ -271,7 +283,7 @@ public:
       {
         GCNF_DUMP_N(name(), "CMD_GET_VAL: get value of param");
         if ( m_param_db->existsParam(tr->get_mSpecifier())) {
-          tr->set_mValue(m_param_db->getValue(tr->get_mSpecifier()));
+          tr->set_mValue(m_param_db->getValue(tr->get_mSpecifier(), (tr->get_mAnyPointer() != NULL) ));
         } else {
           tr->set_mError(1);
           tr->set_mValue("");
@@ -307,7 +319,11 @@ public:
     case CMD_PARAM_HAS_BEEN_ACCESSED:
       {
         GCNF_DUMP_N(name(), "CMD_PARAM_HAS_BEEN_ACCESSED: is/had been param used");      
-        SC_REPORT_ERROR(name(), "TODO: CMD_PARAM_HAS_BEEN_ACCESSED not yet supported!");
+        if ( m_param_db->is_used(tr->get_mSpecifier()) ) {
+          // used
+          tr->set_mError(0);
+        }
+        else tr->set_mError(1); // not used
         break;
       }
         

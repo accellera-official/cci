@@ -422,6 +422,10 @@ namespace cnf {
     void init(const val_type &default_val) {
       // set my_value
       my_value = default_val;
+      // store default value
+      my_default_value = default_val;
+      // set m_default_value_was_set
+      m_default_value_was_set = true;
       // add to plugin database
       if (m_register_at_db) {
         m_api->addPar(this);
@@ -430,6 +434,8 @@ namespace cnf {
     /// Init method without value @see gs::cnf::gs_param_t::init(val_type &default_val)
     void init() {
       GS_PARAM_DUMP("Init gs_param<MessageConfiguration> " << m_par_name.c_str());
+      // set m_default_value_was_set
+      m_default_value_was_set = false;
       my_value = convertStringToValue(string(""));
       // add to plugin database
       if (m_register_at_db) {

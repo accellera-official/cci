@@ -407,6 +407,11 @@ public:
   const bool is_extended_array() const {
     return m_is_extended_array;
   }
+  
+  /// Returns if this parameter originally had a default value
+  const bool has_default_value() {
+    return m_default_value_was_set;
+  }
 
   /// Sets the documentation
   /**
@@ -954,7 +959,10 @@ protected:
   
   /// If this parameter is read-only
   bool m_locked;
-  
+
+  /// If this parameter has or had a default value (if the constructor with default value had been used)
+  bool m_default_value_was_set;
+
   /// Passwort needed to unlock the parameter or override the lock
   void* m_lock_pwd;
   

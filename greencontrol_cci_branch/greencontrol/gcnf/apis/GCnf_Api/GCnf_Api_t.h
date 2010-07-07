@@ -83,6 +83,7 @@ class GCnf_Api_t
 , public initialize_if
 , public cnf_api
 , public gc_port_if
+, public command_if
 {
 
   friend class GCnf_private_Api_T<gs_param_base_T, gs_param_T, ConfigPlugin_T>;
@@ -277,7 +278,7 @@ public:
 
   /// Called by gc_port through gc_port_if when notification arrives.
   /**
-   * Implements pc_port_if.
+   * Implements gc_port_if.
    * This method starts whenever a master triggers a payload-event.
    */
   void transport(ControlTransactionHandle &tr)
@@ -563,13 +564,9 @@ public:
     return p->getString();
   }
   
-  /// Get a parameter's value (string representation). Independent of the implicit or explicit status.
-  /**
-   * @param parname  Hierarchical name of the parameter whose value should be returned.
-   * @return  Value of the parameter, converted to the user-chosen type
-   */
-  const std::string getValue(const std::string &parname, std::string meta_data = "") {
-    GCNF_DUMP_N(name(), "getValue("<<parname.c_str()<<")");      
+  /// @see gs::cnf::cnf_api::getValue
+  const std::string getValue(const std::string &parname, std::string meta_data = "", const bool not_impact_is_used_status = false) {
+    GCNF_DUMP_N(name(), "getValue("<<parname.c_str()<<", not_impact_is_used_status="<<not_impact_is_used_status<<")");      
     // create Transaction an send it to config plugin
     ControlTransactionHandle th = m_gc_port.createTransaction();
     th->set_mService(CONFIG_SERVICE);
@@ -578,6 +575,10 @@ public:
     if (meta_data != "") {
       GCNF_DUMP_N(name(), "Setting Meta Data with the value "<<meta_data.c_str());
       th->set_mMetaData(meta_data);
+    }
+    if (not_impact_is_used_status) {
+      GCNF_DUMP_N(name(), "Setting mAnyPointer to bool not_impact_is_used_status");
+      th->set_mAnyPointer((void*)&not_impact_is_used_status);
     }
     
     m_gc_port->transport(th);
@@ -592,11 +593,7 @@ public:
     return th->get_mValue();
   }
 
-  /// Get a parameter pointer.
-  /**
-   * @param   parname   Hierarchical parameter name.
-   * @return  Pointer to the parameter base object (NULL if not existing).
-   */ 
+  /// @see gs::cnf::cnf_api::getPar
   gs_param_base_T* getPar(const std::string &parname, std::string meta_data = "") {
     GCNF_DUMP_N(name(), "getPar("<<parname.c_str()<<")");
 
@@ -655,7 +652,12 @@ public:
   /// Returns if the parameter has ever been used.
   /**
    * A parameter has been used if there is/was either a parameter object
-   * mapped to the initial value, or the initial value has ever been read.
+   * mapped to the initial value, or the initial value has ever been read
+   * (from the broker/ConfigAPI). 
+   * If there is no implicit/explicit parameter with this name this returns false.
+   *
+   * Note: exists_param, lock_init_value, set_init_value, get_param_list 
+   *       shall not impact the is_used status.
    *
    * @param parname  Full hierarchical parameter name.
    * @return If the parameter is or has been used.
@@ -964,51 +966,8 @@ public:
     }
     return *m_new_param_event;
   }
-  
-  /// Register callback function for notifications of new added (or first time implicitely set) parameters.
-  /**
-   * The callback works even during initialize-mode (elaboration time).
-   *
-   * Inside the callback functions no waits are allowed!
-   *
-   * The user may register any methods as callback functions which have
-   * the following signature:
-   * \code
-   * void method_name(const std::string parname, const std::string value);
-   * \endcode
-   *
-   *
-   * Usage example:
-   * \code
-   * class MyIP_Class
-   * : public sc_core::sc_module
-   * {
-   * public:
-   *   // some code [...]
-   *   
-   *   GC_nfApi my_GCnf_Api;
-   *
-   *   // Example code to register callback function
-   *   void main_action() {
-   *     // some code, parameters etc...
-   *     my_GCnf_Api.REGISTER_NEW_PARAM_CALLBACK(MyIP_Class, config_callback);
-   *   }
-   *
-   *   // Callback function with default signature.
-   *   void config_callback(const std::string parname, const std::string value) {
-   *     // some action
-   *   }
-   * };
-   * \endcode
-   *
-   * This method registers a callback which is done each time a parameter is added
-   * (without being an implicit parameter before) to the Config Plugin or an 
-   * (implicit) parameters value is set the first time (without being added before).
-   *
-   * @param callb      Pointer to the CallbAdapt_b object which contains the object pointer
-   *                   and the member function pointer.
-   * @return           Success of registering.
-   */
+
+  /// @see cnf_api::registerNewParamCallback
   bool registerNewParamCallback(CallbAdapt_b *callb) {
     const std::string parname = DUMMY_NAME;
     GCNF_DUMP_N(name(), "registerNewParamCallback(func_ptr)"); 

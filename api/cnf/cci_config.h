@@ -28,7 +28,7 @@
 //  The top-level include file is cci.h
 //
 
-#define CCI_CNF_VERBOSE
+//#define CCI_CNF_VERBOSE
 
 #ifdef CCI_CNF_VERBOSE
 # define CCI_CNF_DUMP(msg) { std::cout<<msg<<std::endl; } 

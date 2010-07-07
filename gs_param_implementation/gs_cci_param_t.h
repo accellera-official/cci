@@ -61,11 +61,20 @@ namespace cci_impl {
                             , const std::string& n
                             , const std::string &val
                             , bool force_top_level_name /*= false*/
-                            , bool register_at_db /*= true*/
-                            , bool has_default_value ) // if there is a default value
-    : m_gs_param(n, val, NULL, force_top_level_name, register_at_db) 
+                            , bool register_at_db /*= true*/)
+    : m_gs_param(n, val, NULL, force_top_level_name, register_at_db)
     , m_owner_par(owner_par)
-    , cci_base_param(owner_par, m_gs_param, force_top_level_name, register_at_db, has_default_value)
+    , cci_base_param(owner_par, m_gs_param, force_top_level_name, register_at_db, /*has_default_value=*/true)
+    {
+    }
+    
+    explicit gs_cci_param_t(my_return_type& owner_par
+                            , const std::string& n
+                            , bool force_top_level_name /*= false*/
+                            , bool register_at_db /*= true*/)
+    : m_gs_param(n, std::string(""), NULL, force_top_level_name, register_at_db, false) // default value disabled
+    , m_owner_par(owner_par)
+    , cci_base_param(owner_par, m_gs_param, force_top_level_name, register_at_db, /*has_default_value=*/false)
     {
     }
     
@@ -73,7 +82,8 @@ namespace cci_impl {
                             , const std::string& n 
                             , const val_type &val
                             , bool force_top_level_name /*= false*/
-                            , bool register_at_db /*= true*/ ) 
+                            , bool register_at_db /*= true*/
+                            , bool this_is_with_a_value ) // Just to make a difference (allow overloading) the constructor taking a string value 
     : m_gs_param((const std::string&)n, val, force_top_level_name) 
     , m_owner_par(owner_par)
     , cci_base_param(owner_par, m_gs_param, force_top_level_name, register_at_db, true)

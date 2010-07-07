@@ -34,6 +34,7 @@ namespace cnf {
   /// Show full database
   /**
    * Shows parameter type and name of all parameters in the db.
+   * Does not impact the is_used status.
    *
    * Example:
    *    type   : param.name
@@ -63,7 +64,7 @@ namespace cnf {
             ss.width(position_par_name - ss.str().length());
             ss << ": " << vec[i];
             ss.width(position_par_val - ss.str().length());
-            ss << " = " << api->getValue(vec[i]);
+            ss << " = " << api->getValue(vec[i], "", true); // not impact is_used status
             std::set<param_attribute> attbs = api->getPar(vec[i])->get_param_attributes();
             ss.width(position_par_attrib - ss.str().length());
             if (attbs.size() > 0) {
@@ -83,7 +84,8 @@ namespace cnf {
             ss.width(position_par_name - ss.str().length());
             ss << ": " << vec[i];
             ss.width(position_par_val - ss.str().length());
-            ss << " = " << api->getValue(vec[i]);
+            ss << " = " << api->getValue(vec[i], "", true); // not impact is_used status
+            if (api->is_used(vec[i])) ss << ", used"; else ss << ", not used";
           }
           std::cout << ss.str() << std::endl;
         }
@@ -143,7 +145,7 @@ namespace cnf {
           //std::cout << ss_vec[i]->str().length() << " \"" << ss_vec[i]->str() << "\"" << std::endl;
           ss_vec[i]->width(position_par_val_indentation_max - ss_vec[i]->str().length());
           *ss_vec[i] << "= ";
-          *ss_vec[i] << api->getValue(vec[i]);
+          *ss_vec[i] << api->getValue(vec[i], "", true); // not impact is_used status
           //std::cout << ss_vec[i]->str().length() << " \"" << ss_vec[i]->str() << "\"" << std::endl;
           // update max indentation
           //std::cout << "position_par_attrib_indentation_max["<<i<<"]=max("<<position_par_attrib_indentation_max<<","<<ss_vec[i]->str().length()<<")="<<std::max<unsigned int>(position_par_attrib_indentation_max, ss_vec[i]->str().length())<<std::endl;
@@ -151,12 +153,13 @@ namespace cnf {
         }
         position_par_attrib_indentation_max += 3;
         
-        // Parameter attributes
+        // Parameter attributes and is_used status
         for (unsigned int i = 0; i<vec.size(); i++) {
+          ss_vec[i]->width(position_par_attrib_indentation_max - ss_vec[i]->str().length());
           // explicit param
           if (api->getPar(vec[i])) {
             std::set<param_attribute> attbs = api->getPar(vec[i])->get_param_attributes();
-            ss_vec[i]->width(position_par_attrib_indentation_max - ss_vec[i]->str().length());
+            //ss_vec[i]->width(position_par_attrib_indentation_max - ss_vec[i]->str().length());
             *ss_vec[i] << ",";
             if (attbs.size() > 0) {
               *ss_vec[i] << attbs.size() <<" attributes: ";
@@ -168,8 +171,15 @@ namespace cnf {
               *ss_vec[i] << " no attributes";
             }
           }
+          // implicit param
+          else {
+            if (!api->is_used(vec[i])) {
+              *ss_vec[i] << ",";
+              *ss_vec[i] << " UNCONSUMED!";
+            }
+          }
         }
-        
+
         // Output
         for (unsigned int i = 0; i<vec.size(); i++) {
           std::cout << ss_vec[i]->str() << std::endl;

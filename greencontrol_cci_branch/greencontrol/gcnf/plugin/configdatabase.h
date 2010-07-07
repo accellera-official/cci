@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -67,17 +67,25 @@ protected:
     
     /// Lock for the init value (only of interest if param == NULL)
     bool init_value_locked;
+    
+    /// Status if this parameter ever has been used (object or read init value)
+    bool is_used;
 
     /// The parameter pointer (NULL if implicit)
     gs_param_base_T* param;
 
     /// Contructor
-    parameter(gs_param_base_T* par) {
+    parameter(gs_param_base_T* par)
+    : init_value_locked(false)
+    , is_used(false) {
       param = par;
+      if (param != NULL) is_used = true;
     }
 
     /// Contructor with init value
-    parameter(gs_param_base_T* par, const std::string ivalue) {
+    parameter(gs_param_base_T* par, const std::string ivalue)
+    : init_value_locked(false)
+    , is_used(false) {
       if (par != NULL) SC_REPORT_ERROR("ConfigDtabase::parameter constructor", "When creating implicit parameter with init value you cannot set the parmeter pointer!");
       assert(par == NULL);
       init_value = ivalue;
@@ -122,9 +130,16 @@ public:
       // Parameter already exists
       // If parameter is explicit, error:
       if (pos->second.param != NULL) {
-        GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): Error: Parameter is already existing (explicit)!");
+        GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<") (type: "<<par->getTypeString()<<"): Error: Parameter is already existing (explicit) (type: "<<(pos->second.param)->getTypeString()<<")!");
         std::string mes("addParam: Parameter '"); mes += par->getName(); mes += "' is already existing (explicit)!";
         SC_REPORT_WARNING(name(), mes.c_str());
+        // check type
+        if ((pos->second.param)->getType() != par->getType()
+            || (pos->second.param)->getTypeString() != par->getTypeString()) {
+          GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): Error: Existing explicit Parameter is of different type ("<<(pos->second.param)->getTypeString()<<") than the new one ("<<par->getTypeString()<<")!");
+          std::string mes("addParam: Existing explicit Parameter '"); mes += par->getName(); mes += "' is of different type!";
+          SC_REPORT_ERROR(name(), mes.c_str());
+        }
         // set init value anyway which has priority!
         parameter *p = &pos->second;
         if ((p->init_value).length() > 0) {
@@ -132,6 +147,7 @@ public:
           par->setString(p->init_value);
           // TODO: is_initial_value = true here
         }
+        p->is_used = true;
         return false;
       } 
       // If parameter implicit, make it explicit and discard the value
@@ -141,16 +157,18 @@ public:
         p->param = par;
         // set init value which has priority!
         if ((p->init_value).length() > 0) {
-          GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): set init value to '"<<p->init_value.c_str()<<"'");
+          GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<") (type: "<<par->getTypeString()<<"): set init value to '"<<p->init_value.c_str()<<"'");
           p->param->setString(p->init_value);
           // TODO: is_initial_value = true here
         }
+        p->is_used = true;
       }
     }
     // If parameter doesn't exist, create it as explicit with the initial value
     else {
-      GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): add new explicit parameter");
-      m_parameter_database.insert( make_pair(par->getName(), parameter(par)) );
+      GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<") (type: "<<par->getTypeString()<<"): add new explicit parameter");
+      param_iterator iter = (m_parameter_database.insert( make_pair(par->getName(), parameter(par)) )).first;
+      iter->second.is_used = true;
     }
     // now allowed for top-level params
     //} else {
@@ -198,14 +216,14 @@ public:
     else {
       // if parameter is implicit: warning
       if (!is_explicit(hier_parname)) {
-        GCNF_DUMP_N(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
-        SC_REPORT_WARNING(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
         // Check for lock
         if (pos->second.init_value_locked) {
           GCNF_DUMP_N(name(), "setInitValue: Parameter init value is locked!");
           SC_REPORT_WARNING(name(), "setInitValue: Parameter init value is locked!");
-          return false;
+          return false; // note: this is NOT an error code, it just means that the parameter was not added as new one!
         } 
+        GCNF_DUMP_N(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
+        SC_REPORT_WARNING(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
         pos->second.init_value = ivalue;
       }
       else {
@@ -230,7 +248,7 @@ public:
     }
     // If parameter exists
     else {
-      // if parameter is implicit: warning
+      // if parameter is explicit: warning
       if (is_explicit(hier_parname)) {
         SC_REPORT_WARNING(name(), "lockInitValue: Parameter already exists explicitely! Cannot lock an init value of an explicit parameter!");
         GCNF_DUMP_N(name(), "lockInitValue: Parameter already exists explicitely! Cannot lock an init value of an explicit parameter!");
@@ -248,8 +266,21 @@ public:
     return true;
   }
   
+  /// @see gs::cnf::param_db_if::initValueLocked
+  bool initValueLocked(const std::string &hier_parname) {
+    GCNF_DUMP_N(name(), "initValueLocked("<<hier_parname.c_str()<<")");      
+    param_iterator pos;
+    pos = m_parameter_database.find(hier_parname);
+    // If parameter not exists
+    if (pos == m_parameter_database.end()) {
+      GCNF_DUMP_N(name(), "initValueLocked: Parameter not yet exists!");
+      return false;
+    }
+    return pos->second.init_value_locked;
+  }
+
   /// @see gs::cnf::param_db_if::getValue
-  std::string getValue(const std::string &hier_parname) {
+  std::string getValue(const std::string &hier_parname, const bool not_impact_is_used_status = false) {
     GCNF_DUMP_N(name(), "getValue("<<hier_parname.c_str()<<")");
     gs_param_base_T* par = getParam(hier_parname);
     // return explicit value
@@ -260,9 +291,11 @@ public:
     else {
       param_iterator pos = m_parameter_database.find(hier_parname);
       if (pos != m_parameter_database.end()) {
-        // If parameter implicit, make it explicit and discard the value
+        // If parameter implicit, return the value
         if (pos->second.param == NULL) {
           parameter *p = &pos->second;
+          if (!not_impact_is_used_status) 
+          p->is_used = true; // is_used status now true
           return p->init_value;
         }
         // If parameter is explicit, should never happen!
@@ -310,6 +343,17 @@ public:
       return false;
     }
     return (pos->second.param != NULL);
+  }
+
+  /// @see gs::cnf::param_db_if::is_used
+  bool is_used(const std::string &hier_parname) {
+    GCNF_DUMP_N(name(), "is_used("<<hier_parname.c_str()<<")");
+    param_iterator pos;
+    pos = m_parameter_database.find(hier_parname);
+    if (pos == m_parameter_database.end()) {
+      return false;
+    }
+    return pos->second.is_used;
   }
 
   /// @see gs::cnf::param_db_if::getParametersVector

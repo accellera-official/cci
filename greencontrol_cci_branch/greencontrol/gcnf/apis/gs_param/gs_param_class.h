@@ -93,9 +93,9 @@ public:
   explicit gs_param(const std::string &nam, const val_type &val   , gs_param_array& parent_array, const bool force_top_level_name = false) : gs_param_t<val_type>(nam        , force_top_level_name, &parent_array, true) { gs_param_t<val_type>::init(val); }    
   explicit gs_param(const char *nam,        const val_type &val   , gs_param_array& parent_array, const bool force_top_level_name = false) : gs_param_t<val_type>(string(nam), force_top_level_name, &parent_array, true) { gs_param_t<val_type>::init(val); }    
 
-  // Constructors with register_at_db bool
-  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array* parent_array, const bool force_top_level_name, const bool register_at_db) : gs_param_t<val_type>(nam, force_top_level_name,  parent_array, register_at_db) { gs_param_t<val_type>::init(convertStringToValue(val));         } 
-  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array& parent_array, const bool force_top_level_name, const bool register_at_db) : gs_param_t<val_type>(nam, force_top_level_name, &parent_array, register_at_db) { gs_param_t<val_type>::init(convertStringToValue(val));         } 
+  // Constructors with register_at_db bool and optional parameter to disable the given default value
+  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array* parent_array, const bool force_top_level_name, const bool register_at_db, const bool has_default_value = true) : gs_param_t<val_type>(nam, force_top_level_name,  parent_array, register_at_db) { if (has_default_value) gs_param_t<val_type>::init(convertStringToValue(val)); else gs_param_t<val_type>::init(); }
+  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array& parent_array, const bool force_top_level_name, const bool register_at_db, const bool has_default_value = true) : gs_param_t<val_type>(nam, force_top_level_name, &parent_array, register_at_db) { if (has_default_value) gs_param_t<val_type>::init(convertStringToValue(val)); else gs_param_t<val_type>::init(); }
 
   /// Destructor
   virtual ~gs_param() { gs_param_t<val_type>::destruct_gs_param(); }
@@ -170,8 +170,8 @@ public:                                                                \
   explicit gs_param(const std::string &nam, const val_type &val   , gs_param_array& parent_array) : gs_param_t<val_type>(nam        , false, &parent_array, true) { gs_param_t<val_type>::init(val); }    \
   explicit gs_param(const char *nam,        const val_type &val   , gs_param_array& parent_array) : gs_param_t<val_type>(string(nam), false, &parent_array, true) { gs_param_t<val_type>::init(val); }    \
   \
-  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array* parent_array, const bool force_top_level_name, const bool register_at_db) : gs_param_t<val_type>(nam, force_top_level_name,  parent_array, register_at_db) { gs_param_t<val_type>::init(convertStringToValue(val));         } \
-  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array& parent_array, const bool force_top_level_name, const bool register_at_db) : gs_param_t<val_type>(nam, force_top_level_name, &parent_array, register_at_db) { gs_param_t<val_type>::init(convertStringToValue(val));         } \
+  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array* parent_array, const bool force_top_level_name, const bool register_at_db, const bool has_default_value = true) : gs_param_t<val_type>(nam, force_top_level_name,  parent_array, register_at_db) { if (has_default_value) gs_param_t<val_type>::init(convertStringToValue(val)); else gs_param_t<val_type>::init(); } \
+  explicit gs_param(const std::string &nam, const std::string &val, gs_param_array& parent_array, const bool force_top_level_name, const bool register_at_db, const bool has_default_value = true) : gs_param_t<val_type>(nam, force_top_level_name, &parent_array, register_at_db) { if (has_default_value) gs_param_t<val_type>::init(convertStringToValue(val)); else gs_param_t<val_type>::init(); } \
   \
   virtual ~gs_param() { gs_param_t<val_type>::destruct_gs_param(); }              \
                                                                                   \

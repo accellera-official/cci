@@ -47,6 +47,9 @@ class gs_param_t
 protected:
   /// Value of this parameter
   val_type my_value;
+  
+  /// Default value of this parameter
+  val_type my_default_value;
 
   /// String whose reference can be returned as string value
   mutable std::string return_string;
@@ -150,6 +153,10 @@ public:
     GS_PARAM_DUMP("Init gs_param_t "<< m_par_name.c_str());
     // set my_value
     my_value = default_val;
+    // store default value
+    my_default_value = default_val;
+    // set m_default_value_was_set
+    m_default_value_was_set = true;
     // add to plugin database
     if (m_register_at_db) {
       assert(m_api != NULL);
@@ -159,6 +166,8 @@ public:
   /// Init method without value @see gs::cnf::gs_param_t::init(val_type &default_val)
   void init() {
     GS_PARAM_DUMP("Init gs_param_t "<< m_par_name.c_str());
+    // set m_default_value_was_set
+    m_default_value_was_set = false;
     my_value = convertStringToValue(string(""));
     // add to plugin database
     if (m_register_at_db) {
@@ -340,6 +349,20 @@ public:
   //  convertValueToString(val);                                      
   //}
 
+  
+  // //////////////////////////////////////////////////////////////////// //
+  // ///////////////   Get default Value   ////////////////////////////// //
+  
+  
+  /// Get the parameter's original default value
+  /**
+   * @exception cci_exception_get_param Getting default value failed (if this parameter does not have a default value)
+   * @return This value is the default value being set in the constructor
+   */
+  virtual const val_type& get_default_value() {
+    return my_default_value;
+  }
+  
 protected:
   /// Get the value the string. Needed for construction of gs_param.
   /**

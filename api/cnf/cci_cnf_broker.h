@@ -120,7 +120,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Returns if the parameter has ever been used.
     /**
      * A parameter has been used if there is/was either a parameter object
-     * or handle mapped to the NVP, or the NVP's value has ever been read.
+     * or handle mapped to the NVP, or the NVP's value has ever been read 
+     * (from the broker).
      *
      * @param parname  Full hierarchical parameter name.
      * @return If the parameter is or has been used.

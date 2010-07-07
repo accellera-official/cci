@@ -82,8 +82,11 @@ namespace cci_impl {
     // Constructors with register_at_db bool
     explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
 */
-    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
-    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name = false) : base_type(owner_par, nam, val, force_top_level_name, true)   { /*base_type::init(); Done with InitParam function*/ }
+
+    //explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, /*register_at_db=*/true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name) : base_type(owner_par, nam, std::string(val), force_top_level_name, /*register_at_db=*/true                 )   { if (std::string(val).length()==0) assert(false && "Dies darf nicht auftreten, den anderen Konstruktor benutzen!"); /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name) : base_type(owner_par, nam, val,              force_top_level_name, /*register_at_db=*/true, /*(dummy)*/true)   { /*base_type::init(); Done with InitParam function*/ }
+    explicit cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool force_top_level_name) : base_type(owner_par, nam,                   force_top_level_name, /*register_at_db=*/true                 )   { /*base_type::init(); Done with InitParam function*/ }
   
     ~cci_param() {
     }
@@ -131,6 +134,14 @@ namespace cci_impl {
       // TODO: this is currently not a JSON but a GreenConfig specific string
       if (!base_type::m_gs_param.deserialize(target_val, str))
         CCI_THROW_ERROR(cci::cnf::cci_report_types::type().set_param_failed, "String conversion failed.");
+    }
+
+    // //////////////// CCI VALUE HANDLING /////////////////////////// //
+
+    const val_type& get_default_value() {
+      if (!base_type::m_gs_param.has_default_value())
+        CCI_THROW_ERROR(cci::cnf::cci_report_types::type().get_param_failed, "Param has no default value.");
+      return base_type::m_gs_param.get_default_value();
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //
@@ -236,6 +247,12 @@ namespace cci_impl {
     void json_deserialize(val_type& target_val, const std::string& str) {
       base_type::m_gs_param.deserialize(target_val, str);
     }    
+    
+    const val_type& get_default_value() {
+      if (!base_type::m_gs_param.has_default_value())
+        CCI_THROW_ERROR(cci::cnf::cci_report_types::type().get_param_failed, "Param has no default value.");
+      return base_type::m_gs_param.get_default_value();
+    }
     
     void set_value(const cci::cnf::cci_value& val) {
       if (val.type() != get_basic_type()) {

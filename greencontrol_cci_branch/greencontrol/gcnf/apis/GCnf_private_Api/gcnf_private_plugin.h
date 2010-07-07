@@ -87,9 +87,13 @@ namespace cnf {
       GCNF_DUMP_N(name(), "cmd_ADD_PARAM: add param");
       bool notify_new_parameter = true;
       if (par != NULL) {
+#ifdef GCNF_OLD_NEW_PARAM_CALLBACK_BEHAVIOR_ENABLED
         if ( m_param_db->existsParam(par->getName())) notify_new_parameter = false;
+#endif
       } else {
+#ifdef GCNF_OLD_NEW_PARAM_CALLBACK_BEHAVIOR_ENABLED
         if ( m_param_db->existsParam(pname) ) notify_new_parameter = false;
+#endif
         GCNF_DUMP_N(name(), "Create new gs_param<string>: "<<pname.c_str());
         // use special parameter constructor with register_at_db=false:
         par = new gs_param_STRING_T(pname, def_val, NULL, true, false);
@@ -118,11 +122,17 @@ namespace cnf {
     }
       
     // ////////////   Command CMD_SET_INIT_VAL   ////////////////////////////////// //
-    void cmd_SET_INIT_VAL(const std::string& pname, const std::string& val) {
+    bool cmd_SET_INIT_VAL(const std::string& pname, const std::string& val) {
       GCNF_DUMP_N(name(), "CMD_SET_INIT_VAL: set init value to param");
-      if (  m_param_db->setInitValue(pname, val)  ) {
-        sendNewParameterNotify(NULL, pname, val);
+      if (m_param_db->initValueLocked(pname)) {
+        GCNF_DUMP_N(name(), "CMD_SET_INIT_VAL: init value was locked, thus not being set!");
+        return false;
+      } else {
+        if (  m_param_db->setInitValue(pname, val)  ) {
+          sendNewParameterNotify(NULL, pname, val);
+        }
       }
+      return true;
     }
 
     // ////////////   Command CMD_LOCK_INIT_VAL   ////////////////////////////////// //
@@ -132,10 +142,10 @@ namespace cnf {
     }
     
     // ////////////   Command CMD_GET_VAL   ////////////////////////////////// //
-    bool cmd_GET_VAL(const std::string& pname, std::string& val) {
+    bool cmd_GET_VAL(const std::string& pname, std::string& val, const bool not_impact_is_used_status) {
       GCNF_DUMP_N(name(), "CMD_GET_VAL: get value of param");
       if ( m_param_db->existsParam(pname)) {
-        val = m_param_db->getValue(pname);
+        val = m_param_db->getValue(pname, not_impact_is_used_status);
       } else {
         val = "";
         return false;
@@ -160,7 +170,15 @@ namespace cnf {
       return true;
     }
 
-          
+    bool cmd_CMD_PARAM_HAS_BEEN_ACCESSED(const std::string pname) {
+      GCNF_DUMP_N(name(), "CMD_PARAM_HAS_BEEN_ACCESSED: is/had been param used");      
+      if ( m_param_db->is_used(pname) ) {
+        // used
+        return true;
+      }
+      return false; // not used
+    }
+    
     // ////////////   Command CMD_GET_PARAM_LIST_VEC   /////////////////////////// //
     const std::vector<std::string> cmd_GET_PARAM_LIST_VEC(const std::string& spec) {
       GCNF_DUMP_N(name(), "CMD_GET_PARAM_LIST_VEC: get param list");      

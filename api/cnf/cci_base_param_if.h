@@ -186,7 +186,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
     virtual cci_value get_value() = 0;
-    
+
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////////   Documentation   //////////////////////////// //

@@ -55,6 +55,9 @@ namespace cnf {
   #ifndef USE_BOOST_PROG_OPT
   # define USE_GETOPT
   #endif
+
+  // if to enable old new param callback behavior which calls not again when a param is implicit and becomes explicit (changed after release 4.0.1)
+  //#define GCNF_OLD_NEW_PARAM_CALLBACK_BEHAVIOR_ENABLED
   
   // if to enable the lock feature (slows down write accesses to parameters a bit)
   #define GCNF_ENABLE_GS_PARAM_LOCK

@@ -57,6 +57,8 @@ public:
    * If the parameter already exists as implicit parameter, change it to an explicit
    * parameter but do not overwrite the value with the initial value overgiven here.
    *
+   * This impacts the is_used status!
+   *
    * If the parameter already exists as explicit parameter, return an error (false).
    *
    * Note: this method (and all related methods) must not call any of the 
@@ -71,7 +73,8 @@ public:
 
   /// Removes the parameter from the database (because it will be deleted)
   /**
-   * Removes the parameter independent from implicit/explicit.
+   * Removes the parameter object independent from implicit/explicit
+   * while keeping the initial value (and keeping the is_used status).
    *
    * @param par  Parameter pointer to the parameter that should be removed.
    * @return     If the removement was successful.
@@ -92,7 +95,7 @@ public:
    * @param hier_parname Hierarchical parameter name (Delimiter-separated).
    * @param value        init value which has to be set. The default value of an implicit parameter has priority to the initial value of a new added parameter.
    * @return             true: parameter was not yet existing in database and was added
-   *                     false: parameter exists and was updated or is locked
+   *                     false: parameter exists and was updated
    */
   virtual bool setInitValue(const std::string &hier_parname, const std::string &value) = 0;
 
@@ -113,6 +116,19 @@ public:
    */
   virtual bool lockInitValue(const std::string &parname) = 0;
   
+  /// If a parameter's init value is locked. 
+  /**
+   * Returns true when the implicit parameter's init value is locked,
+   * returns also true if the init value of an explicit parameter is 
+   * marked as locked.
+   * Returns false if it is not locked or if this parameter does not 
+   * yet exist implicitely at all.
+   *
+   * @param parname Hierarchical parameter name.
+   * @return        If the init value is locked (true also if explicite already)
+   */
+  virtual bool initValueLocked(const std::string &parname) = 0;
+
   /// Get a parameter's value (independent of the implicit/explicit state of the parameter).
   /**
    * If the parameter does not exist, return empty string.
@@ -120,10 +136,13 @@ public:
    * using the setInitValue call.
    * If the parameter is explicit, return the current value.
    *
+   * This impacts the is_used status!
+   *
    * @param hier_parname Hierarchical parameter name (Delimiter-separated).
+   * @param not_impact_is_used_status  If this get call shall impact the is_used status of this potentially implicit parameter. Shall only be set to true when called by some analysis (e.g. functional coverage) tools.
    * @return             Value of the param (init value if implicit).
    */
-  virtual std::string getValue(const std::string &hier_parname) = 0;
+  virtual std::string getValue(const std::string &hier_parname, const bool not_impact_is_used_status = false) = 0;
   
   /// Get a parameter pointer.
   /**
@@ -152,6 +171,20 @@ public:
    */
   virtual bool is_explicit(const std::string &hier_parname) = 0;
 
+  /// Returns if the parameter has ever been used.
+  /**
+   * A parameter has been used if there is/was either a parameter object
+   * mapped to the initial value, or the initial value has ever been read.
+   * If there is no implicit/explicit parameter with this name this returns false.
+   *
+   * Note: exists_param, lock_init_value, set_init_value, get_param_list 
+   *       shall not impact the is_used status.
+   *
+   * @param parname  Hierarchical parameter name.
+   * @return If the parameter is or has been used.
+   */
+  virtual bool is_used(const std::string &hier_parname) = 0;
+  
   /// Returns a vector of strings of all parameters existing in the database.
   /**
    * @return All parameters (implicit and explicit) in the ConfigPlugin.

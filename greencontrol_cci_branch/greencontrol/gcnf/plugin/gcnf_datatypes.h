@@ -108,8 +108,8 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
     // default, used when not specified
     PARTYPE_NOT_AVAILABLE = 0,
     // POD
-    PARTYPE_INT,
-    PARTYPE_UINT,
+    PARTYPE_INT, // =  LONG (for 32 bit)
+    PARTYPE_UINT,// = ULONG (for 32 bit)
     PARTYPE_BOOL,
     PARTYPE_DOUBLE,
     PARTYPE_FLOAT,

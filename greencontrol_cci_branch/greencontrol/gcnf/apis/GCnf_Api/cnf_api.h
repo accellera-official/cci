@@ -134,9 +134,10 @@ public:
   /// Get a parameter's value (string representation). Independent of the implicit or explicit status.
   /**
    * @param parname  Hierarchical name of the parameter whose value should be returned.
+   * @param not_impact_is_used_status  If this get call shall impact the is_used status of this potentially implicit parameter. Shall only be set to true when called by some analysis (e.g. functional coverage) tools.
    * @return  Value of the parameter, converted to the user-chosen type
    */
-  virtual const std::string getValue(const std::string &parname, std::string meta_data = "") = 0;
+  virtual const std::string getValue(const std::string &parname, std::string meta_data = "", const bool not_impact_is_used_status = false) = 0;
 
   // TODO
   //template<class T>
@@ -160,7 +161,12 @@ public:
   /// Returns if the parameter has ever been used.
   /**
    * A parameter has been used if there is/was either a parameter object
-   * mapped to the initial value, or the initial value has ever been read.
+   * mapped to the initial value, or the initial value has ever been read
+   * (from the broker/ConfigAPI). 
+   * If there is no implicit/explicit parameter with this name this returns false.
+   *
+   * Note: exists_param, lock_init_value, set_init_value, get_param_list 
+   *       shall not impact the is_used status.
    *
    * @param parname  Full hierarchical parameter name.
    * @return If the parameter is or has been used.
@@ -232,7 +238,7 @@ public:
 #define REGISTER_CALLBACK(class, method, parname)                \
 registerCallback(parname, new gs::cnf::CallbAdapt< class >(this, &class::method));
   
-  // Makro for registering new parameter callback functions (see method registerCallback).
+  // Makro for registering new parameter callback functions (see method registerNewParamCallback).
 #define REGISTER_NEW_PARAM_CALLBACK(class, method)                \
 registerNewParamCallback(new gs::cnf::CallbAdapt< class >(this, &class::method));
   
@@ -316,7 +322,7 @@ registerNewParamCallback(new gs::cnf::CallbAdapt< class >(this, &class::method))
    */
   virtual sc_event& getNewParamEvent() throw (RegisterObserverFailedException) = 0;
   
-  /// Register callback function for notifications of new added (or first time implicitely set) parameters.
+  /// Register callback function for notifications of new added (as explicite) or first time implicitely set parameters.
   /**
    * The callback works even during initialize-mode (elaboration time).
    *
@@ -347,14 +353,15 @@ registerNewParamCallback(new gs::cnf::CallbAdapt< class >(this, &class::method))
    *
    *   // Callback function with default signature.
    *   void config_callback(const std::string parname, const std::string value) {
-   *     // some action
+   *     // some action, make sure to check if explicit
    *   }
    * };
    * \endcode
    *
-   * This method registers a callback which is done each time a parameter is added
-   * (without being an implicit parameter before) to the Config Plugin or an 
-   * (implicit) parameters value is set the first time (without being added before).
+   * This method registers a callback which is called each time <br>
+   * a) a parameter is added to the Config Plugin as an explicit parameter
+   *    (even if it has been implicit before) and
+   * b) a parameter's implicit value is set the first time (without being explicit before).
    *
    * @param callb      Pointer to the CallbAdapt_b object which contains the object pointer
    *                   and the member function pointer.

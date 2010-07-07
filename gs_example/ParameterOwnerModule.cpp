@@ -25,15 +25,25 @@ void ParameterOwnerModule::main_action() {
   assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
 
   // demonstrate is_default_value
+  cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
+  cout << name() << ": uint_param="<<(dec)<< uint_param <<std::endl;
+  cout << name() << ": uint_param is_default_value()=" << uint_param.is_default_value()<<endl;
+  uint_param = 12000;
+  cout << name() << ": set uint_param="<<(dec)<< uint_param <<std::endl;
   cout << name() << ": uint_param is_default_value()=" << uint_param.is_default_value()<<endl;
   uint_param = 10;
+  cout << name() << ": set uint_param="<<(dec)<< uint_param <<std::endl;
   cout << name() << ": uint_param is_default_value()=" << uint_param.is_default_value()<<endl<<endl;
+
+  // demonstrate has_default_value
+  cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
+  cout << name() << ": bool_param get_default_value()=" << bool_param.get_default_value()<<endl;
 
   // demonstrate is_invalid_value
   cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
   bool_param = true;
   cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
-  bool_param.set_invalid_value();
+  bool_param.set_invalid_value(); 
   cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl<<endl;
   
   wait(1, SC_NS);
