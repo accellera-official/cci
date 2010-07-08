@@ -1,6 +1,15 @@
 ChangeLog
 ---------
 
+- added broker function get_json_string_keep_unused
+
+- added get_default_value to cci_param interface
+- added cci_param constructors (eliminating optional function parameters)
+- underlying gs_param:
+  - added default value
+  - added is_used status (and get not impacting that status)
+  - added internal init value locked check
+
 - moved license to own file (not changed the license)
 - added hierarchical precendence support by 
 - adding lock to initial values
