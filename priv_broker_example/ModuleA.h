@@ -47,7 +47,7 @@ public:
   , uint_param("uint_param", 12000, false, get_broker() )
   , uint_param2("uint_param2", 12, false, get_broker() )
   , str_param ("str_param", "This is a test string.", false, get_broker())
-  , bool_param("bool_param", "", false, get_broker()) // no default value
+  , bool_param("bool_param", false, get_broker()) // no default value
   , m_modB("ModuleB")
   { 
     SC_THREAD(main_action);

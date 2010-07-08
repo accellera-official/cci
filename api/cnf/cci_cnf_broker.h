@@ -84,10 +84,22 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * This accesses the parameter's NVP and works
      * for implicit and explicit parameters.
      *
+     * See cci_cnf_broker::get_json_string_keep_unused to do the same without impacting the used status.
+     *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  JSON string of the parameter's value
      */
     virtual const std::string get_json_string(const std::string &parname) = 0;
+
+    /// Get a parameter's value (like cci_cnf_broker::get_json_string), but not impacting the used status
+    /**
+     * This is to be used only by tools, e.g. functional coverage tools.
+     *
+     * @see get_json_string
+     * @param parname  Full hierarchical name of the parameter whose value should be returned.
+     * @return  JSON string of the parameter's value
+     */
+    virtual const std::string get_json_string_keep_unused(const std::string &parname) = 0;
 
     /// Get a parameter pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
     /**

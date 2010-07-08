@@ -45,6 +45,12 @@ const std::string cci::cnf::gs_cci_cnf_broker::get_json_string(const std::string
   return m_gcnf_api->getValue(parname);
 }
 
+const std::string cci::cnf::gs_cci_cnf_broker::get_json_string_keep_unused(const std::string &parname) {
+  // TODO: use JSON
+  return m_gcnf_api->getValue(parname, "", true);
+}
+
+
 cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param(const std::string &parname) {
   std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
   if( iter != m_mirrored_registry.end() ) {

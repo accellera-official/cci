@@ -356,7 +356,8 @@ public:
   
   /// Get the parameter's original default value
   /**
-   * @exception cci_exception_get_param Getting default value failed (if this parameter does not have a default value)
+   * The returned value is uninitialized if the default had not been set, so please test gs_param_base::has_default_value before!
+   *
    * @return This value is the default value being set in the constructor
    */
   virtual const val_type& get_default_value() {

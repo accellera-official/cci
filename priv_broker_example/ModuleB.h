@@ -42,7 +42,7 @@ public:
   , uint_param("uint_param", 12000, false, cci::cnf::get_cnf_broker_instance(this))
   , uint_param2("uint_param2", 12, false, cci::cnf::get_cnf_broker_instance(this))
   , str_param ("str_param", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(this))
-  , bool_param("bool_param", "", false, cci::cnf::get_cnf_broker_instance(this)) // no default value
+  , bool_param("bool_param", false, cci::cnf::get_cnf_broker_instance(this)) // no default value
   { 
     SC_THREAD(main_action);
   }

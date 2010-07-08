@@ -47,6 +47,8 @@ namespace cci {
 
     const std::string get_json_string(const std::string &parname);
 
+    const std::string get_json_string_keep_unused(const std::string &parname);
+
     cci_base_param* get_param(const std::string &parname);
     
     bool exists_param(const std::string &parname);
