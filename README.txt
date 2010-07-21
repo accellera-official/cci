@@ -21,6 +21,7 @@ or
   - Makefiles.defs
 
 - compile in
+  - cci
   - gs_api_implementation
   - gs_param_implementation
   - gs_example (or other example)

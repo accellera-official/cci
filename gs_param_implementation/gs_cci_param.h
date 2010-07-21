@@ -271,7 +271,7 @@ namespace cci_impl {
           CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Applied cci value not available for this param type.");
           break;
         case cci::cnf::partype_string:
-          set(val.get_string());
+          base_type::set(val.get_string());
           break;
         default:
           assert(false && "This should never happen!");

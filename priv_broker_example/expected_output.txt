@@ -1,0 +1,66 @@
+Created new GCnf_Api CCI_API_INSTANCE
+new impl_par=0x203aa4
+new impl_par=0x203d84
+new impl_par=0x2040a4
+new impl_par=0x2043b4
+new impl_par=0x204724
+new impl_par=0x204a94
+new impl_par=0x204de4
+new impl_par=0x205114
+new impl_par=0x205444
+new impl_par=0x2057d4
+
+------ sc_start() ----------------
+
+----------------------------
+
+
+**** Parameter list (in Observer): 
+   ModuleA.int_param
+
+
+----------------------------
+
+
+**** Parameter list (in ModuleA.ModuleB): 
+   ModuleA.ModuleB.bool_param
+   ModuleA.ModuleB.int_param
+   ModuleA.ModuleB.str_param
+   ModuleA.ModuleB.uint_param
+   ModuleA.ModuleB.uint_param2
+   ModuleA.bool_param
+   ModuleA.str_param
+   ModuleA.uint_param
+   ModuleA.uint_param2
+   ModuleA.int_param
+
+
+----------------------------
+
+**** Parameter list (in ModuleA): 
+   ModuleA.ModuleB.bool_param
+   ModuleA.ModuleB.int_param
+   ModuleA.ModuleB.str_param
+   ModuleA.ModuleB.uint_param
+   ModuleA.ModuleB.uint_param2
+   ModuleA.bool_param
+   ModuleA.str_param
+   ModuleA.uint_param
+   ModuleA.uint_param2
+   ModuleA.int_param
+
+
+----------------------------
+
+------ sc_start() returned -------
+
+delete param=0xbfffe8f0
+delete param=0xbfffe8e4
+delete param=0xbfffe8d8
+delete param=0xbfffe8cc
+delete param=0xbfffe8c0
+delete param=0xbfffe858
+delete param=0xbfffe84c
+delete param=0xbfffe840
+delete param=0xbfffe834
+delete param=0xbfffe828

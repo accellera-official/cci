@@ -12,18 +12,16 @@ MODULE = testbench
 SRCS = testbench.cpp \
        ModuleA.cpp \
        ModuleB.cpp \
-       ObserverModule.cpp \
-       ../gs_api_implementation/cci_api.cpp \
-       ../gs_api_implementation/gs_cci_cnf_broker.cpp 
+       ObserverModule.cpp
 
 OBJS = testbench.o \
        ModuleA.o \
-       ModuleA.o \
-       ObserverModule.o \
-       cci_api.o \
-       gs_cci_cnf_broker.o
+       ModuleB.o \
+       ObserverModule.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
+
+EXTRA_LIBS = -lcciapiimpl -lcciparamimpl -lcciapi
 
 #include ../Makefile.gspm
 include ../Makefile.defs

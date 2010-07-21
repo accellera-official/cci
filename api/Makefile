@@ -4,13 +4,9 @@ OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 
-SRCS = cci_api.cpp \
-       gs_cci_cnf_broker.cpp \
-       gs_cci_cnf_private_broker.cpp
+SRCS = cnf/cci_broker_module.cpp
 
-OBJS = cci_api.o \
-       gs_cci_cnf_broker.o \
-       gs_cci_cnf_private_broker.o
+OBJS = cnf/cci_broker_module.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
@@ -54,7 +50,7 @@ LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
 #all: $(EXE)
 
 all: myprog
-	ar -r "libcciapiimpl.a" *.o
+	ar -r "libcciapi.a" *.o
 	rm -f  *.o
 
 myprog: $(OBJS)
@@ -66,4 +62,4 @@ myprog: $(OBJS)
 	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
 
 clean:
-	rm -f  *.o libcciapiimpl.a
+	rm -f  *.o libcciapi.a
