@@ -59,7 +59,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Set the value of this parameter to the value of another cci_param.
     /**
-     * @exception cci::cnf::cci_report_types::set_param_failed Setting value failed
+     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
      * @param v  Parameter where the value should be read from.
      * @return   Pointer to this.
      */
@@ -71,7 +71,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Set the value of this parameter.
     /**
-     * @exception cci::cnf::cci_report_types::set_param_failed Setting value failed
+     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
      * @param v  Value which has to be set.
      * @return   Pointer to this.
      */
@@ -83,7 +83,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Get the value of this parameter.
     /**
-     * @exception cci::cnf::cci_report_types::get_param_failed Getting value failed
+     * @exception cci::cnf::cci_report::get_param_failed Getting value failed
      * @return Value of the parameter.
      */
     virtual operator const T& () const = 0;/* { 
@@ -97,21 +97,21 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Set the value of this parameter.
     /**
-     * @exception cci::cnf::cci_report_types::set_param_failed Setting value failed
+     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
      * @param val  The new value for this parameter.
      */
     virtual void set(const T& val) = 0;
 
     /// Returns the value of this parameter.
     /**
-     * @exception cci::cnf::cci_report_types::get_param_failed Getting value failed
+     * @exception cci::cnf::cci_report::get_param_failed Getting value failed
      * @return Value
      */
     virtual const T& get() const = 0;
     
     /// Set the value of this parameter overriding a lock.
     /**
-     * @exception cci::cnf::cci_report_types::set_param_failed Setting value failed
+     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
      * @param val  The new value for this parameter.
      * @param lock_pwd  Password needed for the lock (if needed, else NULL)
      */
@@ -131,7 +131,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *
      * Direct parameter access @see cci_base_param::json_serialize
      *
-     * @exception cci::cnf::cci_report_types::get_param_failed Converting value failed
+     * @exception cci::cnf::cci_report::get_param_failed Converting value failed
      * @param val  Value that should be converted.
      * @return JSON string representation of the value.
      */
@@ -145,7 +145,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * - Do not write to target_val if deserialization fails!
      * - Set target_val to the default value if str is empty (=="").
      *
-     * @exception cci::cnf::cci_report_types::set_param_failed Converting value failed
+     * @exception cci::cnf::cci_report::set_param_failed Converting value failed
      * @param  target_val  Reference to the value that should be set.
      * @param  str         JSON string that should be converted to a value.
      */

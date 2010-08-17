@@ -41,8 +41,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * representation of the value, e.g. the type is cci::partype_number, the correct
    * get function would be get_int64(), but also get_int(), get_string() and get_real() 
    * might return valid string representations. If a particular get function cannot 
-   * return a valid representation of the value, an sc_report error of id
-   * cci_report_types::cci_value_failure is thrown.
+   * return a valid representation of the value, an sc_report error of type
+   * cci_report::cci_value_failure is thrown.
    */
   class cci_value {
   public:
@@ -77,42 +77,42 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Returns the value's string representation
     /**
-     * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
+     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's string representation.
      */
     const std::string&      get_string()   const;
     
     /// Returns the value's list representation
     /**
-     * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
+     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's list representation.
      */
     const cci_value_list&   get_list() const;
     
     /// Returns the value's bool representation
     /**
-     * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
+     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's bool representation.
      */
     bool           get_bool()  const;
     
     /// Returns the value's int representation
     /**
-     * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
+     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's int representation.
      */
     int            get_int()   const;
     
     /// Returns the value's int64 representation
     /**
-     * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
+     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's int64 representation.
      */
     sc_dt::int64 get_int64() const;
     
     /// Returns the value's double representation
     /**
-     * @throw cci_report_types::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
+     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's double representation.
      */
     double         get_real()  const;

@@ -120,7 +120,7 @@ namespace cci_impl {
     
     virtual void set(const val_type& val) {
       if (!m_gs_param.setValue(val))
-        CCI_THROW_ERROR(cci::cnf::cci_report_types::type().set_param_failed, "Bad value.");
+        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Bad value.");
     }
     
     virtual const val_type& get() const {

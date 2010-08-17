@@ -29,45 +29,59 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   
   // ///////////////////// Error handling /////////////////////// //
 
-  /// Error/warning/info types class for sc_reports, using id prefix <code>/OSCI/CCI/</code>
+  /// Error/warning/info type class for sc_reports, using id prefix CCI_SC_REPORT_MSG_TYPE_PREFIX
   /**
    * Usage:
    * <code>
-   * CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Any report text");
+   * CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Any report text");
+   * // Catch:
+   * try {
+   *   b = bool_param.get_default_value(); // e.g.
+   * } catch(sc_core::sc_report e) {
+   *   // If get_param_failed error, catch it
+   *   if (strcmp(e.get_msg_type(), cci::cnf::cci_report::get_param_failed().get_msg_type()) == 0)
+   *     cout <<endl<< name() << ": Caught " << e.what() << endl;
+   *   // If other error, throw it again
+   *   else throw e;
+   * }
    * </code>
-   * @todo This report error/warning/info types class could be made more elegant!
+   * @todo Shall this report error/warning/info type class be made more elegant?
    */
-  class cci_report_types {
-
-  protected:
-    cci_report_types()
-    : set_param_failed("set_param_failed")
-    , get_param_failed("get_param_failed")
-    , add_param_failed("add_param_failed")
-    , remove_param_failed("remove_param_failed")
-    , cci_value_failure("cci_value_failure")
-    {}
+  struct cci_report_base
+  : public std::string {
     
-  public:
-    /// Static function to be called to get accesses to the cci_report_types instances
-    static const cci_report_types& type() {
-      static cci_report_types t = cci_report_types();
-      return t;
+    cci_report_base(const char* _type) : std::string(_type) {}
+    
+    const char* get_msg_type() const {
+      static std::stringstream sid; 
+      if (sid.str().empty()) sid << CCI_SC_REPORT_MSG_TYPE_PREFIX << *this;
+      return sid.str().c_str();
     }
-    
-    const std::string set_param_failed;         // set parameter failed
-    // set_param_bad_type;     // provided value is of the wrong type
-    // set_param_bad_value;    // provided value is not useful (out of range or illegal for other reason)
-    // set_param_not_settable; // this parameter is not settable TODO: supported?
-    // set_param_init_value_failed; // the setting of the initial value in the database failed
-    const std::string get_param_failed;         // get parameter failed
-    // get_param_not_gettable; // param not gettable TODO: supported?
-    const std::string add_param_failed;         // parameter not added
-    // add_param_success_but_renamed; // parameter added successfully but it has been renamed automatically
-    const std::string remove_param_failed;                 // Removing parameter from database failed
-    // remove_param_failed_not_available; // The given pointer was not in the registry (e.g. it was NULL or simply not there)
-    const std::string cci_value_failure;
+    const char* get_type() const {
+      static std::stringstream sid; 
+      if (sid.str().empty()) sid << *this;
+      return sid.str().c_str();
+    }
+    //operator std::string&() const { return *this; }
+    //std::string& operator&() {return *this; }
   };
+
+  #define CCI_REPORT_FUNCTION_FOR(REPORT_NAME)   \
+    static const cci_report_base& REPORT_NAME() { \
+      static cci_report_base t = cci_report_base(#REPORT_NAME); \
+      return t; \
+    }
+  class cci_report {
+  protected:
+    cci_report()  {}
+  public:
+    CCI_REPORT_FUNCTION_FOR(set_param_failed)
+    CCI_REPORT_FUNCTION_FOR(get_param_failed)
+    CCI_REPORT_FUNCTION_FOR(add_param_failed)
+    CCI_REPORT_FUNCTION_FOR(remove_param_failed)
+    CCI_REPORT_FUNCTION_FOR(cci_value_failure)
+  };
+
 
 
 #define CCI_THROW_ERROR(_id, _message) { \

@@ -30,13 +30,13 @@ cci::cnf::gs_cci_cnf_broker::~gs_cci_cnf_broker() {
 void cci::cnf::gs_cci_cnf_broker::set_init_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
   if ( !m_gcnf_api->setInitValue(parname, json_value) ) {
-    CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "Setting initial value failed.");
+    CCI_THROW_ERROR(cci_report::set_param_failed().get_type(), "Setting initial value failed.");
   }
 }
 
 void cci::cnf::gs_cci_cnf_broker::lock_init_value(const std::string &parname) {
   if ( !m_gcnf_api->lockInitValue(parname) ) {
-    CCI_THROW_ERROR(cci_report_types::type().set_param_failed, "Locking initial value failed.");
+    CCI_THROW_ERROR(cci_report::set_param_failed().get_type(), "Locking initial value failed.");
   }
 }
 

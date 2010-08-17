@@ -91,11 +91,11 @@ inline bool cci::cnf::cci_value::operator==(const cci::cnf::cci_value& lhs) cons
       return (lhs.get_list() == get_list());
       break;
     case cci::cnf::partype_other:
-      CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "not implemented");
+      CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "not implemented");
       break;
     default:
       assert(false && "This should never happen!");
-      CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "not implemented");
+      CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "not implemented");
   }
   return false;
 }
@@ -121,11 +121,11 @@ inline cci::cnf::cci_value& cci::cnf::cci_value::operator=(const cci::cnf::cci_v
       m_value_list = lhs.get_list();
       break;
     case cci::cnf::partype_other:
-      CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Not implemented.");
+      CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Not implemented.");
       break;
     default:
       assert(false && "This should never happen!");
-      CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Not implemented.");
+      CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Not implemented.");
   }
   return *this;
 }
@@ -134,39 +134,39 @@ inline cci::cnf::basic_param_type cci::cnf::cci_value::type() const { return m_t
 
 inline const std::string&      cci::cnf::cci_value::get_string()   const {
   if (m_type != cci::cnf::partype_string)
-    CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type (no string).");
+    CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no string).");
   return m_value_string;
 }
 
 inline const cci::cnf::cci_value_list&   cci::cnf::cci_value::get_list() const {
   if (m_type != cci::cnf::partype_list)
-    CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type (no list).");
+    CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no list).");
   return m_value_list;
 }
 
 inline bool cci::cnf::cci_value::get_bool()  const {
   if (m_type != cci::cnf::partype_bool)
-    CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type (no bool).");
+    CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no bool).");
   return m_value_bool;
 }
 
 inline int cci::cnf::cci_value::get_int()   const {
   if (m_type != cci::cnf::partype_number)
-    CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type (no number).");
+    CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
   if (m_value_number > INT_MAX || m_value_number < INT_MIN)
-    CCI_THROW_WARNING(cci::cnf::cci_report_types::type().cci_value_failure, "Overflow cci value (number is larger than int can hold).");
+    CCI_THROW_WARNING(cci::cnf::cci_report::cci_value_failure().get_type(), "Overflow cci value (number is larger than int can hold).");
   return static_cast<int>(m_value_number);
 }
 
 inline sc_dt::int64 cci::cnf::cci_value::get_int64() const {
   if (m_type != cci::cnf::partype_number)
-    CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type (no number).");
+    CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
   return m_value_number;
 }
 
 inline double cci::cnf::cci_value::get_real()  const {
   if (m_type != cci::cnf::partype_real)
-    CCI_THROW_ERROR(cci::cnf::cci_report_types::type().cci_value_failure, "Wrong cci value type (no real).");
+    CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no real).");
   return m_value_real;
 }
 
@@ -249,11 +249,11 @@ namespace cci {
           return (lhs.get_list() == get_list());
           break;
         case partype_other:
-          throw_error(cci_report_types::type().cci_value_failure, "not implemented");
+          throw_error(cci_report::cci_value_failure().get_type(), "not implemented");
           break;
         default:
           assert(false && "This should never happen!");
-          throw_error(cci_report_types::type().cci_value_failure, "not implemented");
+          throw_error(cci_report:: cci_value_failure().get_type(), "not implemented");
       }
     }
     
@@ -278,11 +278,11 @@ namespace cci {
           m_value_list = lhs.get_list();
           break;
         case partype_other:
-          throw_error(cci_report_types::type().cci_value_failure, "Not implemented.");
+          throw_error(cci_report::cci_value_failure().get_type(), "Not implemented.");
           break;
         default:
           assert(false && "This should never happen!");
-          throw_error(cci_report_types::type().cci_value_failure, "Not implemented.");
+          throw_error(cci_report::cci_value_failure().get_type(), "Not implemented.");
       }
     }
     
@@ -290,39 +290,39 @@ namespace cci {
     
     const std::string&      get_string()   const {
       if (my_type != partype_string)
-        throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no string).");
+        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no string).");
       return m_value_string;
     }
     
     const cci_value_list&   get_list() const {
       if (my_type != partype_list)
-        throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no list).");
+        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no list).");
       return m_value_list;
     }
     
     bool get_bool()  const {
       if (my_type != partype_bool)
-        throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no bool).");
+        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no bool).");
       return m_value_bool;
     }
     
     int get_int()   const {
       if (my_type != partype_number)
-        throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no number).");
+        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
       if (m_value_number > INT_MAX || m_value_number < INT_MIN)
-        throw_warning(cci_report_types::type().cci_value_failure, "Overflow cci value (number is larger than int can hold).");
+        throw_warning(cci_report::cci_value_failure().get_type(), "Overflow cci value (number is larger than int can hold).");
       return static_cast<int>(m_value_number);
     }
     
     sc_dt::int64 get_int64() const {
       if (my_type != partype_number)
-        throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no number).");
+        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
       return m_value_number;
     }
     
     double get_real()  const {
       if (my_type != partype_real)
-        throw_error(cci_report_types::type().cci_value_failure, "Wrong cci value type (no real).");
+        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no real).");
       return m_value_real;
     }
     

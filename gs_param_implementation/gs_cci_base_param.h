@@ -206,12 +206,12 @@ namespace cci_impl {
     }
     
     virtual bool is_invalid_value() {
-      assert(!m_init_called && "init must have been called on construction");
+      assert(m_init_called && "init must have been called on construction");
       return m_is_invalid_value;
     }
     
     virtual void set_invalid_value() {
-      assert(!m_init_called && "init must have been called on construction");
+      assert(m_init_called && "init must have been called on construction");
       m_is_invalid_value = true;
     }
     

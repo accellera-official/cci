@@ -57,7 +57,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /**
      * The init value has priority to the default value being set by the owner!
      *
-     * @exception        cci::cnf::cci_report_types::set_param_failed Setting parameter object failed
+     * @exception        cci::cnf::cci_report::set_param_failed Setting parameter object failed
      * @param parname    Full hierarchical parameter name.
      * @param json_value JSON string representation of the init value the parameter has to be set to.
      */
@@ -74,7 +74,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * that can be locked or if an initial value is already locked or if the
      * parameter is already existing as object (explicit parameter).
      *
-     * @exception     cci::cnf::cci_report_types::set_param_failed Locking parameter object failed
+     * @exception     cci::cnf::cci_report::set_param_failed Locking parameter object failed
      * @param parname Hierarchical parameter name.
      */
     virtual void lock_init_value(const std::string &parname) = 0;
@@ -277,7 +277,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *       pure virtual functions in cci_base_param because this method 
      *       may be called by the cci_base_param constructor.
      *
-     * @exception cci::cnf::cci_report_types::add_param_failed Adding parameter object failed
+     * @exception cci::cnf::cci_report::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
     virtual void add_param(cci_base_param* par) = 0;
@@ -286,7 +286,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /**
      * It should be ensured this is not being called from elsewhere than the parameter destructor (e.g. by user).
      *
-     * @exception cci::cnf::cci_report_types::remove_param_failed Remove parameter object failed
+     * @exception cci::cnf::cci_report::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
      */
     virtual void remove_param(cci_base_param* par) = 0;

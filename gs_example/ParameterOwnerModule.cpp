@@ -37,7 +37,17 @@ void ParameterOwnerModule::main_action() {
 
   // demonstrate has_default_value
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
-  cout << name() << ": bool_param get_default_value()=" << bool_param.get_default_value()<<endl;
+  // Need to catch the error here
+  cout << name() << ": bool_param get_default_value()=";
+  try {
+    cout << bool_param.get_default_value()<<endl;
+  } catch(sc_core::sc_report e) {
+    // If get_param_failed error, catch it
+    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::get_param_failed().get_msg_type()) == 0)
+      cout <<endl<< name() << ": Caught " << e.what() << endl;
+    // If other error, throw it again
+    else throw e;
+  }
 
   // demonstrate is_invalid_value
   cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
