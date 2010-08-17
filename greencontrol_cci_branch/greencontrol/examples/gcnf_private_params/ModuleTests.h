@@ -120,7 +120,7 @@ void ModuleTests::main_action() {
 
   gs::gs_param_base *par2 = mApi->getPar("NotExisting.myAddTestParam");
   if (par2 == NULL)
-    std::cout << "  Passed getPar test (passed if getting failed)!" << std::endl;
+    std::cout << "  Passed getPar test (passed getting not existing param failed)!" << std::endl;
   else
     std::cout << "  Failed getPar test!" << std::endl;
   
