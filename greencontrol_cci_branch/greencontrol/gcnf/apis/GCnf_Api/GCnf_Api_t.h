@@ -511,6 +511,10 @@ public:
 
       if (th->get_mError() == 0) {
         GCNF_DUMP_N(name(), "setInitValue: ... setting successfull");
+      } else if (th->get_mError() == 2) {
+        GCNF_DUMP_N(name(), "setInitValue: ... setting failed (error "<<th->get_mError()<<")!");
+        SC_REPORT_WARNING(name(), "setInitValue: ... setting failed because init value is locked!");
+        return false;
       } else {
         GCNF_DUMP_N(name(), "setInitValue: ... setting failed (error "<<th->get_mError()<<")!");
         SC_REPORT_WARNING(name(), "setInitValue: ... setting failed!");
