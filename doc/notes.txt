@@ -109,4 +109,44 @@ Effect: When any module in the subsystem tries to set the initial value again, t
 
 ----------------------------------------------------------------
 
+EMULATING HIERARCHICAL PRECEDENCE (e.g. OVM)
+
+Guidelines how to emulate a hierarchical setting mechanism with
+the parameter object proposal (e.g. for OVM).
+(Decision on 6/2)
+
+This aproach needs the subsystem to be created after the initial 
+value being set and locked before the param construction within 
+the child module.
+
+For Parameters being used during construction:
+   Coding:
+    - Set initial value
+    - lock the initial value
+    - instantiate the child module
+   Summary:
+    The broker has an additional API function allowing to lock an 
+    initial value.
+
+For Parameters being used later than construction:
+  Coding rule:
+    - Just set the parameter value after the construction call.
+    - The hierarchically most top level will overwrite all previous
+      settings/values.
+
+----------------------------------------------------------
+CLASS NAMES
+
+The cci prefix is doubled: in the namespace and often in 
+the class names. E.g.: cci::cci_base_param.
+We discussed and this is OSCI pratice thus ok this way.
+
+----------------------------------------------------------
+NO POST_READ CALLBACKS
+
+We currently do NOT provide post_read callbacks since they are very
+hard (impossible in C++?) to define and implement.
+
+----------------------------------------------------------
+
 christian.schroeder@greensocs.com
