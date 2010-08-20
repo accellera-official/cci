@@ -46,8 +46,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
     virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
     virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
-    virtual bool lock(void* pwd = NULL){return get_pImpl()->lock();}
-    virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock();}
+    virtual bool lock(void* pwd = NULL){return get_pImpl()->lock(pwd);}
+    virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock(pwd);}
     virtual bool locked() const {return get_pImpl()->locked();}
     
   private:

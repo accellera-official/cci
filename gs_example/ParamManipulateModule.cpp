@@ -40,6 +40,7 @@ void ParamManipulateModule::main_action() {
 
   wait(10, SC_NS);
   
+  cout << "----------------------------" << endl;
   // get a parameter using the local config API
   cci::cnf::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
   if (int_param_ptr == NULL) return;

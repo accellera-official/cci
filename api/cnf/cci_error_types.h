@@ -49,21 +49,18 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    */
   struct cci_report_base
   : public std::string {
-    
-    cci_report_base(const char* _type) : std::string(_type) {}
-    
-    const char* get_msg_type() const {
-      static std::stringstream sid; 
-      if (sid.str().empty()) sid << CCI_SC_REPORT_MSG_TYPE_PREFIX << *this;
-      return sid.str().c_str();
+    cci_report_base(const char* _type) 
+    : std::string(_type) 
+    {
+      std::stringstream sid;
+      sid << CCI_SC_REPORT_MSG_TYPE_PREFIX << _type;
+      m_msg_type = sid.str();
     }
-    const char* get_type() const {
-      static std::stringstream sid; 
-      if (sid.str().empty()) sid << *this;
-      return sid.str().c_str();
-    }
+    const char* get_msg_type() const { return m_msg_type.c_str(); }
+    const char* get_type() const { return this->c_str(); }
     //operator std::string&() const { return *this; }
     //std::string& operator&() {return *this; }
+    std::string m_msg_type;
   };
 
   #define CCI_REPORT_FUNCTION_FOR(REPORT_NAME)   \

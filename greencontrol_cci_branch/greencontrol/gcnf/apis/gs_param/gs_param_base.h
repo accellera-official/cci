@@ -458,7 +458,7 @@ public:
       SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter lock failed!");
       return false; 
     }
-    GS_PARAM_CALLBACK_DUMP("locked");      
+    GS_PARAM_CALLBACK_DUMP("locked");
     m_lock_pwd = pwd;
     m_locked = true;
     return true;
@@ -478,6 +478,15 @@ public:
       SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter unlock failed!");
     }
     return !m_locked;
+  }
+
+  /// Checking a password if the parameter can be unlocked with the given password
+  /**
+   * @param pwd Password to check
+   * @return If the parameter can be unlocked with the given password
+   */
+  virtual bool check_pwd(const void* pwd) {
+    return (pwd == m_lock_pwd);
   }
   
 #endif

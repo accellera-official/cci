@@ -60,7 +60,6 @@ void ValueModule::main_action() {
   str_param_p.set_value(vals);
   std::cout << "str_param has value = " << str_param_p.json_serialize() << endl;
   
-  cout << "----------------------------" << endl;
   std::cout << std::endl;
   
   

@@ -1,6 +1,8 @@
 ChangeLog
 ---------
 
+- modified internal cci report class
+
 - added broker function get_json_string_keep_unused
 
 - added get_default_value to cci_param interface

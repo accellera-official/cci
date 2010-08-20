@@ -38,6 +38,8 @@ ObserverModule::~ObserverModule() {
 
 
 void ObserverModule::main_action() {
+  cout << "----------------------------" << endl;
+
   DEMO_DUMP(name(), "register pre write callback for int_param to lock it");
 
   // get access to a foreign parameter using the module's config API
@@ -75,7 +77,6 @@ void ObserverModule::main_action() {
     cout << *iter << " ";
   cout << endl;
   
-  cout << "----------------------------" << endl;
   std::cout << std::endl;
 
 }

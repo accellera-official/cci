@@ -119,6 +119,10 @@ namespace cci_impl {
     }
     
     virtual void set(const val_type& val) {
+      if (m_gs_param.locked()) {
+        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Parameter locked.");
+        return;
+      }
       if (!m_gs_param.setValue(val))
         CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Bad value.");
     }
@@ -128,8 +132,12 @@ namespace cci_impl {
     }
     
     virtual void set(const val_type& val, void* lock_pwd) {
-      // TODO: if (TODO)
-        set(val);
+      if (!m_gs_param.check_pwd(lock_pwd)) {
+        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Wrong key.");
+        return;
+      }
+      if (!m_gs_param.setValue(val, lock_pwd))
+        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Bad value.");
     }
     
   protected:

@@ -20,6 +20,8 @@
 
 void ParameterOwnerModule::main_action() {
 
+  std::cout << "----------------------------" << std::endl;
+
   // get the config API which is responsible for this module
   cci::cnf::cci_cnf_broker* mApi = cci::cnf::get_cnf_broker_instance(this);
   assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
@@ -58,6 +60,8 @@ void ParameterOwnerModule::main_action() {
   
   wait(1, SC_NS);
 
+  std::cout << "----------------------------" << std::endl;
+
   // get json string from parameter
   std::string str = int_param.json_serialize();
   cout << name() << ": "<<int_param.get_name() << ".json_serialize() = "<< int_param.json_serialize()<<endl;
@@ -76,9 +80,9 @@ void ParameterOwnerModule::main_action() {
   int_param.set(200);
 
   // create and access a local parameter
-  cout << name() << ": create param ";
+  cout << name() << ": create parameter " << endl;
   cci::cnf::cci_param<unsigned char> uchar_param("uchar_param");
-  cout << uchar_param.get_name() << endl;
+  cout << "  created " << uchar_param.get_name() << endl;
   cout << name() << ": Set the new parameter uchar_param" << endl;
   uchar_param = 'u';
   cout << endl;
@@ -89,6 +93,8 @@ void ParameterOwnerModule::main_action() {
   
   wait(10, SC_SEC);
   
+  std::cout << "----------------------------" << std::endl;
+
   // show a parameter list
   cout << endl << "**** Parameter list: " << endl;
   std::vector<std::string> vec = mApi->get_param_list();
@@ -99,7 +105,5 @@ void ParameterOwnerModule::main_action() {
     ss_show << *iter;
   }
   std::cout << "   " << ss_show.str() << std::endl<<std::endl;
-
-  std::cout << "----------------------------" << std::endl;
 
 }
