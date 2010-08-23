@@ -226,6 +226,7 @@ public:
    * Calls conversion value type --> string.
    *
    * @param val  The new value for this parameter.
+   * @return If the parameter was set successfully (false if it has been rejected)
    */
   bool setValue(const val_type &val) {
     if (make_pre_write_callbacks() == return_value_change_rejected) {

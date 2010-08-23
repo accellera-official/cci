@@ -25,7 +25,8 @@ void ParameterOwnerMutabilityModule::main_action() {
   cci::cnf::cci_cnf_broker* mApi = cci::cnf::get_cnf_broker_instance(this);
   assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
 
-  // demonstrate mutable parameter being made temporarily immutable 
+  // ************************************************************************
+  // **** demonstrate mutable parameter being made temporarily immutable 
   cout << name() << ": demonstrate mutable parameter being made temporarily immutable" <<endl;
   cout << name() << ":  mutable_int_param=" << (dec) << mutable_int_param<<endl;
   cout << name() << ":  set mutable_int_param to 150"<<endl;
@@ -76,4 +77,12 @@ void ParameterOwnerMutabilityModule::main_action() {
   mutable_int_param = 66666; // should succeed!
   assert(mutable_int_param == 66666);
   
+  
+  // ************************************************************************
+  // **** demonstrate immutable_parameter
+
+
+  // ************************************************************************
+  // **** demonstrate elaboration_time_parameter
+
 }

@@ -40,7 +40,7 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   cout << "----------------------------" << endl;
 
-  DEMO_DUMP(name(), "register pre write callback for int_param to lock it");
+  DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");
 
   // get access to a foreign parameter using the module's config API
   cci::cnf::cci_base_param* p = mApi->get_param("Owner.int_param");
@@ -63,8 +63,16 @@ void ObserverModule::main_action() {
                              cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
   std::string str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
-  cout << "int_param set value = 99" << endl;
-  p->json_deserialize("99");
+  cout << "int_param set value = 99 (shall fail)" << endl;
+  try {
+    p->json_deserialize("99"); // this shall fail because rejected!
+  } catch(sc_core::sc_report e) {
+    // If set_param_failed error, catch it
+    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
+      cout <<endl<< name() << ": Caught " << e.what() << endl;
+    // If other error, throw it again
+    else throw e;
+  }
   str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
   //p->unregister_all_callbacks(this); // this would unregister all calbacks to this module
