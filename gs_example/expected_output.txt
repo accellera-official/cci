@@ -1,54 +1,40 @@
 Created new GCnf_Api CCI_API_INSTANCE
-search_for_broker in: Manipulator
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
 Owner.int_param exists (implicit or explicit)
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb03af4
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb03e14
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb04124
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb04434
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb047a4
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb04bf4
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb04f64
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb05294
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: Observer
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-search_for_broker in: ValueMod
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
+new impl_par=0x203c64
+new impl_par=0x203f84
+new impl_par=0x204294
+new impl_par=0x2045a4
+new impl_par=0x204914
+new impl_par=0x204d84
+new impl_par=0x2050e4
+new impl_par=0x205414
 
 ------ sc_start() ----------------
 
 ----------------------------
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
+@0 s /0 (Observer): register pre write callback for int_param to check value settings and reject them
+int_param has value = 11
+int_param set value = 99 (shall fail)
+@0 s /0 (Observer): Callback method called (which rejects changes):
+  Parameter 'Owner.int_param' type 1
+  REJECT VALUE CHANGE!!
+
+
+Observer: Caught Error: /OSCI/CCI/set_param_failed: Value rejected by callback.
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:130
+In process: Observer.main_action @ 0 s
+int_param has value = 11
+param list:
+MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 
+
+----------------------------
 Owner: uint_param get_default_value()=12000
 Owner: uint_param=12000
 Owner: uint_param is_default_value()=1
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12000'
 Owner: set uint_param=12000
 Owner: uint_param is_default_value()=0
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '10'
 Owner: set uint_param=10
 Owner: uint_param is_default_value()=0
 
@@ -62,58 +48,37 @@ Owner: bool_param is_invalid_value()=0
 Owner: bool_param is_invalid_value()=1
 
 ----------------------------
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
 MutabilityOwner: demonstrate mutable parameter being made temporarily immutable
 MutabilityOwner:  mutable_int_param=50
 MutabilityOwner:  set mutable_int_param to 150
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:  lock mutable_int_param with key 0xa3ef90
+MutabilityOwner:  lock mutable_int_param with key 0x1c7f90
 MutabilityOwner:    set mutable_int_param should fail
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Parameter locked.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:123
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:126
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:    set mutable_int_param with wrong key 0xa3ef94 - should fail twice
+MutabilityOwner:    set mutable_int_param with wrong key 0x1c7f94 - should fail twice
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:136
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:139
 In process: MutabilityOwner.main_action @ 0 s
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:136
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:139
 In process: MutabilityOwner.main_action @ 0 s
-MutabilityOwner:    set mutable_int_param with key 0xa3ef90 - should succeed
+MutabilityOwner:    set mutable_int_param with key 0x1c7f90 - should succeed
 MutabilityOwner:  mutable_int_param=4444
-MutabilityOwner:  unlock mutable_int_param with key 0xa3ef90
+MutabilityOwner:  unlock mutable_int_param with key 0x1c7f90
 MutabilityOwner:    set mutable_int_param should succeed
-----------------------------
-@0 s /0 (Observer): register pre write callback for int_param to check value settings and reject them
-int_param has value = 11
-int_param set value = 99 (shall fail)
-@0 s /0 (Observer): Callback method called (which rejects changes):
-  Parameter 'Owner.int_param' type 1
-  REJECT VALUE CHANGE!!
-
-
-Observer: Caught Error: /OSCI/CCI/set_param_failed: Value rejected by callback.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:127
-In process: Observer.main_action @ 0 s
-int_param has value = 11
-param list:
-MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 
-
 ----------------------------
 Owner: Owner.int_param.json_serialize() = 11
 Owner: Owner.int_param.json_deserialize(555000) results in 555000
 Owner: set int_param = 100
 Owner: set int_param.set(200)
 Owner: create parameter 
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-new impl_par=0xb06664
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
+new impl_par=0x2067b4
   created Owner.uchar_param
 Owner: Set the new parameter uchar_param
 
@@ -146,42 +111,15 @@ str_param has value = test cci value string
 **** Parameter list: 
    MutabilityOwner.elab_time_int_param, MutabilityOwner.immutable_int_param, MutabilityOwner.mutable_int_param, Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2
 
-delete param=0xa4ef70
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
+delete param=0x1d7f70
 
 ------ sc_start() returned -------
 
-delete param=0xbffff6b4
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff6a8
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff69c
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: MutabilityOwner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff634
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff628
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff61c
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff610
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
-delete param=0xbffff604
-Destruct brokerPN2gs3cnf7cnf_apiE 0x0xb00618
-search_for_broker in: Owner
-   got global broker PN3cci3cnf14cci_cnf_brokerE 0x0xb005d0
+delete param=0xbfffe874
+delete param=0xbfffe868
+delete param=0xbfffe85c
+delete param=0xbfffe7f4
+delete param=0xbfffe7e8
+delete param=0xbfffe7dc
+delete param=0xbfffe7d0
+delete param=0xbfffe7c4

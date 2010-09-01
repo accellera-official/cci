@@ -30,7 +30,7 @@
  * <a href="../discussions.txt">discussions.txt</a> - Motivation for some important discussions.<br>
  * <a href="../guidelines.txt">guidelines.txt</a> - Guidelines for implementations of the proposed API.<br>
  * <a href="../notes.txt">notes.txt</a> - Some general notes and hints on the API and the example implementation.<br>
- * <a href="../proposal_status.txt">proposal_status.txt</a> - Status and TODOs of the example implementation.<br>
+ * <a href="../Proposal_Status.xls">Proposal_Status.xls</a> - Status and TODOs of the example implementation.<br>
  * 
  *
  *

@@ -40,19 +40,17 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   cout << "----------------------------" << endl;
 
-  /*DEMO_DUMP(name(), "register for new parameter callbacks");
+  // ******** register for new parameter callbacks ***************
+  DEMO_DUMP(name(), "register for new parameter callbacks");
   cci::shared_ptr<cci::cnf::callb_adapt_b> cb_new_pa;
   cb_new_pa = mApi->register_callback(cci::cnf::create_param, "*", this, 
                                    cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
-  */
-  DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");
 
-  // get access to a foreign parameter using the module's config API
+  // ******** register for parameter change callbacks ***************
+  DEMO_DUMP(name(), "register for post_write callbacks");
   cci::cnf::cci_base_param* p = mApi->get_param("Owner.int_param");
   assert(p != NULL);
-
-  // ******** register for parameter change callback ***************
   cci::shared_ptr<cci::cnf::callb_adapt_b> cb1, cb3;
   cb1 = p->register_callback(cci::cnf::post_write, this, 
                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
@@ -62,39 +60,8 @@ void ObserverModule::main_action() {
                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
   mCallbacks.push_back(cb3);// This will not be deleted after end of main_action()
 
-  // ******* Testing parameter lock with callback returns *************
-  // Register Callback for parameter int_param in module other_ip (IP1)
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb2;
-  cb2 = p->register_callback(cci::cnf::pre_write, this, 
-                             cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
-  std::string str = p->json_serialize();
-  cout << "int_param has value = " << str << endl;
-  cout << "int_param set value = 99 (shall fail)" << endl;
-  try {
-    p->json_deserialize("99"); // this shall fail because rejected!
-  } catch(sc_core::sc_report e) {
-    // If set_param_failed error, catch it
-    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-      cout <<endl<< name() << ": Caught " << e.what() << endl;
-    // If other error, throw it again
-    else throw e;
-  }
-  str = p->json_serialize();
-  cout << "int_param has value = " << str << endl;
-  //p->unregister_all_callbacks(this); // this would unregister all calbacks to this module
-  p->unregister_param_callback(cb2); // unregister a callback
-  
-  // ********* show param list **************
-  cout << "param list:" << endl;
-  std::vector<std::string> vec = mApi->get_param_list();
-  for (std::vector<std::string>::iterator iter = vec.begin(); iter != vec.end(); iter++)
-    cout << *iter << " ";
-  cout << endl;
-  
   std::cout << std::endl;
-
 }
-
 
 /// Callback function with default signature showing changes.
 cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
@@ -110,14 +77,4 @@ cci::cnf::callback_return_type ObserverModule::config_new_param_callback(cci::cn
   std::string str = par.json_serialize();
   DEMO_DUMP(name(), "New parameter callback '" << par.get_name() << "', value '"<<str<<"'");
   return cci::cnf::return_nothing;
-}
-
-/// Callback function with default signature rejecting all changes.
-cci::cnf::callback_return_type ObserverModule::config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
-  assert(cb_reason == cci::cnf::pre_write);
-  DEMO_DUMP(name(), "Callback method called (which rejects changes):");
-  cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
-  cout << "  REJECT VALUE CHANGE!!" << endl;
-  cout << endl;
-  return cci::cnf::return_value_change_rejected;
 }

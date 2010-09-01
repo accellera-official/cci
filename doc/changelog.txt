@@ -1,6 +1,8 @@
 ChangeLog
 ---------
 
+- hotfixed callback deletion issue
+- fixed warnings and modified gs param implementation constructors
 - modified internal cci report class
 
 - added broker function get_json_string_keep_unused

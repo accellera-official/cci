@@ -83,7 +83,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   protected:
 
     /// Allows cci::cnf::cci_base_param to access the caller_param to set to NULL.
-    friend class cci_base_param; 
+    //friend class cci_base_param_if; 
         
   public:
     
@@ -115,10 +115,10 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   protected:
     /// Pointer to the observer
     void* observer_ptr;
-    
+  public:   // TODO: more elegant; needs to be set to NULL when calling parameter is deleted
     /// Caller parameter
     T_cci_base_param_if *caller_param;
-    
+  protected:
     /// Function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
     callb_func_ptr func;
     

@@ -46,9 +46,6 @@ public:
   /// Callback function with default signature announcing new parameters.
   cci::cnf::callback_return_type config_new_param_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
 
-  /// Callback function with default signature rejecting all changes.
-  cci::cnf::callback_return_type config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
-
 protected:
   /// Pointer the the module's configuration API
   cci::cnf::cci_cnf_broker* mApi;

@@ -42,7 +42,7 @@ void ValueModule::main_action() {
 
   // demonstrate setting a parameter using a cci value
   DEMO_DUMP(name(), "Set parameter Owner.uint_param to value=555 using cci_value");
-  This is still TODO
+  //This is still TODO
   cci::cnf::cci_value val(555);
   uint_param_p.set_value(val);
   std::cout << "uint_param has value = " << uint_param_p.json_serialize() << endl;

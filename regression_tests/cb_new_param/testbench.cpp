@@ -21,10 +21,7 @@
 #include "cci_params.h"
 
 #include "ParameterOwnerModule.h"
-#include "ParameterOwnerMutabilityModule.h"
 #include "ObserverModule.h"
-#include "ParamManipulateModule.h"
-#include "ValueModule.h"
 
 /// Testbench for the CCI example application which uses the GreenSocs demo implemenation
 int sc_main(int argc, char *argv[]) {
@@ -37,10 +34,7 @@ int sc_main(int argc, char *argv[]) {
 
 
   ObserverModule        observer   ("Observer");
-  ParamManipulateModule manipulator("Manipulator");
   ParameterOwnerModule  owner      ("Owner");
-  ParameterOwnerMutabilityModule  mutability_owner      ("MutabilityOwner");
-  ValueModule           valueMod   ("ValueMod");
 
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
   sc_core::sc_start(); 

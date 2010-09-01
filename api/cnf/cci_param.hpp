@@ -87,7 +87,7 @@ cci_param<T, TM>& cci_param<T,TM>::operator = (const cci_param<T, TM>& v) { retu
 template<typename T, param_mutable_type TM>
 cci_param<T, TM>& cci_param<T,TM>::operator = (const T& v) { return m_pImpl->operator=(v);}
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::operator const T& () const { return (T)(*m_pImpl); }
+cci_param<T,TM>::operator const T& () const { return m_pImpl->get(); }
 template<typename T, param_mutable_type TM>
 void cci_param<T,TM>::set(const T& val) { m_pImpl->set(val); }
 template<typename T, param_mutable_type TM>
@@ -161,7 +161,7 @@ cci::cnf::cci_param<std::string, TM>& cci_param<std::string,TM>::operator = (con
 template<param_mutable_type TM>
 cci::cnf::cci_param<std::string, TM>& cci_param<std::string,TM>::operator = (const std::string& v) { return m_pImpl->operator=(v);}
 template<param_mutable_type TM>
-cci_param<std::string,TM>::operator const std::string& () const { return (std::string)(*m_pImpl); }
+cci_param<std::string,TM>::operator const std::string& () const { return m_pImpl->get(); }
 template<param_mutable_type TM>
 void cci_param<std::string,TM>::set(const std::string& val) { m_pImpl->set(val); }
 template<param_mutable_type TM>

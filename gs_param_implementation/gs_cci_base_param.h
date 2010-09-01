@@ -131,12 +131,12 @@ namespace cci_impl {
   public:
 
     explicit cci_base_param(cci::cnf::cci_base_param& owner_par
-                            , gs::gs_param_base& gs_param_base
+                            //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
                             , bool force_top_level_name /*= false*/
                             , bool register_at_db /*= true*/
                             , bool has_default_value ) // if there is a default value
     : m_owner_par(owner_par)
-    , m_gs_param_base(gs_param_base) 
+    , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
     , m_is_initial_value(false)
@@ -150,16 +150,20 @@ namespace cci_impl {
       assert(m_init_called == false && "init() function called more than once!");
       m_init_called = true;
       // This has already been done in the cci_param constructor!
-      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(get_cci_base_param());
-      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->add_param(this);
+      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(get_cci_base_param());
+      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(this);
       m_post_write_callback = register_callback(cci::cnf::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
     virtual ~cci_base_param() {
-      cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(get_cci_base_param());
-      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(&m_gs_param_base))->remove_param(this);
+      cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(get_cci_base_param());
+      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");
+      
+      // remove this from all callbacks being called by this parameter (to prevent them to remove themselves from this on their destruction)
+      for (unsigned int i = 0; i < fw_vec.size(); ++i)
+        fw_vec[i]->adapt->caller_param = NULL;      
     }
     
     /// Implicit cast operator
@@ -170,7 +174,8 @@ namespace cci_impl {
     virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::partype_not_available; }
 
     virtual const std::string& get_name() const {
-      return m_gs_param_base.getName();
+      assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+      return m_gs_param_base->getName();
     }
     
     // ///////   Set and Get with JSON String Representation   //////////// //
@@ -181,9 +186,12 @@ namespace cci_impl {
     
     // //////////////// stuff /////////////////////////// //
     
-    virtual bool lock(void* pwd = NULL)   { return m_gs_param_base.lock(pwd);    }
-    virtual bool unlock(void* pwd = NULL) { return m_gs_param_base.unlock(pwd);  }
-    virtual bool locked() const           { return m_gs_param_base.locked();     }
+    virtual bool lock(void* pwd = NULL)   { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+                                            return m_gs_param_base->lock(pwd);    }
+    virtual bool unlock(void* pwd = NULL) { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+                                            return m_gs_param_base->unlock(pwd);  }
+    virtual bool locked() const           { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+                                            return m_gs_param_base->locked();     }
     //void set(const val_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
 
     virtual void set_documentation(const std::string& doc) {
@@ -245,14 +253,15 @@ namespace cci_impl {
       if (cb != gs::cnf::no_callback) {
         internal_callback_forwarder *fw = new internal_callback_forwarder(callb, cb, *this);
         fw_vec.push_back(fw);
+        assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
         fw->calling_gs_adapter = 
-            m_gs_param_base.registerParamCallback( 
+            m_gs_param_base->registerParamCallback( 
                                                   cci::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
                                                                                             new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
                                                                                             (fw, 
                                                                                              &internal_callback_forwarder::call, 
                                                                                              callb->get_observer(), 
-                                                                                             const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(&m_gs_param_base)))
+                                                                                             const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(m_gs_param_base)))
                                                                                             ), fw->get_type() );
       }
       return callb;
@@ -306,7 +315,7 @@ namespace cci_impl {
     /// Owning parameter, to allow implicit casting to the parent
     cci::cnf::cci_base_param &m_owner_par;
     
-    gs::gs_param_base &m_gs_param_base;
+    gs::gs_param_base *m_gs_param_base;
     
     bool m_is_default_value;
     bool m_is_invalid_value;
