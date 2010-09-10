@@ -21,6 +21,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
 
 #define CCI_SC_REPORT_MSG_TYPE_PREFIX "/OSCI/CCI/"

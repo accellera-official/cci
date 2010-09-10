@@ -126,7 +126,7 @@ namespace cci_impl {
       my_type* owner;
     };
     
-    friend class status_guard;
+    //friend class status_guard;
     
   public:
 
