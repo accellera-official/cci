@@ -142,7 +142,10 @@ namespace cnf {
         ss << "    extended = false" << endl;
       ss << "    data: ";
       for (unsigned int i = 0; i < msData.size(); i++) {
-        ss << msData[i] << " ";
+        if (isprint(msData[i]))
+          ss << msData[i];// << " ";
+        else
+          ss << "\\" << int(msData[i]);// << " ";
       }
       return ss.str();
     }

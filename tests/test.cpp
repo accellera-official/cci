@@ -7,8 +7,8 @@
  *
  */
 
-//#include "cci.h"
-#include "gs_cci.h"
+#include "cci.h"
+//#include "gs_cci.h"
 
 
 using namespace std;

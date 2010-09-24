@@ -7,8 +7,8 @@
  *
  */
 
-#include "gs_cci.h"
-#include "../gs_implementation/json_spirit/json_spirit.h"
+#include "cci.h"
+#include "gs_param_implementation/json_spirit/json_spirit.h"
 
 using namespace std;
 

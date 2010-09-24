@@ -365,7 +365,7 @@ namespace av {
     // //////////////// command_if methods ////////////////////////////////////
 
     /// Returns the name of the API.
-    std::string getName()
+    const std::string getName()
     {
       return name();
     }
@@ -375,7 +375,7 @@ namespace av {
     // inclusion. It could be solved by using the template technique like it is used in GCnf, but that wouldn't be reasonable. So the code exists twice, in
     // GAV_Api.h and in gav_plugin.h.
     /// Returns the name of the specified command.
-    std::string getCommandName(unsigned int cmd)
+    const std::string getCommandName(unsigned int cmd)
     {
       // Remember to repeat any changes made here in gav_plugin.h!
       switch (cmd) {
@@ -393,7 +393,7 @@ namespace av {
     }
 
     /// Return a description of the specified command.
-    std::string getCommandDescription(unsigned int cmd)
+    const std::string getCommandDescription(unsigned int cmd)
     {
       // Remember to repeat any changes made here in gav_plugin.h!
       switch (cmd) {

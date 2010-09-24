@@ -616,7 +616,7 @@ public:
 #define GC_REGISTER_PARAM_CALLBACK(param, class, function)                \
   (param)->registerParamCallback( gc_add_ParamCallbAdapt(boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(new ::gs::cnf::ParamCallbAdapt<class>(this, &class::function, this, (param)))), gs::cnf::post_write_and_destroy )
 
-  /// Makro for registering a typed callback functions, usage: GC_REGISTER_PARAM_TYPED_CALLBACK(&my_param, gs::cnf::callback_type, MyIP_Class, config_callback, type);
+  /// Makro for registering a typed callback functions, usage: GC_REGISTER_PARAM_TYPED_CALLBACK(&my_param, gs::cnf::callback_type, MyIP_Class, config_callback);
 #define GC_REGISTER_TYPED_PARAM_CALLBACK(param, type, class, function)                \
 (param)->registerParamCallback( gc_add_ParamCallbAdapt(boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(new ::gs::cnf::ParamTypedCallbAdapt<class>(this, &class::function, this, (param)))), type )
   

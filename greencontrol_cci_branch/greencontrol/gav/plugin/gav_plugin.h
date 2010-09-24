@@ -332,7 +332,7 @@ public:
   // //////////////// command_if methods ////////////////////////////////////
 
   /// Returns the name of the plugin.
-  std::string getName()
+  const std::string getName()
   {
     return name();
   }
@@ -343,7 +343,7 @@ public:
   // reasonable. So the code exists twice, in GAV_Api.h and in gav_plugin.h.
 
   /// Returns the name of the specified command.
-  std::string getCommandName(unsigned int cmd)
+  const std::string getCommandName(unsigned int cmd)
   {
     // Remember to repeat any changes made here in GAV_Api.h!
     switch (cmd) {
@@ -361,7 +361,7 @@ public:
   }
 
   /// Return a description of the specified command.
-  std::string getCommandDescription(unsigned int cmd)
+  const std::string getCommandDescription(unsigned int cmd)
   {
     // Remember to repeat any changes made here in GAV_Api.h!
     switch (cmd) {

@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -44,17 +44,17 @@ public:
   /**
    * This method has to return the name of the API/Plugin implementing command_if.
    */
-  virtual std::string getName() = 0;
+  virtual const std::string getName() = 0;
 
   /**
    * This method has to return the name of the specified command.
    */
-  virtual std::string getCommandName(unsigned int cmd) = 0;
+  virtual const std::string getCommandName(unsigned int cmd) = 0;
 
   /**
    * This method has to return a description of the specified command.
    */ 
-  virtual std::string getCommandDescription(unsigned int cmd) = 0;  
+  virtual const std::string getCommandDescription(unsigned int cmd) = 0;  
 };
 
 

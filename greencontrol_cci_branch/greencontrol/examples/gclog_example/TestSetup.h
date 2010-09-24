@@ -111,9 +111,7 @@ public:
   {
     switch(test)
     {
-      case MISC:
-        misc();
-        break;
+      // case MISC see default
       case SIMPLE_CONSOLE:
         simpleConsole();
         break;
@@ -152,11 +150,33 @@ public:
         break;
       default:
         SC_REPORT_WARNING("TestSetup", "Testcase not defined!");
+        misc();
     }
   }
 
+  void choose_warning() {
+    std::cout << std::endl << "*******************************************" << std::endl;
+    std::cout << std::endl << "Please choose a command line option (1-12):" << std::endl;
+    std::cout << 
+    "  1 = SIMPLE_CONSOLE," << std::endl<<
+    "  2 = SIMPLE_TEXT," << std::endl<<
+    "  3 = SIMPLE_DEBUG," << std::endl<<
+    "  4 = TEXT_FILES," << std::endl<<
+    "  5 = TEXT_CONFIG," << std::endl<<
+    "  6 = SERVICE_FILTER," << std::endl<<
+    "  7 = SERVICE_HEAD," << std::endl<<
+    "  8 = CSV_CONFIG_DYNAMIC," << std::endl<<
+    "  9 = CSV_CONFIG_STATIC," << std::endl<<
+    "  10 = CSV_CONF_PERF," << std::endl<<
+    "  11 = CSV_CONF_PERF_OPTIMIZED," << std::endl<<
+    "  12 = CSV_HARD_PERF" << std::endl<< std::endl;
+    std::cout << std::endl << "*******************************************" << std::endl;
+  }
+  
   void misc()
   {
+    std::cout << std::endl << "Choose default (1=SIMPLE_CONSOLE):" << std::endl << std::endl;
+    simpleConsole();
   }
 
   // Test the Console output.

@@ -31,7 +31,7 @@
 
 int sc_main(int argc, char *argv[])
 {
-  unsigned int testNum;
+  unsigned int testNum = 0;
 
   gs::ctr::GC_Core  core;
   gs::cnf::ConfigDatabase  cnfdatabase("ConfigDatabase");
@@ -46,13 +46,18 @@ int sc_main(int argc, char *argv[])
     std::cout << "Running TestCase " << testNum << std::endl;
     ts.setupTest((TestCase)testNum);
   }
-  else
+  else {
+    ts.choose_warning();
     ts.setupTest(MISC);
+  }
 
   // TestIP
   TestIP ip("TestIP");
 
   sc_core::sc_start();
+
+  if (testNum == 0)
+    ts.choose_warning();
 
   return EXIT_SUCCESS; 
 }

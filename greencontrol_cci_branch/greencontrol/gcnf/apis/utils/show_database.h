@@ -41,11 +41,12 @@ namespace cnf {
    *
    * @param api  cnf_api that should be used to get the parameter list; default=NULL, uses default one
    * @param indentation  If to indent the output according the longest entity
+   * @param show_values  If to show the parameter values
    */
-  static inline void show_database(gs::cnf::cnf_api *api = NULL, bool indentation = true) {
+  static inline void show_database(gs::cnf::cnf_api *api = NULL, bool indentation = true, bool show_values = true) {
     struct local {
       // ----------- begin local function simple ---------------------------
-      static void show_database_simple(gs::cnf::cnf_api *api = NULL) {
+      static void show_database_simple(gs::cnf::cnf_api *api = NULL, bool show_values = true) {
         const unsigned int position_par_name   = 26;
         const unsigned int position_par_val    = 60;
         const unsigned int position_par_attrib = 80;
@@ -64,7 +65,7 @@ namespace cnf {
             ss.width(position_par_name - ss.str().length());
             ss << ": " << vec[i];
             ss.width(position_par_val - ss.str().length());
-            ss << " = " << api->getValue(vec[i], "", true); // not impact is_used status
+            if (show_values) ss << " = " << api->getValue(vec[i], "", true); // not impact is_used status
             std::set<param_attribute> attbs = api->getPar(vec[i])->get_param_attributes();
             ss.width(position_par_attrib - ss.str().length());
             if (attbs.size() > 0) {
@@ -94,7 +95,7 @@ namespace cnf {
       // ----------- end local function simple ---------------------------
     
       // ----------- begin local function with indentation ---------------
-      static void show_database_indentation(gs::cnf::cnf_api *api = NULL) {
+      static void show_database_indentation(gs::cnf::cnf_api *api = NULL, bool show_values = true) {
         unsigned int position_par_name_indentation_max   = 0;
         unsigned int position_par_val_indentation_max    = 0;
         unsigned int position_par_attrib_indentation_max = 0;
@@ -141,17 +142,19 @@ namespace cnf {
         position_par_val_indentation_max += 3;
         
         // Parameter values
-        for (unsigned int i = 0; i<vec.size(); i++) {
-          //std::cout << ss_vec[i]->str().length() << " \"" << ss_vec[i]->str() << "\"" << std::endl;
-          ss_vec[i]->width(position_par_val_indentation_max - ss_vec[i]->str().length());
-          *ss_vec[i] << "= ";
-          *ss_vec[i] << api->getValue(vec[i], "", true); // not impact is_used status
-          //std::cout << ss_vec[i]->str().length() << " \"" << ss_vec[i]->str() << "\"" << std::endl;
-          // update max indentation
-          //std::cout << "position_par_attrib_indentation_max["<<i<<"]=max("<<position_par_attrib_indentation_max<<","<<ss_vec[i]->str().length()<<")="<<std::max<unsigned int>(position_par_attrib_indentation_max, ss_vec[i]->str().length())<<std::endl;
-          position_par_attrib_indentation_max = std::max<unsigned int>(position_par_attrib_indentation_max, ss_vec[i]->str().length());
+        if (show_values) {
+          for (unsigned int i = 0; i<vec.size(); i++) {
+            //std::cout << ss_vec[i]->str().length() << " \"" << ss_vec[i]->str() << "\"" << std::endl;
+            ss_vec[i]->width(position_par_val_indentation_max - ss_vec[i]->str().length());
+            *ss_vec[i] << "= ";
+            *ss_vec[i] << api->getValue(vec[i], "", true); // not impact is_used status
+            //std::cout << ss_vec[i]->str().length() << " \"" << ss_vec[i]->str() << "\"" << std::endl;
+            // update max indentation
+            //std::cout << "position_par_attrib_indentation_max["<<i<<"]=max("<<position_par_attrib_indentation_max<<","<<ss_vec[i]->str().length()<<")="<<std::max<unsigned int>(position_par_attrib_indentation_max, ss_vec[i]->str().length())<<std::endl;
+            position_par_attrib_indentation_max = std::max<unsigned int>(position_par_attrib_indentation_max, ss_vec[i]->str().length());
+          }
+          position_par_attrib_indentation_max += 3;
         }
-        position_par_attrib_indentation_max += 3;
         
         // Parameter attributes and is_used status
         for (unsigned int i = 0; i<vec.size(); i++) {
@@ -192,9 +195,9 @@ namespace cnf {
     }; // end struct local
     
     if (indentation)
-      local::show_database_indentation(api);
+      local::show_database_indentation(api, show_values);
     else
-      local::show_database_simple(api);    
+      local::show_database_simple(api, show_values);    
   }
 
   

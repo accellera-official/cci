@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007-2009 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -48,8 +48,12 @@
 
 
 // /**
-//  * @mainpage GreenSocs GreenControl framework
-//  * This is the GreenSocs GreenControl framework.
+//  * @mainpage GreenSocs GreenControl Framework
+//  * This is the GreenSocs GreenControl Model-Middleware-Framework.<br>
+//  *
+//  * Developed by: Christian Schroeder<br>
+//  * and Wolfgang Klingauf<br>
+//  * with Robert Guenzel, Mark Burton, Marcus Bartholomeu, Eric Roesler, Michael Ruetz and others.
 //  */
 
 
@@ -98,7 +102,7 @@ protected:
   friend class initialize_if_T<GC_Core>;
   
   /// target address map 
-  ControlAddressMap mAddressMap;
+  ControlAddressMap m_AddressMap;
 
   /// String containing the name of the core
   const char* m_name;
@@ -194,8 +198,8 @@ public:
 
     // This is only a convenience security check to prevent user errors
     // TODO: Should be SC_REPORT_FATAL, if there are still any APIs/Plugins connected to the core, but GCnf_Api_t isn't destroyed,
-    // so the mAddressMap won't be empty and the Error/Warning gets thrown every time.
-    //if(!mAddressMap.isEmpty())
+    // so the m_AddressMap won't be empty and the Error/Warning gets thrown every time.
+    //if(!m_AddressMap.isEmpty())
     //  SC_REPORT_WARNING(name(), "GC_Core destructed before other GreenControl elements! To asure that no GreenControl element uses the Core, take care of the coding style to construct first the Core, then the Plugins and destruct them in reverse order.");
 
     access_core_singleton(NULL, true);
@@ -210,7 +214,11 @@ public:
    */
   void bind(gc_port_T* pPort)
   {
-    mAddressMap.addPort(pPort);
+    assert(pPort != NULL && "gc_port must not be NULL!");
+    assert(pPort->getSupportedControlService() != EXTENDED_SERVICE && "Use other constructor and provide the extended service ID!");
+    assert(pPort->getSupportedControlService() != NO_SERVICE && "Provide a valid service ID!");
+
+    m_AddressMap.addPort(pPort);
 
     initialize_if* pIF;
     // add only APIs to the CallbackDispatcher
@@ -239,7 +247,7 @@ public:
    */
   void unbind(gc_port_T* pPort)
   {
-    mAddressMap.removePort(pPort);
+    m_AddressMap.removePort(pPort);
 
     // remove plugins from the CallbackDispatcher
     initialize_if* pIF;
@@ -269,7 +277,7 @@ public:
 
     GC_DUMP_N(name(), "got transaction atom from master"); 
 #ifdef GC_VERBOSE
-    show_pure_vector(mAddressMap.getName( tr->get_mID(), tr->get_mService()), 1);
+    show_pure_vector(m_AddressMap.getName( tr->get_mID(), tr->get_mService()), 1);
     std::cout << std::endl;
 #endif
     GC_DUMP_N(name(), "  received transaction: "<<tr->toString().c_str());      
@@ -280,7 +288,7 @@ public:
     // forward the transaction to the target
     GC_DUMP_N(name(), "forward transaction to slave"); 
 #ifdef GC_VERBOSE
-    show_pure_vector(mAddressMap.getName( tr->get_mTarget(), tr->get_mService()), 1);
+    show_pure_vector(m_AddressMap.getName( tr->get_mTarget(), tr->get_mService()), 1);
     std::cout << std::endl;
 #endif
 
@@ -294,7 +302,7 @@ public:
     if(targetAddr) // use address for direct communication
     {
       // check if target is (still) existing (could be destroyed in the meantime)
-      if(mAddressMap.is_in_maps(targetAddr))
+      if(m_AddressMap.is_in_maps(targetAddr))
         targetAddr->transport(tr);
       else
       {
@@ -306,7 +314,7 @@ public:
     }
     else // got no target address, use plugin id with map
     {
-      addrVec = mAddressMap.decode(tr->get_mService());
+      addrVec = m_AddressMap.decode(tr->get_mService());
       for(unsigned int i=0;i<addrVec.size();i++)
         addrVec[i]->transport(tr);
     }

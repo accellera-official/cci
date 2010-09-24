@@ -1133,19 +1133,19 @@ public:
   // //////////////// command_if methods ////////////////////////////////////
 
   /// Returns the name of the API.
-  std::string getName()
+  const std::string getName()
   {
     return name();
   }
 
   /// Returns the name of the specified command.
-  std::string getCommandName(unsigned int cmd)
+  const std::string getCommandName(unsigned int cmd)
   {
     return ConfigPlugin_T::getCmdName(cmd);
   }
 
   /// Return a description of the specified command.
-  std::string getCommandDescription(unsigned int cmd)
+  const std::string getCommandDescription(unsigned int cmd)
   {
     return ConfigPlugin_T::getCmdDesc(cmd);
   }

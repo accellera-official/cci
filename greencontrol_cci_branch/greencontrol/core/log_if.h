@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2009-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -30,7 +30,7 @@ namespace ctr {
 
 /// Interface to be implemented by parameters or classes, that are passed via a ControlTransaction.
 /**
- * This interface is to be implemented by parameters or classes, that are passed via an AnyPointer in a
+ * This interface is to be implemented by parameters or classes, that are passed via an AnyPointer or an extension in a
  * ControlTransaction. These classes have to provide some information about their content, type etc. in
  * the form of std::strings, so the GC_Logger is able to get further information about the payload in
  * a ControlTransaction.

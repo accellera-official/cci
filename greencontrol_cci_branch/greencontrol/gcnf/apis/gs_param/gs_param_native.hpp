@@ -710,11 +710,11 @@ class gs_param<unsigned long long>
 public:
   GS_PARAM_HEAD;
   /// Constructor with unsigned int value
-  explicit gs_param(const std::string &nam, const unsigned int &val) : gs_param_t<val_type>(nam         )  { gs_param_t<val_type>::init((val_type)val); }    
-  explicit gs_param(const char *nam,        const unsigned int &val) : gs_param_t<val_type>(string(nam) )  { gs_param_t<val_type>::init((val_type)val); }    
+  //explicit gs_param(const std::string &nam, const unsigned long &val) : gs_param_t<val_type>(nam         )  { gs_param_t<val_type>::init((val_type)val); }    
+  //explicit gs_param(const char *nam,        const unsigned long &val) : gs_param_t<val_type>(string(nam) )  { gs_param_t<val_type>::init((val_type)val); }    
   /// Constructor with int value
-  explicit gs_param(const std::string &nam, const int &val) : gs_param_t<val_type>(nam         )  { gs_param_t<val_type>::init((val_type)val); }    
-  explicit gs_param(const char *nam,        const int &val) : gs_param_t<val_type>(string(nam) )  { gs_param_t<val_type>::init((val_type)val); }    
+  //explicit gs_param(const std::string &nam, const long &val) : gs_param_t<val_type>(nam         )  { gs_param_t<val_type>::init((val_type)val); }    
+  //explicit gs_param(const char *nam,        const long &val) : gs_param_t<val_type>(string(nam) )  { gs_param_t<val_type>::init((val_type)val); }    
   
   // ///////////////////////
   //  operators

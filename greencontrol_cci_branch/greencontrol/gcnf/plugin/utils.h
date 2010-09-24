@@ -98,6 +98,20 @@ namespace cnf {
     local_n = hier_name.substr( hier_name.find_last_of(SC_NAME_DELIMITER)+1, hier_name.size()-hier_name.find_last_of(SC_NAME_DELIMITER)+1 );
     return local_n;
   }
+
+  /// Returns the parameter's hierarchy name
+  /**
+   * The parameter's hierarchy name is the first part of the given hier_name 
+   * from the beginning to the last delimiter (usualy '.').
+   *
+   * @param Full hierarchical parameter name
+   * @return Parameter's hierarchy name
+   */
+  static inline std::string get_hierarchy_param_name(const std::string& hier_name) {
+    std::string local_n;
+    local_n = hier_name.substr( 0, hier_name.find_last_of(SC_NAME_DELIMITER));
+    return local_n;
+  }
   
 } // end namespace cnf
 } // end namespace gs

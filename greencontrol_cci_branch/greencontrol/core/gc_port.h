@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2007-2009 : GreenSocs Ltd
+//   Copyright (C) 2007-2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -40,34 +40,39 @@ namespace ctr {
 /**
  * Class gc_port is the port to the GreenControl Core.
  *
- * Modules using it will have to implement gc_port_if to handle incoming transactions. Outgoing transactions can be sent with transport(transaction).
+ * Modules using it will have to implement gc_port_if to handle 
+ * incoming transactions. Outgoing transactions can be sent with 
+ * transport(transaction).
  * 
- * The port will be bound automatically immediately by obtaining the Control Core via its get_instance() method and calling the bind() method.
+ * The port will be bound automatically immediately by obtaining 
+ * the Control Core via its get_instance() method and calling the 
+ * bind() method.
  */
 class gc_port
 {
 public:
 
-  /// Constructor with information for the port.
+  /// Port constructor for the standard services.
   /**
    * Constructor with information to be saved and to be read of core.
    *
    * Initiates automatic binding of the port by calling bind() in the Control Core (which is obtained by get_instance()).
-   *
-   * Must not be called after before end_of_elaboration.
    *
    * @param supportedService    Used by the plugin to announce the supported service.
    * @param api_OR_plugin_name  Name of the connected plugin or API, used for debug and future use.
    * @param isPlugin            Whether the connected module is a plugin.
    * @param pParent             Address to the parent API or plugin.
    */
-  gc_port(ControlService supportedService, const std::string api_OR_plugin_name, bool isPlugin, gc_port_if* pParent)
+  gc_port(ControlService_enum supportedService, const std::string api_OR_plugin_name, bool isPlugin, gc_port_if* pParent)
     : m_pParent(pParent)
     , m_pCommand(NULL)
     , m_supportedControlService(supportedService)
     , m_parentName(api_OR_plugin_name)
     , m_isPlugin(isPlugin)
   {
+    assert(supportedService != EXTENDED_SERVICE && "Use other constructor and provide the extended service ID!");
+    assert(supportedService != NO_SERVICE && "Provide a valid service ID!");
+
     // set command_if* to parent if available
     m_pCommand = dynamic_cast<command_if*>(pParent);
 
@@ -81,6 +86,37 @@ public:
       SC_REPORT_ERROR(m_parentName.c_str(), "Cannot locate GC_Core instance in simulation context.");
   }
 
+  /// Port constructor for extended services.
+  /**
+   * Constructor with information to be saved and to be read of core.
+   *
+   * Initiates automatic binding of the port by calling bind() in the Control Core (which is obtained by get_instance()).
+   *
+   * @param supportedService    Used by the plugin to announce the supported service. For Extended Services.
+   * @param api_OR_plugin_name  Name of the connected plugin or API, used for debug and future use.
+   * @param isPlugin            Whether the connected module is a plugin.
+   * @param pParent             Address to the parent API or plugin.
+   */
+  gc_port(gc_service_ID_extension_base& supportedService, const std::string api_OR_plugin_name, bool isPlugin, gc_port_if* pParent)
+    : m_pParent(pParent)
+    , m_pCommand(NULL)
+    , m_supportedControlService(supportedService.get_Service_ID())
+    , m_parentName(api_OR_plugin_name)
+    , m_isPlugin(isPlugin)
+  {
+    // set command_if* to parent if available
+    m_pCommand = dynamic_cast<command_if*>(pParent);
+    
+    // ensure Core is existing
+    m_pCore = &GC_Core::get_instance();
+    
+    // bind the port to the core
+    if(m_pCore)
+      m_pCore->bind(this);
+    else
+      SC_REPORT_ERROR(m_parentName.c_str(), "Cannot locate GC_Core instance in simulation context.");
+  }
+  
   /// Destructor unbinds the port automatically from the Core.
   ~gc_port()
   {
