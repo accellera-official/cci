@@ -234,10 +234,11 @@ public:
   
   /// Set the value of this parameter.
   bool setValue(const val_type &val) {
-    if (make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_DUMP("pre_write callback rejected value change!");
+    if (make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("reject_write callback rejected value change!");
       return false;
     }
+    make_pre_write_callbacks();
     my_value.value = val.value;
     make_post_write_callbacks();
     return true;
@@ -245,10 +246,11 @@ public:
   
   /// Set the value of this parameter.
   bool setValue(const T &val) {
-    if (make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_DUMP("pre_write callback rejected value change!");
+    if (make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("reject_write callback rejected value change!");
       return false;
     }
+    make_pre_write_callbacks();
     my_value.value = val;
     make_post_write_callbacks();
     return true;
@@ -277,10 +279,11 @@ public:
   
   /// Set the value of this parameter with a string.
   bool setString(const std::string &str) {
-    if (make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_DUMP("pre_write callback rejected value change!");
+    if (make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("reject_write callback rejected value change!");
       return false;
     }
+    make_pre_write_callbacks();
     bool success = deserialize(my_value.value, envvar_subst(str, m_par_name));
     make_post_write_callbacks();
     return success;

@@ -229,10 +229,11 @@ public:
    * @return If the parameter was set successfully (false if it has been rejected)
    */
   bool setValue(const val_type &val) {
-    if (make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_DUMP("pre_write callback rejected value change!");
+    if (make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("reject_write callback rejected value change!");
       return false;
     }
+    make_pre_write_callbacks();
 #ifdef GCNF_ENABLE_GS_PARAM_LOCK
     if (gs_param_base::m_locked) {                                                
       GS_PARAM_DUMP("parameter is locked!");                                      
@@ -251,10 +252,11 @@ public:
       SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked with different password than given one!");
       return false;                                                                     
     }
-    if (make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_DUMP("pre_write callback rejected value change!");
+    if (make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("reject_write callback rejected value change!");
       return false;
     }
+    make_pre_write_callbacks();
     my_value = val;
     make_post_write_callbacks();
     return true;
@@ -287,10 +289,11 @@ public:
    * @return If setting was successful
    */ 
   bool setString(const std::string &str) {
-    if (make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_DUMP("pre_write callback rejected value change!");
+    if (make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_DUMP("reject_write callback rejected value change!");
       return false;
     }
+    make_pre_write_callbacks();
 #ifdef GCNF_ENABLE_GS_PARAM_LOCK
     if (gs_param_base::m_locked) {                                                
       GS_PARAM_DUMP("parameter is locked!");                                      

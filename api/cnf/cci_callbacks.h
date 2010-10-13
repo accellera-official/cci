@@ -31,7 +31,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Callback prior to the value being read from
     pre_read,
     //post_read, // difficult/impossible to provide?
-    /// Callback prior to the value being written to
+    /// Callback announcing someone tries to write the value (can be rejected by observers)
+    reject_write,
+    /// Callback prior to the value being written to (write will definetly be done - not being rejected)
     pre_write,
     /// Callback after to the value has been written to
     post_write,
@@ -45,9 +47,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   enum callback_return_type {
     /// No special return status
     return_nothing,
-    /// The callback function rejects a value change; may only be used in cci::cnf::pre_write callbacks
+    /// The callback function rejects a value change; may only be used in cci::cnf::reject_write callbacks
     /**
-     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::cnf::pre_write.
+     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::cnf::reject_write.
      */
     return_value_change_rejected,
     /// Some other error @todo specify reaction to be performed in calling parameter code

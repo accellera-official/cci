@@ -79,6 +79,9 @@ namespace cci_impl {
             break;
           //case gs::cnf::post_read:
           //  break;
+          case gs::cnf::reject_write: // = cci::cnf::reject_write
+            returned_cci_message = adapt->call(*param, cci::cnf::reject_write);
+            break;
           case gs::cnf::pre_write: // = cci::cnf::pre_write
             returned_cci_message = adapt->call(*param, cci::cnf::pre_write);
             break;
@@ -237,6 +240,9 @@ namespace cci_impl {
           cb = gs::cnf::pre_read;
           break;
         //case post_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
+        case cci::cnf::reject_write:
+          cb = gs::cnf::reject_write;
+          break;
         case cci::cnf::pre_write:
           cb = gs::cnf::pre_write;
           break;

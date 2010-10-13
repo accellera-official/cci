@@ -206,6 +206,7 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
   enum callback_type {
     pre_read,
     post_read,
+    reject_write,
     pre_write,
     post_write,
     create_param,
@@ -221,7 +222,7 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
    */
   enum callback_return_type {
     return_nothing = 0, 
-    return_value_change_rejected = 1, // may only be used in pre_write callbacks
+    return_value_change_rejected = 1, // may only be used in reject_write callbacks
     return_other_error = 2
   };
   
@@ -232,6 +233,8 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
         return std::string("pre_read");
       case post_read:
         return std::string("post_read");
+      case reject_write:
+        return std::string("reject_write");
       case pre_write:
         return std::string("pre_write");
       case post_write:

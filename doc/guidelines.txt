@@ -40,15 +40,20 @@ namespace cci {
 
 ----------------------------------------------------------------
 
+REJECT_WRITE CALLBACK 
+and
 PRE_WRITE CALLBACK
 
-It is possible that any pre_write callback rejects the value (by returning
+Any reject_write callback is allowed to reject the value (by returning
 the according enum item). Thus each observer getting such a callback must
-not rely on the given value to appear as the new one!
+not rely on the given value to appear as the new one - use pre_write instead!
 
-If the value change is rejected during pre_write, there will be no 
-post_write callback for this change. If a pre_write callback rejects the 
-value, all remaining pre_write callbacks shall still be called.
+If the value change is rejected (during reject_write), there will be no 
+pre_write and no post_write callbacks for this change. If a reject_write
+callback rejects the value, all remaining reject_write callbacks shall
+still be called.
+
+A pre_write callback must not reject the value write.
 
 
 ----------------------------------------------------------------

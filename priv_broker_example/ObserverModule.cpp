@@ -67,7 +67,7 @@ cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_bas
 
 /// Callback function with default signature rejecting all changes.
 cci::cnf::callback_return_type ObserverModule::config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
-  assert(cb_reason == cci::cnf::pre_write);
+  assert(cb_reason == cci::cnf::reject_write);
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
   cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;

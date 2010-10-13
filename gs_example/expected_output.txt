@@ -1,13 +1,13 @@
 Created new GCnf_Api CCI_API_INSTANCE
 Owner.int_param exists (implicit or explicit)
-new impl_par=0x203c64
-new impl_par=0x203f84
-new impl_par=0x204294
-new impl_par=0x2045a4
-new impl_par=0x204914
-new impl_par=0x204d84
-new impl_par=0x2050e4
-new impl_par=0x205414
+new impl_par=0x2048e4
+new impl_par=0x204c04
+new impl_par=0x204f14
+new impl_par=0x205224
+new impl_par=0x205594
+new impl_par=0x205a04
+new impl_par=0x205d64
+new impl_par=0x206094
 
 ------ sc_start() ----------------
 
@@ -31,9 +31,11 @@ MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param Mutabili
 Owner: uint_param get_default_value()=12000
 Owner: uint_param=12000
 Owner: uint_param is_default_value()=1
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' will change to value '12000'
 @0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12000'
 Owner: set uint_param=12000
 Owner: uint_param is_default_value()=0
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' will change to value '12000'
 @0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '10'
 Owner: set uint_param=10
 Owner: uint_param is_default_value()=0
@@ -52,14 +54,14 @@ MutabilityOwner: demonstrate mutable parameter being made temporarily immutable
 MutabilityOwner:  mutable_int_param=50
 MutabilityOwner:  set mutable_int_param to 150
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:  lock mutable_int_param with key 0x1c7f90
+MutabilityOwner:  lock mutable_int_param with key 0x1ddf90
 MutabilityOwner:    set mutable_int_param should fail
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Parameter locked.
 In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:126
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:    set mutable_int_param with wrong key 0x1c7f94 - should fail twice
+MutabilityOwner:    set mutable_int_param with wrong key 0x1ddf94 - should fail twice
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
 In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:139
@@ -68,9 +70,9 @@ In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
 In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation/gs_cci_param_t.h:139
 In process: MutabilityOwner.main_action @ 0 s
-MutabilityOwner:    set mutable_int_param with key 0x1c7f90 - should succeed
+MutabilityOwner:    set mutable_int_param with key 0x1ddf90 - should succeed
 MutabilityOwner:  mutable_int_param=4444
-MutabilityOwner:  unlock mutable_int_param with key 0x1c7f90
+MutabilityOwner:  unlock mutable_int_param with key 0x1ddf90
 MutabilityOwner:    set mutable_int_param should succeed
 ----------------------------
 Owner: Owner.int_param.json_serialize() = 11
@@ -78,11 +80,12 @@ Owner: Owner.int_param.json_deserialize(555000) results in 555000
 Owner: set int_param = 100
 Owner: set int_param.set(200)
 Owner: create parameter 
-new impl_par=0x2067b4
+new impl_par=0x206f54
   created Owner.uchar_param
 Owner: Set the new parameter uchar_param
 
-Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12'
+Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will change to value '10'
+@1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12'
 ----------------------------
 @10 ns /2 (Manipulator): Set parameter Owner.int_param to value=5000
 
@@ -91,6 +94,7 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' chang
 @10 ns /4 (Manipulator): Set parameter Owner.int_param to value=5002
 
 @10 ns /5 (Manipulator): Set parameter Owner.uint_param to value=9000
+@10 ns /5 (Observer): Callback for parameter 'Owner.uint_param' will change to value '12'
 @10 ns /5 (Observer): Callback for parameter 'Owner.uint_param' changed to value '9000'
 
 
@@ -111,7 +115,7 @@ str_param has value = test cci value string
 **** Parameter list: 
    MutabilityOwner.elab_time_int_param, MutabilityOwner.immutable_int_param, MutabilityOwner.mutable_int_param, Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2
 
-delete param=0x1d7f70
+delete param=0x1edf70
 
 ------ sc_start() returned -------
 

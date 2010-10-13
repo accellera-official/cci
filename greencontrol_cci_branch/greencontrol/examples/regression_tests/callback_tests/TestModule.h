@@ -41,12 +41,15 @@ public:
   }
   
   void main_action() {
-    GC_REGISTER_TYPED_PARAM_CALLBACK(m_cnf_api->getPar("OM.int_param"), gs::cnf::pre_read,   TestModule, callback_function);
-    GC_REGISTER_TYPED_PARAM_CALLBACK(m_cnf_api->getPar("OM.int_param"), gs::cnf::post_read,  TestModule, callback_function);
-    GC_REGISTER_TYPED_PARAM_CALLBACK(m_cnf_api->getPar("OM.int_param"), gs::cnf::pre_write,  TestModule, callback_function);
-    GC_REGISTER_TYPED_PARAM_CALLBACK(m_cnf_api->getPar("OM.int_param"), gs::cnf::post_write, TestModule, callback_function);
+    gs::gs_param_base *par = m_cnf_api->getPar("OM.int_param");
+    assert (par != NULL);
+    GC_REGISTER_TYPED_PARAM_CALLBACK(par, gs::cnf::pre_read,     TestModule, callback_function);
+    GC_REGISTER_TYPED_PARAM_CALLBACK(par, gs::cnf::post_read,    TestModule, callback_function);
+    GC_REGISTER_TYPED_PARAM_CALLBACK(par, gs::cnf::reject_write, TestModule, callback_function);
+    GC_REGISTER_TYPED_PARAM_CALLBACK(par, gs::cnf::pre_write,    TestModule, callback_function);
+    GC_REGISTER_TYPED_PARAM_CALLBACK(par, gs::cnf::post_write,   TestModule, callback_function);
     
-    m_cnf_api->getPar("OM.int_param")->setString("50");
+    par->setString("50");
   }
   
   gs::cnf::callback_return_type callback_function(gs::gs_param_base& changed_param, gs::cnf::callback_type reason) {

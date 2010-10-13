@@ -53,19 +53,24 @@ void ObserverModule::main_action() {
   assert(p != NULL);
 
   // ******** register for parameter change callback ***************
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb1, cb3;
-  cb1 = p->register_callback(cci::cnf::post_write, this, 
-                             cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  cci::shared_ptr<cci::cnf::callb_adapt_b> cb1a, cb1b, cb3a, cb3b;
+  cb1a = p->register_callback(cci::cnf::pre_write, this, 
+                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  cb1b = p->register_callback(cci::cnf::post_write, this, 
+                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
   cci::cnf::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
   assert(p2 != NULL);
-  cb3 = p2->register_callback(cci::cnf::post_write, this, 
-                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  mCallbacks.push_back(cb3);// This will not be deleted after end of main_action()
+  cb3a = p2->register_callback(cci::cnf::pre_write, this, 
+                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  cb3b = p2->register_callback(cci::cnf::post_write, this, 
+                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  mCallbacks.push_back(cb3a);// This will not be deleted after end of main_action()
+  mCallbacks.push_back(cb3b);// This will not be deleted after end of main_action()
 
   // ******* Testing parameter lock with callback returns *************
   // Register Callback for parameter int_param in module other_ip (IP1)
   cci::shared_ptr<cci::cnf::callb_adapt_b> cb2;
-  cb2 = p->register_callback(cci::cnf::pre_write, this, 
+  cb2 = p->register_callback(cci::cnf::reject_write, this,
                              cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
   std::string str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
@@ -98,9 +103,19 @@ void ObserverModule::main_action() {
 
 /// Callback function with default signature showing changes.
 cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
-  assert(cb_reason == cci::cnf::post_write);
-  std::string str = par.json_serialize();
-  DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
+  std::string str;
+  switch (cb_reason) {
+  case cci::cnf::pre_write:
+    str = par.json_serialize();
+    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change to value '"<<str<<"'");
+    break;
+  case cci::cnf::post_write:
+    str = par.json_serialize();
+    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
+    break;
+  default:
+    assert(false && "not awaited cb reason");
+  }
   return cci::cnf::return_nothing;
 }
 
@@ -114,7 +129,7 @@ cci::cnf::callback_return_type ObserverModule::config_new_param_callback(cci::cn
 
 /// Callback function with default signature rejecting all changes.
 cci::cnf::callback_return_type ObserverModule::config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
-  assert(cb_reason == cci::cnf::pre_write);
+  assert(cb_reason == cci::cnf::reject_write);
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
   cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;

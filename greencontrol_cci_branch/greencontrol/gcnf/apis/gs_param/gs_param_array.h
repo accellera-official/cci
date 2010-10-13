@@ -92,7 +92,8 @@ protected:
   using gs_param_base_T::name;
   using gs_param_base_T::m_callback_lists;
   using gs_param_base_T::m_callback_list_pre_read;
-  using gs_param_base_T::m_callback_list_post_read;
+  //using gs_param_base_T::m_callback_list_post_read;
+  using gs_param_base_T::m_callback_list_reject_write;
   using gs_param_base_T::m_callback_list_pre_write;
   using gs_param_base_T::m_callback_list_post_write;
   using gs_param_base_T::m_callback_list_destroy_param;
@@ -480,8 +481,11 @@ protected:
       case pre_read:
         cb_list = &m_callback_list_pre_read;
         break;
-      case post_read:
-        cb_list = &m_callback_list_post_read;
+      //case post_read:
+      //  cb_list = &m_callback_list_post_read;
+      //  break;
+      case reject_write:
+        cb_list = &m_callback_list_reject_write;
         break;
       case pre_write:
         cb_list = &m_callback_list_pre_write;
@@ -556,10 +560,11 @@ protected:
    */
   bool removeMember(const std::string name) {
     GS_PARAM_ARRAY_DUMP("removeMember("<<name<<")");
-    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_ARRAY_DUMP("  pre_write callback rejected remove member!");
+    if (this->make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("  reject_write callback rejected remove member!");
       return false;
     }
+    this->make_pre_write_callbacks();
 #ifdef GCNF_ENABLE_GS_PARAM_LOCK
     // Check the lock!
     if (gs_param_base_T::m_locked) {                                                
@@ -594,10 +599,11 @@ protected:
       return false;
     }
     // callback changes of this
-    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_ARRAY_DUMP("  pre_write callback rejected add member!");
+    if (this->make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("  reject_write callback rejected add member!");
       return false;
     }
+    this->make_pre_write_callbacks();
 #ifdef GCNF_ENABLE_GS_PARAM_LOCK
     // Check the lock!
     if (gs_param_base_T::m_locked) {                                                
@@ -611,6 +617,7 @@ protected:
     // register this as an observer (for callbacks and for destruction info)
     new_member.registerParamCallback(boost::shared_ptr<gs::cnf::ParamCallbAdapt_b>(new gs::cnf::ParamTypedCallbAdapt<gs_param_array_T>(this, &gs_param_array_T::array_config_callback, this, &new_member)), pre_read);
     //new_member.registerParamCallback(boost::shared_ptr<gs::cnf::ParamCallbAdapt_b>(new gs::cnf::ParamTypedCallbAdapt<gs_param_array_T>(this, &gs_param_array_T::array_config_callback, this, &new_member)), post_read); // TODO add when supported
+    new_member.registerParamCallback(boost::shared_ptr<gs::cnf::ParamCallbAdapt_b>(new gs::cnf::ParamTypedCallbAdapt<gs_param_array_T>(this, &gs_param_array_T::array_config_callback, this, &new_member)), reject_write);
     new_member.registerParamCallback(boost::shared_ptr<gs::cnf::ParamCallbAdapt_b>(new gs::cnf::ParamTypedCallbAdapt<gs_param_array_T>(this, &gs_param_array_T::array_config_callback, this, &new_member)), pre_write);
     new_member.registerParamCallback(boost::shared_ptr<gs::cnf::ParamCallbAdapt_b>(new gs::cnf::ParamTypedCallbAdapt<gs_param_array_T>(this, &gs_param_array_T::array_config_callback, this, &new_member)), post_write);
     new_member.registerParamCallback(boost::shared_ptr<gs::cnf::ParamCallbAdapt_b>(new gs::cnf::ParamTypedCallbAdapt<gs_param_array_T>(this, &gs_param_array_T::array_config_callback, this, &new_member)), destroy_param);
@@ -625,10 +632,11 @@ protected:
    * @return If delete was successfull (or not because e.g. read-only param)
    */
   bool delete_array() {
-    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_ARRAY_DUMP("delete_array: pre_write callback rejected delete member!");
+    if (this->make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("delete_array: reject_write callback rejected delete member!");
       return false;
     }
+    this->make_pre_write_callbacks();
 #ifdef GCNF_ENABLE_GS_PARAM_LOCK
     // Check the lock!
     if (gs_param_base_T::m_locked) {                                                

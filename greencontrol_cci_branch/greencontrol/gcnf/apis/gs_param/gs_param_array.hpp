@@ -458,10 +458,11 @@ public:
       return false;
     }                                                                             
 #endif
-    if (this->make_pre_write_callbacks() == return_value_change_rejected) {
-      GS_PARAM_ARRAY_DUMP("resize: pre_write callback rejected resize!");
+    if (this->make_reject_write_callbacks() == return_value_change_rejected) {
+      GS_PARAM_ARRAY_DUMP("resize: reject_write callback rejected resize!");
       return false;
     }
+    this->make_pre_write_callbacks();
     // Delete unnecessary members if needed
     if (sz < internal_ArrVec.size()) {
       GS_PARAM_ARRAY_DUMP("resize: size ("<<sz<<") than existing size ("<<(unsigned int)internal_ArrVec.size()<<"): delete remaining members.");

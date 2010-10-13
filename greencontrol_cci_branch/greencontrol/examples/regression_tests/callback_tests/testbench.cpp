@@ -26,12 +26,14 @@
 #include "OwningModule.h"
 #include "TestModule.h"
 
+// THIS IS ALL TODO - CHECK CCI examples for existing checks
 /*
  GreenConfig callback tests
  
  - register
  - pre_read cb
  - post_read cb
+ - reject_write
  - pre_write cb
  - post_write cb
  - destroy_param cb

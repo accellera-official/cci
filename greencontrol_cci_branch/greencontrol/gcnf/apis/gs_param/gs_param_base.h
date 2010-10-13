@@ -109,7 +109,8 @@ public:
 
     // TODO: fill m_callback_lists with all callback lists this param has
     m_callback_lists[pre_read]      = &m_callback_list_pre_read;
-    m_callback_lists[post_read]     = &m_callback_list_post_read;
+    //m_callback_lists[post_read]     = &m_callback_list_post_read;
+    m_callback_lists[reject_write]  = &m_callback_list_reject_write;
     m_callback_lists[pre_write]     = &m_callback_list_pre_write;
     m_callback_lists[post_write]    = &m_callback_list_post_write;
     m_callback_lists[destroy_param] = &m_callback_list_destroy_param;
@@ -562,7 +563,7 @@ public:
    * @param callb      boost shared pointer to the ParamCallbAdapt_b object which contains
    *                   the object pointer and the member function pointer.
    * @param type       Type the callback shall be, DEPRECATED default is post_write_and_destroy.
-   *                   Allowed callback types: pre_read, post_read, pre_write, post_write, destroy_param, post_write_and_destroy
+   *                   Allowed callback types: pre_read, post_read, reject_write, pre_write, post_write, destroy_param, post_write_and_destroy
    * @return           boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
    *
    * <em>Macro GC_REGISTER_PARAM_CALLBACK</em>
@@ -584,7 +585,8 @@ public:
     // Add function pointer to callbacks
     switch (type) {
       case pre_read:
-      //case post_read: // not yet supported
+      //case post_read: // not supported
+      case reject_write:
       case pre_write:
       case post_write:
       case destroy_param:
@@ -740,9 +742,9 @@ public:
   }
   
   /// Returns if this param has registered callbacks
-  bool has_callbacks() { return ! ( m_callback_list_pre_read.empty() && m_callback_list_post_read.empty() &&
-                                    m_callback_list_pre_write.empty() && m_callback_list_post_write.empty() &&
-                                    m_callback_list_destroy_param.empty() ); } // more performant than iterating through m_callback_lists
+  bool has_callbacks() { return ! ( m_callback_list_pre_read.empty() && //m_callback_list_post_read.empty() &&
+                                    m_callback_list_reject_write.empty() && m_callback_list_pre_write.empty() &&
+                                    m_callback_list_post_write.empty() && m_callback_list_destroy_param.empty() ); } // more performant than iterating through m_callback_lists
   
   /// INTERNAL Callback function which does the event notify. Registered only if event needed!
   /**
@@ -805,22 +807,30 @@ protected:
   }
 
 protected:
-  /// Makes the pre read callbacks.
+  /// Makes the pre_read callbacks.
   inline callback_return_type make_pre_read_callbacks() const {
-    GS_PARAM_CALLBACK_DUMP("Make pre read callbacks"); 
+    GS_PARAM_CALLBACK_DUMP("Make pre_read callbacks"); 
     return make_enabled_callbacks_helper(m_callback_list_pre_read, pre_read);
   }
 
-  /// Makes the post read callbacks.
-  inline callback_return_type make_post_read_callbacks() const {
-    GS_PARAM_CALLBACK_DUMP("Make post read callbacks"); 
-    return make_enabled_callbacks_helper(m_callback_list_post_read, post_read);
-  }
+  // /// Makes the post_read callbacks.
+  //inline callback_return_type make_post_read_callbacks() const {
+  //  GS_PARAM_CALLBACK_DUMP("Make post read callbacks"); 
+  //  return make_enabled_callbacks_helper(m_callback_list_post_read, post_read);
+  //}
 
-  /// Makes the pre write callbacks.
+  /// Makes the reject_write callbacks.
+  inline callback_return_type make_reject_write_callbacks() {
+    GS_PARAM_CALLBACK_DUMP("Make reject_write callbacks"); 
+    return make_enabled_callbacks_helper(m_callback_list_reject_write, reject_write);
+  }
+  
+  /// Makes the pre_write callbacks.
   inline callback_return_type make_pre_write_callbacks() {
-    GS_PARAM_CALLBACK_DUMP("Make pre write callbacks"); 
-    return make_enabled_callbacks_helper(m_callback_list_pre_write, pre_write);
+    GS_PARAM_CALLBACK_DUMP("Make pre_write callbacks"); 
+    callback_return_type ret = make_enabled_callbacks_helper(m_callback_list_pre_write, pre_write);
+    assert(ret != return_value_change_rejected && "pre_write callback must not reject value, use reject_write instead!");
+    return ret;
   }
 
   /// Makes the post write callbacks and notifies the update event.
@@ -935,15 +945,17 @@ protected:
   mutable bool m_currently_making_callbacks;
   /// If some (how many) callbacks need to be deleted, because delete has been enqueued during m_currently_making_callbacks==true
   mutable unsigned int m_callback_list_delete_enqueued;
-  /// Stores pre read observer callback function pointers
+  /// Stores pre_read observer callback function pointers
   mutable callback_list_type m_callback_list_pre_read;
-  /// Stores post read observer callback function pointers
-  mutable callback_list_type m_callback_list_post_read;
-  /// Stores pre write observer callback function pointers
+  /// Stores post_read observer callback function pointers
+  //mutable callback_list_type m_callback_list_post_read;
+  /// Stores reject_write observer callback function pointers
+  mutable callback_list_type m_callback_list_reject_write;
+  /// Stores pre_write observer callback function pointers
   mutable callback_list_type m_callback_list_pre_write;
-  /// Stores post write observer callback function pointers
+  /// Stores post_write observer callback function pointers
   mutable callback_list_type m_callback_list_post_write;
-  /// Stores destroy param observer callback function pointers
+  /// Stores destroy_param observer callback function pointers
   mutable callback_list_type m_callback_list_destroy_param;
   /// Map of all callback lists, key is the callback type, only for usage in not performance critical code! Fill this map in the constructor!
   mutable all_callback_lists_type m_callback_lists;
