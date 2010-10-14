@@ -75,11 +75,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * parameter, the pointer is set to NULL to avoid repeated unregistration during
    * destruction.
    *
-   * Note the template T_cci_base_param_if is only needed for compiling (to break
+   * Note the template T_cci_base_param is only needed for compiling (to break
    * cyclic includes with cci_base_param), 
    * Use the typedef  to access this class.
    */
-  template<class T_cci_base_param_if>
+  template<class T_cci_base_param>
   class callb_adapt_B
   {
   protected:
@@ -95,7 +95,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param _func  Member function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param_if* _caller_param);
+    callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param* _caller_param);
     
     ~callb_adapt_B();
     
@@ -112,14 +112,14 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /**
      * @return Caller parameter. NULL if not existing.
      */
-    T_cci_base_param_if* get_caller_param();
+    T_cci_base_param* get_caller_param();
     
   protected:
     /// Pointer to the observer
     void* observer_ptr;
   public:   // TODO: more elegant; needs to be set to NULL when calling parameter is deleted
     /// Caller parameter
-    T_cci_base_param_if *caller_param;
+    T_cci_base_param *caller_param;
   protected:
     /// Function pointer to the callback method (must match signature cci::callb_adapt::callb_func_ptr).
     callb_func_ptr func;

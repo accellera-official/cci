@@ -17,8 +17,8 @@
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
-template<class T_cci_base_param_if>
-callb_adapt_B<T_cci_base_param_if>::callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param_if* _caller_param)
+template<class T_cci_base_param>
+callb_adapt_B<T_cci_base_param>::callb_adapt_B(void* _observer_ptr, callb_func_ptr _func, T_cci_base_param* _caller_param)
 : observer_ptr(_observer_ptr)
 , caller_param(_caller_param)
 , func(_func)
@@ -29,16 +29,16 @@ callb_adapt_B<T_cci_base_param_if>::callb_adapt_B(void* _observer_ptr, callb_fun
 #endif
 }
   
-template<class T_cci_base_param_if>
-callb_adapt_B<T_cci_base_param_if>::~callb_adapt_B() {
+template<class T_cci_base_param>
+callb_adapt_B<T_cci_base_param>::~callb_adapt_B() {
   unregister_at_parameter();
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
   printf("callb_adapt_B: Deleting parameter callback adapter %p (shared pointer deleted)\n", (void*)this);
 #endif
 }
 
-template<class T_cci_base_param_if>
-void callb_adapt_B<T_cci_base_param_if>::unregister_at_parameter() {
+template<class T_cci_base_param>
+void callb_adapt_B<T_cci_base_param>::unregister_at_parameter() {
   if (caller_param != NULL) {
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
     printf("callb_adapt_B: Unregister parameter callback adapter %p at caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
@@ -50,8 +50,8 @@ void callb_adapt_B<T_cci_base_param_if>::unregister_at_parameter() {
   }
 }
 
-template<class T_cci_base_param_if>
-callback_return_type callb_adapt_B<T_cci_base_param_if>::call(cci_base_param& changed_param, const callback_type& cb_reason) {
+template<class T_cci_base_param>
+callback_return_type callb_adapt_B<T_cci_base_param>::call(cci_base_param& changed_param, const callback_type& cb_reason) {
   if (func) {
     return func(changed_param, cb_reason);
   } else {
@@ -60,13 +60,13 @@ callback_return_type callb_adapt_B<T_cci_base_param_if>::call(cci_base_param& ch
   return return_nothing;
 }
 
-template<class T_cci_base_param_if>
-void* callb_adapt_B<T_cci_base_param_if>::get_observer() {
+template<class T_cci_base_param>
+void* callb_adapt_B<T_cci_base_param>::get_observer() {
   return (void*) observer_ptr;
 }
 
-template<class T_cci_base_param_if>
-T_cci_base_param_if* callb_adapt_B<T_cci_base_param_if>::get_caller_param() {
+template<class T_cci_base_param>
+T_cci_base_param* callb_adapt_B<T_cci_base_param>::get_caller_param() {
   return caller_param;
 }
 

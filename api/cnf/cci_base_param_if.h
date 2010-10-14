@@ -43,7 +43,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * - JSON (de)serialize functions
    * - Callback handling
    */
-  class cci_base_param_if
+  class cci_base_param_impl_if
   {
   public:
 
@@ -86,7 +86,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /**
      *
      */
-    virtual ~cci_base_param_if() { }
+    virtual ~cci_base_param_impl_if() { }
     
     
     // //////////////////////////////////////////////////////////////////// //

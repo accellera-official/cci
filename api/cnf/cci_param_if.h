@@ -32,8 +32,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   
   /// Compiler Check Interface for the parameters class
   template<typename T, param_mutable_type TM>
-  class cci_param_if 
-  : virtual public cci_base_param_if
+  class cci_param_impl_if 
+  : virtual public cci_base_param_impl_if
   {
   /*protected:
     /// Typedef for the value.
@@ -50,7 +50,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     // TODO: Copy as comment from cci_param.h
     
     /// Destructor
-    virtual ~cci_param_if() { };
+    virtual ~cci_param_impl_if() { };
     
 
     // //////////////////////////////////////////////////////////////////// //

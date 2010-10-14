@@ -38,12 +38,12 @@ namespace cci_impl {
   using std::cout;
   using std::endl;
   
-  class cci_base_param
-  : virtual public cci::cnf::cci_base_param_if
+  class gs_cci_base_param
+  : virtual public cci::cnf::cci_base_param_impl_if
   {
   protected:
     /// Typedef for the param itself.
-    typedef cci_base_param my_type;
+    typedef gs_cci_base_param my_type;
 
     /// Callback forwarder class
     /**
@@ -133,11 +133,11 @@ namespace cci_impl {
     
   public:
 
-    explicit cci_base_param(cci::cnf::cci_base_param& owner_par
-                            //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
-                            , bool force_top_level_name /*= false*/
-                            , bool register_at_db /*= true*/
-                            , bool has_default_value ) // if there is a default value
+    explicit gs_cci_base_param(cci::cnf::cci_base_param& owner_par
+                               //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
+                               , bool force_top_level_name /*= false*/
+                               , bool register_at_db /*= true*/
+                               , bool has_default_value ) // if there is a default value
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
@@ -159,7 +159,7 @@ namespace cci_impl {
     }
 
   public:
-    virtual ~cci_base_param() {
+    virtual ~gs_cci_base_param() {
       cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(get_cci_base_param());
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");

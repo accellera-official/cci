@@ -28,8 +28,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
  */
 template<typename T, param_mutable_type TM = mutable_parameter>
 class cci_param 
-: public cci_base_param,
-  public cci_param_if<T, TM>
+: public cci_base_param
+, public cci_param_impl_if<T, TM> // TODO: Just to make sure they are compatible
 {
 protected:
   typedef T val_type;
@@ -41,8 +41,8 @@ public:
   // //////////////////////////////////////////////////////////////////// //
   // ///////////////   Construction / Destruction   ///////////////////// //
   
-  /// Constructor with a complete parameter
-  explicit cci_param(cci_param_if<val_type, TM>* param);
+  /// Constructor with a complete implementation parameter
+  explicit cci_param(cci_param_impl_if<val_type, TM>* param);
 
   /// Constructor with (local/hierarchical) name.
   explicit cci_param(const std::string& nam);
@@ -74,7 +74,31 @@ public:
 
   /// Destructor
   virtual ~cci_param();
-  
+
+  // Type independent functions
+  virtual void json_deserialize(const std::string& json_string) {get_pImpl()->json_deserialize(json_string); }
+  virtual const std::string& json_serialize() const {return get_pImpl()->json_serialize();}
+  virtual const basic_param_type get_basic_type() const {return get_pImpl()->get_basic_type();}
+  virtual void set_value(const cci_value& val) {get_pImpl()->set_value(val);}
+  virtual cci_value get_value() {return get_pImpl()->get_value();}
+  virtual void set_documentation(const std::string& doc) {get_pImpl()->set_documentation(doc);}
+  virtual std::string get_documentation() const {return get_pImpl()->get_documentation();}
+  virtual bool is_default_value() {return get_pImpl()->is_default_value();}
+  virtual bool is_invalid_value() {return get_pImpl()->is_invalid_value();}
+  virtual void set_invalid_value() {get_pImpl()->set_invalid_value();}
+  virtual bool is_initial_value() {return get_pImpl()->is_initial_value();};
+  virtual const std::string& get_name() const {return get_pImpl()->get_name();}
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()-> register_callback(type, callb);}
+  virtual void unregister_all_callbacks(void* observer) {get_pImpl()->unregister_all_callbacks(observer);}
+  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
+  virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
+  virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
+  virtual bool lock(void* pwd = NULL){return get_pImpl()->lock(pwd);}
+  virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock(pwd);}
+  virtual bool locked() const {return get_pImpl()->locked();}
+
+  // Type dependent functions
   virtual cci_param<val_type, TM>& operator = (const cci_param<val_type, TM>& v);
   virtual cci_param<val_type, TM>& operator = (const val_type& v);
   virtual operator const val_type& () const;
@@ -82,23 +106,23 @@ public:
   virtual const val_type& get() const;
   virtual void set(const val_type& val, void* lock_pwd);
   virtual std::string json_serialize(const val_type& val) const;
-  using cci_base_param::json_serialize;
+  //using cci_base_param::json_serialize;
   virtual void json_deserialize(val_type& target_val, const std::string& str);
-  using cci_base_param::json_deserialize;
+  //using cci_base_param::json_deserialize;
   virtual const val_type& get_default_value();
 
-  virtual cci_base_param_if* get_pImpl() const;
+  virtual cci_base_param_impl_if* get_pImpl() const;
 
 protected:
 
-  mutable cci_param_if<val_type, TM> *m_pImpl;
+  mutable cci_param_impl_if<val_type, TM> *m_pImpl;
   
 };
 
 template<param_mutable_type TM>
 class cci_param<std::string, TM>
-: public cci_base_param,
-  public cci_param_if<std::string, TM>
+: public cci_base_param
+//, public cci_param_impl_if<std::string, TM> // TODO: Just to make sure they are compatible
 {
 protected:
   typedef std::string val_type;
@@ -110,8 +134,8 @@ public:
   // //////////////////////////////////////////////////////////////////// //
   // ///////////////   Construction / Destruction   ///////////////////// //
 
-  /// Constructor with a complete parameter
-  explicit cci_param(cci_param_if<val_type, TM>* param);
+  /// Constructor with a complete implementation parameter
+  explicit cci_param(cci_param_impl_if<val_type, TM>* param);
   
   /// Constructor with (local/hierarchical) name.
   explicit cci_param(const std::string& nam);
@@ -136,6 +160,30 @@ public:
   /// Destructor
   virtual ~cci_param();
   
+  // Type independent functions
+  virtual void json_deserialize(const std::string& json_string) {get_pImpl()->json_deserialize(json_string); }
+  virtual const std::string& json_serialize() const {return get_pImpl()->json_serialize();}
+  virtual const basic_param_type get_basic_type() const {return get_pImpl()->get_basic_type();}
+  virtual void set_value(const cci_value& val) {get_pImpl()->set_value(val);}
+  virtual cci_value get_value() {return get_pImpl()->get_value();}
+  virtual void set_documentation(const std::string& doc) {get_pImpl()->set_documentation(doc);}
+  virtual std::string get_documentation() const {return get_pImpl()->get_documentation();}
+  virtual bool is_default_value() {return get_pImpl()->is_default_value();}
+  virtual bool is_invalid_value() {return get_pImpl()->is_invalid_value();}
+  virtual void set_invalid_value() {get_pImpl()->set_invalid_value();}
+  virtual bool is_initial_value() {return get_pImpl()->is_initial_value();};
+  virtual const std::string& get_name() const {return get_pImpl()->get_name();}
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()-> register_callback(type, callb);}
+  virtual void unregister_all_callbacks(void* observer) {get_pImpl()->unregister_all_callbacks(observer);}
+  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
+  virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
+  virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
+  virtual bool lock(void* pwd = NULL){return get_pImpl()->lock(pwd);}
+  virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock(pwd);}
+  virtual bool locked() const {return get_pImpl()->locked();}
+  
+  // Type dependent functions
   virtual cci::cnf::cci_param<val_type, TM>& operator = (const cci::cnf::cci_param<val_type, TM>& v);
   virtual cci::cnf::cci_param<val_type, TM>& operator = (const val_type& v);
   virtual operator const val_type& () const;
@@ -143,16 +191,16 @@ public:
   virtual const val_type& get() const;
   virtual void set(const val_type& val, void* lock_pwd);
   virtual std::string json_serialize(const val_type& val) const;
-  using cci_base_param::json_serialize;
+  //using cci_base_param::json_serialize;
   virtual void json_deserialize(val_type& target_val, const std::string& str);
-  using cci_base_param::json_deserialize;
+  //using cci_base_param::json_deserialize;
   virtual const val_type& get_default_value();
   
-  virtual cci_base_param_if* get_pImpl() const;
+  virtual cci_base_param_impl_if* get_pImpl() const;
 
 protected:
 
-  cci_param_if<val_type, TM> *m_pImpl;
+  cci_param_impl_if<val_type, TM> *m_pImpl;
   
 };
 

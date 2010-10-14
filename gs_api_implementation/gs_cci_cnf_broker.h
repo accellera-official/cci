@@ -27,7 +27,7 @@
 namespace cci {
   namespace cnf {
 
-  //class cci_base_param;
+  class cci_base_param;
 
   class gs_cci_cnf_broker
   : public cci::cnf::cci_cnf_broker

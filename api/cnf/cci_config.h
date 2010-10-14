@@ -89,7 +89,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
  * @param force_top_level_name If the given name shall be a top-level name
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
+static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -101,7 +101,7 @@ static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM
  * @param force_top_level_name If the given name shall be a top-level name
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
+static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -113,7 +113,7 @@ static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM
  * @param force_top_level_name If the given name shall be a top-level name
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
+static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
 
 /// Parameter factory function that is called after construction and after adding to the broker from within the cci param constructor
 /**

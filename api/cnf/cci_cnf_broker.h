@@ -28,7 +28,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
   // forward declaration 
   class cci_base_param;
-  //class cci_base_param_if;
     
   // forward declaration 
   template <class T, param_mutable_type TM> 

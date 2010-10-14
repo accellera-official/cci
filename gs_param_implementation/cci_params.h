@@ -39,24 +39,24 @@
 __CCI_OPEN_CONFIG_NAMESPACE__
   
   template<typename T, cci::cnf::param_mutable_type TM>
-  static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name) {
-    cci::cnf::cci_param_if<T, TM>* impl_par = new cci_impl::cci_param<T, TM>(*owner_par, nam, force_top_level_name);
+  static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name) {
+    cci::cnf::cci_param_impl_if<T, TM>* impl_par = new cci_impl::gs_cci_param<T, TM>(*owner_par, nam, force_top_level_name);
     std::cout << (std::hex) << "new impl_par=" << impl_par << std::endl;
     return impl_par;
   }
 
   
   template<typename T, cci::cnf::param_mutable_type TM>
-  static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name) {
-    cci::cnf::cci_param_if<T, TM>* impl_par = new cci_impl::cci_param<T, TM>(*owner_par, nam, val, force_top_level_name);
+  static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name) {
+    cci::cnf::cci_param_impl_if<T, TM>* impl_par = new cci_impl::gs_cci_param<T, TM>(*owner_par, nam, val, force_top_level_name);
     std::cout << (std::hex) << "new impl_par=" << impl_par << std::endl;
     return impl_par;
   }
 
 
   template<typename T, cci::cnf::param_mutable_type TM>
-  static cci::cnf::cci_param_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name) {
-    cci::cnf::cci_param_if<T, TM>* impl_par = new cci_impl::cci_param<T, TM>(*owner_par, nam, val, force_top_level_name);
+  static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name) {
+    cci::cnf::cci_param_impl_if<T, TM>* impl_par = new cci_impl::gs_cci_param<T, TM>(*owner_par, nam, val, force_top_level_name);
     std::cout << (std::hex) << "new impl_par=" << impl_par << std::endl;
     return impl_par;
   }
@@ -64,7 +64,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   template<typename T, cci::cnf::param_mutable_type TM>
   static void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par) {
     assert(owner_par != NULL && "The given parameter must not be NULL.");
-    cci_impl::cci_param<T, TM>* p = dynamic_cast<cci_impl::cci_param<T, TM>*> (owner_par->get_pImpl());
+    cci_impl::gs_cci_param<T, TM>* p = dynamic_cast<cci_impl::gs_cci_param<T, TM>*> (owner_par->get_pImpl());
     assert(p != NULL && "The given parameter should be created by the create_cci_param function thus being of the implementation type.");
     p->init();
   }
@@ -74,7 +74,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   void destroy_cci_param(cci::cnf::cci_param<T, TM>* param) {
     std::cout << (std::hex) << "delete param=" << param << std::endl;
     assert(param != NULL && "The given parameter must not be NULL.");
-    cci_impl::cci_param<T, TM>* p = dynamic_cast<cci_impl::cci_param<T, TM>*> (param->get_pImpl());
+    cci_impl::gs_cci_param<T, TM>* p = dynamic_cast<cci_impl::gs_cci_param<T, TM>*> (param->get_pImpl());
     assert(p != NULL && "The given parameter should be created by the create_cci_param function thus being of the implementation type.");
     delete p; p = NULL;
   }
