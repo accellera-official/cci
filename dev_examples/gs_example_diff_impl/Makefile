@@ -7,19 +7,17 @@ OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 
+TODO: different links to different parameter implementations
+
 MODULE = testbench
 
 SRCS = testbench.cpp \
-       ParameterOwnerModule.cpp \
-       ParameterOwnerMutabilityModule.cpp \
-       ParamManipulateModule.cpp \
-       ObserverModule.cpp
+       OwnerModuleA.cpp \
+       OwnerModuleB.cpp \
 
 OBJS = testbench.o \
-       ParameterOwnerModule.o \
-       ParameterOwnerMutabilityModule.o \
-       ParamManipulateModule.o \
-       ObserverModule.o
+       OwnerModuleA.o \
+       OwnerModuleB.o \
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 

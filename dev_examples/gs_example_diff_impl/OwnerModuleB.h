@@ -5,7 +5,6 @@
 //
 //   Developed by:
 //    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//    Mark Burton, mark@greensocs.com
 //
 //
 // The contents of this file are subject to the licensing terms specified
@@ -15,28 +14,28 @@
 // ENDLICENSETEXT
 
 
-#ifndef __PARAMETEROWNERMODULE_H__
-#define __PARAMETEROWNERMODULE_H__
+#ifndef __OWNERMODULEB_H__
+#define __OWNERMODULEB_H__
 
 
 #include <systemc>
 #include "ex_globals.h"
 #include <cci.h>
-#include "cci_params.h"
+#include "cci_params_b.h" // THIS IS THE DIFFERENT PARAMETER IMPLEMENTATION!!!
 #include "cci_api.h"
 
 
-/// Module which owns some cci parameters.
-class ParameterOwnerModule
+/// Module which owns some cci parameters of implementation type B.
+class OwnerModuleB
 : public sc_core::sc_module
 {
   
 public:
   
-  SC_HAS_PROCESS(ParameterOwnerModule);
+  SC_HAS_PROCESS(OwnerModuleB);
 	
   /// Constructor
-  ParameterOwnerModule(sc_core::sc_module_name name)
+  OwnerModuleB(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
   , int_param ("int_param", 50 )
   , uint_param("uint_param", 12000)
