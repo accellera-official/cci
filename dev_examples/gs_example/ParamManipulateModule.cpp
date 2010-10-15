@@ -22,14 +22,14 @@
 ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
-  // get the config API which is responsible for this module
-  mApi = cci::cnf::get_cnf_broker_instance(this);
+  // get the config broker which is responsible for this module
+  mBroker = cci::cnf::get_cnf_broker_instance(this);
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value
-  mApi->set_init_value("Owner.int_param", "11");
+  mBroker->set_init_value("Owner.int_param", "11");
   // demonstrate testing for existence
-  if (mApi->exists_param("Owner.int_param"))
+  if (mBroker->exists_param("Owner.int_param"))
     cout << "Owner.int_param exists (implicit or explicit)" << endl;
   else
     SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT exists!");
@@ -42,13 +42,13 @@ void ParamManipulateModule::main_action() {
   
   cout << "----------------------------" << endl;
   // get a parameter using the local config API
-  cci::cnf::cci_base_param *int_param_ptr = mApi->get_param("Owner.int_param");
+  cci::cnf::cci_base_param *int_param_ptr = mBroker->get_param("Owner.int_param");
   if (int_param_ptr == NULL) return;
   // make it a reference for convenience
   cci::cnf::cci_param<int> &int_param_p = *static_cast<cci::cnf::cci_param<int>* >(int_param_ptr);
 
   // get a parameter using the local config API
-  cci::cnf::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
+  cci::cnf::cci_base_param *uint_param_ptr = mBroker->get_param("Owner.uint_param");
   if (uint_param_ptr == NULL) return;
   // make it a reference for convenience
   cci::cnf::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cnf::cci_param<unsigned int>* >(uint_param_ptr);

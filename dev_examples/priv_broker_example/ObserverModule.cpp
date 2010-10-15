@@ -22,8 +22,8 @@
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
-  // get the config API which is responsible for this module
-  mApi = cci::cnf::get_cnf_broker_instance(this);
+  // get the config broker which is responsible for this module
+  mBroker = cci::cnf::get_cnf_broker_instance(this);
   SC_THREAD(main_action);
 }
 
@@ -43,7 +43,7 @@ void ObserverModule::main_action() {
 
   // show a parameter list
   cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

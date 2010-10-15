@@ -20,9 +20,9 @@
 
 void ModuleA::main_action() {
 
-  // get the config API which is responsible for this module
-  cci::cnf::cci_cnf_broker* mApi = cci::cnf::get_cnf_broker_instance(this);
-  assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
+  // get the config broker which is responsible for this module
+  cci::cnf::cci_cnf_broker* mBroker = cci::cnf::get_cnf_broker_instance(this);
+  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   
   
@@ -30,7 +30,7 @@ void ModuleA::main_action() {
   
   // show a parameter list
   cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

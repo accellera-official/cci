@@ -22,8 +22,8 @@
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
-  // get the config API which is responsible for this module
-  mApi = cci::cnf::get_cnf_broker_instance(this);
+  // get the config broker which is responsible for this module
+  mBroker = cci::cnf::get_cnf_broker_instance(this);
   SC_THREAD(main_action);
 }
 
@@ -42,14 +42,14 @@ void ObserverModule::main_action() {
 
   /*DEMO_DUMP(name(), "register for new parameter callbacks");
   cci::shared_ptr<cci::cnf::callb_adapt_b> cb_new_pa;
-  cb_new_pa = mApi->register_callback(cci::cnf::create_param, "*", this, 
+  cb_new_pa = mBroker->register_callback(cci::cnf::create_param, "*", this, 
                                    cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
   */
   DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");
 
   // get access to a foreign parameter using the module's config API
-  cci::cnf::cci_base_param* p = mApi->get_param("Owner.int_param");
+  cci::cnf::cci_base_param* p = mBroker->get_param("Owner.int_param");
   assert(p != NULL);
 
   // ******** register for parameter change callback ***************
@@ -58,7 +58,7 @@ void ObserverModule::main_action() {
                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
   cb1b = p->register_callback(cci::cnf::post_write, this, 
                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  cci::cnf::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
+  cci::cnf::cci_base_param* p2 = mBroker->get_param("Owner.uint_param");
   assert(p2 != NULL);
   cb3a = p2->register_callback(cci::cnf::pre_write, this, 
                                cci::bind(&ObserverModule::config_callback, this, _1, _2));
@@ -91,7 +91,7 @@ void ObserverModule::main_action() {
   
   // ********* show param list **************
   cout << "param list:" << endl;
-  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string> vec = mBroker->get_param_list();
   for (std::vector<std::string>::iterator iter = vec.begin(); iter != vec.end(); iter++)
     cout << *iter << " ";
   cout << endl;

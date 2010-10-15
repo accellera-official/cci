@@ -22,8 +22,8 @@
 ValueModule::ValueModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
-  // get the config API which is responsible for this module
-  mApi = cci::cnf::get_cnf_broker_instance(this);
+  // get the config broker which is responsible for this module
+  mBroker = cci::cnf::get_cnf_broker_instance(this);
   SC_THREAD(main_action);
 }
 
@@ -34,8 +34,8 @@ void ValueModule::main_action() {
   std::cout << std::endl;
   cout << "----------------------------" << endl;
   
-  // get a parameter using the local config API
-  cci::cnf::cci_base_param *uint_param_ptr = mApi->get_param("Owner.uint_param");
+  // get a parameter using the local config broker
+  cci::cnf::cci_base_param *uint_param_ptr = mBroker->get_param("Owner.uint_param");
   if (uint_param_ptr == NULL) return;
   // make it a reference for convenience
   cci::cnf::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cnf::cci_param<unsigned int>* >(uint_param_ptr);
@@ -48,7 +48,7 @@ void ValueModule::main_action() {
   std::cout << "uint_param has value = " << uint_param_p.json_serialize() << endl;
 
   // get a parameter using the local config API
-  cci::cnf::cci_base_param *str_param_ptr = mApi->get_param("Owner.str_param");
+  cci::cnf::cci_base_param *str_param_ptr = mBroker->get_param("Owner.str_param");
   if (str_param_ptr == NULL) return;
   // make it a reference for convenience
   cci::cnf::cci_param<std::string> &str_param_p = *static_cast<cci::cnf::cci_param<std::string>* >(str_param_ptr);

@@ -22,9 +22,9 @@ void ParameterOwnerModule::main_action() {
 
   std::cout << "----------------------------" << std::endl;
 
-  // get the config API which is responsible for this module
-  cci::cnf::cci_cnf_broker* mApi = cci::cnf::get_cnf_broker_instance(this);
-  assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
+  // get the config broker which is responsible for this module
+  cci::cnf::cci_cnf_broker* mBroker = cci::cnf::get_cnf_broker_instance(this);
+  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   // demonstrate is_default_value
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
@@ -97,7 +97,7 @@ void ParameterOwnerModule::main_action() {
 
   // show a parameter list
   cout << endl << "**** Parameter list: " << endl;
-  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

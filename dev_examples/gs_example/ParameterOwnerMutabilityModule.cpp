@@ -21,9 +21,9 @@ void ParameterOwnerMutabilityModule::main_action() {
 
   std::cout << "----------------------------" << std::endl;
 
-  // get the config API which is responsible for this module
-  cci::cnf::cci_cnf_broker* mApi = cci::cnf::get_cnf_broker_instance(this);
-  assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
+  // get the config broker which is responsible for this module
+  cci::cnf::cci_cnf_broker* mBroker = cci::cnf::get_cnf_broker_instance(this);
+  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   // ************************************************************************
   // **** demonstrate mutable parameter being made temporarily immutable 
@@ -49,9 +49,9 @@ void ParameterOwnerMutabilityModule::main_action() {
   }
   assert(mutable_int_param == 150);
   cout << name() << ":  mutable_int_param=" << (dec) << mutable_int_param<<endl;
-  cout << name() << ":    set mutable_int_param with wrong key "<< (void*)&mApi << " - should fail twice"<<endl;
+  cout << name() << ":    set mutable_int_param with wrong key "<< (void*)&mBroker << " - should fail twice"<<endl;
   try {
-    mutable_int_param.set(4444, &mApi); // should fail!
+    mutable_int_param.set(4444, &mBroker); // should fail!
   } catch(sc_core::sc_report e) {
     if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
       cout <<endl<< name() << ": Caught " << e.what() << endl;

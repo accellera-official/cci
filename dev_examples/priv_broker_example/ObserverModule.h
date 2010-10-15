@@ -47,8 +47,8 @@ public:
   cci::cnf::callback_return_type config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
 
 protected:
-  /// Pointer the the module's configuration API
-  cci::cnf::cci_cnf_broker* mApi;
+  /// Pointer the the module's configuration broker
+  cci::cnf::cci_cnf_broker* mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
   std::vector< cci::shared_ptr<cci::cnf::callb_adapt_b> > mCallbacks;

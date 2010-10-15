@@ -39,8 +39,8 @@ public:
   void main_action();
 
 protected:
-  /// Pointer the the module's configuration API
-  cci::cnf::cci_cnf_broker* mApi;
+  /// Pointer the the module's configuration broker
+  cci::cnf::cci_cnf_broker* mBroker;
 
 };
 
