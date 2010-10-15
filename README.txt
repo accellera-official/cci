@@ -18,13 +18,14 @@ or
 - edit Makefiles
   - gs_api_implementation/Makefile
   - gs_param_implementation/Makefile
+  - api/Makefile
   - Makefiles.defs
 
 - compile in
-  - cci
+  - api
   - gs_api_implementation
   - gs_param_implementation
-  - gs_example (or other example)
+  - dev_examples/gs_example (or other example)
   (currently there are compiler warnings)
 
 - run ./testbench in gs_example (or any other example dir)
@@ -41,5 +42,6 @@ doc/   :  Some further documentation
 api/   :  CCI interface files, only include cci.h in user code
 gs_api_implementation/    :  GreenSocs Config API implementation
 gs_param_implementation/  :  GreenSocs parameter implementation
-gs_example/          :  Example using the GreenSocs implementation
-priv_broker_example/ :  Example demonstrating usage of a private broker
+dev_examples/                     :  some development examples
+             gs_example/          :  Example using the GreenSocs implementation
+             priv_broker_example/ :  Example demonstrating usage of a private broker

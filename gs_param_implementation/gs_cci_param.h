@@ -36,7 +36,8 @@
 #include "gs_param_implementation/json_spirit/json_spirit.h"
 
 
-namespace cci_impl {
+__OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
+
 
   template<typename T, cci::cnf::param_mutable_type TM = cci::cnf::mutable_parameter>
   class gs_cci_param 
@@ -288,6 +289,8 @@ namespace cci_impl {
 
   };
   
-} // end namespace cci_impl
+
+__CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
+
 
 #endif

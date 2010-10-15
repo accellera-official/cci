@@ -32,7 +32,7 @@
 #include "cci.h"
 #include "greencontrol/config.h"
 
-namespace cci_impl {
+__OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   
   // TODO: remove
   using std::cout;
@@ -40,7 +40,7 @@ namespace cci_impl {
   
   template <typename T, cci::cnf::param_mutable_type TM>
   class gs_cci_param_t
-  : public cci_impl::gs_cci_base_param,
+  : public gs_cci_base_param,
     public cci::cnf::cci_param_impl_if<T, TM>
   {
   protected:
@@ -49,7 +49,7 @@ namespace cci_impl {
     /// Typedef for the param itself.
     typedef gs_cci_param_t<T, TM> my_type;
     /// Typedef for base type
-    typedef cci_impl::gs_cci_base_param base_type;
+    typedef gs_cci_base_param base_type;
     /// Typedef for the param itself.
     typedef cci::cnf::cci_param<T, TM> my_return_type;
     /// Typedef for the owned gs_param
@@ -155,6 +155,6 @@ namespace cci_impl {
   };
 
 
-} // namespace cci_impl
+__CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
 #endif

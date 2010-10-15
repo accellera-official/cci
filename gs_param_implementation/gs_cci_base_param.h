@@ -32,11 +32,7 @@
 #include "cci.h"
 #include "greencontrol/config.h"
 
-namespace cci_impl {
-  
-  // TODO: remove
-  using std::cout;
-  using std::endl;
+__OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   
   class gs_cci_base_param
   : virtual public cci::cnf::cci_base_param_impl_if
@@ -337,6 +333,6 @@ namespace cci_impl {
   };
 
 
-} // namespace cci_impl
+__CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
 #endif

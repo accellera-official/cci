@@ -10,21 +10,24 @@ CFLAGS = $(OPT) $(OTHER)
 MODULE = testbench
 
 SRCS = testbench.cpp \
-       ModuleA.cpp \
-       ModuleB.cpp \
-       ObserverModule.cpp
+       ParameterOwnerModule.cpp \
+       ParameterOwnerMutabilityModule.cpp \
+       ParamManipulateModule.cpp \
+       ObserverModule.cpp \
+       ValueModule.cpp
 
 OBJS = testbench.o \
-       ModuleA.o \
-       ModuleB.o \
-       ObserverModule.o
+       ParameterOwnerModule.o \
+       ParameterOwnerMutabilityModule.o \
+       ParamManipulateModule.o \
+       ObserverModule.o \
+       ValueModule.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
 EXTRA_LIBS = -lcciapiimpl -lcciparamimpl -lcciapi
 
-#include ../Makefile.gspm
-include ../Makefile.defs
+include ../../Makefile.defs
 
 all: $(EXE)
 
