@@ -16,9 +16,7 @@
 
 
 #include <systemc>
-#include <cci.h>
-#include "cci_api.h"
-#include "cci_params.h"
+#include "cci.h"
 
 #include "ParameterOwnerModule.h"
 #include "ParameterOwnerMutabilityModule.h"

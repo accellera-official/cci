@@ -14,16 +14,18 @@
 // 
 // ENDLICENSETEXT
 
+// This file is broker vendor dependent but standardized file name!
 
 #include <cci.h>
-#include "cci_api.h"
+#include "cci_api.h" // Broker vendor dependent but standardized file name!
 
 namespace cci {
-  namespace cnf {
+namespace cnf {
 
 
   cci_cnf_broker* singleton_api = NULL;
 
+  /// Implements declaration from cci_config.h
   cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod) {
     if (!singleton_api) singleton_api = new gs_cci_cnf_broker();
     if (mod != NULL) return cci_broker_manager::search_for_broker(mod);
@@ -32,5 +34,5 @@ namespace cci {
   }
 
   
-  } // end namespace cci
+} // end namespace cci
 } // end namespace cci

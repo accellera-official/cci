@@ -18,9 +18,9 @@
 #ifndef __GS_CCI_CNF_BROKER_H__
 #define __GS_CCI_CNF_BROKER_H__
 
+// NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
 #include <cci.h>
-#include "cci_params.h"
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_broker_if.h"
 

@@ -22,8 +22,6 @@
 #include <systemc>
 #include "ex_globals.h"
 #include "cci.h"
-#include "cci_params.h"
-#include "cci_api.h"
 
 #include "gs_cci_cnf_private_broker.h"
 

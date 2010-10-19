@@ -89,7 +89,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
  * @param force_top_level_name If the given name shall be a top-level name
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
+cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -101,7 +101,7 @@ static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<
  * @param force_top_level_name If the given name shall be a top-level name
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
+cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -113,7 +113,7 @@ static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<
  * @param force_top_level_name If the given name shall be a top-level name
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
+cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
 
 /// Parameter factory function that is called after construction and after adding to the broker from within the cci param constructor
 /**
@@ -123,7 +123,7 @@ static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<
  * @param owner_par CCI Parameter which shall be initialized
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-static void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par);
+void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par);
 
 /// Parameter factory function that is called by the cci_param wrapper
 /**

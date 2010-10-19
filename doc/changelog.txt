@@ -1,5 +1,12 @@
 ChangeLog
 ---------
+19.10.2010:
+- big clean-up
+- libraries (param and broker implementations) are now really independent
+- examples clean-up
+- param implementation library prepared to contain symbols for the provided functions
+
+earlier:
 
 - moved pre_write to reject_write callbacks and
   added pre_write callbacks

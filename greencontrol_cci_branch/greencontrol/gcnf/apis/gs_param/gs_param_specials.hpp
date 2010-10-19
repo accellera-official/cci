@@ -23,6 +23,8 @@
 // 
 // ENDLICENSETEXT
 
+// Specialization types in this file:
+//  std::vector<std::string>
 
 using std::istringstream;
 

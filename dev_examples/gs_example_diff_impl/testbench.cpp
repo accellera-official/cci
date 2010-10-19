@@ -17,11 +17,9 @@
 
 #include <systemc>
 #include <cci.h>
-#include "cci_api.h"
-#include "cci_params.h"
 
 #include "OwnerModuleA.h"
-//#include "OwnerModuleB.h"
+#include "OwnerModuleB.h"
 
 /// Example testbench for the CCI example demonstrating that it is possible 
 /// to use two different parameter implementations within one simulation
@@ -38,8 +36,8 @@ int sc_main(int argc, char *argv[]) {
   sc_core::sc_report_handler::set_actions("/OSCI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
 
 
-  OwnerModuleA     owner      ("OwnerA");
-  //OwnerModuleB     owner      ("OwnerB");
+  OwnerModuleA     ownerA     ("OwnerA");
+  OwnerModuleB     ownerB     ("OwnerB");
 
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
   sc_core::sc_start(); 

@@ -16,6 +16,7 @@
 
 #include "OwnerModuleB.h"
 #include <systemc.h>
+//#include "cci_params_b.h" // THIS IS THE DIFFERENT PARAMETER IMPLEMENTATION!!!
 
 void OwnerModuleB::main_action() {
 

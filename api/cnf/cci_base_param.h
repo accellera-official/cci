@@ -29,7 +29,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     virtual ~cci_base_param() { }
     
-    virtual void json_deserialize(const std::string& json_string) = 0;
+    virtual void json_deserialize(const std::string& json_string) = 0; // TODO: make them not virtual??
     virtual const std::string& json_serialize() const = 0;
     virtual const basic_param_type get_basic_type() const = 0;
     virtual void set_value(const cci_value& val) = 0;

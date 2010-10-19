@@ -20,7 +20,6 @@
 
 
 #include <cci.h>
-#include "cci_params.h"
 #include "greencontrol/config.h"
 
 

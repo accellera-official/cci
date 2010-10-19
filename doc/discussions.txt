@@ -67,20 +67,5 @@ c/   (-) less flexible, since the standard must define the complete class
 Currently we've chosen c/.
 
 ----------------------------------------------------------
-pre_write callbacks returning rejected value change
-
-(also see file guidelines.txt)
-
-Theoretically the pre_write callback can ONLY be used for checking 
-and rejecting values. It cannot be used as a pre_write performing 
-any action prior to an actual write, because the called function 
-cannot know if the write will be rejected by any other called item.
-
-An option is to rename pre_write to e.g. 'reject_write'.
-
-In this case we could add another real pre_write callback if it is 
-necessary to have such.
-
-----------------------------------------------------------
 
 There are many more discussions of course...

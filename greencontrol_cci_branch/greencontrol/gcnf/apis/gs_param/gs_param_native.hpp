@@ -20,6 +20,20 @@
 // ENDLICENSETEXT
 
 
+// Specialization types in this file:
+//  int
+//  unsigned int
+//  bool
+//  double
+//  float
+//  string
+//  long long
+//  unsigned char
+//  signed char
+//  char
+//  unsigned short
+
+
 using std::istringstream;
 
 

@@ -25,6 +25,20 @@
 // ENDLICENSETEXT
 
 
+// Specialization types in this file:
+//  sc_int_base
+//  sc_int<w>
+//  sc_uint_base
+//  sc_uint<w>
+//  sc_signed
+//  sc_bigint<w>
+//  sc_unsigned
+//  sc_biguint<w>
+//  sc_bit
+//  sc_logic
+//  sc_time
+//  sc_event
+
 
 // /////////////////////////////////////////////////////////////////////////////// //
 // /////////////////// gs_param< SC_INT_BASE > ////////////////////////////////// //

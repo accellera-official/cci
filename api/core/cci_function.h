@@ -19,6 +19,7 @@
 #define __CCI_FUNCTION_H__
 
 #include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace cci {
   

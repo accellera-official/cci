@@ -29,8 +29,6 @@
 #include <map>
 #include <set>
 
-#include "cci.h"
-#include "greencontrol/config.h"
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   

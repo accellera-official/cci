@@ -15,7 +15,6 @@
 
 
 #include "OwnerModuleA.h"
-#include <systemc.h>
 
 void OwnerModuleA::main_action() {
 

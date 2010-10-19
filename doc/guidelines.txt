@@ -106,11 +106,14 @@ HEADER FILES
 
 OSCI header files are provided by the include file cci.h
 
-Parameter headers shall be provided by the (parameter) vendor (e.g. OSCI) in 
-the include file cci_params.h
+All three independent participants (models, parameter implementations, broker
+implementations) shall not include each other but only use the cci.h file.
 
-API headers shall be provided by the (API) vendor in the include file
-cci_api.h
+Additional parameter implementation headers shall not be included by the
+model or the broker implementation.
+
+Broker implementation headers shall not be included by the model or any
+parameter implementation.
 
 ----------------------------------------------------------------
 

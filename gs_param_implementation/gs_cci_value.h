@@ -26,50 +26,50 @@
 #endif
 
 
-inline cci::cnf::cci_value::cci_value() 
+cci::cnf::cci_value::cci_value() 
 : m_type(partype_not_available) {
 }
       
-inline cci::cnf::cci_value::cci_value(const char* value) 
+cci::cnf::cci_value::cci_value(const char* value) 
 : m_type(partype_string) 
 , m_value_string(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(const std::string& value)
+cci::cnf::cci_value::cci_value(const std::string& value)
 : m_type(partype_string)
 , m_value_string(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(bool value) 
+cci::cnf::cci_value::cci_value(bool value) 
 : m_type(partype_bool) 
 , m_value_bool(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(int value)
+cci::cnf::cci_value::cci_value(int value)
 : m_type(partype_number)
 , m_value_number(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(boost::int64_t value)
+cci::cnf::cci_value::cci_value(boost::int64_t value)
 : m_type(partype_number)
 , m_value_number(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(double value)
+cci::cnf::cci_value::cci_value(double value)
 : m_type(partype_real)
 , m_value_real(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(const cci_value_list& value) 
+cci::cnf::cci_value::cci_value(const cci_value_list& value) 
 : m_type(partype_list)
 , m_value_list(value) {
 }
 
-inline cci::cnf::cci_value::cci_value(const cci::cnf::cci_value& other) {
+cci::cnf::cci_value::cci_value(const cci::cnf::cci_value& other) {
   operator=(other);
 }
 
-inline bool cci::cnf::cci_value::operator==(const cci::cnf::cci_value& lhs) const {
+bool cci::cnf::cci_value::operator==(const cci::cnf::cci_value& lhs) const {
   if (lhs.type() != type()) return false;
   switch(lhs.type()) {
     case cci::cnf::partype_not_available:
@@ -100,7 +100,7 @@ inline bool cci::cnf::cci_value::operator==(const cci::cnf::cci_value& lhs) cons
   return false;
 }
 
-inline cci::cnf::cci_value& cci::cnf::cci_value::operator=(const cci::cnf::cci_value& lhs) {
+cci::cnf::cci_value& cci::cnf::cci_value::operator=(const cci::cnf::cci_value& lhs) {
   m_type = lhs.type();
   switch(lhs.type()) {
     case cci::cnf::partype_not_available:
@@ -130,27 +130,27 @@ inline cci::cnf::cci_value& cci::cnf::cci_value::operator=(const cci::cnf::cci_v
   return *this;
 }
 
-inline cci::cnf::basic_param_type cci::cnf::cci_value::type() const { return m_type; }
+cci::cnf::basic_param_type cci::cnf::cci_value::type() const { return m_type; }
 
-inline const std::string&      cci::cnf::cci_value::get_string()   const {
+const std::string&      cci::cnf::cci_value::get_string()   const {
   if (m_type != cci::cnf::partype_string)
     CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no string).");
   return m_value_string;
 }
 
-inline const cci::cnf::cci_value_list&   cci::cnf::cci_value::get_list() const {
+const cci::cnf::cci_value_list&   cci::cnf::cci_value::get_list() const {
   if (m_type != cci::cnf::partype_list)
     CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no list).");
   return m_value_list;
 }
 
-inline bool cci::cnf::cci_value::get_bool()  const {
+bool cci::cnf::cci_value::get_bool()  const {
   if (m_type != cci::cnf::partype_bool)
     CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no bool).");
   return m_value_bool;
 }
 
-inline int cci::cnf::cci_value::get_int()   const {
+int cci::cnf::cci_value::get_int()   const {
   if (m_type != cci::cnf::partype_number)
     CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
   if (m_value_number > INT_MAX || m_value_number < INT_MIN)
@@ -158,13 +158,13 @@ inline int cci::cnf::cci_value::get_int()   const {
   return static_cast<int>(m_value_number);
 }
 
-inline sc_dt::int64 cci::cnf::cci_value::get_int64() const {
+sc_dt::int64 cci::cnf::cci_value::get_int64() const {
   if (m_type != cci::cnf::partype_number)
     CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
   return m_value_number;
 }
 
-inline double cci::cnf::cci_value::get_real()  const {
+double cci::cnf::cci_value::get_real()  const {
   if (m_type != cci::cnf::partype_real)
     CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type (no real).");
   return m_value_real;

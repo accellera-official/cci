@@ -6,11 +6,13 @@ CFLAGS = $(OPT) $(OTHER)
 
 SRCS = json_spirit/json_spirit_reader.cpp \
        json_spirit/json_spirit_value.cpp \
-       json_spirit/json_spirit_writer.cpp
+       json_spirit/json_spirit_writer.cpp \
+       gs_cci_symbols.cpp
 
 OBJS = json_spirit/json_spirit_reader.o \
        json_spirit/json_spirit_value.o \
-       json_spirit/json_spirit_writer.o
+       json_spirit/json_spirit_writer.o \
+       gs_cci_symbols.o
  
 
 #include ../Makefile.defs
