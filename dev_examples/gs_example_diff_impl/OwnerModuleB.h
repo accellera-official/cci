@@ -23,7 +23,7 @@
 #include "cci.h"
 #include "param_impl/test_datatype.h"
 
-/// Module which owns some cci parameters of implementation type B.
+/// Module which owns some std cci parameters (provided by lib A) and one additional one of lib implementation B.
 class OwnerModuleB
 : public sc_core::sc_module
 {
@@ -49,7 +49,7 @@ public:
   cci::cnf::cci_param<int>             int_param;
   /// Example parameter.
   cci::cnf::cci_param<bool>            bool_param;
-  /// Example parameter. which only exists in the parameter implementation B
+  /// Example parameter. which exists in the parameter implementation B
   cci::cnf::cci_param<test_datatype> test_datatype_param;
   
 };

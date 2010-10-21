@@ -35,9 +35,19 @@ namespace cci { namespace cnf {
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_parameter) \
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_parameter)
 
-  // TODO: add all supported parameter types here!!
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(int)
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(bool)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(test_datatype)
 
 } } // end namespace
+
+
+std::istream& operator >>(std::istream &is,test_datatype &obj)
+{
+  is>>obj.strVal;
+  return is;
+}
+std::ostream& operator <<(std::ostream &os,const test_datatype &obj)
+{
+  os<<obj.strVal;
+  return os;
+}
+

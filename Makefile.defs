@@ -31,7 +31,8 @@ INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
          -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_INC_DIR) \
          -I$(CCI_API_IMPLEMENTATION_INC_DIR) -I$(CCI_PARAM_IMPLEMENTATION_INC_DIR)
 LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH) -L$(CCI_LIB_DIR) \
-         -L$(CCI_API_IMPLEMENTATION_LIB_DIR) -L$(CCI_PARAM_IMPLEMENTATION_LIB_DIR)
+         -L$(CCI_API_IMPLEMENTATION_LIB_DIR) -L$(CCI_PARAM_IMPLEMENTATION_LIB_DIR) \
+         $(EXTRA_LIBS_DIRS)
 
 
 ## here may be needed to write -lscv at the beginning - which also may cause problems!

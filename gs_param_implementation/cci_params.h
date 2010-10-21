@@ -50,10 +50,6 @@
   #define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 #endif
 #include "gs_cci_param.h"
-#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
-  #define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
-#endif
-#include "gs_cci_value.h"
 #undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 
 namespace cci { namespace cnf {

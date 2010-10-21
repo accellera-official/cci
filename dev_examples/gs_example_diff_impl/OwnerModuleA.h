@@ -23,7 +23,7 @@
 #include "cci.h"
 
 
-/// Module which owns some cci parameters of implementation type A.
+/// Module which owns some std cci parameters.
 class OwnerModuleA
 : public sc_core::sc_module
 {
@@ -37,7 +37,7 @@ public:
   : sc_core::sc_module(name)
   , int_param ("int_param", 50 )
   , bool_param("bool_param")
-  , string_param("string_param", "This is from library A")
+  , string_param("string_param", "This is from std library A")
   { 
     SC_THREAD(main_action);
   }

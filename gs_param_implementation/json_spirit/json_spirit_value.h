@@ -8,6 +8,9 @@
 
 // json spirit version 3.01
 
+// ChangeLog:
+// 2010-01-21 Christian Schroeder: removed compiler warning
+
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 # pragma once
 #endif
@@ -219,6 +222,7 @@ namespace json_spirit
             case bool_type:  std::swap( bool_, tmp.bool_ ); break;
             case int_type:   std::swap( i_,    tmp.i_ );    break;
             case real_type:  std::swap( d_,    tmp.d_ );    break;
+            default: ;
         };
 
         return *this;

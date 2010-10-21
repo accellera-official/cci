@@ -1,6 +1,103 @@
 Guidelines to be required in the standard
 
 ----------------------------------------------------------------
+
+BASIC STRUCTURE
+
+A CCI system consists of the following parts:
+- CCI standard header files
+- One broker implementation
+- One standard parameter implementation
+- Potentially additional parameter type implementations
+- The user code
+
+----------------------------------------------------------------
+
+CCI STANDARD HEADER FILES
+
+OSCI header files are provided by the include file cci.h
+They contain all code needed by user models to write and compile vendor
+independent models.
+As well the headers are the glue between broker implementation, parameter 
+implementation and user model, all being able to be compiled on their own 
+and linked together.
+
+All three independent participants (models, parameter implementations, broker
+implementations) shall not include each other but only use the cci.h file.
+
+Additional parameter implementation headers shall not be included by the
+model or the broker implementation.
+
+Broker implementation headers shall not be included by the model or any
+parameter implementation.
+
+----------------------------------------------------------------
+
+BROKER IMPLEMENTATION (TOOL VENDOR)
+
+The library implementing the CCI configuration broker must provide the 
+following global function, declared in file cci_config.h. 
+It shall be available no later than the start of elaboration (e.g. sc_main).
+
+  get_cnf_broker_instance
+
+----------------------------------------------------------------
+
+PARAMETER IMPLEMENTATION
+
+The library implementing the CCI configuration parameters must provide the 
+following global functions, declared in the file cci_config.h.
+
+  create_cci_param 
+  init_cci_param
+  destroy_cci_param
+
+
+The one standard parameter implementation (library) shall provide the 
+following symbols:
+- the parameter functions above for (only!) the standard parameter types
+- the cci_value implementation for class cci_value in file cci_value.h
+(Drawback: Such a library might be quite large (e.g. 700 MB) due to the 
+           symbols of sc_(big)(u)int<width> for width 
+           from 1 to 64 or 1 to e.g. 1024)
+
+Potentially additional parameter implementation libraries (or object files) 
+shall provide symbols for only one additional parameter type.
+
+Thus it is possible to choose one vendor for the standard types and use other 
+vendors for additional types.
+
+----------------------------------------------------------------
+
+STANDARD PARAMETER TYPES
+
+Currently proposed data types to be provided by the parameter library:
+  int
+  unsigned int
+  bool
+  double
+  float
+  std::string
+  long long
+  unsigned char
+  signed char
+  char
+  unsigned short
+  std::vector<std::string>
+  sc_dt::sc_int_base
+  sc_dt::sc_uint_base
+  sc_dt::sc_signed
+  sc_dt::sc_unsigned
+  sc_dt::sc_bit
+  sc_dt::sc_logic
+  sc_core::sc_time
+  sc_dt::sc_int<w> w=1...64
+  sc_dt::sc_uint<w> w=1...64
+  sc_dt::sc_bigint<w> w=1...1024
+  sc_dt::sc_biguint<w> w=1...1024
+
+----------------------------------------------------------------
+
 JSON STUFF
 
 Uninitialized and invalid:
@@ -14,29 +111,6 @@ sc_time:
  by a space and followed by an sc_time_unit string represenation 
  ("SC_FS", "SC_PS", "SC_NS", "SC_US", "SC_MS", "SC_SEC"). 
  The sc_time_unit string shall be not case sensitiv.
-
-----------------------------------------------------------------
-
-TOOL ACCESS IN USER CODE
-
-The library implementing the CCI configuration must provide the 
-following function, which may work in the static code before 
-sc_main is executed. It shall be available no later than the 
-start of elaboration (e.g. sc_main).
-It is forward declared in cci.h
-
- cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod = NULL);
-
-Code for tool vendor:
-
-namespace cci {
-  /**
-   * @param mod  (Optional:) The sc module that wants an API
-   * @return     Pointer to a configuration API
-   */
-  cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod);
-} // end namespace cci
-
 
 ----------------------------------------------------------------
 
@@ -102,29 +176,6 @@ Examples:
 
 ----------------------------------------------------------------
 
-HEADER FILES
-
-OSCI header files are provided by the include file cci.h
-
-All three independent participants (models, parameter implementations, broker
-implementations) shall not include each other but only use the cci.h file.
-
-Additional parameter implementation headers shall not be included by the
-model or the broker implementation.
-
-Broker implementation headers shall not be included by the model or any
-parameter implementation.
-
-----------------------------------------------------------------
-
-PARAMETER CONSTRUCTORS
-
-For parameters, a parameter vendor shall provide the constructors
-listed in cci_param_if.h
-
-
-----------------------------------------------------------------
-
 ERROR/WARNING/INFO THROWING
 
 The implementation shall throw sc_reports to report problems (warning/error)
@@ -134,4 +185,6 @@ one of the types defined in cci_error_types.h.
 
 ----------------------------------------------------------------
 
+--
+Christian Schröder
 christian.schroeder@greensocs.com

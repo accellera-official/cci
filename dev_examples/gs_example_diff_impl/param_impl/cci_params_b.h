@@ -18,6 +18,9 @@
 #ifndef __CCI_PARAMS_B_H__
 #define __CCI_PARAMS_B_H__
 
+//
+// This extra library ONLY provides the one addtional data type and NOT the cci_value
+//
 
 //#define GS_CCI_CNF_VERBOSE
 
@@ -50,11 +53,11 @@
 #define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 #endif
 #include "gs_cci_param.h"
-#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
-#define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
-#endif
-#include "gs_cci_value.h"
-#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+//#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+//#define __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
+//#endif
+//#include "gs_cci_value.h"
+//#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 
 namespace cci { namespace cnf {
   

@@ -1,7 +1,16 @@
 Discussions about the API and prototype proposal:
 
 ----------------------------------------------------------
+Libraries, linking, template parameter issue
 
+Because cci parameters are templates, their implementations either need to be provided independently from demand by a large library where the model links to - or they need to be compiled directly with and into the model.
+
+Libraries allow vendor independent coding style, but require large libraries (cp. guidelines.txt).
+Header provided implementation require vendor dependent code (due to the include) and require the parameter implementations to be available as source code (with the source code needed to be allowed to be shipped together with the model between different developers).
+
+Current proposal uses the library approach: The cci_param<t> class accesses forward declared factory template functions which are provided by the parameter library. This library needs to provide all needed parameter template types, including all width for the SystemC number types. All other than the set of standard types shall be provided in separate library files to make the standard library file exchangeable.
+
+----------------------------------------------------------
 Private broker manager
 
 To be discussed:
@@ -69,3 +78,7 @@ Currently we've chosen c/.
 ----------------------------------------------------------
 
 There are many more discussions of course...
+
+--
+Christian Schröder
+christian.schroeder@greensocs.com

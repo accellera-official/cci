@@ -1,28 +1,16 @@
-# usage for big_ints:
-# make bigsymbols "CCI_SYMBOLS_LOWER_BOUND=1" "CCI_SYMBOLS_UPPER_BOUND=100" OBJNAME=big1
-# etc.
-
-# small make without bigsymbols
-# compile time on Intel Core Duo 1.83 GHz (MacMini) 2 GB DDR2 SDRAM
-# -O2 : 13 minutes
-# -O0 :  3 minutes (45.5 MB)
 
 CC     = g++
-OPT    = -O0 -Wall
+OPT    = -O2 -Wall
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 
-#SRCS = json_spirit/json_spirit_reader.cpp \
-#       json_spirit/json_spirit_writer.cpp \
-#       gs_cci_value.cpp \
-#       gs_cci_symbols_templ_small_int.cpp \
-#       gs_cci_symbols.cpp
+SRCS = ../../gs_param_implementation/json_spirit/json_spirit_reader.cpp \
+       json_spirit/json_spirit_writer.cpp \
+       gs_cci_symbols_b.cpp
 
-OBJS = json_spirit/json_spirit_reader.o \
-       json_spirit/json_spirit_writer.o \
-       gs_cci_value.o \
-       gs_cci_symbols_templ_small_int.o \
-       gs_cci_symbols.o
+OBJS = ../../../gs_param_implementation/json_spirit/json_spirit_reader.o \
+       ../../../gs_param_implementation/json_spirit/json_spirit_writer.o \
+       gs_cci_symbols_b.o
  
 
 # Makefile.defs
@@ -60,7 +48,7 @@ LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
 
 
 all: myprog
-	ar -r "libcciparamimpl.a" *.o
+	ar -r "libcciparamimpl_test_type.a" *.o
 	rm -f  *.o
 
 myprog: $(OBJS)
@@ -72,12 +60,5 @@ myprog: $(OBJS)
 	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
 
 clean:
-	rm -f  *.o libcciparamimpl.a
-
-bigsymbols:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) -DCCI_SYMBOLS_LOWER_BOUND=$(CCI_SYMBOLS_LOWER_BOUND) -DCCI_SYMBOLS_UPPER_BOUND=$(CCI_SYMBOLS_UPPER_BOUND) $(INCDIR) -c gs_cci_symbols_templ_big_int.cpp -o $(OBJNAME).o $<
-
-full_library:
-	ar -r "libcciparamimpl.a" *.o
-	rm -f  *.o
+	rm -f  *.o libcciparamimpl_test_type.a
 

@@ -15,16 +15,7 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_VALUE_H__
-#define __GS_CCI_VALUE_H__
-
-
-#ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
-#error "failed include check"
-#else
-#undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
-#endif
-
+#include "cci_params.h"
 
 cci::cnf::cci_value::cci_value() 
 : m_type(partype_not_available) {
@@ -340,7 +331,3 @@ namespace cci {
   
 } // end namespace cci
 
-
-
-
-#endif

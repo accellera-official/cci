@@ -30,7 +30,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "gs_param_implementation/json_spirit/json_spirit.h"
+#include "json_spirit/json_spirit.h"
 
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__

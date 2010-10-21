@@ -7,7 +7,7 @@ OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 
-TODO: different links to different parameter implementations
+#TODO: different links to different parameter implementations
 
 MODULE = testbench
 
@@ -21,7 +21,8 @@ OBJS = testbench.o \
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-EXTRA_LIBS = -lcciapiimpl -lcciparamimpl -lcciapi
+EXTRA_LIBS = -lcciapiimpl -lcciparamimpl -lcciparamimpl_test_type -lcciapi
+EXTRA_LIBS_DIRS = -L./param_impl
 
 include ../../Makefile.defs
 

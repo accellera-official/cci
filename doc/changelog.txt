@@ -1,6 +1,10 @@
 ChangeLog
 ---------
-19.10.2010:
+21.10.2010
+- library cleanup, new rules
+- gs_example_diff_impl updated
+
+19.10.2010
 - big clean-up
 - libraries (param and broker implementations) are now really independent
 - examples clean-up

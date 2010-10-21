@@ -15,8 +15,15 @@
 
 #include "cci_params.h"
 
+
 //
-// This makes sure the symbols for supported parameter types are available in the library!
+// PART 1
+//
+// This makes sure the symbols for standard parameter types are available in this library!
+//
+// Note: Only standard parameter types shall be provided here! Additional provided types shall be
+//       provided in separate libraries / object files to allow exchangeablility of different
+//       parameter vendor libraries.
 //
 
 namespace cci { namespace cnf {
@@ -34,7 +41,7 @@ namespace cci { namespace cnf {
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_parameter) \
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_parameter)
 
-  // TODO: add all supported parameter types here!!
+  // TODO: add (ONLY!) standard parameter types here!!
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(int)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(unsigned int)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(bool)
@@ -54,13 +61,8 @@ namespace cci { namespace cnf {
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_bit)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_logic)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_core::sc_time)
-  //CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_core::sc_event)
 
-  /*CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_core::sc_attribute<T>)
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_int<w>)
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_uint<w>)
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_bigint<w>)
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_biguint<w>)*/
+} } // end namespace
+
 
   
-} } // end namespace

@@ -30,7 +30,8 @@ public:
   std::string strVal;
 };
 
-std::istream& operator >>(std::istream &is,test_datatype &obj)
+// implementation see library cpp gs_cci_symbols_b.cpp
+/*std::istream& operator >>(std::istream &is,test_datatype &obj)
 {
   is>>obj.strVal;
   return is;
@@ -40,5 +41,5 @@ std::ostream& operator <<(std::ostream &os,const test_datatype &obj)
   os<<obj.strVal;
   return os;
 }
-
+*/
 #endif

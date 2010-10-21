@@ -59,7 +59,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
   /// Returns a configuration broker instance responsible for handling the requests of the given module 
   /**
-   * Forward declaration, to be implemented by the tool.
+   * Forward declaration, to be implemented by the tool (broker vendor).
    *
    * @param mod Pointer to the module who wants access the config broker, can be NULL if e.g. top-level or non-SystemC code is requesting the broker.
    * @return Configuration broker.
@@ -82,6 +82,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
+ * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
+ *
  * The implementation shall return a new parameter object.
  *
  * @param owner_par CCI Parameter which will store the returned param
@@ -93,6 +95,8 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
+ * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
+ *
  * The implementation shall return a new parameter object.
  *
  * @param owner_par CCI Parameter which will store the returned param
@@ -105,6 +109,8 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
+ * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
+ *
  * The implementation shall return a new parameter object.
  *
  * @param owner_par CCI Parameter which will store the returned param
@@ -117,6 +123,8 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
 
 /// Parameter factory function that is called after construction and after adding to the broker from within the cci param constructor
 /**
+ * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
+ *
  * The implementation is free to use this function for initialization.
  * Note that the registration with the broker had already been done.
  *
@@ -127,6 +135,8 @@ void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par);
 
 /// Parameter factory function that is called by the cci_param wrapper
 /**
+ * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
+ *
  * This shall never be called anywhere else that the cci_param destructor. 
  * The implementation shall delete (or free) the underlying parameter.
  *
