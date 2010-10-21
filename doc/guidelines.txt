@@ -57,8 +57,8 @@ The one standard parameter implementation (library) shall provide the
 following symbols:
 - the parameter functions above for (only!) the standard parameter types
 - the cci_value implementation for class cci_value in file cci_value.h
-(Drawback: Such a library might be quite large (e.g. 700 MB) due to the 
-           symbols of sc_(big)(u)int<width> for width 
+(Drawback: Such a library might be quite large (e.g. 700 MB in the prototype) due to the 
+           symbols of sc_(big)(u)int<width> for all width 
            from 1 to 64 or 1 to e.g. 1024)
 
 Potentially additional parameter implementation libraries (or object files) 
@@ -95,6 +95,9 @@ Currently proposed data types to be provided by the parameter library:
   sc_dt::sc_uint<w> w=1...64
   sc_dt::sc_bigint<w> w=1...1024
   sc_dt::sc_biguint<w> w=1...1024
+
+Any sc_big(u)int with bit width larger than 1024 had to be provided 
+by additional parameter implementation (library).
 
 ----------------------------------------------------------------
 

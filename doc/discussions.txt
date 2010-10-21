@@ -10,6 +10,8 @@ Header provided implementation require vendor dependent code (due to the include
 
 Current proposal uses the library approach: The cci_param<t> class accesses forward declared factory template functions which are provided by the parameter library. This library needs to provide all needed parameter template types, including all width for the SystemC number types. All other than the set of standard types shall be provided in separate library files to make the standard library file exchangeable.
 
+Note that this does not allow different models within one simulation to use different implementations of the same parameter type.
+
 ----------------------------------------------------------
 Private broker manager
 
