@@ -2,10 +2,18 @@
 # make bigsymbols "CCI_SYMBOLS_LOWER_BOUND=1" "CCI_SYMBOLS_UPPER_BOUND=100" OBJNAME=big1
 # etc.
 
+#
 # small make without bigsymbols
 # compile time on Intel Core Duo 1.83 GHz (MacMini) 2 GB DDR2 SDRAM
 # -O2 : 13 minutes
 # -O0 :  3 minutes (45.5 MB)
+#
+# big make with bigsymbols
+# compile time on Intel Core Duo 1.83 GHz (MacMini) 2 GB DDR2 SDRAM
+# -O2 : real 213m user 197m (511 MB (stripped))
+# -O0 : real 43m user 33m (550 MB)
+#
+
 
 CC     = g++
 OPT    = -O0 -Wall
