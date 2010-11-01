@@ -1,0 +1,96 @@
+##
+##  This Makefile demonstrates how a vendor environment could build 
+##  the parameter implementation symbols on demand depending on the 
+##  missing symbols in the user code.
+##  
+##  After building the user code, a missing_symbols.cpp is created
+##  compiled and linked against. The missing_symbols contains the
+##  missing parameter factory functions identified with nm -u before.
+##
+
+
+## -------------------------------------------------------------------------------------------
+## ----------  BEGIN USER SETTINGS  ----------------------------------------------------------
+
+
+## user compile files
+OBJS = testbench.o \
+       ParameterOwnerModule.o \
+       ParameterOwnerMutabilityModule.o \
+       ParamManipulateModule.o \
+       ObserverModule.o \
+       ValueModule.o
+
+## target architecture
+TARGET_ARCH = macosx
+
+## some directories 
+GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
+GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore
+BOOST = /cad/tools/boost
+SYSTEMC = /cad/tools/systemc
+CCI_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
+CCI_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
+CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
+CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
+CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
+
+
+## ----------  END USER SETTINGS  ----------------------------------------------------------
+## -----------------------------------------------------------------------------------------
+
+
+## standard parameter library files (not parameter factory symbols)
+PARAM_LIB_OBJS_STD = $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/json_spirit/json_spirit_reader.o \
+       $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/json_spirit/json_spirit_writer.o \
+       $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/gs_cci_value.o
+
+EXEC = testbench.x
+
+DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
+
+LDFLAGS  =
+
+INCDIR   = -I. -I$(GS_CONTROL_DIR) -I$(BOOST) \
+           -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_INC_DIR) \
+           -I$(CCI_PARAM_IMPLEMENTATION_INC_DIR) -I$(CCI_API_IMPLEMENTATION_INC_DIR)
+
+LIBDIR = -L. -L$(SYSTEMC)/lib-$(TARGET_ARCH) \
+         -L$(CCI_LIB_DIR) -L$(CCI_API_IMPLEMENTATION_LIB_DIR)
+
+EXTRA_LIBS = -lcciapiimpl -lcciapi
+LIBS       = $(EXTRA_LIBS) -lsystemc -lm
+
+CC     = g++
+OPT    = -O0 -Wall
+OTHER  = -pedantic -Wno-long-long
+CFLAGS = $(OPT) $(OTHER)
+
+
+## ---------------  MAKE RULES  ---------------------------------------------------------------------
+
+
+all: $(EXEC)
+
+$(EXEC): missing_symbols.o
+	$(CC) $(CFLAGS) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) missing_symbols.o $(PARAM_LIB_OBJS_STD) $(LIBS) 2>&1 | c++filt
+
+missing_symbols.o: missing_symbols.cpp
+  ## fallback to default rule
+
+missing_symbols.cpp: $(OBJS) $(PARAM_LIB_OBJS_STD)
+	rm -f missing_symbols.out.cpp
+	nm -u $(OBJS) | c++filt | grep -e cci::cnf::create_cci_param -e cci::cnf::destroy_cci_param -e cci::cnf::init_cci_param | grep "<\{1\}" | sed 's/cci::cnf:://g' | sed s/^/template\ / | sed s/$$/\;/ | sort | uniq >> missing_symbols.out.cpp
+	cp $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/gs_cci_missing_symbols_template.cpp missing_symbols.cpp
+	cat missing_symbols.out.cpp >> missing_symbols.cpp
+	echo "}}" >> missing_symbols.cpp
+
+.cpp.o:
+	$(CC) $(CFLAGS) $(DEFFLAGS) $(INCDIR) -o $@ -c $<
+
+.cc.o:
+	$(CC) $(CFLAGS) $(DEFFLAGS) $(INCDIR) -o $@ -c $<
+
+clean:
+	rm -f $(OBJS) $(PARAM_LIB_OBJS_STD) missing_symbols.o missing_symbols.out.cpp missing_symbols.cpp
+

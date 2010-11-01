@@ -57,12 +57,19 @@ The one standard parameter implementation (library) shall provide the
 following symbols:
 - the parameter functions above for (only!) the standard parameter types
 - the cci_value implementation for class cci_value in file cci_value.h
-(Drawback: Such a library might be quite large (e.g. 700 MB in the prototype) due to the 
-           symbols of sc_(big)(u)int<width> for all width 
-           from 1 to 64 or 1 to e.g. 1024)
+Drawback: Such a library might be quite large (e.g. 700 MB in the prototype) due to the 
+          symbols of sc_(big)(u)int<width> for all width 
+          from 1 to 64 or 1 to e.g. 1024
+Workaround within a tool environment:
+          Use a Makefile which searches for undefined symbols of the needed 
+          parameter factory functions, create and compile a cpp which creates
+          exactly those symbols and link afterwards.
+          see Makefile.only.needed.symbols in dev_examples/gs_example
+          use: make -f Makefile.only.needed.symbols
 
 Potentially additional parameter implementation libraries (or object files) 
-shall provide symbols for only one additional parameter type.
+shall provide symbols for only one additional parameter type (or a set of
+strongly related types).
 
 Thus it is possible to choose one vendor for the standard types and use other 
 vendors for additional types.

@@ -1,6 +1,3 @@
-# enabling SystemC2.1 automatically changes 
-# includes and compiler flags in Makefile.defs
-#SYSTEMC21V1 = yes
 
 CC     = g++
 OPT    = -g -Wall 
