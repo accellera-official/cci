@@ -80,7 +80,7 @@ missing_symbols.o: missing_symbols.cpp
 
 missing_symbols.cpp: $(OBJS) $(PARAM_LIB_OBJS_STD)
 	rm -f missing_symbols.out.cpp
-	nm -u $(OBJS) | c++filt | grep -e cci::cnf::create_cci_param -e cci::cnf::destroy_cci_param -e cci::cnf::init_cci_param | grep "<\{1\}" | sed 's/cci::cnf:://g' | sed s/^/template\ / | sed s/$$/\;/ | sort | uniq >> missing_symbols.out.cpp
+	nm -u -P $(OBJS) | c++filt | grep -e cci::cnf::create_cci_param -e cci::cnf::destroy_cci_param -e cci::cnf::init_cci_param | grep "<\{1\}" | sed 's/cci::cnf:://g' | sed s/^/template\ / | sed s/\ U\ /\;\\/\\// | sort | uniq >> missing_symbols.out.cpp
 	cp $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/gs_cci_missing_symbols_template.cpp missing_symbols.cpp
 	cat missing_symbols.out.cpp >> missing_symbols.cpp
 	echo "}}" >> missing_symbols.cpp
