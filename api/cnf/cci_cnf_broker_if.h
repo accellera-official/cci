@@ -16,8 +16,8 @@
 
 
 
-#ifndef __CCI_CNF_BROKER_H__
-#define __CCI_CNF_BROKER_H__
+#ifndef __CCI_CNF_BROKER_IF_H__
+#define __CCI_CNF_BROKER_IF_H__
 
 
 #include "core/cci_shared_ptr.h"    
