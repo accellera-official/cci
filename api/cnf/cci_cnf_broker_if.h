@@ -39,13 +39,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * This can be used by a tool to access the database or parameter objects, set initial values etc.
    * or can be used by the model itself to get access to configuration objects etc.
    */
-  class cci_cnf_broker
+  class cci_cnf_broker_if
   {
     
   public:
     
     // Destructor
-    virtual ~cci_cnf_broker() { };
+    virtual ~cci_cnf_broker_if() { };
 
     
     // //////////////////////////////////////////////////////////////////// //
@@ -83,14 +83,14 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * This accesses the parameter's NVP and works
      * for implicit and explicit parameters.
      *
-     * See cci_cnf_broker::get_json_string_keep_unused to do the same without impacting the used status.
+     * See cci_cnf_broker_if::get_json_string_keep_unused to do the same without impacting the used status.
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  JSON string of the parameter's value
      */
     virtual const std::string get_json_string(const std::string &parname) = 0;
 
-    /// Get a parameter's value (like cci_cnf_broker::get_json_string), but not impacting the used status
+    /// Get a parameter's value (like cci_cnf_broker_if::get_json_string), but not impacting the used status
     /**
      * This is to be used only by tools, e.g. functional coverage tools.
      *

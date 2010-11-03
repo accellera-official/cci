@@ -22,25 +22,25 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
 // Implementation cci_broker_manager
 
-cci_broker_manager::cci_broker_manager(cci_cnf_broker* broker)
+cci_broker_manager::cci_broker_manager(cci_cnf_broker_if* broker)
 : m_broker(broker) 
 { 
 }
   
 cci_broker_manager::~cci_broker_manager() { }
 
-cci_cnf_broker* cci_broker_manager::get_broker() {
+cci_cnf_broker_if* cci_broker_manager::get_broker() {
   if (m_broker) return m_broker;
   CCI_CNF_DUMP("   "<<dynamic_cast<sc_core::sc_object*>(this)->name() << ".get_broker() has not (yet) a private broker, search for other one");
   return search_for_broker(dynamic_cast<sc_core::sc_object*>(this)->get_parent_object());
 }
 
-void cci_broker_manager::register_private_broker(cci_cnf_broker* broker) {
+void cci_broker_manager::register_private_broker(cci_cnf_broker_if* broker) {
   if (m_broker && broker) SC_REPORT_WARNING("CCI/broker_module", "Overwriting currently registered broker module!");
   m_broker = broker;
 }
 
-cci_cnf_broker* cci_broker_manager::search_for_broker(sc_core::sc_object* ob) {
+cci_cnf_broker_if* cci_broker_manager::search_for_broker(sc_core::sc_object* ob) {
   if (ob == NULL) return cci::cnf::get_cnf_broker_instance();
   CCI_CNF_DUMP("search_for_broker in: "<<ob->name());
   cci_broker_manager* m = dynamic_cast<cci_broker_manager*>(ob);

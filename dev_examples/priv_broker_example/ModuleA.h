@@ -53,7 +53,7 @@ public:
   
   ~ModuleA() {
     // Don't delete while params existing!
-    /*cci::cnf::cci_cnf_broker* pb = get_broker();
+    /*cci::cnf::cci_cnf_broker_if* pb = get_broker();
     register_private_broker(NULL);
     delete pb;*/
   }

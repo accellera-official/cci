@@ -32,7 +32,7 @@ public:
   /**
    * @param broker Broker this should use and return (Default=NULL)
    */
-  cci_broker_manager(cci_cnf_broker* broker = NULL);
+  cci_broker_manager(cci_cnf_broker_if* broker = NULL);
   
   /// Destructor
   virtual ~cci_broker_manager();
@@ -45,21 +45,21 @@ public:
    *
    * @return Broker (config broker), is never NULL
    */
-  virtual cci_cnf_broker* get_broker();
+  virtual cci_cnf_broker_if* get_broker();
 
   /// Register a private broker to be used and returned by this module
   /**
    * TODO: Problem: all params created before this call did not use this broker to register themselves!
    *       So maybe don't provide this function? In that case, how shall the cci_broker_manager_module class work if it cannot get a private broker?
    */
-  virtual void register_private_broker(cci_cnf_broker* broker);
+  virtual void register_private_broker(cci_cnf_broker_if* broker);
 
 public:
   
   /// Recursive search in SystemC hierarchy for a broker
-  static cci_cnf_broker* search_for_broker(sc_core::sc_object* ob);
+  static cci_cnf_broker_if* search_for_broker(sc_core::sc_object* ob);
   
-  cci_cnf_broker* m_broker;
+  cci_cnf_broker_if* m_broker;
   
 };
 

@@ -23,10 +23,10 @@ namespace cci {
 namespace cnf {
 
 
-  cci_cnf_broker* singleton_api = NULL;
+  cci_cnf_broker_if* singleton_api = NULL;
 
   /// Implements declaration from cci_config.h
-  cci_cnf_broker* get_cnf_broker_instance(sc_core::sc_module* mod) {
+  cci_cnf_broker_if* get_cnf_broker_instance(sc_core::sc_module* mod) {
     if (!singleton_api) singleton_api = new gs_cci_cnf_broker();
     if (mod != NULL) return cci_broker_manager::search_for_broker(mod);
     //CCI_CNF_DUMP("   got global broker "<< typeid(singleton_api).name()<<" 0x"<<(std::hex)<<singleton_api<<(std::dec));

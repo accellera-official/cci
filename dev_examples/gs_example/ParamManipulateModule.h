@@ -38,7 +38,7 @@ public:
 
 protected:
   /// Pointer the the module's configuration broker
-  cci::cnf::cci_cnf_broker* mBroker;
+  cci::cnf::cci_cnf_broker_if* mBroker;
 
 };
 

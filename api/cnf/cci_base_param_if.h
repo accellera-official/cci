@@ -265,7 +265,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Registers an observer callback function (a callback_func_ptr).
     /**
-     * For further callback types @see cci::cnf::cci_cnf_broker::register_callback
+     * For further callback types @see cci::cnf::cci_cnf_broker_if::register_callback
      *
      * Inside the callback functions no waits, next_trigger, get_current_process_handle are allowed!
      *

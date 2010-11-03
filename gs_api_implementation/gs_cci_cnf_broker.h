@@ -30,7 +30,7 @@ namespace cci {
   class cci_base_param;
 
   class gs_cci_cnf_broker
-  : public cci::cnf::cci_cnf_broker
+  : public cci::cnf::cci_cnf_broker_if
   , public gs_cci_cnf_broker_if
   {
   public:

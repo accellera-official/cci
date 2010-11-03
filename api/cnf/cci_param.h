@@ -59,18 +59,18 @@ public:
   explicit cci_param(const char* nam,        const val_type& val);
 
   /// Constructor with (local/hierarchical) name and NO initial value and options.
-  explicit cci_param(const std::string& nam, const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const bool force_top_level_name, cci_cnf_broker* private_broker);
+  explicit cci_param(const std::string& nam, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const bool force_top_level_name, cci_cnf_broker_if* private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and options.
-  explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker);
+  explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
 
   /// Constructor with (local/hierarchical) name and initial value and options.
-  explicit cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const val_type& val, const bool force_top_level_name, cci_cnf_broker* private_broker);
+  explicit cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const val_type& val, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
 
   /// Destructor
   virtual ~cci_param();
@@ -148,14 +148,14 @@ public:
   explicit cci_param(const char* nam,        const std::string& val);
   
   /// Constructor with (local/hierarchical) name and NO initial value and options.
-  explicit cci_param(const std::string& nam, const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const bool force_top_level_name, cci_cnf_broker* private_broker);
+  explicit cci_param(const std::string& nam, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const bool force_top_level_name, cci_cnf_broker_if* private_broker);
   
   /// Constructor with (local/hierarchical) name and string representation of default value and options.
-  explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker* private_broker);
-  explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker* private_broker);
+  explicit cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const char* val       , const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const std::string& nam, const char* val       , const bool force_top_level_name, cci_cnf_broker_if* private_broker);
+  explicit cci_param(const char* nam,        const std::string& val, const bool force_top_level_name, cci_cnf_broker_if* private_broker);
   
   /// Destructor
   virtual ~cci_param();

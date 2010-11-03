@@ -147,7 +147,7 @@ public:
 
     // TODO: CCI modifications:
 
-    cci::cnf::cci_cnf_broker* a = cci::cnf::get_cnf_broker_instance(mod);
+    cci::cnf::cci_cnf_broker_if* a = cci::cnf::get_cnf_broker_instance(mod);
     cci::cnf::gs_cci_cnf_broker_if* gs_cci_a = dynamic_cast<cci::cnf::gs_cci_cnf_broker_if*> (a);
     assert(gs_cci_a && "All APIs in this system are gs_cci_cnf_brokers, what is wrong here?");
     cnf_api* gs_a = gs_cci_a->get_gcnf_api();
