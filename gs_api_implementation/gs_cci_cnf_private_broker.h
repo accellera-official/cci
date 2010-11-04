@@ -30,7 +30,7 @@ namespace cci {
 
   class gs_cci_private_broker
   : public cci_cnf_broker_if
-  , public gs_cci_cnf_broker_if
+  , public gs::cnf::GCnf_private_Api
   {
     
   public:
@@ -74,11 +74,11 @@ namespace cci {
     
     const std::vector<cci_base_param*> get_params(const std::string& pattern = "");
 
-    gs::cnf::cnf_api* get_gcnf_api();
+    //gs::cnf::cnf_api* get_gcnf_api();
   
   protected:
   
-    gs::cnf::cnf_api* m_gcnf_api;
+    //gs::cnf::cnf_api* m_gcnf_api;
     
     std::map<std::string, cci_base_param*> m_mirrored_registry;
 

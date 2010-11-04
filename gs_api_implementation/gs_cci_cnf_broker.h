@@ -22,7 +22,6 @@
 
 #include <cci.h>
 #include "greencontrol/config.h"
-#include "gs_cci_cnf_broker_if.h"
 
 namespace cci {
   namespace cnf {
@@ -31,7 +30,7 @@ namespace cci {
 
   class gs_cci_cnf_broker
   : public cci::cnf::cci_cnf_broker_if
-  , public gs_cci_cnf_broker_if
+  , public gs::cnf::GCnf_Api
   {
   public:
     
@@ -73,11 +72,11 @@ namespace cci {
     
     const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern = "");
 
-    gs::cnf::cnf_api* get_gcnf_api();
+    //gs::cnf::cnf_api* get_gcnf_api();
   
   protected:
   
-    gs::cnf::cnf_api* m_gcnf_api;
+    //gs::cnf::cnf_api* m_gcnf_api;
     
     std::map<std::string, cci::cnf::cci_base_param*> m_mirrored_registry;
 

@@ -18,9 +18,9 @@
 #include "gs_cci_cnf_broker.h"
 
 cci::cnf::gs_cci_cnf_broker::gs_cci_cnf_broker() 
-: m_gcnf_api(NULL) { 
+: gs::cnf::GCnf_Api("CCI_API_INSTANCE") { 
   //m_gcnf_api = gs::cnf::GCnf_Api::getApiInstance(NULL);
-  m_gcnf_api = new gs::cnf::GCnf_Api("CCI_API_INSTANCE");
+  //m_gcnf_api = new gs::cnf::GCnf_Api("CCI_API_INSTANCE");
   std::cout << "Created new GCnf_Api CCI_API_INSTANCE" << std::endl;
 }
 
@@ -29,25 +29,25 @@ cci::cnf::gs_cci_cnf_broker::~gs_cci_cnf_broker() {
 
 void cci::cnf::gs_cci_cnf_broker::set_init_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
-  if ( !m_gcnf_api->setInitValue(parname, json_value) ) {
+  if ( !gs::cnf::GCnf_Api::setInitValue(parname, json_value) ) {
     CCI_THROW_ERROR(cci_report::set_param_failed().get_type(), "Setting initial value failed.");
   }
 }
 
 void cci::cnf::gs_cci_cnf_broker::lock_init_value(const std::string &parname) {
-  if ( !m_gcnf_api->lockInitValue(parname) ) {
+  if ( !gs::cnf::GCnf_Api::lockInitValue(parname) ) {
     CCI_THROW_ERROR(cci_report::set_param_failed().get_type(), "Locking initial value failed.");
   }
 }
 
 const std::string cci::cnf::gs_cci_cnf_broker::get_json_string(const std::string &parname) {
   // TODO: use JSON
-  return m_gcnf_api->getValue(parname);
+  return gs::cnf::GCnf_Api::getValue(parname);
 }
 
 const std::string cci::cnf::gs_cci_cnf_broker::get_json_string_keep_unused(const std::string &parname) {
   // TODO: use JSON
-  return m_gcnf_api->getValue(parname, "", true);
+  return gs::cnf::GCnf_Api::getValue(parname, "", true);
 }
 
 
@@ -62,15 +62,15 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param(const std::stri
 }
 
 bool cci::cnf::gs_cci_cnf_broker::exists_param(const std::string &parname) {
-  return m_gcnf_api->existsParam(parname);
+  return gs::cnf::GCnf_Api::existsParam(parname);
 }
 
 bool cci::cnf::gs_cci_cnf_broker::is_used(const std::string &parname) {
-  return m_gcnf_api->is_used(parname);
+  return gs::cnf::GCnf_Api::is_used(parname);
 }
 
 const std::vector<std::string> cci::cnf::gs_cci_cnf_broker::get_param_list() {
-  return m_gcnf_api->getParamList();
+  return gs::cnf::GCnf_Api::getParamList();
 }
 
 cci::shared_ptr<cci::cnf::callb_adapt_b> cci::cnf::gs_cci_cnf_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
@@ -107,7 +107,7 @@ void cci::cnf::gs_cci_cnf_broker::remove_param(cci_base_param* par) {
 
 const std::vector<std::string> cci::cnf::gs_cci_cnf_broker::get_param_list(const std::string& pattern) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "pattern limited to GreenConfig capabilities");
-  return m_gcnf_api->getParamList(pattern);
+  return gs::cnf::GCnf_Api::getParamList(pattern);
 }
 
 const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_cnf_broker::get_params(const std::string& pattern) {
@@ -123,6 +123,6 @@ const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_cnf_broker::get_pa
   return parvec;
 }
 
-gs::cnf::cnf_api* cci::cnf::gs_cci_cnf_broker::get_gcnf_api() {
+/*gs::cnf::cnf_api* cci::cnf::gs_cci_cnf_broker::get_gcnf_api() {
   return m_gcnf_api;
-}
+}*/

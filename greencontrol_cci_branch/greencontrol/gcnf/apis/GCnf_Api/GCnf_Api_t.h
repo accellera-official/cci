@@ -47,7 +47,6 @@
 
 // TODO: CCI modification
 #include <cci.h>
-#include "gs_cci_cnf_broker_if.h"
 
 namespace gs {
 namespace cnf {
@@ -148,9 +147,7 @@ public:
     // TODO: CCI modifications:
 
     cci::cnf::cci_cnf_broker_if* a = cci::cnf::get_cnf_broker_instance(mod);
-    cci::cnf::gs_cci_cnf_broker_if* gs_cci_a = dynamic_cast<cci::cnf::gs_cci_cnf_broker_if*> (a);
-    assert(gs_cci_a && "All APIs in this system are gs_cci_cnf_brokers, what is wrong here?");
-    cnf_api* gs_a = gs_cci_a->get_gcnf_api();
+    cnf_api* gs_a = dynamic_cast<cnf_api*> (a);
     assert(gs_a && "All APIs in this System are cnf_apis! What happened here?");
     return gs_a;
   }
@@ -734,7 +731,7 @@ public:
    * @param module_name Name of the module whose parameter list should be returned.
    * @return Vector with hierarchical parameter names.
    */
-  const std::vector<std::string> getParamList(const std::string &module_name, std::string meta_data) {
+  const std::vector<std::string> getParamList(const std::string &module_name, std::string meta_data = "") {
     return getParamList(module_name, false, meta_data);
   }
 

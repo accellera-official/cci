@@ -18,13 +18,13 @@
 #include "gs_cci_cnf_private_broker.h"
 
 cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner, std::vector<std::string> pub_params) 
-: m_gcnf_api(NULL) { 
-  m_gcnf_api = new gs::cnf::GCnf_private_Api(owner, pub_params);
+: gs::cnf::GCnf_private_Api(owner, pub_params) { 
+  //m_gcnf_api = new gs::cnf::GCnf_private_Api(owner, pub_params);
 }
 
 cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...)
-: m_gcnf_api(NULL) {
-  std::vector<std::string> pub_param_lst;
+: gs::cnf::GCnf_private_Api(owner_module, pub_par) {
+/*  std::vector<std::string> pub_param_lst;
   va_list list;
   va_start(list, pub_par);
   const char* p = pub_par;
@@ -36,34 +36,34 @@ cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner
   }
   va_end(list);
 
-  m_gcnf_api = new gs::cnf::GCnf_private_Api(owner_module, pub_param_lst);
+  m_gcnf_api = new gs::cnf::GCnf_private_Api(owner_module, pub_param_lst);*/
 }
 
 cci::cnf::gs_cci_private_broker::~gs_cci_private_broker() { 
-  delete m_gcnf_api; m_gcnf_api = NULL;
+  //delete m_gcnf_api; m_gcnf_api = NULL;
 }
 
 void cci::cnf::gs_cci_private_broker::set_init_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
-  if ( !m_gcnf_api->setInitValue(parname, json_value) ) {
+  if ( !gs::cnf::GCnf_private_Api::setInitValue(parname, json_value) ) {
     CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Setting initial value failed.");
   }
 }
 
 void cci::cnf::gs_cci_private_broker::lock_init_value(const std::string &parname) {
-  if ( !m_gcnf_api->lockInitValue(parname) ) {
+  if ( !gs::cnf::GCnf_private_Api::lockInitValue(parname) ) {
     CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Locking initial value failed.");
   }
 }
 
 const std::string cci::cnf::gs_cci_private_broker::get_json_string(const std::string &parname) {
   // TODO: use JSON
-  return m_gcnf_api->getValue(parname);
+  return gs::cnf::GCnf_private_Api::getValue(parname);
 }
 
 const std::string cci::cnf::gs_cci_private_broker::get_json_string_keep_unused(const std::string &parname) {
   // TODO: use JSON
-  return m_gcnf_api->getValue(parname, "", true);
+  return gs::cnf::GCnf_private_Api::getValue(parname, "", true);
 }
 
 cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param(const std::string &parname) {
@@ -74,15 +74,15 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param(const std::
 }
 
 bool cci::cnf::gs_cci_private_broker::exists_param(const std::string &parname) {
-  return m_gcnf_api->existsParam(parname);
+  return gs::cnf::GCnf_private_Api::existsParam(parname);
 }
 
 bool cci::cnf::gs_cci_private_broker::is_used(const std::string &parname) {
-  return m_gcnf_api->is_used(parname);
+  return gs::cnf::GCnf_private_Api::is_used(parname);
 }
 
 const std::vector<std::string> cci::cnf::gs_cci_private_broker::get_param_list() {
-  return m_gcnf_api->getParamList();
+  return gs::cnf::GCnf_private_Api::getParamList();
 }
 
 cci::shared_ptr<cci::cnf::callb_adapt_b> cci::cnf::gs_cci_private_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
@@ -121,7 +121,7 @@ void cci::cnf::gs_cci_private_broker::remove_param(cci::cnf::cci_base_param* par
 
 const std::vector<std::string> cci::cnf::gs_cci_private_broker::get_param_list(const std::string& pattern) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "pattern limited to GreenConfig capabilities");
-  return m_gcnf_api->getParamList(pattern);
+  return gs::cnf::GCnf_private_Api::getParamList(pattern);
 }
 
 const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_private_broker::get_params(const std::string& pattern) {
@@ -137,7 +137,7 @@ const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_private_broker::ge
   return parvec;
 }
 
-gs::cnf::cnf_api* cci::cnf::gs_cci_private_broker::get_gcnf_api() {
+/*gs::cnf::cnf_api* cci::cnf::gs_cci_private_broker::get_gcnf_api() {
   return m_gcnf_api;
-}
+}*/
 
