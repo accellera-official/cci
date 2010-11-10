@@ -36,10 +36,12 @@ parameter implementation.
 BROKER IMPLEMENTATION (TOOL VENDOR)
 
 The library implementing the CCI configuration broker must provide the 
-following global function, declared in file cci_config.h. 
-It shall be available no later than the start of elaboration (e.g. sc_main).
+following global functions, declared in file cci_config.h. 
+TODO: They shall be available no later than the start of elaboration (e.g. sc_main).
+  much earlier!!
 
-  get_cnf_broker_instance
+  get_cnf_broker_instance(sc_object*)
+  get_cnf_broker_instance(const string&)
 
 ----------------------------------------------------------------
 
@@ -105,6 +107,8 @@ Currently proposed data types to be provided by the parameter library:
 
 Any sc_big(u)int with bit width larger than 1024 had to be provided 
 by additional parameter implementation (library).
+
+TODO: Check types with C++ standard
 
 ----------------------------------------------------------------
 
@@ -191,6 +195,21 @@ ERROR/WARNING/INFO THROWING
 The implementation shall throw sc_reports to report problems (warning/error)
 or status (info). The id prefix should be (TODO:) "/OSCI/CCI/" followed by
 one of the types defined in cci_error_types.h.
+
+
+----------------------------------------------------------------
+
+HOW TO GET ACCESS TO BROKERS
+
+Any instance that accesses any CCI configuration feature shall get access to 
+its broker and any foreign parameters only by calling  the global 
+get_cnf_broker_instance function. (Parameter objects owned by this instance 
+shall be created as described elsewhere instantiating the parameter objects.) 
+It is recommended to keep the returned pointer due to performance reasons. 
+Any CCI parameter but the own ones shall be accessed only through this broker 
+and not using separate ways, like e.g. using the child parameter object 
+directly. This is to make sure the broker can add the correct originator 
+information for debug pupose on parameter accesses.
 
 
 ----------------------------------------------------------------

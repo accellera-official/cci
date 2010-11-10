@@ -1,5 +1,13 @@
 ChangeLog
 ---------
+10.11.2010
+- API modification:
+  changed originator information in global get_cnf_broker_instance function:
+  - Changed sc_module to sc_object
+  - Added function getting string
+  - Added end-user rules
+  - not yet implemented 
+
 21.10.2010
 - library cleanup, new rules
 - gs_example_diff_impl updated

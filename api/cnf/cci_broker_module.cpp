@@ -41,7 +41,7 @@ void cci_broker_manager::register_private_broker(cci_cnf_broker_if* broker) {
 }
 
 cci_cnf_broker_if* cci_broker_manager::search_for_broker(sc_core::sc_object* ob) {
-  if (ob == NULL) return cci::cnf::get_cnf_broker_instance();
+  if (ob == NULL) return cci::cnf::get_cnf_broker_instance("");
   CCI_CNF_DUMP("search_for_broker in: "<<ob->name());
   cci_broker_manager* m = dynamic_cast<cci_broker_manager*>(ob);
   if (m) {
