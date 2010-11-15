@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -15,25 +15,17 @@
 // ENDLICENSETEXT
 
 
-#include "ModuleB.h"
+#include "ModuleA.h"
 #include <systemc.h>
 
-ModuleB::ModuleB(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-, int_param ("int_param", 50, false, cci::cnf::get_cnf_broker_instance(this) )
-, uint_param("uint_param", 12000, false, cci::cnf::get_cnf_broker_instance(this))
-, uint_param2("uint_param2", 12, false, cci::cnf::get_cnf_broker_instance(this))
-, str_param ("str_param", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(this))
-, bool_param("bool_param", false, cci::cnf::get_cnf_broker_instance(this)) // no default value
-{ 
-  SC_THREAD(main_action);
-}
-
-void ModuleB::main_action() {
+void ModuleA::main_action() {
 
   // get the config broker which is responsible for this module
   cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(this);
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
+
+  
+  
   wait(10, SC_SEC);
   
   // show a parameter list
@@ -45,7 +37,19 @@ void ModuleB::main_action() {
     ss_show << "   " << *iter << std::endl;
   }
   std::cout << ss_show.str() << std::endl<<std::endl;
-  
+
+  cci::cnf::cci_base_param* p = mBroker->get_param("ModuleA.int_param");
+  if (p != NULL) {
+    cci::cnf::cci_param<int> &i_p = *static_cast<cci::cnf::cci_param<int>* >(p);
+    std::cout << "setting int_param = 10000" << std::endl;
+    //p->json_deserialize("10000");  //sets value based on string
+    i_p = 10000;
+    //p->set_value(10000);  //calls abort???
+  }
+  else
+    std::cout << name() << ": fetching ModuleA.int_param failed!"  << std::endl;
+
+
   std::cout << "----------------------------" << std::endl;
 
 }

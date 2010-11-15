@@ -52,6 +52,7 @@ const std::string cci::cnf::gs_cci_cnf_broker::get_json_string_keep_unused(const
 
 
 cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param(const std::string &parname) {
+  //std::cout << name() << " (gs_cci_cnf_broker) get param " << parname << std::endl;
   std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
   if( iter != m_mirrored_registry.end() ) {
     cci::cnf::cci_base_param* ret = dynamic_cast<cci::cnf::cci_base_param*>(iter->second);
@@ -59,6 +60,11 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param(const std::stri
     return ret;
   }
   else return NULL;
+  /*gs::gs_param_base* p = gs::cnf::GCnf_Api::getPar(parname);
+  cci_base_param* cp = dynamic_cast<cci_base_param*> (p);
+  assert(((p == NULL && cp == NULL) || (p != NULL && cp != NULL)) && "There shall only be cci params in the gs database!");
+  if (cp != NULL) return cp;
+  else return NULL;*/
 }
 
 bool cci::cnf::gs_cci_cnf_broker::exists_param(const std::string &parname) {
@@ -98,11 +104,18 @@ bool cci::cnf::gs_cci_cnf_broker::has_callbacks(const std::string& parname) {
 
 void cci::cnf::gs_cci_cnf_broker::add_param(cci_base_param* par) {
   bool new_element = m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par)).second;
+  //std::cout << name() << " (gs_cci_cnf_broker) add param " << par->get_name() << std::endl;
   assert(new_element && "The same parameter had been added twice!!");
+  /*gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
+  assert(p != NULL && "This demo example implementation only works with the gs parameter implementation (TODO: internally to be changed!)");
+  gs::cnf::GCnf_Api::addPar(p);*/
 }
 
 void cci::cnf::gs_cci_cnf_broker::remove_param(cci_base_param* par) {
   m_mirrored_registry.erase(par->get_name());
+  /*gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
+  assert(p != NULL && "This demo example implementation only works with the gs parameter implementation (TODO: internally to be changed!)");
+  gs::cnf::GCnf_Api::removePar(p);*/
 }
 
 const std::vector<std::string> cci::cnf::gs_cci_cnf_broker::get_param_list(const std::string& pattern) {

@@ -35,9 +35,26 @@ namespace cci {
     
   public:
     
+    gs_cci_private_broker(sc_core::sc_module* owner, std::vector<const char*> pub_params);
     gs_cci_private_broker(sc_core::sc_module* owner, std::vector<std::string> pub_params);
-    gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...);
+    //gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...);
     
+    static std::vector<std::string> vector_factory(const char* pub_par ...) {
+      std::vector<std::string> pub_param_lst;
+      va_list list;
+      va_start(list, pub_par);
+      const char* p = pub_par;
+      for(;;) { 
+        if(std::string(p) == std::string(END_OF_PUBLIC_PARAM_LIST))
+          break;
+        pub_param_lst.push_back(p);
+        p = va_arg(list, char*);
+      }
+      va_end(list);
+      
+      return pub_param_lst;
+    }
+
     ~gs_cci_private_broker();
 
     void set_init_value(const std::string &parname, const std::string &value);

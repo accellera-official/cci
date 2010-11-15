@@ -34,21 +34,30 @@ public:
   SC_HAS_PROCESS(ModuleB);
 	
   /// Constructor
-  ModuleB(sc_core::sc_module_name name);
+  ModuleB(sc_core::sc_module_name name)
+  : sc_core::sc_module(name)
+  , int_paramb ("int_paramb", 50, false, cci::cnf::get_cnf_broker_instance(this) )
+  , uint_paramb("uint_paramb", 12000, false, cci::cnf::get_cnf_broker_instance(this))
+  , uint_param2b("uint_param2b", 12, false, cci::cnf::get_cnf_broker_instance(this))
+  , str_paramb ("str_paramb", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(this))
+  , bool_paramb("bool_paramb", false, cci::cnf::get_cnf_broker_instance(this)) // no default value
+  { 
+    SC_THREAD(main_action);
+  }
   
   /// Main action to make tests with parameters.
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<int>             int_param;
+  cci::cnf::cci_param<int>             int_paramb;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param;
+  cci::cnf::cci_param<unsigned int>    uint_paramb;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param2;
+  cci::cnf::cci_param<unsigned int>    uint_param2b;
   /// Example parameter.
-  cci::cnf::cci_param<std::string>     str_param;
+  cci::cnf::cci_param<std::string>     str_paramb;
   /// Example parameter.
-  cci::cnf::cci_param<bool>            bool_param;
+  cci::cnf::cci_param<bool>            bool_paramb;
   
 };
 

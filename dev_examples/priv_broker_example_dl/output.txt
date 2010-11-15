@@ -1,0 +1,216 @@
+Created new GCnf_Api CCI_API_INSTANCE
+new impl_par=0x505854
+new impl_par=0x505af4
+new impl_par=0x505e14
+new impl_par=0x506134
+new impl_par=0x5064a4
+new impl_par=0x506af4
+new impl_par=0x506e04
+new impl_par=0x507114
+new impl_par=0x507424
+new impl_par=0x5077a4
+new impl_par=0x507ab4
+new impl_par=0x507e24
+new impl_par=0x508144
+new impl_par=0x508464
+new impl_par=0x5087e4
+new impl_par=0x508f74
+new impl_par=0x509274
+new impl_par=0x509584
+new impl_par=0x5098a4
+new impl_par=0x509c24
+new impl_par=0x509f54
+new impl_par=0x50a2c4
+new impl_par=0x50a5f4
+new impl_par=0x50a924
+new impl_par=0x50acb4
+new impl_par=0x50b214
+new impl_par=0x50b574
+new impl_par=0x50b894
+new impl_par=0x50bbb4
+new impl_par=0x50bf24
+
+------ sc_start() ----------------
+
+----------------------------
+
+
+**** Parameter list (in Observer): 
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+setting int_param = 10000
+----------------------------
+
+
+**** Parameter list (in ModuleC): 
+   ModuleC.str_paramc
+   ModuleC.uint_paramc
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+----------------------------
+
+**** Parameter list (in ModuleB2): 
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+----------------------------
+
+**** Parameter list (in ModuleA2): 
+   ModuleA2.bool_param
+   ModuleA2.m_modB.bool_paramb
+   ModuleA2.m_modB.int_paramb
+   ModuleA2.m_modB.str_paramb
+   ModuleA2.m_modB.uint_param2b
+   ModuleA2.m_modB.uint_paramb
+   ModuleA2.str_param
+   ModuleA2.uint_param
+   ModuleA2.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+setting int_param = 10000
+----------------------------
+
+**** Parameter list (in ModuleA2.m_modB): 
+   ModuleA2.bool_param
+   ModuleA2.m_modB.bool_paramb
+   ModuleA2.m_modB.int_paramb
+   ModuleA2.m_modB.str_paramb
+   ModuleA2.m_modB.uint_param2b
+   ModuleA2.m_modB.uint_paramb
+   ModuleA2.str_param
+   ModuleA2.uint_param
+   ModuleA2.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+----------------------------
+
+**** Parameter list (in ModuleA): 
+   ModuleA.bool_param
+   ModuleA.m_modB.bool_paramb
+   ModuleA.m_modB.int_paramb
+   ModuleA.m_modB.str_paramb
+   ModuleA.m_modB.uint_param2b
+   ModuleA.m_modB.uint_paramb
+   ModuleA.str_param
+   ModuleA.uint_param
+   ModuleA.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+setting int_param = 10000
+----------------------------
+
+**** Parameter list (in ModuleA.m_modB): 
+   ModuleA.bool_param
+   ModuleA.m_modB.bool_paramb
+   ModuleA.m_modB.int_paramb
+   ModuleA.m_modB.str_paramb
+   ModuleA.m_modB.uint_param2b
+   ModuleA.m_modB.uint_paramb
+   ModuleA.str_param
+   ModuleA.uint_param
+   ModuleA.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+   ModuleB2.bool_paramb
+   ModuleB2.int_paramb
+   ModuleB2.str_paramb
+   ModuleB2.uint_param2b
+   ModuleB2.uint_paramb
+   ModuleC.bool_paramc
+   ModuleC.int_paramc
+   ModuleC.uint_param2c
+
+
+----------------------------
+
+------ sc_start() returned -------
+
+delete param=0xbfffe904
+delete param=0xbfffe8fc
+delete param=0xbfffe8f0
+delete param=0xbfffe8e4
+delete param=0xbfffe8d8
+delete param=0xbfffe6a4
+delete param=0xbfffe69c
+delete param=0xbfffe690
+delete param=0xbfffe684
+delete param=0xbfffe678
+delete param=0xbfffe610
+delete param=0xbfffe608
+delete param=0xbfffe5fc
+delete param=0xbfffe5f0
+delete param=0xbfffe5e4
+delete param=0xbfffe7d4
+delete param=0xbfffe7cc
+delete param=0xbfffe7c0
+delete param=0xbfffe7b4
+delete param=0xbfffe7a8
+delete param=0xbfffe740
+delete param=0xbfffe738
+delete param=0xbfffe72c
+delete param=0xbfffe720
+delete param=0xbfffe714
+delete param=0xbfffe870
+delete param=0xbfffe868
+delete param=0xbfffe85c
+delete param=0xbfffe850
+delete param=0xbfffe844

@@ -17,13 +17,18 @@
 
 #include "gs_cci_cnf_private_broker.h"
 
+cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner, std::vector<const char*> pub_params) 
+: gs::cnf::GCnf_private_Api(owner, pub_params) { 
+  //m_gcnf_api = new gs::cnf::GCnf_private_Api(owner, pub_params);
+}
+
 cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner, std::vector<std::string> pub_params) 
 : gs::cnf::GCnf_private_Api(owner, pub_params) { 
   //m_gcnf_api = new gs::cnf::GCnf_private_Api(owner, pub_params);
 }
 
-cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...)
-: gs::cnf::GCnf_private_Api(owner_module, pub_par) {
+//cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...)
+//: gs::cnf::GCnf_private_Api(owner_module, vector_factory(pub_par)) {
 /*  std::vector<std::string> pub_param_lst;
   va_list list;
   va_start(list, pub_par);
@@ -37,7 +42,7 @@ cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner
   va_end(list);
 
   m_gcnf_api = new gs::cnf::GCnf_private_Api(owner_module, pub_param_lst);*/
-}
+//}
 
 cci::cnf::gs_cci_private_broker::~gs_cci_private_broker() { 
   //delete m_gcnf_api; m_gcnf_api = NULL;
@@ -70,7 +75,13 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param(const std::
   std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
   if( iter != m_mirrored_registry.end() )
     return iter->second;
-  else return NULL;
+  else {
+    // and get from hierarchically upper broker
+    cci_cnf_broker_if* b = cci_broker_manager::search_for_broker(owner_module->get_parent_object());
+    assert(b != this);
+    if (b) return b->get_param(parname);      
+  }
+  return NULL;
 }
 
 bool cci::cnf::gs_cci_private_broker::exists_param(const std::string &parname) {
@@ -111,12 +122,27 @@ bool cci::cnf::gs_cci_private_broker::has_callbacks(const std::string& parname) 
 void cci::cnf::gs_cci_private_broker::add_param(cci_base_param* par) {
   //cci::cnf::cci_base_param* bpar = dynamic_cast<cci::cnf::cci_base_param*>(par);
   //assert(bpar != NULL && "This should never happen, a cci_base_param shall be a cci_base_param!");
-
-  m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par));
+  
+  if (public_params.find(par->get_name()) == public_params.end()) {
+    m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par));
+    //std::cout << name() << " (gs_cci_cnf_broker) add param to PRIVATE broker " << par->get_name() << std::endl;
+  // or add to hierarchically upper broker if public
+  } else {
+    cci_cnf_broker_if* b = cci_broker_manager::search_for_broker(owner_module->get_parent_object());
+    if (b) b->add_param(par);
+    assert(b != this);
+  }
 }
 
 void cci::cnf::gs_cci_private_broker::remove_param(cci::cnf::cci_base_param* par) {
-  m_mirrored_registry.erase(par->get_name());
+  if (m_mirrored_registry.find(par->get_name()) != m_mirrored_registry.end())
+    m_mirrored_registry.erase(par->get_name());
+  // or remove from hierarchically upper broker if public
+  else {
+    cci_cnf_broker_if* b = cci_broker_manager::search_for_broker(owner_module->get_parent_object());
+    if (b) b->remove_param(par);      
+    assert(b != this);
+  }
 }
 
 const std::vector<std::string> cci::cnf::gs_cci_private_broker::get_param_list(const std::string& pattern) {

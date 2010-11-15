@@ -94,6 +94,35 @@ namespace cnf {
       init_this();
     }      
 
+    /// Contructor private GCnf API with vector of parameter names that are public
+    /**
+     * @param owner_module   Pointer to owning module
+     * @param pub_params   Const-char-vector of parameter names (name underneath the owner hierarchical position) e.g. "par1" for a param "topmod.ModS.ModSub.par1" or "ModSub2.par1" for a param "topmod.ModS.ModSub.ModSub2.par1"
+     */
+    // * @param full_owner_name  Full hierarchical name of the owner module (name()) e.g. "topmod.ModS.ModSub".
+    GCnf_private_Api_T(sc_core::sc_module* owner_module /*const char* full_owner_name*/,
+                       std::vector<const char*> pub_params)
+    : sc_object(sc_gen_unique_name("__gcnf_api__")),
+    mPrivPlugin(this),
+    m_registered_as_new_param_observer(false),
+    m_new_param_event(NULL)
+    {
+      assert (owner_module != NULL);
+      owner_name = owner_module->name(); // full_owner_name;
+      this->owner_module = owner_module;
+      GCNF_DUMP_N(name(), "Create private API for owner '"<<owner_name<<"'");
+      std::string full_par_name;
+      for (unsigned int i = 0; i < pub_params.size(); i++) {
+        full_par_name = owner_name;
+        full_par_name += SC_NAME_DELIMITER;
+        full_par_name += pub_params[i];
+        GCNF_DUMP_N(name(), "    public param: '"<<pub_params[i].c_str()<<"' = '"<<full_par_name.c_str()<<"'");
+        public_params.insert(full_par_name);
+      }
+      // Register etc.
+      init_this();
+    }      
+    
     /// Contructor private GCnf API without public parameters
     /**
      * @param owner_module   Pointer to owning module

@@ -18,17 +18,6 @@
 #include "ModuleB.h"
 #include <systemc.h>
 
-ModuleB::ModuleB(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-, int_param ("int_param", 50, false, cci::cnf::get_cnf_broker_instance(this) )
-, uint_param("uint_param", 12000, false, cci::cnf::get_cnf_broker_instance(this))
-, uint_param2("uint_param2", 12, false, cci::cnf::get_cnf_broker_instance(this))
-, str_param ("str_param", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(this))
-, bool_param("bool_param", false, cci::cnf::get_cnf_broker_instance(this)) // no default value
-{ 
-  SC_THREAD(main_action);
-}
-
 void ModuleB::main_action() {
 
   // get the config broker which is responsible for this module
