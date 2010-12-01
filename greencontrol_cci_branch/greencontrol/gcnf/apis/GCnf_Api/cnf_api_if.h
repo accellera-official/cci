@@ -20,8 +20,8 @@
 
 // doxygen comments
 
-#ifndef __CNF_API_H__
-#define __CNF_API_H__
+#ifndef __CNF_API_IF_H__
+#define __CNF_API_IF_H__
 
 
 namespace gs {
@@ -46,12 +46,12 @@ template <class T> class gs_param;
  * They are template functions (which cannot be virtual) and which
  * are independent of the API type.
  */
-class cnf_api
+class cnf_api_if
 {
   
 public:
   
-  virtual ~cnf_api() {}
+  virtual ~cnf_api_if() {}
 
   // -------------------- deprecated functions ----------------------------
   
@@ -234,7 +234,7 @@ public:
    */
   virtual sc_event& getUpdateEvent(const std::string &parname)  throw (RegisterObserverFailedException) = 0;
   
-  // Makro for registering callback functions (see method registerCallback). DEPRECATED
+  // DEPRECATED Makro for registering callback functions (see method registerCallback). DEPRECATED
 #define REGISTER_CALLBACK(class, method, parname)                \
 registerCallback(parname, new gs::cnf::CallbAdapt< class >(this, &class::method));
   
@@ -447,7 +447,9 @@ registerNewParamCallback(new gs::cnf::CallbAdapt< class >(this, &class::method))
   
 };
 
-    
+/// DEPRECATED type for legacy support
+typedef cnf_api_if cnf_api;
+  
 } // end namespace cnf
 } // end namespace gs
 

@@ -180,7 +180,7 @@ private:
   gs::ctr::letter_digit_iterator letter_digit;
   
   /// GCnf API
-  gs::cnf::cnf_api *m_GCnf_Api;
+  gs::cnf::cnf_api_if *m_GCnf_Api;
 
 };
 

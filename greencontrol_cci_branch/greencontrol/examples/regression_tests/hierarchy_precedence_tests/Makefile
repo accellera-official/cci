@@ -11,12 +11,12 @@ CC     = g++
 #OPT    = -O3 -funroll-loops -mtune=pentium4
 OPT  = -g -Wall -lpthread -D_REENTRANT
 #OTHER  = -Wno-deprecated
-CFLAGS = $(OPT) $(OTHER)
+CFLAGS = $(OPT) $(OTHER) -DGCNF_VERBOSE
 # CFLAGS = $(DEBUG) $(OTHER)
 EXTRA_LIBS = -lscv # -lboost_program_options
 
 MODULE = testbench
-SRCS = testbench.cpp ModuleATop.cpp ModuleBSubsystem.cpp
+SRCS = testbench.cpp ModuleATop.cpp ModuleBSubsystem.cpp ModuleC.cpp ModuleD.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 include ../../Makefile.gspm

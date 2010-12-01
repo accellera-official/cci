@@ -37,11 +37,12 @@
 namespace gs {
 namespace cnf {
 
+  /// Private GCnf API
   template<typename gs_param_base_T, template<class T> class gs_param_T, typename ConfigPlugin_T>
   class GCnf_private_Api_T
-  : public sc_object,
-    public initialize_if,
-    public cnf_api
+  : public sc_object
+  , public initialize_if
+  , public cnf_api_if
   {
 
     /// Friend class to make cmd_NOTIFY_NEW_PARAM_OBSERVER accessable
@@ -148,11 +149,11 @@ namespace cnf {
      * using <code>END_OF_PUBLIC_PARAM_LIST</code>.
      *
      * Example:
-     * <code>
+     * \code
        ModSub(sc_core::sc_module_name name)
        : sc_core::sc_module(name),
          m_privApi(this, "par1", "ModSub2.par1", END_OF_PUBLIC_PARAM_LIST),
-     * </code>
+       \endcode
      *
      * @param owner_module   Pointer to owning module
      * @param pub_par   Variable arguments of parameter names (name underneath the owner hierarchical position) e.g. "par1" for a param "topmod.ModS.ModSub.par1" or "ModSub2.par1" for a param "topmod.ModS.ModSub.ModSub2.par1"
@@ -200,7 +201,7 @@ namespace cnf {
       return owner_name.c_str();
     }
 
-    // ////////////// API functions (implements cnf_api) //////////////
+    // ////////////// API functions (implements cnf_api_if) //////////////
 
     /// @see gs::cnf::GCnf_Api::addParam(const std::string&)
     bool addParam(const std::string &parname) {
@@ -564,7 +565,7 @@ namespace cnf {
     // ///////////// initialize_if functions ///////////////// //
     
     /// Implements initialize_if, deal the initialize-mode.
-    virtual void start_initial_configuration() {
+    virtual void start_initialize_mode() {
     }
     
     /// Implements initialize_if, deal the initialize-mode.
@@ -697,7 +698,7 @@ namespace cnf {
     std::set<std::string> public_params;
     
     /// Pointer to the GCnf_API this API uses to communicate upwards (e.g. to the Core). This may be a private or the default API
-    cnf_api* mApi;
+    cnf_api_if* mApi;
 
     /// private config plugin
     // TODO CS ConfigPrivatePlugin mPrivPlugin;

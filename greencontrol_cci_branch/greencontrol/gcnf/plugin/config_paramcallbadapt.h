@@ -128,6 +128,7 @@ protected:
   unsigned int m_id;
 };
 
+/// Typedef for ParamCallbAdapt_B with the only allowed template specialization
 typedef ParamCallbAdapt_B<gs_param_base> ParamCallbAdapt_b;
 
   

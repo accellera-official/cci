@@ -50,7 +50,7 @@ public:
     // ////////////////////////////////////////////////////////////////////
     // //////// test all API function calls with the top-level params /////
     
-    gs::cnf::cnf_api *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
+    gs::cnf::cnf_api_if *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
 
     // test addParam
     mApi->addParam("addedTopLevelParam", "30");

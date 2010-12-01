@@ -93,7 +93,7 @@ public:
   // / deal the initialize-mode
 
   /// implements initialize_if 
-  void start_initial_configuration() {
+  void start_initialize_mode() {
   }
 
   /// implements initialize_if 

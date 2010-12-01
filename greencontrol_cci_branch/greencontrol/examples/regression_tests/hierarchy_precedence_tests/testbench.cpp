@@ -27,7 +27,7 @@
  Hierarchical/time precendence tests
  
                            ModuleATop1
-                                 setInitValue ("ModuleATop1.ModuleBSubsystem1.ModuleC1.ModuleD1.my_param3", val);
+                                 setInitValue ("ModuleATop1.ModuleBSubsystem1.ModuleC1.ModuleD2.my_param3", val);
  
  
                  ModuleATop1.ModuleBSubsystem1

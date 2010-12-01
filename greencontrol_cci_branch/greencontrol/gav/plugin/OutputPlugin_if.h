@@ -66,7 +66,7 @@ namespace av {
      * @param config_api  Reference to a GreenConfig API where to get the 
      *                    list of all parameters.
      */
-    virtual void observe_all(gs::cnf::cnf_api& config_api) =0;
+    virtual void observe_all(gs::cnf::cnf_api_if& config_api) =0;
 
     /// Lets the Output Plugin observe all parameters in the vector. E.g. use cnf_api::getParams(parent_name.*) to get such a vector.
     /**
@@ -128,7 +128,7 @@ namespace av {
     virtual bool running() =0;
     
     /// initialize_if dummy
-    virtual void start_initial_configuration() { }
+    virtual void start_initialize_mode() { }
     /// initialize_if dummy
     virtual void end_initialize_mode() { }
     // initialize_if implementation to get called on end_of_elaboration

@@ -61,7 +61,7 @@ public:
   void config_callback(gs::gs_param_base& par);
 
 protected:
-  gs::cnf::cnf_api *mApi;
+  gs::cnf::cnf_api_if *mApi;
   
 };
 

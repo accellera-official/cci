@@ -506,7 +506,7 @@ public:
   // //////////////////////////////////////////////////////////////////// //
   // ///////   Callback handling methods   ////////////////////////////// //
   
-  /// Registers an observer callback function (with the signature of callback_func_ptr). Use the GC_REGISTER_PARAM_CALLBACK macro!
+  /// Registers an observer callback function (with the signature of callb_func_w_reason_ptr). Use the GC_REGISTER_TYPED_PARAM_CALLBACK macro!
   /**
    * Several callbacks may be registered. Even several callbacks to the same method
    * in the same object can be registered!
@@ -528,7 +528,7 @@ public:
    * The user may register any methods as callback functions which have
    * the following signature:
    * \code
-   * void method_name(gs_param_base& changed_param);
+   * void method_name(gs_param_base& changed_param, callback_type reason);
    * \endcode
    *
    * Usage example:
@@ -550,11 +550,11 @@ public:
    *   // Example code to register callback function
    *   void main_action() {
    *     // some code, parameters etc...
-   *     GC_REGISTER_PARAM_CALLBACK(&my_param, MyIP_Class, config_callback);
+   *     GC_REGISTER_TYPED_PARAM_CALLBACK(&my_param, post_write, MyIP_Class, config_callback);
    *   }
    *
    *   // Callback function with default signature.
-   *   void config_callback(gs_param_base& changed_param) {
+   *   void config_callback(gs_param_base& changed_param, callback_type reason) {
    *     // some action
    *   }
    * };
@@ -563,20 +563,20 @@ public:
    * @param callb      boost shared pointer to the ParamCallbAdapt_b object which contains
    *                   the object pointer and the member function pointer.
    * @param type       Type the callback shall be, DEPRECATED default is post_write_and_destroy.
-   *                   Allowed callback types: pre_read, post_read, reject_write, pre_write, post_write, destroy_param, post_write_and_destroy
+   *                   Allowed callback types: pre_read, reject_write, pre_write, post_write, destroy_param, post_write_and_destroy
    * @return           boost shared pointer to the callback adapter (e.g. to be used for unregister calls).
    *
-   * <em>Macro GC_REGISTER_PARAM_CALLBACK</em>
+   * <em>Macro GC_REGISTER_TYPED_PARAM_CALLBACK</em>
    *
    * Creates new ParamCallbAdapt object and registers it at registerCallback.
    *
    * Usage:
    * \code
-   * GC_REGISTER_PARAM_CALLBACK(&my_param, class_name, callback_method_name)
+   * GC_REGISTER_TYPED_PARAM_CALLBACK(&my_param, callback_type, class_name, callback_method_name)
    * \endcode
    * Example:
    * \code
-   * GC_REGISTER_PARAM_CALLBACK(&my_param, MyIP,       config_callback)
+   * GC_REGISTER_TYPED_PARAM_CALLBACK(&my_param, post_write,    MyIP,       config_callback)
    * \endcode
    */
   virtual boost::shared_ptr<ParamCallbAdapt_b> registerParamCallback(boost::shared_ptr<ParamCallbAdapt_b> callb, callback_type type = gs::cnf::post_write_and_destroy/*DEPRECATED, TODO: remove this default!*/) {
@@ -614,7 +614,7 @@ public:
     return cba;   \
   }
   
-  /// Makro for registering callback functions (for post_write and destroy callbacks), usage: GC_REGISTER_PARAM_CALLBACK(&my_param, MyIP_Class, config_callback);, better use GC_REGISTER_TYPED_PARAM_CALLBACK
+  /// DEPRECATED Makro for registering callback functions (for post_write and destroy callbacks), usage: GC_REGISTER_PARAM_CALLBACK(&my_param, MyIP_Class, config_callback);, better use GC_REGISTER_TYPED_PARAM_CALLBACK
 #define GC_REGISTER_PARAM_CALLBACK(param, class, function)                \
   (param)->registerParamCallback( gc_add_ParamCallbAdapt(boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(new ::gs::cnf::ParamCallbAdapt<class>(this, &class::function, this, (param)))), gs::cnf::post_write_and_destroy )
 

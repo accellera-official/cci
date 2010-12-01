@@ -33,7 +33,7 @@ namespace cnf {
 /**
  * Config command to specify the command in the gs::ctr::ControlTransaction.
  */
-enum GCfgCommand {
+enum ConfigCommand {
   /// No command.
   CMD_NONE=0,
   /// Command: add an explicit parameter. May only be used by parameter owning API (API -> plugin).
@@ -69,7 +69,7 @@ enum GCfgCommand {
 };
 
 #ifdef GC_VERBOSE
-static inline std::string gcnfCommandToString(unsigned int cmd) {
+inline std::string gcnfCommandToString(unsigned int cmd) {
   switch (cmd) {
     case CMD_NONE:
       return std::string("CMD_NONE");
@@ -141,6 +141,7 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
     LAST_PARTYPE
   };
   
+  /// Namespace for enum gs::cnf::param_attributes::param_attribute_enum
   namespace param_attributes {
     /// Enumeration for parameter attributes
     enum param_attribute_enum { // When changing, please also add the string to function param_attributeToString below!
@@ -161,9 +162,9 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
       gr_bit_range,
       last_attribute
     };
-  } // end namespace param_attribute
+  } // end namespace param_attributes
 
-  static inline std::string param_attributeToString(unsigned int att) {
+  inline std::string param_attributeToString(unsigned int att) {
     switch (att) {
       case param_attributes::undefined:
         return std::string("undefined");
@@ -200,6 +201,7 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
     }
   }
   
+  /// Typedef for storage of param_attributes::param_attribute_enum
   typedef unsigned int param_attribute;
 
   /// Parameter callback types
@@ -227,7 +229,7 @@ static inline std::string gcnfCommandToString(unsigned int cmd) {
   };
   
   /// returns string for callback_type
-  static inline std::string callback_type_to_string(callback_type cbt) {
+  inline std::string callback_type_to_string(callback_type cbt) {
     switch (cbt) {
       case pre_read:
         return std::string("pre_read");

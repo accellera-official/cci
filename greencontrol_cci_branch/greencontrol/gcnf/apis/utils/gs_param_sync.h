@@ -25,6 +25,7 @@
 namespace gs {
 namespace cnf {
 
+  /// Class that synchronizes two gs_params - can be used for aliasing parameters
   template <class T>
   class gs_param_sync
   {
@@ -45,7 +46,7 @@ namespace cnf {
 
     void bind(const std::string& param1_name, const std::string& param2_name)
     {
-      gs::cnf::cnf_api* m_cnfApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
+      gs::cnf::cnf_api_if* m_cnfApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
 
       gs_param_base* param1_base = m_cnfApi->getPar(param1_name);
       gs_param_base* param2_base = m_cnfApi->getPar(param2_name);

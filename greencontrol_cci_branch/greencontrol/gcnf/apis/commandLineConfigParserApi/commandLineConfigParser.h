@@ -354,7 +354,7 @@ private:
 private:
 
   /// Tool API which is used by this API
-  cnf_api *gcnf_api;
+  cnf_api_if *gcnf_api;
 
 };
 

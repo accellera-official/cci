@@ -53,7 +53,7 @@ public:
 
 protected:
   /// Configuration API
-  gs::cnf::cnf_api *m_configAPI;
+  gs::cnf::cnf_api_if *m_configAPI;
   
   /// Analysis API
   gs::av::GAV_Api  m_analysisAPI;

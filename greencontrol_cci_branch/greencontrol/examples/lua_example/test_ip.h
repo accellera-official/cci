@@ -47,7 +47,7 @@ public:
   void main_action();
 
 private:
-  gs::cnf::cnf_api *api;
+  gs::cnf::cnf_api_if *api;
 
   gs::gs_param<unsigned int> param1;
   gs::gs_param<std::string> param2;

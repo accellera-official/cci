@@ -31,7 +31,7 @@
  
 */
 
-void is_used_test(gs::cnf::cnf_api* m_cnf_api) {
+void is_used_test(gs::cnf::cnf_api_if* m_cnf_api) {
   std::vector<std::string> par;
   par.push_back("OM.int_param1");
   par.push_back("OM.int_param2");
@@ -58,7 +58,7 @@ int sc_main(int argc, char *argv[]) {
   gs::cnf::ConfigDatabase cnfdatabase("ConfigDatabase");
   gs::cnf::ConfigPlugin configPlugin(&cnfdatabase);
 
-  gs::cnf::cnf_api* m_cnf_api = gs::cnf::GCnf_Api::getApiInstance(NULL);
+  gs::cnf::cnf_api_if* m_cnf_api = gs::cnf::GCnf_Api::getApiInstance(NULL);
   std::cout << "** set init OM.int_param2" << std::endl;
   m_cnf_api->setInitValue("OM.int_param2", "12");
   std::cout << "** set init OM.int_param3" << std::endl;

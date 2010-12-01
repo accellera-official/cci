@@ -114,7 +114,7 @@ int sc_main(int argc, char *argv[]) {
   gs::av::GAV_Plugin analysisPlugin("AnalysisPlugin");
 
   // sc_main Config API
-  gs::cnf::cnf_api* mainApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
+  gs::cnf::cnf_api_if* mainApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
   // sc_main Analysis API
   boost::shared_ptr<gs::av::GAV_Api>  mainGAVApi = gs::av::GAV_Api::getApiInstance(NULL);
 

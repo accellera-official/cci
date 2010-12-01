@@ -31,9 +31,9 @@ namespace ctr {
 /// Interface to be implemented by each API/Plugin.
 /**
  * This interface has to be implemented by the APIs and Plugins, so other modules can get the name
- * and a descrition of the commands provided by an API/Plugin pair. The APIs and Plugins should use
- * internal static methods to be provided by the plugins, so the code that provides the information
- * exists only once.
+ * and a descrition of the commands provided by an API/Plugin pair. The APIs and Plugins should 
+ * internally use the same functions (e.g. static functions provided by the plugins, or same base 
+ * class) so the code that provides the information exists only once.
  */
 class command_if
 {

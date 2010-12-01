@@ -49,7 +49,7 @@ namespace ctr {
 
 
   
-  /// INTERNAL static method to organize the string representation of the extended ControlServices.
+  /// INTERNAL method to organize the string representation of the extended ControlServices.
   /**
    * User shall use the gs::ctr::getControlServiceString(ControlService) function!
    *
@@ -57,7 +57,7 @@ namespace ctr {
    * @param id_string Optional parameter to set the string.
    * @return          String representation of cs.
    */
-  static const std::string getExtendedControlServiceString(ControlService cs, const char* id_string = NULL) {
+  inline const std::string getExtendedControlServiceString(ControlService cs, const char* id_string = NULL) {
     static std::map<gs::ctr::ControlService, std::string> gc_service_ID_extension_strings;
     if (id_string != NULL) {
       if (gc_service_ID_extension_strings.find(cs) != gc_service_ID_extension_strings.end()) {
@@ -71,14 +71,14 @@ namespace ctr {
   }
   
   
-  /// Static method to get the string representation of the ControlService ID (for debug purpose).
+  /// Method to get the string representation of the ControlService ID (for debug purpose).
   /**
    * This works for standard and extension service IDs
    *
    * @param cs  ControlService ID.
    * @return    String representation of cs.
    */
-  static const std::string getControlServiceString(ControlService cs) {
+  inline const std::string getControlServiceString(ControlService cs) {
     switch (cs) {
       case NO_SERVICE:
         return string("NO_SERVICE");
@@ -157,6 +157,7 @@ namespace ctr {
     virtual unsigned int get_Service_ID() const { return ID; }
     /// Returns the Service ID string (for debug)
     virtual std::string get_Service_ID_string() const { return mIDstring; }
+  protected:
     const static unsigned int ID;
     const std::string mIDstring;
   };

@@ -56,7 +56,7 @@ class ModuleB
     gs::gs_param<int>   int_param2;
     
     /// API got with static function
-    gs::cnf::cnf_api *mApi;
+    gs::cnf::cnf_api_if *mApi;
   };
 
 

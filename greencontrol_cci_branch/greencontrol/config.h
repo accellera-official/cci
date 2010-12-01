@@ -39,11 +39,11 @@
 #include "greencontrol/gcnf/plugin/config_globals.h"    // configuration globals
 #include "greencontrol/gcnf/plugin/gcnf_datatypes.h"    // Command enumeration
 #include "greencontrol/gcnf/plugin/param_db_if.h"       // allows connection of database through SystemC port
-#include "greencontrol/gcnf/plugin/plugin_if.h"         // interface for the configuration plugin
+//#include "greencontrol/gcnf/plugin/plugin_if.h"         // interface for the configuration plugin
 #include "greencontrol/gcnf/plugin/config_paramcallbadapt.h"  // callback adapters
 #include "greencontrol/gcnf/plugin/config_callbadapt.h"       // callback adapters
 
-#include "greencontrol/gcnf/apis/GCnf_Api/cnf_api.h"    // Configuration API interface (implemented by normal and private API)
+#include "greencontrol/gcnf/apis/GCnf_Api/cnf_api_if.h"    // Configuration API interface (implemented by normal and private API)
 
 BEGIN_GS_CONFIG_NAMESPACE
 class ConfigPlugin;

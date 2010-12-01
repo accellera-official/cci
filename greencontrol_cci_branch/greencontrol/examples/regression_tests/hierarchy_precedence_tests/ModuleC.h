@@ -45,7 +45,7 @@ public:
 protected:
   
   /// Pointer to my config API
-  gs::cnf::cnf_api *m_cnf_api;
+  gs::cnf::cnf_api_if *m_cnf_api;
   
   /// Subsystem to be configured
   ModuleD *m_submoduleD1;

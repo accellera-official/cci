@@ -53,7 +53,7 @@ public:
 
 protected:
 
-  gs::cnf::cnf_api *mGcnfApi;
+  gs::cnf::cnf_api_if *mGcnfApi;
 
 };
 

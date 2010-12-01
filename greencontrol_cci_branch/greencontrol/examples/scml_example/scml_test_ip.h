@@ -69,7 +69,7 @@ public:
 
 private:
   
-  gs::cnf::cnf_api *api;
+  gs::cnf::cnf_api_if *api;
   
 };
 

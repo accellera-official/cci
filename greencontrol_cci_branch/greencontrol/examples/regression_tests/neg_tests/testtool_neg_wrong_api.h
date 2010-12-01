@@ -54,7 +54,7 @@ public:
 
 private:
   gs::cnf::Wrong_Transactions_User_Api directUserApi;
-  gs::cnf::cnf_api *gcnfUserApi;
+  gs::cnf::cnf_api_if *gcnfUserApi;
   
 };
 

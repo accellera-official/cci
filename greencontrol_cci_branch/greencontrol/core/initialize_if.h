@@ -36,12 +36,28 @@ namespace ctr {
   
 /// Interface to be implemented by each API. @see typedef gs::ctr::initialize_if
 /**
- * Because the APIs should not be sc_core::sc_modules (they shouldn't be named) they cannot
- * use the callback functions end_of_elaboration etc.
+ * Because the Service objects (plugins and APIs) shall not be sc_core::sc_modules 
+ * (they shall not appear in SystemC-Analysis) they cannot
+ * use the SystemC elaboration and simulation callbacks.
  *
- * This provides some forwarded kernel callbacks.
+ * This interface (with some implementation) provides some these kernel callbacks
+ * to GreenControl Services.
  *
  * This interface automatically connects to the Core's Callback Dispatcher.
+ *
+ * Usage:
+ * \code
+   class MyServiceAPI : gs::ctr::initialize_if
+   {                                          
+   public:                                    
+     MyServiceAPI() {  do something  }        
+     ~MyServiceAPI() {  do something  }       
+     void start_initialize_mode() { do something }
+     void end_initialize_mode() { do something }  
+     void gc_end_of_elaboration() { do something }
+     // etc.                                      
+   }
+   \endcode
  */
 template <typename GC_Core_T>
 class initialize_if_T
@@ -57,24 +73,46 @@ public:
     GC_Core_T::get_instance().get_CallbackDispatcher().remove(this);
   }
 
+  /// Gets called on start_of_simulation (starting GreenControl initialize-mode) (Optional)
   /**
-   * Inside this method the initial configuration has to be done.
+   * This starts the initialize mode for the listening object:
+   * Inside this method some initial configuration can be done.
    * This is called by the CallbackDispatcher during the start_of_simulation callback.
    */
-  virtual void start_initial_configuration() = 0;
+  virtual void start_initialize_mode() { };
 
+  /// Ending GreenControl initialize-mode (Called during start_of_simulation) (Optional)
   /**
-   * Informs the APIs about the done start_of_simulation call in the CallbackDispatcher:
-   * leave the initialze-mode
+   * This ends the initialize-mode for the listening object:
+   * Called during start_of_simulation after all start_initialize_mode calls have been done.
+   * This is called by the CallbackDispatcher during the start_of_simulation callback.
    */ 
-  virtual void end_initialize_mode() = 0;
+  virtual void end_initialize_mode() { };
   
-  /// Can optionally be overloaded by the implementing class to get called on end_of_elaboration
+  /// Gets called on before_end_of_elaboration (Optional)
   /**
-   * Informs the APIs about the done end_of_elaboration call in the CallbackDispatcher.
+   * Forwards the before_end_of_elaboration call. Called by the CallbackDispatcher.
+   */ 
+  virtual void gc_before_end_of_elaboration() { } 
+
+  /// Gets called on end_of_elaboration (Optional)
+  /**
+   * Forwards the end_of_elaboration call. Called by the CallbackDispatcher.
    */ 
   virtual void gc_end_of_elaboration() { } 
-    
+
+  /// Gets called on start_of_simulation (Optional)
+  /**
+   * Forwards the start_of_simulation call. Called by the CallbackDispatcher.
+   */ 
+  virtual void gc_start_of_simulation() { } 
+  
+  /// Gets called on end_of_simulation (Optional)
+  /**
+   * Forwards the end_of_simulation call. Called by the CallbackDispatcher.
+   */ 
+  virtual void gc_end_of_simulation() { } 
+  
 };
 
 /// initialize interface

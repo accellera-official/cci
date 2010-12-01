@@ -88,7 +88,7 @@ public:
 
 
 protected:
-  gs::cnf::cnf_api *m_Api;
+  gs::cnf::cnf_api_if *m_Api;
   
 };
 

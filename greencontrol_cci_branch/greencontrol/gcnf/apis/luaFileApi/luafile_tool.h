@@ -295,13 +295,13 @@ namespace cnf {
 #endif
 
     /// Config API which is used by this API
-    cnf_api* mApi;
+    cnf_api_if* mApi;
 
     /// Traverse a Lua table setting global variables as parameters (recursive)
     /**
-     * @param Lua state
-     * @param Lua index
-     * @param (only for recursion) parameter name prefixed
+     * @param L Lua state
+     * @param t Lua index
+     * @param level (only for recursion) parameter name prefixed
      * @return number of elements if lua array or error if negative
      */
     int setParamsFromLuaTable(lua_State *L, int t, char* level=NULL)

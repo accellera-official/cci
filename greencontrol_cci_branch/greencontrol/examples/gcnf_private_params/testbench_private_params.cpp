@@ -63,7 +63,7 @@ int sc_main(int argc, char *argv[]) {
   ModuleA mod2("ModuleTopA");
   ModulePub mod3("ModulePub");
 
-  gs::cnf::cnf_api *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
+  gs::cnf::cnf_api_if *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
   
   //ShowSCObjects::showSCObjects();
 

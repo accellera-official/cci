@@ -620,7 +620,7 @@ namespace av {
       bool got_result_param;
       
       /// Pointer to a GCnf_Api (for e.g. check param existence)
-      cnf::cnf_api* m_GCnf_Api;
+      cnf::cnf_api_if* m_GCnf_Api;
       
       /// Pointer to a GAV_Api (for e.g. getting event listener)
       shared_ptr<GAV_Api> m_GAV_Api;

@@ -62,7 +62,7 @@ public:
   void config_callback(gs::gs_param_base& par);
 
 protected:
-  gs::cnf::cnf_api *m_Api;
+  gs::cnf::cnf_api_if *m_Api;
   
 };
 

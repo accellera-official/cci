@@ -63,7 +63,7 @@ class EnaMod
     void main_action();
 
     boost::shared_ptr<gs::av::GAV_Api> mAVApi;
-    gs::cnf::cnf_api *mCnfApi;
+    gs::cnf::cnf_api_if *mCnfApi;
     
     gs::gs_param<int> explicitParam;
     gs::gs_param<int> explicitParamB;

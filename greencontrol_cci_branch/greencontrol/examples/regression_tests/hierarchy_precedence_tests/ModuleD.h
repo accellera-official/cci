@@ -44,7 +44,7 @@ public:
 protected:
   
   /// Pointer to my config API
-  gs::cnf::cnf_api *m_cnf_api;
+  gs::cnf::cnf_api_if *m_cnf_api;
 
   /// Parameter being configured
   gs::gs_param<std::string> my_param1;

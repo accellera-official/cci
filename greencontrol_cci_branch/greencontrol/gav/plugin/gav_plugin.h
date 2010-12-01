@@ -432,7 +432,7 @@ protected:
   /// Map of Output Plugins hold by this plugin.Key: OutputPluginType, value: Pointer to the OutputPlugin
   OutpPlMultiMap_type m_OutputPlugins;
   
-  //gs::cnf::cnf_api *m_cnf_api;
+  //gs::cnf::cnf_api_if *m_cnf_api;
   
   /// Event listener for the OutputPlugins
   event_listener<OutputPlugin_base> m_OutpPl_event_listener;

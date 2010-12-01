@@ -33,7 +33,7 @@
 #include "greencontrol/gcnf/plugin/gcnf_datatypes.h"
 
 #include "greencontrol/gcnf/plugin/param_db_if.h" // allows connection of database through SystemC port
-#include "greencontrol/gcnf/plugin/plugin_if.h"
+//#include "greencontrol/gcnf/plugin/plugin_if.h"
 #include "greencontrol/gcnf/plugin/observerdatabase.h"  // with typedef address_set
 #include "greencontrol/gcnf/plugin/configdatabase.h" // ConfigDatabase to be bound to port of ConfigPlugin
 
@@ -56,7 +56,7 @@ namespace cnf {
    */
   template<typename gs_param_base_T, typename gs_param_STRING_T, typename GCnf_private_Api_T>
   class ConfigPrivatePlugin_T
-  : public plugin_if  // to provide the parameter database to the observer database
+  //: public plugin_if  // to provide the parameter database to the observer database
   {
     
   public:
@@ -249,9 +249,9 @@ namespace cnf {
     // ////////// PLUGIN_IF Interface ///////////////////////////////////// //
     
     /// This gs::cnf::plugin_if method provides the gs::cnf::param_db_if::existsParam method of the gs::cnf::param_db_if to the observer database.
-    bool existsParam(const std::string &hier_parname) {
-      return m_param_db->existsParam(hier_parname);
-    }
+    //bool existsParam(const std::string &hier_parname) {
+    //  return m_param_db->existsParam(hier_parname);
+    //}
     
     // /////////////////////////////////////////////////////////////////// //
     

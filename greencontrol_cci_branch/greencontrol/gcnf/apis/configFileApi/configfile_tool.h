@@ -505,7 +505,7 @@ protected:
 protected:
 
   /// Config API which is used by this API
-  cnf_api* mApi;
+  cnf_api_if* mApi;
 
   /// Name of this object, given by constructor
   std::string m_name;

@@ -42,13 +42,13 @@
  *
  * Instead of using this class the simplebusSlavePort 
  * may be instatiated in the testbench directly:
- * <code>
- * simplebusSlavePort *slaveport = new simplebusSlavePort("memoryport");
- * ddr *memory = new ddr("Mem");
- * slaveport->slave_port(*memory);
- * slaveport->base_addr = 0x200;
- * slaveport->high_addr = 0x300;
- * </code>
+ * \code
+   simplebusSlavePort *slaveport = new simplebusSlavePort("memoryport");
+   ddr *memory = new ddr("Mem");
+   slaveport->slave_port(*memory);
+   slaveport->base_addr = 0x200;
+   slaveport->high_addr = 0x300;
+   /endcode
  * But in that case the base and high addresses cannot be parameters.
  */
 class Mem

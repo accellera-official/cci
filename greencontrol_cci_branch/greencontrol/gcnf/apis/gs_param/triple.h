@@ -31,6 +31,7 @@ namespace cnf {
   
   class gs_param_base;
 
+  /// Help struct for the SCRSI-Tool
   struct triple {
     std::string m_op;
     const gs_param_base &m_p1, &m_p2;

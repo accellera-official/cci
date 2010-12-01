@@ -90,7 +90,7 @@ namespace cnf {
    * The local parameter name is the last part of the given hier_name 
    * from the last delimiter (usualy '.') on.
    *
-   * @param Full hierarchical parameter name
+   * @param hier_name Full hierarchical parameter name
    * @return Local parameter name
    */
   static inline std::string get_local_param_name(const std::string& hier_name) {
@@ -104,7 +104,7 @@ namespace cnf {
    * The parameter's hierarchy name is the first part of the given hier_name 
    * from the beginning to the last delimiter (usualy '.').
    *
-   * @param Full hierarchical parameter name
+   * @param hier_name Full hierarchical parameter name
    * @return Parameter's hierarchy name
    */
   static inline std::string get_hierarchy_param_name(const std::string& hier_name) {

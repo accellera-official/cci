@@ -670,6 +670,7 @@ protected:
 
 };
 
+/// Typedef for gs_param_array_T with the only allowed template specialization
 typedef gs_param_array_T<gs_param_base> gs_param_array;
 
   

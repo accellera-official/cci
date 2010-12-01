@@ -70,7 +70,7 @@ protected:
   gs::cnf::GCnf_private_Api  m_privApi;
   
   /// API got with static function - will be the same as the m_privApi!
-  gs::cnf::cnf_api *mApi;
+  gs::cnf::cnf_api_if *mApi;
   
   /// Sub-Module not handling with private
   ModuleAB submod;

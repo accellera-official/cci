@@ -55,7 +55,7 @@ public:
   
 protected:
   /// API
-  gs::cnf::cnf_api *mApi;
+  gs::cnf::cnf_api_if *mApi;
   
   /// Example parameter.
   gs::gs_param<int>   int_param;

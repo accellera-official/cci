@@ -43,10 +43,11 @@ namespace cnf {
 #define BUFSIZE 1024
   static char line[BUFSIZE];
 
-
+  /// Typedef for use in ConfigFile_Tool
   typedef std::pair<std::vector<std::string>, gc_config_parse_result> parseresult;
 
 
+  /// parse function to be used by ConfigFile_Tool
   /**
    * Classify a token.
    * @param token_ A token.

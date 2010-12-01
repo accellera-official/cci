@@ -273,7 +273,7 @@ namespace av {
     /**
      * @see gs::av::OutputPlugin_if::observe_all
      */
-    virtual void observe_all(cnf::cnf_api& config_api) {
+    virtual void observe_all(cnf::cnf_api_if& config_api) {
       GAV_DUMP_N(name(), "observe all parameters");
       std::vector<std::string> plist = config_api.getParamList();
       gs_param_base *p;
@@ -441,7 +441,7 @@ namespace av {
     bool pause_event_registered;
 
     /// Config API
-    cnf::cnf_api* mCnfApi;
+    cnf::cnf_api_if* mCnfApi;
     
     /// Vector containing pointers to the enabled (enable/disable) parameters of this
     std::vector<gs_param<bool>*> enabled_params;

@@ -180,7 +180,7 @@ public:
    * Note: exists_param, lock_init_value, set_init_value, get_param_list 
    *       shall not impact the is_used status.
    *
-   * @param parname  Hierarchical parameter name.
+   * @param hier_parname  Hierarchical parameter name.
    * @return If the parameter is or has been used.
    */
   virtual bool is_used(const std::string &hier_parname) = 0;

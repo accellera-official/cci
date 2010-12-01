@@ -39,7 +39,7 @@
 #include "greencontrol/gcnf/plugin/config_paramcallbadapt.h"
 #include "greencontrol/gcnf/plugin/utils.h"
 #include "greencontrol/gcnf/plugin/string_vector.h"
-#include "cnf_api.h"
+#include "cnf_api_if.h"
 
 #define GCNF_API_NAME "GCnf_Api"
 #undef DUMMY_NAME
@@ -74,13 +74,11 @@ class GCnf_private_Api_T;
  *
  * All notifies are made without events and time.
  */
-// Future: This class is prepared for storing the sets and adds before
-//         initialize-mode.
 template<typename gs_param_base_T, typename GCnf_private_Api_TMPL, template<typename T> class gs_param_T, typename ConfigPlugin_T>
 class GCnf_Api_t
 : public sc_object
 , public initialize_if
-, public cnf_api
+, public cnf_api_if
 , public gc_port_if
 , public command_if
 {
@@ -96,7 +94,7 @@ class GCnf_Api_t
   // typedef std::vector<GCnf_Api*>  ApiVector;
 
   // Typedef for map containing pointers to the GCnf_Api and its module
-  typedef std::map<sc_module *, cnf_api *>   ModuleApiMap;
+  typedef std::map<sc_module *, cnf_api_if *>   ModuleApiMap;
 
   // Typedef for static map containing pointers to the _private_ GCnf_private_Apis
   //               name-string, private API pointer
@@ -139,7 +137,7 @@ public:
    * @param mod  User module pointer which identifies the needed API instance.
    * @return     Pointer to the API instance.
    */ 
-  static cnf_api* getApiInstance(sc_core::sc_module *mod) 
+  static cnf_api_if* getApiInstance(sc_core::sc_module *mod) 
   {
     // ensure the plugin is existing
     ConfigPlugin_T::get_instance();
@@ -147,7 +145,7 @@ public:
     // TODO: CCI modifications:
 
     cci::cnf::cci_cnf_broker_if* a = cci::cnf::get_cnf_broker_instance(mod);
-    cnf_api* gs_a = dynamic_cast<cnf_api*> (a);
+    cnf_api_if* gs_a = dynamic_cast<cnf_api*> (a);
     assert(gs_a && "All APIs in this System are cnf_apis! What happened here?");
     return gs_a;
   }
@@ -565,7 +563,7 @@ public:
     return p->getString();
   }
   
-  /// @see gs::cnf::cnf_api::getValue
+  /// @see gs::cnf::cnf_api_if::getValue
   const std::string getValue(const std::string &parname, std::string meta_data = "", const bool not_impact_is_used_status = false) {
     GCNF_DUMP_N(name(), "getValue("<<parname.c_str()<<", not_impact_is_used_status="<<not_impact_is_used_status<<")");      
     // create Transaction an send it to config plugin
@@ -594,7 +592,7 @@ public:
     return th->get_mValue();
   }
 
-  /// @see gs::cnf::cnf_api::getPar
+  /// @see gs::cnf::cnf_api_if::getPar
   gs_param_base_T* getPar(const std::string &parname, std::string meta_data = "") {
     GCNF_DUMP_N(name(), "getPar("<<parname.c_str()<<")");
 
@@ -848,7 +846,7 @@ public:
     return p->getUpdateEvent();
   }
 
-  // Makros moved to cnf_api.h
+  // Makros moved to cnf_api_if.h
   // Makro for registering callback functions (see method registerCallback). DEPRECATED
   /*#define REGISTER_CALLBACK(class, method, parname)                \
     registerCallback(parname, new gs::cnf::CallbAdapt< class >(this, &class::method));
@@ -968,7 +966,7 @@ public:
     return *m_new_param_event;
   }
 
-  /// @see cnf_api::registerNewParamCallback
+  /// @see cnf_api_if::registerNewParamCallback
   bool registerNewParamCallback(CallbAdapt_b *callb) {
     const std::string parname = DUMMY_NAME;
     GCNF_DUMP_N(name(), "registerNewParamCallback(func_ptr)"); 

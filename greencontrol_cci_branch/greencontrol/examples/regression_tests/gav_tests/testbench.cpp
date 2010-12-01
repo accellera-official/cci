@@ -62,7 +62,7 @@ int sc_main(int argc, char *argv[]) {
   gs::gs_param<int> mytopparamexpl("top_param_expl", 22);
   gs::gs_param<int> mytopparamexplB("top_param_expl_B", 22);
   
-  gs::cnf::cnf_api *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
+  gs::cnf::cnf_api_if *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
   // test output plugin owned by analysis plugin
   mApi->setInitValue("AnalysisPlugin.STDOUT_OUT_default.EnaMod.ExplicitParam", "1");
   mApi->setInitValue("AnalysisPlugin.STDOUT_OUT_default.EnaMod.ImplicitParam", "1");

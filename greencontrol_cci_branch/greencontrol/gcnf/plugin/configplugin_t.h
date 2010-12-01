@@ -46,9 +46,8 @@ namespace cnf {
  * The plugin provides the service "ConfigPlugin" (enumeration entry CONFIG_SERVICE).
  */
 class ConfigPlugin
-: public gc_port_if,
-  public plugin_if,  // to provide the parameter database to the observer database
-  public command_if
+: public gc_port_if
+, public command_if
 {
 protected:
   
@@ -88,48 +87,6 @@ public:
     return *access_plugin_singleton();
   }
 
-  
-  /// DEPRECATED Constructor
-  ConfigPlugin(const char* n, param_db_if *db = NULL)
-  : m_gc_port(CONFIG_SERVICE, "ConfigPlugin", true, this)
-  , m_param_db_created(NULL)
-  , m_name("ConfigPlugin")
-  { 
-    DEPRECATED_WARNING("ConfigPlugin", "DEPRECATED: ConfigPlugin Constructor with name is deprecated, use without name instead!");
-    GCNF_DUMP_N("ConfigPlugin", "ConfigPlugin constructor!");
-    
-    // ensure singleton
-    if (access_plugin_singleton() != NULL) {
-      SC_REPORT_FATAL(name(), "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
-    }
-    assert(access_plugin_singleton() == NULL && "Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.");
-    assert(access_plugin_instantiated() == false && "Config Plugin has already been instantiated and destroyed!");
-    access_plugin_singleton(this, true);
-    
-    if (db == NULL) {
-      GCNF_DUMP_N(name(), "No parameter database given by user, create default one!");
-      m_param_db_created = new ConfigDatabase("ConfigDatabase");
-      db = m_param_db_created;
-    }
-    
-    // Check if the database pointer is valid
-    std::string test = db->getParameters();
-    assert(test.length() == 0);
-    
-    // bind the (in the toplevel) user chosen database to the port
-    m_param_db = db;
-    
-    /// Observer database
-    m_observer_db = new ObserverDatabase("ObserverDatabase", this);
-    
-    // create the default GCnf_Api instance which is accessible via the NULL pointer
-    // Note: Don't call GCnf_Api_t::getApiInstance(NULL) here, because this ConfigPlugin constructor
-    //       is possibly called by exactly this function (the GCnf_Api_T constructor), the 
-    //       create_default_instance() function has a guard to prevent this.
-    // TODO: CCI modifications:
-    //GCnf_Api_t<gs_param_base, GCnf_private_Api_T<gs_param_base, gs_param, ConfigPlugin>, gs_param, ConfigPlugin>::create_default_instance();
-  }
-
   /// Constructor
   /**
    * Constructor 
@@ -140,7 +97,6 @@ public:
   ConfigPlugin(param_db_if *db = NULL)
   : m_gc_port(CONFIG_SERVICE, "ConfigPlugin", true, this)
   , m_param_db_created(NULL)
-  , m_name("ConfigPlugin")
   { 
     GCNF_DUMP_N("ConfigPlugin", "ConfigPlugin constructor!");
 
@@ -166,7 +122,7 @@ public:
     m_param_db = db;
     
     /// Observer database
-    m_observer_db = new ObserverDatabase("ObserverDatabase", this);
+    m_observer_db = new ObserverDatabase("ObserverDatabase");//, this);
      
     // create the default GCnf_Api instance which is accessible via the NULL pointer
     // Note: Don't call GCnf_Api_t::getApiInstance(NULL) here, because this ConfigPlugin constructor
@@ -471,17 +427,6 @@ public:
         
         break;
       }
-        
-        // ////////////   Command CMD_REGISTER_PARAM_OBSERVER   ////////////////////// //
-     // REMOVED: APIs use registering at parameters themselves
-     /*case CMD_REGISTER_PARAM_OBSERVER:
-      {
-        GCNF_DUMP_N(name(), "CMD_REGISTER_PARAM_OBSERVER: register observer");      
-        if ( !m_observer_db->registerObserver(tr->get_mSpecifier(), tr->get_mID()) ) {
-          tr->set_mError(1);
-        }
-        break;
-      }*/
 
       // ////////////   Command CMD_REGISTER_NEW_PARAM_OBSERVER   ///////////////// //
     case CMD_REGISTER_NEW_PARAM_OBSERVER:
@@ -520,12 +465,6 @@ public:
       sendNewParameterNotify(  static_cast<gs_param_base*>(tr->get_mLogPointer()),
                                tr->get_mSpecifier(), tr->get_mValue()  );
     }
-
-    // moved to parameter themseves!
-    // If observers have to be notified, do that.
-    //if (notify_observers) {
-    //  sendObserverNotifies(tr->get_mSpecifier());
-    //}
 
   }
 
@@ -627,24 +566,9 @@ public:
 
   // ///////////////////////////////////////////////////////////////////////// //
 
-
-  // ////////// PLUGIN_IF Interface ///////////////////////////////////// //
-
-  /// This gs::cnf::plugin_if method provides the gs::cnf::param_db_if::setParam method of the gs::cnf::param_db_if to the observer database.
-  //bool setParam(const std::string &hier_parname, const std::string &value) {
-  //  return m_param_db->setParam(hier_parname, value);
-  //}
-
-  /// This gs::cnf::plugin_if method provides the gs::cnf::param_db_if::existsParam method of the gs::cnf::param_db_if to the observer database.
-  bool existsParam(const std::string &hier_parname) {
-    return m_param_db->existsParam(hier_parname);
-  }
-
-  // /////////////////////////////////////////////////////////////////// //
-
   /// Returns the name of this Plugin
   const char* name() {
-    return m_name.c_str();
+    return "ConfigPlugin";
   }
   
 protected:
@@ -705,46 +629,8 @@ protected:
 
     } // end for
   }
-  
-  /// Sends all notify transactions to oberver APIs.
-  /**
-   * @param parname  Name of the parameter whose observers have to be notified.
-   */
-  // has been moved to the gs_param s
-  /*void sendObserverNotifies(const std::string &parname) {
-    GCNF_DUMP_N(name(), "sendObserverNotifies: notify observers for parameter "<< parname.c_str());
-
-    // Go through set and notify each observer
-    ObserverDatabase::addressSet observers = m_observer_db->getObservers(parname);
-    cport_address_type addr = 0;
-    std::string value = m_param_db->getParam( parname );
-
-    for (ObserverDatabase::addressSet::iterator iter = observers.begin(); iter!=observers.end(); ++iter) {
-      
-      addr = *iter;
-
-      // create Transaction an send it to API
-      ControlTransactionHandle th = m_gc_port.init_port.create_transaction();
-      th->set_mService(CONFIG_SERVICE);
-      th->set_mCmd(CMD_NOTIFY_OBSERVER);
-      th->set_mTarget(addr);
-      th->set_mSpecifier(parname);
-      th->set_mValue(value);
-      
-      ControlPhase p(ControlPhase::CONTROL_REQUEST);
-      ControlTransactionContainer ctc = ControlTransactionContainer(th,p);
-      m_gc_port.init_port.out->notify(ctc);
-
-      if (th->get_mError() > 0) {
-        GCNF_DUMP_N(name(), "sendObserverNotifies: Response for CMD_NOTIFY_OBSERVER (param="<<parname<<" ,value="<<value<<") returned error "<<th->get_mError()<<".");
-        SC_REPORT_WARNING(name(), "sendObserverNotifies: Response for CMD_NOTIFY_OBSERVER returned error.");
-      }
-
-    } // end for
-
-  }*/
-
-public: // TODO: needs this to be public?
+ 
+protected:
   
   /// Port to communicate over the Core with the configurable modules.
   gc_port m_gc_port;
@@ -752,16 +638,11 @@ public: // TODO: needs this to be public?
   /// Pointer get access to the parameter database which implements the param_db_if
   param_db_if* m_param_db;
 
-protected:
-
   /// Observer database
   observer_db_if *m_observer_db;
 
   /// Pointer to the param db if created automatically, NULL else
   param_db_if* m_param_db_created;
-  
-  /// Plugin name for debug
-  const std::string m_name;
   
 };
 

@@ -39,14 +39,14 @@ namespace cnf {
    * Example:
    *    type   : param.name
    *
-   * @param api  cnf_api that should be used to get the parameter list; default=NULL, uses default one
+   * @param api  cnf_api_if that should be used to get the parameter list; default=NULL, uses default one
    * @param indentation  If to indent the output according the longest entity
    * @param show_values  If to show the parameter values
    */
-  static inline void show_database(gs::cnf::cnf_api *api = NULL, bool indentation = true, bool show_values = true) {
+  static inline void show_database(gs::cnf::cnf_api_if *api = NULL, bool indentation = true, bool show_values = true) {
     struct local {
       // ----------- begin local function simple ---------------------------
-      static void show_database_simple(gs::cnf::cnf_api *api = NULL, bool show_values = true) {
+      static void show_database_simple(gs::cnf::cnf_api_if *api = NULL, bool show_values = true) {
         const unsigned int position_par_name   = 26;
         const unsigned int position_par_val    = 60;
         const unsigned int position_par_attrib = 80;
@@ -95,7 +95,7 @@ namespace cnf {
       // ----------- end local function simple ---------------------------
     
       // ----------- begin local function with indentation ---------------
-      static void show_database_indentation(gs::cnf::cnf_api *api = NULL, bool show_values = true) {
+      static void show_database_indentation(gs::cnf::cnf_api_if *api = NULL, bool show_values = true) {
         unsigned int position_par_name_indentation_max   = 0;
         unsigned int position_par_val_indentation_max    = 0;
         unsigned int position_par_attrib_indentation_max = 0;

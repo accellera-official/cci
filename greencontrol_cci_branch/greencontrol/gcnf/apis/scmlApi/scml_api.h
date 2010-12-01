@@ -327,8 +327,8 @@ public:
   // /////////////////////////   deal the initialize-mode   ////////////////////////////
 
   /// Implement initialize_if, deal the initialize-mode.
-  void start_initial_configuration() {
-    GCNF_DUMP_N(name(), "start_initial_configuration called in Scml_Api.");
+  void start_initialize_mode() {
+    GCNF_DUMP_N(name(), "start_initialize_mode called in Scml_Api.");
     //start_of_sim = true;
   }
   
@@ -351,7 +351,7 @@ private:
   //bool start_of_sim;         // true from the point of start_of_simulation called on
 
   /// GCnf_Api which is used by this API.
-  cnf_api *m_gcnf_api;
+  cnf_api_if *m_gcnf_api;
   
 };
 

@@ -52,7 +52,7 @@ public:
 
 private:
   gs::gs_param<sc_int<32> >  int_param;
-  gs::cnf::cnf_api *gc_api;
+  gs::cnf::cnf_api_if *gc_api;
 
   void timeTest(void);
 };

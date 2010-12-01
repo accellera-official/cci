@@ -58,7 +58,7 @@ int sc_main(int argc, char *argv[]) {
   // negative test:
   //gs::av::GAV_Plugin analysisPlugin("AnalysisPlugin"); // will fail adding params to DEFAULT_OUT type
   
-  gs::cnf::cnf_api *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
+  gs::cnf::cnf_api_if *mApi = gs::cnf::GCnf_Api::getApiInstance(NULL);
   
   AVOwner            owner ("Owner");
   AVAnalyserTool     tool  ("AVTool");

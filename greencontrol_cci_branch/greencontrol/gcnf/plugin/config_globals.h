@@ -85,6 +85,7 @@ namespace cnf {
   // called more than once within a cakkback call stack (reentrant protection)
   #define GCNF_AVOID_NESTED_CALLBACKS_IN_CALLBACK_ADAPTERS
 
+  /// Namespace for enum gs::cnf::CallbackBehavior::CallbackBehavior
   namespace CallbackBehavior {
     /// CallbackBehavior enumeration for setting of callback behavior by array observers
     enum CallbackBehavior {

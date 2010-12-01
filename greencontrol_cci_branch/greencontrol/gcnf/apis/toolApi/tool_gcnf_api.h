@@ -152,7 +152,7 @@ public:
   // //////////////   deal the initialize-mode   ////////////////////////////////////
 
   /// implements initialize_if 
-  void start_initial_configuration() {
+  void start_initialize_mode() {
   }
 
   /// implements initialize_if
@@ -164,7 +164,7 @@ public:
 private:
 
   /// GCnf_Api which is used by this API
-  gs::cnf::cnf_api* m_gcnf_api;
+  gs::cnf::cnf_api_if* m_gcnf_api;
 
 };
 

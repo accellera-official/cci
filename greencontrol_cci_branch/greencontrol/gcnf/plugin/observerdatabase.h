@@ -27,7 +27,6 @@
 #include <set>
 
 #include "config_globals.h"
-#include "plugin_if.h"
 #include "observer_db_if.h"
 
 
@@ -47,6 +46,8 @@ namespace cnf {
  * @todo: remove prameter names in this database
  * The observers for new added (or without add first time set) parameters
  * are stored under the dummy entry parameter name DUMMY_NAME (see define).
+ *
+ * Actually this class is not more than JUST A SET of observers.
  */
 class ObserverDatabase
 : public observer_db_if
@@ -61,24 +62,14 @@ public:
   typedef std::map<std::string, addressSet > observer_map;
   typedef observer_map::iterator             observer_iterator;
 
-  /// Pointer to access the parameter database of the ConfigPlugin
-  plugin_if* m_plugin;
-
   /// Constructor with name and parameter database
   /**
    * @param name    Name of this object.
-   * @param plugin  Pointer to the config plugin.
    */
-  ObserverDatabase(const char* name, plugin_if *plugin)
-  : m_plugin(plugin)
-  , m_name(name)
+  ObserverDatabase(const char* name)
+  : m_name(name)
   {
-    assert(plugin != NULL && "Plugin pointer must not be NULL");
   }
-  
-private:
-  /// Constructor without parameter must not be used!
-  ObserverDatabase() { }
   
 public:
 

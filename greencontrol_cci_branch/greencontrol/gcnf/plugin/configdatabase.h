@@ -295,7 +295,7 @@ public:
         if (pos->second.param == NULL) {
           parameter *p = &pos->second;
           if (!not_impact_is_used_status) 
-          p->is_used = true; // is_used status now true
+            p->is_used = true; // is_used status now true
           return p->init_value;
         }
         // If parameter is explicit, should never happen!
@@ -410,6 +410,7 @@ protected:
 };
 
   class gs_param_base;
+  /// Typedef for ConfigDatabase_T with the only allowed template specialization
   typedef ConfigDatabase_T<gs_param_base> ConfigDatabase;
 
 } // end namespace cnf

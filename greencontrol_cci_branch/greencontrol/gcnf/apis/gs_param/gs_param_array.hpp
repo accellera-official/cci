@@ -150,7 +150,7 @@ public:
   : gs_param_t<val_type>(nam, false, parent_array, true),
     m_init_size(NULL)
   {
-    init_array(false, DEFAULT_ARRAY_SIZE, NULL);
+    init_array(true, DEFAULT_ARRAY_SIZE, NULL);
     gs_param_t<val_type>::init();
   }
   /// Constructor with (local) name and default size and parent array reference.
