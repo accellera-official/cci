@@ -168,6 +168,7 @@ static bool search_for_objects(sc_core::sc_object *node, const sc_core::sc_objec
   }
   return false;
 }
+
   
   /// Converts each string to a SC name compatible string
   /**

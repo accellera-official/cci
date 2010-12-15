@@ -23,7 +23,7 @@
 #include "ex_globals.h"
 #include "cci.h"
 
-#include "gs_cci_cnf_private_broker.h"
+#include "gs_cci_cnf_private_broker_accessor.h"
 
 #include "ModuleB.h"
 

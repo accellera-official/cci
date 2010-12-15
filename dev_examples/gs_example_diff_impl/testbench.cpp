@@ -22,10 +22,10 @@
 #include "OwnerModuleB.h"
 
 /// Example testbench for the CCI example demonstrating that it is possible 
-/// to use two different parameter implementations within one simulation
+/// to use multiple parameter implementations (for _different_ data types) within one simulation
 /**
- * OwnerModuleA is compiled an linked against the proof-of-concept parameter implementation,
- * OwnerModuleB is compiled an linked against a modified version of the proof-of-concept parameter implementation.
+ * OwnerModuleA is linked against the proof-of-concept parameter implementation,
+ * OwnerModuleB is linked against both the poc a parameter implementation for an additional datatype.
  */
 int sc_main(int argc, char *argv[]) {
   //sc_core::sc_report_handler::set_actions(sc_core::SC_ERROR, sc_core::SC_ABORT);

@@ -23,7 +23,7 @@
 #include "ex_globals.h"
 #include "cci.h"
 
-#include "gs_cci_cnf_private_broker.h"
+#include "gs_cci_cnf_private_broker_accessor.h"
 
 #include "ModuleB.h"
 
@@ -40,9 +40,9 @@ public:
   /// Constructor
   ModuleA(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
-  , cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, cci::cnf::gs_cci_private_broker::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST)))
-  //, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, std::vector<std::string>(1,"int_param") ))
-  //, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, {std::string("int_param"), std::string("uint_param")} ))
+  , cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, cci::cnf::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST)))
+  //, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, std::vector<std::string>(1,"int_param") ))
+  //, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, {std::string("int_param"), std::string("uint_param")} ))
   , int_param ("int_param", 10, false, get_broker() )
   , uint_param("uint_param", 12345, false, get_broker() )
   , uint_param2("uint_param2", 89, false, get_broker() )

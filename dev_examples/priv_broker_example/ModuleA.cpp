@@ -21,7 +21,7 @@
 
 ModuleA::ModuleA(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, cci::cnf::gs_cci_private_broker::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST)))
+, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, cci::cnf::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST)))
 , int_param ("int_param", 50, false, get_broker() )
 , uint_param("uint_param", 12000, false, get_broker() )
 , uint_param2("uint_param2", 12, false, get_broker() )

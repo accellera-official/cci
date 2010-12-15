@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009 : GreenSocs Ltd
+//   Copyright (C) 2010 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -15,17 +15,19 @@
 // ENDLICENSETEXT
 
 
-#ifndef __GS_CCI_H__
-#define __GS_CCI_H__
+#ifndef __GS_CCI_HELPERS_H__
+#define __GS_CCI_HELPERS_H__
 
-// NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
 #include <cci.h>
-#include "gs_cci_cnf_broker.h"
+#include "greencontrol/config.h"
 
 namespace cci {
+  namespace cnf {
 
-  
-} // end namespace cci
+    std::vector<std::string> vector_factory(const char* pub_par ...);
+
+  }
+}
 
 #endif

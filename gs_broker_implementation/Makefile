@@ -1,16 +1,24 @@
+# enable compiler flag -DCCI_CNF_IMPL_VERBOSE to get broker
+#  implementation debug output (see CFLAGS)
 
 CC     = g++
 OPT    = -g -Wall 
 OTHER  = -pedantic -Wno-long-long
-CFLAGS = $(OPT) $(OTHER)
+CFLAGS = $(OPT) $(OTHER) # -DCCI_CNF_IMPL_VERBOSE 
 
-SRCS = cci_api.cpp \
+SRCS = gs_cci_broker.cpp \
        gs_cci_cnf_broker.cpp \
-       gs_cci_cnf_private_broker.cpp
+       gs_cci_cnf_broker_accessor.cpp \
+       gs_cci_cnf_private_broker.cpp \
+       gs_cci_cnf_private_broker_accessor.cpp \
+       helpers.cpp
 
-OBJS = cci_api.o \
+OBJS = gs_cci_broker.o \
        gs_cci_cnf_broker.o \
-       gs_cci_cnf_private_broker.o
+       gs_cci_cnf_broker_accessor.o \
+       gs_cci_cnf_private_broker.o \
+       gs_cci_cnf_private_broker_accessor.o \
+       helpers.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
@@ -54,7 +62,7 @@ LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
 #all: $(EXE)
 
 all: myprog
-	ar -r "libcciapiimpl.a" *.o
+	ar -r "libccibrokerimpl.a" *.o
 	rm -f  *.o
 
 myprog: $(OBJS)
@@ -66,4 +74,4 @@ myprog: $(OBJS)
 	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
 
 clean:
-	rm -f  *.o libcciapiimpl.a
+	rm -f  *.o libccibrokerimpl.a

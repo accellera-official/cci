@@ -43,6 +43,7 @@ namespace cnf {
   : public sc_object
   , public initialize_if
   , public cnf_api_if
+  , public command_if
   {
 
     /// Friend class to make cmd_NOTIFY_NEW_PARAM_OBSERVER accessable
@@ -624,7 +625,7 @@ namespace cnf {
      */
     inline void init_this() {
       /// get next API upwards
-      mApi = GCnf_Api_TMPL::getApiInstance(owner_module);
+      mApi = GCnf_Api_TMPL::getApiInstance(gs::cnf::get_parent_sc_module(owner_module));
 #ifdef GCNF_VERBOSE
       GCnf_private_Api_T* p = dynamic_cast<GCnf_private_Api_T*>(mApi);
       if (p) {
@@ -686,6 +687,29 @@ namespace cnf {
         m_registered_as_new_param_observer = true;
       }
     }
+    
+  public:
+    // //////////////// command_if methods ////////////////////////////////////
+    
+    /// Returns the name of the API.
+    const std::string getName()
+    {
+      return name();
+    }
+    
+    /// Returns the name of the specified command.
+    const std::string getCommandName(unsigned int cmd)
+    {
+      return ConfigPlugin_T::getCmdName(cmd);
+    }
+    
+    /// Return a description of the specified command.
+    const std::string getCommandDescription(unsigned int cmd)
+    {
+      return ConfigPlugin_T::getCmdDesc(cmd);
+    }
+    
+    // ///////////////////////////////////////////////////////////////////////// //
     
   protected:
     /// Full hierarchical name of the owning module

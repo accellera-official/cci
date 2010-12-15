@@ -17,7 +17,6 @@
 
 #include <systemc>
 #include <cci.h>
-#include "cci_api.h"
 
 #include "ModuleA.h"
 #include "ModuleB.h"

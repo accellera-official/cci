@@ -21,7 +21,7 @@ OBJS = testbench.o \
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-EXTRA_LIBS = -lcciapiimpl -lcciparamimpl -lcciparamimpl_test_type -lcciapi
+EXTRA_LIBS = -lccibrokerimpl -lcciparamimpl -lcciparamimpl_test_type -lcciapi
 EXTRA_LIBS_DIRS = -L./param_impl
 
 include ../../Makefile.defs

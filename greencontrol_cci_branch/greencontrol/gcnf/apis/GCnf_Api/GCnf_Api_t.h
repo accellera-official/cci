@@ -51,7 +51,12 @@
 namespace gs {
 namespace cnf {
 
-
+  // CCI helpstruct to get access to the underlying config api
+  struct gs_cnf_api_accessor {
+    virtual gs::cnf::cnf_api_if* get_gs_cnf_api() = 0;
+    virtual ~gs_cnf_api_accessor() {}
+  };
+  
 // forward declaration 
 class gs_param_base;
 
@@ -145,9 +150,10 @@ public:
     // TODO: CCI modifications:
 
     cci::cnf::cci_cnf_broker_if* a = cci::cnf::get_cnf_broker_instance(mod);
-    cnf_api_if* gs_a = dynamic_cast<cnf_api*> (a);
-    assert(gs_a && "All APIs in this System are cnf_apis! What happened here?");
-    return gs_a;
+    gs::cnf::gs_cnf_api_accessor* b = dynamic_cast<gs::cnf::gs_cnf_api_accessor*>(a);
+    gs::cnf::cnf_api_if* gs_br = b->get_gs_cnf_api();
+    assert (gs_br && "All APIs in this System are gs_cci_cnf_broker_accessor this gs_cnf_api_accessor! What happened here?");
+    return gs_br;
   }
   
 
@@ -200,7 +206,7 @@ public:
    * TODO: check if really deprecated or maybe not
    */
   explicit GCnf_Api_t(const char* api_name)
-  : sc_object(sc_gen_unique_name("__gcnf_api__"))
+  : sc_object(sc_gen_unique_name(api_name))
   , m_gc_port(CONFIG_SERVICE, api_name, false, this)
   , m_registered_as_new_param_observer(false)
   , m_new_param_event(NULL)

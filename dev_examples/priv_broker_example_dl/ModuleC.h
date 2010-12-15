@@ -22,7 +22,7 @@
 #include <systemc>
 #include "ex_globals.h"
 #include "cci.h"
-#include "gs_cci_cnf_private_broker.h"
+#include "gs_cci_cnf_private_broker_accessor.h"
 
 
 /// Module which owns some cci parameters.
@@ -38,8 +38,8 @@ public:
   /// Constructor
   ModuleC(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
-  , cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, cci::cnf::gs_cci_private_broker::vector_factory("int_paramc", "uint_param2c", "bool_paramc", END_OF_PUBLIC_PARAM_LIST)))
-  //, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker(this, {std::string("int_paramc"), std::string("uint_param2c"), std::string("bool_paramc")} ))
+  , cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, cci::cnf::vector_factory("int_paramc", "uint_param2c", "bool_paramc", END_OF_PUBLIC_PARAM_LIST)))
+  //, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, {std::string("int_paramc"), std::string("uint_param2c"), std::string("bool_paramc")} ))
   , int_paramc ("int_paramc", 50, false, get_broker() )
   , uint_paramc("uint_paramc", 12000, false, get_broker())
   , uint_param2c("uint_param2c", 12, false, get_broker())

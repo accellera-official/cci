@@ -1,5 +1,12 @@
 ChangeLog
 ---------
+15.12.2010
+- Added to broker implementation:
+  - broker accessors:
+    originator information is transfered over internal GreenControl
+    infratructure thus it can be logged.
+  - still TODO: parameter accessors
+
 10.11.2010
 - API modification:
   changed originator information in global get_cnf_broker_instance function:

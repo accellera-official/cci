@@ -57,7 +57,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   // forward declaration
   class cci_cnf_broker_if;
 
-  /// Returns a configuration broker instance responsible for handling the requests of the given originator 
+  /// Returns a configuration broker accessor instance responsible for handling the requests of the given originator 
   /**
    * Forward declaration, to be implemented by the tool (broker vendor).
    *
@@ -66,20 +66,20 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * can be used!
    *
    * @param originator Pointer to the object or module who wants access the config broker
-   * @return Configuration broker.
+   * @return Configuration broker accessor.
    */
   cci_cnf_broker_if* get_cnf_broker_instance(sc_core::sc_object* originator);
 
-  /// Returns a configuration broker instance responsible for handling the requests of the given originator 
+  /// Returns a configuration broker accessor instance responsible for handling the requests of the given originator 
   /**
    * Forward declaration, to be implemented by the tool (broker vendor).
    *
    * If the originator is an sc_module, the function 
    * get_cnf_broker_instance(sc_core::sc_object* originator) 
-   * shall be used! (Important to get access to potential private brokers!)
+   * shall be used!
    *
    * @param originator String giving some identification for the instance who wants access the config broker.
-   * @return Configuration broker.
+   * @return Configuration broker accessor.
    */
   cci_cnf_broker_if* get_cnf_broker_instance(const std::string& originator);
 

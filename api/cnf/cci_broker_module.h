@@ -56,7 +56,11 @@ public:
 
 public:
   
-  /// Recursive search in SystemC hierarchy for a broker
+  /// Recursive search in SystemC hierarchy for a private broker
+  /**
+   * Finally (if no private broker found) it uses the global
+   * get_cnf_broker_instance function to get the global default broker.
+   */
   static cci_cnf_broker_if* search_for_broker(sc_core::sc_object* ob);
   
   cci_cnf_broker_if* m_broker;

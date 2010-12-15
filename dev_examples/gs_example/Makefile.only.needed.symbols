@@ -31,8 +31,8 @@ BOOST = /cad/tools/boost
 SYSTEMC = /cad/tools/systemc
 CCI_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
 CCI_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
-CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
-CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
+CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_broker_implementation
+CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_broker_implementation
 CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
 
 
@@ -58,7 +58,7 @@ INCDIR   = -I. -I$(GS_CONTROL_DIR) -I$(BOOST) \
 LIBDIR = -L. -L$(SYSTEMC)/lib-$(TARGET_ARCH) \
          -L$(CCI_LIB_DIR) -L$(CCI_API_IMPLEMENTATION_LIB_DIR)
 
-EXTRA_LIBS = -lcciapiimpl -lcciapi
+EXTRA_LIBS = -lccibrokerimpl -lcciapi
 LIBS       = $(EXTRA_LIBS) -lsystemc -lm
 
 CC     = g++

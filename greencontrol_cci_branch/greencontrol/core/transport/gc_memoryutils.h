@@ -144,11 +144,11 @@ namespace ctr {
     ObjectFactory( int poolSize=50/*512*/ ) : // (CS) Warning: potential memory issue when size is 512
       m_pool( poolSize )
       {
-        (livingFactories)[this]=true;
+        (get_livingFactories())[this]=true;
       };
 
     ~ObjectFactory(){
-      (livingFactories)[this]=false; // necessary to avoid segfault at GreenBus deconstruction
+      (get_livingFactories())[this]=false; // necessary to avoid segfault at GreenBus deconstruction
     }
 
     inline PTRTYPE<T> create()
@@ -177,18 +177,23 @@ namespace ctr {
     //the method checks whether the factory is still alive and if so frees T, otherwise nothing will happen.
     static void st_release( T* p, ObjectFactory<PTRTYPE<T>, false>* fact)
     {
-      if ((livingFactories)[fact]){ 
+      if ((get_livingFactories())[fact]){ 
         p->reset();
         fact->release(p);
       }
     }
-
-    static std::map< ObjectFactory<PTRTYPE<T>, false>*, bool> livingFactories;
+    
+    // getter function to create static function member on demand, to ensure it is available at any time, including static initialization
+    static std::map< ObjectFactory<PTRTYPE<T>, false>*, bool>& get_livingFactories() {
+      static std::map< ObjectFactory<PTRTYPE<T>, false>*, bool> livingFactories;
+      return livingFactories;
+    }
 
   };
   
-  template <typename T>
-  std::map< ObjectFactory<PTRTYPE<T>, false>*, bool> ObjectFactory<PTRTYPE<T>, false>::livingFactories;
+  // moved to get function get_livingFactories
+  //template <typename T>
+  //std::map< ObjectFactory<PTRTYPE<T>, false>*, bool> ObjectFactory<PTRTYPE<T>, false>::livingFactories;
 
 
 
