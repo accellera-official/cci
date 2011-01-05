@@ -43,3 +43,5 @@ dev_examples/                     :  some development examples
              gs_example/          :  Example using the GreenSocs implementation
              priv_broker_example/ :  Example demonstrating usage of a private broker
              gs_example_diff_impl :  still TODO!!
+examples/  :  directory for official examples
+              to be added by anyone who is in charge of implementing them
