@@ -41,7 +41,7 @@ cci::cnf::cci_value::cci_value(int value)
 , m_value_number(value) {
 }
 
-cci::cnf::cci_value::cci_value(boost::int64_t value)
+cci::cnf::cci_value::cci_value(sc_dt::int64 value)
 : m_type(partype_number)
 , m_value_number(value) {
 }
