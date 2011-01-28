@@ -1,10 +1,5 @@
 Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
-new impl_par=0x505614
-new impl_par=0x505ac4
-new impl_par=0x505dd4
-new impl_par=0x506264
-new impl_par=0x506644
-TYPE B new impl_par=0x506954
+TYPE B new impl_par
 
 ------ sc_start() ----------------
 
@@ -15,9 +10,4 @@ TYPE B new impl_par=0x506954
 
 ------ sc_start() returned -------
 
-TYPE B delete param=0xbfffe860
-delete param=0xbfffe854
-delete param=0xbfffe848
-delete param=0xbfffe8e0
-delete param=0xbfffe8d4
-delete param=0xbfffe8c8
+TYPE B delete param

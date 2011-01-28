@@ -1,15 +1,5 @@
 Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
 Created new PRIVATE broker for Module "ModuleA" and GCnf_private_Api "ModuleA.__gcnf_api___0"
-new impl_par=0x505824
-new impl_par=0x505bd4
-new impl_par=0x505ee4
-new impl_par=0x5061f4
-new impl_par=0x506544
-new impl_par=0x506934
-new impl_par=0x506cc4
-new impl_par=0x506ff4
-new impl_par=0x507324
-new impl_par=0x507684
 
 ------ sc_start() ----------------
 
@@ -55,13 +45,3 @@ new impl_par=0x507684
 
 ------ sc_start() returned -------
 
-delete param=0xbfffe920
-delete param=0xbfffe918
-delete param=0xbfffe90c
-delete param=0xbfffe900
-delete param=0xbfffe8f4
-delete param=0xbfffe88c
-delete param=0xbfffe884
-delete param=0xbfffe878
-delete param=0xbfffe86c
-delete param=0xbfffe860

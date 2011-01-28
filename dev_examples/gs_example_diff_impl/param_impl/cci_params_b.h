@@ -65,7 +65,7 @@ namespace cci { namespace cnf {
   template<typename T, cci::cnf::param_mutable_type TM>
   static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name) {
     cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, force_top_level_name);
-    std::cout << (std::hex) << "TYPE B new impl_par=" << impl_par << std::endl;
+    std::cout << (std::hex) << "TYPE B new impl_par" << std::endl;
     return impl_par;
   }
 
@@ -74,7 +74,7 @@ namespace cci { namespace cnf {
   template<typename T, cci::cnf::param_mutable_type TM>
   static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name) {
     cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, force_top_level_name);
-    std::cout << (std::hex) << "TYPE B new impl_par=" << impl_par << std::endl;
+    std::cout << (std::hex) << "TYPE B new impl_par" << std::endl;
     return impl_par;
   }
 
@@ -83,7 +83,7 @@ namespace cci { namespace cnf {
   template<typename T, cci::cnf::param_mutable_type TM>
   static cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name) {
     cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, force_top_level_name);
-    std::cout << (std::hex) << "TYPE B new impl_par=" << impl_par << std::endl;
+    std::cout << (std::hex) << "TYPE B new impl_par" << std::endl;
     return impl_par;
   }
 
@@ -100,7 +100,7 @@ namespace cci { namespace cnf {
   /// Implementation of parameter factory destroy function function declared in cci_config.h
   template<class T, cci::cnf::param_mutable_type TM>
   void destroy_cci_param(cci::cnf::cci_param<T, TM>* param) {
-    std::cout << (std::hex) << "TYPE B delete param=" << param << std::endl;
+    std::cout << (std::hex) << "TYPE B delete param" << std::endl;
     assert(param != NULL && "The given parameter must not be NULL.");
     __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>* p = dynamic_cast<__NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>*> (param->get_pImpl());
     assert(p != NULL && "The given parameter should be created by the create_cci_param function thus being of the implementation type.");

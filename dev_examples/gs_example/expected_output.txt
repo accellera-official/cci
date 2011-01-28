@@ -1,13 +1,5 @@
 Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
 Owner.int_param exists (implicit or explicit)
-new impl_par=0x505af4
-new impl_par=0x505f34
-new impl_par=0x506244
-new impl_par=0x506554
-new impl_par=0x506894
-new impl_par=0x506d34
-new impl_par=0x507124
-new impl_par=0x507454
 
 ------ sc_start() ----------------
 
@@ -21,7 +13,7 @@ int_param set value = 99 (shall fail)
 
 
 Observer: Caught Error: /OSCI/CCI/set_param_failed: Value rejected by callback.
-In file: gs_cci_param_t.h:130
+In file: gs_cci_param_t.h:135
 In process: Observer.main_action @ 0 s
 int_param has value = 11
 param list:
@@ -43,7 +35,7 @@ Owner: uint_param is_default_value()=0
 Owner: uint_param get_default_value()=12000
 Owner: bool_param get_default_value()=
 Owner: Caught Error: /OSCI/CCI/get_param_failed: Param has no default value.
-In file: gs_cci_param.h:141
+In file: gs_cci_param.h:154
 In process: Owner.main_action @ 0 s
 Owner: bool_param is_invalid_value()=1
 Owner: bool_param is_invalid_value()=0
@@ -54,25 +46,25 @@ MutabilityOwner: demonstrate mutable parameter being made temporarily immutable
 MutabilityOwner:  mutable_int_param=50
 MutabilityOwner:  set mutable_int_param to 150
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:  lock mutable_int_param with key 0x4b2f90
+MutabilityOwner:  lock mutable_int_param with key 0x4b3f90
 MutabilityOwner:    set mutable_int_param should fail
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Parameter locked.
-In file: gs_cci_param_t.h:126
+In file: gs_cci_param_t.h:131
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:    set mutable_int_param with wrong key 0x4b2f94 - should fail twice
+MutabilityOwner:    set mutable_int_param with wrong key 0x4b3f94 - should fail twice
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: gs_cci_param_t.h:139
+In file: gs_cci_param_t.h:144
 In process: MutabilityOwner.main_action @ 0 s
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: gs_cci_param_t.h:139
+In file: gs_cci_param_t.h:144
 In process: MutabilityOwner.main_action @ 0 s
-MutabilityOwner:    set mutable_int_param with key 0x4b2f90 - should succeed
+MutabilityOwner:    set mutable_int_param with key 0x4b3f90 - should succeed
 MutabilityOwner:  mutable_int_param=4444
-MutabilityOwner:  unlock mutable_int_param with key 0x4b2f90
+MutabilityOwner:  unlock mutable_int_param with key 0x4b3f90
 MutabilityOwner:    set mutable_int_param should succeed
 ----------------------------
 Owner: Owner.int_param.json_serialize() = 11
@@ -80,7 +72,6 @@ Owner: Owner.int_param.json_deserialize(555000) results in 555000
 Owner: set int_param = 100
 Owner: set int_param.set(200)
 Owner: create parameter 
-new impl_par=0x5083e4
   created Owner.uchar_param
 Owner: Set the new parameter uchar_param
 
@@ -102,7 +93,7 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 @20 ns /7 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
 
 Error: /OSCI/CCI/cci_value_failure: Set cci value not implemented for not specialized parameter types.
-In file: gs_cci_param.h:148
+In file: gs_cci_param.h:161
 In process: ValueMod.main_action @ 20 ns
 uint_param has value = 9000
 
@@ -115,15 +106,6 @@ str_param has value = test cci value string
 **** Parameter list: 
    MutabilityOwner.elab_time_int_param, MutabilityOwner.immutable_int_param, MutabilityOwner.mutable_int_param, Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2
 
-delete param=0x4c2f70
 
 ------ sc_start() returned -------
 
-delete param=0xbfffe7c4
-delete param=0xbfffe7b8
-delete param=0xbfffe7ac
-delete param=0xbfffe744
-delete param=0xbfffe73c
-delete param=0xbfffe730
-delete param=0xbfffe724
-delete param=0xbfffe718

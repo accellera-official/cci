@@ -1,37 +1,7 @@
 Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
 Created new PRIVATE broker for Module "ModuleC" and GCnf_private_Api "ModuleC.__gcnf_api___0"
-new impl_par=0x505904
-new impl_par=0x505c74
-new impl_par=0x505f84
-new impl_par=0x5062a4
-new impl_par=0x506614
 Created new PRIVATE broker for Module "ModuleA" and GCnf_private_Api "ModuleA.__gcnf_api___0"
-new impl_par=0x506cd4
-new impl_par=0x507034
-new impl_par=0x507344
-new impl_par=0x507654
-new impl_par=0x5079a4
-new impl_par=0x507d74
-new impl_par=0x508104
-new impl_par=0x508424
-new impl_par=0x508744
-new impl_par=0x508a94
 Created new PRIVATE broker for Module "ModuleA2" and GCnf_private_Api "ModuleA2.__gcnf_api___0"
-new impl_par=0x5092c4
-new impl_par=0x509614
-new impl_par=0x509924
-new impl_par=0x509c44
-new impl_par=0x509f94
-new impl_par=0x50a384
-new impl_par=0x50a714
-new impl_par=0x50aa44
-new impl_par=0x50ad74
-new impl_par=0x50b0d4
-new impl_par=0x50b6d4
-new impl_par=0x50ba54
-new impl_par=0x50bd74
-new impl_par=0x50c094
-new impl_par=0x50c3d4
 
 ------ sc_start() ----------------
 
@@ -187,33 +157,3 @@ setting int_param = 10000
 
 ------ sc_start() returned -------
 
-delete param=0xbfffe8e4
-delete param=0xbfffe8dc
-delete param=0xbfffe8d0
-delete param=0xbfffe8c4
-delete param=0xbfffe8b8
-delete param=0xbfffe684
-delete param=0xbfffe67c
-delete param=0xbfffe670
-delete param=0xbfffe664
-delete param=0xbfffe658
-delete param=0xbfffe5f0
-delete param=0xbfffe5e8
-delete param=0xbfffe5dc
-delete param=0xbfffe5d0
-delete param=0xbfffe5c4
-delete param=0xbfffe7b4
-delete param=0xbfffe7ac
-delete param=0xbfffe7a0
-delete param=0xbfffe794
-delete param=0xbfffe788
-delete param=0xbfffe720
-delete param=0xbfffe718
-delete param=0xbfffe70c
-delete param=0xbfffe700
-delete param=0xbfffe6f4
-delete param=0xbfffe850
-delete param=0xbfffe848
-delete param=0xbfffe83c
-delete param=0xbfffe830
-delete param=0xbfffe824
