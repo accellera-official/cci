@@ -128,6 +128,15 @@ sc_time:
 
 ----------------------------------------------------------------
 
+CALLBACKS
+
+In general for all callbacks it is still TODO to define when exactly 
+(on which interface/function call) which callback has to be called.
+(e.g. a list: on base param function xy, call cb abc)
+
+
+----------------------------------------------------------------
+
 REJECT_WRITE CALLBACK 
 and
 PRE_WRITE CALLBACK
@@ -210,6 +219,68 @@ Any CCI parameter but the own ones shall be accessed only through this broker
 and not using separate ways, like e.g. using the child parameter object 
 directly. This is to make sure the broker can add the correct originator 
 information for debug pupose on parameter accesses.
+
+
+----------------------------------------------------------------
+
+PARAMETER ACCESSORS
+
+While a configurable module creates configuration parameters (cci_param) directly
+- I call this original parameter for now -, configurators get access to those 
+parameters through brokers (compare section HOW TO GET ACCESS TO BROKERS). 
+The broker does not return the original parameter object (which the owning module 
+instantiated) but returns a parameter accessor.
+
+The broker (which is specific for each originator, cp. broker_accessor, in the POC-
+implementation) shall create, return and manage one parameter accessor per original 
+parameter and originator. This parameter accessor can be created using the 
+cci_(base_)param create_accessor-function. Internally all parameter objects point to
+the same parameter implementation.
+
+The difference between the original parameter object and the parameter accessor 
+object is that the parameter accessor forwards its originator information, which is
+internally stored, to all function calls that are forwared to the underlying 
+implementation (cci_(base_)param_impl_if).
+
+
+----------------------------------------------------------------
+
+ORIGINATOR INFORMATION FLOW
+
+Originator information means that for some actions on parameters it is possible to ask 
+for the responsible originator of that change or action in general. The end user has 
+two places where he encounters the originator information: 
+1/ When asking for the responsible broker it is important to give the originator 
+   information to the global get function. This is either (recommended) the sc_object-
+   pointer of the instance that asks for the broker, or - if no sc_object pointer is 
+   available - a string that is realated or suitable to identify the object. This 
+   information is internally attached to the broker which forwards it on all action 
+   performed on that broker. The broker also attaches the information to all parameters 
+   that are requested over this broker: parameter accessors instead of the original 
+   parameter are returned to the end user.
+2/ Each time an action happens which allows to ask for the originator - e.g. a 
+   parameter callback happens - the parameter object (original parameter or parameter 
+   accessor) can be asked for the originator. Example: Within a post_write-Callback on 
+   the given parameter the function get_originator returns the originator.
+
+Internally the originator information flow is following:
+(POC-Implementation:) The user gives the originator (object or string) to the global 
+function get_cnf_broker_instance. There one broker accessor per originator is created, 
+all using one originator-independent broker in the background. The broker accessors 
+store the originator information. Each time the broker accessor is asked to do some 
+action it forwards the originator information to the background broker function it calls. 
+In the case it shall return a parameter object to the user it creates one parameter 
+accessor object per original parameter (it holds a map of all created param accessors). 
+(Std. Header:) The parameter accessors get the originator information during construction 
+- which happens using the create_accessor-function on the cci_(base_)param. Each time the 
+parameter accessor is used by the configurator (who asked for it), the accessor forwards 
+the originator (object or string) to the underlying implementation 
+(cci_(base_)param_impl_if).
+(POC-Implementation:) The parameter implementation now needs to make sure the originator 
+information is available via the get_orginator calls during and after the specific action, 
+e.g. callback.
+
+TODO: are there needs for a get_originator other than on parameter objects? If yes, where?
 
 
 ----------------------------------------------------------------

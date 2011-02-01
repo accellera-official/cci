@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2009-2011 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -31,13 +31,15 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
   // forward declaration 
   template <class T, param_mutable_type TM> 
-  class cci_param;
+  class cci_param_accessor;
 
   
   /// CCI configuration broker interface.
   /**
    * This can be used by a tool to access the database or parameter objects, set initial values etc.
    * or can be used by the model itself to get access to configuration objects etc.
+   *
+   * This always returns not the owner's parameter objects but parameter accessor wrappers.
    */
   class cci_cnf_broker_if
   {
@@ -100,10 +102,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      */
     virtual const std::string get_json_string_keep_unused(const std::string &parname) = 0;
 
-    /// Get a parameter pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
+    /// Get a parameter accessor pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
     /**
+     * This returns not the owner's parameter object but an accessor.
+     *
      * @param   parname   Full hierarchical parameter name.
-     * @return  Pointer to the parameter object (NULL if not existing). @todo return a vector/iterator over param objects, because there might be more than one
+     * @return  Pointer to the parameter accessor object (NULL if not existing). 
+     *          @todo return a vector/iterator over param objects, because there might be more than one
      */ 
     virtual cci_base_param* get_param(const std::string &parname) = 0;
     
@@ -234,7 +239,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
     /**
-     * @param observer   Pointer to the observer module who did register parameter callbacks. NULL shall be an error.
+     * @param observer   Pointer to the observer module who did register
+     *                   parameter callbacks. NULL shall be an error.
      */
     virtual void unregister_all_callbacks(void* observer) = 0;
     
@@ -276,6 +282,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *       pure virtual functions in cci_base_param because this method 
      *       may be called by the cci_base_param constructor.
      *
+     * Note: This function shall never been called for any parameter accessor
+     *       objects but only for "real" parameter objects.
+     *
      * @exception cci::cnf::cci_report::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
@@ -284,6 +293,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Removes a parameter from the registry. May only be called by the parameter destructor, must not be called by anone else.
     /**
      * It should be ensured this is not being called from elsewhere than the parameter destructor (e.g. by user).
+     *
+     * Note: This function shall never been called for any parameter accessor
+     *       objects but only for "real" parameter objects.
      *
      * @exception cci::cnf::cci_report::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
@@ -303,6 +315,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *   pattern = full_param_name to get all param objects/handles (PH/PO) being mapped to the NVP
      * @todo use iterator instead of vector?
      *
+     * This returns not the owner's parameter objects but accessors.
+     *
      * @param pattern Specifies the parameters to be returned.
      * @return Vector with parameter base object pointers.
      */
@@ -321,14 +335,14 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      */
     //virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
         
-    /// Convenience function to get a typed parameter pointer.
+    /// Convenience function to get a typed parameter accessor pointer.
     /**
      * @param   parname   Full hierarchical parameter name.
      * @return  Pointer to the parameter object (NULL if not existing).
      */ 
     template<class T, param_mutable_type TM>
-    cci_param<T, TM>* get_cci_param(const std::string &parname) {
-      return dynamic_cast<cci_param<T, TM>*>(get_param(parname));
+    cci_param_accessor<T, TM>* get_cci_param(const std::string &parname) {
+      return dynamic_cast<cci_param_accessor<T, TM>*>(get_param(parname));
     }
     
   };

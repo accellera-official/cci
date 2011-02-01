@@ -53,7 +53,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     using base_type::return_string;
     //using base_type::my_value;
     using base_type::operator=;
-    
+    using base_type::m_originator_obj;
+    using base_type::m_originator_str;
+
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
 
@@ -111,24 +113,35 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     // //////////////// JSON (DE)SERIALIZE /////////////////////////// //
 
-    const std::string& json_serialize() const {
-      return_string = json_serialize(base_type::get());
+    std::string json_serialize(sc_core::sc_object* originator) const {
+      return_string = json_serialize(base_type::get(), originator);
       return return_string;
     }
     
-    void json_deserialize(const std::string& str) {
+    void json_deserialize(const std::string& json_string, sc_core::sc_object* originator) {
+      m_originator_obj = originator;
       val_type t;
-      json_deserialize(t, str);
-      base_type::set(t);
+      json_deserialize(t, json_string, originator);
+      base_type::set(t, originator);
     }
 
-    std::string json_serialize(const val_type& val) const {
+    std::string json_serialize(const val_type& val, const char* originator) const {
+      m_originator_str = originator;
+      return json_serialize(val, NO_ORIGINATOR);
+    }
+    std::string json_serialize(const val_type& val, sc_core::sc_object* originator) const {
+      m_originator_obj = originator;
       // TODO: this is currently not a JSON but a GreenConfig specific string
       // TODO: throw exception on error
       return base_type::m_gs_param.convertValueToString(val);
     }
 
-    void json_deserialize(val_type& target_val, const std::string& str) {
+    void json_deserialize(val_type& target_val, const std::string& str, const char* originator) {
+      m_originator_str = originator;
+      json_deserialize(target_val, str, NO_ORIGINATOR);
+    }
+    void json_deserialize(val_type& target_val, const std::string& str, sc_core::sc_object* originator) {
+      m_originator_obj = originator;
       // TODO: this is currently not a JSON but a GreenConfig specific string
       if (!base_type::m_gs_param.deserialize(target_val, str))
         CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "String conversion failed.");
@@ -149,7 +162,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       // TODO: this could use a cci value's json representation to set the parameter
     }
 
-    cci::cnf::cci_value get_value() {
+    cci::cnf::cci_value get_value(const char* originator) {
+      m_originator_str = originator;
+      return get_value(NO_ORIGINATOR);
+    }
+    cci::cnf::cci_value get_value(sc_core::sc_object* originator) {
+      m_originator_obj = originator;
       CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Get cci value not implemented for not specialized parameter types.");
       // TODO: this could use a cci value's json representation to get the parameter
       cci::cnf::cci_value val;
@@ -177,6 +195,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     using base_type::return_string;
     //using base_type::my_value;
     using base_type::operator=;
+    using base_type::m_originator_obj;
+    using base_type::m_originator_str;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
@@ -228,22 +248,34 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
      my_type& operator ++ ();    // prefix
      val_type operator ++ (int); // postfix */ 
     
-    const std::string& json_serialize() const {
-      return_string = json_serialize(base_type::get());
+    std::string json_serialize(sc_core::sc_object* originator) const {
+      return_string = json_serialize(base_type::get(), originator);
       return return_string;
     }
     
-    void json_deserialize(const std::string& str) {
+    void json_deserialize(const std::string& json_string, sc_core::sc_object* originator) {
       val_type t;
-      json_deserialize(t, str);
-      base_type::set(t);
+      json_deserialize(t, json_string, originator);
+      base_type::set(t, originator);
     }
     
-    std::string json_serialize(const val_type& val) const {
+    std::string json_serialize(const val_type& val, const char* originator) const {
+      m_originator_str = originator;
+      return json_serialize(val, NO_ORIGINATOR);
+    }
+    std::string json_serialize(const val_type& val, sc_core::sc_object* originator) const {
+      m_originator_obj = originator;
+      // TODO: this is currently not a JSON but a GreenConfig specific string
+      // TODO: throw exception on error
       return base_type::m_gs_param.convertValueToString(val);
     }
     
-    void json_deserialize(val_type& target_val, const std::string& str) {
+    void json_deserialize(val_type& target_val, const std::string& str, const char* originator) {
+      m_originator_str = originator;
+      json_deserialize(target_val, str, NO_ORIGINATOR);
+    }
+    void json_deserialize(val_type& target_val, const std::string& str, sc_core::sc_object* originator) {
+      m_originator_obj = originator;
       base_type::m_gs_param.deserialize(target_val, str);
     }    
     
@@ -270,7 +302,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Applied cci value not available for this param type.");
           break;
         case cci::cnf::partype_string:
-          base_type::set(val.get_string());
+          base_type::set(val.get_string(), NO_ORIGINATOR /*TODO: give originator when set_value gets an originator*/);
           break;
         default:
           assert(false && "This should never happen!");
@@ -278,7 +310,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       }
     }
     
-    cci::cnf::cci_value get_value() {
+    cci::cnf::cci_value get_value(const char* originator) {
+      m_originator_str = originator;
+      return get_value(NO_ORIGINATOR);
+    }
+    cci::cnf::cci_value get_value(sc_core::sc_object* originator) {
+      m_originator_obj = originator;
       cci::cnf::cci_value val(base_type::get());
       return val;
     }

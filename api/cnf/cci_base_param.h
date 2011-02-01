@@ -20,9 +20,13 @@
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
-  // The shell class to make access easier
+  // CCI Configuration parameter base class
+  /**
+   * Type independent base class all cci parameters derive from.
+   * This class gives some easier access to type independent functions.
+   */
   class cci_base_param 
-  : virtual public cci_base_param_impl_if // TODO: Just to make sure they are compatible
+//  : virtual public cci_base_param_impl_if // TODO: Just to make sure they are compatible // needed to be removed due to originator difference
   {
   public:
     //explicit cci_base_param() { }
@@ -30,7 +34,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual ~cci_base_param() { }
     
     virtual void json_deserialize(const std::string& json_string) = 0; // TODO: make them not virtual??
-    virtual const std::string& json_serialize() const = 0;
+    virtual const std::string json_serialize() const = 0;
     virtual const basic_param_type get_basic_type() const = 0;
     virtual void set_value(const cci_value& val) = 0;
     virtual cci_value get_value() = 0;
@@ -50,6 +54,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual bool lock(void* pwd = NULL) = 0;
     virtual bool unlock(void* pwd = NULL) = 0;
     virtual bool locked() const = 0;
+    virtual bool is_accessor() const = 0;
+    virtual cci_base_param* create_accessor(sc_core::sc_object& originator) = 0;
+    virtual cci_base_param* create_accessor(const char* originator) = 0;
   };
 
 __CCI_CLOSE_CONFIG_NAMESPACE__

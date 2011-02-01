@@ -26,7 +26,9 @@
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
-  
+  /// Originator information when functions being called by the main object (which only the owner shall use)
+  static const char* OWNER_ORIGINATOR = "owner";
+
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
   enum basic_param_type {
     /// default, type unknown

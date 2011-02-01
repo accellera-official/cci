@@ -1,5 +1,13 @@
 ChangeLog
 ---------
+01.02.2011
+- detach cci_param_(base_)impl_if from cci_(base_)param
+- added originator function parameters to cci_param_(base_)impl_if and example implementation
+  (still TODO for most functions)
+- modified cci_(base_)param so that they now can create a copy of themselved, with storing originator information, to act as parameter accessors
+- changed broker interface (rules) and implementation to use param accessors
+TODO: Tests + further functions in cci_param_(base_)impl_if and implementation
+
 15.12.2010
 - Added to broker implementation:
   - broker accessors:

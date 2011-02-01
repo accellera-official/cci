@@ -32,18 +32,26 @@ namespace cci {
    
     class cci_base_param;
     
-    /// Objects to handle the originator information and forwarding calls to the actual 
-    /// (private or non-private) gs broker implementation
+    /// Objects to handle the originator information and forwarding calls to the actual (private or non-private) gs broker implementation
     /**
      * This is created and returned by the global get_cnf_broker_implementation
      * function. One accessor per originator. Internally holds the originator
      * information (as sc_object* or string) and forwards it on each call to the
      * actual broker to make it possible to log.
+     *
+     * Furthermore it maps between the original parameters -being returned by the
+     * brokers- and the parameter accessors -which are created locally and returned
+     * to the users.
      */
     class gs_cci_cnf_broker_accessor
     : public cci::cnf::cci_cnf_broker_if // end user interface
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
+    protected:
+      
+      /// Typedef for parameter accessor map
+      typedef std::map<std::string, cci::cnf::cci_base_param*> param_accessor_map;
+      
     public:
       
       /// Used by global get_cnf_broker_instance function (prefered compared to string originator)
@@ -112,6 +120,18 @@ namespace cci {
       gs::cnf::cnf_api_if* get_gs_cnf_api();
 
     protected:
+
+      /// Convenience access to local parameter accessor map
+      /**
+       * Returns the parameter accessor belonging to the orig_param. Creates
+       * a new one if not yet created.
+       *
+       * @param orig_param  Original (not-accessor) parameter
+       * @return parameter accessor
+       */
+      cci::cnf::cci_base_param* get_param_accessor(cci::cnf::cci_base_param& orig_param);
+      
+    protected:
       
       /// the appropriate (private or non-private) broker with originator function calls
       gs_cci_cnf_broker_if* m_broker;
@@ -121,6 +141,9 @@ namespace cci {
       
       /// Originator information (only relevant if m_originator_obj has not been set)
       std::string m_originator_str;
+
+      /// Map for parameter accessors that have already been createated and can be returned (key=parameter name, value=parameter accessor)
+      param_accessor_map m_param_accessor_map;
 
     };
     

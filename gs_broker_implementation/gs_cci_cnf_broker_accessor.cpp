@@ -18,6 +18,7 @@
 #include "gs_cci_cnf_private_broker_accessor.h"
 #include "gs_cci_broker.h"
 
+
 cci::cnf::gs_cci_cnf_broker_accessor::gs_cci_cnf_broker_accessor(sc_core::sc_object* originator) 
 : m_broker(NULL)
 , m_originator_obj(originator) 
@@ -91,121 +92,102 @@ cci::cnf::gs_cci_cnf_broker_accessor::gs_cci_cnf_broker_accessor(bool called_int
 }
 
 cci::cnf::gs_cci_cnf_broker_accessor::~gs_cci_cnf_broker_accessor() { 
+  // delete param accessors
+  for ( param_accessor_map::iterator it = m_param_accessor_map.begin() ; it != m_param_accessor_map.end(); it++ ) {
+    delete it->second;
+  }
 }
 
 void cci::cnf::gs_cci_cnf_broker_accessor::set_init_value(const std::string &parname, const std::string &json_value) {
-  if (m_originator_obj)
-    m_broker->set_init_value(parname, json_value, m_originator_obj);
-  else
-    m_broker->set_init_value(parname, json_value, m_originator_str);
+  if (m_originator_obj) m_broker->set_init_value(parname, json_value, m_originator_obj);
+  else m_broker->set_init_value(parname, json_value, m_originator_str.c_str());
 }
 
 void cci::cnf::gs_cci_cnf_broker_accessor::lock_init_value(const std::string &parname) {
-  if (m_originator_obj)
-    m_broker->lock_init_value(parname, m_originator_obj);
-  else
-    m_broker->lock_init_value(parname, m_originator_str);
+  if (m_originator_obj) m_broker->lock_init_value(parname, m_originator_obj);
+  else m_broker->lock_init_value(parname, m_originator_str.c_str());
 }
 
 const std::string cci::cnf::gs_cci_cnf_broker_accessor::get_json_string(const std::string &parname) {
   // TODO: use JSON
-  if (m_originator_obj)
-    return m_broker->get_json_string(parname, m_originator_obj);
-  else
-    return m_broker->get_json_string(parname, m_originator_str);
+  if (m_originator_obj) return m_broker->get_json_string(parname, m_originator_obj);
+  else return m_broker->get_json_string(parname, m_originator_str.c_str());
 }
 
 const std::string cci::cnf::gs_cci_cnf_broker_accessor::get_json_string_keep_unused(const std::string &parname) {
   // TODO: use JSON
-  if (m_originator_obj)
-    return m_broker->get_json_string_keep_unused(parname, m_originator_obj);
-  else
-    return m_broker->get_json_string_keep_unused(parname, m_originator_str);
+  if (m_originator_obj) return m_broker->get_json_string_keep_unused(parname, m_originator_obj);
+  else return m_broker->get_json_string_keep_unused(parname, m_originator_str.c_str());
   
 }
 
 cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker_accessor::get_param(const std::string &parname) {
-  if (m_originator_obj)
-    return m_broker->get_param(parname, m_originator_obj);
-  else
-    return m_broker->get_param(parname, m_originator_str);
+  cci::cnf::cci_base_param* orig_param;
+  if (m_originator_obj) orig_param = m_broker->get_param(parname, m_originator_obj);
+  else orig_param = m_broker->get_param(parname, m_originator_str.c_str());
+  if (orig_param) return get_param_accessor(*orig_param);
+  else return NULL;
 }
 
 bool cci::cnf::gs_cci_cnf_broker_accessor::exists_param(const std::string &parname) {
-  if (m_originator_obj)
-    return m_broker->exists_param(parname, m_originator_obj);
-  else
-    return m_broker->exists_param(parname, m_originator_str);
+  if (m_originator_obj) return m_broker->exists_param(parname, m_originator_obj);
+  else return m_broker->exists_param(parname, m_originator_str);
 }
 
 bool cci::cnf::gs_cci_cnf_broker_accessor::is_used(const std::string &parname) {
-  if (m_originator_obj)
-    return m_broker->is_used(parname, m_originator_obj);
-  else
-    return m_broker->is_used(parname, m_originator_str);
+  if (m_originator_obj) return m_broker->is_used(parname, m_originator_obj);
+  else return m_broker->is_used(parname, m_originator_str.c_str());
 }
 
 const std::vector<std::string> cci::cnf::gs_cci_cnf_broker_accessor::get_param_list() {
-  if (m_originator_obj)
-    return m_broker->get_param_list(m_originator_obj);
-  else
-    return m_broker->get_param_list(m_originator_str);
+  if (m_originator_obj) return m_broker->get_param_list(m_originator_obj);
+  else return m_broker->get_param_list(m_originator_str.c_str());
 }
 
 cci::shared_ptr<cci::cnf::callb_adapt_b> cci::cnf::gs_cci_cnf_broker_accessor::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
-  if (m_originator_obj)
-    return m_broker->register_callback(parname, type, callb, m_originator_obj);
-  else
-    return m_broker->register_callback(parname, type, callb, m_originator_str);
+  if (m_originator_obj) return m_broker->register_callback(parname, type, callb, m_originator_obj);
+  else return m_broker->register_callback(parname, type, callb, m_originator_str.c_str());
 }
 
 void cci::cnf::gs_cci_cnf_broker_accessor::unregister_all_callbacks(void* observer) {
-  if (m_originator_obj)
-    return m_broker->unregister_all_callbacks(observer, m_originator_obj);
-  else
-    return m_broker->unregister_all_callbacks(observer, m_originator_str);
+  if (m_originator_obj) return m_broker->unregister_all_callbacks(observer, m_originator_obj);
+  else return m_broker->unregister_all_callbacks(observer, m_originator_str.c_str());
 }
 
 bool cci::cnf::gs_cci_cnf_broker_accessor::unregister_param_callback(callb_adapt_b* callb) {
-  if (m_originator_obj)
-    return m_broker->unregister_param_callback(callb, m_originator_obj);
-  else
-    return m_broker->unregister_param_callback(callb, m_originator_str);
+  if (m_originator_obj) return m_broker->unregister_param_callback(callb, m_originator_obj);
+  else return m_broker->unregister_param_callback(callb, m_originator_str.c_str());
 }
 
 bool cci::cnf::gs_cci_cnf_broker_accessor::has_callbacks(const std::string& parname) {
-  if (m_originator_obj)
-    return m_broker->has_callbacks(parname, m_originator_obj);
-  else
-    return m_broker->has_callbacks(parname, m_originator_str);
+  if (m_originator_obj) return m_broker->has_callbacks(parname, m_originator_obj);
+   return m_broker->has_callbacks(parname, m_originator_str.c_str());
 }
 
 void cci::cnf::gs_cci_cnf_broker_accessor::add_param(cci_base_param* par) {
-  if (m_originator_obj)
-    return m_broker->add_param(par, m_originator_obj);
-  else
-    return m_broker->add_param(par, m_originator_str);
+  if (m_originator_obj) return m_broker->add_param(par, m_originator_obj);
+  else return m_broker->add_param(par, m_originator_str.c_str());
 }
 
 void cci::cnf::gs_cci_cnf_broker_accessor::remove_param(cci_base_param* par) {
-  if (m_originator_obj)
-    return m_broker->remove_param(par, m_originator_obj);
-  else
-    return m_broker->remove_param(par, m_originator_str);
+  if (m_originator_obj) return m_broker->remove_param(par, m_originator_obj);
+  else return m_broker->remove_param(par, m_originator_str.c_str());
 }
 
 const std::vector<std::string> cci::cnf::gs_cci_cnf_broker_accessor::get_param_list(const std::string& pattern) {
-  if (m_originator_obj)
-    return m_broker->get_param_list(pattern, m_originator_obj);
-  else
-    return m_broker->get_param_list(pattern, m_originator_str);
+  if (m_originator_obj) return m_broker->get_param_list(pattern, m_originator_obj);
+  else return m_broker->get_param_list(pattern, m_originator_str.c_str());
 }
 
 const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_cnf_broker_accessor::get_params(const std::string& pattern) {
-  if (m_originator_obj)
-    return m_broker->get_params(pattern, m_originator_obj);
-  else
-    return m_broker->get_params(pattern, m_originator_str);
+  std::vector<cci::cnf::cci_base_param*> orig_params;
+  if (m_originator_obj) orig_params = m_broker->get_params(pattern, m_originator_obj);
+  else orig_params = m_broker->get_params(pattern, m_originator_str.c_str());
+  std::vector<cci::cnf::cci_base_param*> param_accessors;
+  for (std::vector<cci::cnf::cci_base_param*>::iterator it; it != orig_params.end(); it++) {
+    param_accessors.push_back(get_param_accessor(**it));
+  }
+  return param_accessors;
 }
 
 const std::string& cci::cnf::gs_cci_cnf_broker_accessor::get_originator() {
@@ -219,3 +201,27 @@ cci::cnf::gs_cci_cnf_broker_if* cci::cnf::gs_cci_cnf_broker_accessor::get_gs_bro
 gs::cnf::cnf_api_if* cci::cnf::gs_cci_cnf_broker_accessor::get_gs_cnf_api() {
   return dynamic_cast<gs::cnf::cnf_api_if*>(get_gs_broker());
 }
+
+cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker_accessor::get_param_accessor(cci::cnf::cci_base_param& orig_param) {
+  assert (!orig_param.is_accessor() && "This function shall be called with an original parameter to return the related accessor parameter!");
+  cci::cnf::cci_base_param* param_accessor = NULL;  
+  
+  // Choose or create the accessor for this parameter
+  // Choose
+  param_accessor_map::iterator iter_acc = m_param_accessor_map.find(orig_param.get_name());
+  if( iter_acc != m_param_accessor_map.end() ) {
+    param_accessor = iter_acc->second;
+  }
+  // or create
+  else {
+    if (m_originator_obj) param_accessor = orig_param.create_accessor(*m_originator_obj);
+    else param_accessor = orig_param.create_accessor(m_originator_str.c_str());
+    assert(param_accessor!=NULL);
+    bool new_element = m_param_accessor_map.insert(std::pair<std::string, cci_base_param*>(orig_param.get_name(), param_accessor)).second;
+    assert(new_element && "The same accessor parameter had been added twice! Must not happen, to be caught by other if branch.");
+  }    
+  
+  assert(param_accessor->is_accessor() && "The returned object must be a parameter accessor");
+  return param_accessor;         
+}
+

@@ -90,10 +90,10 @@ __CCI_CLOSE_CONFIG_NAMESPACE__
 #include "cci_callbacks.h"
 #include "cci_cnf_broker_if.h"
 
-#include "cci_base_param_if.h"
+#include "cci_base_param_impl_if.h"
 #include "cci_base_param.h"
 
-#include "cci_param_if.h"
+#include "cci_param_impl_if.h"
 
 __CCI_OPEN_CONFIG_NAMESPACE__
   

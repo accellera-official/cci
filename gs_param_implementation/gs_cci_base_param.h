@@ -32,6 +32,10 @@
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   
+  /// sc_object-NULL-Pointer to give to originator functions if there is no
+  static sc_core::sc_object* NO_ORIGINATOR = NULL;
+
+
   class gs_cci_base_param
   : virtual public cci::cnf::cci_base_param_impl_if
   {
@@ -139,6 +143,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_is_initial_value(false)
     , m_status_guard(*this)
     , m_init_called(false)
+    , m_originator_obj(NULL)
+    , m_originator_str()
     {
     }
 
@@ -177,9 +183,23 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     // ///////   Set and Get with JSON String Representation   //////////// //
 
-    virtual void json_deserialize(const std::string& json_string) = 0;
+    /*virtual void json_deserialize(const std::string& json_string) {
+      json_deserialize(json_string, "unknown");
+    }*/
+    virtual void json_deserialize(const std::string& json_string, const char* originator) {
+      m_originator_str = originator;
+      json_deserialize(json_string, NO_ORIGINATOR);
+    }
+    virtual void json_deserialize(const std::string& json_string, sc_core::sc_object* originator) = 0;
     
-    virtual const std::string& json_serialize() const = 0;
+    /*virtual const std::string json_serialize() const {
+      return json_serialize("unknown");
+    }*/
+    virtual std::string json_serialize(const char* originator) const {
+      m_originator_str = originator;
+      return json_serialize(NO_ORIGINATOR);
+    }
+    virtual std::string json_serialize(sc_core::sc_object* originator) const = 0;
     
     // //////////////// stuff /////////////////////////// //
     
@@ -305,6 +325,16 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return (fw_vec.size() > 0);
     }
     
+    // //////////////// ORIGINATOR INFORMATION ////////////////// //
+    
+    virtual sc_core::sc_object* get_originator_obj() {
+      return m_originator_obj;
+    }
+    
+    virtual const std::string& get_originator_str() {
+      return m_originator_str;
+    }
+    
   protected:
     
     /// String whose reference can be returned as string value
@@ -327,6 +357,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     bool m_init_called;
 
     cci::shared_ptr<cci::cnf::callb_adapt_b> m_post_write_callback;
+    
+    /// Holds the latest originator object; has precedence before the string 
+    mutable sc_core::sc_object* m_originator_obj;
+    /// Holds the latest originator, if m_originator_obj == NULL (if m_originator_obj != NULL this is unspecified)
+    mutable std::string m_originator_str;
     
   };
 

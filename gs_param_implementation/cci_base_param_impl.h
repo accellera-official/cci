@@ -46,7 +46,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual ~cci_base_param() { }
     
     virtual void json_deserialize(const std::string& json_string) {get_pImpl()->json_deserialize(json_string); }
-    virtual const std::string& json_serialize() const {return get_pImpl()->json_serialize();}
+    virtual const std::string json_serialize() const {return get_pImpl()->json_serialize();}
     virtual const basic_param_type get_basic_type() const {return get_pImpl()->get_basic_type();}
     virtual void set_value(const cci_value& val) {get_pImpl()->set_value(val);}
     virtual cci_value get_value() {return get_pImpl()->get_value();}
