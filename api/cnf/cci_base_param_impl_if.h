@@ -16,8 +16,8 @@
 
 
 
-#ifndef __CCI_BASE_PARAM_IF_H__
-#define __CCI_BASE_PARAM_IF_H__
+#ifndef __CCI_BASE_PARAM_IMPL_IF_H__
+#define __CCI_BASE_PARAM_IMPL_IF_H__
 
 
 #include <string>
@@ -98,38 +98,14 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @exception cci_exception_set_param Setting value failed
      * @param json_string the new value, represented as a JSON string.
      */
-    //virtual void json_deserialize(const std::string& json_string) = 0;
-    /// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
-    /** 
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    virtual void json_deserialize(const std::string& json_string, const char* originator) = 0;
-    /// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
-    /** 
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    virtual void json_deserialize(const std::string& json_string, sc_core::sc_object* originator) = 0;
+    virtual void json_deserialize(const std::string& json_string) = 0;
     
     /// Get the JSON string representation of this parameter's value. @todo Alternative function name: get_json_string
     /**
      * @exception cci_exception_get_param Getting value failed
      * @return  The value of this parameter represented as a JSON string.
      */
-    //virtual const std::string& json_serialize() const = 0;
-    /// Get the JSON string representation of this parameter's value. @todo Alternative function name: get_json_string
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    virtual std::string json_serialize(const char* originator) const = 0;
-    /// Get the JSON string representation of this parameter's value. @todo Alternative function name: get_json_string
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    virtual std::string json_serialize(sc_core::sc_object* originator) const = 0;
+    virtual std::string json_serialize() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -141,18 +117,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return Type
      */
     virtual const basic_param_type get_basic_type() const = 0;// { return partype_not_available; }
-    /// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type)
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual const basic_param_type get_basic_type(const char* originator) const = 0;
-    /// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type)
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual const basic_param_type get_basic_type(sc_core::sc_object* originator) const = 0;
     
 #define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(CCI_SC_REPORT_MSG_TYPE_PREFIX, "Not supported for this parameter type!")
 
@@ -215,38 +179,14 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
      */
     virtual void set_value(const cci_value& val) = 0;
-    /// Set the parameter's value to the given one
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void set_value(const cci_value& val, const char* originator) = 0;
-    /// Set the parameter's value to the given one
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void set_value(const cci_value& val, sc_core::sc_object* originator) = 0;
     
     /// Get the parameter's value
     /**
      * @exception cci_exception_get_param Getting value failed
      * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
-    //virtual cci_value get_value() = 0;
-    /// Get the parameter's value
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    virtual cci_value get_value(const char* originator) = 0;
-    /// Get the parameter's value
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    virtual cci_value get_value(sc_core::sc_object* originator) = 0;
-    
+    virtual cci_value get_value() = 0;
+
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////////   Documentation   //////////////////////////// //
@@ -260,36 +200,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param doc Human readable documentation
      */
     virtual void set_documentation(const std::string& doc) = 0;
-    /// Set parameter meta data/documentation
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void set_documentation(const std::string& doc, const char* originator) = 0;
-    /// Set parameter meta data/documentation
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void set_documentation(const std::string& doc, sc_core::sc_object* originator) = 0;
-    
+
     /// Get the parameter's meta data/documentation
     /**
      * return Documentation
      */
     virtual std::string get_documentation() const = 0;
-    /// Get the parameter's meta data/documentation
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual std::string get_documentation(const char* originator) const = 0;
-    /// Get the parameter's meta data/documentation
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual std::string get_documentation(sc_core::sc_object* originator) const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -307,18 +223,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return If the parameter's current value is the default one
      */
     virtual bool is_default_value() = 0;
-    /// Returns if the current value is the default one being set by the constructor and never been modified
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool is_default_value(const char* originator) = 0;
-    /// Returns if the current value is the default one being set by the constructor and never been modified
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool is_default_value(sc_core::sc_object* originator) = 0;
     
     /// Returns if the current value is invalid
     /**
@@ -330,33 +234,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return  If the parameter's current value is invalid
      */
     virtual bool is_invalid_value() = 0;
-    /// Returns if the current value is invalid
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool is_invalid_value(const char* originator) = 0;
-    /// Returns if the current value is invalid
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool is_invalid_value(sc_core::sc_object* originator) = 0;
-    
+
     /// Marks the value to be invalid. (Does not impact the actual value.)
     virtual void set_invalid_value() = 0;
-    /// Marks the value to be invalid. (Does not impact the actual value.)
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void set_invalid_value(const char* originator) = 0;
-    /// Marks the value to be invalid. (Does not impact the actual value.)
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void set_invalid_value(sc_core::sc_object* originator) = 0;
     
     /// OPTIONAL: Returns if the current value is an initial value being set by the database (OPTIONAL:) and not been modified
     /**
@@ -366,18 +246,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return If the parameter's current value is an initial value being set by the database
      */
     virtual bool is_initial_value() = 0;
-    /// OPTIONAL: Returns if the current value is an initial value being set by the database (OPTIONAL:) and not been modified
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool is_initial_value(const char* originator) = 0;
-    /// OPTIONAL: Returns if the current value is an initial value being set by the database (OPTIONAL:) and not been modified
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool is_initial_value(sc_core::sc_object* originator) = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -389,19 +257,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return   Name of the parameter.
      */
     virtual const std::string& get_name() const = 0;
-    /// Get the name of this parameter.
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual const std::string& get_name(const char* originator) const = 0;
-    /// Get the name of this parameter.
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual const std::string& get_name(sc_core::sc_object* originator) const = 0;
-    
+   
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////   Callback Handling   //////////////////////////// //
@@ -478,33 +334,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
       // call the pure virtual function performing the registration
       return register_callback(type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
     }*/
-    /// Registers an observer callback function (a callback_func_ptr).
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function, const char* originator) = 0;
-    /// Registers an observer callback function (a callback_func_ptr).
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function, sc_core::sc_object* originator) = 0;
     
     /// Function registering a callback object (should not be called by user)
     virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr<callb_adapt_b> callb) = 0;
-    /// Function registering a callback object (should not be called by user)
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr<callb_adapt_b> callb, const char* originator) = 0;
-    /// Function registering a callback object (should not be called by user)
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr<callb_adapt_b> callb, sc_core::sc_object* originator) = 0;
     
     
     /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
@@ -515,18 +347,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param observer   Pointer to the observer module who did register parameter callbacks.
      */
     virtual void unregister_all_callbacks(void* observer) = 0;
-    /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void unregister_all_callbacks(void* observer, const char* originator) = 0;
-    /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual void unregister_all_callbacks(void* observer, sc_core::sc_object* originator) = 0;
     
     /// Unregisters the callback and (default) deletes the callback adapter.
     /**
@@ -542,48 +362,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return       If the callback adapter existed in this parameter.
      */
     virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt_b> callb) = 0;
-    /// Unregisters the callback and (default) deletes the callback adapter.
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt_b> callb, const char* originator) = 0;
-    /// Unregisters the callback and (default) deletes the callback adapter.
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt_b> callb, sc_core::sc_object* originator) = 0;
-
     /// @see unregister_param_callback(shared_ptr<>) 
     virtual bool unregister_param_callback(cci::cnf::callb_adapt_b* callb) = 0;
-    /// @see unregister_param_callback(shared_ptr<>) 
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool unregister_param_callback(cci::cnf::callb_adapt_b* callb, const char* originator) = 0;
-    /// @see unregister_param_callback(shared_ptr<>) 
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool unregister_param_callback(cci::cnf::callb_adapt_b* callb, sc_core::sc_object* originator) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;
-    /// Returns if the parameter has registered callbacks
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool has_callbacks(const char* originator) = 0;
-    /// Returns if the parameter has registered callbacks
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool has_callbacks(sc_core::sc_object* originator) = 0;
     
 
     // //////////////////////////////////////////////////////////////////// //
@@ -605,76 +388,19 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @return If the lock was successfull. .
      */
     virtual bool lock(void* pwd = NULL) = 0;
-    /// Locking this parameter, optionally with a password
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool lock(void* pwd, const char* originator) = 0;
-    /// Locking this parameter, optionally with a password
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool lock(void* pwd, sc_core::sc_object* originator) = 0;
-    
+
     /// Unlocking this parameter, optionally with a password if needed
     /**
      * @param pwd Password to unlock the param (if needed), default = NULL.
      * @return If the parameter is unlocked now.
      */
     virtual bool unlock(void* pwd = NULL) = 0;
-    /// Unlocking this parameter, optionally with a password if needed
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool unlock(void* pwd, const char* originator) = 0;
-    /// Unlocking this parameter, optionally with a password if needed
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool unlock(void* pwd, sc_core::sc_object* originator) = 0;
-    
+
     /// If this parameter is locked
     /**
      * @return If this parameter is locked
      */
     virtual bool locked() const = 0;
-    /// If this parameter is locked
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool locked(const char* originator) const = 0;
-    /// If this parameter is locked
-    /**
-     * @see For further information see function above
-     * @param originator Originator information for this access
-     */
-    // TODO virtual bool locked(sc_core::sc_object* originator) const = 0;
-    
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Originator information   ///////////////////////// //
-
-    /// Returns who was the originator of some action currently happening (e.g. within a callback function)
-    /**
-     * This information is sourced from the original parameter (which actually is the implementation, 
-     * internally m_pImpl-pointer), not the parameter accessor, even if this object is an accessor.
-     *
-     * @return Originator sc_object pointer (NULL if only string is available)
-     */
-    virtual sc_core::sc_object* get_originator_obj() = 0;
-    
-    /// Returns who was the originator of some action currently happening (e.g. within a callback function)
-    /**
-     * This information is sourced from the original parameter (which actually is the implementation, 
-     * internally m_pImpl-pointer), not the parameter accessor, even if this object is an accessor.
-     *
-     * @return Originator string (either sc_object.name() or manually set string)
-     */
-    virtual const std::string& get_originator_str() = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Parameter syncronization   /////////////////////// //

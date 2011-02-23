@@ -1,5 +1,14 @@
 ChangeLog
 ---------
+23.02.2011
+- reverted some originator changes: Originator information now hold within global pointer
+- added originator data type combining sc_object and name information
+- eased originator handling
+- changed syntax for get_cnf_broker_instance:
+  use cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
+  intead of cci::cnf::get_cnf_broker_instance(this);
+- bugfix reported by Swami in gs_cci_base_param::is_invalid_value
+
 01.02.2011
 - detach cci_param_(base_)impl_if from cci_(base_)param
 - added originator function parameters to cci_param_(base_)impl_if and example implementation

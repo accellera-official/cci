@@ -44,53 +44,37 @@ namespace cci {
             
       ~gs_cci_private_broker();
       
-      void set_init_value(const std::string &parname, const std::string &json_value, sc_core::sc_object* originator);
-      void set_init_value(const std::string &parname, const std::string &json_value, const std::string& originator);
+      void set_init_value(const std::string &parname, const std::string &json_value);
       
-      void lock_init_value(const std::string &parname, sc_core::sc_object* originator);
-      void lock_init_value(const std::string &parname, const std::string& originator);
+      void lock_init_value(const std::string &parname);
       
-      const std::string get_json_string(const std::string &parname, sc_core::sc_object* originator);
-      const std::string get_json_string(const std::string &parname, const std::string& originator);
+      const std::string get_json_string(const std::string &parname);
       
-      const std::string get_json_string_keep_unused(const std::string &parname, sc_core::sc_object* originator);
-      const std::string get_json_string_keep_unused(const std::string &parname, const std::string& originator);
+      const std::string get_json_string_keep_unused(const std::string &parname);
       
-      cci_base_param* get_param(const std::string &parname, sc_core::sc_object* originator);
-      cci_base_param* get_param(const std::string &parname, const std::string& originator);
+      cci_base_param* get_param(const std::string &parname);
       
-      const std::vector<std::string> get_param_list(sc_core::sc_object* originator);
-      const std::vector<std::string> get_param_list(const std::string& originator);
+      const std::vector<std::string> get_param_list();
       
-      const std::vector<std::string> get_param_list(const std::string& pattern, sc_core::sc_object* originator);
-      const std::vector<std::string> get_param_list(const std::string& pattern, const std::string& originator);
+      const std::vector<std::string> get_param_list(const std::string& pattern);
       
-      const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern, sc_core::sc_object* originator);
-      const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern, const std::string& originator);
+      const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern);
       
-      bool exists_param(const std::string &parname, sc_core::sc_object* originator);
-      bool exists_param(const std::string &parname, const std::string& originator);
+      bool exists_param(const std::string &parname);
       
-      bool is_used(const std::string &parname, sc_core::sc_object* originator);
-      bool is_used(const std::string &parname, const std::string& originator);
+      bool is_used(const std::string &parname);
       
-      shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb, sc_core::sc_object* originator);
-      shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb, const std::string& originator);
+      shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb);
       
-      void unregister_all_callbacks(void* observer, sc_core::sc_object* originator);
-      void unregister_all_callbacks(void* observer, const std::string& originator);
+      void unregister_all_callbacks(void* observer);
       
-      bool unregister_param_callback(callb_adapt_b* callb, sc_core::sc_object* originator);
-      bool unregister_param_callback(callb_adapt_b* callb, const std::string& originator);
+      bool unregister_param_callback(callb_adapt_b* callb);
       
-      bool has_callbacks(const std::string& parname, sc_core::sc_object* originator);
-      bool has_callbacks(const std::string& parname, const std::string& originator);
+      bool has_callbacks(const std::string& parname);
       
-      void add_param(cci_base_param* par, sc_core::sc_object* originator);
-      void add_param(cci_base_param* par, const std::string& originator);
+      void add_param(cci_base_param* par);
       
-      void remove_param(cci_base_param* par, sc_core::sc_object* originator);
-      void remove_param(cci_base_param* par, const std::string& originator);
+      void remove_param(cci_base_param* par);
       
       //void set_alias(std::string& orig_parname, std::string& alias_parname);
       

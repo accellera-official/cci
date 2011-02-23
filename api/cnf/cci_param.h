@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2010 : GreenSocs Ltd
+//   Copyright (C) 2010-2011 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -32,7 +32,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 template<typename T, param_mutable_type TM = mutable_parameter>
 class cci_param 
 : public cci_base_param
-//, public cci_param_impl_if<T, TM> // TODO: Just to make sure they are compatible // needed to be removed due to originator difference
+, public cci_param_impl_if<T, TM> // TODO: Just to make sure they are compatible // needed to be removed due to originator difference
 {
 protected:
   typedef T val_type;
@@ -78,40 +78,33 @@ public:
    * @param original_param  Parameter that shall be accessed with the constructed accessor
    * @param originator      Originator the constructed accessor shall hold
    */
-  explicit cci_param(cci_param<val_type, TM>& param, sc_core::sc_object& originator);
-  /// Constructor for a parameter accessor object
-  /**
-   * If possible always use constructor cci_param(cci_param<val_type, TM>& param, sc_core::sc_object& originator) instead!
-   * @param original_param  Parameter that shall be accessed with the constructed accessor
-   * @param originator      Originator string the constructed accessor shall hold
-   */
-  explicit cci_param(cci_param<val_type, TM>& param, const char* originator);
+  explicit cci_param(cci_param<val_type, TM>& param, cci_originator& originator);
 
   /// Destructor
   virtual ~cci_param();
 
   // Type independent functions
-  virtual void json_deserialize(const std::string& json_string) {get_pImpl()->json_deserialize(json_string, cci::cnf::OWNER_ORIGINATOR); }
-  virtual const std::string json_serialize() const {return get_pImpl()->json_serialize(cci::cnf::OWNER_ORIGINATOR);}
-  virtual const basic_param_type get_basic_type() const {return get_pImpl()->get_basic_type();}
-  virtual void set_value(const cci_value& val) {get_pImpl()->set_value(val);}
-  virtual cci_value get_value() {return get_pImpl()->get_value(cci::cnf::OWNER_ORIGINATOR);}
-  virtual void set_documentation(const std::string& doc) {get_pImpl()->set_documentation(doc);}
-  virtual std::string get_documentation() const {return get_pImpl()->get_documentation();}
-  virtual bool is_default_value() {return get_pImpl()->is_default_value();}
-  virtual bool is_invalid_value() {return get_pImpl()->is_invalid_value();}
-  virtual void set_invalid_value() {get_pImpl()->set_invalid_value();}
-  virtual bool is_initial_value() {return get_pImpl()->is_initial_value();};
-  virtual const std::string& get_name() const {return get_pImpl()->get_name();}
-  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
-  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()-> register_callback(type, callb);}
-  virtual void unregister_all_callbacks(void* observer) {get_pImpl()->unregister_all_callbacks(observer);}
-  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
-  virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
-  virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
-  virtual bool lock(void* pwd = NULL){return get_pImpl()->lock(pwd);}
-  virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock(pwd);}
-  virtual bool locked() const {return get_pImpl()->locked();}
+  virtual void json_deserialize(const std::string& json_string);
+  virtual std::string json_serialize() const;
+  virtual const basic_param_type get_basic_type() const;
+  virtual void set_value(const cci_value& val);
+  virtual cci_value get_value();
+  virtual void set_documentation(const std::string& doc);
+  virtual std::string get_documentation() const;
+  virtual bool is_default_value();
+  virtual bool is_invalid_value();
+  virtual void set_invalid_value();
+  virtual bool is_initial_value();
+  virtual const std::string& get_name() const;
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function);
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb);
+  virtual void unregister_all_callbacks(void* observer);
+  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb);
+  virtual bool unregister_param_callback(callb_adapt_b* callb);
+  virtual bool has_callbacks();
+  virtual bool lock(void* pwd = NULL);
+  virtual bool unlock(void* pwd = NULL);
+  virtual bool locked() const;
 
   // Type dependent functions
   virtual cci_param<val_type, TM>& operator = (const cci_param<val_type, TM>& v);
@@ -140,36 +133,7 @@ public:
    * @return  A newed copy pointing to the same implementation parameter.
    *          Memory management has to be done by the caller!
    */
-  cci_base_param* create_accessor(sc_core::sc_object& originator);
-
-  /// Copy myself; The copy is a parameter accessor object holding the originator information and pointing to the same parameter
-  /**
-   * If possible always use the function copy_me(sc_core::sc_object& originator)!
-   * This shall be used by the broker when returning a not yet created parameter accessor.
-   *
-   * @param originator  Originator string the returned parameter accessor shall represent
-   * @return  A newed copy pointing to the same implementation parameter.
-   *          Memory management has to be done by the caller!
-   */
-  cci_base_param* create_accessor(const char* originator);
-
-  /// Returns who was the originator of some action currently happening (e.g. within a callback function)
-  /**
-   * This information is sourced from the original parameter (which actually is the implementation, 
-   * internally m_pImpl-pointer), not the parameter accessor, even if this object is an accessor.
-   *
-   * @return Originator sc_object pointer (NULL if only string is available)
-   */
-  sc_core::sc_object* get_originator_obj() const;
-
-  /// Returns who was the originator of some action currently happening (e.g. within a callback function)
-  /**
-   * This information is sourced from the original parameter (which actually is the implementation, 
-   * internally m_pImpl-pointer), not the parameter accessor, even if this object is an accessor.
-   *
-   * @return Originator string (either sc_object.name() or manually set string)
-   */
-  const std::string& get_originator_str() const;
+  cci_base_param* create_accessor(cci_originator& originator);
 
 protected:
 
@@ -178,17 +142,16 @@ protected:
 
   /// If this is a parameter accessor object
   bool m_is_accessor;
-  /// In the case this is a parameter accessor object: this accessor's originator object, set during construction by broker; might be NULL if only string is available
-  sc_core::sc_object* m_originator_obj;
-  /// In the case this is a parameter accessor object: this accessor's originator, set during construction by broker; m_originator_obj has precedence!
-  std::string m_originator_str;
+
+  /// In the case this is a parameter accessor object: this accessor's originator object, set during construction by broker
+  mutable cci_originator m_originator;
 
 };
 
 template<param_mutable_type TM>
 class cci_param<std::string, TM>
 : public cci_base_param
-//, public cci_param_impl_if<std::string, TM> // TODO: Just to make sure they are compatible
+, public cci_param_impl_if<std::string, TM> // TODO: Just to make sure they are compatible
 {
 protected:
   typedef std::string val_type;
@@ -226,40 +189,33 @@ public:
    * @param original_param  Parameter that shall be accessed with the constructed accessor
    * @param originator      Originator the constructed accessor shall hold
    */
-  explicit cci_param(cci_param<val_type, TM>& param, sc_core::sc_object& originator);
-  /// Constructor for a parameter accessor object
-  /**
-   * If possible always use constructor cci_param(cci_param<val_type, TM>& param, sc_core::sc_object& originator) instead!
-   * @param original_param  Parameter that shall be accessed with the constructed accessor
-   * @param originator      Originator string the constructed accessor shall hold
-   */
-  explicit cci_param(cci_param<val_type, TM>& param, const char* originator);
-
+  explicit cci_param(cci_param<val_type, TM>& param, cci_originator& originator);
+  
   /// Destructor
   virtual ~cci_param();
   
   // Type independent functions
-  virtual void json_deserialize(const std::string& json_string) {get_pImpl()->json_deserialize(json_string, cci::cnf::OWNER_ORIGINATOR); }
-  virtual const std::string json_serialize() const {return get_pImpl()->json_serialize(cci::cnf::OWNER_ORIGINATOR);}
-  virtual const basic_param_type get_basic_type() const {return get_pImpl()->get_basic_type();}
-  virtual void set_value(const cci_value& val) {get_pImpl()->set_value(val);}
-  virtual cci_value get_value() {return get_pImpl()->get_value(cci::cnf::OWNER_ORIGINATOR);}
-  virtual void set_documentation(const std::string& doc) {get_pImpl()->set_documentation(doc);}
-  virtual std::string get_documentation() const {return get_pImpl()->get_documentation();}
-  virtual bool is_default_value() {return get_pImpl()->is_default_value();}
-  virtual bool is_invalid_value() {return get_pImpl()->is_invalid_value();}
-  virtual void set_invalid_value() {get_pImpl()->set_invalid_value();}
-  virtual bool is_initial_value() {return get_pImpl()->is_initial_value();};
-  virtual const std::string& get_name() const {return get_pImpl()->get_name();}
-  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
-  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()-> register_callback(type, callb);}
-  virtual void unregister_all_callbacks(void* observer) {get_pImpl()->unregister_all_callbacks(observer);}
-  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
-  virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
-  virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
-  virtual bool lock(void* pwd = NULL){return get_pImpl()->lock(pwd);}
-  virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock(pwd);}
-  virtual bool locked() const {return get_pImpl()->locked();}
+  virtual void json_deserialize(const std::string& json_string);
+  virtual std::string json_serialize() const;
+  virtual const basic_param_type get_basic_type() const;
+  virtual void set_value(const cci_value& val);
+  virtual cci_value get_value();
+  virtual void set_documentation(const std::string& doc);
+  virtual std::string get_documentation() const;
+  virtual bool is_default_value();
+  virtual bool is_invalid_value();
+  virtual void set_invalid_value();
+  virtual bool is_initial_value();
+  virtual const std::string& get_name() const;
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function);
+  virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb);
+  virtual void unregister_all_callbacks(void* observer);
+  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb);
+  virtual bool unregister_param_callback(callb_adapt_b* callb);
+  virtual bool has_callbacks();
+  virtual bool lock(void* pwd = NULL);
+  virtual bool unlock(void* pwd = NULL);
+  virtual bool locked() const;
   
   // Type dependent functions
   virtual cci::cnf::cci_param<val_type, TM>& operator = (const cci::cnf::cci_param<val_type, TM>& v);
@@ -290,48 +246,18 @@ public:
    * @return  A newed copy pointing to the same implementation parameter.
    *          Memory management has to be done by the caller!
    */
-  cci_base_param* create_accessor(sc_core::sc_object& originator);
-
-  /// Copy myself; The copy is a parameter accessor object holding the originator information and pointing to the same parameter
-  /**
-   * If possible always use the function copy_me(sc_core::sc_object& originator)!
-   * This shall be used by the broker when returning a not yet created parameter accessor.
-   *
-   * @param originator  Originator string the returned parameter accessor shall represent
-   * @return  A newed copy pointing to the same implementation parameter.
-   *          Memory management has to be done by the caller!
-   */
-  cci_base_param* create_accessor(const char* originator);
-
-  /// Returns who was the originator of some action currently happening (e.g. within a callback function)
-  /**
-   * This information is sourced from the original parameter (which actually is the implementation, 
-   * internally m_pImpl-pointer), not the parameter accessor, even if this object is an accessor.
-   *
-   * @return Originator sc_object pointer (NULL if only string is available)
-   */
-  sc_core::sc_object* get_originator_obj() const;
-
-  /// Returns who was the originator of some action currently happening (e.g. within a callback function)
-  /**
-   * This information is sourced from the original parameter (which actually is the implementation, 
-   * internally m_pImpl-pointer), not the parameter accessor, even if this object is an accessor.
-   *
-   * @return Originator string (either sc_object.name() or manually set string)
-   */
-  const std::string& get_originator_str() const;
+  cci_base_param* create_accessor(cci_originator& originator);
   
 protected:
 
   /// Pointer to the parameter object with the actual implementation
-  cci_param_impl_if<val_type, TM> *m_pImpl;
+  mutable cci_param_impl_if<val_type, TM> *m_pImpl;
   
   /// If this is a parameter accessor object
   bool m_is_accessor;
-  /// In the case this is a parameter accessor object: this accessor's originator object, set during construction by broker; might be NULL if only string is available
-  sc_core::sc_object* m_originator_obj;
-  /// In the case this is a parameter accessor object: this accessor's originator, set during construction by broker; m_originator_obj has precedence!
-  std::string m_originator_str;
+
+  /// In the case this is a parameter accessor object: this accessor's originator object, set during construction by broker
+  mutable cci_originator m_originator;
   
 };
 

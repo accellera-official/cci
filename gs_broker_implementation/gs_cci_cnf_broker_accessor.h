@@ -54,10 +54,8 @@ namespace cci {
       
     public:
       
-      /// Used by global get_cnf_broker_instance function (prefered compared to string originator)
-      gs_cci_cnf_broker_accessor(sc_core::sc_object* originator);
       /// Used by global get_cnf_broker_instance function
-      gs_cci_cnf_broker_accessor(const std::string& originator);
+      gs_cci_cnf_broker_accessor(const cci_originator& originator);
       
       /// Internally called by global get_cnf_broker_instance function for creating the default broker instance
       gs_cci_cnf_broker_accessor(bool called_internally_for_creating_global_broker);
@@ -106,13 +104,13 @@ namespace cci {
       // ////////////////////////////////////////////////////////////// //
       // ////////////////////////////////////////////////////////////// //
 
-      /// Returns the originator string
+      /// Returns the originator
       /**
        * To be used by the global get function to identify for whom this accessor has been created.
        *
-       * @return Name of the originator this accessor has been created for.
+       * @return The originator this accessor has been created for.
        */
-      const std::string& get_originator();
+      cci_originator* get_originator();
       
       gs_cci_cnf_broker_if* get_gs_broker();
 
@@ -136,11 +134,8 @@ namespace cci {
       /// the appropriate (private or non-private) broker with originator function calls
       gs_cci_cnf_broker_if* m_broker;
       
-      /// Originator information (prefered against m_originator_str)
-      sc_core::sc_object* m_originator_obj;
-      
-      /// Originator information (only relevant if m_originator_obj has not been set)
-      std::string m_originator_str;
+      /// Originator information
+      cci_originator m_originator;
 
       /// Map for parameter accessors that have already been createated and can be returned (key=parameter name, value=parameter accessor)
       param_accessor_map m_param_accessor_map;

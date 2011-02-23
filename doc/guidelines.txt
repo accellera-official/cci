@@ -248,39 +248,29 @@ implementation (cci_(base_)param_impl_if).
 ORIGINATOR INFORMATION FLOW
 
 Originator information means that for some actions on parameters it is possible to ask 
-for the responsible originator of that change or action in general. The end user has 
-two places where he encounters the originator information: 
-1/ When asking for the responsible broker it is important to give the originator 
-   information to the global get function. This is either (recommended) the sc_object-
-   pointer of the instance that asks for the broker, or - if no sc_object pointer is 
-   available - a string that is realated or suitable to identify the object. This 
-   information is internally attached to the broker which forwards it on all action 
-   performed on that broker. The broker also attaches the information to all parameters 
-   that are requested over this broker: parameter accessors instead of the original 
-   parameter are returned to the end user.
+for the responsible originator of that change or action in general.
+
+Originator information is handled by the CCI data type cci::cnf::cci_originator.
+It holds an sc_object pointer to identify the originator or - if the originator is not 
+an sc_object or did not provide its pointer - it holds an name alternatively that is 
+realated or suitable to identify the object. The cci_originator automatially handles 
+these options.
+
+There are global functions that are used to set (called by the standard header or the 
+implementation) and get the current originator. They give access to a single global 
+cci_originator pointer. An originator stack is built by using the call stack (always 
+some entity updates the originator information it first needs to backup the previous
+originator and restore it after the action had been performed).
+
+The end user has two places where he encounters the originator information: 
+1/ When asking for the responsible broker accessor it is important to give the originator 
+   information (using a cci_originator) to the global get function. This 
+   information is internally attached to the broker accessor which cares for setting the 
+   originator on each action. The broker also attaches the information to all parameter 
+   accessors that are requested through this broker.
 2/ Each time an action happens which allows to ask for the originator - e.g. a 
-   parameter callback happens - the parameter object (original parameter or parameter 
-   accessor) can be asked for the originator. Example: Within a post_write-Callback on 
-   the given parameter the function get_originator returns the originator.
-
-Internally the originator information flow is following:
-(POC-Implementation:) The user gives the originator (object or string) to the global 
-function get_cnf_broker_instance. There one broker accessor per originator is created, 
-all using one originator-independent broker in the background. The broker accessors 
-store the originator information. Each time the broker accessor is asked to do some 
-action it forwards the originator information to the background broker function it calls. 
-In the case it shall return a parameter object to the user it creates one parameter 
-accessor object per original parameter (it holds a map of all created param accessors). 
-(Std. Header:) The parameter accessors get the originator information during construction 
-- which happens using the create_accessor-function on the cci_(base_)param. Each time the 
-parameter accessor is used by the configurator (who asked for it), the accessor forwards 
-the originator (object or string) to the underlying implementation 
-(cci_(base_)param_impl_if).
-(POC-Implementation:) The parameter implementation now needs to make sure the originator 
-information is available via the get_orginator calls during and after the specific action, 
-e.g. callback.
-
-TODO: are there needs for a get_originator other than on parameter objects? If yes, where?
+   parameter callback happens - the global get originator function can be asked for the 
+   originator.
 
 
 ----------------------------------------------------------------

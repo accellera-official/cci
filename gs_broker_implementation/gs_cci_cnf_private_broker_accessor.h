@@ -39,8 +39,8 @@ namespace cci {
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
     public:
-      gs_cci_private_broker_accessor(sc_core::sc_module* owner, std::vector<const char*> pub_params);
-      gs_cci_private_broker_accessor(sc_core::sc_module* owner, std::vector<std::string> pub_params);
+      gs_cci_private_broker_accessor(sc_core::sc_module* owner, std::vector<const char*> pub_params, const cci_originator& originator);
+      gs_cci_private_broker_accessor(sc_core::sc_module* owner, std::vector<std::string> pub_params, const cci_originator& originator);
       
       ~gs_cci_private_broker_accessor();
       
@@ -86,13 +86,13 @@ namespace cci {
       // ////////////////////////////////////////////////////////////// //
       // ////////////////////////////////////////////////////////////// //
 
-      /// Returns the originator string
+      /// Returns the originator
       /**
        * To be used by the global get function to identify for whom this accessor has been created.
        *
-       * @return Name of the originator this accessor has been created for.
+       * @return The originator this accessor has been created for.
        */
-      const std::string& get_originator();
+      cci_originator* get_originator();
       
       gs_cci_cnf_broker_if* get_gs_broker();
       
@@ -104,11 +104,8 @@ namespace cci {
       /// the appropriate (private or non-private) broker with originator function calls
       gs_cci_cnf_broker_if* m_broker;
       
-      /// Originator information (prefered against m_originator_str)
-      sc_core::sc_object* m_originator_obj;
-      
-      /// Originator information (only relevant if m_originator_obj has not been set)
-      std::string m_originator_str;
+      /// Originator information
+      cci_originator m_originator;
 
     };
     

@@ -36,11 +36,11 @@ public:
   /// Constructor
   ModuleB(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
-  , int_paramb ("int_paramb", 50, false, cci::cnf::get_cnf_broker_instance(this) )
-  , uint_paramb("uint_paramb", 12000, false, cci::cnf::get_cnf_broker_instance(this))
-  , uint_param2b("uint_param2b", 12, false, cci::cnf::get_cnf_broker_instance(this))
-  , str_paramb ("str_paramb", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(this))
-  , bool_paramb("bool_paramb", false, cci::cnf::get_cnf_broker_instance(this)) // no default value
+  , int_paramb ("int_paramb", 50, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)) )
+  , uint_paramb("uint_paramb", 12000, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
+  , uint_param2b("uint_param2b", 12, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
+  , str_paramb ("str_paramb", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
+  , bool_paramb("bool_paramb", false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this))) // no default value
   { 
     SC_THREAD(main_action);
   }

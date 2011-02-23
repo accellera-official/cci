@@ -114,19 +114,14 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       set(v);
       //return *this;
       return m_owner_par;
-    }
+    }*/
     
 
     virtual operator const val_type& () const {
       return get(); 
-    }*/
-    
-    virtual void set(const val_type& val, const char* originator) {
-      m_originator_str = originator;
-      set(val, NO_ORIGINATOR);
     }
-    virtual void set(const val_type& val, sc_core::sc_object* originator) {
-      m_originator_obj = originator;
+    
+    virtual void set(const val_type& val) {
       if (m_gs_param.locked()) {
         CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Parameter locked.");
         return;

@@ -21,7 +21,7 @@ void OwnerModuleA::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(this);
+  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   

@@ -21,7 +21,7 @@
 
 ModuleA::ModuleA(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, cci::cnf::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST)))
+, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, cci::cnf::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST), cci::cnf::cci_originator(*this)))
 , int_param ("int_param", 50, false, get_broker() )
 , uint_param("uint_param", 12000, false, get_broker() )
 , uint_param2("uint_param2", 12, false, get_broker() )
@@ -42,7 +42,7 @@ ModuleA::~ModuleA() {
 void ModuleA::main_action() {
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(this);
+  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   

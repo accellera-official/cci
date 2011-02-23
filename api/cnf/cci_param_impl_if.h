@@ -63,11 +63,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param v  Parameter where the value should be read from.
      * @return   Pointer to this.
      */
-    //virtual cci_param<T, TM>& operator = (const cci_param<T, TM>& v) = 0;
-    /* { 
-      set(v.get());
-      return *this;
-    }*/
+    //virtual cci_param<T, TM>& operator = (const cci_param<T, TM>& v) = 0; // this convenience function is not needed for internal implementation
     
     /// Set the value of this parameter.
     /**
@@ -75,21 +71,14 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param v  Value which has to be set.
      * @return   Pointer to this.
      */
-    //virtual cci_param<T, TM>& operator = (const T& v) = 0;
-    /* { 
-      set(v);
-      return *this;
-    }*/
+    //virtual cci_param<T, TM>& operator = (const T& v) = 0; // this convenience function is not needed for internal implementation
     
     /// Get the value of this parameter.
     /**
      * @exception cci::cnf::cci_report::get_param_failed Getting value failed
      * @return Value of the parameter.
      */
-    //virtual operator const T& () const = 0;
-    /* { 
-      return get(); 
-    }*/
+    //virtual operator const T& () const = 0; // this convenience function is not needed for internal implementation
     
     
     // //////////////////////////////////////////////////////////////////// //
@@ -101,9 +90,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @exception cci::cnf::cci_report::set_param_failed Setting value failed
      * @param val  The new value for this parameter.
      */
-    //virtual void set(const T& val) = 0;
-    virtual void set(const T& val, const char* originator) = 0;
-    virtual void set(const T& val, sc_core::sc_object* originator) = 0;
+    virtual void set(const T& val) = 0;
 
     /// Returns the value of this parameter.
     /**
@@ -138,8 +125,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param val  Value that should be converted.
      * @return JSON string representation of the value.
      */
-    virtual std::string json_serialize(const T& val, const char* originator) const = 0;
-    virtual std::string json_serialize(const T& val, sc_core::sc_object* originator) const = 0;
+    virtual std::string json_serialize(const T& val) const = 0;
 
     /// Convertion JSON string --> value type (without affecting the parameter value directly)
     /**
@@ -153,8 +139,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param  target_val  Reference to the value that should be set.
      * @param  str         JSON string that should be converted to a value.
      */
-    virtual void json_deserialize(T& target_val, const std::string& str, const char* originator) = 0;
-    virtual void json_deserialize(T& target_val, const std::string& str, sc_core::sc_object* originator) = 0;
+    virtual void json_deserialize(T& target_val, const std::string& str) = 0;
     
 
     // //////////////////////////////////////////////////////////////////// //
