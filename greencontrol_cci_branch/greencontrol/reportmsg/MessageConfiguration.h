@@ -318,7 +318,7 @@ namespace cnf {
      */
     const std::string& getString() const {
       make_pre_read_callbacks();
-      return_string = convertValueToString(my_value);
+      return_string = serialize(my_value);
       make_post_read_callbacks();
       return return_string;
     }
@@ -353,11 +353,11 @@ namespace cnf {
     
     
     /// Get the value of this parameter as a string.
-    std::string convertValueToString(const val_type &val) const{
+    std::string serialize(const val_type &val) const{
       // TODO
-      //SC_REPORT_WARNING("MessageConfiguration", "convertValueToString (getString) not implemented for MessageConfiguration parameters!");
+      //SC_REPORT_WARNING("MessageConfiguration", "serialize (getString) not implemented for MessageConfiguration parameters!");
       std::string str("Warning: getString not implemented for MessageConfiguration parameters");
-      GCNF_DUMP_N(name(), "convertValueToString (getString) not implemented for MessageConfiguration parameters");
+      GCNF_DUMP_N(name(), "serialize (getString) not implemented for MessageConfiguration parameters");
       return str;
     }
     

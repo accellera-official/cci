@@ -150,6 +150,9 @@ namespace av {
         m_GCnf_Api = cnf::GCnf_Api::getApiInstance(NULL); // TODO unsauber
         m_GAV_Api = GAV_Api::getApiInstance(NULL);
         m_event_listener = m_GAV_Api->get_event_listener();
+        if (!m_event_listener) {
+          SC_REPORT_WARNING(name(), "Trigger Event Listener (GreenAV Plugin) is not available! Trigger won't work as expected!");
+        }
         
         // if on event
         if (ev != NULL) {
@@ -395,11 +398,14 @@ namespace av {
         //if (m_event_id >= 0)
         //  remove_event();
         //m_event_id = 
-        m_event_listener->create_event_listener(this, &trigger_if::event_callback, ev);
+        if (m_event_listener) 
+          m_event_listener->create_event_listener(this, &trigger_if::event_callback, ev);
       }
       /*void remove_event() {
+       if (m_event_listener) {
        if (!m_event_listener->remove_event_listener(m_event_id))
        SC_REPORT_WARNING(name(), "remove_event(): removing event failed!");
+       }
        m_event_id = -1;
        }*/
       /// Callback function for events
@@ -432,7 +438,7 @@ namespace av {
         GAV_DUMP_N(name(), "Set sample interval "<<sample.to_string().c_str()<<"!");
         sample_event.notify(sample_time);
         if (sample_event_id == -1)
-          sample_event_id = m_event_listener->create_event_listener(this, &trigger_if::interval_callback, sample_event);
+          if (m_event_listener) sample_event_id = m_event_listener->create_event_listener(this, &trigger_if::interval_callback, sample_event);
       }
       void set_sample_interval(double t, sc_time_unit u) {
         sc_time tu = sc_time(t, u);
@@ -644,7 +650,7 @@ namespace av {
       /// Callback Adapter for the condition callback
       boost::shared_ptr<ParamCallbAdapt_b > cond_callbadapt;
       
-      /// Pointer to the plugin which can handle events to create callbacks to this
+      /// Pointer to the plugin which can handle events to create callbacks to this; can be NULL if plugin not existing
       event_listener<trigger_if>* m_event_listener;
       
       /* /// id of the event which is registered at the event listener for this event, =-1 if no event

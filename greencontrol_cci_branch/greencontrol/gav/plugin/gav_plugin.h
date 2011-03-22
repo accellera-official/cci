@@ -429,7 +429,7 @@ protected:
   /// Map of the DEFAULT Output Plugins hold by this plugin. Key: OutputPluginType, value: Pointer to the OutputPlugin
   OutpPlMap_type m_DefaultOutputPlugins; 
   
-  /// Map of Output Plugins hold by this plugin.Key: OutputPluginType, value: Pointer to the OutputPlugin
+  /// Map of Output Plugins hold by this plugin. Key: OutputPluginType, value: Pointer to the OutputPlugin
   OutpPlMultiMap_type m_OutputPlugins;
   
   //gs::cnf::cnf_api_if *m_cnf_api;

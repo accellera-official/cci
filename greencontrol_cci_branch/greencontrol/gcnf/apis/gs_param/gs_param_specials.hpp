@@ -2,7 +2,7 @@
 //
 // LICENSETEXT
 //
-//   Copyright (C) 2008 : GreenSocs Ltd
+//   Copyright (C) 2008-2011 : GreenSocs Ltd
 //      http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
@@ -25,6 +25,8 @@
 
 // Specialization types in this file:
 //  std::vector<std::string>
+//  sc_lv_base
+//  sc_lv<w>
 
 using std::istringstream;
 
@@ -69,17 +71,17 @@ public:
     return PARTYPE_NOT_AVAILABLE;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
+  /// Overloads gs_param_t<T>::serialize
   /**
    * Serializes the vector to a single line comma separated list 
    * of the members.<br>
    * Members surrounded by quotes (").
    * The whole string surrounded by { }
    */
-  std::string convertValueToString(const val_type &val) const{
-    return static_convertValueToString(val);
+  std::string serialize(const val_type &val) const{
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << "{";
     bool first = true;
@@ -167,5 +169,148 @@ public:
     return true;
   }    
 
+};
+
+
+
+// /////////////////////////////////////////////////////////////////////////////// //
+// /////////////////// gs_param< SC_LV_BASE > ////////////////////////////////// //
+// /////////////////////////////////////////////////////////////////////////////// //
+
+/// Template specialization for gs_param< sc_lv_base >.
+/**
+ * Default value = 0.
+ * Uses unsigned long representation for (de)serialization!
+ *
+ * @TODO Constructors for param specialization sc_lv_base
+ * @TODO Operators (=, == etc.) for param specialization sc_lv_base
+ */
+template<>
+class gs_param< sc_dt::sc_lv_base >
+: public gs_param_t< sc_dt::sc_lv_base >
+{
+  /// Typedef for the value.
+  typedef sc_dt::sc_lv_base val_type;
+  
+public:
+  GS_PARAM_HEAD;
+  
+  // ///////////////////////
+  //  operators
+  
+  // ... TODO
+  
+  /// Overloads gs_param_base::getTypeString
+  const std::string getTypeString() const {
+    return string("sc_lv_base");
+  }
+  
+  /// Overloads gs_param_base::getType
+  const Param_type getType() const {
+    return PARTYPE_NOT_AVAILABLE;
+  }
+  
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
+  }  
+  inline static std::string static_serialize(const val_type &val) {
+    std::ostringstream ss;
+    ss << val.to_ulong(); 
+    return ss.str();
+  }
+  
+  /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
+  inline static bool static_deserialize(val_type &target_val, const std::string& str) { 
+    std::istringstream ss(str);
+    GS_PARAM_DUMP_WITHNAME("gs_param", "deserialize: string='" << ss.str().c_str() <<"'");
+    if (ss.str().length() == 0) {
+      target_val = 0;
+      GS_PARAM_DUMP_WITHNAME("gs_param", "deserialize: set default value");
+      return true;
+    }
+    val_type tmp;
+    ss >> tmp;
+    // if next char is a decimal point, ignore
+    if (!ss.eof() && ss.peek() == '.') {
+      target_val = tmp;
+      GS_PARAM_DUMP_WITHNAME("gs_param", "(sc_lv_base as unsigned long) ignored decimal point");
+      return true;
+    }
+    // if error try hex
+    if (!ss.eof() || ss.fail() || ss.bad()) {
+      ss.~istringstream();
+      new ( (void *) &ss ) std::istringstream(str); // TODO: changed m_api->getParam(m_par_name) to str; correct??
+      ss >> (std::hex) >> tmp;
+    }
+    // no conversion error
+    if (ss.eof() && !ss.fail() && !ss.bad()) {
+      target_val = tmp;
+      GS_PARAM_DUMP_WITHNAME("gs_param", "(sc_lv_base as unsigned long) stream eof and not fail"); 
+    }
+    else {
+      std::stringstream ess;
+      ess << "Conversion error: '" << str << "'";
+      SC_REPORT_WARNING("deserialize", ess.str().c_str());
+      return false;
+    }
+    return true;
+  }
+  
+};
+
+
+// /////////////////////////////////////////////////////////////////////////////// //
+// /////////////////// gs_param< SC_LV<w> > ///////////////////////////////////// //
+// /////////////////////////////////////////////////////////////////////////////// //
+
+/// Template specialization for gs_param< sc_lv<W> >.
+/**
+ * Default value = 0.
+ * Uses unsigned long representation for (de)serialization!
+ *
+ * @TODO Constructors for param specialization sc_lv_base
+ * @TODO Operators (=, == etc.) for param specialization sc_lv_base
+ */
+template<int W>
+class gs_param< sc_dt::sc_lv<W> >
+: public gs_param_t< sc_dt::sc_lv<W> >
+{
+  /// Typedef for the value.
+  typedef sc_dt::sc_lv<W> val_type;
+  
+public:
+  GS_PARAM_HEAD;
+  
+  // ///////////////////////
+  //  operators
+
+  // ...
+ 
+  /// Overloads gs_param_base::getTypeString
+  const std::string getTypeString() const {
+    return string("sc_lv");
+  }
+  
+  /// Overloads gs_param_base::getType
+  const Param_type getType() const {
+    return PARTYPE_NOT_AVAILABLE;
+  }
+  
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
+  }  
+  inline static std::string static_serialize(const val_type &val) {
+    std::ostringstream ss;
+    ss << val.to_ulong(); 
+    return ss.str();
+  }
+  
+  /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
+  inline static bool static_deserialize(val_type &target_val, const std::string& str) { 
+    return gs_param<sc_dt::sc_lv_base>::static_deserialize(target_val, str);
+  }
+  
 };
 

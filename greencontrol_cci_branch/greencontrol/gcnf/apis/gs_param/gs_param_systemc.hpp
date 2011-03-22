@@ -18,6 +18,7 @@
 //     Microelectronics and Electronics SystemS Dpt. UAB.
 //     http://cephis.uab.cat
 //
+//
 // The contents of this file are subject to the licensing terms specified
 // in the file LICENSE. Please consult this file for restrictions and
 // limitations that may apply.
@@ -81,11 +82,11 @@ public:
     return PARTYPE_SC_INT_BASE;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
    
@@ -145,11 +146,11 @@ public:
     return PARTYPE_SC_INT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
 
@@ -208,11 +209,11 @@ public:
     return PARTYPE_SC_UINT_BASE;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
     
@@ -272,11 +273,11 @@ public:
     return PARTYPE_SC_UINT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
   
@@ -336,11 +337,11 @@ public:
     return PARTYPE_SC_SIGNED;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
     
@@ -400,11 +401,11 @@ public:
     return PARTYPE_SC_BIGINT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
     
@@ -463,11 +464,11 @@ public:
     return PARTYPE_SC_UNSIGNED;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
     
@@ -527,11 +528,11 @@ public:
     return PARTYPE_SC_BIGUINT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.to_string();
   }
   
@@ -610,8 +611,8 @@ public:
     return PARTYPE_SC_BIT;
   }
   
-  /// convertValueToString(sc_logic)
-  std::string convertValueToString(const sc_dt::sc_logic &v) {
+  /// serialize(sc_logic)
+  std::string serialize(const sc_dt::sc_logic &v) {
     DEPRECATED_WARNING("gs_param<sc_bit>", "DEPRECATED: sc_bit is deprecated use bool instead.");
     if (v == sc_dt::SC_LOGIC_0)       return std::string("0");
     else if (v == sc_dt::SC_LOGIC_1)  return std::string("1");
@@ -619,11 +620,11 @@ public:
     return std::string("");
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     DEPRECATED_WARNING("gs_param<sc_bit>", "DEPRECATED: sc_bit is deprecated use bool instead.");
     std::ostringstream ss;
     ss << val;
@@ -751,8 +752,8 @@ public:
     return PARTYPE_SC_LOGIC;
   }
   
-  /// convertValueToString(sc_logic)
-  std::string convertValueToString(const sc_dt::sc_logic &v) {
+  /// serialize(sc_logic)
+  std::string serialize(const sc_dt::sc_logic &v) {
     if (v == sc_dt::SC_LOGIC_0)       return std::string("0");
     else if (v == sc_dt::SC_LOGIC_1)  return std::string("1");
     else if (v == sc_dt::SC_LOGIC_Z)  return std::string("Z");
@@ -761,11 +762,11 @@ public:
     return std::string("");
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -845,11 +846,11 @@ public:
     return PARTYPE_SC_TIME;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ret (std::ostringstream::out);
     ret << val;
     return ret.str();
@@ -1073,18 +1074,18 @@ public:
     return PARTYPE_SC_EVENT;
   }
   
-  /// convertValueToString(sc_logic)
-  std::string convertValueToString(const sc_core::sc_event &v) {
-    GS_PARAM_DUMP_WITHNAME("gs_param<sc_event>", "convertValueToString: sc_event has no value!");
+  /// serialize(sc_logic)
+  std::string serialize(const sc_core::sc_event &v) {
+    GS_PARAM_DUMP_WITHNAME("gs_param<sc_event>", "serialize: sc_event has no value!");
     return std::string("");
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
-    GS_PARAM_DUMP_WITHNAME("gs_param<sc_event>", "convertValueToString: sc_event has no value!");
+  inline static std::string static_serialize(const val_type &val) {
+    GS_PARAM_DUMP_WITHNAME("gs_param<sc_event>", "serialize: sc_event has no value!");
     return std::string("");
   }
     

@@ -83,10 +83,12 @@ public:
       service = pPort->getSupportedControlService();
       is_plugin = pPort->isPlugin();
 
-      if(pPort->isPlugin())
+      if(pPort->isPlugin()) {
         GC_DUMP_N("ControlAddressMap", "           Target-Plugin ["<<target_name<<"] is connected to core");
-      else
+      }
+      else {
         GC_DUMP_N("ControlAddressMap", "           Target-API ["<<target_name<<"] is connected to core");
+      }
       GC_DUMP_N("ControlAddressMap", "                Target port supports control service "<<service<<" ("<<getControlServiceString(service).c_str()<<")");
         
       // insert into map if not yet in it
@@ -190,7 +192,7 @@ public:
   /// Decode a service to an address.
   /**
    * @param service  The expected service.
-   * @return The decoded target addresses in a vector.
+   * @return The decoded target addresses in a vector (might be empty).
    */
   std::vector<cport_address_type> decode(ControlService service)
   {
@@ -201,11 +203,11 @@ public:
     addr_range = getAddrFromService(service);
 
     // Actually this check is not needed, it has already been performed in getAddrFromService()
-    if ( addr_range.first == addr_range.second ) {
+    //if ( addr_range.first == addr_range.second ) {
       //dumpMap();
-      GC_DUMP_N("ControlAddressMap", "Decode attempt for service "<<service<<" failed:\n");
-      SC_REPORT_ERROR("ControlAddressMap", "Service not in name map.");
-    }
+    //  GC_DUMP_N("ControlAddressMap", "Decode attempt for service "<<service<<" failed:\n");
+    //  SC_REPORT_ERROR("ControlAddressMap", "Service not in name map.");
+    //}
 
     for (serv_addr_iter = addr_range.first; serv_addr_iter!=addr_range.second; ++serv_addr_iter) {
       ret_vec_addr.push_back(serv_addr_iter->second);
@@ -218,14 +220,15 @@ public:
   /// Decode an address to it's supported control service.
   /**
    * @param addr A target address.
-   * @return The decoded control service.
+   * @return The decoded control service (might be NO_SERVICE).
    */
   const ControlService getService(const cport_address_type addr)
   {
     if (m_address_service_map.count(addr) < 1) {
       //dumpMap();
       GC_DUMP_N("ControlAddressMap", "Decode attempt (service) for address "<<addr<<" failed:\n");
-      SC_REPORT_ERROR("ControlAddressMap", "Address not in service map.");
+      //SC_REPORT_WARNING("ControlAddressMap", "Address not in service map.");
+      return NO_SERVICE;
     }
     addressServiceMapType::iterator iter = m_address_service_map.find(addr);
     return iter->second;
@@ -234,7 +237,7 @@ public:
   /// Decode an address to the parent's name.
   /**
    * @param addr A target address.
-   * @return The decoded name.
+   * @return The decoded name (might be empty).
    */
   const std::vector<std::string> getName(const cport_address_type addr)
   {
@@ -242,7 +245,8 @@ public:
     if (m_address_name_map.count(addr) < 1) {
       //dumpMap();
       GC_DUMP_N("ControlAddressMap", "Decode attempt (name) for address "<<addr<<" failed:\n");
-      SC_REPORT_ERROR("ControlAddressMap", "Address not in name map.");
+      SC_REPORT_WARNING("ControlAddressMap", "Address not in name map.");
+      return ret_vec_str;
     }
     addressNameMapType::iterator iter = m_address_name_map.find(addr);
     ret_vec_str.push_back(iter->second);
@@ -253,7 +257,7 @@ public:
   /**
    * @param _addr    A target address.
    * @param service  The service of the searched target.
-   * @return The decoded name.
+   * @return The decoded name (might be empty).
    */
   const std::vector<std::string> getName(const cport_address_type _addr, ControlService service)
   {
@@ -266,7 +270,8 @@ public:
     if (m_address_name_map.count(addr) < 1) {
       //dumpMap();
       GC_DUMP_N("ControlAddressMap", "Decode attempt (name) for address "<<addr<<" failed:\n");
-      SC_REPORT_ERROR("ControlAddressMap", "Address not in name map.");
+      SC_REPORT_WARNING("ControlAddressMap", "Address not in name map.");
+      return ret_vec_str;
     }
     addressNameMapType::iterator iter = m_address_name_map.find(addr);
     ret_vec_str.push_back(iter->second);
@@ -276,7 +281,7 @@ public:
   /// Decode a service to the parent's name.
   /**
    * @param service  The service of the searched target.
-   * @return The decoded name of all plugin name in a vector 
+   * @return The decoded name of all plugin name in a vector (might be empty)
    */
   const std::vector<std::string> getName(ControlService service)
   {
@@ -288,11 +293,11 @@ public:
     addr_range = getAddrFromService(service);
 
     // Actually not needed, this check has been performed in getAddrFromService()
-    if ( addr_range.first == addr_range.second ) {
+    //if ( addr_range.first == addr_range.second ) {
       //dumpMap();
-      GC_DUMP_N("ControlAddressMap", "Decode attempt for service "<<service<<" failed:\n");
-      SC_REPORT_ERROR("ControlAddressMap", "Service not in name map.");
-    }
+    //  GC_DUMP_N("ControlAddressMap", "Decode attempt for service "<<service<<" failed:\n");
+    //  SC_REPORT_ERROR("ControlAddressMap", "Service not in name map.");
+    //}
 
     for (serv_addr_iter = addr_range.first; serv_addr_iter!=addr_range.second; ++serv_addr_iter) 
     {
@@ -307,7 +312,7 @@ public:
   /// Decode a service to the address of the supporting plugin.
   /**
    * @param service Service to which the address should be returned.
-   * @return The address range which belongs to all the plugins which supports the service.
+   * @return The address range which belongs to all the plugins which supports the service (might be empty).
    */
   std::pair<serviceAddressMapType::iterator, serviceAddressMapType::iterator> getAddrFromService(ControlService service)
   {
@@ -316,7 +321,7 @@ public:
       GC_DUMP_N("ControlAddressMap", "Decode attempt (service->address) for service "<<service<<" failed:\n");
       std::stringstream ss;
       ss << "Service '" << getControlServiceString(service) << "' ("<< (unsigned int)service <<") is not available. Please instantiate plugin first.";
-      SC_REPORT_ERROR("ControlAddressMap", ss.str().c_str());
+      SC_REPORT_WARNING("ControlAddressMap", ss.str().c_str());
     }
     return m_service_address_map.equal_range(service);
   }

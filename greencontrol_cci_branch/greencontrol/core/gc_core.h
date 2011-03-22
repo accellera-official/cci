@@ -309,12 +309,15 @@ public:
         std::stringstream tmpStr;
         tmpStr << "Sender (" << tr->getSenderName() << ") is trying to reach a non existing target.";
         SC_REPORT_WARNING(name(), tmpStr.str().c_str());
+        tr->set_mError(666); // GreenControl Core Error
       }
 
     }
     else // got no target address, use plugin id with map
     {
       addrVec = m_AddressMap.decode(tr->get_mService());
+      if (addrVec.size() == 0) // set error if no target (e.g. plugin not available)
+        tr->set_mError(666); // GreenControl Core Error
       for(unsigned int i=0;i<addrVec.size();i++)
         addrVec[i]->transport(tr);
     }

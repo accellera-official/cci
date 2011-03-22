@@ -122,10 +122,10 @@ public:
   using gs_param_t<val_type>::getString;
   using gs_param_t<val_type>::setValue;
   using gs_param_t<val_type>::getValue;
- 
+
  
 */
-  
+
 #define GS_PARAM_HEAD                                                  \
 protected:                                                             \
   typedef gs_param<val_type> my_type;                                  \
@@ -178,7 +178,7 @@ public:                                                                \
                                                                                   \
   const bool deserialize(val_type &target_val, const std::string& str) {          \
     GCNF_ENABLE_GS_PARAM_LOCK_GUARD( \
-    if (m_locked) {                                                \
+    if (gs_param_t<val_type>::m_locked) {                                                \
       GS_PARAM_DUMP("parameter is locked!");                                      \
       SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked!");        \
       return false;                                                               \
@@ -193,7 +193,7 @@ public:                                                                \
   using gs_param_t<val_type>::setString;                                          \
   using gs_param_t<val_type>::getString;                                          \
   using gs_param_t<val_type>::setValue;                                           \
-  using gs_param_t<val_type>::getValue                                                                                     
+  using gs_param_t<val_type>::getValue                                           
 
 
 /// The parameters, gs_param class, templated.
@@ -215,8 +215,8 @@ class gs_param
 public:
   GS_PARAM_HEAD;
 
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
     std::ostringstream ss;
     ss << val;
     return ss.str();

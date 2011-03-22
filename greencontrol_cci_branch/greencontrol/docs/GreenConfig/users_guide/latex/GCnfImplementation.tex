@@ -1359,9 +1359,9 @@ This section is about the implementation of the \GreenConfig parameters and how 
 The base class {\bf \lstinline|gs_param_base|} is not templated. It has member variables for the
 parameter name and the parent name which is used in the constructor (when no name is set) and for debug. The \GreenConfig API variable is also a member of this base class. It is generated with the pointer of the next child object which is an sc\_module. The member variables are protected to allow access by derived classes. The constructor instantiates the API instance using the static function \lstinline|GCnf_Api::getApiInstance(mod)| (see section \ref{StaticGetAPIinstance}) and sets the parameter (and parent) name. The value-independent observer function is in this base class, too.
 
-The template class {\bf \lstinline|gs_param_t|} inherits \lstinline|gs_param_base| and extends it for some functionality which is dependent on the value type (operators, set and get value methods). All methods which need a conversion between value type and string representation make use of the virtual methods \lstinline|convertValueToString| and \lstinline|getValue|.
+The template class {\bf \lstinline|gs_param_t|} inherits \lstinline|gs_param_base| and extends it for some functionality which is dependent on the value type (operators, set and get value methods). All methods which need a conversion between value type and string representation make use of the virtual methods \lstinline|serialize| and \lstinline|getValue|.
 
-The template class {\bf \lstinline|gs_param|} inherits \lstinline|gs_param_t|. The template specializations should implement the operators (for the specialized data type) and must implement the conversion methods \lstinline|convertValueToString| and \lstinline|getValue| to achieve a specialized conversion for the data type.
+The template class {\bf \lstinline|gs_param|} inherits \lstinline|gs_param_t|. The template specializations should implement the operators (for the specialized data type) and must implement the conversion methods \lstinline|serialize| and \lstinline|getValue| to achieve a specialized conversion for the data type.
 
 If no explicit specialization for the desired data type exists, there is the default \lstinline|gs_param<T>| implementation. There the operators except the = operator are not available. Conversion is done per default with string streams.
 
@@ -1371,7 +1371,7 @@ If a specialization for a user data type (or an existing but not yet supported d
 to be specialized are: 
 \begin{itemize}
   \item type information functions, 
-  \item \lstinline|convertValueToString|, 
+  \item \lstinline|serialize|, 
   \item \mbox{\lstinline|static_deserialize|.} 
 \end{itemize}
 The macro \lstinline|GS_PARAM_HEAD| creates some using statements, many constructors, the destructor and the non-static deserialize function which calls the user-implemented static one (for details see \Datei{greencontrol/gcnf/apis/gs\_param/gs\_param.h}). You also may (but need not) use operator macros. 
@@ -1404,8 +1404,8 @@ public:
   //  return PARTYPE_NOT_AVAILABLE;
   //}
 
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) {
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) {
     [...]
   }
 
@@ -1425,7 +1425,7 @@ In some cases the provided macros do not suffice, e.g. addtional constructors an
       \item The return value of \lstinline|getTypeString()| may be any string that is unique within all specializations.
       \item The function \lstinline|getType()| returns a member of the enumeration \lstinline|Param_type| (see \Datei{greencontrol/gcnf/plugin/gcnf\_datatypes.h}) but needs not to be overloaded.
     \end{itemize}
-  \item \lstinline|convertValueToString()| (conversion value type $\rightarrow$ string):
+  \item \lstinline|serialize()| (conversion value type $\rightarrow$ string):
     \begin{itemize}
       \item May not make use of \lstinline|m_par_name| because it is called inside constructor!
     \end{itemize}

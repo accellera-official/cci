@@ -78,11 +78,11 @@ public:
     return PARTYPE_INT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const{
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const{
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -176,11 +176,11 @@ public:
     return PARTYPE_UINT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -272,11 +272,11 @@ public:
     return PARTYPE_BOOL;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -365,11 +365,11 @@ public:
     return PARTYPE_DOUBLE;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -444,11 +444,11 @@ public:
     return PARTYPE_FLOAT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -605,11 +605,11 @@ public:
     return PARTYPE_STRING;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
     return val;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val;//m_api->setParam(m_par_name, val);
   }
   
@@ -750,11 +750,11 @@ public:
     return PARTYPE_ULONGLONG;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -842,11 +842,11 @@ public:
     return PARTYPE_LONGLONG;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -928,7 +928,7 @@ public:
   // To resolve the correct = operator
   //using gs_param_t<val_type>::operator =;
   my_type& operator = (const val_type& v) { 
-    //cout << "operator = (val_type) value="<<convertValueToString(v) <<endl;
+    //cout << "operator = (val_type) value="<<serialize(v) <<endl;
     setValue(v);
     return *this;
   }
@@ -953,11 +953,11 @@ public:
     return PARTYPE_UCHAR;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << (int) val;
     return ss.str();
@@ -1032,7 +1032,7 @@ public:
   // To resolve the correct = operator
   //using gs_param_t<val_type>::operator =;
   my_type& operator = (const val_type& v) { 
-    //cout << "operator = (val_type) value="<<convertValueToString(v) <<endl;
+    //cout << "operator = (val_type) value="<<serialize(v) <<endl;
     setValue(v);
     return *this;
   }
@@ -1057,11 +1057,11 @@ public:
     return PARTYPE_SIGNED_CHAR;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << (int) val;
     return ss.str();
@@ -1136,7 +1136,7 @@ public:
   // To resolve the correct = operator
   //using gs_param_t<val_type>::operator =;
   my_type& operator = (const val_type& v) { 
-    //cout << "operator = (val_type) value="<<convertValueToString(v) <<endl;
+    //cout << "operator = (val_type) value="<<serialize(v) <<endl;
     setValue(v);
     return *this;
   }
@@ -1161,11 +1161,11 @@ public:
     return PARTYPE_CHAR;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);;
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);;
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << (int) val;
     return ss.str();
@@ -1267,11 +1267,11 @@ public:
     return PARTYPE_USHORT;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const{
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const{
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     std::ostringstream ss;
     ss << val;
     return ss.str();
@@ -1305,6 +1305,95 @@ public:
     if (ss.eof() && !ss.fail() && !ss.bad()) {
       target_val = tmp;
       GS_PARAM_DUMP_WITHNAME("gs_param", "(unsigned short) stream eof and not fail"); 
+    }  
+    else {
+      std::stringstream ess;
+      ess << "Conversion error: '" << str << "'";
+      SC_REPORT_WARNING("deserialize", ess.str().c_str());
+      return false;
+    }
+    return true;
+  }    
+  
+};
+
+
+// /////////////////////////////////////////////////////////////////////////////// //
+// //////////////////////////// gs_param< SHORT > //////////////////////////////// //
+// /////////////////////////////////////////////////////////////////////////////// //
+
+/// Template specialization for gs_param<short>.
+/**
+ * Default value = 0.
+ */
+template<>
+class gs_param<short>
+: public gs_param_t<short>
+{
+  /// Typedef for the value.
+  typedef short val_type;
+  
+public:
+  GS_PARAM_HEAD;
+  
+  // ///////////////////////
+  //  operators
+  
+  GC_SPECIALISATIONS_ARITHMETIC_OPERATORS;
+  
+  GC_SPECIALISATIONS_BINARY_OPERATORS;
+  
+  GC_SPECIALISATIONS_INCREMENT_OPERATORS;
+  GC_SPECIALISATIONS_DECREMENT_OPERATORS;
+  
+  /// Overloads gs_param_base::getTypeString
+  const std::string getTypeString() const {
+    return string("short");
+  }
+  
+  /// Overloads gs_param_base::getType
+  const Param_type getType() const {
+    return PARTYPE_SHORT;
+  }
+  
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const{
+    return static_serialize(val);
+  }  
+  inline static std::string static_serialize(const val_type &val) {
+    std::ostringstream ss;
+    ss << val;
+    return ss.str();
+  }
+  
+  /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
+  inline static bool static_deserialize(val_type &target_val, const std::string& str) { 
+    std::istringstream ss(str);
+    GS_PARAM_DUMP_WITHNAME("gs_param", "deserialize: string='"<< ss.str().c_str()<<"'");
+    if (ss.str().length() == 0) {
+      target_val = 0;
+      GS_PARAM_DUMP_WITHNAME("gs_param", "deserialize: set default value");
+      return true;
+    }
+    val_type tmp;
+    ss >> tmp;
+    // if next char is a decimal point, ignore
+    if (!ss.eof() && ss.peek() == '.') {
+      target_val = tmp;
+      GS_PARAM_DUMP_WITHNAME("gs_param", "(short) ignored decimal point");
+      return true;
+    }
+    // if error try hex
+    if (!ss.eof() || ss.fail() || ss.bad()) {
+      GS_PARAM_DUMP_WITHNAME("gs_param", "stream fail or not eof, try hex");
+      ss.~istringstream();
+      new ( (void *) &ss ) std::istringstream(str); // TODO: changed m_api->getParam(m_par_name) to str; correct??
+      ss >> (std::hex) >> tmp;
+    }
+    // no conversion error
+    if (ss.eof() && !ss.fail() && !ss.bad()) {
+      target_val = tmp;
+      GS_PARAM_DUMP_WITHNAME("gs_param", "(short) stream eof and not fail"); 
     }  
     else {
       std::stringstream ess;

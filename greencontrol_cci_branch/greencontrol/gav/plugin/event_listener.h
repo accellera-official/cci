@@ -33,16 +33,16 @@
 namespace gs {
 namespace av {
 
-  /// Event listener sc_core::sc_module which manages event listenings for non-sc_modules of the template type
+  /// Event listener sc_core::sc_object which manages event listenings for non-sc_modules of the template type
   /**
-   * The event_lister sc_core::sc_module creates one dynamic process per event
+   * The event_lister creates one dynamic process per event
    * given to it by an initiator. The method is sensitive to that event
    * and on notification of that event the listener calls back the
    * initiator.
    */ 
   template<typename Initiator_t>
   class event_listener
-  : public sc_core::sc_module
+  : public sc_core::sc_object
   {
 
   protected:
@@ -60,11 +60,9 @@ namespace av {
 
   public:
     
-    SC_HAS_PROCESS(event_listener);
-    
     /// Event listener constructor
-    event_listener(sc_core::sc_module_name name)
-    : sc_core::sc_module(name),
+    event_listener(const char* name)
+    : sc_core::sc_object(name),
       id_cnt(0) 
     {
     }

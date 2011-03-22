@@ -397,8 +397,8 @@ public:
   // //////////////////////////////////////////////////////////////////// //
   // ///////   virtual conversion methods string <-> value   //////////// //
 
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
     std::ostringstream ss;
     ss << "{";
     for (unsigned int i = 0; i < internal_ArrVec.size(); i++) {

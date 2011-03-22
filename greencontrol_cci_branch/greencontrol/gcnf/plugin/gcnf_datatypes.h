@@ -118,6 +118,7 @@ inline std::string gcnfCommandToString(unsigned int cmd) {
     PARTYPE_LONGLONG,
     PARTYPE_UCHAR,
     PARTYPE_USHORT,
+    PARTYPE_SHORT,
     PARTYPE_CHAR,
     PARTYPE_SIGNED_CHAR,
     // SystemC
@@ -206,14 +207,23 @@ inline std::string gcnfCommandToString(unsigned int cmd) {
 
   /// Parameter callback types
   enum callback_type {
+    /// Parameter will be read from someone, value can be updated here
     pre_read,
+    /// Parameter is currently been read. Value shall not be changed within this callback!
     post_read,
+    /// Parameter value shall be changed, can be rejected here with return callback_return_type::return_value_change_rejected
     reject_write,
+    /// Parameter is about to be changed 
     pre_write,
+    /// Parameter value has been changed 
     post_write,
+    /// New (implicit or explicit) parameter created (different callback signature!)
     create_param,
+    /// Parameter is in destruction
     destroy_param,
+    /// legacy support type
     post_write_and_destroy,
+    /// shall not be used
     no_callback
   };
 
@@ -223,8 +233,11 @@ inline std::string gcnfCommandToString(unsigned int cmd) {
    * Numbers are for internal use, NOT part of the API!
    */
   enum callback_return_type {
+    /// Default return type, nothing special happened
     return_nothing = 0, 
-    return_value_change_rejected = 1, // may only be used in reject_write callbacks
+    /// Rejects write, may only be used within callback_type::reject_write callback!
+    return_value_change_rejected = 1, 
+    /// Some not specified error (this does not change any behavior, especially does not prevent the action that has been announced by this callback)
     return_other_error = 2
   };
   

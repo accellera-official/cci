@@ -497,6 +497,9 @@ public:
    * @return If this parameter is locked
    */
   bool locked() const {
+#ifndef GCNF_ENABLE_GS_PARAM_LOCK
+    SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter lock feature is disabled!");
+#endif
     return m_locked;
   }
   
@@ -528,7 +531,7 @@ public:
    * The user may register any methods as callback functions which have
    * the following signature:
    * \code
-   * void method_name(gs_param_base& changed_param, callback_type reason);
+    gs::cnf::callback_return_type method_name(gs_param_base& changed_param, callback_type reason);
    * \endcode
    *
    * Usage example:
@@ -539,7 +542,7 @@ public:
    * public:
    *   // some code [...]
    *   
-   *   gs_param<int> my_param;
+   *   gs::gs_param<int> my_param;
    *
    *   MyIP_Class(sc_core::sc_module_name name)
    *    : sc_core::sc_module(name),
@@ -550,11 +553,11 @@ public:
    *   // Example code to register callback function
    *   void main_action() {
    *     // some code, parameters etc...
-   *     GC_REGISTER_TYPED_PARAM_CALLBACK(&my_param, post_write, MyIP_Class, config_callback);
+   *     GC_REGISTER_TYPED_PARAM_CALLBACK(&my_param, gs::cnf::post_write, MyIP_Class, config_callback);
    *   }
    *
    *   // Callback function with default signature.
-   *   void config_callback(gs_param_base& changed_param, callback_type reason) {
+   *   gs::cnf::callback_return_type config_callback(gs::gs_param_base& changed_param, gs::cnf::callback_type reason) {
    *     // some action
    *   }
    * };
@@ -594,10 +597,10 @@ public:
         break;
       // This is the legacy default case
       case post_write_and_destroy:
-        m_callback_list_destroy_param.push_back( observer_and_callback_type(true, callb) );
-        m_callback_list_post_write.push_back( observer_and_callback_type(true, callb) );
+        m_callback_lists[destroy_param]->push_back( observer_and_callback_type(true, callb) );
+        m_callback_lists[post_write]->push_back( observer_and_callback_type(true, callb) );
         break;
-      default: // create_param
+      default: // e.g. create_param
         std::stringstream ss; ss << "Given callback type ("<<callback_type_to_string(type)<<") cannot be handled by a gs_param!";
         GS_PARAM_CALLBACK_DUMP("   "<< ss.str().c_str());
         SC_REPORT_WARNING(GCNF_SC_REPORTER("callback"), ss.str().c_str());
@@ -878,6 +881,8 @@ protected:
         GS_PARAM_CALLBACK_DUMP("   call adapter "<< callb_list[i].second->get_id());
         cb_return_tmp = callb_list[i].second->call(*const_cast<gs_param_base*>(this), reason);
         if (cb_return < cb_return_tmp) cb_return = cb_return_tmp; // consider precedence!
+      } else {
+        GS_PARAM_CALLBACK_DUMP("   DONT call adapter "<< callb_list[i].second->get_id()<<" (disabled)");
       }
     }
     m_currently_making_callbacks = false;
@@ -929,6 +934,21 @@ protected:
     }
   }            
   
+private:
+  
+  /// Help function listing callback adapter
+  void show_callback_adapters( callback_type reason ) const {
+    callback_list_type& callb_list = *m_callback_lists[reason];
+    GS_PARAM_CALLBACK_DUMP(" adapter list["<<callback_type_to_string(reason)<<"]:");
+    for (unsigned int i = 0; i < callb_list.size(); i++ ) {
+      if (callb_list[i].first) { // if not true, this has been disabled and will be removed outside this loop
+        GS_PARAM_CALLBACK_DUMP("   adapter "<< callb_list[i].second->get_id());
+      } else {
+        GS_PARAM_CALLBACK_DUMP("   adapter "<< callb_list[i].second->get_id() << " (disabled)");
+      }
+    }
+  }    
+  
 protected:
 
   /// Name of this parameter.
@@ -976,7 +996,7 @@ protected:
   /// Callback adapter pointer for the update event callback
   boost::shared_ptr< ::gs::cnf::ParamCallbAdapt_b> m_update_event_callbAdapt;
   /// Update event: notified when parameter value changed
-  sc_event m_update_event;
+  sc_core::sc_event m_update_event;
   
   /// If this parameter is read-only
   bool m_locked;

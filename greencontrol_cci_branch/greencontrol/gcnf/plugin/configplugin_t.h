@@ -459,7 +459,6 @@ public:
       }
     }
 
-
     // If observers for new parameters have to be notified, do that.
     if (notify_new_parameter) {
       sendNewParameterNotify(  static_cast<gs_param_base*>(tr->get_mLogPointer()),

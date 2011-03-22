@@ -191,9 +191,9 @@ public:
     return PARTYPE_SC_ATTRIBUTE;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const T &val) const{
-    return gs_param<T>::static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const T &val) const{
+    return gs_param<T>::static_serialize(val);
   }  
   
   /// Overloads gs_param_t<T>::deserialize in gs_param_t<T>
@@ -292,7 +292,7 @@ public:
   /// Get the value of this parameter as a string.
   const std::string& getString() const {
     make_pre_read_callbacks();
-    return_string = convertValueToString(my_value.value);
+    return_string = serialize(my_value.value);
     //make_post_read_callbacks(); // TODO possible but deactivated
     return return_string;
   }

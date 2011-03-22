@@ -312,7 +312,7 @@ public:
    */
   const std::string& getString() const {
     make_pre_read_callbacks();
-    return_string = convertValueToString(my_value);
+    return_string = serialize(my_value);
     //make_post_read_callbacks(); // TODO possible but deactivated
     return return_string;
   }
@@ -328,7 +328,7 @@ public:
    * @param val  Value that should be converted to string.
    * @return String representation of the value.
    */
-  virtual std::string convertValueToString(const val_type &val) const = 0;
+  virtual std::string serialize(const val_type &val) const = 0;
 
   /// Deserialize for this parameter. To be implemented by the specialization.
   /**
@@ -348,9 +348,9 @@ public:
   virtual const bool deserialize(val_type &target_val, const std::string& str) = 0;
 
   /// Serialize this parameter.
-  /** Uses the convertValueToString method */
+  /** Uses the serialize method */
   //void serialize(const val_type &val) {                             
-  //  convertValueToString(val);                                      
+  //  serialize(val);                                      
   //}
 
   

@@ -183,7 +183,7 @@ protected:
   ControlValue   mValue;   
   /// ID (API's or plugin's address) of sending master.
   cport_address_type   mID;
-  /// Error flag (mError != 0: error).
+  /// Error flag (mError != 0: error; = 666: GreenControl Core (e.g. routing) error).
   unsigned int   mError;  
   /// String to hold meta data
   std::string   mMetaData;

@@ -64,11 +64,11 @@ public:
     return PARTYPE_NOT_AVAILABLE;
   }
   
-  /// Overloads gs_param_t<T>::convertValueToString
-  std::string convertValueToString(const val_type &val) const {
-    return static_convertValueToString(val);
+  /// Overloads gs_param_t<T>::serialize
+  std::string serialize(const val_type &val) const {
+    return static_serialize(val);
   }  
-  inline static std::string static_convertValueToString(const val_type &val) {
+  inline static std::string static_serialize(const val_type &val) {
     return val.toString();
   }
   
