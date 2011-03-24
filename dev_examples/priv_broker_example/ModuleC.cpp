@@ -15,10 +15,27 @@
 // ENDLICENSETEXT
 
 
-#include "ModuleA.h"
+#include "ModuleC.h"
 #include <systemc.h>
 
-void ModuleA::main_action() {
+
+ModuleC::ModuleC(sc_core::sc_module_name name)
+: sc_core::sc_module(name)
+, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
+, priv_param ("priv_param", "this is private information", get_broker() )
+{ 
+  SC_THREAD(main_action);
+}
+
+ModuleC::~ModuleC() {
+  // TODO: delete private broker that was newed during construction!
+  // Don't delete while params existing!
+  /*cci::cnf::cci_cnf_broker_if* pb = get_broker();
+   register_private_broker(NULL);
+   delete pb;*/
+}
+
+void ModuleC::main_action() {
 
   // get the config broker which is responsible for this module
   // Note: Do NOT use cci_broker_manager::get_current_broker here, it won't return the private broker!
@@ -27,7 +44,7 @@ void ModuleA::main_action() {
   wait(10, SC_SEC);
   
   // show a parameter list
-  cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
+  cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
   std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
@@ -35,18 +52,6 @@ void ModuleA::main_action() {
     ss_show << "   " << *iter << std::endl;
   }
   std::cout << ss_show.str() << std::endl<<std::endl;
-
-  cci::cnf::cci_base_param* p = mBroker->get_param("ModuleA.int_param");
-  if (p != NULL) {
-    cci::cnf::cci_param<int> &i_p = *static_cast<cci::cnf::cci_param<int>* >(p);
-    std::cout << "setting int_param = 10000" << std::endl;
-    //p->json_deserialize("10000");  //sets value based on string
-    i_p = 10000;
-    //p->set_value(10000);  //calls abort???
-  }
-  else
-    std::cout << name() << ": fetching ModuleA.int_param failed!"  << std::endl;
-
 
   std::cout << "----------------------------" << std::endl;
 

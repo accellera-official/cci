@@ -17,7 +17,7 @@
 
 #include "gs_cci_cnf_broker.h"
 
-// TODO DEBUG
+// TODO: remove (this is for debug)
 /*static void show_accessor_map(std::map<std::string, cci::cnf::cci_base_param*> mmap) {
   std::cout << mmap.size() << " accessors: " << std::endl;
   std::map<std::string, cci::cnf::cci_base_param*>::iterator iter;
@@ -28,13 +28,24 @@
 
 cci::cnf::gs_cci_cnf_broker::gs_cci_cnf_broker(const std::string& name) 
 : gs::cnf::GCnf_Api(name.c_str()) 
-, m_name(name)
+, m_name(cci::cci_gen_unique_name(name.c_str()))
 { 
   assert (name.length() > 0 && "Name must not be empty");
-  std::cout << "Created new broker \""<<name<<"\" and GCnf_Api \""<< getName() << "\"" << std::endl;
+  CCI_CNF_DUMP("Created new broker \""<<name<<"\" and GCnf_Api \""<< getName() << "\"");
+}
+
+cci::cnf::gs_cci_cnf_broker::gs_cci_cnf_broker(bool called_internally_for_creating_global_broker) 
+: gs::cnf::GCnf_Api(__CCI_DEFAULT_BROKER_STRING__) 
+, m_name(cci::cci_gen_unique_name(__CCI_DEFAULT_BROKER_STRING__))
+{ 
+  CCI_CNF_DUMP("Created new global standard broker \""<<m_name<<"\" and GCnf_Api \""<< getName() << "\"");
 }
 
 cci::cnf::gs_cci_cnf_broker::~gs_cci_cnf_broker() { 
+}
+
+const char* cci::cnf::gs_cci_cnf_broker::name() const {
+  return m_name.c_str();
 }
 
 void cci::cnf::gs_cci_cnf_broker::set_init_value(const std::string &parname, const std::string &json_value) {
@@ -144,6 +155,10 @@ const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_cnf_broker::get_pa
     if (p) parvec.push_back(p);
   }
   return parvec;
+}
+
+bool cci::cnf::gs_cci_cnf_broker::is_private_broker() const {
+  return false;
 }
 
 gs::cnf::cnf_api_if* cci::cnf::gs_cci_cnf_broker::get_gs_cnf_api() {

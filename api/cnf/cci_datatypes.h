@@ -27,7 +27,7 @@
 __CCI_OPEN_CONFIG_NAMESPACE__
 
   /// Originator information when functions being called by the main object (which only the owner shall use)
-  static const char* OWNER_ORIGINATOR = "owner";
+  static const char* PARAM_ORIGINATOR = "owning_param";
 
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
   enum basic_param_type {
@@ -60,6 +60,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     other_parameter
   };
   
+  /// Enumeration for convenient cci_param constructor: for chose if a param gets a top-level-name
+  enum cci_top_level_name { CCI_TOP_LEVEL_NAME=0 };
   
 // Debug output of the parameter objects
 #ifdef CCI_PARAM_VERBOSE

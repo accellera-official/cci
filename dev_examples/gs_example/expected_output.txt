@@ -1,5 +1,13 @@
-Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
 Owner.int_param exists (implicit or explicit)
+
+Warning: deserialize: Conversion error: 'This is a param with top-level-name'
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
+
+Warning: deserialize: Conversion error: 'This is a param with top-level-name'
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:313
+
+Warning: deserialize: Conversion error: 'This is a param with top-level-name'
+In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 ------ sc_start() ----------------
 
@@ -13,11 +21,11 @@ int_param set value = 99 (shall fail)
 
 
 Observer: Caught Error: /OSCI/CCI/set_param_failed: Value rejected by callback.
-In file: gs_cci_param_t.h:130
+In file: gs_cci_param_t.h:133
 In process: Observer.main_action @ 0 s
 int_param has value = 11
 param list:
-MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 
+MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 param2 top.arbitrary.param top.arbitrary.param3 top.param1 
 
 ----------------------------
 Owner: uint_param get_default_value()=12000
@@ -35,7 +43,7 @@ Owner: uint_param is_default_value()=0
 Owner: uint_param get_default_value()=12000
 Owner: bool_param get_default_value()=
 Owner: Caught Error: /OSCI/CCI/get_param_failed: Param has no default value.
-In file: gs_cci_param.h:141
+In file: gs_cci_param.h:118
 In process: Owner.main_action @ 0 s
 Owner: bool_param is_invalid_value()=1
 Owner: bool_param is_invalid_value()=0
@@ -46,25 +54,25 @@ MutabilityOwner: demonstrate mutable parameter being made temporarily immutable
 MutabilityOwner:  mutable_int_param=50
 MutabilityOwner:  set mutable_int_param to 150
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:  lock mutable_int_param with key 0x499f88
+MutabilityOwner:  lock mutable_int_param
 MutabilityOwner:    set mutable_int_param should fail
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Parameter locked.
-In file: gs_cci_param_t.h:126
+In file: gs_cci_param_t.h:129
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
-MutabilityOwner:    set mutable_int_param with wrong key 0x499f8c - should fail twice
+MutabilityOwner:    set mutable_int_param with wrong key
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: gs_cci_param_t.h:139
+In file: gs_cci_param_t.h:142
 In process: MutabilityOwner.main_action @ 0 s
 
 MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: gs_cci_param_t.h:139
+In file: gs_cci_param_t.h:142
 In process: MutabilityOwner.main_action @ 0 s
-MutabilityOwner:    set mutable_int_param with key 0x499f88 - should succeed
+MutabilityOwner:    set mutable_int_param with key - should succeed
 MutabilityOwner:  mutable_int_param=4444
-MutabilityOwner:  unlock mutable_int_param with key 0x499f88
+MutabilityOwner:  unlock mutable_int_param
 MutabilityOwner:    set mutable_int_param should succeed
 ----------------------------
 Owner: Owner.int_param.json_serialize() = 11
@@ -93,7 +101,7 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 @20 ns /7 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
 
 Error: /OSCI/CCI/cci_value_failure: Set cci value not implemented for not specialized parameter types.
-In file: gs_cci_param.h:148
+In file: gs_cci_param.h:125
 In process: ValueMod.main_action @ 20 ns
 uint_param has value = 9000
 
@@ -104,7 +112,7 @@ str_param has value = test cci value string
 ----------------------------
 
 **** Parameter list: 
-   MutabilityOwner.elab_time_int_param, MutabilityOwner.immutable_int_param, MutabilityOwner.mutable_int_param, Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2
+   MutabilityOwner.elab_time_int_param, MutabilityOwner.immutable_int_param, MutabilityOwner.mutable_int_param, Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2, param2, top.arbitrary.param, top.arbitrary.param3, top.param1
 
 
 ------ sc_start() returned -------

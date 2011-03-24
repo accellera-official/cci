@@ -33,6 +33,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   template <class T, param_mutable_type TM> 
   class cci_param_accessor;
 
+  // forward declaration for friend class
+  class cci_broker_manager;
   
   /// CCI configuration broker interface.
   /**
@@ -43,12 +45,42 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    */
   class cci_cnf_broker_if
   {
-    
+  protected:
+    friend class cci_broker_manager;
+   
+    /// Creates or returns existing responsible accessor for this broker for the given originator
+    /**
+     * This is called by the broker manager when the static search functions shall return a broker accessor.
+     * It is possible (but "senseless") to call this as a user. Returned instances shall be deleted together 
+     * with the original broker.
+     *
+     * It is ok to nest calls with the same originator.
+     *
+     * @param originator   Originator for which the broker accessor shall be returned
+     * @return Broker accessor
+     */
+    virtual cci_cnf_broker_if& get_accessor(const cci_originator& originator) = 0;
+
+    /// If this is an accessor, returns the originator this broker accessor is responsible for, otherwise returns NULL
+    /**
+     * @return Originator pointer in the case this is an accessor; NULL if this is a raw broker
+     */
+    virtual const cci_originator* get_originator() const = 0;
+
   public:
-    
-    // Destructor
+
+    /// Destructor
     virtual ~cci_cnf_broker_if() { };
 
+    /// Name of this broker
+    /**
+     * Shall be a system-wide unique broker name.
+     * Broker accessors shall return their underlying broker's name.
+     * Accessors can be distinguished using their originator information.
+     *
+     * @return broker name
+     */
+    virtual const char* name() const = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //
@@ -344,6 +376,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     cci_param_accessor<T, TM>* get_cci_param(const std::string &parname) {
       return dynamic_cast<cci_param_accessor<T, TM>*>(get_param(parname));
     }
+
+    ///If this broker is a private broker (or accessor)
+    /**
+     * @return If this broker is a private broker
+     */
+    virtual bool is_private_broker() const = 0;
     
   };
 

@@ -21,18 +21,19 @@
 
 ModuleA::ModuleA(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(this, cci::cnf::vector_factory("int_param", END_OF_PUBLIC_PARAM_LIST), cci::cnf::cci_originator(*this)))
-, int_param ("int_param", 50, false, get_broker() )
-, uint_param("uint_param", 12000, false, get_broker() )
-, uint_param2("uint_param2", 12, false, get_broker() )
-, str_param ("str_param", "This is a test string.", false, get_broker())
-, bool_param("bool_param", false, get_broker()) // no default value
+, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
+, int_param ("int_param", 50, get_broker() )
+, uint_param("uint_param", 12000, get_broker() )
+, uint_param2("uint_param2", 12, get_broker() )
+, str_param ("str_param", "This is a test string.", get_broker())
+, bool_param("bool_param", get_broker()) // no default value
 , m_modB("ModuleB")
 { 
   SC_THREAD(main_action);
 }
 
 ModuleA::~ModuleA() {
+  // TODO: delete private broker that was newed during construction!
   // Don't delete while params existing!
   /*cci::cnf::cci_cnf_broker_if* pb = get_broker();
    register_private_broker(NULL);
@@ -42,15 +43,14 @@ ModuleA::~ModuleA() {
 void ModuleA::main_action() {
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
-  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
-
+  // Note: Do NOT use cci_broker_manager::get_current_broker here, it won't return the private broker!
+  cci::cnf::cci_cnf_broker_if* mBroker = &get_broker(); // use my base class broker manager which cares for the correct broker!
   
   
   wait(10, SC_SEC);
   
   // show a parameter list
-  cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
+  cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
   std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;

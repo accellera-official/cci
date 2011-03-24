@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2010 : GreenSocs Ltd
+//   Copyright (C) 2010-2011 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -18,20 +18,30 @@
 #include "gs_cci_cnf_private_broker.h"
 
 
-cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner, std::vector<const char*> pub_params) 
-: gs::cnf::GCnf_private_Api(owner, pub_params) { 
-  //m_gcnf_api = new gs::cnf::GCnf_private_Api(owner, pub_params);
-  std::cout << "Created new PRIVATE broker for Module \""<<owner->name()<<"\" and GCnf_private_Api \""<< getName() << "\"" << std::endl;
+/*cci::cnf::gs_cci_private_broker::gs_cci_private_broker(const char* name, sc_core::sc_module& owner, std::vector<const char*> pub_params) 
+: gs::cnf::GCnf_private_Api(&owner, pub_params)
+, m_upper_broker(&cci_broker_manager::get_current_broker(cci_originator(owner))) 
+//, m_upper_broker(&cci_broker_manager::get_current_parent_broker(cci_originator(owner))) // at this point in time this is not yet pushed to stack, so use the top of stack as upper broker
+, m_name(cci::cci_gen_unique_name(name))
+{ 
+  //m_gcnf_api = new gs::cnf::GCnf_private_Api(&owner, pub_params);
+  std::cout << "Created new PRIVATE \""<<m_name<<"\" broker for Module \""<<owner.name()<<"\" (with GCnf_private_Api \""<< getName() << "\")" << std::endl;
+}*/
+
+cci::cnf::gs_cci_private_broker::gs_cci_private_broker(const char* name, sc_core::sc_module& owner, std::vector<std::string> pub_params) 
+: gs::cnf::GCnf_private_Api(&owner, pub_params)
+, m_upper_broker(&cci_broker_manager::get_current_broker(cci_originator(owner))) 
+//, m_upper_broker(&cci_broker_manager::get_current_parent_broker(cci_originator(owner))) // at this point in time this is not yet pushed to stack, so use the top of stack as upper broker 
+, m_name(cci::cci_gen_unique_name(name))
+{ 
+  //m_gcnf_api = new gs::cnf::GCnf_private_Api(&owner, pub_params);
+  CCI_CNF_DUMP("Created new PRIVATE broker \""<<m_name<<"\" for Module \""<<owner.name()<<"\" (with GCnf_private_Api \""<< getName() << "\")");
+  CCI_CNF_DUMP("  using broker \"" << m_upper_broker->name() << "\" to access upper hierarchy");
 }
 
-cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner, std::vector<std::string> pub_params) 
-: gs::cnf::GCnf_private_Api(owner, pub_params) { 
-  //m_gcnf_api = new gs::cnf::GCnf_private_Api(owner, pub_params);
-  std::cout << "Created new PRIVATE broker for Module \""<<owner->name()<<"\" and GCnf_private_Api \""<< getName() << "\"" << std::endl;
-}
-
-//cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner_module, const char* pub_par ...)
-//: gs::cnf::GCnf_private_Api(owner_module, vector_factory(pub_par)) {
+//cci::cnf::gs_cci_private_broker::gs_cci_private_broker(const char* name, sc_core::sc_module& owner_module, const char* pub_par ...)
+//: gs::cnf::GCnf_private_Api(owner_module, vector_factory(pub_par))
+//, m_name(cci::cci_gen_unique_name(name)) {
 /*  std::vector<std::string> pub_param_lst;
   va_list list;
   va_start(list, pub_par);
@@ -49,6 +59,10 @@ cci::cnf::gs_cci_private_broker::gs_cci_private_broker(sc_core::sc_module* owner
 
 cci::cnf::gs_cci_private_broker::~gs_cci_private_broker() { 
   //delete m_gcnf_api; m_gcnf_api = NULL;
+}
+
+const char* cci::cnf::gs_cci_private_broker::name() const {
+  return m_name.c_str();
 }
 
 void cci::cnf::gs_cci_private_broker::set_init_value(const std::string &parname, const std::string &json_value) {
@@ -80,8 +94,8 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param(const std::
     return iter->second;
   else {
     // and get from hierarchically upper broker
-    cci_cnf_broker_if* a = cci_broker_manager::search_for_broker(owner_module->get_parent_object());
-    cci::cnf::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::cnf::gs_cci_cnf_broker_accessor*>(a);
+    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
+    cci::cnf::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::cnf::gs_cci_cnf_broker_accessor*>(m_upper_broker);
     cci::cnf::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
     assert(gs_br && gs_br != this);
     return gs_br->get_param(parname);      
@@ -133,8 +147,8 @@ void cci::cnf::gs_cci_private_broker::add_param(cci_base_param* par) {
     //std::cout << name() << " (gs_cci_cnf_broker) add param to PRIVATE broker " << par->get_name() << std::endl;
   // or add to hierarchically upper broker if public
   } else {
-    cci_cnf_broker_if* a = cci_broker_manager::search_for_broker(owner_module->get_parent_object());
-    cci::cnf::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::cnf::gs_cci_cnf_broker_accessor*>(a);
+    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
+    cci::cnf::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::cnf::gs_cci_cnf_broker_accessor*>(m_upper_broker);
     cci::cnf::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
     assert(gs_br && gs_br != this);
     gs_br->add_param(par);
@@ -146,8 +160,8 @@ void cci::cnf::gs_cci_private_broker::remove_param(cci::cnf::cci_base_param* par
     m_mirrored_registry.erase(par->get_name());
   // or remove from hierarchically upper broker if public
   else {
-    cci_cnf_broker_if* a = cci_broker_manager::search_for_broker(owner_module->get_parent_object());
-    cci::cnf::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::cnf::gs_cci_cnf_broker_accessor*>(a);
+    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
+    cci::cnf::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::cnf::gs_cci_cnf_broker_accessor*>(m_upper_broker);
     cci::cnf::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
     assert(gs_br && gs_br != this);
     gs_br->remove_param(par);      
@@ -170,6 +184,10 @@ const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_private_broker::ge
     if (p) parvec.push_back(p);
   }
   return parvec;
+}
+
+bool cci::cnf::gs_cci_private_broker::is_private_broker() const {
+  return true;
 }
 
 gs::cnf::cnf_api_if* cci::cnf::gs_cci_private_broker::get_gs_cnf_api() {

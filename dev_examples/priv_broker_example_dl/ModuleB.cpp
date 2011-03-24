@@ -20,14 +20,11 @@
 
 void ModuleB::main_action() {
 
-  // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
-  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
   wait(10, SC_SEC);
   
   // show a parameter list
   cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = m_broker_accessor->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

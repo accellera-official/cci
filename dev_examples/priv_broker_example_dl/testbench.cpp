@@ -32,10 +32,16 @@ int sc_main(int argc, char *argv[]) {
 
   //ModuleB b("ModuleB");  //causes the global broker to be created
   ModuleC c("ModuleC");    //a private broker
+  // TODO: remove this hack: poped previous private brokers from broker stack
+  cci::cnf::cci_broker_stack::stack().pop();
   ModuleA a1("ModuleA");   //a different private broker
+  // TODO: remove this hack: poped previous private brokers from broker stack
+  cci::cnf::cci_broker_stack::stack().pop();
   ModuleA a2("ModuleA2");  //anther instance of a private broker
+  // TODO: remove this hack: poped previous private brokers from broker stack
+  cci::cnf::cci_broker_stack::stack().pop();
   ModuleB b2("ModuleB2");
-   ObserverModule        observer   ("Observer");
+  ObserverModule        observer   ("Observer");
   //uncomment following line to set observer's mBroker pointer directly
   //observer.mBroker = c.get_broker();
 

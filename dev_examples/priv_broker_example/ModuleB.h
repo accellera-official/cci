@@ -22,7 +22,7 @@
 #include <systemc>
 #include "ex_globals.h"
 #include "cci.h"
-
+#include "ModuleC.h"
 
 /// Module which owns some cci parameters.
 class ModuleB
@@ -50,6 +50,13 @@ public:
   /// Example parameter.
   cci::cnf::cci_param<bool>            bool_param;
   
+protected:
+  
+  /// Points to the broker being responsible for this module; This is needed to be set during construction to get the correct private broker from stack
+  /// Alternatively this module could derive from the cci_broker_manager even without having an own private broker - that would allow to use its get_broker() function
+  cci::cnf::cci_cnf_broker_if* m_broker_accessor;
+  
+  ModuleC mC;
 };
 
 

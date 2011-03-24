@@ -16,7 +16,7 @@
 
 #include "helpers.h"
 
-std::vector<std::string> cci::cnf::vector_factory(const char* pub_par ...) {
+/*std::vector<std::string> cci::cnf::vector_factory(const char* pub_par ...) {
   std::vector<std::string> pub_param_lst;
   va_list list;
   va_start(list, pub_par);
@@ -30,4 +30,4 @@ std::vector<std::string> cci::cnf::vector_factory(const char* pub_par ...) {
   va_end(list);
   
   return pub_param_lst;
-}
+}*/

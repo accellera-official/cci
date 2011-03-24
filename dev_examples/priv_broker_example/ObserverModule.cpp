@@ -23,7 +23,7 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config broker which is responsible for this module
-  mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
+  mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
   SC_THREAD(main_action);
 }
 
@@ -42,7 +42,7 @@ void ObserverModule::main_action() {
   cout << "----------------------------" << endl<< endl;
 
   // show a parameter list
-  cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
+  cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
   std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;

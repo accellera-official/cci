@@ -1,5 +1,21 @@
 ChangeLog
 ---------
+24.03.2011
+- BUG - STILL TODO: PRIVATE BROKER STACK POP!
+  Currently the pop from broker stack needs to be done manually,
+  cp. testbenches in dev_examples/priv_broker_example*
+- changed way how to access broker accessors
+- important API change:
+  instead of cci::cnf::get_cnf_broker_instance(originator)->
+  use now cci::cnf::cci_broker_manager::get_current_broker(originator).
+- search_for_broker renamed to get_current_broker
+- smaller API changes:
+  gs_cci_private_broker_accessor now get a reference to the owner (not a pointer)
+  gs_cci_private_broker now gets a name
+  parameter constructor new options (e.g. broker without bool top-level-name)
+- top-level-names in cci_param constructors not with bool but with cci::cnf::CCI_TOP_LEVEL_NAME
+  (to avoid ambiguous constructors)
+
 23.02.2011
 - reverted some originator changes: Originator information now hold within global pointer
 - added originator data type combining sc_object and name information

@@ -12,11 +12,13 @@ MODULE = testbench
 SRCS = testbench.cpp \
        ModuleA.cpp \
        ModuleB.cpp \
+       ModuleC.cpp \
        ObserverModule.cpp
 
 OBJS = testbench.o \
        ModuleA.o \
        ModuleB.o \
+       ModuleC.o \
        ObserverModule.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)

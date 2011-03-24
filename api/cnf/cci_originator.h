@@ -50,8 +50,8 @@ public:
    * @param current_originator  Pointer to the current Golbal Originator Pointer, might be NULL if there is no originator information
    * @return The old originator (NULL if there was none before)
    */
-  static cci_originator* set_global_originator(cci_originator* current_originator) {
-    cci_originator* old_originator = handle_current_originator();
+  static const cci_originator* set_global_originator(const cci_originator* current_originator) {
+    const cci_originator* old_originator = handle_current_originator();
     handle_current_originator(current_originator, true);
     return old_originator;
   }
@@ -71,8 +71,8 @@ protected:
    * @param new_originator Pointer to the new originator (optional), only applied if param set_new_originator is true.
    * @param set_new_originator If the param new_originator shall be stored as new originator (guarded by this bool to allow setting of NULL)
    */
-  static cci_originator* handle_current_originator(cci_originator* new_originator = NULL, bool set_new_originator = false) {
-    static cci_originator* global_current_originator = NULL;
+  static const cci_originator* handle_current_originator(const cci_originator* new_originator = NULL, bool set_new_originator = false) {
+    static const cci_originator* global_current_originator = NULL;
     if (set_new_originator) global_current_originator = new_originator;
     return global_current_originator;
   }

@@ -24,13 +24,17 @@ namespace cnf {
 
   /// Internal pointer to the one global default fallback broker instance 
   /// used in the case the appropriate broker is not known (or is this one)
-  cci_cnf_broker_if* singleton_broker = new gs_cci_cnf_broker_accessor(true);
+  cci_cnf_broker_if* singleton_broker = new gs_cci_cnf_broker(true);
   
   /// Map containing all broker accessors so they can be found by get_cnf_broker_instance
-  std::map<std::string, gs_cci_cnf_broker_accessor> all_broker_accessors;
+  //std::map<std::string, gs_cci_cnf_broker_accessor> all_broker_accessors;
 
   /// Internal help function used by get_cnf_broker_instance
-  static cci_cnf_broker_if* get_cnf_broker_instance_helper(const cci_originator& originator) {
+  /**
+   * Organizes the broker accessors for the global broker instance
+   * Note: private brokers and their accessors are not handled here!
+   */
+  /*static cci_cnf_broker_if* get_cnf_broker_instance_helper(const cci_originator& originator) {
     static bool entrance_guard = false; // debug information, guard to identify user calls with originator=NULL
     std::string originator_name = originator.name();
     if (originator_name.empty() && !entrance_guard) { // debug information, do not warn if nested call of this function
@@ -44,7 +48,7 @@ namespace cnf {
     //  CCI_CNF_IMPL_DUMP("create GLOBAL default broker accessor");
     //  singleton_broker = new gs_cci_cnf_broker_accessor(true); // just to ensure it exists
     //}
-    if (originator_name.length() == 0 || originator_name.compare(GS_CCI_IMPL_UNKNOWN_ORIGINATOR_STRING) == 0) {
+    if (originator_name.length() == 0 || originator_name.compare(__CCI_UNKNOWN_ORIGINATOR_STRING__) == 0) {
       entrance_guard = false; // reset guard
       return singleton_broker;
     }
@@ -63,7 +67,7 @@ namespace cnf {
       entrance_guard = false; // reset guard
       return dynamic_cast<cci_cnf_broker_if*>(br);
     }
-  }
+  }*/
   
   /// Implements declaration from cci_config.h
   /**
@@ -75,10 +79,10 @@ namespace cnf {
    * @param originator Object the returned broker shall be responsible for (or NULL)
    * @param Config broker accessor
    */
-  cci_cnf_broker_if* get_cnf_broker_instance(cci_originator* originator) {
+  /*cci_cnf_broker_if* get_cnf_broker_instance(cci_originator* originator) {
     assert(singleton_broker && "To be created during static initialization!");
     if (originator) return get_cnf_broker_instance_helper(*originator);
-    else return get_cnf_broker_instance_helper(GS_CCI_IMPL_UNKNOWN_ORIGINATOR_STRING);
+    else return get_cnf_broker_instance_helper(__CCI_UNKNOWN_ORIGINATOR_STRING__);
   }
   cci_cnf_broker_if* get_cnf_broker_instance(const cci_originator& originator) {
     assert(singleton_broker && "To be created during static initialization!");
@@ -87,8 +91,24 @@ namespace cnf {
   
   cci_cnf_broker_if* get_cnf_broker_instance(const char* TODO_REMOVE) {
     assert(false && "TODO: remove this functione!");
-    return get_cnf_broker_instance_helper(GS_CCI_IMPL_UNKNOWN_ORIGINATOR_STRING);
+    return get_cnf_broker_instance_helper(__CCI_UNKNOWN_ORIGINATOR_STRING__);
+  }*/
+  
+  /// Creates or returns the one non-private global config broker provided by the broker implementation
+  /// Called by the header function get_current_broker (TODO: check if renamed?), NEVER call as a user!
+  /**
+   * This returns the raw broker, not an accessor, thus this 
+   * shall not be returned directy to the user!
+   * @return The one non-private global config broker (not wrapped with an accessor)
+   */
+  cci_cnf_broker_if& create_global_cnf_broker() {
+    static bool added_to_registry = false;
+    if (!added_to_registry) { 
+      cci_broker_registry::registry().insert(*singleton_broker); // TODO: when remove?
+      added_to_registry = true;
+    }
+    return *singleton_broker;
   }
   
-} // end namespace cci
-} // end namespace cci
+} // end namespace
+} // end namespace

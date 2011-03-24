@@ -21,8 +21,9 @@
 void ModuleC::main_action() {
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
-  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
+  // Note: Do NOT use cci_broker_manager::get_current_broker here, it won't return the private broker!
+  cci::cnf::cci_cnf_broker_if* mBroker = &get_broker(); // use my base class broker manager which cares for the correct broker!
+
   wait(10, SC_SEC);
   
   // show a parameter list

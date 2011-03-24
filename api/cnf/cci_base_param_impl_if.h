@@ -58,12 +58,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param n  The local (or full hierarchical) parameter name (local: should not but may include points) 
      *           (local: unique inside a module, hierarchical: unique in the system).
      *           May be empty: name will be chosen automatically.
-     * @param force_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
+     * @param is_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
      *                             default false,
      *                             Be carefull in using this.
      */
     //explicit cci_base_param(const std::string& n,
-    //                        const bool force_top_level_name = false);
+    //                        const bool is_top_level_name = false);
 
     /// Proposed constructor with (local or hierarchical) name and string value, to be called by user
     /**
@@ -74,13 +74,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *              (local: unique inside a module, hierarchical: unique in the system).
      *              May be empty: name will be chosen automatically.
      * @param value The string value that should be stored by this base param (NOT use when having typed params!)
-     * @param force_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
+     * @param is_top_level_name If the given name n should be a top-level name (then no prefeix is attached to the name),
      *                             default false,
      *                             Be carefull in using this.
      */
     //explicit cci_base_param(const std::string& name,
     //                        const std::string& value,
-    //                        const bool force_top_level_name = false);
+    //                        const bool is_top_level_name = false);
     
     /// Destructor.
     /**

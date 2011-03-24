@@ -129,9 +129,10 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     explicit gs_cci_base_param(cci::cnf::cci_base_param& owner_par
                                //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
-                               , bool force_top_level_name /*= false*/
+                               , bool is_top_level_name /*= false*/
                                , bool register_at_db /*= true*/
-                               , bool has_default_value ) // if there is a default value
+                               , bool has_default_value // if there is a default value
+                               , cci::cnf::cci_cnf_broker_if* broker_accessor)
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
@@ -139,6 +140,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_is_initial_value(false)
     , m_status_guard(*this)
     , m_init_called(false)
+    , m_broker_accessor(broker_accessor)
     {
     }
 
@@ -154,9 +156,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
   public:
     virtual ~gs_cci_base_param() {
-      sc_core::sc_object* obj = dynamic_cast<sc_core::sc_object*>(gs::cnf::get_parent_sc_module(m_gs_param_base));
-      assert(obj); // TODO
-      cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*obj))->remove_param(get_cci_base_param()); // TODO!!!
+      m_broker_accessor->remove_param(get_cci_base_param()); // TODO!!!
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");
       
@@ -329,6 +329,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     bool m_init_called;
 
     cci::shared_ptr<cci::cnf::callb_adapt_b> m_post_write_callback;
+    
+    cci::cnf::cci_cnf_broker_if* m_broker_accessor;
     
   };
 

@@ -45,9 +45,9 @@ using namespace cci::cnf;
 using namespace sc_dt;
   
 #define PLACE_FUNCTION_POINTERS_T_TM(T,TM) \
-  cci_param_impl_if<T<LOWER>, TM>*  (*call_create1_##T##TM)(cci_param<T<LOWER>, TM>*, const char*, const bool); \
-  cci_param_impl_if<T<LOWER>, TM>*  (*call_create2_##T##TM)(cci_param<T<LOWER>, TM>*, const char*, const T<LOWER>&, const bool); \
-  cci_param_impl_if<T<LOWER>, TM>*  (*call_create3_##T##TM)(cci_param<T<LOWER>, TM>*, const char*, const char*,  const bool); \
+  cci_param_impl_if<T<LOWER>, TM>*  (*call_create1_##T##TM)(cci_param<T<LOWER>, TM>*, const char*, const bool, cci_cnf_broker_if* broker_accessor); \
+  cci_param_impl_if<T<LOWER>, TM>*  (*call_create2_##T##TM)(cci_param<T<LOWER>, TM>*, const char*, const T<LOWER>&, const bool, cci_cnf_broker_if* broker_accessor); \
+  cci_param_impl_if<T<LOWER>, TM>*  (*call_create3_##T##TM)(cci_param<T<LOWER>, TM>*, const char*, const char*,  const bool, cci_cnf_broker_if* broker_accessor); \
   void (*call_create4_##T##TM)(cci_param<T<LOWER>, TM>*); \
   void (*call_create5_##T##TM)(cci_param<T<LOWER>, TM>*);
 #define PLACE_FUNCTION_POINTERS_T(T) \

@@ -39,11 +39,16 @@ namespace cci {
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
     public:
-      gs_cci_private_broker_accessor(sc_core::sc_module* owner, std::vector<const char*> pub_params, const cci_originator& originator);
-      gs_cci_private_broker_accessor(sc_core::sc_module* owner, std::vector<std::string> pub_params, const cci_originator& originator);
-      
+      cci_cnf_broker_if& get_accessor(const cci_originator& originator);
+
+      //gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<const char*> pub_params, const cci_originator& originator);
+      gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params, const cci_originator& originator);
+
+    public:
       ~gs_cci_private_broker_accessor();
       
+      const char* name() const;
+
       // ////////////////////////////////////////////////////////////// //
       // /////////////// cci_cnf_broker_if functions ////////////////// //
       // ////////////////////////////////////////////////////////////// //
@@ -82,6 +87,8 @@ namespace cci {
       
       //void set_alias(std::string& orig_parname, std::string& alias_parname);
       
+      bool is_private_broker() const;
+
       // ////////////////////////////////////////////////////////////// //
       // ////////////////////////////////////////////////////////////// //
       // ////////////////////////////////////////////////////////////// //
@@ -92,7 +99,7 @@ namespace cci {
        *
        * @return The originator this accessor has been created for.
        */
-      cci_originator* get_originator();
+      const cci_originator* get_originator() const;
       
       gs_cci_cnf_broker_if* get_gs_broker();
       

@@ -55,7 +55,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual bool unlock(void* pwd = NULL) = 0;
     virtual bool locked() const = 0;
     virtual bool is_accessor() const = 0;
-    virtual cci_base_param* create_accessor(cci_originator& originator) = 0;
+    virtual cci_base_param* create_accessor(const cci_originator& originator) = 0;
   };
 
 __CCI_CLOSE_CONFIG_NAMESPACE__

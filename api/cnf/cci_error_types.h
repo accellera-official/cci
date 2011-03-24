@@ -78,6 +78,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     CCI_REPORT_FUNCTION_FOR(add_param_failed)
     CCI_REPORT_FUNCTION_FOR(remove_param_failed)
     CCI_REPORT_FUNCTION_FOR(cci_value_failure)
+    CCI_REPORT_FUNCTION_FOR(broker_failure)
   };
 
 

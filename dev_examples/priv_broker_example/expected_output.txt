@@ -1,19 +1,19 @@
-Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
-Created new PRIVATE broker for Module "ModuleA" and GCnf_private_Api "ModuleA.__gcnf_api___0"
 
 ------ sc_start() ----------------
 
 ----------------------------
 
 
-**** Parameter list (in Observer): 
+**** Parameter list (visible in Observer): 
    ModuleA.int_param
+   ModuleA2.int_param
 
 
 ----------------------------
 
 
-**** Parameter list (in ModuleA.ModuleB): 
+**** Parameter list (visible in ModuleA.ModuleB.ModuleC): 
+   ModuleA.ModuleB.ModuleC.priv_param
    ModuleA.ModuleB.bool_param
    ModuleA.ModuleB.int_param
    ModuleA.ModuleB.str_param
@@ -24,11 +24,62 @@ Created new PRIVATE broker for Module "ModuleA" and GCnf_private_Api "ModuleA.__
    ModuleA.uint_param
    ModuleA.uint_param2
    ModuleA.int_param
+   ModuleA2.int_param
 
 
 ----------------------------
 
-**** Parameter list (in ModuleA): 
+**** Parameter list (visible in ModuleA2): 
+   ModuleA2.ModuleB.bool_param
+   ModuleA2.ModuleB.int_param
+   ModuleA2.ModuleB.str_param
+   ModuleA2.ModuleB.uint_param
+   ModuleA2.ModuleB.uint_param2
+   ModuleA2.bool_param
+   ModuleA2.str_param
+   ModuleA2.uint_param
+   ModuleA2.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+
+
+----------------------------
+
+**** Parameter list (visible in ModuleA2.ModuleB): 
+   ModuleA2.ModuleB.ModuleC.priv_param
+   ModuleA2.ModuleB.bool_param
+   ModuleA2.ModuleB.int_param
+   ModuleA2.ModuleB.str_param
+   ModuleA2.ModuleB.uint_param
+   ModuleA2.ModuleB.uint_param2
+   ModuleA2.bool_param
+   ModuleA2.str_param
+   ModuleA2.uint_param
+   ModuleA2.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+
+
+----------------------------
+
+**** Parameter list (visible in ModuleA2.ModuleB.ModuleC): 
+   ModuleA2.ModuleB.ModuleC.priv_param
+   ModuleA2.ModuleB.bool_param
+   ModuleA2.ModuleB.int_param
+   ModuleA2.ModuleB.str_param
+   ModuleA2.ModuleB.uint_param
+   ModuleA2.ModuleB.uint_param2
+   ModuleA2.bool_param
+   ModuleA2.str_param
+   ModuleA2.uint_param
+   ModuleA2.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
+
+
+----------------------------
+
+**** Parameter list (visible in ModuleA): 
    ModuleA.ModuleB.bool_param
    ModuleA.ModuleB.int_param
    ModuleA.ModuleB.str_param
@@ -39,6 +90,24 @@ Created new PRIVATE broker for Module "ModuleA" and GCnf_private_Api "ModuleA.__
    ModuleA.uint_param
    ModuleA.uint_param2
    ModuleA.int_param
+   ModuleA2.int_param
+
+
+----------------------------
+
+**** Parameter list (visible in ModuleA.ModuleB): 
+   ModuleA.ModuleB.ModuleC.priv_param
+   ModuleA.ModuleB.bool_param
+   ModuleA.ModuleB.int_param
+   ModuleA.ModuleB.str_param
+   ModuleA.ModuleB.uint_param
+   ModuleA.ModuleB.uint_param2
+   ModuleA.bool_param
+   ModuleA.str_param
+   ModuleA.uint_param
+   ModuleA.uint_param2
+   ModuleA.int_param
+   ModuleA2.int_param
 
 
 ----------------------------

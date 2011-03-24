@@ -1,7 +1,3 @@
-Created new broker "DEFAULT_BROKER_UNKNOWN_ORIGINATOR" and GCnf_Api "DEFAULT_BROKER_UNKNOWN_ORIGINATOR_0"
-Created new PRIVATE broker for Module "ModuleC" and GCnf_private_Api "ModuleC.__gcnf_api___0"
-Created new PRIVATE broker for Module "ModuleA" and GCnf_private_Api "ModuleA.__gcnf_api___0"
-Created new PRIVATE broker for Module "ModuleA2" and GCnf_private_Api "ModuleA2.__gcnf_api___0"
 
 ------ sc_start() ----------------
 

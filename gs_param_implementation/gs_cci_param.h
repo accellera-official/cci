@@ -59,32 +59,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     // Explicit constructors to avoid implicit construction of parameters.
     
-    /// Empty constructor. Name will be set in base
-    /*explicit gs_cci_param()                    : base_type("", std::string(""), false, true, false) { base_type::init(); }
-    explicit gs_cci_param(const val_type& val) : base_type("", val, false, true) { base_type::init(); }
-    
-    /// Constructor with (local/hierarchical) name.
-    explicit gs_cci_param(const std::string& nam) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
-    explicit gs_cci_param(const char* nam       ) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
-    
-    /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
-    explicit gs_cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
-    explicit gs_cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
-    explicit gs_cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
-    
-    /// Constructor with (local/hierarchical) name and initial value.
-    explicit gs_cci_param(const std::string& nam, const val_type& val, const bool force_top_level_name = false) : base_type(nam, val, force_top_level_name, true)   { base_type::init(); }
-    explicit gs_cci_param(const char* nam,        const val_type& val, const bool force_top_level_name = false) : base_type(nam, val, force_top_level_name, true)   { base_type::init(); }
-    
-    // Constructors with register_at_db bool
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
-*/
-
-    //explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, /*register_at_db=*/true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name) : base_type(owner_par, nam, std::string(val), force_top_level_name, /*register_at_db=*/true                 )   { /* TODO: Remove this check to allow empty default values!! This check is to ensure the framework internally uses the correct constructor*/ if (std::string(val).length()==0) assert(false && "This shall not happen, use other constructor!"); /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name) : base_type(owner_par, nam, val,              force_top_level_name, /*register_at_db=*/true, /*(dummy)*/true)   { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool force_top_level_name) : base_type(owner_par, nam,                   force_top_level_name, /*register_at_db=*/true                 )   { /*base_type::init(); Done with InitParam function*/ }
+    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(val), is_top_level_name, /*register_at_db=*/true                 , broker_accessor)   { /* TODO: Remove this check to allow empty default values!! This check is to ensure the framework internally uses the correct constructor*/ if (std::string(val).length()==0) assert(false && "This shall not happen, use other constructor!"); /*base_type::init(); Done with InitParam function*/ }
+    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, val,              is_top_level_name, /*register_at_db=*/true, /*(dummy)*/true, broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
+    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam,                   is_top_level_name, /*register_at_db=*/true                 , broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
   
     ~gs_cci_param() {
     }
@@ -125,7 +102,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     std::string json_serialize(const val_type& val) const {
       // TODO: this is currently not a JSON but a GreenConfig specific string
       // TODO: throw exception on error
-      return base_type::m_gs_param.convertValueToString(val);
+      return base_type::m_gs_param.serialize(val);
     }
 
     void json_deserialize(val_type& target_val, const std::string& str) {
@@ -183,27 +160,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     // Explicit constructors to avoid implicit construction of parameters.
 
-    /// Empty constructor. Name will be set in base
-    /*explicit gs_cci_param()                    : base_type("", std::string(""), false, true, false) { base_type::init(); }
-    
-    /// Constructor with (local/hierarchical) name.
-    explicit gs_cci_param(const std::string& nam) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
-    explicit gs_cci_param(const char* nam       ) : base_type(nam, std::string(""), false, true, false) { base_type::init(); }
-    
-    /// Constructor with (local/hierarchical) name and string representation of initial value.
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
-    explicit gs_cci_param(const char* nam,        const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
-    explicit gs_cci_param(const std::string& nam, const char* val       , const bool force_top_level_name = false)  : base_type(nam, std::string(val), force_top_level_name, true, true) { base_type::init(); }
-    explicit gs_cci_param(const char* nam,        const std::string& val, const bool force_top_level_name = false)  : base_type(nam, val, force_top_level_name, true, true) { base_type::init(); }
-    
-    /// Constructor with (local/hierarchical) name and initial value.
-    
-    // Constructors with register_at_db bool
-    explicit gs_cci_param(const std::string& nam, const std::string& val, const bool force_top_level_name, const bool register_at_db) : base_type(nam, val, force_top_level_name, register_at_db, true) { base_type::init(); }
-     */
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(val), force_top_level_name, true, (std::string(val).length()>0) ? true : false) { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool force_top_level_name = false) : base_type(owner_par, nam, val, force_top_level_name, true)   { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool force_top_level_name = false) : base_type(owner_par, nam, std::string(""), force_top_level_name, true, false) { /*base_type::init(); Done with InitParam function*/ }
+    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(val), is_top_level_name, true, (std::string(val).length()>0) ? true : false, broker_accessor) { /*base_type::init(); Done with InitParam function*/ }
+    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, val, is_top_level_name, true, broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
+    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(""), is_top_level_name, true, false, broker_accessor) { /*base_type::init(); Done with InitParam function*/ }
     
     ~gs_cci_param() {
     }
@@ -240,7 +199,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     }
     
     std::string json_serialize(const val_type& val) const {
-      return base_type::m_gs_param.convertValueToString(val);
+      return base_type::m_gs_param.serialize(val);
     }
     
     void json_deserialize(val_type& target_val, const std::string& str) {

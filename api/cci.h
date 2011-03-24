@@ -42,6 +42,7 @@
  * christian.schroeder@greensocs.com
  */
 
+#include "core/cci_gen_unique_name.h"
 #include "cnf/cci_config.h"
 
 

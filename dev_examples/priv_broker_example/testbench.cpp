@@ -30,6 +30,17 @@ int sc_main(int argc, char *argv[]) {
 
 
   ModuleA a("ModuleA");
+
+  // TODO: remove this hack: poped previous private brokers from broker stack
+  cci::cnf::cci_broker_stack::stack().pop();
+  cci::cnf::cci_broker_stack::stack().pop();
+
+  ModuleA a2("ModuleA2");
+  
+  // TODO: remove this hack: poped previous private brokers from broker stack
+  cci::cnf::cci_broker_stack::stack().pop();
+  cci::cnf::cci_broker_stack::stack().pop();
+  
   ObserverModule        observer   ("Observer");
 
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;

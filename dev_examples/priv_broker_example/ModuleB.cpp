@@ -20,25 +20,26 @@
 
 ModuleB::ModuleB(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, int_param ("int_param", 50, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)) )
-, uint_param("uint_param", 12000, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
-, uint_param2("uint_param2", 12, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
-, str_param ("str_param", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
-, bool_param("bool_param", false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this))) // no default value
+, int_param ("int_param", 50, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)) )
+, uint_param("uint_param", 12000, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+, uint_param2("uint_param2", 12, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+, str_param ("str_param", "This is a test string.", cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+, bool_param("bool_param", cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this))) // no default value
+, mC("ModuleC")
 { 
   SC_THREAD(main_action);
+
+  // This needs to be done during construction (NOT within the sc_thread)!
+  m_broker_accessor = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 }
 
 void ModuleB::main_action() {
 
-  // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
-  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
   wait(10, SC_SEC);
   
   // show a parameter list
-  cout << endl << "**** Parameter list (in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
+  std::vector<std::string> vec = m_broker_accessor->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

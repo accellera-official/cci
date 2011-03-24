@@ -22,7 +22,7 @@ void ParameterOwnerMutabilityModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
+  cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   // ************************************************************************
@@ -35,7 +35,7 @@ void ParameterOwnerMutabilityModule::main_action() {
   cout << name() << ":  mutable_int_param=" << (dec) << mutable_int_param<<endl;
 
   void* key = &mutable_int_param;
-  cout << name() << ":  lock mutable_int_param with key "<< (void*)&key <<endl;
+  cout << name() << ":  lock mutable_int_param"<<endl; // "with key "<< (void*)&key <<endl;
   mutable_int_param.lock(&key);
   cout << name() << ":    set mutable_int_param should fail"<<endl;
   try {
@@ -49,7 +49,7 @@ void ParameterOwnerMutabilityModule::main_action() {
   }
   assert(mutable_int_param == 150);
   cout << name() << ":  mutable_int_param=" << (dec) << mutable_int_param<<endl;
-  cout << name() << ":    set mutable_int_param with wrong key "<< (void*)&mBroker << " - should fail twice"<<endl;
+  cout << name() << ":    set mutable_int_param with wrong key"<<endl;// "<< (void*)&mBroker << " - should fail twice"<<endl;
   try {
     mutable_int_param.set(4444, &mBroker); // should fail!
   } catch(sc_core::sc_report e) {
@@ -66,12 +66,12 @@ void ParameterOwnerMutabilityModule::main_action() {
   }
   assert(mutable_int_param == 150);
 
-  cout << name() << ":    set mutable_int_param with key "<< (void*)&key << " - should succeed"<<endl;
+  cout << name() << ":    set mutable_int_param with key - should succeed"<<endl;// "<< (void*)&key << " - should succeed"<<endl;
   mutable_int_param.set(4444, &key); // should succeed!
   cout << name() << ":  mutable_int_param=" << (dec) << mutable_int_param<<endl;
   assert(mutable_int_param == 4444);
 
-  cout << name() << ":  unlock mutable_int_param with key "<< (void*)&key <<endl;
+  cout << name() << ":  unlock mutable_int_param"<<endl;// with key "<< (void*)&key <<endl;
   mutable_int_param.unlock(&key);
   cout << name() << ":    set mutable_int_param should succeed"<<endl;
   mutable_int_param = 66666; // should succeed!

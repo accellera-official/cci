@@ -40,6 +40,12 @@
 #define __CCI_OPEN_CONFIG_NAMESPACE__  namespace cci { namespace cnf {
 #define __CCI_CLOSE_CONFIG_NAMESPACE__ } }
 
+// Some strings
+#define __CCI_OWNER_ORIGINATOR_STRING__   "OWNER_ORIGINATOR"
+#define __CCI_DEFAULT_BROKER_STRING__     "DEFAULT_BROKER"
+#define __CCI_UNKNOWN_ORIGINATOR_STRING__ "UNKNOWN_ORIGINATOR"
+
+
 /// Main CCI namespace
 /**
  * This is the OSCI CCI namespace
@@ -69,8 +75,21 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * @param originator Originator points to or names the object or module who wants access the config broker; might be NULL for global default broker to be returned
    * @return Configuration broker accessor.
    */
-  cci_cnf_broker_if* get_cnf_broker_instance(cci_originator* originator);
-  cci_cnf_broker_if* get_cnf_broker_instance(const cci_originator& originator);
+  //cci_cnf_broker_if* get_cnf_broker_instance(cci_originator* originator);
+  //cci_cnf_broker_if* get_cnf_broker_instance(const cci_originator& originator);
+
+  /// Creates or returns the one non-private global config broker provided by the broker implementation
+  /// Called by the header function get_current_broker, NEVER call this as a user!
+  /**
+   * This returns the raw broker, not an accessor, thus this 
+   * shall not be returned directy to the user!
+   *
+   * The implemementation shall register the global broker with the broker registry
+   * cci_broker_registry::registry() !
+   *
+   * @return The one non-private global config broker (not wrapped with an accessor)
+   */
+  cci_cnf_broker_if& create_global_cnf_broker();
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
 
@@ -92,10 +111,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
  *
  * @param owner_par CCI Parameter which will store the returned param
  * @param nam The (local or top-level) name the parameter shall get
- * @param force_top_level_name If the given name shall be a top-level name
+ * @param is_top_level_name If the given name shall be a top-level name
+ * @param broker_accessor The broker accessor responsible for this parameter
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool force_top_level_name);
+cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -106,10 +126,11 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
  * @param owner_par CCI Parameter which will store the returned param
  * @param nam       The (local or top-level) name the parameter shall get
  * @param val       Default value for this parameter
- * @param force_top_level_name If the given name shall be a top-level name
+ * @param is_top_level_name If the given name shall be a top-level name
+ * @param broker_accessor The broker accessor responsible for this parameter
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool force_top_level_name);
+cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -120,10 +141,11 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
  * @param owner_par CCI Parameter which will store the returned param
  * @param nam       The (local or top-level) name the parameter shall get
  * @param val       Default value (as JSON string) for this parameter
- * @param force_top_level_name If the given name shall be a top-level name
+ * @param is_top_level_name If the given name shall be a top-level name
+ * @param broker_accessor The broker accessor responsible for this parameter
  */
 template<typename T, cci::cnf::param_mutable_type TM>
-cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool force_top_level_name);
+cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 /// Parameter factory function that is called after construction and after adding to the broker from within the cci param constructor
 /**
@@ -153,7 +175,11 @@ __CCI_CLOSE_CONFIG_NAMESPACE__
 
 #include "cci_param.h"
 
-#include "cci_broker_module.h"
+#include "cci_broker_stack.h"
+#include "cci_broker_registry.h"
+#include "cci_broker_manager.h"
+#include "cci_broker_manager_module.h"
 
+#include "cci_param.hpp"
 
 #endif

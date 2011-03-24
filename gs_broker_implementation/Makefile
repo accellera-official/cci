@@ -9,6 +9,7 @@ CFLAGS = $(OPT) $(OTHER) # -DCCI_CNF_IMPL_VERBOSE
 SRCS = gs_cci_broker.cpp \
        gs_cci_cnf_broker.cpp \
        gs_cci_cnf_broker_accessor.cpp \
+       gs_cci_cnf_broker_accessor_handler.cpp \
        gs_cci_cnf_private_broker.cpp \
        gs_cci_cnf_private_broker_accessor.cpp \
        helpers.cpp
@@ -16,6 +17,7 @@ SRCS = gs_cci_broker.cpp \
 OBJS = gs_cci_broker.o \
        gs_cci_cnf_broker.o \
        gs_cci_cnf_broker_accessor.o \
+       gs_cci_cnf_broker_accessor_handler.o \
        gs_cci_cnf_private_broker.o \
        gs_cci_cnf_private_broker_accessor.o \
        helpers.o

@@ -60,10 +60,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     explicit gs_cci_param_t(my_return_type& owner_par
                             , const std::string& n
                             , const std::string &val
-                            , bool force_top_level_name /*= false*/
-                            , bool register_at_db /*= true*/)
-    : gs_cci_base_param(owner_par, force_top_level_name, register_at_db, /*has_default_value=*/true)
-    , m_gs_param(n, val, NULL, force_top_level_name, register_at_db)
+                            , bool is_top_level_name /*= false*/
+                            , bool register_at_db /*= true*/
+                            , cci::cnf::cci_cnf_broker_if* broker_accessor)
+    : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, /*has_default_value=*/true, broker_accessor)
+    , m_gs_param(n, val, NULL, is_top_level_name, register_at_db)
     , m_owner_par(owner_par)
     {
       gs_cci_base_param::m_gs_param_base = &m_gs_param;
@@ -71,10 +72,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     explicit gs_cci_param_t(my_return_type& owner_par
                             , const std::string& n
-                            , bool force_top_level_name /*= false*/
-                            , bool register_at_db /*= true*/)
-    : gs_cci_base_param(owner_par, force_top_level_name, register_at_db, /*has_default_value=*/false)
-    , m_gs_param(n, std::string(""), NULL, force_top_level_name, register_at_db, false) // default value disabled
+                            , bool is_top_level_name /*= false*/
+                            , bool register_at_db /*= true*/
+                            , cci::cnf::cci_cnf_broker_if* broker_accessor)
+    : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, /*has_default_value=*/false, broker_accessor)
+    , m_gs_param(n, std::string(""), NULL, is_top_level_name, register_at_db, false) // default value disabled
     , m_owner_par(owner_par)
     {
       gs_cci_base_param::m_gs_param_base = &m_gs_param;
@@ -83,11 +85,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     explicit gs_cci_param_t(my_return_type& owner_par
                             , const std::string& n 
                             , const val_type &val
-                            , bool force_top_level_name /*= false*/
+                            , bool is_top_level_name /*= false*/
                             , bool register_at_db /*= true*/
-                            , bool this_is_with_a_value ) // Just to make a difference (allow overloading) the constructor taking a string value 
-    : gs_cci_base_param(owner_par, force_top_level_name, register_at_db, true)
-    , m_gs_param((const std::string&)n, val, force_top_level_name) 
+                            , bool this_is_with_a_value // Just to make a difference (allow overloading) the constructor taking a string value 
+                            , cci::cnf::cci_cnf_broker_if* broker_accessor )
+    : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, true, broker_accessor)
+    , m_gs_param((const std::string&)n, val, is_top_level_name) 
     , m_owner_par(owner_par)
     {
       assert(register_at_db && "Not supported with gs_param?");

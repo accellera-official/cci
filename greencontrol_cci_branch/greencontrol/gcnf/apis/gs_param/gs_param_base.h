@@ -187,7 +187,7 @@ public:
 
     make_destroy_param_callbacks();
 
-    CCI_CNF_DUMP("Destruct broker"<< typeid(m_api).name()<<" 0x"<<(std::hex)<<m_api<<(std::dec));
+    //CCI_CNF_DUMP("Destruct broker"<< typeid(m_api).name()<<" 0x"<<(std::hex)<<m_api<<(std::dec));
     // remove this from database
     if (m_register_at_db)
       m_api->removePar(this);

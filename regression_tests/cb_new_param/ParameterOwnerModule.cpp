@@ -25,7 +25,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config API which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mApi = cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this));
+  cci::cnf::cci_cnf_broker_if* mApi = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
   assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
   
   // create and access a local parameter

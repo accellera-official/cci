@@ -36,13 +36,16 @@ public:
   /// Constructor
   ModuleB(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
-  , int_paramb ("int_paramb", 50, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)) )
-  , uint_paramb("uint_paramb", 12000, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
-  , uint_param2b("uint_param2b", 12, false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
-  , str_paramb ("str_paramb", "This is a test string.", false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this)))
-  , bool_paramb("bool_paramb", false, cci::cnf::get_cnf_broker_instance(cci::cnf::cci_originator(*this))) // no default value
+  , int_paramb ("int_paramb", 50, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)) )
+  , uint_paramb("uint_paramb", 12000, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+  , uint_param2b("uint_param2b", 12, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+  , str_paramb ("str_paramb", "This is a test string.", cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+  , bool_paramb("bool_paramb", cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this))) // no default value
   { 
     SC_THREAD(main_action);
+
+    // This needs to be done during construction (NOT within the sc_thread)!
+    m_broker_accessor = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
   }
   
   /// Main action to make tests with parameters.
@@ -59,6 +62,12 @@ public:
   /// Example parameter.
   cci::cnf::cci_param<bool>            bool_paramb;
   
+protected:
+  
+  /// Points to the broker being responsible for this module; This is needed to be set during construction to get the correct private broker from stack
+  /// Alternatively this module could derive from the cci_broker_manager even without having an own private broker - that would allow to use its get_broker() function
+  cci::cnf::cci_cnf_broker_if* m_broker_accessor;
+
 };
 
 

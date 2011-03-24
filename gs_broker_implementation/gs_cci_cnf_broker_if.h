@@ -28,12 +28,16 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   /// Configuration broker interface with originator information.
   class gs_cci_cnf_broker_if
   {
-    
+
   public:
-    
+
+    virtual cci_cnf_broker_if& get_accessor(const cci_originator& originator) = 0;
+
     // Destructor
     virtual ~gs_cci_cnf_broker_if() { };
     
+    virtual const char* name() const = 0;
+
     virtual void set_init_value(const std::string &parname, const std::string &json_value) = 0;
 
     virtual void lock_init_value(const std::string &parname) = 0;
@@ -68,6 +72,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     //virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
     
+    virtual bool is_private_broker() const = 0;
+
   };
 
       
