@@ -1,0 +1,102 @@
+#------------------------------------------------------------------------------- 
+# @file     Makefile.gs_cci
+# @date     Sun Dec 12 20:10:03 IST 2010
+# @desc     Make rules for building GreenSocs CCI reference lib implementation
+#------------------------------------------------------------------------------- 
+include Makefile.common
+
+#-- Temporary folder to store intermediate .o's for CCI library builds
+USR=$(shell whoami)
+OBJDIR=/tmp/$(USR)
+
+#-- api/
+GS_CCI_API_SRCS_WOPATH=cci_broker_module.cpp
+GS_CCI_API_SRCS_PATH=$(GS_CCI_HOME)/api/cnf/
+GS_CCI_API_SRCS=$(addprefix $(GS_CCI_API_SRCS_PATH),$(GS_CCI_API_SRCS_WOPATH))
+GS_CCI_API_OBJS_TMP=$(addprefix $(OBJDIR)/,$(GS_CCI_API_SRCS_WOPATH))
+GS_CCI_API_OBJS=$(GS_CCI_API_OBJS_TMP:.cpp=.o)
+
+#-- gs_broker_implementation/
+GS_CCI_BROKER_SRCS_WOPATH=gs_cci_broker.cpp \
+                          gs_cci_cnf_broker.cpp  \
+                          gs_cci_cnf_broker_accessor.cpp \
+                          gs_cci_cnf_private_broker.cpp \
+                          gs_cci_cnf_private_broker_accessor.cpp \
+                          helpers.cpp
+GS_CCI_BROKER_SRCS_PATH=$(GS_CCI_HOME)/gs_broker_implementation/
+GS_CCI_BROKER_SRCS=$(addprefix $(GS_CCI_BROKER_SRCS_PATH),$(GS_CCI_BROKER_SRCS_WOPATH))
+GS_CCI_BROKER_OBJS_TMP=$(addprefix $(OBJDIR)/,$(GS_CCI_BROKER_SRCS_WOPATH))
+GS_CCI_BROKER_OBJS=$(GS_CCI_BROKER_OBJS_TMP:.cpp=.o)
+
+#-- gs_param_implementation/
+GS_CCI_PARAM_SRCS_WOPATH=gs_cci_value.cpp \
+                         gs_cci_symbols.cpp \
+                         gs_cci_symbols_templ_small_int.cpp 
+                         #gs_cci_symbols_templ_big_int.cpp 
+GS_CCI_PARAM_SRCS_PATH=$(GS_CCI_HOME)/gs_param_implementation/
+GS_CCI_PARAM_SRCS=$(addprefix $(GS_CCI_PARAM_SRCS_PATH),$(GS_CCI_PARAM_SRCS_WOPATH))
+GS_CCI_PARAM_OBJS_TMP=$(addprefix $(OBJDIR)/,$(GS_CCI_PARAM_SRCS_WOPATH))
+GS_CCI_PARAM_OBJS=$(GS_CCI_PARAM_OBJS_TMP:.cpp=.o)
+
+GS_CCI_JSON_SRCS_WOPATH=json_spirit_reader.cpp \
+                        json_spirit_writer.cpp
+GS_CCI_JSON_SRCS_PATH=$(GS_CCI_HOME)/gs_param_implementation/json_spirit/
+GS_CCI_JSON_SRCS=$(addprefix $(GS_CCI_JSON_SRCS_PATH),$(GS_CCI_JSON_SRCS_WOPATH))
+GS_CCI_JSON_OBJS_TMP=$(addprefix $(OBJDIR)/,$(GS_CCI_JSON_SRCS_WOPATH))
+GS_CCI_JSON_OBJS=$(GS_CCI_JSON_OBJS_TMP:.cpp=.o)
+
+#-- Consolidated sources to package for GS CCI implementation
+GS_CCI_SRCS=$(GS_CCI_API_SRCS) \
+            $(GS_CCI_BROKER_SRCS) \
+            $(GS_CCI_PARAM_SRCS) \
+            $(GS_CCI_JSON_SRCS)
+GS_CCI_OBJS=$(GS_CCI_API_OBJS) \
+            $(GS_CCI_BROKER_OBJS) \
+            $(GS_CCI_PARAM_OBJS) \
+            $(GS_CCI_JSON_OBJS) 
+
+#GS_CCI_CFLAGS=-DCCI_SYMBOLS_LOWER_BOUND=1 -DCCI_SYMBOLS_UPPER_BOUND=10
+
+#-- Build Rules for CCI Component libs
+$(OBJDIR)/%.o : $(GS_CCI_API_SRCS_PATH)%.cpp
+	$(CXX) $(CFLAGS) $(INCS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(GS_CCI_BROKER_SRCS_PATH)%.cpp
+	$(CXX) $(CFLAGS) $(INCS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(GS_CCI_PARAM_SRCS_PATH)%.cpp
+	$(CXX) $(CFLAGS) $(INCS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(GS_CCI_JSON_SRCS_PATH)%.cpp
+	$(CXX) $(CFLAGS) $(INCS) -c $< -o $@
+
+all: $(GS_CCI_BROKER_LIB) $(GS_CCI_API_LIB) $(GS_CCI_PARAM_LIB) $(OBJDIR)
+
+$(OBJDIR): 
+	mkdir -p $(OBJDIR)
+
+$(GS_CCI_API_LIB): $(GS_CCI_API_OBJS)
+	$(AR) $(ARFLAGS) $(GS_CCI_API_LIB) $(GS_CCI_API_OBJS) && \
+	ranlib $@
+
+$(GS_CCI_BROKER_LIB): $(GS_CCI_BROKER_OBJS)
+	$(AR) $(ARFLAGS) $(GS_CCI_BROKER_LIB) $(GS_CCI_BROKER_OBJS) && \
+	ranlib $@
+
+$(GS_CCI_PARAM_LIB): $(GS_CCI_PARAM_OBJS) $(GS_CCI_JSON_OBJS)
+	$(AR) $(ARFLAGS) $(GS_CCI_PARAM_LIB) $(GS_CCI_PARAM_OBJS) $(GS_CCI_JSON_OBJS) && \
+	ranlib $@
+
+Makefile.gs_deps:
+	$(CXX) $(CFLAGS) $(INCS) -M $(GS_CCI_SRCS) >> $@
+
+clean:
+	-rm $(GS_CCI_OBJS)
+	
+cleanbuild: clean all
+
+cleanall: clean
+	-rm $(GS_CCI) Makefile.gs_deps 
+
+include Makefile.gs_deps
+

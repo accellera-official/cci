@@ -1,0 +1,102 @@
+#-- [Update] Update based on your local environment settings
+DEFAULT_SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/ti-systemc-2.2.0
+DEFAULT_TLM_HOME=/vobs/ti_systemc/tools/tlm/TLM-2009-7-15
+DEFAULT_BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_37_0
+DEFAULT_CCI_HOME=/vobs/ti_systemc/tools//cci/CCI-1.31-cci_api-160310
+#DEFAULT_GS_CCI_HOME=/vobs/ti_systemc/tools/cci/CCI-1.31-gs_impl-160310
+DEFAULT_GS_CCI_HOME=/vobs/ti_systemc/tools/cci/greenstarcore_rev613
+DEFAULT_CCI_EXAMPLES_HOME=/vobs/ti_systemc/tools/cci/cci_examples
+
+#--------------------------------------- 
+#-- [Update, if required]
+CXX=g++
+CFLAGS=-m32 -g -Wall -pedantic -Wno-long-long \
+       -DSC_INCLUDE_DYNAMIC_PROCESSES
+LD=g++
+LDFLAGS=-m32
+AR=ar
+ARFLAGS=r
+
+#----------------------------------------
+## Determine platform specific settings
+PLATFORM=$(shell uname -s)
+
+ifeq "$(PLATFORM)" "SunOS"
+     TARGET_ARCH = gccsparcOS5
+endif
+ifeq "$(PLATFORM)" "Linux"
+     TARGET_ARCH=linux
+endif
+ifeq "$(PLATFORM)" "MacOS"
+     TARGET_ARCH=macosx
+endif
+ifeq "$(PLATFORM)" "CYGWIN_NT-5.1"
+     TARGET_ARCH=cygwin
+endif
+ifndef TARGET_ARCH
+     $(error Sorry. I do not recognize platform $(PLATFORM))
+endif
+
+#----------------------------------------
+ifndef SYSTEMC_HOME
+     SYSTEMC_HOME=$(DEFAULT_SYSTEMC_HOME)
+endif
+#-- [Update, if required]
+#SYSTEMC_INC=-I$(SYSTEMC_HOME)/src
+#SYSTEMC_LIB=-L$(SYSTEMC_HOME)/lib/linux/gcc3.4/debug -lsystemc
+SYSTEMC_INC=-I$(SYSTEMC_HOME)/include
+SYSTEMC_LIB=-L$(SYSTEMC_HOME)/lib-$(TARGET_ARCH) -lsystemc
+
+ifndef TLM_HOME
+     TLM_HOME=$(DEFAULT_TLM_HOME)
+endif
+TLM_INC=-I$(TLM_HOME)/include
+
+ifndef BOOST_HOME
+     BOOST_HOME=$(DEFAULT_BOOST_HOME)
+endif
+BOOST_INC=-I$(BOOST_HOME)
+
+ifndef CCI_HOME
+     CCI_HOME=$(DEFAULT_CCI_HOME)
+endif
+CCI_INC=-I$(CCI_HOME)/api
+
+ifndef CCI_EXAMPLES_HOME
+     CCI_EXAMPLES_HOME=$(DEFAULT_CCI_EXAMPLES_HOME)
+endif
+CCI_EXAMPLES_INC=-I$(CCI_EXAMPLES_HOME)/common/inc
+
+ifndef GS_CCI_HOME
+     GS_CCI_HOME=$(DEFAULT_GS_CCI_HOME)
+endif
+GS_CCI_INC=-I$(GS_CCI_HOME) \
+           -I$(GS_CCI_HOME)/api \
+           -I$(GS_CCI_HOME)/gs_param_implementation \
+           -I$(GS_CCI_HOME)/greencontrol_cci_branch \
+           -I$(GS_CCI_HOME)/gs_broker_implementation
+GS_INST_DIR=$(CCI_EXAMPLES_HOME)/common/lib
+GS_CCI_API_LIB=$(GS_INST_DIR)/libcciapi.a
+GS_CCI_BROKER_LIB=$(GS_INST_DIR)/libccibrokerimpl.a
+GS_CCI_PARAM_LIB =$(GS_INST_DIR)/libcciparamimpl.a
+GS_CCI= $(GS_CCI_PARAM_LIB) $(GS_CCI_BROKER_LIB) $(GS_CCI_API_LIB)
+GS_CCI_LIB=-L$(GS_INST_DIR) -lccibrokerimpl -lcciparamimpl -lcciapi  
+
+#-------------------------------------------------------------------------------
+#-- [Do not Update]
+#---- Concatenate include paths
+INCS=$(INC_DIR) \
+     $(SYSTEMC_INC) \
+     $(TLM_INC) \
+     $(BOOST_INC) \
+     $(GS_CCI_INC) 
+
+#-------------------------------------------------------------------------------
+## Make suffix rules 
+.SUFFIXES: .cpp .c .o
+.cpp.o: 
+	$(CXX) $(CFLAGS) $(INCS) -o $@ -c $<
+
+.c.o: 
+	$(CC) $(CFLAGS) $(INCS) -o $@ -c $<
+
