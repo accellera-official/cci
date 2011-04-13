@@ -39,7 +39,7 @@ SC_MODULE(config_ip) {
   SC_CTOR(config_ip)
   {
     // Get CCI configuration handle specific for this module
-    m_cci = cci::cnf::get_cnf_broker_instance(this);
+    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
     assert(m_cci != NULL);
     setup_sim_ip("Attempting to setup config_ip to 10 before IP construction", "10");
   }

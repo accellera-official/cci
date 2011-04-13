@@ -4,7 +4,7 @@ DEPTH=../../build-unix
 
 #-- [Update] 
 #---- Add source files to be compiled for this example without path
-SRCS_WOPATH=testbench.cpp
+SRCS_WOPATH=testbench.cpp 
 
 #-- [Update, if required] 
 #---- Update sources with path and derive object names
@@ -15,7 +15,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=simple_int_param.exe
+EXE=parameter_naming.exe
 
 #-- [Do not Update]
 include $(DEPTH)/Makefile.config

@@ -1,6 +1,6 @@
 ================================================================================
                         OSCI-CCI Examples
-Date: 03/14/2011
+Date: 04/12/2011
 ================================================================================
 
 ToC
@@ -14,7 +14,7 @@ ToC
 
 Introduction:
 -------------
-This README describes the content and structure of examples in the cci_example/ 
+This README describes the content and structure of examples in the cci/examples/ 
 folder.
 
 The CCI examples are patterned after the TLM2 examples. The examples implemented 
@@ -22,13 +22,13 @@ here are based on the brief in 'Description of Config Examples.docx'.
 
 Directory Structure:
 --------------------
-          cci_examples/
+          examples/
                 |- build-msvc           // Windows build scripts
                 |- build-unix           // *nix build scripts
                 |- common               // Code common to one or more examples
                 |       |- inc          //   Common headers
                 |       |- src          //   Common sources
-                |       |- lib*         // Lib folder to install GS-CCI
+                |       |- lib*         // Lib folder to install CCI-libs
                 |- ex1_xxx              // ex[Index]_[Example Name]
                 |       |- doc          //   PPT having example description
                 |       |- reports      //   Contains 'expected.log' file
@@ -58,7 +58,7 @@ To run the makefiles the following environment needs to be set:
       $SYSTEMC_HOME should point to the SystemC installation
       $BOOST_HOME should point to the Boost library installation
       $GS_CCI_HOME should point to the GreenSocs-CCI reference installation
-      $CCI_EXAMPLES_HOME should point to the cci_examples/ dir
+      $CCI_EXAMPLES_HOME should point to the cci/examples/ dir
       $TARGET_ARCH defines the appendix of the systemc library directory
         these should be set such that $SYSTEMC_HOME/lib-$TARGET_ARCH is a 
         directory containing the systemc library.  
@@ -103,4 +103,8 @@ TODO:
 ISSUES:
 ------
 1. General
-    a. Unimplemented features are marked with 'Warning's.
+    a. Unimplemented features are marked with 'Warning's/TBD.
+2. Link time error reported when the 3 component CCI libraries are built 
+and linked independently. Hence the component CCI libs are archived as a single lib
+-lgs_cci.
+

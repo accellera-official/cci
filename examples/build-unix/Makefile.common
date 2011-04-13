@@ -1,17 +1,23 @@
 #-- [Update] Update based on your local environment settings
 DEFAULT_SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/ti-systemc-2.2.0
+#DEFAULT_SYSTEMC_HOME=/usr/local/systemc-2.2
 DEFAULT_TLM_HOME=/vobs/ti_systemc/tools/tlm/TLM-2009-7-15
+#DEFAULT_TLM_HOME=/home/swaminathan/Cpp/TLM-2009-07-15
 DEFAULT_BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_37_0
+#DEFAULT_BOOST_HOME=/usr/local/boost_1_37_0
 DEFAULT_CCI_HOME=/vobs/ti_systemc/tools//cci/CCI-1.31-cci_api-160310
-#DEFAULT_GS_CCI_HOME=/vobs/ti_systemc/tools/cci/CCI-1.31-gs_impl-160310
+#DEFAULT_CCI_HOME=/home/swaminathan/svn
 DEFAULT_GS_CCI_HOME=/vobs/ti_systemc/tools/cci/greenstarcore_rev613
+#DEFAULT_GS_CCI_HOME=/home/swaminathan/svn
 DEFAULT_CCI_EXAMPLES_HOME=/vobs/ti_systemc/tools/cci/cci_examples
+#DEFAULT_CCI_EXAMPLES_HOME=/home/swaminathan/svn/examples
 
 #--------------------------------------- 
 #-- [Update, if required]
 CXX=g++
+# Swami: Added -DNDEBUG to get example-6 to run (without assertions)
 CFLAGS=-m32 -g -Wall -pedantic -Wno-long-long \
-       -DSC_INCLUDE_DYNAMIC_PROCESSES
+       -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG
 LD=g++
 LDFLAGS=-m32
 AR=ar
@@ -79,8 +85,12 @@ GS_INST_DIR=$(CCI_EXAMPLES_HOME)/common/lib
 GS_CCI_API_LIB=$(GS_INST_DIR)/libcciapi.a
 GS_CCI_BROKER_LIB=$(GS_INST_DIR)/libccibrokerimpl.a
 GS_CCI_PARAM_LIB =$(GS_INST_DIR)/libcciparamimpl.a
+GS_CCI_ALL_LIB=$(GS_INST_DIR)/libgs_cci.a
 GS_CCI= $(GS_CCI_PARAM_LIB) $(GS_CCI_BROKER_LIB) $(GS_CCI_API_LIB)
-GS_CCI_LIB=-L$(GS_INST_DIR) -lccibrokerimpl -lcciparamimpl -lcciapi  
+# Swami: Am getting link error if I try to link the libs separately.
+#        Hence am consolidating the libs before linking.
+#GS_CCI_LIB=-L$(GS_INST_DIR) -lccibrokerimpl -lcciparamimpl -lcciapi  
+GS_CCI_LIB=-L$(GS_INST_DIR) -lgs_cci
 
 #-------------------------------------------------------------------------------
 #-- [Do not Update]
