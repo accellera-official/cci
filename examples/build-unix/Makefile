@@ -7,6 +7,7 @@ SUBDIRS = \
           ../ex4_simple_immutable_param \
           ../ex5_default_and_init_value \
           ../ex6_parameter_naming \
+          ../ex7_Parameter_Information	\
           ../ex8_parameter_value_change_callbacks
 
 .PHONY: all clean check run

@@ -1,0 +1,105 @@
+
+[MAIN] : parameter_container module declares two cci type parameters.
+
+	One is of 'Integer type' and the other is of 'String type'
+
+@ 0 s	demonstrating 'get_default_value()'
+
+	[OWNER -> Retrieve] : Parameter name  : param_owner.mutable_int_param
+
+	[OWNER -> Retrieve] : Using 'get_default_value()' : 0
+
+	[OWNER -> Set] : Param doc - 'Initial documentation'
+
+	[CFGR] : DEFAULT_BROKER is not a private broker.
+
+	[CFGR] : String parameter initialized by broker using 'set_init_value()'
+
+	[CFGR] : String parameter exists
+
+@ 0 s	demonstrating 'is_default_value()'
+
+	[CFGR] : param_owner.mutable_int_param default value hasn't been modified.
+@ 1 ns
+
+	[OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 2
+
+	[OWNER -> Set] : Int param doc - 'Modified by initial value'
+
+@ 2 ns	demonstrating 'is_default_value()'
+
+	[CFGR] : param_owner.mutable_int_param value has been modified.
+
+	[CFGR] : param_owner.mutable_string_param value has been modified.
+
+	[CFGR -> Retrieve] : Parameter name  : param_owner.mutable_string_param
+
+	[CFGR -> Retrieve] : Parameter value : Configured
+
+@ 4 ns	demonstrating 'is_invalid_value()'
+
+	[CFGR] : Valid parameter value.
+
+	[CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
+
+	[CFGR -> Retrieve] Parameter's value : 1
+
+	[CFGR -> Retreive] Parameter's doc : Modified by initial value
+
+@ 6 ns
+
+	[CFGR -> Set] :  param_owner.mutable_int_param value to 10
+
+@ 8 ns
+
+	[CFGR-> Set] : Parameter doc - 'Modified with Configuration tool'
+
+@ 10 ns
+
+	[CFGR -> Retrieve] : Parameter name : param_owner.mutable_int_param
+
+	[CFGR -> Retrieve] : Parameter value: 10
+
+	[CFGR -> Retrieve] : Parameter doc : Modified with Configuration tool
+
+@ 12 ns
+
+	[CFGR] : Checking locked status of parameter
+
+	[CFGR] : param_owner.mutable_int_param is in unlocked state!!
+
+	[CFGR] : Parameter locked using password
+
+@ 14 ns
+
+	[CFGR] : Checking locked status of parameter
+
+	[CFGR] : param_owner.mutable_int_param is in locked state!!
+
+	[CFGR] : Parameter unlocked using password
+
+@ 16 ns
+
+	[CFGR] : Checking locked status of parameter
+
+	[CFGR] : param_owner.mutable_int_param is in unlocked state!!
+
+@ 18 ns demonstrating 'set_value_invalid()'
+
+	[OWNER -> Set] : param_owner.mutable_int_param value invalid.
+
+	[OWNER] : param_owner.mutable_int_param value is invalid : 10
+
+@ 20 ns	demonstrating 'is_invalid_value()'
+
+	[CFGR] : param_owner.mutable_int_param value is set to invalid.
+
+@ 22 ns	demonstrating 'set_value()' using cci_value
+
+	[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : 4
+
+	[CFGR] : 'Retrieve1' using 'json_serialize' and 'Retrieve2' using 'get_value()'
+
+	[CFGR -> Retrieve1] : param_owner.mutable_string_param value is Hello_New_String
+
+	[CFGR -> Retrieve2] : Hello_New_String

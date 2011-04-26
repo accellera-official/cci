@@ -1,16 +1,20 @@
 #-- [Update] Update based on your local environment settings
-DEFAULT_SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/ti-systemc-2.2.0
 #DEFAULT_SYSTEMC_HOME=/usr/local/systemc-2.2
-DEFAULT_TLM_HOME=/vobs/ti_systemc/tools/tlm/TLM-2009-7-15
 #DEFAULT_TLM_HOME=/home/swaminathan/Cpp/TLM-2009-07-15
-DEFAULT_BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_37_0
 #DEFAULT_BOOST_HOME=/usr/local/boost_1_37_0
-DEFAULT_CCI_HOME=/vobs/ti_systemc/tools//cci/CCI-1.31-cci_api-160310
 #DEFAULT_CCI_HOME=/home/swaminathan/svn
-DEFAULT_GS_CCI_HOME=/vobs/ti_systemc/tools/cci/greenstarcore_rev613
 #DEFAULT_GS_CCI_HOME=/home/swaminathan/svn
-DEFAULT_CCI_EXAMPLES_HOME=/vobs/ti_systemc/tools/cci/cci_examples
 #DEFAULT_CCI_EXAMPLES_HOME=/home/swaminathan/svn/examples
+
+#----------- [Update] Update the following based on your system environment settings ------------
+# PVS :  CST System Paths 
+DEFAULT_SYSTEMC_HOME= /home/pvs/MyInstallations/SystemC-2.2.0
+DEFAULT_TLM_HOME=
+DEFAULT_BOOST_HOME=/home/pvs/MyInstallations/boost_1_46_1/boost
+DEFAULT_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/api
+DEFAULT_GS_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622
+DEFAULT_CCI_EXAMPLES_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/examples
+#-------------------------------------------------------------------------------------------------
 
 #--------------------------------------- 
 #-- [Update, if required]
