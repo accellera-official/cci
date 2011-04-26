@@ -1,0 +1,2 @@
+This is a test file for commit tests.
+Feel free to change its content to try out if you can commit.
