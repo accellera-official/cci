@@ -37,15 +37,15 @@ SC_MODULE(parameter_owner)
 		SC_CTOR(parameter_owner)
 
 			/// Assign name and value to the cci 'int-type' parameter.
-			: int_param("mutable_int_param", 0)
+		: int_param("mutable_int_param", 0)
 			/// Assign name to the cci 'string-type' parameter (Value NOT ASSIGNED)
-			, string_param("mutable_string_param","Default_Value")
+		, string_param("mutable_string_param","Default_Value")
 		{
 
 			// Registering SC_THREAD process
 			SC_THREAD(run_thread);
 
-			std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'get_default_value()'" << endl;			
+			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'get_default_value()'" << endl;			
 			std::cout << "\n\t[OWNER -> Retrieve] : Parameter name  : " << int_param.get_name() << endl;
 			
 			//TODO :  The following code generates a warning :
@@ -59,6 +59,8 @@ SC_MODULE(parameter_owner)
 			//	std::cout << "\n\t[OWNER] : Value has not been modified since it is initialized by CCI tool." << endl;
 			//else
 			//	std::cout << "\n\t[OWNER] : is_initial_value() - Value has been modified." << endl;
+			//
+			//Used something like : int_param = 1; (see code within the SC_THREAD)
 
 			/// Query default value of a parameter using 'get_default_type()' API
 			std::cout << "\n\t[OWNER -> Retrieve] : Using 'get_default_value()' : " << int_param.get_default_value() << endl;			
@@ -77,54 +79,53 @@ SC_MODULE(parameter_owner)
 		/// SC_THREAD process definition
 		void run_thread (void)
 		{
-				while(1)
-				{
-					wait(1.0, SC_NS);
-					
-					// Override the default value
-					std::cout << "@ " << sc_time_stamp() << endl;
-					std::cout << "\n\t[OWNER -> Set] : Overriding default value of " << int_param.get_name() << " to 2" << endl;
-					
-					int_param = 1;
-					const std::string doc2 = "Modified by initial value";					
-
-					std::cout << "\n\t[OWNER -> Set] : Int param doc - 'Modified by initial value'" << endl;
-					int_param.set_documentation(doc2);
-			
-					wait(17.0, SC_NS);
-
-					/*****************************************************************************************************************
- 					// The code (commented) below notifies the following error :
- 					//
- 					// Error: /OSCI/CCI/cci_value_failure: Set cci value not implemented for not specialized parameter types.
- 					// In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_param_implementation/gs_cci_param.h:125
- 					// In process: param_acc.run_accessor @ 20 ns
- 					//
-
-  				std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'set_value' using cci_value for int" << endl;
-					
-					cci::cnf::cci_value int_value(55);
-					int_param.set_value(int_value);
+			while(1)
+			{
+				wait(1.0, SC_NS);
 				
-					std::cout << "\n\t[OWNER -> Retrieve] : " << int_param.get_name() << " value is " << int_param.get() << endl;
-						
-					wait(2.0, SC_NS);
-					******************************************************************************************************************/
+				// Override the default value
+				std::cout << "@ " << sc_time_stamp() << endl;
+				std::cout << "\n\t[OWNER -> Set] : Overriding default value of " << int_param.get_name() << " to 2" << endl;
+				
+				int_param = 1;
+				const std::string doc2 = "Modified by initial value";					
 
-					std::cout << "\n@ " << sc_time_stamp() << " demonstrating 'set_value_invalid()'" << endl;	
-					std::cout << "\n\t[OWNER -> Set] : " << int_param.get_name() << " value invalid." << endl;
+				std::cout << "\n\t[OWNER -> Set] : Int param doc - 'Modified by initial value'" << endl;
+				int_param.set_documentation(doc2);
+		
+				wait(17.0, SC_NS);
+
+				/*****************************************************************************************************************
+				// The code (commented) below notifies the following error :
+				//
+				// Error: /OSCI/CCI/cci_value_failure: Set cci value not implemented for not specialized parameter types.
+				// In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_param_implementation/gs_cci_param.h:125
+				// In process: param_acc.run_accessor @ 20 ns
 					
-					/// Set the cci parameter to invalid state using 'set_invalid_state()' API
-					int_param.set_invalid_value();				
+				std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'set_value' using cci_value for int" << endl;
+				
+				cci::cnf::cci_value int_value(55);
+				int_param.set_value(int_value);
 			
-					/// Query a cci parameter value validity using 'is_invalid_value()' API	
-					if(int_param.is_invalid_value())
-						std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is invalid : " << int_param.get() << endl;
-					else
-						std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is not invalid." << endl;					
-	
-					wait(20.0, SC_NS); 
-				}
+				std::cout << "\n\t[OWNER -> Retrieve] : " << int_param.get_name() << " value is " << int_param.get() << endl;
+							
+				wait(2.0, SC_NS);
+				******************************************************************************************************************/
+
+				std::cout << "\n@ " << sc_time_stamp() << " demonstrating 'set_value_invalid()'" << endl;	
+				std::cout << "\n\t[OWNER -> Set] : " << int_param.get_name() << " value invalid." << endl;
+				
+				/// Set the cci parameter to invalid state using 'set_invalid_state()' API
+				int_param.set_invalid_value();				
+			
+				/// Query a cci parameter value validity using 'is_invalid_value()' API	
+				if(int_param.is_invalid_value())
+					std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is invalid : " << int_param.get() << endl;
+				else
+					std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is not invalid." << endl;					
+
+				wait(20.0, SC_NS); 
+			}
 		}
 
 	private	:

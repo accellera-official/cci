@@ -24,20 +24,18 @@
 #define PARAMETER_CONFIGURER_H
 
 /// Include 'cci.h' header in all CCI-based applications
-#include "cci.h"
-#include "assert.h"
+#include <cci.h>
+#include <assert.h>
 
 /**
   * @brief   This sc_module instantiates a cci configuration broker which accessess
   *          and sets the various attributes of a cci parameter 
   * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    18th April, 2011 (Monday) : 17:45 hrs IST
+  * @date    28th April, 2011 (Thursday) : 14:45 hrs IST
   */
 SC_MODULE(parameter_configurer)
 {
 	public	:
-
-		std::string string_param_str;
 
 		/// Default constructor
 		SC_CTOR(parameter_configurer) : check(0)
@@ -55,24 +53,9 @@ SC_MODULE(parameter_configurer)
 				std::cout << "\n\t[CFGR] : Broker Type : " << myBrokerInterface->name() << endl;
 			else
 				std::cout << "\n\t[CFGR] : " << myBrokerInterface->name() << " is not a private broker." << endl; 
-
 		
-			string_param_str = "param_owner.mutable_string_param";
-			
-			std::cout << "\n\t[CFGR] : String parameter initialized by broker using 'set_init_value()'" << endl;			
-
-			/// Broker initializing cci parameter's value using 'set_init_value()' API
-			//  This value has higher precedence than the default value of the parameter
-			myBrokerInterface->set_init_value(string_param_str, "Configured");
-			
-			//Moved the below code snippet to the SC_THREAD process
-			//
-			//if(myBrokerInterface->exists_param(string_param_str))
-			//	std::cout << "\n\t[CFGR] : String parameter exists" << endl;
-			//else
-			//	std::cout << "\n\t[CFGR] : String parameter does not exists" << endl;
-
-			/// Registering SC_THREAD process 
+	
+ 			/// Registering SC_THREAD process 
 			SC_THREAD(run_accessor);
 		}
 
@@ -86,30 +69,55 @@ SC_MODULE(parameter_configurer)
 		void run_accessor(void)
 		{
 			const std::string int_param_str = "param_owner.mutable_int_param";
-				
+			const std::string string_param_str = "param_owner.mutable_string_param";
+			
+			cci::cnf::cci_base_param* int_param_ptr;
+			cci::cnf::cci_base_param* str_param_ptr;			
+
+			bool intParamExists = false;
+			bool strParamExists = false;	
+		
 			while(1) 
 			{
 
-				/// Broker interface checks for existance of a parameter using 'exists_param' API
+				/// Broker interface checks for existance of a (std::string type) parameter using 'exists_param' API
 				if(myBrokerInterface->exists_param(string_param_str))
-					std::cout << "\n\t[CFGR] : String parameter exists" << endl;
+				{
+					/// If parameter exists, get handle of the parameter using 'get_param' API
+					str_param_ptr = myBrokerInterface->get_param(string_param_str);		
+					
+					// Report if parameter handle is returned NULL
+					assert(str_param_ptr != NULL && "String CCI Parameter Handle returned NULL");
+									
+					strParamExists = true;
+				}
 				else
-					std::cout << "\n\t[CFGR] : String parameter does not exists" << endl;
+				{
+					std::cout << "\n\t[CFGR] : String parameter does not exist" << endl;
+					
+					strParamExists = false;
+				} // End of IF
 
-
-				// Broker interface checks for the existance of a parameter
+				// Broker interface checks for the existance of a (int type) parameter
 				if(myBrokerInterface->exists_param(int_param_str))
 				{
-					/// If the parameter exists, get the parameter using 'get_param' API
-					cci::cnf::cci_base_param* int_param_ptr =	myBrokerInterface->get_param(int_param_str);
-					cci::cnf::cci_base_param* str_param_ptr = myBrokerInterface->get_param(string_param_str);		
+					int_param_ptr =	myBrokerInterface->get_param(int_param_str);
 		
 					assert(int_param_ptr != NULL && "Integer CCI Parameter Handle returned NULL");					
-					assert(str_param_ptr != NULL && "String CCI Parameter Handle returned NULL");
 				
+					intParamExists = true;
+				}
+				else
+				{
+					std::cout << "\n\t[CFGR] : Integer parameter does not exist." << endl;
+				
+					intParamExists = false;
+				} // End of IF
+
+				if(strParamExists && intParamExists)
+				{
 					std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'is_default_value()'" << endl; 
-
-
+					
 					/// Access parameter's default value status using 'is_default_value()' API
 					if(int_param_ptr->is_default_value())
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " default value hasn't been modified." << endl; 
@@ -124,15 +132,16 @@ SC_MODULE(parameter_configurer)
 					// Access parameter's default value status using 'is_default_value()' API
 					if(!int_param_ptr->is_default_value())
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " value has been modified." << endl; 
-					
+
+
 					if(str_param_ptr->is_default_value())
-						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " value hasn't been modified" << endl;			
-					else
 					{
-						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " value has been modified." << endl; 
+						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " value hasn't been modified" << endl;			
 						std::cout << "\n\t[CFGR -> Retrieve] : Parameter name  : " << str_param_ptr->get_name() << endl;
 						std::cout << "\n\t[CFGR -> Retrieve] : Parameter value : " << str_param_ptr->json_serialize() << endl;			
-					}// End of IF
+					}
+					else
+						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " value has been modified." << endl; 
 				
 
 					wait(2.0, SC_NS);

@@ -1,9 +1,11 @@
 
+[MAIN] : Setting 'param_owner.mutable_string_param' value to 'Initialized within sc_main()'
+
 [MAIN] : parameter_container module declares two cci type parameters.
 
 	One is of 'Integer type' and the other is of 'String type'
 
-@ 0 s	demonstrating 'get_default_value()'
+Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Retrieve] : Parameter name  : param_owner.mutable_int_param
 
@@ -12,10 +14,6 @@
 	[OWNER -> Set] : Param doc - 'Initial documentation'
 
 	[CFGR] : DEFAULT_BROKER is not a private broker.
-
-	[CFGR] : String parameter initialized by broker using 'set_init_value()'
-
-	[CFGR] : String parameter exists
 
 @ 0 s	demonstrating 'is_default_value()'
 
@@ -30,11 +28,11 @@
 
 	[CFGR] : param_owner.mutable_int_param value has been modified.
 
-	[CFGR] : param_owner.mutable_string_param value has been modified.
+	[CFGR] : param_owner.mutable_string_param value hasn't been modified
 
 	[CFGR -> Retrieve] : Parameter name  : param_owner.mutable_string_param
 
-	[CFGR -> Retrieve] : Parameter value : Configured
+	[CFGR -> Retrieve] : Parameter value : Initialized within sc_main
 
 @ 4 ns	demonstrating 'is_invalid_value()'
 
