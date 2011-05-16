@@ -70,15 +70,24 @@ In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencont
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
+[ROUTER : Caught] : Error: /OSCI/CCI/set_param_failed: Setting initial value failed.
+In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:54
+
 [TOP_MODULE C_TOR] : Re-setting start addr of Slave_1
 
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
+[ROUTER : Caught] : Error: /OSCI/CCI/set_param_failed: Setting initial value failed.
+In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:54
+
 [TOP_MODULE C_TOR] : Re-setting end addr of Slave_1
 
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
+
+[ROUTER : Caught] : Error: /OSCI/CCI/set_param_failed: Setting initial value failed.
+In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:54
 
 [TOP_MODULE C_TOR] : Re-setting fields of Slave_2
 

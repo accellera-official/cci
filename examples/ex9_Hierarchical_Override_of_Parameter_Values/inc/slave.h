@@ -13,7 +13,7 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/*
+/**
  * @file     slave.h
  * @brief    This file declares and implements the functionality of the slave.
  *           Few of the parameters of the slave sc_module are configured by the 
@@ -31,7 +31,7 @@
 #include "tlm.h"
 #include "tlm_utils/simple_target_socket.h"
 
-/*
+/**
  * @brief    This module implements the slave functionality and contains tlm 
  *           socket for communication with router
  * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
@@ -77,7 +77,7 @@ SC_MODULE(slave)
 			// Implements no functionality				
 		}
 		
-		/*
+		/**
  		 * @brief      :  TLM2.0 b_transport layer callback
  		 * @param[in]     tlm::tlm_generic_payload&
  		 * @param[in]     sc_time&

@@ -14,7 +14,7 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/*
+/**
  * @file     top_module.h
  * @brief    This header contains code related to the top module which decides
  *           the model hierarchy for example#9.  
@@ -35,7 +35,7 @@
 #include "router.h"
 #include "tlm.h"
 
-/*
+/**
  * @brief     This SC_MODULE instantiates the router, master and slave modules.
  *            Also, it creates the binding or communication between these modules.
  * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
@@ -108,7 +108,7 @@ SC_MODULE(top_module)
 				myDefaultBroker->set_init_value(stringMisc, masterName);
 				masterList.push_back(new master(masterName));
       
-				/*
+				/**
  				 * @author : Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
  				 * @date   : 6th May, 2011 (Friday) 
 				 * @desc   : Binding of Master to Router
@@ -138,7 +138,7 @@ SC_MODULE(top_module)
 				myDefaultBroker->set_init_value(stringMisc, ss.str());
 				slaveList.push_back(new slave(slaveName));
 
-				/*
+				/**
  				 * @author    : Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
  				 * @date      : 6th May, 2011 (Friday)
 				 * @desc      : Binding Router to Slave
@@ -160,7 +160,7 @@ SC_MODULE(top_module)
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting fields of Slave_" << i << endl;
 					myDefaultBroker->set_init_value(slaveName, ss.str());
 				}	catch (sc_core::sc_report e)	{
- 					if(strcmp(e.get_msg_type(), cci::cnf::cci_report::get_param_failed().get_msg_type()) == 0)
+ 					if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
   					std::cout <<  "\n[ROUTER : Caught] : " << e.what() << endl;}
 	
 				sprintf(slaveName, "%s.RouterInstance.r_sa_%d", name(), i);
@@ -175,7 +175,7 @@ SC_MODULE(top_module)
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting start addr of Slave_" << i << endl;
 					myDefaultBroker->set_init_value(slaveName, ss.str());
 				}	catch (sc_core::sc_report e)	{
-	 				if(strcmp(e.get_msg_type(), cci::cnf::cci_report::get_param_failed().get_msg_type()) == 0)
+	 				if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
 	  				std::cout <<  "\n[ROUTER : Caught] : " << e.what() << endl;	}
 	
 				sprintf(slaveName, "%s.RouterInstance.r_ea_%d", name(), i);
@@ -188,7 +188,7 @@ SC_MODULE(top_module)
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting end addr of Slave_" << i << endl;
 					myDefaultBroker->set_init_value(slaveName, ss.str());
 				}	catch (sc_core::sc_report e)	{
-	 				if(strcmp(e.get_msg_type(), cci::cnf::cci_report::get_param_failed().get_msg_type()) == 0)
+	 				if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
 	  				std::cout <<  "\n[ROUTER : Caught] : " << e.what() << endl;	}
 			}// End of FOR
 		}// End of constructor
@@ -197,7 +197,7 @@ SC_MODULE(top_module)
 		/// Destructor of the top module
 		~top_module()
 		{
-		  // TODO De-allocate all master and slave 
+		  // TODO De-allocate all master and slave properly 
 			if(!masterList.empty())
 				masterList.clear();
 

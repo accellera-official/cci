@@ -14,7 +14,7 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/*
+/**
  * @file     master.h
  * @brief    This file declares and implements the functionality of the master.
  *           Few of the parameters of the master sc_module are configured by the 
@@ -32,7 +32,7 @@
 #include "tlm.h"
 #include "tlm_utils/simple_initiator_socket.h"
 
-/*
+/**
  * @brief     This module implements the master functionality and contains tlm
  *            socket for communication with router
  * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
@@ -59,7 +59,7 @@ SC_MODULE(master)
 			SC_THREAD(run_master);
 		}
 
-		/* 
+		/** 
 		 * @brief     :   Description for tlm socket and communication with router
 		 * @author    :   Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
 		 * @date      :   5th May, 2011 (Thursday)

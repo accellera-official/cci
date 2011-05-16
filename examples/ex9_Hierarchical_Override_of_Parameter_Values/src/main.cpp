@@ -14,7 +14,7 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/*
+/**
  * @file     main.cpp 
  * @brief    This file declares and implements the functionality of the slave.
  *           Few of the parameters of the slave sc_module are configured by the 
@@ -27,7 +27,7 @@
 #include <assert.h>          
 #include "top_module.h"      /*!<'top_module' instance shall be created within main*/
 
-/*
+/**
  * @brief     The sc_main begins from here
  * @param[in] int sc_argc 
  * @param[in] char* sc_argv[]

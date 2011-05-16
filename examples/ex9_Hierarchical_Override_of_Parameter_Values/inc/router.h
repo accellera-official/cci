@@ -14,7 +14,7 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/*
+/**
  * @file     router.h
  * @brief    This file declares and implements the functionality of the router.
  *           Few of the parameters of the slave and master sc_module(s) are 
@@ -35,7 +35,7 @@
 #include "tlm_utils/multi_passthrough_target_socket.h"
 #include "tlm_utils/multi_passthrough_initiator_socket.h"
 
-/*
+/**
  * @brief     This module describes the attributes and functionality of the router.
  *            Router creates its Router Table within the 'before_end_of_elaboration'
  *            callback
@@ -73,7 +73,7 @@ SC_MODULE(router)
 			Router_target.register_b_transport(this,&router::b_transport);
 		}
 
-		/*
+		/**
      * @brief     : The Router Table contents are filled within this 'before_end_of_elaboration' callback
      * @param[in]  void (Callbacks registered with the SystemC Kernel just like processes)
      * @param[out] void (Callbacks registered with the SystemC kernel just like processes)
