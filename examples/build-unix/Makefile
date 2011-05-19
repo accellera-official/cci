@@ -10,6 +10,7 @@ SUBDIRS = \
           ../ex7_Parameter_Information	\
           ../ex8_parameter_value_change_callbacks \
 					../ex9_Hierarchical_Override_of_Parameter_Values	\
+					../ex10_Shared_Parameters	\
 					../ex13_Parameter_Value_Locking
 	
 .PHONY: all clean check run
