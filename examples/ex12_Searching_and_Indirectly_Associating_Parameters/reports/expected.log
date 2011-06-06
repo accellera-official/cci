@@ -1,0 +1,53 @@
+
+	[OWNER_1 C_TOR] : Parameter Name   : top_mod.param_owner_1.clk_freq_Hz	Parameter Value : 1000
+	[OWNER_1 C_TOR] : Parameter Name   : top_mod.param_owner_1.clk_freq_KHz	Parameter Value : 2000
+	[OWNER_1 C_TOR] : Parameter Name   : top_mod.param_owner_1.clk_freq_MHz	Parameter Value : 3000
+
+	[OWNER_2 C_TOR] : Parameter Name   : top_mod.param_owner_2.clock_speed_Hz	Parameter Value : 1500
+	[OWNER_2 C_TOR] : Parameter Name   : top_mod.param_owner_2.clock_speed_KHz	Parameter Value : 2500
+	[OWNER_2 C_TOR] : Parameter Name   : top_mod.param_owner_2.clock_speed_MHz	Parameter Value : 3500
+
+Warning: GreenSocs/cci/not_implemented: pattern limited to GreenConfig capabilities
+In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:143
+
+Warning: GreenSocs/cci/not_implemented: pattern limited to GreenConfig capabilities
+In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:143
+
+	[TOP_MODULE within beoe] : Parameter Name : top_mod.param_owner_1.clk_freq_Hz	Parameter Value : 1000
+
+	[TOP_MODULE within beoe] : Parameter Name : top_mod.param_owner_1.clk_freq_KHz	Parameter Value : 2000
+
+	[TOP_MODULE within beoe] : Parameter Name : top_mod.param_owner_1.clk_freq_MHz	Parameter Value : 3000
+
+	[TOP_MODULE within beoe] : Parameter Name : top_mod.param_owner_2.clock_speed_Hz	Parameter Value : 1500
+
+	[TOP_MODULE within beoe] : Parameter Name : top_mod.param_owner_2.clock_speed_KHz	Parameter Value : 2500
+
+	[TOP_MODULE within beoe] : Parameter Name : top_mod.param_owner_2.clock_speed_MHz	Parameter Value : 3500
+	Parent_str: top_mod.main_clk_Hz	Child_str : top_mod.param_owner_1.clk_freq_Hz	CF : 1
+	Parent_str: top_mod.main_clk_Hz	Child_str : top_mod.param_owner_1.clk_freq_KHz	CF : 0.001
+	Parent_str: top_mod.main_clk_Hz	Child_str : top_mod.param_owner_1.clk_freq_MHz	CF : 1e-06
+	Parent_str: top_mod.main_clk_Hz	Child_str : top_mod.param_owner_2.clock_speed_Hz	CF : 1
+	Parent_str: top_mod.main_clk_Hz	Child_str : top_mod.param_owner_2.clock_speed_KHz	CF : 0.001
+	Parent_str: top_mod.main_clk_Hz	Child_str : top_mod.param_owner_2.clock_speed_MHz	CF : 1e-06
+
+@ 5 ns
+	[CFGR] : Changing the 'main_clk_Hz' of TOP_MODULE to 15000 (Hz).
+
+	[TOP_MODULE - pre_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 5000
+	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 15000
+	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 15000
+	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 15000
+	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 15000
+	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 15000
+	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.main_clk_Hz	Value : 15000
+
+@ 10 ns
+	[OWNER_1] : Parameter Name   : top_mod.param_owner_1.clk_freq_Hz	Parameter Value : 15000
+	[OWNER_1] : Parameter Name   : top_mod.param_owner_1.clk_freq_KHz	Parameter Value : 15
+	[OWNER_1] : Parameter Name   : top_mod.param_owner_1.clk_freq_MHz	Parameter Value : 0.015
+
+@ 10 ns
+	[OWNER_2] : Parameter Name   : top_mod.param_owner_2.clock_speed_Hz	Parameter Value : 15000
+	[OWNER_2] : Parameter Name   : top_mod.param_owner_2.clock_speed_KHz	Parameter Value : 15
+	[OWNER_2] : Parameter Name   : top_mod.param_owner_2.clock_speed_MHz	Parameter Value : 0.015
