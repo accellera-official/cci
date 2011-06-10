@@ -15,18 +15,18 @@
 
 /**
  * @file      main.cpp
- * @brief     This file shows 
+ * @brief     This file instantiates the TOP_MODULE and the PARAMETER_CONFIGURATOR 
  * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date      2nd June, 2011 (Thursday)
+ * @date      9th June, 2011 (Thursday)
  */
 #include <systemc.h>
 #include "top_module.h"
 #include "parameter_configurator.h"
 
 /**
- * @brief      This function
+ * @brief      The TOP_MODULE in turn instantiates the PARAMETER_OWNER module
  * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       2nd June, 2011 (Thursday)
+ * @date       9th June, 2011 (Thursday)
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {
@@ -35,7 +35,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 	parameter_configurator    param_cfgr("param_cfgr");
 
 	// Start and run the simulation till 50 nanoseconds
-	sc_core::sc_start(13.0, sc_core::SC_NS);
+	sc_core::sc_start(30.0, sc_core::SC_NS);
 
 	return EXIT_SUCCESS;
 

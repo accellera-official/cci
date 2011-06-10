@@ -17,7 +17,7 @@
  * @file     top_module.h
  * @brief    This header declares and defines the top module which instantiates the two owner modules 
  * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     2nd June, 2011 (Thursday)
+ * @date     9th June, 2011 (Thursday)
  */
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
@@ -27,100 +27,87 @@
 #include <assert.h>
 #include <vector>
 
-#include "parameter_owner_1.h"
-#include "parameter_owner_2.h"
+#include "parameter_owner.h"
 
 /**
- * @brief    The configurator class illustrates ways of searching parameters in a model using different patterns 
+ * @brief    The configurator class registers 'post_write' callbacks for the
+ *           owner's parameters in order to update an owner cci_parameter directly
+ *           when another cci_parameter value is modified 
  * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     2nd June, 2011 (Thursday)
+ * @date     9th June, 2011 (Thursday)
  */ 
-class top_module : public ::sc_core::sc_module
+class top_module : public sc_module
 {
 	public:
 		
-		parameter_owner_1   param_owner_1;
-		parameter_owner_2   param_owner_2;
+		/// Pointers to the owner module
+		parameter_owner*   param_owner1;
+		parameter_owner*   param_owner2;
 
 		/// Default constructor
 		SC_CTOR(top_module)
-		: param_owner_1("param_owner_1")
-		, param_owner_2("param_owner_2")
-		, main_clk_Hz("main_clk_Hz", 5000)
 		{
 			/// Get handle of the broker responsible for the class/module
 			myTopModBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+		
+			std::string str1,str2;		/*!Strings to store the names of the owner's parameters*/
+			str1="clk_freq_Hz";
+			str2="clock_speed_Hz";	
+			param_owner1	= new parameter_owner("param_owner1", str1);
+			param_owner2	= new parameter_owner("param_owner2", str2);
 
 			/// Report if handle returned is NULL
 			assert(myTopModBrokerIF != NULL && "Configuration Broker handle is NULL");
 			
-		}// End of Constructor	
+			std::string param1_str = "top_mod.param_owner1.clk_freq_Hz";
+			std::string param2_str = "top_mod.param_owner2.clock_speed_Hz";
 
-
-		void end_of_elaboration (void)
-		{
-			/// Selected parameters list of OWNER module #2
-			tempList	=	myTopModBrokerIF->get_param_list("*._speed_Hz"); 
-
-			/// Selected parameters list of OWNER module #1
-			returnParameterList	=	myTopModBrokerIF->get_param_list("*._freq_Hz"); 
-
-			/// Single parameter vector containing the list of all selected parameters
-			returnParameterList.insert(returnParameterList.end(), tempList.begin(), tempList.end());
-
-			for(unsigned int i = 0; i < returnParameterList.size(); i++)
+			/// Check for existence of the owner cci_parameter using name-based look up access
+			/// and then assign their reference to respective cci_base_param
+			if(myTopModBrokerIF->exists_param(param1_str))
 			{
-				if(myTopModBrokerIF->exists_param(returnParameterList[i]))
-				{
-					cci::cnf::cci_base_param *temp;
-					temp = myTopModBrokerIF->get_param(returnParameterList[i]);
-					returnBaseParamList.push_back(temp);
-				
-					std::cout << "\n\t[TOP_MODULE within beoe] : Parameter Name : " << returnBaseParamList[i]->get_name()	\
-						<< "\tParameter Value : " << returnBaseParamList[i]->json_serialize() << std::endl;
-				}
-					else
-						std::cout << "\t[TOP_MODULE within beoe] : Parameter Name : " << returnBaseParamList[i]->get_name() << "\tnot found." << std::endl;
-					
-			}// End of FOR
+				cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
+				returnBaseParamList.push_back(temp);
+			
+				std::cout << "\n\t[TOP_MODULE C_TOR] : Parameter Name : " << temp->get_name()	\
+					<< "\tParameter Value : " << temp->json_serialize() << std::endl;
+			}
+			else
+				std::cout << "\t[TOP_MODULE C_TOR] : Parameter Name : " << param1_str << "\tnot found." << std::endl;
 
-			/// Registering callbacks
-			for(unsigned int i = 0; i < returnBaseParamList.size(); i++)	{
-				synchValues(main_clk_Hz,returnBaseParamList[i]);
+			/// Check for existence of the owner cci_parameter using name-based look up access
+			/// and then assign their reference to respective cci_base_param
+			if(myTopModBrokerIF->exists_param(param2_str))
+			{
+				cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
+				returnBaseParamList.push_back(temp);
+			
+				std::cout << "\n\t[TOP_MODULE C_TOR] : Parameter Name : " << temp->get_name()	\
+					<< "\tParameter Value : " << temp->json_serialize() << std::endl;
+			}
+			else
+				std::cout << "\t[TOP_MODULE C_TOR] : Parameter Name : " << param2_str << "\tnot found." << std::endl;
+					
+			for(unsigned int i = 1; i < returnBaseParamList.size(); i++)	{
+				synchValues(returnBaseParamList[0], returnBaseParamList[i]);
 			}
 		
-		}// End of end_of_elaboration Callback
+	}// End of Constructor
 
 		
-		/// Pre-Write and Post-Write Callbacks Implementation
-		cci::cnf::callback_return_type
-			write_callback(cci::cnf::cci_base_param& base_param, const cci::cnf::callback_type& cb_reason, cci::cnf::cci_base_param * _out_param)	{
-				// Decision on Pre-Write & Post-Write callbacks
-				switch(cb_reason)
-				{
-					case cci::cnf::pre_write	:	{
+	/// Pre-Write and Post-Write Callbacks Implementation
+	cci::cnf::callback_return_type
+		write_callback(cci::cnf::cci_base_param & _base_param_1,const cci::cnf::callback_type& cb_reason,  cci::cnf::cci_base_param * _base_param_2)
+		{
+			// Decision on Pre-Write & Post-Write callbacks
+			std::cout << "\t[TOP_MODULE - post_write callback] : Parameter Name : "
+				<< _base_param_1.get_name() << "\tValue : " << _base_param_1.json_serialize() << std::endl;
 
-						std::cout << "\n\t[TOP_MODULE - pre_write callback] : Parameter Name : "
-							 << base_param.get_name() << "\tValue : " << base_param.json_serialize() << std::endl;
-
-						break;	}
-
-					case cci::cnf::post_write	:	{
-						std::cout << "\t[TOP_MODULE - post_write callback] : Parameter Name : "
-							<< base_param.get_name() << "\tValue : " << base_param.json_serialize() << std::endl;
-
-						_out_param->json_deserialize(base_param.json_serialize());
-
-						break;	}
-
-					default	:
-						std::cout << "\t[TOP_MODULE callback] : Callback type unknown" << std::endl;
+			_base_param_2->json_deserialize(_base_param_1.json_serialize());
 					
-				}// End of SWITCH-CASE Statements
-				
-				return cci::cnf::return_nothing;
+			return cci::cnf::return_nothing;
 
-			}// End of Write Callbacks
+		}// End of Write Callbacks
 
 		
 		/**
@@ -129,33 +116,24 @@ class top_module : public ::sc_core::sc_module
  		  * @param     _out_param   Reference of cci_base_param pointers to the selected owner parameters
 		  * @return    void 
  		  */	
-		void synchValues (cci::cnf::cci_param<int> & _input_param, cci::cnf::cci_base_param * _out_param)
+		void synchValues (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2)
 		{
-			/// Registering Callbacks for the top module cci parameter
-			main_clk_pre_write_cb	=	main_clk_Hz.register_callback(cci::cnf::pre_write,
-				this, cci::bind(&top_module::write_callback, this, _1, _2, _out_param));
+			
+			main_clk_post_write_cb_vec.push_back(_base_param_1->register_callback(cci::cnf::post_write,\
+				this, cci::bind(&top_module::write_callback, this, _1, _2,_base_param_2)) );
 
-			main_clk_post_write_cb_vec.push_back(main_clk_Hz.register_callback(cci::cnf::post_write,\
-				this, cci::bind(&top_module::write_callback, this, _1, _2, _out_param)) );
+			main_clk_post_write_cb_vec.push_back(_base_param_2->register_callback(cci::cnf::post_write,\
+				this, cci::bind(&top_module::write_callback, this, _1, _2, _base_param_1)) );
 		}
-
 
 	private	:
 	
 	/// Declaring a CCI configuration broker interface instance
 	cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;
 
-	/// A CCI Instance of the configurator
-	cci::cnf::cci_param<int>  main_clk_Hz;
-
 	/// Callback Adaptor Objects
-	cci::shared_ptr<cci::cnf::callb_adapt_b>  main_clk_pre_write_cb;
 	std::vector<cci::shared_ptr<cci::cnf::callb_adapt_b> > main_clk_post_write_cb_vec;
 
-	/// std::vector storing the desired owner parameters list searched using a pattern
-	std::vector<std::string> tempList;
-	std::vector<std::string> returnParameterList;
-	
 	/// std::vector storing the searched owner parameters references to CCI base parameter pointers
 	std::vector<cci::cnf::cci_base_param*> returnBaseParamList;
 
