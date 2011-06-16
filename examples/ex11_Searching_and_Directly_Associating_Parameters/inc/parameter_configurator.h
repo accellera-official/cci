@@ -52,7 +52,7 @@ class parameter_configurator : public ::sc_core::sc_module
 
 			/// Hierarchical names for the cci_parameters of the owner modules
 			std::string cfgr_param_str1	=	"top_mod.param_owner1.clk_freq_Hz";
-			std::string cfgr_param_str2	=	"top_mod.param_owner2.clock_speed_Hz";
+			std::string cfgr_param_str2	=	"top_mod.param_owner2.clock_speed_KHz";
 
 			/// Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
 			if(myCfgrBrokerIF->exists_param(cfgr_param_str1))
@@ -88,7 +88,7 @@ class parameter_configurator : public ::sc_core::sc_module
 		  */
 		void before_end_of_elaboration (void)
 		{
-			/// Change the value of the cci_parameter 'clk_freq_Hz' of OWNER (1) to '123.45'
+			/// Change the value of the cci_parameter 'clk_freq_Hz' of OWNER (1) to '5000' (Hz)
 			if(cfgr_param_ptr1 != NULL)
 			{
 				std::cout << "\n[CFGR within beoe] Within the BEOE phase" << std::endl;
@@ -116,12 +116,12 @@ class parameter_configurator : public ::sc_core::sc_module
 		{
 			while(1)
 			{
-				/// Change the value of the cci_parameter 'clock_speed_Hz' of OWNER (2) to '234.56'
+				/// Change the value of the cci_parameter 'clock_speed_KHz' of OWNER (2) to '12' (KHz)
 				if(cfgr_param_ptr2 != NULL)
 				{
 					std::cout << "\n@ " << sc_time_stamp() << std::endl;
-					std::cout << "\t[CFGR] : Changing the 'clock_speed_Hz' of OWNER (2) to 12000 (Hz)." << std::endl;
-					cfgr_param_ptr2->json_deserialize("12000");
+					std::cout << "\t[CFGR] : Changing the 'clock_speed_KHz' of OWNER (2) to 12 (KHz)." << std::endl;
+					cfgr_param_ptr2->json_deserialize("12.00");
 				}				
 
 				std::cout << "\n\t[CFGR] : Parameter Name : " << cfgr_param_ptr1->get_name()

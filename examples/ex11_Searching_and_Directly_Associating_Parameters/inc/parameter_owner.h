@@ -46,10 +46,10 @@ SC_MODULE(parameter_owner)
  			* @param    _name         Name of the SC_MODULE
  			* @param    _param_name   (std::string) Name of the cci_parameter
  			*/
-		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_Hz")
+		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_KHz")
 		{
 		
-			clk	=	new cci::cnf::cci_param<int>(_param_name.c_str(), 1000);
+			clk	=	new cci::cnf::cci_param<float>(_param_name.c_str(), 1000.00);
 	
 			std::cout << "\n\t[OWNER C_TOR] : Parameter Name   : " << clk->get_name() << "\tParameter Value : " << clk->get() << std::endl; 
 
@@ -59,7 +59,7 @@ SC_MODULE(parameter_owner)
 	private	:
 	
 		/// Declare an instance of mutable CCI parameter of type 'int'
-		cci::cnf::cci_param<int>*	clk;
+		cci::cnf::cci_param<float>*	clk;
 
 };// End of SC_MODULE
 

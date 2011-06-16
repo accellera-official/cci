@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex11_Searching_and_Directly_Associating_Parmeters
+EXE=./ex12_Indirectly_Associating_Parameters
 
 #EXE_ARGS= | tee ../reports/expected.log 
 
