@@ -1,0 +1,48 @@
+
+	[CHILD C_TOR] : Is Private Broker? : true
+	[CHILD C_TOR] : Broker Name : root_module.parent_inst
+
+	[CHILD C_TOR] : Parameter Name   : root_module.parent_inst.child_inst.priv_int_param	Parameter Value : 100
+
+	[PARENT C_TOR] : Parameter Name : root_module.parent_inst.parent_int_param	Parameter Value : 300
+
+	[PARENT C_TOR] : Parameter Name : root_module.parent_inst.parent_int_buffer	Parameter Value : 123
+
+	[ROOT_MODULE C_TOR] : Parameter Name : root_module.root_int_param	Parameter Value : 500
+
+	[CFGR] : Parameter Name : root_module.root_int_param	Parameter Value : 500
+
+@ 0 s	Visible parameters to 'child' module
+	[CHILD] : Parameter Name : root_module.parent_inst.child_inst.priv_int_param
+	[CHILD] : Parameter Name : root_module.parent_inst.parent_int_param
+	[CHILD] : Parameter Name : root_module.parent_inst.parent_int_buffer
+	[CHILD] : Parameter Name : root_module.root_int_param
+
+@ 5 ns	Visible parameters to the 'parent' module
+	[PARENT] : Parameter Name : root_module.parent_inst.child_inst.priv_int_param
+	[PARENT] : Parameter Name : root_module.parent_inst.parent_int_param
+	[PARENT] : Parameter Name : root_module.parent_inst.parent_int_buffer
+	[PARENT] : Parameter Name : root_module.root_int_param
+
+@ 10 ns	Visible parameters to 'root_module'
+	[ROOT_MODULE] : Parameter Name : root_module.parent_inst.parent_int_buffer
+	[ROOT_MODULE] : Parameter Name : root_module.root_int_param
+
+@ 15 ns	Visible parameters to the 'configurator' module
+	[CFGR] : Parameter Name : root_module.parent_inst.parent_int_buffer
+	[CFGR] : Parameter Name : root_module.root_int_param
+
+@ 20 ns
+	[CFGR] : Change the value of the private cci-parameters through 'root_module'
+	[CFGR] : Change the value of the 'root_int_param' to '1000'
+
+	[ROOT_MODULE - post_write_cb] : Parameter Name : root_module.root_int_param	Parameter Value : 1000
+
+	[PARENT - post_write_cb] : Parameter Name : root_module.parent_inst.parent_int_buffer	Parameter Value : 1000
+
+	[ROOT_MODULE - post_write_cb] : Parameter Name : root_module.parent_inst.parent_int_buffer	Parameter Value : 1000
+
+	[CFGR] : Parameter Name : root_module.root_int_param	Parameter Value : 1000
+
+@ 25 ns
+	[CHILD] : Parameter Name : root_module.parent_inst.child_inst.priv_int_param	Parameter Value : 1000
