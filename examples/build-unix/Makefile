@@ -11,7 +11,14 @@ SUBDIRS = \
           ../ex8_parameter_value_change_callbacks \
 					../ex9_Hierarchical_Override_of_Parameter_Values	\
 					../ex10_Shared_Parameters	\
-					../ex13_Parameter_Value_Locking
+					../ex11_Searching_and_Directly_Associating_Parameters	\
+					../ex12_Indirectly_Associating_Parameters	\
+					../ex13_Parameter_Value_Locking	\
+					../ex14_Hiding_Parameters	\
+					../ex15_Inter_Parameter_Value_Constraints	\
+					../ex17_Specifying_Parameter_Values_via_a_Configuration_File\
+					../ex18_Superset_Parameter_Value_Specification	\
+					../ex20_Tracing_Parameter_Activity
 	
 .PHONY: all clean check run
 
