@@ -166,7 +166,7 @@ public:
 protected:
 
   /// Pointer to the parameter object with the actual implementation
-  mutable cci_param_impl_if<val_type, TM> *m_pImpl;
+  cci_param_impl_if<val_type, TM> *m_pImpl; // TODO: this was mutable, why?
 
   /// If this is a parameter accessor object
   bool m_is_accessor;
