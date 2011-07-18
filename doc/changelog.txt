@@ -115,7 +115,7 @@ earlier:
 - added lock API to base params
 - added mutable template types to POs
 - added is_used for detecting unconsumed parameters
-- added is/set_invalud_value, is_initial_value, is_default_value
+- added is/set_invalid_value, is_initial_value, is_default_value
 
 
 **** CCI-1.2-101109.tar.gz ****

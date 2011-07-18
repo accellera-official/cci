@@ -32,7 +32,7 @@
 /// The SimpleIP owns 2 CCI params with associated callbacks
 SC_MODULE(simple_ip) {
  public:
-  SC_HAS_PROCESS(simple_ip);
+  //SC_HAS_PROCESS(simple_ip);
 
   /// Ctor
  SC_CTOR(simple_ip)
