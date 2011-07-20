@@ -13,8 +13,32 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef __CCI_BROKER_REGISTRY_H__
+
+#if (false)
+//
+//
+//
+//
+//
+//
+//     NOT IN USE CURRENTLY!!!!!
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//#ifndef __CCI_BROKER_REGISTRY_H__
 #define __CCI_BROKER_REGISTRY_H__
+
 
 
 __CCI_OPEN_CONFIG_NAMESPACE__
@@ -34,6 +58,10 @@ class cci_broker_registry {
   
   /// Allow the implementation to add the global broker to the registry
   friend cci_cnf_broker_if& create_global_cnf_broker();
+
+private:
+  /// Private copy constructor to prevent registry from being copied
+  cci_broker_registry(const cci_broker_registry&);
 
 public:
 

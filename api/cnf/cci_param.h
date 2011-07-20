@@ -37,6 +37,10 @@ class cci_param
 protected:
   typedef T val_type;
 
+private:
+  /// Private copy constructor to prevent parameters from being copied
+  cci_param(const cci_param<T, TM>&);
+  
 public:
   
   // //////////////////////////////////////////////////////////////////// //
@@ -50,63 +54,63 @@ public:
   explicit cci_param(const char* nam       );
   
   /// Constructor with (local/hierarchical) name and string representation of default value.
-  explicit cci_param(const std::string& nam, const std::string& val);
-  explicit cci_param(const char* nam,        const char* val       );
-  explicit cci_param(const std::string& nam, const char* val       );
-  explicit cci_param(const char* nam,        const std::string& val);
+  cci_param(const std::string& nam, const std::string& val);
+  cci_param(const char* nam,        const char* val       );
+  cci_param(const std::string& nam, const char* val       );
+  cci_param(const char* nam,        const std::string& val);
 
   /// Constructor with (local/hierarchical) name and initial value.
-  explicit cci_param(const std::string& nam, const val_type& val);
-  explicit cci_param(const char* nam,        const val_type& val);
+  cci_param(const std::string& nam, const val_type& val);
+  cci_param(const char* nam,        const val_type& val);
 
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name.
-  explicit cci_param(const std::string& nam, cci_top_level_name);
-  explicit cci_param(const char* nam,        cci_top_level_name);
+  cci_param(const std::string& nam, cci_top_level_name);
+  cci_param(const char* nam,        cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and NO initial value and private broker.
-  explicit cci_param(const std::string& nam, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name and private broker.
-  explicit cci_param(const std::string& nam, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        cci_top_level_name, cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name.
-  explicit cci_param(const std::string& nam, const std::string& val, cci_top_level_name);
-  explicit cci_param(const char* nam,        const char* val       , cci_top_level_name);
-  explicit cci_param(const std::string& nam, const char* val       , cci_top_level_name);
-  explicit cci_param(const char* nam,        const std::string& val, cci_top_level_name);
+  cci_param(const std::string& nam, const std::string& val, cci_top_level_name);
+  cci_param(const char* nam,        const char* val       , cci_top_level_name);
+  cci_param(const std::string& nam, const char* val       , cci_top_level_name);
+  cci_param(const char* nam,        const std::string& val, cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and private broker.
-  explicit cci_param(const std::string& nam, const std::string& val,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const std::string& nam, const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const std::string& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const std::string& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const char* val       ,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const char* val       ,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const std::string& val,                                  cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name and private broker.
-  explicit cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const std::string& nam, const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and initial value and top-level name.
-  explicit cci_param(const std::string& nam, const val_type& val, cci_top_level_name);
-  explicit cci_param(const char* nam,        const val_type& val, cci_top_level_name);
+  cci_param(const std::string& nam, const val_type& val, cci_top_level_name);
+  cci_param(const char* nam,        const val_type& val, cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and initial value and private broker.
-  explicit cci_param(const std::string& nam, const val_type& val,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const val_type& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const val_type& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const val_type& val,                                  cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-  explicit cci_param(const std::string& nam, const val_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const val_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const val_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const val_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
 
   /// Constructor for a parameter accessor object
   /**
    * @param original_param  Parameter that shall be accessed with the constructed accessor
    * @param originator      Originator the constructed accessor shall hold
    */
-  explicit cci_param(cci_param<val_type, TM>& param, const cci_originator& originator);
+  cci_param(cci_param<val_type, TM>& param, const cci_originator& originator);
 
   /// Destructor
   virtual ~cci_param();
@@ -201,47 +205,47 @@ public:
   explicit cci_param(const char* nam       );
   
   /// Constructor with (local/hierarchical) name and string representation of default value.
-  explicit cci_param(const std::string& nam, const std::string& val);
-  explicit cci_param(const char* nam,        const char* val       );
-  explicit cci_param(const std::string& nam, const char* val       );
-  explicit cci_param(const char* nam,        const std::string& val);
+  cci_param(const std::string& nam, const std::string& val);
+  cci_param(const char* nam,        const char* val       );
+  cci_param(const std::string& nam, const char* val       );
+  cci_param(const char* nam,        const std::string& val);
   
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name.
-  explicit cci_param(const std::string& nam, cci_top_level_name);
-  explicit cci_param(const char* nam,        cci_top_level_name);
+  cci_param(const std::string& nam, cci_top_level_name);
+  cci_param(const char* nam,        cci_top_level_name);
   
   /// Constructor with (local/hierarchical) name and NO initial value and private broker.
-  explicit cci_param(const std::string& nam, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        cci_cnf_broker_if& private_broker);
   
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name and private broker.
-  explicit cci_param(const std::string& nam, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        cci_top_level_name, cci_cnf_broker_if& private_broker);
   
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name.
-  explicit cci_param(const std::string& nam, const std::string& val, cci_top_level_name);
-  explicit cci_param(const char* nam,        const char* val       , cci_top_level_name);
-  explicit cci_param(const std::string& nam, const char* val       , cci_top_level_name);
-  explicit cci_param(const char* nam,        const std::string& val, cci_top_level_name);
+  cci_param(const std::string& nam, const std::string& val, cci_top_level_name);
+  cci_param(const char* nam,        const char* val       , cci_top_level_name);
+  cci_param(const std::string& nam, const char* val       , cci_top_level_name);
+  cci_param(const char* nam,        const std::string& val, cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and private broker.
-  explicit cci_param(const std::string& nam, const std::string& val,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const std::string& nam, const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const std::string& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const std::string& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const char* val       ,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const char* val       ,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const std::string& val,                                  cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name and private broker.
-  explicit cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const std::string& nam, const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  explicit cci_param(const char* nam,        const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const char* nam,        const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
   
   /// Constructor for a parameter accessor object
   /**
    * @param original_param  Parameter that shall be accessed with the constructed accessor
    * @param originator      Originator the constructed accessor shall hold
    */
-  explicit cci_param(cci_param<val_type, TM>& param, const cci_originator& originator);
+  cci_param(cci_param<val_type, TM>& param, const cci_originator& originator);
   
   /// Destructor
   virtual ~cci_param();

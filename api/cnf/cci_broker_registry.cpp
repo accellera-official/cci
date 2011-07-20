@@ -16,7 +16,34 @@
 
 #include "cci.h"
 
+#if (false)
+//
+//
+//
+//
+//
+//
+//     NOT IN USE CURRENTLY!!!!!
+//
+//
+//
+//
+//
+//
+// Had been replaced by different cci_broker_manager
+//
+//
+//
+//
+//
+//
+//
+
 __CCI_OPEN_CONFIG_NAMESPACE__
+
+cci_broker_registry::cci_broker_registry(const cci_broker_registry&) {
+  assert(false && "Not allowed to copy registry!");
+}
 
 void cci_broker_registry::insert(cci_cnf_broker_if& broker) {
 #ifdef CCI_CNF_VERBOSE
@@ -65,3 +92,4 @@ cci_broker_registry& cci_broker_registry::registry() {
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
 
+#endif

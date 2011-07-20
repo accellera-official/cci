@@ -127,12 +127,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
   public:
 
-    explicit gs_cci_base_param(cci::cnf::cci_base_param& owner_par
-                               //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
-                               , bool is_top_level_name /*= false*/
-                               , bool register_at_db /*= true*/
-                               , bool has_default_value // if there is a default value
-                               , cci::cnf::cci_cnf_broker_if* broker_accessor)
+    gs_cci_base_param(cci::cnf::cci_base_param& owner_par
+                      //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
+                      , bool is_top_level_name /*= false*/
+                      , bool register_at_db /*= true*/
+                      , bool has_default_value // if there is a default value
+                      , cci::cnf::cci_cnf_broker_if* broker_accessor)
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)

@@ -61,5 +61,9 @@ void cci_broker_stack::pop() {
   CCI_SHOW_BROKER_STACK(this, "pop")
 }
 
+cci_broker_stack::cci_broker_stack(const cci_broker_stack&) {
+  assert(false && "Not allowed to copy stack!");
+}
+
 __CCI_CLOSE_CONFIG_NAMESPACE__
 

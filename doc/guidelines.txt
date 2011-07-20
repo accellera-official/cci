@@ -210,14 +210,14 @@ one of the types defined in cci_error_types.h.
 
 HOW TO GET ACCESS TO BROKERS
 
-Any instance that accesses any CCI configuration feature shall get access to 
-its broker and any foreign parameters only by calling  the global 
-get_cnf_broker_instance function. (Parameter objects owned by this instance 
-shall be created as described elsewhere instantiating the parameter objects.) 
+Any instance (e.g. user module) that accesses any CCI configuration feature 
+shall get access to its broker and any foreign parameters only by calling 
+the static cci_broker_manager::get_current_broker function. 
 It is recommended to keep the returned pointer due to performance reasons. 
-Any CCI parameter but the own ones shall be accessed only through this broker 
+Any CCI parameter shall be accessed only through this broker 
 and not using separate ways, like e.g. using the child parameter object 
-directly. This is to make sure the broker can add the correct originator 
+directly. Only directly owned parameter object can be accessed directly. 
+This is to make sure the broker can add the correct originator 
 information for debug pupose on parameter accesses.
 
 

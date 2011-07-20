@@ -22,6 +22,10 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 // -- ------------------------------------------------------- --
 // General Parameter Implementation
 
+// private contructor
+template<typename T, param_mutable_type TM>
+cci_param<T,TM>::cci_param(const cci_param<val_type, TM>& param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::cnf::PARAM_ORIGINATOR), m_broker_accessor(&cci::cnf::cci_broker_manager::get_current_broker(m_originator)) { assert(false && "Not allowed to copy parameter objects!"); }
+
 // Constructors without options
 
 template<typename T, param_mutable_type TM>

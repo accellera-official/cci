@@ -1,14 +1,14 @@
 ## set some directories 
-CCI_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
-CCI_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
+CCI_INC_DIR = /Users/schroede/mydev/cci_git/cci/api
+CCI_LIB_DIR = /Users/schroede/mydev/cci_git/cci/api
 
-CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_broker_implementation
-CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_broker_implementation
-CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
-CCI_PARAM_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
+CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/cci_git/cci/gs_broker_implementation
+CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/cci_git/cci/gs_broker_implementation
+CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
+CCI_PARAM_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
 
-GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
-GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore
+GS_CONTROL_DIR = /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch
+GREENSTARCORE_DIR = /Users/schroede/mydev/cci_git/cci
 BOOST = /cad/tools/boost
 SYSTEMC = /cad/tools/systemc
 

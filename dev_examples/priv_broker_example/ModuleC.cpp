@@ -19,10 +19,11 @@
 #include <systemc.h>
 
 
-ModuleC::ModuleC(sc_core::sc_module_name name)
+ModuleC::ModuleC(sc_core::sc_module_name name, cci::cnf::cci_broker_manager priv_broker)
 : sc_core::sc_module(name)
-, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
-, priv_param ("priv_param", "this is private information", get_broker() )
+//, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
+, m_broker(priv_broker)
+, priv_param ("priv_param", "this is private information", *m_broker)
 { 
   SC_THREAD(main_action);
 }
@@ -37,15 +38,13 @@ ModuleC::~ModuleC() {
 
 void ModuleC::main_action() {
 
-  // get the config broker which is responsible for this module
   // Note: Do NOT use cci_broker_manager::get_current_broker here, it won't return the private broker!
-  cci::cnf::cci_cnf_broker_if* mBroker = &get_broker(); // use my base class broker manager which cares for the correct broker!
   
   wait(10, SC_SEC);
   
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = m_broker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

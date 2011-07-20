@@ -36,6 +36,10 @@ protected:
   /// Friend class, this shall only be used by the broker manager
   friend class cci_broker_manager;
 
+private:
+  /// Private copy constructor to prevent stack from being copied
+  cci_broker_stack(const cci_broker_stack&);
+  
 public:
 
   cci_cnf_broker_if* top();
@@ -46,7 +50,7 @@ public:
   
   void push(cci_cnf_broker_if* broker);
   void pop();
-  
+
 //protected: /// @TODO: reactivate this to be protected after debugging stack succeeded
   
   explicit cci_broker_stack() {}

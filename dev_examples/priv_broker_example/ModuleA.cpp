@@ -19,39 +19,34 @@
 #include <systemc.h>
 
 
-ModuleA::ModuleA(sc_core::sc_module_name name)
+// within this contructor the private broker stack is valid containing the priv_broker broker as top
+ModuleA::ModuleA(sc_core::sc_module_name name, cci::cnf::cci_broker_manager priv_broker)
 : sc_core::sc_module(name)
-, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
-, int_param ("int_param", 50, get_broker() )
-, uint_param("uint_param", 12000, get_broker() )
-, uint_param2("uint_param2", 12, get_broker() )
-, str_param ("str_param", "This is a test string.", get_broker())
-, bool_param("bool_param", get_broker()) // no default value
+//, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
+, m_broker(priv_broker)
+, int_param ("int_param", 50, *m_broker )
+, uint_param("uint_param", 12000, *m_broker )
+, uint_param2("uint_param2", 12, *m_broker )
+, str_param ("str_param", "This is a test string.", *m_broker)
+, bool_param("bool_param", *m_broker) // no default value
 , m_modB("ModuleB")
 { 
   SC_THREAD(main_action);
 }
 
 ModuleA::~ModuleA() {
-  // TODO: delete private broker that was newed during construction!
-  // Don't delete while params existing!
-  /*cci::cnf::cci_cnf_broker_if* pb = get_broker();
-   register_private_broker(NULL);
-   delete pb;*/
 }
 
 void ModuleA::main_action() {
 
-  // get the config broker which is responsible for this module
   // Note: Do NOT use cci_broker_manager::get_current_broker here, it won't return the private broker!
-  cci::cnf::cci_cnf_broker_if* mBroker = &get_broker(); // use my base class broker manager which cares for the correct broker!
   
   
   wait(10, SC_SEC);
   
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = m_broker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
@@ -62,3 +57,4 @@ void ModuleA::main_action() {
   std::cout << "----------------------------" << std::endl;
 
 }
+

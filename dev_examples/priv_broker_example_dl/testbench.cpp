@@ -23,6 +23,9 @@
 #include "ModuleC.h"
 #include "ObserverModule.h"
 
+assert(false && "THIS IS OUTDATED!!");
+
+
 /// Testbench for the CCI example application which uses the GreenSocs demo implemenation
 int sc_main(int argc, char *argv[]) {
   //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);

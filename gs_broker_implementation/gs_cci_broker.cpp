@@ -102,11 +102,11 @@ namespace cnf {
    * @return The one non-private global config broker (not wrapped with an accessor)
    */
   cci_cnf_broker_if& create_global_cnf_broker() {
-    static bool added_to_registry = false;
-    if (!added_to_registry) { 
-      cci_broker_registry::registry().insert(*singleton_broker); // TODO: when remove?
-      added_to_registry = true;
-    }
+    //static bool added_to_registry = false;
+    //if (!added_to_registry) { 
+    //  cci_broker_registry::registry().insert(*singleton_broker); // TODO: when remove?
+    //  added_to_registry = true;
+    //}
     return *singleton_broker;
   }
   

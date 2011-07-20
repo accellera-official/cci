@@ -178,7 +178,7 @@ __CCI_CLOSE_CONFIG_NAMESPACE__
 #include "cci_broker_stack.h"
 #include "cci_broker_registry.h"
 #include "cci_broker_manager.h"
-#include "cci_broker_manager_module.h"
+//#include "cci_broker_manager_module.h"
 
 #include "cci_param.hpp"
 

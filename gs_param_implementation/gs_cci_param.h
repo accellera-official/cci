@@ -57,11 +57,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
 
-    // Explicit constructors to avoid implicit construction of parameters.
-    
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(val), is_top_level_name, /*register_at_db=*/true                 , broker_accessor)   { /* TODO: Remove this check to allow empty default values!! This check is to ensure the framework internally uses the correct constructor*/ if (std::string(val).length()==0) assert(false && "This shall not happen, use other constructor!"); /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, val,              is_top_level_name, /*register_at_db=*/true, /*(dummy)*/true, broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam,                   is_top_level_name, /*register_at_db=*/true                 , broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
+    gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(val), is_top_level_name, /*register_at_db=*/true                 , broker_accessor)   { /* TODO: Remove this check to allow empty default values!! This check is to ensure the framework internally uses the correct constructor*/ if (std::string(val).length()==0) assert(false && "This shall not happen, use other constructor!"); /*base_type::init(); Done with InitParam function*/ }
+    gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, val,              is_top_level_name, /*register_at_db=*/true, /*(dummy)*/true, broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
+    gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam,                   is_top_level_name, /*register_at_db=*/true                 , broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
   
     ~gs_cci_param() {
     }
@@ -158,11 +156,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
     
-    // Explicit constructors to avoid implicit construction of parameters.
-
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(val), is_top_level_name, true, (std::string(val).length()>0) ? true : false, broker_accessor) { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, val, is_top_level_name, true, broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
-    explicit gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(""), is_top_level_name, true, false, broker_accessor) { /*base_type::init(); Done with InitParam function*/ }
+    gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const char* val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(val), is_top_level_name, true, (std::string(val).length()>0) ? true : false, broker_accessor) { /*base_type::init(); Done with InitParam function*/ }
+    gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam, const val_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, val, is_top_level_name, true, broker_accessor)   { /*base_type::init(); Done with InitParam function*/ }
+    gs_cci_param(cci::cnf::cci_param<val_type, TM>& owner_par, const char* nam,                      const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) : base_type(owner_par, nam, std::string(""), is_top_level_name, true, false, broker_accessor) { /*base_type::init(); Done with InitParam function*/ }
     
     ~gs_cci_param() {
     }

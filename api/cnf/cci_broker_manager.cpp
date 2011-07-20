@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2010 : GreenSocs Ltd
+//   Copyright (C) 2010-2011 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -16,6 +16,7 @@
 
 
 #include "cci.h"
+
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
@@ -54,51 +55,41 @@ cci_cnf_broker_if& cci_broker_manager::get_current_parent_broker(const cci_origi
   }
 }
 
+/*cci_broker_manager::cci_broker_manager(const cci_broker_manager&) {
+  assert(false && "Not allowed to copy manager!");
+}*/
 
 cci_broker_manager::cci_broker_manager(cci_cnf_broker_if* broker)
-: m_own_private_broker(broker) 
 {
-  // Try to cast this into an sc_object for originator information
-  // TODO: Does this not work during construction???
-  //sc_core::sc_object* o = dynamic_cast<sc_core::sc_object*>(this);
-  //if (!o) SC_REPORT_INFO("CCI/cci_broker_manager", "It is recommended to use the cci_broker_manager as a base for sc_modules!");
-  
   // Set m_broker either to own private broker or the one responsible upwards the hierarchy
-  if (m_own_private_broker) {
-    CCI_CNF_DUMP("This broker manager has an own private broker (\""<< m_own_private_broker->name() <<"\")");
-    // register the own broker with the registry
-    cci_broker_registry::registry().insert(*m_own_private_broker);
+  if (broker) {
+    CCI_CNF_DUMP("Broker manager with private broker (\""<< broker->name() <<"\")");
     // push to broker stack
-    cci_broker_stack::stack().push(m_own_private_broker);
-    if (m_own_private_broker->get_originator()) {
-      m_broker = &m_own_private_broker->get_accessor(*m_own_private_broker->get_originator());
+    cci_broker_stack::stack().push(broker);
+    if (broker->get_originator()) {
+      m_broker = &broker->get_accessor(*broker->get_originator());
     } else {
-      std::cout << "The private broker (\""<<m_own_private_broker->name()<<"\") given to this broker manager IS NOT an accessor." << std::endl;
+      std::cout << "The private broker (\""<<broker->name()<<"\") given to this broker manager IS NOT an accessor." << std::endl;
       SC_REPORT_INFO("CCI/cci_broker_manager", "It is recommended to provide a broker accessor to the broker manager!");
-      m_broker = &m_own_private_broker->get_accessor(cci_originator("unknown broker manager")); // TODO: what string is reasonable here? 
+      m_broker = &broker->get_accessor(cci_originator("unknown broker manager")); // TODO: what string is reasonable here? 
     }
-    // @TODO move to somewhere else: where?
-    // pop from broker stack
-    //cci_broker_stack::stack().pop();
   } else {
-    m_broker = &get_current_broker(cci_originator("unknown broker manager")); // TODO: what string is reasonable here? 
+    assert(false && "TODO error");
+    // CCI_REPORT_ERROR(TODO, "no private broker ");
   }
 }
   
 cci_broker_manager::~cci_broker_manager() {
-  // remove the own broker from the registry
-  if (m_own_private_broker) cci_broker_registry::registry().remove(*m_own_private_broker);
+  // pop private broker from broker stack
+  cci_broker_stack::stack().pop();
 }
 
-// protected
-cci_cnf_broker_if& cci_broker_manager::get_broker() const {
+cci_broker_manager::operator cci::cnf::cci_cnf_broker_if&() {
   return *m_broker;
 }
 
-/*void cci_broker_manager::register_private_broker(cci_cnf_broker_if* broker) {
-  if (m_broker && broker) SC_REPORT_WARNING("CCI/broker_module", "Overwriting currently registered broker module!");
-  m_broker = broker;
-}*/
-
+cci_broker_manager::operator cci::cnf::cci_cnf_broker_if*() {
+  return m_broker;
+}
 
 __CCI_CLOSE_CONFIG_NAMESPACE__

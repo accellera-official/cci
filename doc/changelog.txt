@@ -1,5 +1,13 @@
 ChangeLog
 ---------
+20.07.2011
+- Changed private broker
+  Automatic push and pop is done by cci_broker_manager
+  Important: Semantic of cci_broker_manager did change!
+- removed broker registry
+- Some copy constructors private
+- clean-up of some explicit constructors
+
 24.03.2011
 - BUG - STILL TODO: PRIVATE BROKER STACK POP!
   Currently the pop from broker stack needs to be done manually,

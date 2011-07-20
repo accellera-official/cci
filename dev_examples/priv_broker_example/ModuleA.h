@@ -30,15 +30,18 @@
 /// Module which owns some cci parameters.
 class ModuleA
 : public sc_core::sc_module
-, public cci::cnf::cci_broker_manager
 {
-  
+protected:
+  /// for secure access by parameters
+  cci::cnf::cci_cnf_broker_if* m_broker;
+
 public:
   
   SC_HAS_PROCESS(ModuleA);
 	
   /// Constructor
-  ModuleA(sc_core::sc_module_name name);
+  ModuleA(sc_core::sc_module_name name, cci::cnf::cci_broker_manager); 
+  // Important: never use a private_broker_manager anywhere else than as constructor argument!!!
   
   /// Destructor
   ~ModuleA();

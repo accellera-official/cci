@@ -88,30 +88,27 @@ hard to do for the user.
 
 PRIVATE BROKERS
 
-The user can derive from cci_broker_manager_module to create an 
-sc_module which can hold a private broker.
-This private broker can be given during construction to the 
-constructor. If none is given, the broker manager will 
-automatically take the responsible one from the broker stack.
+If a module or subsystem shall contain private (hidden) parameters,
+the user needs to create a private broker outside the module and
+provide it through a constructor parameter of type 
+cci_broker_manager to the module. Parameters that shall be public 
+can be specified while constructing the private broker.
+The cci_broker_manager will be created only as temporary object 
+during construction of that module or subsystem and manages the 
+broker stack (push and pop).
 
-The appropriate broker information (managed using a broker stack
-during construction) is valid only during construction. It is 
-recommended that the user derives from the broker manager class,
-even if no private broker is needed. The broker manager stores
-the responsible broker during constructor for later use (call of
-function get_broker). Alternatively the user can get the broker 
-manually (during construction) and store it internally (use 
-protected or private members!) for later use.
+The automatically provided broker is only valid/appropriate only 
+during construction. It is recommended for ALL modules (even those 
+who intentionally do not make use of private brokers) that the user 
+stores the responsible broker during construction for later use 
+(call function cci_broker_manager::get_current_broker).
 
-Note: The cci_broker_manager(_module) constructor now has a 
-broker parameter thus the owning sc_module is not already been 
-constructed.
+If cci config accesses or parameter creation takes place outside the 
+construction (e.g. within sc_threads/_methods) the previously stored 
+broker shall be used or given to the parameter constructor!
 
-Internal broker registry
-An internal broker registry, maintained by the broker manager 
-class, knows all brokers in the system.
-
-Internal broker stack
+Background Notes:
+Internal broker stack:
 An internal broker stack is maintained by the broker manager.
 During construction private brokers are pushed to top and later
 poped. During construction of the user module the top broker is
@@ -120,7 +117,9 @@ There is the option to get the second most top one (TODO: maybe
 not needed, this WAS for a new priv. broker to get its hierarchical 
 upwards broker - but this can just be the top one since new
 brokers are not yet pushed to top when they are created).
- THE POP IN THE BROKER MANAGER IS STILL TODO
+
+Legacy notice: The user shall NOT derive from 
+cci_broker_manager_module any more!
 
 ----------------------------------------------------------------
 

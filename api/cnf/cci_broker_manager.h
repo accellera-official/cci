@@ -14,13 +14,17 @@
 // 
 // ENDLICENSETEXT
 
+
 #ifndef __CCI_BROKER_MANAGER_H__
 #define __CCI_BROKER_MANAGER_H__
 
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
-/// Class identifying a module which provides a (private) broker
+
+/// Class taking a private broker within a user module's constructor
+
+// OLD, semantic changed!!!: identifying a module which provides a (private) broker
 /**
  * To get access to a (possibly private) broker, use static 
  * cci_broker_manager::get_current_broker function.
@@ -33,6 +37,10 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 class cci_broker_manager {
 
 public:
+  
+  //
+  // Functions for static usage:
+  //
   
   /// Returns an accessor to the broker currently on top of broker stack
   /**
@@ -58,41 +66,45 @@ public:
    */
   static cci_cnf_broker_if& get_current_parent_broker(const cci_originator& originator);
   
+private:
+  //TODO
+  /// Private copy constructor to prevent manager from being copied
+  //cci_broker_manager(const cci_broker_manager&);
+  
 public:
   
-  /// Constructor taking an optional (private) broker instance (recommended to provide an accessor)
+  /// Constructor for ONLY temporary object; taking an optional (private) broker instance (recommended to provide an accessor)
   /**
    * @TODO: Memory management for the private broker given to the broker manager: Is this left for the user to be solved? The broker must not be deleted as long as parameters exist using it.
    *
-   * @param broker Broker this should use and return (Default=NULL)
+   * The constructor does a push to the private broker stack, which is poped by 
+   * the destructor again. That's the reason why this object is only allowed to 
+   * be used as temporary object within user module constructors.
+   *
+   * @param broker Broker that should use forwarded to user module and placed on stack
    */
-  cci_broker_manager(cci_cnf_broker_if* broker = NULL);
+  cci_broker_manager(cci_cnf_broker_if* broker);
   
   /// Destructor
+  /**
+   * Pops the given private broker from private broker stack.
+   * This happens when the temporary object in user module contructor is destructed, which 
+   * happens after completed construction of the user module.
+   */
   virtual ~cci_broker_manager();
 
-  /// Register a private broker to be used and returned by this module
+  /// Conversion operator
   /**
-   * TODO: Problem: all params created before this call did not use this broker to register themselves!
-   *       So maybe don't provide this function? In that case, how shall the cci_broker_manager_module class work if it cannot get a private broker?
+   * Can be used by user module to access the broker
    */
-  //virtual void register_private_broker(cci_cnf_broker_if* broker);
+  operator cci_cnf_broker_if&();
 
-// Protected to protect from being called by someone casting through the SystemC hierarchy
-protected:
+  /// Conversion operator
+  /**
+   * Can be used by user module to access the broker
+   */
+  operator cci_cnf_broker_if*();
   
-  /// Returns the broker accessor being responsible for this module
-  /**
-   * Protected to protect from being called by someone casting through the SystemC hierarchy
-   *
-   * Returned broker is either an accessor to the own broker being registered manually at this manager,
-   * or one from an hierarchically upwards module
-   * or the top-level one.
-   *
-   * @return Config broker accessor (class member m_broker)
-   */
-  virtual cci_cnf_broker_if& get_broker() const;
-
 // Private to prevent from modification
 private:
 
@@ -103,13 +115,6 @@ private:
    * or an accessor to another (private or not private) broker from upwards the hierarchy.
    */
   cci_cnf_broker_if* m_broker;
-
-  /// Private broker (possibly accessor) pointer this manager owns
-  /**
-   * This is the private broker specified by the user given to this manager.
-   * Might be NULL if there is no own private broker!
-   */
-  cci_cnf_broker_if* m_own_private_broker;
 
 };
 
