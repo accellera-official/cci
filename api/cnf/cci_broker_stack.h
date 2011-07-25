@@ -47,11 +47,13 @@ public:
 
   cci_cnf_broker_if* second_top();
   const cci_cnf_broker_if* second_top() const;
-  
-  void push(cci_cnf_broker_if* broker);
-  void pop();
 
-//protected: /// @TODO: reactivate this to be protected after debugging stack succeeded
+protected:
+  
+  /// Push a broker, protected to be called only by broker manager
+  void push(cci_cnf_broker_if* broker);
+  /// Pop the top broker, protected to be called only by broker manager
+  void pop();
   
   explicit cci_broker_stack() {}
 
