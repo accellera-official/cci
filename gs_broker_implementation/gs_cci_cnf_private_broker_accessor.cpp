@@ -28,7 +28,7 @@ cci::cnf::cci_cnf_broker_if& cci::cnf::gs_cci_private_broker_accessor::get_acces
 : m_originator(originator)
 {
   if (dynamic_cast<sc_core::sc_object*>(&owner) != originator.get()) {
-    SC_REPORT_WARNING(CCI_SC_REPORT_MSG_TYPE_PREFIX, "When creating a private broker, the given originator should be the same as the owner.");
+    SC_REPORT_WARNING(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "When creating a private broker, the given originator should be the same as the owner.");
   }
   m_broker = new gs_cci_private_broker(owner.name(), owner, pub_params);
 }*/
@@ -37,7 +37,7 @@ cci::cnf::gs_cci_private_broker_accessor::gs_cci_private_broker_accessor(sc_core
 : m_originator(originator)
 {
   if (dynamic_cast<sc_core::sc_object*>(&owner) != originator.get()) {
-    SC_REPORT_WARNING(CCI_SC_REPORT_MSG_TYPE_PREFIX, "When creating a private broker, the given originator should be the same as the owner.");
+    SC_REPORT_WARNING(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "When creating a private broker, the given originator should be the same as the owner.");
   }
   m_broker = new gs_cci_private_broker(owner.name(), owner, pub_params);
 }

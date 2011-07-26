@@ -75,7 +75,7 @@ cci_broker_manager::cci_broker_manager(cci_cnf_broker_if* broker)
     }
   } else {
     assert(false && "TODO error");
-    // CCI_REPORT_ERROR(TODO, "no private broker ");
+    // cci_report_handler::TODO("no private broker!");
   }
 }
   

@@ -68,13 +68,13 @@ const char* cci::cnf::gs_cci_private_broker::name() const {
 void cci::cnf::gs_cci_private_broker::set_init_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
   if ( !gs::cnf::GCnf_private_Api::setInitValue(parname, json_value) ) {
-    CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Setting initial value failed.");
+    cci_report_handler::set_param_failed("Setting initial value failed.");
   }
 }
 
 void cci::cnf::gs_cci_private_broker::lock_init_value(const std::string &parname) {
   if ( !gs::cnf::GCnf_private_Api::lockInitValue(parname) ) {
-    CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Locking initial value failed.");
+    cci_report_handler::set_param_failed("Locking initial value failed.");
   }
 }
 

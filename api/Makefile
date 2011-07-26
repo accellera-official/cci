@@ -4,14 +4,12 @@ OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 
-SRCS = cnf/cci_broker_manager_module.cpp \
-       cnf/cci_broker_manager.cpp \
+SRCS = cnf/cci_broker_manager.cpp \
        cnf/cci_broker_stack.cpp \
        cnf/cci_broker_registry.cpp \
        core/cci_gen_unique_name.cpp
 
-OBJS = cnf/cci_broker_manager_module.o \
-       cnf/cci_broker_manager.o \
+OBJS = cnf/cci_broker_manager.o \
        cnf/cci_broker_stack.o \
        cnf/cci_broker_registry.o \
        core/cci_gen_unique_name.o

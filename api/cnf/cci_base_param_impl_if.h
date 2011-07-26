@@ -118,7 +118,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      */
     virtual const basic_param_type get_basic_type() const = 0;// { return partype_not_available; }
     
-#define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(CCI_SC_REPORT_MSG_TYPE_PREFIX, "Not supported for this parameter type!")
+#define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Not supported for this parameter type!")
 
     /// Set the parameter value by trying to convert the given number to the param value.
     /**

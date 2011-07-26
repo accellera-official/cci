@@ -44,7 +44,18 @@ void ValueModule::main_action() {
   DEMO_DUMP(name(), "Set parameter Owner.uint_param to value=555 using cci_value");
   //This is still TODO
   cci::cnf::cci_value val(555);
-  uint_param_p.set_value(val);
+  try {
+    uint_param_p.set_value(val);
+  } catch(sc_core::sc_report e) {
+    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
+      case cci::cnf::CCI_VALUE_FAILURE: 
+        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
+        break;
+      default:
+        // If other error, throw it again
+        throw e;
+    }
+  }
   std::cout << "uint_param has value = " << uint_param_p.json_serialize() << endl;
 
   // get a parameter using the local config API

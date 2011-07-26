@@ -106,26 +106,26 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     void json_deserialize(val_type& target_val, const std::string& str) {
       // TODO: this is currently not a JSON but a GreenConfig specific string
       if (!base_type::m_gs_param.deserialize(target_val, str))
-        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "String conversion failed.");
+        cci::cnf::cci_report_handler::set_param_failed("String conversion failed.");
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //
 
     const val_type& get_default_value() {
       if (!base_type::m_gs_param.has_default_value())
-        CCI_THROW_ERROR(cci::cnf::cci_report::get_param_failed(), "Param has no default value.");
+        cci::cnf::cci_report_handler::get_param_failed("Param has no default value.");
       return base_type::m_gs_param.get_default_value();
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //
     
     void set_value(const cci::cnf::cci_value& val) {
-      CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Set cci value not implemented for not specialized parameter types.");
+      cci::cnf::cci_report_handler::cci_value_failure("Set cci value not implemented for not specialized parameter types.");
       // TODO: this could use a cci value's json representation to set the parameter
     }
 
     cci::cnf::cci_value get_value() {
-      CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Get cci value not implemented for not specialized parameter types.");
+      cci::cnf::cci_report_handler::cci_value_failure("Get cci value not implemented for not specialized parameter types.");
       // TODO: this could use a cci value's json representation to get the parameter
       cci::cnf::cci_value val;
       return val;
@@ -204,32 +204,35 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     const val_type& get_default_value() {
       if (!base_type::m_gs_param.has_default_value())
-        CCI_THROW_ERROR(cci::cnf::cci_report::get_param_failed().get_type(), "Param has no default value.");
+        cci::cnf::cci_report_handler::get_param_failed("Param has no default value.");
       return base_type::m_gs_param.get_default_value();
     }
     
     void set_value(const cci::cnf::cci_value& val) {
       if (val.type() != get_basic_type()) {
-        CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Wrong cci value type applied to parameter.");
-        CCI_THROW_INFO(cci::cnf::cci_report::cci_value_failure().get_type(), "  cci value type: "<<val.type()<<" != parameter type: "<<get_basic_type());
+        cci::cnf::cci_report_handler::cci_value_failure("Wrong cci value type applied to parameter.");
+        //CCI_THROW_INFO(cci::cnf::cci_report::cci_value_failure().get_type(), "  cci value type: "<<val.type()<<" != parameter type: "<<get_basic_type());
+        std::stringstream ss; ss << "  cci value type: "<<val.type()<<" != parameter type: "<<get_basic_type();
+        cci::cnf::cci_report_handler::report(sc_core::SC_INFO,"CCI_VALUE_FAILURE",ss.str().c_str(),__FILE__,__LINE__);
       }
       switch (val.type()) {
         case cci::cnf::partype_not_available:
-          CCI_THROW_WARNING(cci::cnf::cci_report::cci_value_failure().get_type(), "Applied cci value has no type.");
+          //CCI_THROW_WARNING(cci::cnf::cci_report::cci_value_failure().get_type(), "Applied cci value has no type.");
+          cci::cnf::cci_report_handler::report(sc_core::SC_WARNING,"CCI_VALUE_FAILURE","Applied cci value has no type.",__FILE__,__LINE__);
           break;
         case cci::cnf::partype_number:
         case cci::cnf::partype_real:
         case cci::cnf::partype_bool:
         case cci::cnf::partype_list:
         case cci::cnf::partype_other:
-          CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Applied cci value not available for this param type.");
+          cci::cnf::cci_report_handler::cci_value_failure("Applied cci value not available for this param type.");
           break;
         case cci::cnf::partype_string:
           base_type::set(val.get_string());
           break;
         default:
           assert(false && "This should never happen!");
-          CCI_THROW_ERROR(cci::cnf::cci_report::cci_value_failure().get_type(), "Not implemented.");
+          cci::cnf::cci_report_handler::cci_value_failure("Not implemented.");
       }
     }
     

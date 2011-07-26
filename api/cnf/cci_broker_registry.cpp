@@ -50,7 +50,8 @@ void cci_broker_registry::insert(cci_cnf_broker_if& broker) {
   // check if broker is already inserted
   for(int i = size()-1; i>=0; --i) {
     if(&broker == m_broker_vec[i]) {
-      CCI_THROW_ERROR(cci::cnf::cci_report::broker_failure().get_type(), "broker already inserted");
+      //CCI_THROW_ERROR(cci::cnf::cci_report::broker_failure().get_type(), "broker already inserted");
+      report(sc_core::SC_ERROR,"BROKER_FAILURE","broker already inserted",__FILE__,__LINE__);
     }
   }
 #endif
@@ -65,7 +66,8 @@ void cci_broker_registry::remove(cci_cnf_broker_if& broker) {
     }
   }
   if(i == size()) {
-    CCI_THROW_ERROR(cci::cnf::cci_report::broker_failure().get_type(), "remove broker failed");
+    //CCI_THROW_ERROR(cci::cnf::cci_report::broker_failure().get_type(), "remove broker failed");
+    report(sc_core::SC_ERROR,"BROKER_FAILURE","remove broker failed",__FILE__,__LINE__);
   }
   
   m_broker_vec[i] = m_broker_vec[size()-1];

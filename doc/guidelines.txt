@@ -201,9 +201,9 @@ Examples:
 
 ERROR/WARNING/INFO THROWING
 
-The implementation shall throw sc_reports to report problems (warning/error)
-or status (info). The id prefix should be (TODO:) "/OSCI/CCI/" followed by
-one of the types defined in cci_error_types.h.
+The implementation shall report sc_reports to report problems (warning/error)
+or status (info). The id prefix should be "/OSCI/CCI/" followed by
+one of the types defined in cci_report_handler.h.
 
 
 ----------------------------------------------------------------

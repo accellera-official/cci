@@ -1,5 +1,8 @@
 ChangeLog
 ---------
+26.07.2011
+- Changed error reporting
+
 20.07.2011
 - Changed private broker
   Automatic push and pop is done by cci_broker_manager

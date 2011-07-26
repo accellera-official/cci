@@ -126,11 +126,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     virtual void set(const val_type& val) {
       if (m_gs_param.locked()) {
-        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Parameter locked.");
+        cci::cnf::cci_report_handler::set_param_failed("Parameter locked.");
         return;
       }
       if (!m_gs_param.setValue(val))
-        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Value rejected by callback.");
+        cci::cnf::cci_report_handler::set_param_failed("Value rejected by callback.");
     }
     
     virtual const val_type& get() const {
@@ -139,11 +139,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     virtual void set(const val_type& val, void* lock_pwd) {
       if (!m_gs_param.check_pwd(lock_pwd)) {
-        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Wrong key.");
+        cci::cnf::cci_report_handler::set_param_failed("Wrong key.");
         return;
       }
       if (!m_gs_param.setValue(val, lock_pwd))
-        CCI_THROW_ERROR(cci::cnf::cci_report::set_param_failed().get_type(), "Bad value.");
+        cci::cnf::cci_report_handler::set_param_failed("Bad value.");
     }
     
   protected:

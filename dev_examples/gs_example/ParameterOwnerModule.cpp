@@ -45,10 +45,14 @@ void ParameterOwnerModule::main_action() {
     cout << bool_param.get_default_value()<<endl;
   } catch(sc_core::sc_report e) {
     // If get_param_failed error, catch it
-    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::get_param_failed().get_msg_type()) == 0)
-      cout <<endl<< name() << ": Caught " << e.what() << endl;
-    // If other error, throw it again
-    else throw e;
+    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
+	    case cci::cnf::CCI_GET_PARAM_FAILURE: 
+        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
+        break;
+      default:
+        // If other error, throw it again
+        throw e;
+    }
   }
 
   // demonstrate is_invalid_value

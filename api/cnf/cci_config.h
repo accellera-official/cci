@@ -44,6 +44,7 @@
 #define __CCI_OWNER_ORIGINATOR_STRING__   "OWNER_ORIGINATOR"
 #define __CCI_DEFAULT_BROKER_STRING__     "DEFAULT_BROKER"
 #define __CCI_UNKNOWN_ORIGINATOR_STRING__ "UNKNOWN_ORIGINATOR"
+#define __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "/OSCI/CCI/"
 
 
 /// Main CCI namespace
@@ -59,7 +60,7 @@ namespace cci {
   }
 }
 
-#include "cci_error_types.h"
+#include "cci_report_handler.h"
 #include "cci_datatypes.h"
 #include "cci_originator.h"
 

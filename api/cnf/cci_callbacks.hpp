@@ -55,7 +55,7 @@ callback_return_type callb_adapt_B<T_cci_base_param>::call(cci_base_param& chang
   if (func) {
     return func(changed_param, cb_reason);
   } else {
-    SC_REPORT_ERROR(CCI_SC_REPORT_MSG_TYPE_PREFIX, "No callback registered yet.");
+    SC_REPORT_ERROR(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "No callback registered yet.");
   }      
   return return_nothing;
 }

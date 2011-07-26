@@ -81,10 +81,14 @@ void ObserverModule::main_action() {
     p->json_deserialize("99"); // this shall fail because rejected!
   } catch(sc_core::sc_report e) {
     // If set_param_failed error, catch it
-    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-      cout <<endl<< name() << ": Caught " << e.what() << endl;
-    // If other error, throw it again
-    else throw e;
+    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
+      case cci::cnf::CCI_SET_PARAM_FAILURE: 
+        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
+        break;
+      default:
+        // If other error, throw it again
+        throw e;
+    }
   }
   str = p->json_serialize();
   cout << "int_param has value = " << str << endl;

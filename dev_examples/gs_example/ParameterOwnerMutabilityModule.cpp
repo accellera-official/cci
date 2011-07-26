@@ -42,10 +42,14 @@ void ParameterOwnerMutabilityModule::main_action() {
     mutable_int_param = 55555; // should fail!
   } catch(sc_core::sc_report e) {
     // If set_param_failed error, catch it
-    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-      cout <<endl<< name() << ": Caught " << e.what() << endl;
-    // If other error, throw it again
-    else throw e;
+    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
+	    case cci::cnf::CCI_SET_PARAM_FAILURE: 
+        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
+        break;
+      default:
+        // If other error, throw it again
+        throw e;
+    }
   }
   assert(mutable_int_param == 150);
   cout << name() << ":  mutable_int_param=" << (dec) << mutable_int_param<<endl;
@@ -53,16 +57,28 @@ void ParameterOwnerMutabilityModule::main_action() {
   try {
     mutable_int_param.set(4444, &mBroker); // should fail!
   } catch(sc_core::sc_report e) {
-    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-      cout <<endl<< name() << ": Caught " << e.what() << endl;
-    else throw e;
+    // If set_param_failed error, catch it
+    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
+	    case cci::cnf::CCI_SET_PARAM_FAILURE: 
+        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
+        break;
+      default:
+        // If other error, throw it again
+        throw e;
+    }
   }
   try {
     mutable_int_param.set(4444, NULL); // should fail!
   } catch(sc_core::sc_report e) {
-    if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-      cout <<endl<< name() << ": Caught " << e.what() << endl;
-    else throw e;
+    // If set_param_failed error, catch it
+    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
+	    case cci::cnf::CCI_SET_PARAM_FAILURE: 
+        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
+        break;
+      default:
+        // If other error, throw it again
+        throw e;
+    }
   }
   assert(mutable_int_param == 150);
 

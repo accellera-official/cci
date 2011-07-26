@@ -1,13 +1,13 @@
 Owner.int_param exists (implicit or explicit)
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
+In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:313
+In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:313
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
-In file: /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
+In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 ------ sc_start() ----------------
 
@@ -20,8 +20,8 @@ int_param set value = 99 (shall fail)
   REJECT VALUE CHANGE!!
 
 
-Observer: Caught Error: /OSCI/CCI/set_param_failed: Value rejected by callback.
-In file: gs_cci_param_t.h:133
+Observer: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Value rejected by callback.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: Observer.main_action @ 0 s
 int_param has value = 11
 param list:
@@ -42,8 +42,8 @@ Owner: uint_param is_default_value()=0
 
 Owner: uint_param get_default_value()=12000
 Owner: bool_param get_default_value()=
-Owner: Caught Error: /OSCI/CCI/get_param_failed: Param has no default value.
-In file: gs_cci_param.h:118
+Owner: Caught Error: /OSCI/CCI/GET_PARAM_FAILED: Param has no default value.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:37
 In process: Owner.main_action @ 0 s
 Owner: bool_param is_invalid_value()=1
 Owner: bool_param is_invalid_value()=0
@@ -57,18 +57,18 @@ MutabilityOwner:  mutable_int_param=150
 MutabilityOwner:  lock mutable_int_param
 MutabilityOwner:    set mutable_int_param should fail
 
-MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Parameter locked.
-In file: gs_cci_param_t.h:129
+MutabilityOwner: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Parameter locked.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
 MutabilityOwner:    set mutable_int_param with wrong key
 
-MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: gs_cci_param_t.h:142
+MutabilityOwner: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Wrong key.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: MutabilityOwner.main_action @ 0 s
 
-MutabilityOwner: Caught Error: /OSCI/CCI/set_param_failed: Wrong key.
-In file: gs_cci_param_t.h:142
+MutabilityOwner: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Wrong key.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:    set mutable_int_param with key - should succeed
 MutabilityOwner:  mutable_int_param=4444
@@ -100,8 +100,8 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 ----------------------------
 @20 ns /7 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
 
-Error: /OSCI/CCI/cci_value_failure: Set cci value not implemented for not specialized parameter types.
-In file: gs_cci_param.h:125
+ValueMod: Caught Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:49
 In process: ValueMod.main_action @ 20 ns
 uint_param has value = 9000
 

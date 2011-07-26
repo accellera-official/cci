@@ -42,11 +42,11 @@ ifndef TARGET_ARCH
 endif
 
 ## set some directories 
-GS_CONTROL_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/greencontrol_cci_branch
-GREENSTARCORE_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore
-CCI_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/api
-GS_CCI_PARAM_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_param_implementation
-GS_CCI_API_DIR = /Users/schroede/mydev/greensocs_greencontrol/greenstarcore/gs_api_implementation
+GS_CONTROL_DIR = /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch
+GREENSTARCORE_DIR = /Users/schroede/mydev/cci_git/cci
+CCI_DIR = /Users/schroede/mydev/cci_git/cci/api
+GS_CCI_PARAM_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
+GS_CCI_API_DIR = /Users/schroede/mydev/cci_git/cci/gs_api_implementation
 BOOST = /cad/tools/boost
 SYSTEMC = /cad/tools/systemc
 
