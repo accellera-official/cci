@@ -1,5 +1,4 @@
-/*******************************************************************************
- * The following code is derived, directly or indirectly, from the SystemC
+/* The following code is derived, directly or indirectly, from the SystemC
  * source code Copyright (c) 1996-2010 by all Contributors.
  * All Rights reserved.
  * 
@@ -14,39 +13,44 @@
  * *******************************************************************************/
 
 /**
- * @brief          This module implements the owner module cci-parameters with default values
- * @author         P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date           15th June, 2011 (Wednesday)
+ *  @file     parameter_owner.h
+ *  @brief    This class declares few of the cci-parameters which are
+ *            initialized with initial values either from the testbench (main.cpp)
+ *            file or the configuration file reader & parser.
+ *  @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ *  @date     21st July, 2011 (Thursday)
  */
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-/*!This header must be included in all the 'cci' header files*/
-#include <cci.h>
+#include <cci.h>  /*!This header must be included wherever cci-infrastructure is used*/
 
 /**
- * @brief          This module defines the owner module which instantiates the
- *                 'int type' and 'string type' cci-parameters.  The other two parameters
- *                 of 'float type' and 'double type' have not been instantiated
- * @author         P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date           15th June, 2011 (Wednesday)
+ *  @brief    This SC_MODULE class instantiates two 'integer' type cci-parameters along
+ *            with default values.  In this case, both the parameters have been provided with
+ *            initial values from the testbench file 
+ *            @see example#17 : Specifying Parameter Values via a Configuration File for further details
+ *  @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ *  @date     21st July, 2011 (Thursday)
  */
 class parameter_owner : public sc_module
 {
 	public	:
 
-		/// Default constructor
+		/// Default Constructor
 		SC_CTOR(parameter_owner)
-		:	int_param("int_param", 10)
-		,	string_param("string_param", "default_value")
+		:	int_param_1("int_param_1", 10)
+		,	int_param_2("int_param_2", 20)
 		{
-			// Constructor does nothing other than initializing parameters with default values
-		}
+			// Constructor does nothing here other than initializing parameters with default values
+
+		}// End of Constructor
 
 	private	:
 
-		cci::cnf::cci_param<int>            int_param;
-		cci::cnf::cci_param<std::string>    string_param;
+		/// Declare the cci-parameters of type 'int' and 'std::string'
+		cci::cnf::cci_param<int>            int_param_1;
+		cci::cnf::cci_param<int>            int_param_2;
 
 };// End of SC_MODULE
 

@@ -30,6 +30,14 @@ Author : Parvinder
 
 1.  TLM2 binding and communication part of the example has been developed by Parvinder Pal Singh
 
+---------------------------
+Modifications Done (if any):
+Date :  3rd August, 2011
+Author : P V S Phaneendra
+===========================
+
+1.  Incorporated changes to the cci_report_handling in accordance with the latest cci-infrastructure
+
 
 TODO List :
 ==========

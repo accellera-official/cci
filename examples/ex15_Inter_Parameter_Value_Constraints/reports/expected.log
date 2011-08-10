@@ -1,0 +1,27 @@
+
+	[MAIN] : In this example, the following is condition is verified
+
+	[MAIN] : 		x <= 2^n - 1
+
+	[MAIN] : where, 'x' : value of 'curr_addr_pos', and
+	[MAIN] :        'n' : total number of address lines - 'curr_addr_lines'
+
+	[ADDR_LINES_REG C_TOR] : Default Address Lines : 8
+
+	[ADDR_HOLDING_REG C_TOR] : Default Address Value : 999
+
+	[PROCESSOR fn] : The address lines cannot address the current address position
+
+@ 0 s
+	[CFGR] : Modify the 'curr_addr_lines' to 11
+
+	[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : processor.addr_lines_mod.curr_addr_lines	Parameter Value : 11
+	[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : processor.addr_holding_mod.curr_addr_pos	Parameter Value : 999
+	[PROCESSOR fn] : The number of address lines can address the current address position
+
+@ 5 ns
+	[CFGR] : Changing the 'curr_addr_pos' to 2196
+
+	[PROCESSOR addr_value_post_wr_cb] : Parameter Name : processor.addr_holding_mod.curr_addr_pos	Parameter Value : 2196
+	[PROCESSOR addr_value_post_wr_cb] : Parameter Name : processor.addr_lines_mod.curr_addr_lines	Parameter Value : 11
+	[PROCESSOR fn] : The address lines cannot address the current address position

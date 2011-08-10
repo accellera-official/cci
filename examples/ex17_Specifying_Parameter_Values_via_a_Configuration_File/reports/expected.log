@@ -1,5 +1,5 @@
-ConfigFile_Api: Applying value of param 'param_owner.mutable_int_param' to '15'
-ConfigFile_Api: Applying value of param 'param_owner.mutable_string_param' to 'initial'
+ConfigFile_Api: Applying initial value of param 'param_owner.mutable_int_param' to '15'
+ConfigFile_Api: Applying initial value of param 'param_owner.mutable_string_param' to 'initial'
 
 	[OWNER C_TOR] : Int Parameter Value : 15
 

@@ -46,10 +46,10 @@ SC_MODULE(parameter_owner)
  			* @param    _name         Name of the SC_MODULE
  			* @param    _param_name   (std::string) Name of the cci_parameter
  			*/
-		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_KHz")
+		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_KHz", float _freq = 10.0) : sc_module(_name)
 		{
 		
-			clk	=	new cci::cnf::cci_param<float>(_param_name.c_str(), 1000.00);
+			clk	=	new cci::cnf::cci_param<float>(_param_name.c_str(), _freq);
 	
 			std::cout << "\n\t[OWNER C_TOR] : Parameter Name   : " << clk->get_name() << "\tParameter Value : " << clk->get() << std::endl; 
 

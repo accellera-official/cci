@@ -1,27 +1,19 @@
+ConfigFile_Api: Applying initial value of param 'param_owner.int_param_1' to '100'
+ConfigFile_Api: Applying initial value of param 'param_owner.int_param_2' to '200'
+ConfigFile_Api: Applying initial value of param 'param_owner.int_param_3' to '300'
+ConfigFile_Api: Applying initial value of param 'param_owner.int_param_4' to '400'
 
-	[MAIN] : Set initial value to 'integer type parameter'
+	[CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_1	is : 1
 
-	[MAIN] : Set initial value to 'float type parameter'
+	[CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_2	is : 1
 
-	[MAIN] : Set initial value to 'string type parameter'
+	[CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_3	is : 0
 
-	[MAIN] : Set initial value to 'double type parameter'
-
-	[CFGR within EOE] : Check 'used' status of the int type cci-parameter
-	[CFGR within EOE] : Parameter Name : param_owner.int_param	Used Status : 1
-
-	[CFGR within EOE] : Check 'used' status of the float type cci-parameter
-	[CFGR within EOE] : Parameter Name : param_owner.float_param	Used Status : 0
-
-	[CFGR within EOE] : Check 'used' status of the string type cci-parameter
-	[CFGR within EOE] : Parameter Name : param_owner.string_param	Used Status : 1
-
-	[CFGR within EOE] : Check 'used' status of the double type cci-parameter
-	[CFGR within EOE] : Parameter Name : param_owner.double_param	Used Status : 0
+	[CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_4	is : 0
 
 @ 0 s
 	[CFGR] : List of all unconsumed parameters in the model
 
-	[CFGR] : Unconsumed Parameter Name : param_owner.float_param
+	[CFGR] : Unconsumed Parameter Name : param_owner.int_param_3
 
-	[CFGR] : Unconsumed Parameter Name : param_owner.double_param
+	[CFGR] : Unconsumed Parameter Name : param_owner.int_param_4

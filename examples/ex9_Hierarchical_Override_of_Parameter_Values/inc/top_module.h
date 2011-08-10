@@ -159,9 +159,8 @@ SC_MODULE(top_module)
 				try	{
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting fields of Slave_" << i << endl;
 					myDefaultBroker->set_init_value(slaveName, ss.str());
-				}	catch (sc_core::sc_report e)	{
- 					if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-  					std::cout <<  "\n[ROUTER : Caught] : " << e.what() << endl;}
+				}	catch (sc_core::sc_report exception)	{
+  				std::cout <<  "\n[ROUTER : Caught] : " << exception.what() << endl;}
 	
 				sprintf(slaveName, "%s.RouterInstance.r_sa_%d", name(), i);
 				ss.clear();
@@ -174,9 +173,8 @@ SC_MODULE(top_module)
 				try	{
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting start addr of Slave_" << i << endl;
 					myDefaultBroker->set_init_value(slaveName, ss.str());
-				}	catch (sc_core::sc_report e)	{
-	 				if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-	  				std::cout <<  "\n[ROUTER : Caught] : " << e.what() << endl;	}
+				}	catch (sc_core::sc_report exception)	{
+	  				std::cout <<  "\n[ROUTER : Caught] : " << exception.what() << endl;	}
 	
 				sprintf(slaveName, "%s.RouterInstance.r_ea_%d", name(), i);
 				ss.clear();
@@ -187,10 +185,11 @@ SC_MODULE(top_module)
 				try	{
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting end addr of Slave_" << i << endl;
 					myDefaultBroker->set_init_value(slaveName, ss.str());
-				}	catch (sc_core::sc_report e)	{
-	 				if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-	  				std::cout <<  "\n[ROUTER : Caught] : " << e.what() << endl;	}
+				}	catch (sc_core::sc_report exception)	{
+	  				std::cout <<  "\n[ROUTER : Caught] : " << exception.what() << endl;	}
+
 			}// End of FOR
+
 		}// End of constructor
 		
 

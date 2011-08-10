@@ -21,9 +21,17 @@ Date :   15th June, 2011
 Author : P V S Phaneendra
 ===========================
 
-   1.  'get_param' broker API has been used as of now in order to keep the implementation
+   1.  'get_param_list' broker API has been used as of now in order to keep the implementation
        simple and the eliminate all the warnings arising because of using different string
        patterns while searching for the desired parameters from the config_database
+
+---------------------------
+Modifications Done (if any):
+Date :   8th August, 2011
+Author : P V S Phaneendra
+===========================
+	
+	1.	CCI_REPORT_HANDLING has been modified in accordance to the latest cci-infrastructure
 
 
 TODO List :

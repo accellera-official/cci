@@ -27,6 +27,14 @@ Author : P V S Phaneendra
 
 1.  The presentation has been developed  as per the user's perspective (recommended use of lock, locked and unlock APIs)
  
+---------------------------
+Modifications Done (if any):
+Date : 13th May, 2011 (Friday) 
+Author : P V S Phaneendra
+===========================
+
+1.	Changes to CCI_REPORT_HANDLING have been incorporated into the examples in accordance to the latest cci-infrastructure	
+
 
 TODO List :
 ==========

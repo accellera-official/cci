@@ -15,41 +15,33 @@
 
 /**
  * @file      main.cpp
- * @brief     This file reads the inputs (parameter name and parameter value pair)
- *            from the 'Configuration Text File' and assigns the initial values to
- *            the corresponding parameters before the construction of the modules begins
+ * @brief      
  * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date      12th July, 2011 (Tuesday)
+ * @date      10th June, 2011 (Friday)
  */
-
-#include <cci.h>                  /*!To be included in all CCI based applications*/
 #include <systemc.h>
-
-#include "cci_configFile_Tool.h"
-#include "parameter_owner.h"
-#include "parameter_configurator.h"
-
-#include <string.h>
+#include "processor.h"
+#include "configurator.h"
 
 /**
- * @brief      This function illustrates the way of reading paramters name-value
- *             pair from an external configuration file and then, assigns the
- *             respective initial values to the parmeters via the GreenSoCs parser
+ * @brief      
  * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       12th July, 2011 (Tuesday)
+ * @date       10th June, 2011 (Friday)
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {
-  cci::cnf::cci_configFile_Tool	configTool("configFileTool");
-	configTool.config("Configuration_File.txt");
+	std::cout << "\n\t[MAIN] : In this example, the following is condition is verified" << std::endl;
+	std::cout << "\n\t[MAIN] : \t\tx <= 2^n - 1" << std::endl;
+	std::cout << "\n\t[MAIN] : where, 'x' : value of 'curr_addr_pos', and" << std::endl;
+	std::cout << "\t[MAIN] :        'n' : total number of address lines - 'curr_addr_lines'" << std::endl;
 
-	/// Declare instances of the owner and configurator classes
-	parameter_owner           param_onwer("param_owner");
-	parameter_configurator    param_cfgr("param_setter");
+	/// Instantiation of the owner and configurator sc_modules
+	processor                 processor("processor");
+	configurator              param_cfgr("param_cfgr");
 
-	/// Start and run the simulation till the time specified
-	sc_core::sc_start(50.0, sc_core::SC_NS);
-	
+	// Start and run the simulation till 50 nanoseconds
+	sc_start(10.0, SC_NS);
+
 	return EXIT_SUCCESS;
 
 }// End of MAIN

@@ -13,51 +13,70 @@
  * language governing rights and limitations under the License.
  * *******************************************************************************/
 
-#include <cci.h>
+/**
+ * @file     main.cpp
+ * @brief    This implementation assigns initial values to a list of cci-parameters
+ *           (without any knowledge of them being present in the model) and then
+ *           instantiates the 'parameter_owner' and 'parameter_configurator' modules
+ * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @date     21st July, 2011 (Thursday)
+ */
+#include <cci.h>      /*!This header must be included wherever cci-infrastructure is used*/
 #include <systemc.h>
 #include <assert.h>
 #include <string.h>
 
-/**
- * @file      main.cpp
- * @brief     This is the main testbench file.
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date      15th June, 2011 (Wednesday)
- */
+#include "cci_configFile_Tool.h"
 #include "parameter_owner.h"
 #include "parameter_configurator.h"
 
 /**
- * @brief     The file assigns initial values to a set/list of cci_parameters
- *            (having no previous knowledge of the existence of any of the parameters
- *            within the owner module).  Later instantiates the owner and configurator modules
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date      15th June, 2011 (Wednesday)
+ * @file     main.cpp
+ * @brief    Here, a reference of the global broker is taken with the help of
+ *           the originator information and then initial values are assigned to
+ *           a list of cci-parameters
+ * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @date     21st July, 2011 (Thursday)
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {
+  cci::cnf::cci_configFile_Tool configTool("configFileTool");
+  configTool.config("Configuration_File.txt");
+
+#if 0
+  // In case, if user doesn't want to use the reading from configuration file approach, here
+  // is an alternative that assigns initial values to the cci-parameters
+
+	/// Declare cci-originator instance in order to retrieve a reference of the global broker 
 	cci::cnf::cci_originator            sc_main_originator("sc_main_originator");
 	
+	/// Get reference/handle of the default global broker
 	cci::cnf::cci_cnf_broker_if* myMainBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(sc_main_originator);
 
+	/// Assert if the returned broker handle is NULL
 	assert(myMainBrokerIF != NULL && "SC_MAIN_BROKER_IF handle is returned NULL");
 
-	std::cout << "\n\t[MAIN] : Set initial value to 'integer type parameter'" << std::endl;
+	std::cout << "\n\t[MAIN] : Try setting initial value to 'integer type parameter'" << std::endl;
 	myMainBrokerIF->set_init_value("param_owner.int_param", "10");
 
-	std::cout << "\n\t[MAIN] : Set initial value to 'float type parameter'" << std::endl;
+	std::cout << "\n\t[MAIN] : Try setting initial value to 'float type parameter'" << std::endl;
 	myMainBrokerIF->set_init_value("param_owner.float_param", "11.11");
 
-	std::cout << "\n\t[MAIN] : Set initial value to 'string type parameter'" << std::endl;
-	myMainBrokerIF->set_init_value("param_owner.string_param", "sample_string");
+	std::cout << "\n\t[MAIN] : Try setting initial value to 'string type parameter'" << std::endl;
+	myMainBrokerIF->set_init_value("param_owner.string_param", "Used_parameter");
 
-	std::cout << "\n\t[MAIN] : Set initial value to 'double type parameter'" << std::endl;
+	std::cout << "\n\t[MAIN] : Try setting initial value to 'double type parameter'" << std::endl;
 	myMainBrokerIF->set_init_value("param_owner.double_param", "100.123456789");
+#endif
 
+	/// Instatiation of 'parameter_owner' and 'parameter_configurator' modules
 	parameter_owner          param_owner("param_owner");
 	parameter_configurator   param_cfgr("param_cfgr");
 
-	sc_start(15.0, SC_NS);
+	/// BEOE, EOE and simulation phases advance from here
+	sc_start(10.0, SC_NS);
 
 	return EXIT_SUCCESS;
-}
+
+}//End of MAIN
+ 

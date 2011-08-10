@@ -127,7 +127,6 @@ class parameter_configurator : public sc_module
 					std::cout << "\t[CFGR] : Set parameter value to '4'" << endl;
 					int_param_ptr->json_deserialize("4");
 				}	catch	(sc_core::sc_report exception)	{
-					if(strcmp(exception.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
 						std::cout << "\t[CFGR] : Caught Exception : " << exception.what() << endl;	}
 
 				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;

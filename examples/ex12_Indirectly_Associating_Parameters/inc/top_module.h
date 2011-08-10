@@ -54,8 +54,8 @@ class top_module : public sc_module
 			std::string str1,str2;		/*!Strings to store the names of the owner's parameters*/
 			str1="clk_freq_Hz";
 			str2="clock_speed_KHz";	
-			param_owner1	= new parameter_owner("param_owner1", str1);
-			param_owner2	= new parameter_owner("param_owner2", str2);
+			param_owner1	= new parameter_owner("param_owner1", str1, 1);
+			param_owner2	= new parameter_owner("param_owner2", str2, 2);
 
 			/// Report if handle returned is NULL
 			assert(myTopModBrokerIF != NULL && "Configuration Broker handle is NULL");
@@ -88,11 +88,30 @@ class top_module : public sc_module
 			}
 			else
 				std::cout << "\t[TOP_MODULE C_TOR] : Parameter Name : " << param2_str << "\tnot found." << std::endl;
+
+			// In order to synchronize even the default values of the owner modules, there could be two procedures
+			// 1. Create 'create_param' callbacks on these cci-parameters using the TOP_MODULE's broker interface APIs
+			//    and then upon creation, read their default values using post-write callbacks and if found unequal,
+			//    synchronize them.
+			// 2. Using cci_base_param of one parameter as reference, write the same value (using CF) to the other
+			//    pararmeter's cci_base_param using JSON serialize/deserialize APIs manually
+			float CF = multiplyWithConversionFactor(returnBaseParamList[0]->get_name(), returnBaseParamList[1]->get_name());
+      float freq = atof((returnBaseParamList[1]->json_serialize()).c_str());
+      float operand1 = freq * (1.0/CF);
+			std::stringstream ss;
+      ss.clear();
+      ss.str("");
+      ss << operand1;
+			returnBaseParamList[0]->json_deserialize(ss.str());
+			std::cout << "\n\t[TOP_MODULE C_TOR] : Parameter Name : " << returnBaseParamList[0]->get_name()	\
+				<< "\tParameter Value : " << returnBaseParamList[0]->json_serialize() << std::endl;
+			std::cout << "\n\t[TOP_MODULE C_TOR] : Parameter Name : " << returnBaseParamList[1]->get_name()	\
+				<< "\tParameter Value : " << returnBaseParamList[1]->json_serialize() << std::endl;
 					
 			for(unsigned int i = 1; i < returnBaseParamList.size(); i++)	{
 				float conversion_factor;
 				conversion_factor = multiplyWithConversionFactor(returnBaseParamList[0]->get_name(), returnBaseParamList[i]->get_name());
-				synchValues(returnBaseParamList[0], returnBaseParamList[i], conversion_factor);
+				synchValuesWithCF(returnBaseParamList[0], returnBaseParamList[i], conversion_factor);
 			}
 		
 	}// End of Constructor
@@ -176,7 +195,7 @@ class top_module : public sc_module
  		  * @param     _out_param   Reference of cci_base_param pointers to the selected owner parameters
 		  * @return    void 
  		  */	
-		void synchValues (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2,float con_fact)
+		void synchValuesWithCF (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2,float con_fact)
 		{
 			
 			main_clk_post_write_cb_vec.push_back(_base_param_1->register_callback(cci::cnf::post_write,\

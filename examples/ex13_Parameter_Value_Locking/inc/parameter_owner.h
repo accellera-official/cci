@@ -70,11 +70,8 @@ SC_MODULE(parameter_owner)
 					std::cout << "\t[OWNER] : Try to set parameter value to 1 from 0" << endl;
 					int_param = 1;
 				}	catch	(sc_core::sc_report e)	{
-					if(strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0)
-					{
 						std::cout << "\t[OWNER] : " << name() << "\tFailed to set parameter value to 1 from 0." << endl;
 						std::cout << "\t[OWNER] : Caught Exception : " << e.what() << endl;
-					}
 				}// End of TRY-CATCH
 					
 				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;

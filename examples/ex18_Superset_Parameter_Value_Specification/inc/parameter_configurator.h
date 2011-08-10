@@ -15,23 +15,23 @@
 
 /**
  * @file     parameter_configurator.h
- * @brief    This header declares and defines configurator 
+ * @brief    This header declares and defines configurator class.  The configurator
+ *           class tries to find the list of unconsumed parameters with the model
  * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     15th June, 2011 (Wednesday)
+ * @date     21st July, 2011 (Thursday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci.h>    /*!This header file must be included wherever cci-infrastructure is used*/
 #include <assert.h>
 #include <vector>
 
 /**
- * @brief    The configurator class illustrates retrieving the list of
- *           unconsumed cci-parameters with the broker API - 'is_used' 
+ * @brief    The configurator class illustrates way of retrieving cci-parameters list within
+ *           a cci-model by using the 'get_param_list()' API 
  * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     15th June, 2011 (Wednesday)
+ * @date     3rd June, 2011 (Friday)
  */ 
 class parameter_configurator : public ::sc_core::sc_module
 {
@@ -39,7 +39,6 @@ class parameter_configurator : public ::sc_core::sc_module
 		
 		/// Default constructor
 		SC_CTOR(parameter_configurator)
-		: param_used_status(0)
 		{
 			// Get handle of the broker responsible for the class/module
 			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -47,74 +46,42 @@ class parameter_configurator : public ::sc_core::sc_module
 			// Report if handle returned is NULL
 			assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
 
-			// Define hierarchical paths for the list of cci_parameters that have been
-			// assumed to be instantiated within owner module by the 'testbench file'
-			int_param_str = "param_owner.int_param";
-			float_param_str = "param_owner.float_param";
-			string_param_str = "param_owner.string_param";
-			double_param_str = "param_owner.double_param";
-
-			/// Registering SC_THREAD with the SystemC kernel
-			SC_THREAD(run_cfgr);
+			/// Retrieve the list of all cci-parameters within a model.
+      complete_parameter_list = myCfgrBrokerIF->get_param_list();	
 
 		}// End of Constructor	
 
 
 		/**
-		  * @brief      This callback function demonstrates using broker API 'is_used'
+		  * @brief      This callback function demonstrates ways for a tool developer
 		  *             to retrieve the list of unconsumed parameters in a model.
 		  * @param      void
 		  * @return     void
 		  */ 	
 		void end_of_elaboration (void)
 		{
-			std::cout << "\n\t[CFGR within EOE] : Check 'used' status of the int type cci-parameter" << std::endl;
-			if(!myCfgrBrokerIF->is_used(int_param_str))
-				unconsumed_parameter_list.push_back(int_param_str);
-			std::cout << "\t[CFGR within EOE] : Parameter Name : " <<  int_param_str
-				<< "\tUsed Status : " << myCfgrBrokerIF->is_used(int_param_str) << std::endl;
-
-			std::cout << "\n\t[CFGR within EOE] : Check 'used' status of the float type cci-parameter" << std::endl;
-			if(!myCfgrBrokerIF->is_used(float_param_str))
-				unconsumed_parameter_list.push_back(float_param_str);
-			std::cout << "\t[CFGR within EOE] : Parameter Name : " <<  float_param_str
-				<< "\tUsed Status : " << myCfgrBrokerIF->is_used(float_param_str) << std::endl;
-
-			std::cout << "\n\t[CFGR within EOE] : Check 'used' status of the string type cci-parameter" << std::endl;
-			if(!myCfgrBrokerIF->is_used(string_param_str))
-				unconsumed_parameter_list.push_back(string_param_str);
-			std::cout << "\t[CFGR within EOE] : Parameter Name : " <<  string_param_str
-				<< "\tUsed Status : " << myCfgrBrokerIF->is_used(string_param_str) << std::endl;
-
-			std::cout << "\n\t[CFGR within EOE] : Check 'used' status of the double type cci-parameter" << std::endl;
-			if(!myCfgrBrokerIF->is_used(double_param_str))
-				unconsumed_parameter_list.push_back(double_param_str);
-			std::cout << "\t[CFGR within EOE] : Parameter Name : " <<  double_param_str
-				<< "\tUsed Status : " << myCfgrBrokerIF->is_used(double_param_str) << std::endl;
-		}
-
-
-		/**
-		  * @brief      This process retrieves and displays list of unconsumed
-		  *             parameters in a model to the user
-		  * @param      void
-		  * @return     void
-		  */ 	
-		void run_cfgr (void)
-		{
-			while(1)
+			for(unsigned int i = 0; i < complete_parameter_list.size(); i++)
 			{
-				std::cout << "\n@ " << sc_time_stamp() << std::endl;
-				std::cout << "\t[CFGR] : List of all unconsumed parameters in the model" << std::endl;
+				if(!myCfgrBrokerIF->is_used(complete_parameter_list[i]))
+				{
+					unconsumed_parameter_list.push_back(complete_parameter_list[i]);
 
-				for(unsigned int i = 0; i < unconsumed_parameter_list.size(); i++)
-					std::cout << "\n\t[CFGR] : Unconsumed Parameter Name : " << unconsumed_parameter_list[i] << std::endl;
+					std::cout << "\n\t[CFGR within EOE] : 'used status' of cci-parameter : " << complete_parameter_list[i]
+						<< "\tis : " << myCfgrBrokerIF->is_used(complete_parameter_list[i]) << std::endl; 
+				}
+				else
+					std::cout << "\n\t[CFGR within EOE] : 'used status' of cci-parameter : " << complete_parameter_list[i]
+						<< "\tis : " << myCfgrBrokerIF->is_used(complete_parameter_list[i]) << std::endl; 
 
-				wait(50.0, sc_core::SC_NS);	
+			}// End of FOR
 
-			}// End of WHILE
+			std::cout << "\n@ " << sc_time_stamp() << std::endl;
+			std::cout << "\t[CFGR] : List of all unconsumed parameters in the model" << std::endl;
 
-		}// End of SC_THREAD
+			for(unsigned int i = 0; i < unconsumed_parameter_list.size(); i++)
+				std::cout << "\n\t[CFGR] : Unconsumed Parameter Name : " << unconsumed_parameter_list[i] << std::endl;
+
+		}// End of 'EOE' callback
 
 
 	private	:
@@ -126,14 +93,8 @@ class parameter_configurator : public ::sc_core::sc_module
 	cci::cnf::cci_base_param*    cfgr_param_ptr;
  
 	/// std::vector to store the list of the unconsumed parameters
+	std::vector<std::string>     complete_parameter_list;
 	std::vector<std::string>     unconsumed_parameter_list;
-
-	std::string                  int_param_str;
-	std::string                  float_param_str;
-	std::string                  string_param_str;
-	std::string                  double_param_str;
-
-	bool param_used_status;      /*!Variable stores the 'used' status of a cci-parameter*/
 
 };// End of Class/SC_MODULE
 

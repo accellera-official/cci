@@ -4,7 +4,7 @@
 [MAIN] : Setting initial value of the number of masters to 1
 
 Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/plugin/configdatabase.h:226
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//greencontrol_cci_branch/greencontrol/gcnf/plugin/configdatabase.h:226
 
 [MAIN] : Setting initial value of the number of slaves to 4
 
@@ -68,26 +68,26 @@ In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencont
 [TOP_MODULE C_TOR] : Re-setting fields of Slave_1
 
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
-[ROUTER : Caught] : Error: /OSCI/CCI/set_param_failed: Setting initial value failed.
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:54
+[ROUTER : Caught] : Error: /OSCI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//api/cnf/cci_report_handler.h:33
 
 [TOP_MODULE C_TOR] : Re-setting start addr of Slave_1
 
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
-[ROUTER : Caught] : Error: /OSCI/CCI/set_param_failed: Setting initial value failed.
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:54
+[ROUTER : Caught] : Error: /OSCI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//api/cnf/cci_report_handler.h:33
 
 [TOP_MODULE C_TOR] : Re-setting end addr of Slave_1
 
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
-[ROUTER : Caught] : Error: /OSCI/CCI/set_param_failed: Setting initial value failed.
-In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_broker_implementation/gs_cci_cnf_broker.cpp:54
+[ROUTER : Caught] : Error: /OSCI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci//api/cnf/cci_report_handler.h:33
 
 [TOP_MODULE C_TOR] : Re-setting fields of Slave_2
 
