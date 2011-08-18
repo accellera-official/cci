@@ -230,7 +230,7 @@ SC_MODULE(top_module)
 
 		int addrValue;
 		int slaveSize;                     /*!<Maximum Slave Size (initial value)*/
-		int r_addr_max;            /*!<Maximum Router Table's memory range*/ 
+		int r_addr_max;                    /*!<Maximum Router Table's memory range*/ 
 };// End of SC_MODULE
 
 #endif	// End of TOP_MODULE_H

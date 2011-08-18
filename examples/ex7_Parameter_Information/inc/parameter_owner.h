@@ -41,6 +41,14 @@ SC_MODULE(parameter_owner)
 			/// Assign name to the cci 'string-type' parameter (Value NOT ASSIGNED)
 		, string_param("mutable_string_param","Default_Value")
 		{
+			/// Registering 'pre_read' callback onto the 'str_param' cci-parameter
+			str_pre_read_cb	=	string_param.register_callback(cci::cnf::pre_read, this,
+			                      cci::bind(&parameter_owner::read_callbacks, this, _1, _2));
+
+			/// Registering 'post_write' callback onto the 'int_param' cci-parameter
+			int_post_write_cb	=	int_param.register_callback(cci::cnf::post_write, this,
+			                      cci::bind(&parameter_owner::write_callbacks, this, _1, _2));
+
 
 			// Registering SC_THREAD process
 			SC_THREAD(run_thread);
@@ -76,6 +84,33 @@ SC_MODULE(parameter_owner)
 			// Destructor does nothing here
 		}
 	
+	
+		/// Callbacks implementation
+		cci::cnf::callback_return_type
+			read_callbacks	(cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
+			{
+				const cci::cnf::cci_originator* myOriginator = cci::cnf::cci_originator::get_global_originator();
+
+				std::cout << "\n\t[OWNER pre_read_cb] :  Parameter Name : " << _selected_base_param.get_name()
+					<<	"\tOriginator info : " << myOriginator->name() << std::endl;
+		
+				return cci::cnf::return_nothing;
+			}
+
+
+		/// Callbacks implementation
+		cci::cnf::callback_return_type
+			write_callbacks	(cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
+			{
+				const cci::cnf::cci_originator* myOriginator = cci::cnf::cci_originator::get_global_originator();
+
+				std::cout << "\n\t[OWNER post_write_cb] :  Parameter Name : " << _selected_base_param.get_name()
+					<<	"\tOriginator info : " << myOriginator->name() << std::endl;
+		
+				return cci::cnf::return_nothing;
+			}
+		
+
 		/// SC_THREAD process definition
 		void run_thread (void)
 		{
@@ -133,6 +168,10 @@ SC_MODULE(parameter_owner)
 		/// CCI parameters declarations
 		cci::cnf::cci_param<int>         int_param;    /*!Integer Parameter*/
 		cci::cnf::cci_param<std::string> string_param; /*!String Parameter*/
+
+		/// Declaration of callback adaptor objects
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    str_pre_read_cb; 
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb; 
 };
 
 #endif	// End of PARAMETER_OWNER_H

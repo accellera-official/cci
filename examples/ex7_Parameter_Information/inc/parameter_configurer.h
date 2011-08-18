@@ -53,8 +53,51 @@ SC_MODULE(parameter_configurer)
 				std::cout << "\n\t[CFGR] : Broker Type : " << myBrokerInterface->name() << endl;
 			else
 				std::cout << "\n\t[CFGR] : " << myBrokerInterface->name() << " is not a private broker." << endl; 
+
+
+			int_param_str = "param_owner.mutable_int_param";
+			string_param_str = "param_owner.mutable_string_param";
+			
+			intParamExists = false;
+			strParamExists = false;	
 		
 	
+			/// Broker interface checks for existance of a (std::string type) parameter using 'exists_param' API
+			if(myBrokerInterface->exists_param(string_param_str))
+			{
+				/// If parameter exists, get handle of the parameter using 'get_param' API
+				str_param_ptr = myBrokerInterface->get_param(string_param_str);		
+					
+				// Report if parameter handle is returned NULL
+				assert(str_param_ptr != NULL && "String CCI Parameter Handle returned NULL");
+									
+				strParamExists = true;
+			}
+			else
+			{
+				std::cout << "\n\t[CFGR] : String parameter does not exist" << endl;
+					
+				strParamExists = false;
+			} // End of IF
+
+
+			// Broker interface checks for the existance of a (int type) parameter
+			if(myBrokerInterface->exists_param(int_param_str))
+			{
+				int_param_ptr =	myBrokerInterface->get_param(int_param_str);
+		
+				assert(int_param_ptr != NULL && "Integer CCI Parameter Handle returned NULL");					
+				
+				intParamExists = true;
+			}
+			else
+			{
+				std::cout << "\n\t[CFGR] : Integer parameter does not exist." << endl;
+				
+				intParamExists = false;
+			} // End of IF
+
+
  			/// Registering SC_THREAD process 
 			SC_THREAD(run_accessor);
 		}
@@ -68,52 +111,8 @@ SC_MODULE(parameter_configurer)
 		/// Within SC_THREAD process definition
 		void run_accessor(void)
 		{
-			const std::string int_param_str = "param_owner.mutable_int_param";
-			const std::string string_param_str = "param_owner.mutable_string_param";
-			
-			cci::cnf::cci_base_param* int_param_ptr;
-			cci::cnf::cci_base_param* str_param_ptr;			
-
-			bool intParamExists = false;
-			bool strParamExists = false;	
-		
 			while(1) 
 			{
-
-				/// Broker interface checks for existance of a (std::string type) parameter using 'exists_param' API
-				if(myBrokerInterface->exists_param(string_param_str))
-				{
-					/// If parameter exists, get handle of the parameter using 'get_param' API
-					str_param_ptr = myBrokerInterface->get_param(string_param_str);		
-					
-					// Report if parameter handle is returned NULL
-					assert(str_param_ptr != NULL && "String CCI Parameter Handle returned NULL");
-									
-					strParamExists = true;
-				}
-				else
-				{
-					std::cout << "\n\t[CFGR] : String parameter does not exist" << endl;
-					
-					strParamExists = false;
-				} // End of IF
-
-				// Broker interface checks for the existance of a (int type) parameter
-				if(myBrokerInterface->exists_param(int_param_str))
-				{
-					int_param_ptr =	myBrokerInterface->get_param(int_param_str);
-		
-					assert(int_param_ptr != NULL && "Integer CCI Parameter Handle returned NULL");					
-				
-					intParamExists = true;
-				}
-				else
-				{
-					std::cout << "\n\t[CFGR] : Integer parameter does not exist." << endl;
-				
-					intParamExists = false;
-				} // End of IF
-
 				if(strParamExists && intParamExists)
 				{
 					std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'is_default_value()'" << endl; 
@@ -141,8 +140,9 @@ SC_MODULE(parameter_configurer)
 						std::cout << "\n\t[CFGR -> Retrieve] : Parameter value : " << str_param_ptr->json_serialize() << endl;			
 					}
 					else
-						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " value has been modified." << endl; 
-				
+						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " New Value : "
+							<< str_param_ptr->json_serialize()<< endl; 
+
 
 					wait(2.0, SC_NS);
 	
@@ -289,7 +289,18 @@ SC_MODULE(parameter_configurer)
 
 		/// CCI configuration broker instance
 		cci::cnf::cci_cnf_broker_if* myBrokerInterface;
-		
+
+		/// std::string types for storing parameters hierarchical paths
+		std::string int_param_str;
+		std::string string_param_str;
+			
+		/// Declaring cci_base_parameters
+		cci::cnf::cci_base_param* int_param_ptr;
+		cci::cnf::cci_base_param* str_param_ptr;			
+
+		// Few Local parameters
+		bool intParamExists; /*!Stores the status whether integer type parameter exists*/
+		bool strParamExists; /*!Stores the status whether string type parameter exists*/	
 		int 	check;
 		bool	lock_status;	/*!Holds lock status of a parameter*/
 		void*	lock_passwd;  /*!Holds the key(password) for lock/unlock*/

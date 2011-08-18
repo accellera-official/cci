@@ -34,12 +34,19 @@ Author : PVS Phaneendra
 4.  Updated presentation in accordance with the code
 
 
+-----------------------
+Modifications Done :
+Date : 17th August, 2011
+Author : PVS Phaneendra
+========================
+
+1.  Appended the code for checking the value originator information
+
+
 TODO List :
 ==========
 
-1.  To demonstate setting and querying value origin
-
-2.  To illustrate use of "is_initial_value()" API 
+1.  To illustrate use of "is_initial_value()" API 
      
     Currently, encountering the following issues : 
       

@@ -25,6 +25,7 @@
 #include <assert.h>
 #include "parameter_owner.h"
 #include "parameter_configurer.h"
+#include "observer.h"
 
 /// SystemC main function
 int sc_main(int sc_argc, char* sc_argv[])
@@ -52,9 +53,15 @@ int sc_main(int sc_argc, char* sc_argv[])
 
 	std::cout << "\n[MAIN] : parameter_container module declares two cci type parameters." << endl;
 	std::cout << "\n\tOne is of 'Integer type' and the other is of 'String type'" << endl;
+	std::cout << "\n\t'Integer type' has 'post_write' callback registered within the OWNER, while" << std::endl;
+	std::cout << "\t'String type' parameter has 'pre_read' callback registered" << endl;
 
+	/// Instantiation of sc_modules
 	parameter_owner     	param_owner("param_owner");
-	parameter_configurer	param_cfgr("param_acc");
+	parameter_configurer	param_cfgr("param_cfgr");
+
+	/// Instantiating observer class
+	observer              observer_class;
 
 	sc_start(24.0, SC_NS);
 

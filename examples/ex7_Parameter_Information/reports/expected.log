@@ -5,6 +5,9 @@
 
 	One is of 'Integer type' and the other is of 'String type'
 
+	'Integer type' has 'post_write' callback registered within the OWNER, while
+	'String type' parameter has 'pre_read' callback registered
+
 Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Retrieve] : Parameter name  : param_owner.mutable_int_param
@@ -15,12 +18,22 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR] : DEFAULT_BROKER is not a private broker.
 
+	[OBSERVER] : DEFAULT_BROKER is not a private broker.
+
+	[OBSERVER] : Parameter Name : param_owner.mutable_int_param	Parameter Value : 0
+
+	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : observerOriginator
+
+	[OBSERVER] : Parameter Name : param_owner.mutable_string_param	Parameter Value : Initialized within sc_main
+
 @ 0 s	demonstrating 'is_default_value()'
 
 	[CFGR] : param_owner.mutable_int_param default value hasn't been modified.
 @ 1 ns
 
 	[OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 2
+
+	[OWNER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
 
 	[OWNER -> Set] : Int param doc - 'Modified by initial value'
 
@@ -31,6 +44,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 	[CFGR] : param_owner.mutable_string_param value hasn't been modified
 
 	[CFGR -> Retrieve] : Parameter name  : param_owner.mutable_string_param
+
+	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : param_cfgr
 
 	[CFGR -> Retrieve] : Parameter value : Initialized within sc_main
 
@@ -47,6 +62,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 @ 6 ns
 
 	[CFGR -> Set] :  param_owner.mutable_int_param value to 10
+
+	[OWNER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
 
 @ 8 ns
 
@@ -98,6 +115,10 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR] : 'Retrieve1' using 'json_serialize' and 'Retrieve2' using 'get_value()'
 
+	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : param_cfgr
+
 	[CFGR -> Retrieve1] : param_owner.mutable_string_param value is Hello_New_String
+
+	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : param_cfgr
 
 	[CFGR -> Retrieve2] : Hello_New_String
