@@ -21,8 +21,29 @@
  */
 #include <cci.h>
 #include <systemc.h>
-#include "root_module.h"
+#include "parent.h"
 #include "configurator.h"
+
+
+SC_MODULE(Top)
+{
+	public	:
+
+		SC_CTOR(Top)
+		: privBroker (new cci::cnf::gs_cci_private_broker_accessor(*this, 
+                    boost::assign::list_of("parent_inst.parent_int_buffer"), cci::cnf::cci_originator(*this)))
+		, parent_inst("parent_inst", privBroker)
+		, param_cfgr("param_cfgr")			
+		{
+			// Does nothing
+		}
+
+		cci::cnf::cci_cnf_broker_if* privBroker;
+		parent  									   parent_inst;
+		configurator                 param_cfgr;
+
+};// End of SC_MODULE
+
 
 /**
  * @brief      The ROOT_MODULE in turn instantiates the parent module
@@ -31,10 +52,8 @@
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {
-	/// Instantiation of the owner and configurator sc_modules
-	root_module                root_module("root_module");
-	
-	configurator               param_cfgr("param_cfgr");
+
+	Top      Top("Top");
 
 	// Start and run the simulation till 50 nanoseconds
 	sc_core::sc_start(26.0, sc_core::SC_NS);

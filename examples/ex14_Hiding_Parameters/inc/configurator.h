@@ -47,23 +47,24 @@ class configurator : public sc_module
 			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 
 			// Asserts if the returned broker handle is NULL
-			assert(myCfgrBrokerIF != NULL && "Returned broker handle for 'root_module' is NULL");
+			assert(myCfgrBrokerIF != NULL && "Returned default broker handle for 'configurator' is NULL");
 
 			if(myCfgrBrokerIF != NULL)
 			{
-				if(myCfgrBrokerIF->exists_param("root_module.root_int_param"))
+				if(myCfgrBrokerIF->exists_param("Top.parent_inst.parent_int_buffer"))
 				{
-					/// Get handle of the root_module's cci-parameter
-					root_base_param_ptr = myCfgrBrokerIF->get_param("root_module.root_int_param");
+					/// Get handle of the parent_module's cci-parameter
+					parent_base_param_ptr = myCfgrBrokerIF->get_param("Top.parent_inst.parent_int_buffer");
 
 					// Assert if the handle returned is NULL
-					assert(root_base_param_ptr != NULL && "Returned handle of root_module's cci-parameter is NULL");
+					assert(parent_base_param_ptr != NULL && "Returned handle of parent_module's cci-parameter is NULL");
 					
-					std::cout << "\n\t[CFGR] : Parameter Name : " << root_base_param_ptr->get_name()
-						<< "\tParameter Value : " << root_base_param_ptr->json_serialize() << std::endl;
+					std::cout << "\n\t[CFGR] : Parameter Name : " << parent_base_param_ptr->get_name()
+						<< "\tParameter Value : " << parent_base_param_ptr->json_serialize() << std::endl;
 				}
 				else
-					std::cout << "\n\t[CFGR] : No parameter by name 'root_module.root_int_param' exists" << std::endl;
+					//std::cout << "\n\t[CFGR] : No parameter by name 'root_module.root_int_param' exists" << std::endl;
+					std::cout << "\n\t[CFGR] : Parameter by name 'Top.parent_module.parent_int_buffer' doesn't exist" << std::endl;
 
 			}// End of IF
 
@@ -93,17 +94,17 @@ class configurator : public sc_module
 
 				std::cout << "\n@ " << sc_time_stamp() << std::endl;
 
-				std::cout << "\t[CFGR] : Change the value of the private cci-parameters through 'root_module'" << std::endl;
-				std::cout << "\t[CFGR] : Change the value of the 'root_int_param' to '1000'" << std::endl;
+				std::cout << "\t[CFGR] : Change the value of the 'parent_int_buffer' to '1000'" << std::endl;
 
-				root_base_param_ptr->json_deserialize("1000");
+				parent_base_param_ptr->json_deserialize("1000");
 
-				std::cout << "\n\t[CFGR] : Parameter Name : " << root_base_param_ptr->get_name()
-					<< "\tParameter Value : " << root_base_param_ptr->json_serialize() << std::endl;
+				std::cout << "\n\t[CFGR] : Parameter Name : " << parent_base_param_ptr->get_name()
+					<< "\tParameter Value : " << parent_base_param_ptr->json_serialize() << std::endl;
 
 				wait(5.0, SC_NS);
 
 			}// End of WHILE
+
 		}// End of SC_THREAD
 
 	private	:
@@ -112,7 +113,7 @@ class configurator : public sc_module
 		cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
 	
 		/// Few directly accessible cci-parameters
-		cci::cnf::cci_base_param*	   root_base_param_ptr;
+		cci::cnf::cci_base_param*	   parent_base_param_ptr;
 
 };// End of Class
 
