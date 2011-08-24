@@ -28,7 +28,7 @@
 
 /**
  * @brief    This module gets the references to all the cci-parameters within
- *           the model and writes values to it.
+ *           the model and writes (valid) values to them.
  * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
  * @date     4th August, 2011 (Thursday)
  */ 
@@ -47,30 +47,30 @@ class configurator : public sc_module
 
 
 			/// Hierarchical names for the cci_parameters of the owner modules	
-			std::string cfgr_param_str2	=	"processor.addr_lines_mod.curr_addr_lines";
-			std::string cfgr_param_str3	=	"processor.addr_holding_mod.curr_addr_pos";
+			std::string cfgr_param_str1	=	"processor.addr_lines_mod.curr_addr_lines";
+			std::string cfgr_param_str2	=	"processor.memory_block.mem_size";
 
 
 			/// Check for the existence of 'curr_addr_lines' cci_parameter of ADDRESS_LINES_REGISTER
-			if(myCfgrBrokerIF->exists_param(cfgr_param_str2))
+			if(myCfgrBrokerIF->exists_param(cfgr_param_str1))
 			{
-				addr_lines_base_ptr	=	myCfgrBrokerIF->get_param(cfgr_param_str2);
+				addr_lines_base_ptr	=	myCfgrBrokerIF->get_param(cfgr_param_str1);
 
 				assert(addr_lines_base_ptr	!= NULL && "Handle of 'curr_addr_lines' parameter returned is NULL");
 			}
 			else
-				std::cout << "\t[CFGR C_TOR] : Parameter " << cfgr_param_str2 << "\tdoesn't exists" << std::endl;
+				std::cout << "\t[CFGR C_TOR] : Parameter " << cfgr_param_str1 << "\tdoesn't exists" << std::endl;
 
 
-			/// Check for the existence of 'curr_addr_pos' cci_parameter of ADDRESS_HOLDING_REGISTER
-			if(myCfgrBrokerIF->exists_param(cfgr_param_str3))
+			/// Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
+			if(myCfgrBrokerIF->exists_param(cfgr_param_str2))
 			{
-				addr_value_base_ptr	=	myCfgrBrokerIF->get_param(cfgr_param_str3);
+				mem_size_base_ptr	=	myCfgrBrokerIF->get_param(cfgr_param_str2);
 
-				assert(addr_value_base_ptr	!= NULL && "Handle of 'curr_addr_pos' parameter returned is NULL");
+				assert(mem_size_base_ptr	!= NULL && "Handle of 'mem_size' parameter returned is NULL");
 			}
 			else
-				std::cout << "\t[CFGR C_TOR] : Parameter " << cfgr_param_str3 << "\tdoesn't exists" << std::endl;
+				std::cout << "\t[CFGR C_TOR] : Parameter " << cfgr_param_str2 << "\tdoesn't exists" << std::endl;
 
 
 			/// Registering SC_THREAD with the SystemC kernel
@@ -86,18 +86,25 @@ class configurator : public sc_module
 			{
 				std::cout << "\n@ " << sc_time_stamp() << std::endl;
 
-				std::cout << "\t[CFGR] : Modify the 'curr_addr_lines' to 11" << std::endl;
-				addr_lines_base_ptr->json_deserialize("11");
+				std::cout << "\t[CFGR] : Changing the 'mem_size' to 640" << std::endl;
+				mem_size_base_ptr->json_deserialize("640");
 
 				wait(5.0, SC_NS);	
 	
 				std::cout << "\n@ " << sc_time_stamp() << std::endl;
 			
-				std::cout << "\t[CFGR] : Changing the 'curr_addr_pos' to 2196" << std::endl;
-				addr_value_base_ptr->json_deserialize("2196");
+				std::cout << "\t[CFGR] : Modify the 'curr_addr_lines' to 10" << std::endl;
+				addr_lines_base_ptr->json_deserialize("10");
 		
 				wait(5.0, SC_NS);
 
+				std::cout << "\n@ " << sc_time_stamp() << std::endl;
+			
+				std::cout << "\t[CFGR] : Changing the 'mem_size' to 800" << std::endl;
+				mem_size_base_ptr->json_deserialize("800");
+	
+				wait(5.0, SC_NS);
+	
 			}// End of WHILE
 
 		}// End of SC_THREAD
@@ -109,9 +116,8 @@ class configurator : public sc_module
 	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
 
 	/// CCI base parameters
-	cci::cnf::cci_base_param* proc_mem_base_ptr;
 	cci::cnf::cci_base_param* addr_lines_base_ptr;
-	cci::cnf::cci_base_param* addr_value_base_ptr;
+	cci::cnf::cci_base_param* mem_size_base_ptr;
 
 };// End of Class/SC_MODULE
 

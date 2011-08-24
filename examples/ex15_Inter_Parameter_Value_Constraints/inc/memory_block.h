@@ -14,40 +14,38 @@
  * *******************************************************************************/
 
 /**
- * @file      parameter_owner.h
- * @brief     The file specifies a cci-parameter to hold the current value
- *            of a memory location that will later be used by the processor
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @file      memory_block.h
+ * @brief     The file specifies a cci-parameter to list the size of a
+ * 						memory block that will later be used by the processor
+ * @author    P V S Phaneendra, CircuitSutra Technologies, <pvs@circuitsutra.com>
  * @date      4th August, 2011 (Thursday)
  */
-#ifndef ADDRESS_HOLDING_REGISTER_H
-#define ADDRESS_HOLDING_REGISTER_H
+#ifndef MEMORY_BLOCK_H
+#define MEMORY_BLOCK_H
 
 /// Include the 'cci.h' header in all cci-based applications
 #include <cci.h>
 
 /**
- * @brief      The Address Holding Register initializes a cci-parameter
+ * @brief      The 'Memory Stack' initializes a cci-parameter
  *             for holding a address value
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       4th August, 2011 (Thursday)
  */
-SC_MODULE(address_holding_register)
+SC_MODULE(memory_block)
 {
 	public:
 
-		SC_CTOR(address_holding_register)
-		: addr_pos("curr_addr_pos", 999)
+		SC_CTOR(memory_block)
+		: mem_size("mem_size", 500)
 		{
-			std::cout << "\n\t[ADDR_HOLDING_REG C_TOR] : Default Address Value : " << addr_pos.get() << "\n" << std::endl;
+			std::cout << "\n\t[MEMORY_BLOCK C_TOR] : Default Memory Size : " << mem_size.get() << "\n" << std::endl;
 
 		}// End of Constructor
 		
 	private	:
 	
 		/// Declare a cci-parameter to hold an address value
-		cci::cnf::cci_param<int>                     addr_pos;
+		cci::cnf::cci_param<int>                     mem_size;
 
 };// End of SC_MODULE
 
-#endif // End of ADDRESS_HOLDING_REGISTER_H
+#endif // End of MEMORY_BLOCK_H

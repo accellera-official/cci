@@ -53,8 +53,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 
 	std::cout << "\n[MAIN] : parameter_container module declares two cci type parameters." << endl;
 	std::cout << "\n\tOne is of 'Integer type' and the other is of 'String type'" << endl;
-	std::cout << "\n\t'Integer type' has 'post_write' callback registered within the OWNER, while" << std::endl;
-	std::cout << "\t'String type' parameter has 'pre_read' callback registered" << endl;
+	std::cout << "\n\t'Integer type' has 'pre_read', 'pre/post_write' callback registered within the OBSERVER" << std::endl;
 
 	/// Instantiation of sc_modules
 	parameter_owner     	param_owner("param_owner");

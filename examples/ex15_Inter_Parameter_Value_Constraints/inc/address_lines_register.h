@@ -37,7 +37,7 @@ SC_MODULE(address_lines_register)
 	public:
 
 		SC_CTOR(address_lines_register)
-		: no_of_addr_lines("curr_addr_lines", 8)
+		: no_of_addr_lines("curr_addr_lines", 9)
 		{
 			std::cout << "\n\t[ADDR_LINES_REG C_TOR] : Default Address Lines : " << no_of_addr_lines.get() << std::endl;
 

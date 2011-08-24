@@ -32,7 +32,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 {
 	std::cout << "\n\t[MAIN] : In this example, the following is condition is verified" << std::endl;
 	std::cout << "\n\t[MAIN] : \t\tx <= 2^n - 1" << std::endl;
-	std::cout << "\n\t[MAIN] : where, 'x' : value of 'curr_addr_pos', and" << std::endl;
+	std::cout << "\n\t[MAIN] : where, 'x' : value of 'mem_block_size' (Memory Block size), and" << std::endl;
 	std::cout << "\t[MAIN] :        'n' : total number of address lines - 'curr_addr_lines'" << std::endl;
 
 	/// Instantiation of the owner and configurator sc_modules
@@ -40,7 +40,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 	configurator              param_cfgr("param_cfgr");
 
 	// Start and run the simulation till 50 nanoseconds
-	sc_start(10.0, SC_NS);
+	sc_start(15.0, SC_NS);
 
 	return EXIT_SUCCESS;
 

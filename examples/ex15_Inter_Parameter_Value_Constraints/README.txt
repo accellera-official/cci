@@ -25,6 +25,13 @@ Author : P V S Phaneendra
 1.  Changes have been incorporated into the example as per CCIWG suggestions to incorporate for
     a more real-time example
 
+---------------------------
+Modifications Done (if any):
+Date : 5th August, 2011 
+Author : P V S Phaneendra
+---------------------------
+
+1.  Address_Holding_Register sc_module has been replaced by Memory_Stack module.
 
 TODO List :
 ==========

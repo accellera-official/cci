@@ -28,7 +28,9 @@
 #include <vector>
 
 /**
-  * @brief   This observer class reads in the cci-parameters values 
+  * @brief   This observer class registers all types of callbacks on the 
+  *          cci-parameter values of interest in order to find the originator
+  *          for the appropriate actions on the cci-parameters
   * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
   * @date    17th August, 2011 (Wednesday) : 17:55 hrs IST
   */
@@ -57,21 +59,19 @@ class observer
 				std::cout << "\n\t[OBSERVER] : " << observerBrokerIF->name() << " is not a private broker." << endl; 
 
 
-			/// Gets the list of all cci-parameters within the model
-			complete_param_list = observerBrokerIF->get_param_list();
+			/// Gets the reference to the 'int' type cci-parameter of OWNER module
+			obsv_int_base_ptr = observerBrokerIF->get_param("param_owner.mutable_int_param");
 
+			assert(obsv_int_base_ptr != NULL && "Returned Handle of 'integer type' cci-parameter is NULL");
 
-			// NOTE :  All cci-parameters will be available here as this class has been instantiated after
-			//         PARAMETER_OWNER and PARAMETER_CONFIGURATOR modules
-			//for(unsigned int i = 0; i < base_param_ptr_list.size(); i++)
-			for(unsigned int i = 0; i < complete_param_list.size(); i++)
-			{
-				// Get reference to the owner cci-parameters
-				base_param_ptr_list.push_back(observerBrokerIF->get_param(complete_param_list[i]));
-	
-				std::cout << "\n\t[OBSERVER] : Parameter Name : " << base_param_ptr_list[i]->get_name()
-					<< "\tParameter Value : " << base_param_ptr_list[i]->json_serialize() << std::endl;
-			}
+			/// Observer registering 'PRE_READ', 'PRE_WRITE' & 'POST_WRITE' callbacks
+			/// on the integer parameter to monitor all actions on it
+			int_pre_read_cb	=	obsv_int_base_ptr->register_callback(cci::cnf::pre_read, this,
+			                                           cci::bind(&observer::read_callback, this, _1, _2));
+			int_pre_write_cb	=	obsv_int_base_ptr->register_callback(cci::cnf::pre_write, this,
+			                                           cci::bind(&observer::write_callbacks, this, _1, _2));
+			int_post_write_cb	=	obsv_int_base_ptr->register_callback(cci::cnf::post_write, this,
+			                                           cci::bind(&observer::write_callbacks, this, _1, _2));
 	
 		}// End of Constructor
 
@@ -82,17 +82,71 @@ class observer
 			// Destructor does nothing
 		}
 
+		
+		/// 'PRE_READ' Callbacks Implementations
+		cci::cnf::callback_return_type
+			read_callback (cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
+			{
+				switch(cb_reason)
+				{
+					case cci::cnf::pre_read	:	{
+						const cci::cnf::cci_originator* myOriginator = cci::cnf::cci_originator::get_global_originator();
+
+		        std::cout << "\n\t[OBSERVER pre_read_cb] :  Parameter Name : " << _selected_base_param.get_name()	\
+    		      <<  "\tOriginator info : " << myOriginator->name() << std::endl;
+				
+						break;	}
+			
+					default	:
+						std::cout << "\n\t[OBSERVER] - Unknown Callback Type" << std::endl;
+
+				}// End of SWITCH-CASE
+
+       	return cci::cnf::return_nothing;
+
+			}// End of read_callback
+
+
+		/// 'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
+		cci::cnf::callback_return_type
+			write_callbacks	(cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
+			{			
+				const cci::cnf::cci_originator* myOriginator = cci::cnf::cci_originator::get_global_originator();
+				
+				switch(cb_reason)
+				{
+					case	cci::cnf::pre_write	:	{
+						std::cout << "\n\t[OBSERVER pre_write_cb] :  Parameter Name : " << _selected_base_param.get_name()	\
+          		<<  "\tOriginator info : " << myOriginator->name() << std::endl;
+						break;}
+
+					case	cci::cnf::post_write	:	{
+						std::cout << "\n\t[OBSERVER post_write_cb] :  Parameter Name : " << _selected_base_param.get_name()	\
+          		<<  "\tOriginator info : " << myOriginator->name() << std::endl;
+						break;}
+									
+					default	:
+						std::cout << "\n\t[OWNER] - Unknown Callback Type" << std::endl;
+
+				}// End of SWITCH-CASE
+
+        return cci::cnf::return_nothing;
+
+			}// End of write_callbacks
+
 
 	private	:
 
 		/// CCI configuration broker instance
-		cci::cnf::cci_cnf_broker_if* observerBrokerIF;
+		cci::cnf::cci_cnf_broker_if*            observerBrokerIF;
 
-		/// Declare a std::vector to hold the string names of all the cci-parameters
-		std::vector<std::string> complete_param_list;			
+		/// Declare cci_base_param for int type cci-parameter
+		cci::cnf::cci_base_param*               obsv_int_base_ptr;
 
-		/// Declaring cci_base_parameters
-		std::vector<cci::cnf::cci_base_param *> base_param_ptr_list;			
+		/// Callback Adaptor Objects for 'int' type parameter
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_read_cb;
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_write_cb;
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb;
 
 };// End of Class
 

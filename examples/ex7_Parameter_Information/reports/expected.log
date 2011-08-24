@@ -5,8 +5,7 @@
 
 	One is of 'Integer type' and the other is of 'String type'
 
-	'Integer type' has 'post_write' callback registered within the OWNER, while
-	'String type' parameter has 'pre_read' callback registered
+	'Integer type' has 'pre_read', 'pre/post_write' callback registered within the OBSERVER
 
 Prior to 0 s	demonstrating 'get_default_value()'
 
@@ -20,12 +19,6 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OBSERVER] : DEFAULT_BROKER is not a private broker.
 
-	[OBSERVER] : Parameter Name : param_owner.mutable_int_param	Parameter Value : 0
-
-	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : observerOriginator
-
-	[OBSERVER] : Parameter Name : param_owner.mutable_string_param	Parameter Value : Initialized within sc_main
-
 @ 0 s	demonstrating 'is_default_value()'
 
 	[CFGR] : param_owner.mutable_int_param default value hasn't been modified.
@@ -33,7 +26,9 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 2
 
-	[OWNER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
+	[OBSERVER pre_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
+
+	[OBSERVER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
 
 	[OWNER -> Set] : Int param doc - 'Modified by initial value'
 
@@ -45,8 +40,6 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR -> Retrieve] : Parameter name  : param_owner.mutable_string_param
 
-	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : param_cfgr
-
 	[CFGR -> Retrieve] : Parameter value : Initialized within sc_main
 
 @ 4 ns	demonstrating 'is_invalid_value()'
@@ -54,6 +47,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 	[CFGR] : Valid parameter value.
 
 	[CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
+
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
 
 	[CFGR -> Retrieve] Parameter's value : 1
 
@@ -63,7 +58,9 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR -> Set] :  param_owner.mutable_int_param value to 10
 
-	[OWNER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
+	[OBSERVER pre_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
+
+	[OBSERVER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
 
 @ 8 ns
 
@@ -72,6 +69,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 @ 10 ns
 
 	[CFGR -> Retrieve] : Parameter name : param_owner.mutable_int_param
+
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
 
 	[CFGR -> Retrieve] : Parameter value: 10
 
@@ -103,6 +102,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Set] : param_owner.mutable_int_param value invalid.
 
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
+
 	[OWNER] : param_owner.mutable_int_param value is invalid : 10
 
 @ 20 ns	demonstrating 'is_invalid_value()'
@@ -115,10 +116,6 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR] : 'Retrieve1' using 'json_serialize' and 'Retrieve2' using 'get_value()'
 
-	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : param_cfgr
-
 	[CFGR -> Retrieve1] : param_owner.mutable_string_param value is Hello_New_String
-
-	[OWNER pre_read_cb] :  Parameter Name : param_owner.mutable_string_param	Originator info : param_cfgr
 
 	[CFGR -> Retrieve2] : Hello_New_String
