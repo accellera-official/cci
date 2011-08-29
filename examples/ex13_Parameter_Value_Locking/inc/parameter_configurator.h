@@ -15,9 +15,9 @@
 
 /**
  * @file     parameter_configurator.h
- * @brief    This header declares and defines configurator and implements the
+ * @brief    This file declares and defines configurator and implements the
  *           locking and unlocking mechnanisms on the owner parameter 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     10th May, 2011 (Tuesday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
@@ -30,8 +30,6 @@
 /**
  * @brief    This class lists and defines the locking and unlocking mechnanisms
  *           by a parameter-setter(configurator)
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     10th May, 2011 (Tuesday)
  */ 
 class parameter_configurator : public sc_module
 {
@@ -66,11 +64,6 @@ class parameter_configurator : public sc_module
 		  *             of a parameter using 'lock()', 'lock(&password)'. 'unlock()',
 		  *             'unlock(&password)' APIs.  'locked()' API is used to query the 
 		  *             locking status of the parameter
-		  * @param[in]  void
-		  * @param[out] void
-		  * @author     P V S Phaneendra, CircuitSutra Technolgies Pvt. Ltd.
-		  * @date       10th May, 2011 (Tuesday) 
-		  *             (Modified date) 13th May, 2011 (Friday)
 		  */ 	
 		void run_mutable_cfgr (void)
 		{
@@ -138,6 +131,7 @@ class parameter_configurator : public sc_module
 				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 				wait(50.0, SC_NS);	
+
 			}// End of WHILE
 
 		}// End of SC_THREAD

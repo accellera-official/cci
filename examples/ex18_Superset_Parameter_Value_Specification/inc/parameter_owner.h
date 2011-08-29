@@ -17,7 +17,7 @@
  *  @brief    This class declares few of the cci-parameters which are
  *            initialized with initial values either from the testbench (main.cpp)
  *            file or the configuration file reader & parser.
- *  @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *  @date     21st July, 2011 (Thursday)
  */
 #ifndef PARAMETER_OWNER_H
@@ -30,8 +30,6 @@
  *            with default values.  In this case, both the parameters have been provided with
  *            initial values from the testbench file 
  *            @see example#17 : Specifying Parameter Values via a Configuration File for further details
- *  @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- *  @date     21st July, 2011 (Thursday)
  */
 class parameter_owner : public sc_module
 {

@@ -19,18 +19,18 @@
  * @brief    This file declares and implements the functionality of the router.
  *           Few of the parameters of the slave and master sc_module(s) are 
  *           configured by the router sc_module
- * @authors  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @authors  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     29th April, 2011 (Friday) : 11:23 hrs IST
  */
 #ifndef ROUTER_H
 #define ROUTER_H
 
-/// Include this header in all cci-applications
+/// Include this header in all cci-base applications
 #include <cci.h>
 #include <assert.h>
 #include <vector>
 
-/// Headers for tlm2 communication
+/// Include the below headers for tlm2 communication
 #include "tlm.h"
 #include "tlm_utils/multi_passthrough_target_socket.h"
 #include "tlm_utils/multi_passthrough_initiator_socket.h"
@@ -39,16 +39,13 @@
  * @brief     This module describes the attributes and functionality of the router.
  *            Router creates its Router Table within the 'before_end_of_elaboration'
  *            callback
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- *            Girish Verma, CircuitSutra Technologies Pvt. Ltd.
- * @date      29th April, 2011 (Friday) : 11:35 hrs IST
- *            (Last Modified on) 4th May, 2011 (Wednesday) 
  */
 SC_MODULE(router)
 {
 
 	public :
-		
+
+		/// Declare tlm multi-passthrough sockets for target and initiator modules	
 		tlm_utils::multi_passthrough_target_socket<router,32> Router_target;
  		tlm_utils::multi_passthrough_initiator_socket<router,32> Router_initiator;
 
@@ -71,12 +68,13 @@ SC_MODULE(router)
 
 			// Registering b_transport
 			Router_target.register_b_transport(this,&router::b_transport);
-		}
+
+		}// End of Constructor
 
 		/**
-     * @brief     : The Router Table contents are filled within this 'before_end_of_elaboration' callback
-     * @param[in]  void (Callbacks registered with the SystemC Kernel just like processes)
-     * @param[out] void (Callbacks registered with the SystemC kernel just like processes)
+     * @brief     The Router Table contents are filled within this 'before_end_of_elaboration' callback
+     * @param     void (Callbacks registered with the SystemC Kernel just like processes)
+     * @return    void (Callbacks registered with the SystemC kernel just like processes)
      */ 
 		void before_end_of_elaboration (void)
 		{
@@ -104,7 +102,8 @@ SC_MODULE(router)
 
 				sprintf(slaveName, "r_ea_%d", i);
 				r_addr_end.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter>(slaveName, ((i+1)*addrSize -1)));
-			}
+
+			}// End of FOR
 
 			for(int i = 0; i < r_slaves; i++)
 			{
@@ -114,21 +113,34 @@ SC_MODULE(router)
 				{	
 					base_ptr = myBrokerForRouter->get_param(stringName);
 					assert(base_ptr != NULL && "Slave Base Address Handle returned is NULL");
-				}
+
+				}// End of IF
+
 				std::cout << "\t|\t" << r_slave_index[i]->get()
 				          << "\t\t|\t" << r_addr_start[i]->get()
 				          << "\t\t|\t" << r_addr_end[i]->get() 
 				          << "\t\t|\t" << base_ptr->json_serialize()
 				          << "\t\t|" << endl;
 				std::cout << "\t--------------------------------------------------------------------------------------------------" << endl;
-			}// End of FOR*/
+
+			}// End of FOR
+
 		}// End of before_end_of_elaboration callback
 
-		/// TLM2.0 b_transport layer callback 
+
+		/**
+ 		  * @brief 		 TLM2.0 b_transport layer callback
+ 		  * @param     i
+ 		  * @param     tlm::tlm_generic_payload &
+ 		  * @param     sc_time &
+ 		  * @return    void
+ 		  */
 		void b_transport(int i,tlm::tlm_generic_payload& trans,sc_time& delay)
 		{
 			wait(delay);
+
 			delay=SC_ZERO_TIME;
+
 			sc_dt::uint64 addr	=	trans.get_address();
 
 			if (addr >= sc_dt::uint64(addr_limit.get()))
@@ -151,7 +163,9 @@ SC_MODULE(router)
 
 		}// End of b_transport callback
 
+
 	private :
+
 
 		/// Demonstrates Model-to-Model Configuration (UC12)
 		/// Elaboration Time Parameters for setting up the model hierarcy;

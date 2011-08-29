@@ -15,8 +15,8 @@
 
 /**
  * @file      parameter_owner.h
- * @brief     This sc_module is the owner class of a cci-based parameter
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief     This file defines the PARAMETER_OWNER modules
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      16th May, 2011 (Monday)
  */
 #ifndef PARAMETER_OWNER_H
@@ -30,8 +30,6 @@ class parameter_configurator;  /*!Declaring configurator class*/
 /**
  * @brief      This sc_module declares a cci-parameter.  Also, it declares and makes
  *             the configurator class a friend class of this sc_module (class)
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       16th May, 2011 (Monday)
  */
 SC_MODULE(parameter_owner)
 {
@@ -52,8 +50,6 @@ SC_MODULE(parameter_owner)
 
 		/**
 		 * @brief         This process sets and reads value of the cci-parameter
-		 * @param[in]     void
-		 * @return        void
 		 */
 		void run_owner (void)
 		{
@@ -76,6 +72,7 @@ SC_MODULE(parameter_owner)
 				wait(50.0, sc_core::SC_NS);
 
 			}// End of WHILE	
+
 		}// End of SC_THREAD
 
 

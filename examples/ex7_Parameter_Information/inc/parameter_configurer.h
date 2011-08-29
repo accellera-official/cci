@@ -15,9 +15,10 @@
 
 /**
   * @file    parameter_configurer.h
-  * @brief   This class demonstrates means to access and set various  
-  *          attributes of a cci parameter
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+  * @brief   This file defines a sc_module which demonstrates means to access
+  *          cci-parameters by name-based look up access approach and set their
+  *          various attributes
+  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
   * @date    18th April, 2011 (Monday) : 17:43 hrs IST
   */
 #ifndef PARAMETER_CONFIGURER_H
@@ -28,17 +29,17 @@
 #include <assert.h>
 
 /**
-  * @brief   This sc_module instantiates a cci configuration broker which accessess
-  *          and sets the various attributes of a cci parameter 
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    28th April, 2011 (Thursday) : 14:45 hrs IST
+  * @brief   This sc_module instantiates a cci configuration broker which accesses
+  *          the references of the cci-parameters and sets their attributes like 
+  *          value, documentation, etc. 
   */
 SC_MODULE(parameter_configurer)
 {
 	public	:
 
 		/// Default constructor
-		SC_CTOR(parameter_configurer) : check(0)
+		SC_CTOR(parameter_configurer)
+		:	check(0)
 		{
 			/// Get the broker responsible for this module using 'get_current_broker' API
 			myBrokerInterface = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -299,11 +300,11 @@ SC_MODULE(parameter_configurer)
 		cci::cnf::cci_base_param* str_param_ptr;			
 
 		// Few Local parameters
-		bool intParamExists; /*!Stores the status whether integer type parameter exists*/
-		bool strParamExists; /*!Stores the status whether string type parameter exists*/	
-		int 	check;
-		bool	lock_status;	/*!Holds lock status of a parameter*/
-		void*	lock_passwd;  /*!Holds the key(password) for lock/unlock*/
+		bool  intParamExists; /*!Stores the status whether integer type parameter exists*/
+		bool  strParamExists; /*!Stores the status whether string type parameter exists*/	
+		int 	check;          /*!Local Variable*/
+		bool	lock_status;    /*!Holds lock status of a parameter*/
+		void*	lock_passwd; 	  /*!Holds the key(password) for lock/unlock*/
 };
 
 #endif	// End of PARAMETER_CONFIGURER_H

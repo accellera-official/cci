@@ -15,9 +15,10 @@
 
 /**
  * @file     parent.h
- * @brief    This header declares and defines the 'parent' which instantiates
+ * @brief    This header file declares and defines the 'parent' which instantiates
  *           'child' and hides its parameters
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
  * @date     5th June, 2011 (Tuesday)
  */
 #ifndef PARENT_H
@@ -36,8 +37,6 @@
 /**
  * @brief    The 'parent' module derives from the 'cci_broker_manager'
  *           class and manages it own private broker stack
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     5th June, 2011 (Tuesday)
  */ 
 class parent : public sc_module
 {
@@ -50,8 +49,8 @@ class parent : public sc_module
 		: sc_core::sc_module(_name)
 	  ,	child_inst("child_inst")
 		, parent_BrokerIF(priv_broker)
-		,	parent_int_param("parent_int_param", 300, *parent_BrokerIF)
-		, parent_buffer("parent_int_buffer", 350, *parent_BrokerIF)
+		,	parent_int_param("parent_int_param", 300)
+		, parent_buffer("parent_int_buffer", 350 )
 		{
 			// Asserts if the returned broker handle is NULL
 			assert(parent_BrokerIF != NULL && "Returned broker handle for 'parent' is NULL");
@@ -71,9 +70,9 @@ class parent : public sc_module
 
 					assert(child_base_param_ptr != NULL && "Returned broker handle for 'priv_int_param' of 'child' is NULL");
 	
-					// register call back to chnage child module parameter 
-					// Configurator write to parent_buffer ( register to default global broker )
-					// callback transfer this chnage to child module parameter 
+					// Register 'POST_WRITE' callback to change child's cci-parameter 
+					// Configurators writes to 'parent_buffer' cci-parameter (registered to the default global broker)
+					// Changes to the 'parent_buffer' will be reflected on to the 'priv_int_param' of child as well 
 					parent_post_write_cb = parent_buffer.register_callback(cci::cnf::post_write,\
         																		this, cci::bind(&parent::write_callback, this, _1, _2, child_base_param_ptr)) ;
 				}

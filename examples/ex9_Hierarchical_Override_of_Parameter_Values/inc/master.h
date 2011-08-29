@@ -17,27 +17,25 @@
 /**
  * @file     master.h
  * @brief    This file declares and implements the functionality of the master.
- *           Few of the parameters of the master sc_module are configured by the 
+ *           Few of the parameters of the master sc_module are configured by the
  *           router sc_module
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
  * @date     29th April, 2011 (Friday) : 11:37 hrs IST
  */
 #ifndef MASTER_H
 #define MASTER_H
 
-/// This header must be included to every cci-application file
+/// This header file must be included in every cci-based application
 #include <cci.h>
 
-/// These headers are included for tlm2 communication 
-#include "tlm.h"
-#include "tlm_utils/simple_initiator_socket.h"
+/// Includes the definitions for TLM2 and TLM2 Communication
+#include "tlm.h"                 
+#include "tlm_utils/simple_initiator_socket.h" 
 
 /**
- * @brief     This module implements the master functionality and contains tlm
- *            socket for communication with router
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date      29th April, 2011 (Wednesday) : 11:37 hrs IST
- *            (Last Modified on) 3rd March, 2011 (Tuesday)
+ * @brief     This module implements the master functionality and contains
+ *            tlm2-based socket for communication with the router
  */
 SC_MODULE(master)
 {
@@ -45,6 +43,8 @@ SC_MODULE(master)
 	public :
 
 		int data;	
+
+		/// Declare instance of tlm2-base simple initiator socket
 		tlm_utils::simple_initiator_socket<master,32> Master_socket;
 
 		/// Master's Default Constructor
@@ -60,11 +60,8 @@ SC_MODULE(master)
 		}
 
 		/** 
-		 * @brief     :   Description for tlm socket and communication with router
-		 * @author    :   Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
-		 * @date      :   5th May, 2011 (Thursday)
-		 * @param[in]     void
-		 * @param[out]    void
+		 * @brief     :   This sc_thread contains the description for tlm2
+		 *                socket and communication with router
 		 */ 
 		void run_master (void)
 		{
@@ -125,13 +122,17 @@ SC_MODULE(master)
 				wait(5.0,SC_NS);	// Wait for some delay
 
 				i=i+4;
+
 			}// End of WHILE             
+
 		}// End of SC_THREAD
+
 
 	private :
 		
 		/// Elaboration Time Parameter for assigning master ID (initialized by top_module)
 		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> master_ID;
+
 };// End of SC_MODULE
 
 #endif	// End of MASTER_H

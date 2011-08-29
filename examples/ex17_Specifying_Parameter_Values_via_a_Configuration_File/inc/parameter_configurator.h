@@ -16,7 +16,8 @@
 /**
  * @file     parameter_configurator.h
  * @brief    This header declares and defines configurator 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
  * @date     18th May, 2011 (Monday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
@@ -29,8 +30,6 @@
 /**
  * @brief    This class either reads or sets values to the parameter-owner's
  *           parameters initialization
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     18th May, 2011 (Monday)
  */ 
 class parameter_configurator : public ::sc_core::sc_module
 {
@@ -39,6 +38,7 @@ class parameter_configurator : public ::sc_core::sc_module
 		/// Default constructor
 		SC_CTOR(parameter_configurator)
 		{
+			/// Get reference of the responsible broker for the module
 			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 
 			assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");

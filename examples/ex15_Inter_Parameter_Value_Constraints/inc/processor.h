@@ -15,8 +15,8 @@
 
 /**
  * @file      processor.h
- * @brief     This header defines limited 'processor' module functionality
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief     This header implements 'processor' module validates the consistency of the system
+ * @author    P V S Phaneendra, CircuitSutra Technologies, Inc.  <pvs@circuitsutra.com>
  * @date      4th August, 2011 (Thursday)
  */
 #ifndef PROCESSOR_H
@@ -35,8 +35,9 @@
 /**
  * @brief      The 'processor' module register's callbacks on the references of the
  *             cci-parameters of the two register module and the memory stack module,
- *             and does few checkings and comparisons
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ *             and does few checkings and comparisons in order to validate whether
+ *             or not the system configuration meets the desired qualifications
+ * @author     P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date       4th August, 2011 (Thursday)
  */
 SC_MODULE(processor)
@@ -91,7 +92,7 @@ SC_MODULE(processor)
 			/// Checks for the condition whether the default total number of the address lines can address the default address location
 			total_addr_lines = atoi(addr_lines_base_ptr->json_serialize().c_str());
       mem_block_size  = atoi(mem_size_base_ptr->json_serialize().c_str());
-			compareFunction(total_addr_lines, mem_block_size);
+			TestCondition(total_addr_lines, mem_block_size);
 			
 
 			/// Registering 'POST_WRITE' callbacks on the cci-parameters of the two register modules
@@ -117,7 +118,8 @@ SC_MODULE(processor)
 				total_addr_lines = atoi(_base_param.json_serialize().c_str());
 				mem_block_size  = atoi(_mem_size_base_ptr->json_serialize().c_str());
 
-				compareFunction(total_addr_lines, mem_block_size);
+				/// Test condition : X < 2^n - 1
+				TestCondition(total_addr_lines, mem_block_size);
 
 				return cci::cnf::return_nothing;
 
@@ -138,18 +140,24 @@ SC_MODULE(processor)
 				mem_block_size = atoi(_base_param.json_serialize().c_str());
 				total_addr_lines  = atoi(_addr_lines_base_ptr->json_serialize().c_str());
 
-				compareFunction(total_addr_lines, mem_block_size);
+				TestCondition(total_addr_lines, mem_block_size);
 
 				return cci::cnf::return_nothing;
 
 			}// End of Callback
 
 
-		void compareFunction(int lines, int addr_value)
+		/**
+ 		 * @brief   This function validates the consistency of the system based on the
+ 		 *          two inputs fed to it
+ 		 * @param   lines
+ 		 * @param   memory_size
+ 		 */ 
+		void TestCondition(int lines, int memory_size)
 		{
 			static int check = 0;
 
-			if(addr_value < (pow(2, lines)-1) )
+			if(memory_size < (pow(2, lines)-1) )
 			{
 				if(check == 0)
 					std::cout << "\t[PROCESSOR fn] : User may proceed with the present configuration" << std::endl;
@@ -163,8 +171,9 @@ SC_MODULE(processor)
 				std::cout << "\t[PROCESSOR fn] : The address lines cannot address the current memory size" << std::endl;
 				
 				check = 1;
-			}
-		}// End of Function - 'compareFunction'
+			}// End of IF-ELSE
+
+		}// End of Function - 'TestCondition'
 
 	
 	private	:

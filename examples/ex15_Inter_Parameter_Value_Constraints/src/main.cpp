@@ -15,8 +15,8 @@
 
 /**
  * @file      main.cpp
- * @brief      
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief     This file defines the 'sc_main' function 
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      10th June, 2011 (Friday)
  */
 #include <systemc.h>
@@ -24,9 +24,7 @@
 #include "configurator.h"
 
 /**
- * @brief      
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       10th June, 2011 (Friday)
+ * @brief     This function instantiates the two modules - PROCESSOR & CONFIGURATOR modules
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {

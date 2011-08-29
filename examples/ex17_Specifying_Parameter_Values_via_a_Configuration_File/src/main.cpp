@@ -18,7 +18,8 @@
  * @brief     This file reads the inputs (parameter name and parameter value pair)
  *            from the 'Configuration Text File' and assigns the initial values to
  *            the corresponding parameters before the construction of the modules begins
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *            Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
  * @date      12th July, 2011 (Tuesday)
  */
 
@@ -35,11 +36,12 @@
  * @brief      This function illustrates the way of reading paramters name-value
  *             pair from an external configuration file and then, assigns the
  *             respective initial values to the parmeters via the GreenSoCs parser
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       12th July, 2011 (Tuesday)
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {
+	/// Declare an instance of the cci_configFile_Tool that reads in the initial values to be
+	/// set to a cci-parameter via a configuration file, parses them and sets them to the
+	/// appropriate parameters
   cci::cnf::cci_configFile_Tool	configTool("configFileTool");
 	configTool.config("Configuration_File.txt");
 

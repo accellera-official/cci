@@ -15,24 +15,24 @@
 
 /**
   * @file    parameter_owner.h
-  * @brief   This header instantiates various CCI parameters with default values
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+  * @brief   This file instantiates defines a 'PARAMETER_OWNER' sc_module which,
+  *          in turn, 'int-type' & 'string-type'cci-parameters with default values
+  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
   * @date    18th April, 2011 (Monday) : 17:13 hrs IST
   */
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-/// Include cci.h header in all CCI-based applications
+/// Include 'cci.h' header in all CCI-based applications
 #include "cci.h"
 
 /**
- 	* @brief   The various CCI-based parameters aire initialized within this sc_module
- 	* @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- 	* @date    18th April, 2011 (Monday) : 15:34 hrs IST
+ 	* @brief   The various CCI-based parameters are initialized within this sc_module
   */ 
 SC_MODULE(parameter_owner)
 {
 	public	:
+
 		/// Default Constructor
 		SC_CTOR(parameter_owner)
 
@@ -59,6 +59,7 @@ SC_MODULE(parameter_owner)
 			//else
 			//	std::cout << "\n\t[OWNER] : is_initial_value() - Value has been modified." << endl;
 			//
+			//Setting parameter value using 'cci_value' not implemented
 			//Used something like : int_param = 1; (see code within the SC_THREAD)
 
 			/// Query default value of a parameter using 'get_default_type()' API
@@ -67,7 +68,8 @@ SC_MODULE(parameter_owner)
 			
 			const std::string init_doc = "Initial documentation";
 			int_param.set_documentation(init_doc);
-		}
+
+		}// End of Constructor
 
 		/// Destructor
 		~parameter_owner()
@@ -86,8 +88,11 @@ SC_MODULE(parameter_owner)
 				// Override the default value
 				std::cout << "@ " << sc_time_stamp() << endl;
 				std::cout << "\n\t[OWNER -> Set] : Overriding default value of " << int_param.get_name() << " to 2" << endl;
-				
+			
+				/// Setting value to the integer type parameter
 				int_param = 1;
+
+				///
 				const std::string doc2 = "Modified by initial value";					
 
 				std::cout << "\n\t[OWNER -> Set] : Int param doc - 'Modified by initial value'" << endl;
@@ -125,8 +130,11 @@ SC_MODULE(parameter_owner)
 					std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is not invalid." << endl;					
 
 				wait(20.0, SC_NS); 
-			}
-		}
+
+			}// End of WHILE
+
+		}// End of SC_THREAD
+
 
 	private	:
 		

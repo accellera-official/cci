@@ -15,8 +15,8 @@
 
 /**
  * @file     parameter_configurator.h
- * @brief    This header declares and defines configurator 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief    This file declares and defines the configurator module
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     16th May, 2011 (Monday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
@@ -31,8 +31,6 @@
  *           value of a cci-parameter of the owner class can be accessed using 
  *           both a cci_base_parameter object and a cci_param object (by making the
  *           configurator a friend class to the owner) 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     16th May, 2011 (Monday)
  */ 
 class parameter_configurator : public ::sc_core::sc_module
 {
@@ -75,8 +73,6 @@ class parameter_configurator : public ::sc_core::sc_module
 		  * @brief      This process illustrates use of the cci_param (shared parameter)
 		  *             that stores the reference of the owner cci-parameter to make changes
 		  *             to the parameter's value
-		  * @param[in]  void
-		  * @param[out] void
 		  */ 	
 		void run_mutable_cfgr (void)
 		{
@@ -103,7 +99,7 @@ class parameter_configurator : public ::sc_core::sc_module
  		  *  @brief     This parameter gets the reference of the 'int_param', a
  		  *             private-type cci-parameter member of the owner class
  		  *  @see       ../src/main.cpp
- 		  *  @param[in] pointer of the owner 'parameter_owner' class
+ 		  *  @param     pointer of the owner 'parameter_owner' class
  		  *  @return    void
  		  */
   	void set_cfgr_parameter(parameter_owner *owner)

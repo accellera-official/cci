@@ -1,24 +1,28 @@
 
 	[OWNER C_TOR] : Parameter Name   : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 1000
 
-	[OWNER C_TOR] : Parameter Name   : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 1000
+	[OWNER C_TOR] : Parameter Name   : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 2000
 
 	[TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 1000
 
-	[TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 1000
+	[TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 2000
+
+	[CFGR C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 1000
+
+	[CFGR C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 1000
 
 [CFGR within beoe] Within the BEOE phase
 	[CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1) to 5000 (Hz).
-	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Value : 5000
-	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Value : 5000
+	[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Value : 5000
+	[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Value : 5000
 
 	[CFGR within beoe] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 5000
 	[CFGR within beoe] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 5000
 
 @ 0 s
 	[CFGR] : Changing the 'clock_speed_Hz' of OWNER (2) to 12000 (Hz).
-	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Value : 12000
-	[TOP_MODULE - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Value : 12000
+	[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Value : 12000
+	[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Value : 12000
 
 	[CFGR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 12000
 	[CFGR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz	Parameter Value : 12000

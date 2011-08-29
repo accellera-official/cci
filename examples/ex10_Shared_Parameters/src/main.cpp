@@ -18,7 +18,7 @@
  * @brief     This file shows the up-front planning needed to be done in order to
  *            access an owner class private memmbers accessible within the 
  *            configurator class by making the configurator a friend class of the owner
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com> 
  * @date      16th May, 2011 (Monday)
  */
 #include <systemc.h>
@@ -29,8 +29,6 @@
  * @brief      This function instantiates owner and configurator class objects
  *             and shows details of the up-front planning required to make the owner
  *             class private members accesible within the configurator 
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       16th May, 2011 (Monday)
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {

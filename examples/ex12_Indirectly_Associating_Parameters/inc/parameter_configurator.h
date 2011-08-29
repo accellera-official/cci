@@ -18,7 +18,7 @@
  * @brief    This file takes the references of the owner's parameters using 
  *           cci_base_param and sets values to the owner's parameters at various
  *           timing points 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     9th June, 2011 (Thursday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
@@ -34,8 +34,6 @@
  *           get_param API.  'get_param_list' API implementation is resulting in warnings,
  *           though the parameters are being searched as per the string pattern provided.
  *           Hence, 'get_param' API has been adopted as of now 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     9th June, 2011 (Thursday)
  */ 
 class parameter_configurator : public ::sc_core::sc_module
 {
@@ -85,6 +83,7 @@ class parameter_configurator : public ::sc_core::sc_module
 
 		}// End of Constructor	
 
+
 		/**
 		  * @brief    Within this 'before_end_of_elaboration' callback phase, the
 		  *           value of the cci_parameter of owner(1) is modified and the
@@ -100,7 +99,7 @@ class parameter_configurator : public ::sc_core::sc_module
 				std::cout << "\n[CFGR within beoe] Within the BEOE phase" << std::endl;
 				std::cout << "\t[CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1) to 5000 (Hz)." << std::endl;
 				cfgr_param_ptr1->json_deserialize("5000");
-			}				
+			}// End of IF
 				
 			std::cout << "\n\t[CFGR within beoe] : Parameter Name : " << cfgr_param_ptr1->get_name()
 				<< "\tParameter Value : " << cfgr_param_ptr1->json_serialize() << std::endl;
@@ -114,9 +113,6 @@ class parameter_configurator : public ::sc_core::sc_module
 		/**
 		  * @brief      Within this sc_process, the value of the cci_parameter of owner(2)
 		  *             is modified and the (updated) values of both the owners are read
-		  *             parameters
-		  * @param      void
-		  * @return     void
 		  */ 	
 		void run_cfgr (void)
 		{

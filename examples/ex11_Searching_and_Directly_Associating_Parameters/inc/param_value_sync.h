@@ -54,9 +54,9 @@ class param_value_sync
 	
 			
 			for(unsigned int i = 1; i < returnBaseParamList.size(); i++)	{
-				float conversion_factor;
-				conversion_factor = multiplyWithConversionFactor(returnBaseParamList[0]->get_name(), returnBaseParamList[i]->get_name());
-				synchValuesWithCF(returnBaseParamList[0], returnBaseParamList[i], conversion_factor);
+				//float conversion_factor;
+				//conversion_factor = multiplyWithConversionFactor(returnBaseParamList[0]->get_name(), returnBaseParamList[i]->get_name());
+				synchValues(returnBaseParamList[0], returnBaseParamList[i]);
 			}// End of FOR
 		
 	}// End of Constructor
@@ -66,24 +66,19 @@ class param_value_sync
 	cci::cnf::callback_return_type
 		write_callback(cci::cnf::cci_base_param & _base_param_1,\
 										const cci::cnf::callback_type& cb_reason,\
-										cci::cnf::cci_base_param * _base_param_2, float conv_fact )
+										cci::cnf::cci_base_param * _base_param_2)
 		{
-			// Decision on Pre-Write & Post-Write callbacks
+			// Post-Write callbacks
 			std::cout << "\t[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
 				<< _base_param_1.get_name() << "\tValue : " << _base_param_1.json_serialize() << std::endl;
 
-			float freq = atof((_base_param_1.json_serialize()).c_str());      
-      float operand1 = freq * conv_fact;
-			std::stringstream ss;
-			ss.clear();
-			ss.str("");
-			ss << operand1;
-			 _base_param_2->json_deserialize(ss.str());
+			 _base_param_2->json_deserialize(_base_param_1.json_serialize());
 					
 			return cci::cnf::return_nothing;
 
 		}// End of Write Callbacks
 
+#if 0
 		/**
  		  * @brief     Function computing the conversion factor to be multiplied
  		  *            with the 'main_clk_Hz' parameter of the PARAM_VALUE_SYNC while
@@ -129,7 +124,7 @@ class param_value_sync
 
 			return returnValue;
 		} 
-	
+#endif
 		
 		/**
  		  * @brief     Function for synchronizing the values of cci_parameter of OWNER modules via the PARAM_VALUE_SYNC
@@ -137,28 +132,21 @@ class param_value_sync
  		  * @param     _out_param   Reference of cci_base_param pointers to the selected owner parameters
 		  * @return    void 
  		  */	
-		void synchValuesWithCF (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2, float conv_fact)
+		void synchValues (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2)
 		{
 			// In order to synchronize even the default values of the owner modules, there could be two procedures
 			// 1. Create 'create_param' callbacks on these cci-parameters using the PARAM_VALUE_SYNC's broker interface APIs
 			//    and then upon creation, read their default values using post-write callbacks and if found unequal,
 			//    synchronize them.
-			// 2. Using cci_base_param of one parameter as reference, write the same value (using CF) to the other
-			//    pararmeter's cci_base_param using JSON serialize/deserialize APIs manually
-			float CF = multiplyWithConversionFactor(_base_param_1->get_name(), _base_param_2->get_name());
-			float freq = atof((_base_param_1->json_serialize()).c_str());      
-      float operand1 = freq * CF;
-			std::stringstream ss;
-			ss.clear();
-			ss.str("");
-			ss << operand1;
-			 _base_param_2->json_deserialize(ss.str());
+			// 2. Using cci_base_param of one parameter as reference, write the same value to the other
+			//    pararmeter's cci_base_param using JSON serialize/deserialize APIs
+			 _base_param_2->json_deserialize(_base_param_1->json_serialize());
 			
 			post_write_cb_vec.push_back(_base_param_1->register_callback(cci::cnf::post_write,\
-				this, cci::bind(&param_value_sync::write_callback, this, _1, _2,_base_param_2,conv_fact)) );
+				this, cci::bind(&param_value_sync::write_callback, this, _1, _2,_base_param_2)) );
 
 			post_write_cb_vec.push_back(_base_param_2->register_callback(cci::cnf::post_write,\
-				this, cci::bind(&param_value_sync::write_callback, this, _1, _2, _base_param_1,(1.0/conv_fact))) );
+				this, cci::bind(&param_value_sync::write_callback, this, _1, _2, _base_param_1)) );
 		}
 
 

@@ -17,7 +17,7 @@
  * @file      parameter_owner.h
  * @brief     This file contains the code which defines the OWNER module and its contents.
  *            The owner module is instantiated by the TOP_MODULE
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      9th June, 2011 (Thursday)
  */
 #ifndef PARAMETER_OWNER_H
@@ -30,8 +30,6 @@
 /**
  * @brief      This sc_module declares the cci_parameters and they are created
  *             with the names passed from the TOP_MODULE
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       9th June, 2011 (Thursday)
  */
 SC_MODULE(parameter_owner)
 {
@@ -46,10 +44,10 @@ SC_MODULE(parameter_owner)
  			* @param    _name         Name of the SC_MODULE
  			* @param    _param_name   (std::string) Name of the cci_parameter
  			*/
-		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_Hz")
+		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_Hz", int _param_value = 1000)
 		{
 		
-			clk	=	new cci::cnf::cci_param<int>(_param_name.c_str(), 1000);
+			clk	=	new cci::cnf::cci_param<int>(_param_name.c_str(), _param_value);
 	
 			std::cout << "\n\t[OWNER C_TOR] : Parameter Name   : " << clk->get_name() << "\tParameter Value : " << clk->get() << std::endl; 
 

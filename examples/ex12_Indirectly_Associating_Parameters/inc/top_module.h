@@ -16,7 +16,7 @@
 /**
  * @file     top_module.h
  * @brief    This header declares and defines the top module which instantiates the two owner modules 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     9th June, 2011 (Thursday)
  */
 #ifndef TOP_MODULE_H
@@ -32,11 +32,9 @@
 #include "param_value_sync.h"
 
 /**
- * @brief    The configurator class registers 'post_write' callbacks for the
+ * @brief    The configurator class registers 'post_write' callbacks on the
  *           owner's parameters in order to update an owner cci_parameter directly
  *           when another cci_parameter value is modified 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     9th June, 2011 (Thursday)
  */ 
 class top_module : public sc_module
 {
@@ -98,7 +96,6 @@ class top_module : public sc_module
 			/// synchronization related activity
 			param_sync	=	new param_value_sync(selectedBaseParamList);
 			
-
 	}// End of Constructor
 
 

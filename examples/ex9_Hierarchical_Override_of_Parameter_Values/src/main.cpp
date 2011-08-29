@@ -1,4 +1,3 @@
-
 /******************************************************************************** 
  * The following code is derived, directly or indirectly, from the SystemC
  * source code Copyright (c) 1996-2010 by all Contributors.
@@ -19,7 +18,7 @@
  * @brief    This file declares and implements the functionality of the slave.
  *           Few of the parameters of the slave sc_module are configured by the 
  *           router sc_module
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     29th April, 2011 (Friday) : 12:52 hrs IST
  */
 #include <cci.h>             /*!<Always include this header in all CCI applications>*/
@@ -28,12 +27,8 @@
 #include "top_module.h"      /*!<'top_module' instance shall be created within main*/
 
 /**
- * @brief     The sc_main begins from here
- * @param[in] int sc_argc 
- * @param[in] char* sc_argv[]
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date      29th April, 2011 (Friday) : 11:30 hrs IST
- *            (Last Modified) 3rd March, 2011 (Tuesday) 
+ * @brief     The sc_main function instantiates the top module which, in turn,
+ *            instantiates master, router and slave modules
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {

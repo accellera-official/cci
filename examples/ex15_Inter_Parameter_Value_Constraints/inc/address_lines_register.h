@@ -17,7 +17,7 @@
  * @file      parameter_owner.h
  * @brief     The file specifies 'number of address lines' parameter that will be
  *            used by the 'processor' module
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      4th August, 2011 (Thursday)
  */
 #ifndef ADDRESS_LINES_REGISTER_H
@@ -29,8 +29,6 @@
 /**
  * @brief      The Address  Lines Register initializes a cci-parameter
  *             for maintaining the number of address lines
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       4th August, 2011 (Thursday)
  */
 SC_MODULE(address_lines_register)
 {

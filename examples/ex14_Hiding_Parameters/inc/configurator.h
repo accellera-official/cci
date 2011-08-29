@@ -16,7 +16,7 @@
 /**
  * @file     configurator.h
  * @brief    This header declares and defines the 'configurator' module functionality
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     5th July, 2011 (Tuesday)
  */
 #ifndef CONFIGURATOR_H
@@ -30,11 +30,8 @@
 /**
  * @brief    The 'configurator' module functionality is defined within this module.
  *           To make changes to the 'priv_int_param' of the 'child' module, the
- *           'configurator' will be making changes to the root module which in turn
- *           will be reflecting the desired changes on the 'parent_inst.parent_buffer'
- *           cci-parameter.  
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     5th July, 2011 (Tuesday)
+ *           'configurator' will be making changes to the 'parent_inst.parent_buffer'
+ *           cci-parameter.
  */ 
 class configurator : public sc_module
 {
@@ -106,6 +103,7 @@ class configurator : public sc_module
 			}// End of WHILE
 
 		}// End of SC_THREAD
+
 
 	private	:
 

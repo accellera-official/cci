@@ -16,7 +16,8 @@
 /**
  * @file      parameter_owner.h
  * @brief     This sc_module is the owner class of cci-parameters
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
+ *            Girish Verman, CircuitSutra Technologies   <girish@circuitsutra.com>
  * @date      18th May, 2011 (Monday)
  */
 #ifndef PARAMETER_OWNER_H
@@ -31,8 +32,6 @@ class parameter_configurator;
  * @brief      This sc_module gives default values to all its cci-parameters.
  *             The parameters that are overridden with their initial values
  *             appear with their initial values rather than default values.
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       18th May, 2011 (Monday)
  */
 SC_MODULE(parameter_owner)
 {

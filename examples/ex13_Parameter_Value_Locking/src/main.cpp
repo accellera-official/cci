@@ -17,7 +17,7 @@
  * @file      main.cpp
  * @brief     This file instantiates the owner and configurator modules and
  *            sets the simulation time
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      10th May, 2011
  */
 #include <systemc.h>
@@ -25,13 +25,7 @@
 #include "parameter_configurator.h"
 
 /**
- * @desc       This function instantiates the owner and configurator modules and
- *             sets the simulation time
- * @param[in]  int sc_argc
- * @param[in]  char* sc_argv[]
- * @return     int
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       10th May, 2011
+ * @brief     This function instantiates the owner and configurator modules
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {

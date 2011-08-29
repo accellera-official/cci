@@ -15,14 +15,15 @@
 
 /**
   * @file    main.cpp
-  * @brief   This function instantiates both the parameter_containter and
-  *          access_container modules
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    28th April, 2011 : 18:03 hrs IST
+  * @brief   This function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
+  *          modules and 'OBSERVER' class
+  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+  * @date    17th August, 2011 : 18:03 hrs IST
   */
-#include <cci.h>
-#include <systemc.h>
+#include <cci.h>          /// Contains all the definitions for CCI-infrastructure
+#include <systemc.h>      /// Contains all the definitions for SystemC
 #include <assert.h>
+
 #include "parameter_owner.h"
 #include "parameter_configurer.h"
 #include "observer.h"
@@ -51,6 +52,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 	/// construction of the model hierarchy begins.
 	globalBroker->set_init_value("param_owner.mutable_string_param", "Initialized within sc_main");
 
+	/// Infrastructure created within the example for example illustration
 	std::cout << "\n[MAIN] : parameter_container module declares two cci type parameters." << endl;
 	std::cout << "\n\tOne is of 'Integer type' and the other is of 'String type'" << endl;
 	std::cout << "\n\t'Integer type' has 'pre_read', 'pre/post_write' callback registered within the OBSERVER" << std::endl;
@@ -62,7 +64,9 @@ int sc_main(int sc_argc, char* sc_argv[])
 	/// Instantiating observer class
 	observer              observer_class;
 
+	/// Simulation time
 	sc_start(24.0, SC_NS);
 
 	return EXIT_SUCCESS;
-}
+
+}// End of sc_main

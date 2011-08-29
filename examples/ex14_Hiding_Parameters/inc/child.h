@@ -18,7 +18,7 @@
  * @brief     This file declares and implements the 'child' module. The
  *            'child' module is instantiated by the 'parent' module and the
  *            parent module hides the 'child' details from the external world.
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      5th July, 2011 (Tuesday)
  */
 #ifndef CHILD_H
@@ -34,8 +34,6 @@
 /**
  * @brief      The 'child' module registers it's cci-parameter to the broker
  *             responsible for the module 
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       5th July, 2011 (Tuesday)
  */
 class child : public sc_module
 {
@@ -43,7 +41,8 @@ class child : public sc_module
 		
 		/// Default Constructor		
 		SC_CTOR(child)
-		:	priv_int_param("priv_int_param", 100, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+		//:	priv_int_param("priv_int_param", 100, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+		:	priv_int_param("priv_int_param", 100)
 		{
 			// This returns the reference to the broker responsible for this module
 			child_BrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -92,10 +91,11 @@ class child : public sc_module
 
 		}// End of SC_THREAD
 
+
 	private	:
 	
 		/// Declare instances of mutable CCI parameter of type 'int'
-		cci::cnf::cci_param<int>	  priv_int_param;    /*!To be registered with private broker*/
+		cci::cnf::cci_param<int>	  priv_int_param;   /*!To be registered with private broker*/
 
 		/// Declare a configuration broker
 		cci::cnf::cci_cnf_broker_if*	child_BrokerIF;

@@ -15,8 +15,8 @@
 
 /**
  * @file     top_module.h
- * @brief    This header declares and defines the top module which instantiates the two owner modules 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief    This header declares and defines the top module which instantiates two owner modules
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     9th June, 2011 (Thursday)
  */
 #ifndef TOP_MODULE_H
@@ -28,18 +28,20 @@
 #include <vector>
 
 #include "parameter_owner.h"
+#include "param_value_sync.h"
 
 /**
  * @brief    The configurator class registers 'post_write' callbacks for the
  *           owner's parameters in order to update an owner cci_parameter directly
  *           when another cci_parameter value is modified 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     9th June, 2011 (Thursday)
  */ 
 class top_module : public sc_module
 {
 	public:
 		
+		/// Declare an instance of the 'param_value_sync' class
+		param_value_sync*  param_sync;
+
 		/// Pointers to the owner module
 		parameter_owner*   param_owner1;
 		parameter_owner*   param_owner2;
@@ -53,8 +55,8 @@ class top_module : public sc_module
 			std::string str1,str2;		/*!Strings to store the names of the owner's parameters*/
 			str1="clk_freq_Hz";
 			str2="clock_speed_Hz";	
-			param_owner1	= new parameter_owner("param_owner1", str1);
-			param_owner2	= new parameter_owner("param_owner2", str2);
+			param_owner1	= new parameter_owner("param_owner1", str1, 1000);
+			param_owner2	= new parameter_owner("param_owner2", str2, 2000);
 
 			/// Report if handle returned is NULL
 			assert(myTopModBrokerIF != NULL && "Configuration Broker handle is NULL");
@@ -67,7 +69,7 @@ class top_module : public sc_module
 			if(myTopModBrokerIF->exists_param(param1_str))
 			{
 				cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
-				returnBaseParamList.push_back(temp);
+				selected_base_param_list.push_back(temp);
 			
 				std::cout << "\n\t[TOP_MODULE C_TOR] : Parameter Name : " << temp->get_name()	\
 					<< "\tParameter Value : " << temp->json_serialize() << std::endl;
@@ -80,62 +82,29 @@ class top_module : public sc_module
 			if(myTopModBrokerIF->exists_param(param2_str))
 			{
 				cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
-				returnBaseParamList.push_back(temp);
+				selected_base_param_list.push_back(temp);
 			
 				std::cout << "\n\t[TOP_MODULE C_TOR] : Parameter Name : " << temp->get_name()	\
 					<< "\tParameter Value : " << temp->json_serialize() << std::endl;
 			}
 			else
 				std::cout << "\t[TOP_MODULE C_TOR] : Parameter Name : " << param2_str << "\tnot found." << std::endl;
-					
-			for(unsigned int i = 1; i < returnBaseParamList.size(); i++)	{
-				synchValues(returnBaseParamList[0], returnBaseParamList[i]);
-			}
-		
+
+
+			/// Pass on the list of selected cci_base_parameters to the 'param_value_sync'
+			/// that looks in at the synchronization related activity b/w the owner modules
+			param_sync	=	new param_value_sync(selected_base_param_list);
+
 	}// End of Constructor
 
-		
-	/// Pre-Write and Post-Write Callbacks Implementation
-	cci::cnf::callback_return_type
-		write_callback(cci::cnf::cci_base_param & _base_param_1,const cci::cnf::callback_type& cb_reason,  cci::cnf::cci_base_param * _base_param_2)
-		{
-			// Decision on Pre-Write & Post-Write callbacks
-			std::cout << "\t[TOP_MODULE - post_write callback] : Parameter Name : "
-				<< _base_param_1.get_name() << "\tValue : " << _base_param_1.json_serialize() << std::endl;
-
-			_base_param_2->json_deserialize(_base_param_1.json_serialize());
-					
-			return cci::cnf::return_nothing;
-
-		}// End of Write Callbacks
-
-		
-		/**
- 		  * @brief     Function for synchronizing the values of cci_parameter of OWNER modules via the TOP_MODULE
- 		  * @param     _input_param Reference of Integer type CCI parameter
- 		  * @param     _out_param   Reference of cci_base_param pointers to the selected owner parameters
-		  * @return    void 
- 		  */	
-		void synchValues (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2)
-		{
-			
-			main_clk_post_write_cb_vec.push_back(_base_param_1->register_callback(cci::cnf::post_write,\
-				this, cci::bind(&top_module::write_callback, this, _1, _2,_base_param_2)) );
-
-			main_clk_post_write_cb_vec.push_back(_base_param_2->register_callback(cci::cnf::post_write,\
-				this, cci::bind(&top_module::write_callback, this, _1, _2, _base_param_1)) );
-		}
 
 	private	:
 	
 	/// Declaring a CCI configuration broker interface instance
 	cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;
 
-	/// Callback Adaptor Objects
-	std::vector<cci::shared_ptr<cci::cnf::callb_adapt_b> > main_clk_post_write_cb_vec;
-
 	/// std::vector storing the searched owner parameters references to CCI base parameter pointers
-	std::vector<cci::cnf::cci_base_param*> returnBaseParamList;
+	std::vector<cci::cnf::cci_base_param*> selected_base_param_list;
 
 };// End of Class/SC_MODULE
 

@@ -17,7 +17,7 @@
  * @file      parameter_owner.h
  * @brief     This file contains the code which defines the OWNER module and its contents.
  *            The owner module is instantiated by the TOP_MODULE
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      9th June, 2011 (Thursday)
  */
 #ifndef PARAMETER_OWNER_H
@@ -30,8 +30,6 @@
 /**
  * @brief      This sc_module declares the cci_parameters and they are created
  *             with the names passed from the TOP_MODULE
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       9th June, 2011 (Thursday)
  */
 SC_MODULE(parameter_owner)
 {
@@ -58,7 +56,7 @@ SC_MODULE(parameter_owner)
 
 	private	:
 	
-		/// Declare an instance of mutable CCI parameter of type 'int'
+		/// Declare an instance of mutable CCI parameter of type 'float'
 		cci::cnf::cci_param<float>*	clk;
 
 };// End of SC_MODULE

@@ -18,8 +18,9 @@
  * @brief    This file declares and implements the functionality of the slave.
  *           Few of the parameters of the slave sc_module are configured by the 
  *           router sc_module
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     29th April, 2011 (Friday) : 10:55 hrs IST
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
+ * @date     5th May, 2011 (Thursday)
  */
 #ifndef SLAVE_H
 #define SLAVE_H
@@ -34,9 +35,6 @@
 /**
  * @brief    This module implements the slave functionality and contains tlm 
  *           socket for communication with router
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     29th April, 2011 (Friday) : 11:00 hrs IST
- *           (Last Modified on) 3rd May, 2011 (Tuesday)
  */
 SC_MODULE(slave)
 {
@@ -78,12 +76,10 @@ SC_MODULE(slave)
 		}
 		
 		/**
- 		 * @brief      :  TLM2.0 b_transport layer callback
- 		 * @param[in]     tlm::tlm_generic_payload&
- 		 * @param[in]     sc_time&
- 		 * @param[out]    void
- 		 * @author     :  Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
- 		 * @date       :  5th May, 2011 (Thursday)
+ 		 * @brief         TLM2.0 b_transport layer callback
+ 		 * @param         tlm::tlm_generic_payload&
+ 		 * @param         sc_time&
+ 		 * @return        void
  		 */
 		void b_transport(tlm::tlm_generic_payload& trans,sc_time& delay)
 		{
@@ -121,7 +117,9 @@ SC_MODULE(slave)
 			}// End of IF
 
 			trans.set_response_status(tlm::TLM_OK_RESPONSE);
+
 		}// End of b_transport layer callback
+
 
 	private :
 
@@ -135,6 +133,7 @@ SC_MODULE(slave)
 		cci::cnf::cci_param<unsigned int>	s_size;
 
 		int* mem;
+
 };// End of SC_MODULE
 
 #endif	// End of SLAVE_H

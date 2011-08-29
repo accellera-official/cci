@@ -16,7 +16,7 @@
 /**
  * @file      main.cpp
  * @brief     This file instantiates the TOP_MODULE and the PARAMETER_CONFIGURATOR 
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      9th June, 2011 (Thursday)
  */
 #include <systemc.h>
@@ -24,9 +24,8 @@
 #include "parameter_configurator.h"
 
 /**
- * @brief      The TOP_MODULE in turn instantiates the PARAMETER_OWNER module
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       9th June, 2011 (Thursday)
+ * @brief      The TOP_MODULE instantiated within this function, in turn,
+ *             instantiates the PARAMETER_OWNER module
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {

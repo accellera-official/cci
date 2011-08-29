@@ -15,8 +15,9 @@
 
 /**
  * @file      parameter_owner.h
- * @brief     This sc_module is the owner class of a cci-based parameter
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief     This file defines the sc_module which is the owner class of a
+ *            cci- parameter
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      10th May, 2011 (Tuesday)
  */
 #ifndef PARAMETER_OWNER_H
@@ -29,8 +30,6 @@
 /**
  * @brief      This sc_module declares an integer parameter and also illustrates
  *             usage of CCI infrastructure in locking and unlocking of the parameter
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       10th May, 2011 (Tuesday)
  */
 SC_MODULE(parameter_owner)
 {
@@ -49,10 +48,6 @@ SC_MODULE(parameter_owner)
 
 		/**
 		 * @brief         This process demonstrates usages of various locking and unlocking APIs
-		 * @param[in]     void
-		 * @param[out]    void
-		 * @author        P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-		 * @date          10th May, 2011 (Tuesday)
 		 */
 		void run_owner (void)
 		{
@@ -99,8 +94,11 @@ SC_MODULE(parameter_owner)
 				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
 				
 				wait(30.0, SC_NS);
+
 			}// End of WHILE	
+
 		}// End of SC_THREAD
+
 
 	private	:
 	

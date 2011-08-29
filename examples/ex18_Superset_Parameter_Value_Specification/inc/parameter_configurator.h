@@ -17,7 +17,7 @@
  * @file     parameter_configurator.h
  * @brief    This header declares and defines configurator class.  The configurator
  *           class tries to find the list of unconsumed parameters with the model
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     21st July, 2011 (Thursday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H

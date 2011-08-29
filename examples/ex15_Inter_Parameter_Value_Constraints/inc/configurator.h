@@ -16,7 +16,7 @@
 /**
  * @file     configurator.h
  * @brief    This header implements the functionality of the configurator
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     12th July, 2011 (Tuesday)
  */
 #ifndef CONFIGURATOR_H
@@ -29,8 +29,6 @@
 /**
  * @brief    This module gets the references to all the cci-parameters within
  *           the model and writes (valid) values to them.
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     4th August, 2011 (Thursday)
  */ 
 class configurator : public sc_module
 {

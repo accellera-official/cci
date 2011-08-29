@@ -1,4 +1,3 @@
-
 /******************************************************************************** 
  * The following code is derived, directly or indirectly, from the SystemC
  * source code Copyright (c) 1996-2010 by all Contributors.
@@ -18,14 +17,15 @@
  * @file     top_module.h
  * @brief    This header contains code related to the top module which decides
  *           the model hierarchy for example#9.  
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- *           Girish Verma, CircuitSutra Technolgies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
+ *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
  * @date     29th April, 2011 (Friday) : 10:55 hrs IST
  */
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
 
-#include <cci.h>
+#include <cci.h>      /*!To be included in all CCI-based applications*/
 #include <assert.h>
 #include <vector>
 #include <sstream>
@@ -33,15 +33,12 @@
 #include "master.h"
 #include "slave.h"
 #include "router.h"
+
 #include "tlm.h"
 
 /**
  * @brief     This SC_MODULE instantiates the router, master and slave modules.
  *            Also, it creates the binding or communication between these modules.
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- *            Girish Verma, CircuitSutra Technologies, Pvt. Ltd.
- * @date      29th April, 2011 (Friday) : 11:00 hrs IST 
- *            (Last Modified) ; 2nd May, 2011 (Monday)
  */
 SC_MODULE(top_module)
 {
@@ -49,7 +46,6 @@ SC_MODULE(top_module)
 	public :
 		
 		/// Top Module's Default Constructor
-
 		SC_CTOR(top_module)
 		:	n_masters("number_of_masters", 0)
 		,	n_slaves("number_of_slaves", 0)
@@ -109,12 +105,11 @@ SC_MODULE(top_module)
 				masterList.push_back(new master(masterName));
       
 				/**
- 				 * @author : Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
- 				 * @date   : 6th May, 2011 (Friday) 
-				 * @desc   : Binding of Master to Router
+				 * @brief     Binding of Master to Router
 				 */ 
 				std::cout<< "\n[TOP MODULE C_TOR] : Binding Router_Initiator to " << masterName <<endl;
 				masterList[i]->Master_socket.bind(routerInstance->Router_target); 
+
 			}// End of FOR  
 
 
@@ -139,12 +134,11 @@ SC_MODULE(top_module)
 				slaveList.push_back(new slave(slaveName));
 
 				/**
- 				 * @author    : Parvinder Pal Singh, CircuitSutra Technologies Pvt. Ltd.
- 				 * @date      : 6th May, 2011 (Friday)
-				 * @desc      : Binding Router to Slave
+				 * @brief       Binding Router to Slave
 				 */
 				std::cout<< "\n[TOP MODULE C_TOR] : Binding Router_Initiator to " << slaveName <<endl;
 				routerInstance->Router_initiator.bind(slaveList[i]->Slave_socket);
+
 			}// End of FOR  
 
 
@@ -230,7 +224,8 @@ SC_MODULE(top_module)
 
 		int addrValue;
 		int slaveSize;                     /*!<Maximum Slave Size (initial value)*/
-		int r_addr_max;                    /*!<Maximum Router Table's memory range*/ 
+		int r_addr_max;                    /*!<Maximum Router Table's memory range*/
+
 };// End of SC_MODULE
 
 #endif	// End of TOP_MODULE_H

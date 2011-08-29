@@ -14,9 +14,9 @@
  *******************************************************************************/
 
 /**
-  * @file    parameter_configurer.h
-  * @brief   This class demonstrates implements a simple observer module's functionality
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+  * @file    observer.h
+  * @brief   This file defines an observer class demonstrates
+  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
   * @date    17th August, 2011 (Wednesday) : 17:43 hrs IST
   */
 #ifndef OBSERVER_H
@@ -30,9 +30,7 @@
 /**
   * @brief   This observer class registers all types of callbacks on the 
   *          cci-parameter values of interest in order to find the originator
-  *          for the appropriate actions on the cci-parameters
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    17th August, 2011 (Wednesday) : 17:55 hrs IST
+  *          for the appropriate actions on the respective cci-parameters
   */
 class observer
 {

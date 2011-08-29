@@ -29,7 +29,6 @@
 #ifndef __CONFIGSET_H__
 #define __CONFIGSET_H__
 
-//#include "config_globals.h"
 #include <map>
 
 namespace gs {
@@ -59,7 +58,6 @@ namespace gs {
         std::pair< cnf_data_map_type::iterator, bool> ret;
         ret=m_cnf_data.insert( std::pair<std::string, std::string>(param_name, value) ); 
         if (!ret.second) {
-          //GCNF_DUMP_N("ConfigSet", "add("<<param_name<<", "<<value<<") replaces existing value in this ConfigSet!");
           m_cnf_data.erase(ret.first); // erase previous value
           m_cnf_data.insert( std::pair<std::string, std::string>(param_name, value) ); // add new value
         }
@@ -72,7 +70,6 @@ namespace gs {
         if( iter != m_cnf_data.end() ) {
           return iter->second;
         }
-        //GCNF_DUMP_N("ConfigSet", "get("<<param_name<<") cannot return value of key not existing in ConfigSet!");
         SC_REPORT_INFO("ConfigSet", "get_value cannot return value of key not existing in ConfigSet!");
         return std::string("");
       }

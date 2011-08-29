@@ -15,29 +15,40 @@
 
 /**
  * @file      main.cpp
- * @brief     This file instantiates the ROOT_MODULE and the CONFIGURATOR modules
- * @author    P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @brief     This file instantiates the TOP module which, in turn, instantiates
+ *            the PARENT and the CONFIGURATOR modules.  
+ * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *            Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
  * @date      5th July, 2011 (Tuesday)
  */
-#include <cci.h>
+#include <cci.h>           /*!Include this header in all cci-based applications*/
 #include <systemc.h>
+
 #include "parent.h"
 #include "configurator.h"
 
 
+/**
+ *  @brief   This sc_module constructs both the PARENT module and the CONFIGURATOR
+ *           module.  This also creates a (private broker) responsible for the
+ *           PARENT module and all the public parameters of the parent module have
+ *           be enlisted and fed to the private broker here.
+ */
 SC_MODULE(Top)
 {
 	public	:
 
 		SC_CTOR(Top)
+			// cci::cnf::gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params, const cci_originator& originator)
 		: privBroker (new cci::cnf::gs_cci_private_broker_accessor(*this, 
-                    boost::assign::list_of("parent_inst.parent_int_buffer"), cci::cnf::cci_originator(*this)))
+				            boost::assign::list_of("parent_inst.parent_int_buffer"), cci::cnf::cci_originator(*this)))
 		, parent_inst("parent_inst", privBroker)
 		, param_cfgr("param_cfgr")			
 		{
 			// Does nothing
 		}
 
+	public	:
 		cci::cnf::cci_cnf_broker_if* privBroker;
 		parent  									   parent_inst;
 		configurator                 param_cfgr;
@@ -46,13 +57,11 @@ SC_MODULE(Top)
 
 
 /**
- * @brief      The ROOT_MODULE in turn instantiates the parent module
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       5th July, 2011 (Tuesday)
+ * @brief      The TOP_MODULE is instantiated within this sc_main function
  */
 int sc_main(int sc_argc, char* sc_argv[])
 {
-
+	/// Instantiating TOP module
 	Top      Top("Top");
 
 	// Start and run the simulation till 50 nanoseconds

@@ -18,7 +18,7 @@
  * @brief    This file takes the references of the owner's parameters using 
  *           cci_base_param and sets values to the owner's parameters at various
  *           timing points 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     9th June, 2011 (Thursday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
@@ -31,11 +31,9 @@
 
 /**
  * @brief    The configurator class searches for the owner parameters using the
- *           get_param API.  'get_param_list' API implementation is resulting in warnings,
- *           though the parameters are being searched as per the string pattern provided.
- *           Hence, 'get_param' API has been adopted as of now 
- * @author   P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date     9th June, 2011 (Thursday)
+ *           get_param API.  Implementation using 'get_param_list' API is ignore
+ *           though the parameters are being searched as per the string pattern
+ *           provided.  Hence, 'get_param' API has been adopted as of now 
  */ 
 class parameter_configurator : public ::sc_core::sc_module
 {
@@ -60,9 +58,12 @@ class parameter_configurator : public ::sc_core::sc_module
 				cfgr_param_ptr1	=	myCfgrBrokerIF->get_param(cfgr_param_str1);
 
 				assert(cfgr_param_str1	!= NULL && "Configuration parameter returned is NULL");
+
+				std::cout << "\n\t[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr1->get_name()	\
+					<< "\tParameter Value : " << cfgr_param_ptr1->json_serialize() << std::endl;
 			}
 			else
-				std::cout << "\t[CFGR within beoe] : Parameter " << cfgr_param_str1 << "\tdoesn't exists in top_module" << std::endl;
+				std::cout << "\t[CFGR C_TOR] : Parameter " << cfgr_param_str1 << "\tdoesn't exists in top_module" << std::endl;
 
 			/// Check for the existence of 'clock_speed_Hz' cci_parameter of owner module 2
 			if(myCfgrBrokerIF->exists_param(cfgr_param_str2))
@@ -70,9 +71,12 @@ class parameter_configurator : public ::sc_core::sc_module
 				cfgr_param_ptr2	=	myCfgrBrokerIF->get_param(cfgr_param_str2);
 
 				assert(cfgr_param_str2	!= NULL && "Configuration parameter returned is NULL");
+
+				std::cout << "\n\t[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr2->get_name()	\
+					<< "\tParameter Value : " << cfgr_param_ptr2->json_serialize() << std::endl;
 			}
 			else
-				std::cout << "\t[CFGR within beoe] : Parameter " << cfgr_param_str1 << "\tdoesn't exists in top_module" << std::endl;
+				std::cout << "\t[CFGR C_TOR] : Parameter " << cfgr_param_str1 << "\tdoesn't exists in top_module" << std::endl;
 				
 			/// Registering SC_THREAD with the SystemC kernel
 			SC_THREAD(run_cfgr);
@@ -109,8 +113,6 @@ class parameter_configurator : public ::sc_core::sc_module
 		  * @brief      Within this sc_process, the value of the cci_parameter of owner(2)
 		  *             is modified and the (updated) values of both the owners are read
 		  *             parameters
-		  * @param      void
-		  * @return     void
 		  */ 	
 		void run_cfgr (void)
 		{

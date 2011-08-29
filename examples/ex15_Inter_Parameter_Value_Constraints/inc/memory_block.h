@@ -17,7 +17,7 @@
  * @file      memory_block.h
  * @brief     The file specifies a cci-parameter to list the size of a
  * 						memory block that will later be used by the processor
- * @author    P V S Phaneendra, CircuitSutra Technologies, <pvs@circuitsutra.com>
+ * @author    P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
  * @date      4th August, 2011 (Thursday)
  */
 #ifndef MEMORY_BLOCK_H
@@ -27,8 +27,7 @@
 #include <cci.h>
 
 /**
- * @brief      The 'Memory Stack' initializes a cci-parameter
- *             for holding a address value
+ * @brief      The 'Memory Stack' initializes a cci-parameter for defining the memory size
  */
 SC_MODULE(memory_block)
 {
