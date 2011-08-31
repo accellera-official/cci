@@ -24,7 +24,7 @@ Prior to 0 s	demonstrating 'get_default_value()'
 	[CFGR] : param_owner.mutable_int_param default value hasn't been modified.
 @ 1 ns
 
-	[OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 2
+	[OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 1
 
 	[OBSERVER pre_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
 

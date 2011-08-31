@@ -1,0 +1,79 @@
+
+[MAIN] : Setting initial value 's_address:256,d_address:512,index:0' to UDT
+
+Prior to 0 s	demonstrating 'get_default_value()'
+
+	[OWNER -> Retrieve] : Parameter name  : param_owner.User_data_type_param
+
+	[OWNER -> Retrieve] : Using 'get_default_value()' : {"s_address":512,"d_address":768,"index":1}
+
+	[OWNER -> Set] : Param doc - 'Initial documentation'
+
+	[CFGR] : DEFAULT_BROKER is not a private broker.
+
+	[OBSERVER] : DEFAULT_BROKER is not a private broker.
+@ 0 s
+
+	[OWNER -> Retrieve] : Documentation : Initial documentation
+
+	[OWNER -> Set] : New Value param_owner.User_data_type_param	's_address:768,d_address:1024,index:2'
+
+	[OBSERVER pre_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
+
+	[OBSERVER post_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
+
+	[OWNER -> Set] : UDT Documentation - 'Modified by Owner'
+@ 2 ns
+
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
+
+	[OWNER -> Retrieve] : UDT Value : {"s_address":768,"d_address":1024,"index":2}
+
+	[OWNER -> Retrieve] : UDT Doc : Modified by Owner
+
+@ 4 ns
+
+	[CFGR -> Retrieve] : Parameter name : param_owner.User_data_type_param
+
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
+
+	[CFGR -> Retrieve] : Parameter value: {"s_address":768,"d_address":1024,"index":2}
+
+	[CFGR -> Retrieve] : Parameter doc: Modified by Owner
+
+@ 6 ns
+	[CFGR -> Set] : Value - 's_address:1024,d_address:1280,index:3
+
+	[OBSERVER pre_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
+
+	[OBSERVER post_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
+
+	[CFGR-> Set] : Parameter doc - 'Modified with CFGR'
+
+@ : 8 ns
+
+	[CFGR -> Retrieve] : Parameter name : param_owner.User_data_type_param
+
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
+
+	[CFGR -> Retrieve] : Parameter value: {"s_address":1024,"d_address":1280,"index":3}
+
+	[CFGR -> Retrieve] : Parameter doc : Modified with CFGR
+
+@ 10 ns demonstrating 'set_value_invalid()'
+
+	[OWNER -> Set] : param_owner.User_data_type_param value invalid.
+
+	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
+
+	[OWNER] : param_owner.User_data_type_param value is invalid : {"s_address":1024,"d_address":1280,"index":3}
+
+@ : 10 ns	Demonstrating using CCI_VALUE
+
+	[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : 0
+
+	[CFGR -> Set] 's_address:1280,d_address:2048,index:4'
+
+Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
+In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:49
+In process: param_cfgr.run_accessor @ 10 ns

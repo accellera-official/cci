@@ -87,7 +87,7 @@ SC_MODULE(parameter_owner)
 				
 				// Override the default value
 				std::cout << "@ " << sc_time_stamp() << endl;
-				std::cout << "\n\t[OWNER -> Set] : Overriding default value of " << int_param.get_name() << " to 2" << endl;
+				std::cout << "\n\t[OWNER -> Set] : Overriding default value of " << int_param.get_name() << " to 1" << endl;
 			
 				/// Setting value to the integer type parameter
 				int_param = 1;
