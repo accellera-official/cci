@@ -51,7 +51,7 @@ SC_MODULE(parameter_owner)
 			
 			/// Query default value of a parameter using 'get_default_type()' API
 			std::cout << "\n\t[OWNER -> Retrieve] : Using 'get_default_value()' : " << udt_param.get_default_value() << endl;			
-
+			std::cout << "\n\t[OWNER -> Retrieve] : Parameter Value' : " << udt_param.get() << endl;			
 
 			std::cout << "\n\t[OWNER -> Set] : Param doc - 'Initial documentation'" << endl;
 			

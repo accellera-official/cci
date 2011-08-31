@@ -49,8 +49,8 @@ class parent : public sc_module
 		: sc_core::sc_module(_name)
 	  ,	child_inst("child_inst")
 		, parent_BrokerIF(priv_broker)
-		,	parent_int_param("parent_int_param", 300)
-		, parent_buffer("parent_int_buffer", 350 )
+		,	parent_int_param("parent_int_param", 300, *priv_broker)
+		, parent_buffer("parent_int_buffer", 350, *priv_broker)
 		{
 			// Asserts if the returned broker handle is NULL
 			assert(parent_BrokerIF != NULL && "Returned broker handle for 'parent' is NULL");

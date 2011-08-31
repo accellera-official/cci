@@ -7,6 +7,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Retrieve] : Using 'get_default_value()' : {"s_address":512,"d_address":768,"index":1}
 
+	[OWNER -> Retrieve] : Parameter Value' : {"s_address":256,"d_address":512,"index":0}
+
 	[OWNER -> Set] : Param doc - 'Initial documentation'
 
 	[CFGR] : DEFAULT_BROKER is not a private broker.
@@ -67,13 +69,3 @@ Prior to 0 s	demonstrating 'get_default_value()'
 	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
 
 	[OWNER] : param_owner.User_data_type_param value is invalid : {"s_address":1024,"d_address":1280,"index":3}
-
-@ : 10 ns	Demonstrating using CCI_VALUE
-
-	[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : 0
-
-	[CFGR -> Set] 's_address:1280,d_address:2048,index:4'
-
-Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
-In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:49
-In process: param_cfgr.run_accessor @ 10 ns

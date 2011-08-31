@@ -124,30 +124,8 @@ SC_MODULE(parameter_configurer)
 
 				/// Access parameter's documentation using 'get_documentation()' API
 				std::cout << "\n\t[CFGR -> Retrieve] : Parameter doc : " << udt_param_ptr->get_documentation() << endl;
-		
-				wait(2.0, SC_NS);
-				std::cout << "\n@ : " << sc_time_stamp() << "\tDemonstrating using CCI_VALUE" << std::endl;
-					
-				/// Query basic type of a parameter using 'get_basic_type()' API
-				std::cout << "\n\t[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : " << udt_param_ptr->get_basic_type() << endl;
 
-				/// Set a (std::string) parameter's value using 'set_value' API with cci_value
-				std::cout << "\n\t[CFGR -> Set] 's_address:1280,d_address:2048,index:4'" << std::endl;
-				cci::cnf::cci_value str_value("{\"s_address\":1280,\"d_address\":2048,\"index\":4}");
-				udt_param_ptr->set_value(str_value);
-					
-				std::cout << "\n\t[CFGR] : 'Retrieve1' using 'json_serialize' and 'Retrieve2' using 'get_value()'" << endl;
-				std::cout << "\n\t[CFGR -> Retrieve1] : " << udt_param_ptr->get_name()
-					<< " value is " << udt_param_ptr->json_serialize() << endl;  					
-					
-				/// Query a [UDT] parameter's value by using 'get_value()'API with cci_value
-				cci::cnf::cci_value rx_value = udt_param_ptr->get_value();
-
-				/**	
-		  		* Based on the type returned by 'get_basic_type()', query value of cci_value.
-		  		* For example, if returned type is 'std::string', use 'get_string()' API with cci_value
-		  		*/
-				std::cout << "\n\t[CFGR -> Retrieve2] : " << rx_value.get_string() << endl;
+				wait(20.0, SC_NS);
 
 			}// End of WHILE
 
