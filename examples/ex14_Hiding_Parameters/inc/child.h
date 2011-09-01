@@ -52,8 +52,6 @@ class child : public sc_module
 			std::cout << "\n\t[CHILD C_TOR] : Is Private Broker? : " << std::boolalpha
 				<< child_BrokerIF->is_private_broker() << std::endl;
 
-			std::cout << "\t[CHILD C_TOR] : Broker Name : " << child_BrokerIF->name() << std::endl;
-
 			std::cout << "\n\t[CHILD C_TOR] : Parameter Name   : " << priv_int_param.get_name()
 				<< "\tParameter Value : " << priv_int_param.get() << std::endl; 
 

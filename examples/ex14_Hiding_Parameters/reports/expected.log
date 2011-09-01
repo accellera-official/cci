@@ -1,6 +1,5 @@
 
 	[CHILD C_TOR] : Is Private Broker? : true
-	[CHILD C_TOR] : Broker Name : Top
 
 	[CHILD C_TOR] : Parameter Name   : Top.parent_inst.child_inst.priv_int_param	Parameter Value : 100
 
