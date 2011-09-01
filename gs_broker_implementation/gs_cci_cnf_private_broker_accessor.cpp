@@ -33,12 +33,11 @@ cci::cnf::cci_cnf_broker_if& cci::cnf::gs_cci_private_broker_accessor::get_acces
   m_broker = new gs_cci_private_broker(owner.name(), owner, pub_params);
 }*/
 
-cci::cnf::gs_cci_private_broker_accessor::gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params, const cci_originator& originator) 
-: m_originator(originator)
+cci::cnf::gs_cci_private_broker_accessor::gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params) 
+: m_originator(cci::cnf::cci_originator(owner))
 {
-  if (dynamic_cast<sc_core::sc_object*>(&owner) != originator.get()) {
-    SC_REPORT_WARNING(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "When creating a private broker, the given originator should be the same as the owner.");
-  }
+  //if (dynamic_cast<sc_core::sc_object*>(&owner) != originator.get())
+  //  SC_REPORT_WARNING(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "When creating a private broker, the given originator should be the same as the owner.");
   m_broker = new gs_cci_private_broker(owner.name(), owner, pub_params);
 }
 

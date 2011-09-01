@@ -25,7 +25,7 @@ ModuleB::ModuleB(sc_core::sc_module_name name)
 , uint_param2("uint_param2", 12, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
 , str_param ("str_param", "This is a test string.", cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
 , bool_param("bool_param", cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this))) // no default value
-, mC("ModuleC", new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
+, mC("ModuleC", new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param")))
 { 
   SC_THREAD(main_action);
 

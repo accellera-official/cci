@@ -1,5 +1,9 @@
 ChangeLog
 ---------
+01.09.2011
+- removed totally outdated dev_example priv_broker_example_dl
+- changed gs private broker's constructor: does not need originator which is created automatically from owner now
+
 26.07.2011
 - Changed error reporting
 

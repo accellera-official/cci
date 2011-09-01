@@ -42,7 +42,10 @@ namespace cci {
       cci_cnf_broker_if& get_accessor(const cci_originator& originator);
 
       //gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<const char*> pub_params, const cci_originator& originator);
-      gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params, const cci_originator& originator);
+
+      /// Constructor for broker accessort. To be used by end user for creating private brokers.
+      /// Will forward the owner and private param list to private broker constructor, creates an originator using the owner reference.
+      gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params);
 
     public:
       ~gs_cci_private_broker_accessor();

@@ -71,8 +71,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           case gs::cnf::pre_read: // = cci::cnf::pre_read
             returned_cci_message = adapt->call(*param, cci::cnf::pre_read);
             break;
-          //case gs::cnf::post_read:
-          //  break;
           case gs::cnf::reject_write: // = cci::cnf::reject_write
             returned_cci_message = adapt->call(*param, cci::cnf::reject_write);
             break;
@@ -235,7 +233,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
         case cci::cnf::pre_read:
           cb = gs::cnf::pre_read;
           break;
-        //case post_read: SC_REPORT_WARNING("GreenSocs/cci/not_supported", "not supported by GreenSocs parameters"); break;
         case cci::cnf::reject_write:
           cb = gs::cnf::reject_write;
           break;
