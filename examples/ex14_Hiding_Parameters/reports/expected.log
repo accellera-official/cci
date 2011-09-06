@@ -3,6 +3,8 @@
 
 	[CHILD C_TOR] : Parameter Name   : Top.parent_inst.child_inst.priv_int_param	Parameter Value : 100
 
+	[CHILD C_TOR] : Parameter Name   : Top.parent_inst.child_inst.pub_int_param	Parameter Value : 150
+
 	[PARENT C_TOR] : Parameter Name : Top.parent_inst.parent_int_param	Parameter Value : 300
 
 	[PARENT C_TOR] : Parameter Name : Top.parent_inst.parent_int_buffer	Parameter Value : 350
@@ -12,14 +14,17 @@
 @ 0 s	Visible parameters to 'child' module
 	[CHILD] : Parameter Name : Top.parent_inst.child_inst.priv_int_param
 	[CHILD] : Parameter Name : Top.parent_inst.parent_int_param
+	[CHILD] : Parameter Name : Top.parent_inst.child_inst.pub_int_param
 	[CHILD] : Parameter Name : Top.parent_inst.parent_int_buffer
 
 @ 5 ns	Visible parameters to the 'parent' module
 	[PARENT] : Parameter Name : Top.parent_inst.child_inst.priv_int_param
 	[PARENT] : Parameter Name : Top.parent_inst.parent_int_param
+	[PARENT] : Parameter Name : Top.parent_inst.child_inst.pub_int_param
 	[PARENT] : Parameter Name : Top.parent_inst.parent_int_buffer
 
 @ 15 ns	Visible parameters to the 'configurator' module
+	[CFGR] : Parameter Name : Top.parent_inst.child_inst.pub_int_param
 	[CFGR] : Parameter Name : Top.parent_inst.parent_int_buffer
 
 @ 20 ns

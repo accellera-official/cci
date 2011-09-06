@@ -17,9 +17,10 @@
  * @file      child.h
  * @brief     This file declares and implements the 'child' module. The
  *            'child' module is instantiated by the 'parent' module and the
- *            parent module hides the 'child' details from the external world.
+ *            parent module hides the private cci-parameter of the 'child'
+ *            details from the external world.
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      5th July, 2011 (Tuesday)
+ * @date      2nd September, 2011 (Saturday)
  */
 #ifndef CHILD_H
 #define CHILD_H
@@ -29,11 +30,10 @@
 #include <assert.h>
 #include <string.h>
 
-#include "gs_cci_cnf_private_broker_accessor.h"
 
 /**
- * @brief      The 'child' module registers it's cci-parameter to the broker
- *             responsible for the module 
+ * @brief      The 'child' module registers - public & private cci-parameters to
+ *             the broker responsible for the module
  */
 class child : public sc_module
 {
@@ -41,8 +41,8 @@ class child : public sc_module
 		
 		/// Default Constructor		
 		SC_CTOR(child)
-		//:	priv_int_param("priv_int_param", 100, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
-		:	priv_int_param("priv_int_param", 100)
+		:	priv_int_param("priv_int_param", 100, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
+		,	pub_int_param("pub_int_param", 150, cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this)))
 		{
 			// This returns the reference to the broker responsible for this module
 			child_BrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -54,6 +54,9 @@ class child : public sc_module
 
 			std::cout << "\n\t[CHILD C_TOR] : Parameter Name   : " << priv_int_param.get_name()
 				<< "\tParameter Value : " << priv_int_param.get() << std::endl; 
+
+			std::cout << "\n\t[CHILD C_TOR] : Parameter Name   : " << pub_int_param.get_name()
+				<< "\tParameter Value : " << pub_int_param.get() << std::endl; 
 
 			// Declare a SC_THREAD
 			SC_THREAD(run_child);
@@ -92,11 +95,12 @@ class child : public sc_module
 
 	private	:
 	
-		/// Declare instances of mutable CCI parameter of type 'int'
-		cci::cnf::cci_param<int>	  priv_int_param;   /*!To be registered with private broker*/
-
 		/// Declare a configuration broker
 		cci::cnf::cci_cnf_broker_if*	child_BrokerIF;
+
+		/// Declare instances of mutable CCI parameters of type 'int'
+		cci::cnf::cci_param<int>	  priv_int_param;   /*!To be registered to the private broker*/
+		cci::cnf::cci_param<int>	  pub_int_param;   /*!To be registered to the global broker*/
 
 };// End of SC_MODULE
 

@@ -27,6 +27,7 @@
 #include "parent.h"
 #include "configurator.h"
 
+#include "gs_cci_cnf_private_broker_accessor.h"
 
 /**
  *  @brief   This sc_module constructs both the PARENT module and the CONFIGURATOR
@@ -39,13 +40,19 @@ SC_MODULE(Top)
 	public	:
 
 		SC_CTOR(Top)
-			// cci::cnf::gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> pub_params, const cci_originator& originator)
+			// cci::cnf::gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<std::string> public_parameters)
 		: privBroker (new cci::cnf::gs_cci_private_broker_accessor(*this, 
-				            boost::assign::list_of("parent_inst.parent_int_buffer"), cci::cnf::cci_originator(*this)))
+				            boost::assign::list_of("parent_inst.parent_int_buffer")("parent_inst.child_inst.pub_int_param")))
+			// Broker instantiated above is to be passed as an argument to the parent module
 		, parent_inst("parent_inst", privBroker)
 		, param_cfgr("param_cfgr")			
 		{
 			// Does nothing
+		}
+
+		~Top()
+		{
+			delete privBroker;
 		}
 
 	public	:
