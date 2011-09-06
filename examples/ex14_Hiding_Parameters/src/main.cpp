@@ -19,7 +19,7 @@
  *            the PARENT and the CONFIGURATOR modules.  
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *            Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
- * @date      5th July, 2011 (Tuesday)
+ * @date      3rd September, 2011 (Saturday)
  */
 #include <cci.h>           /*!Include this header in all cci-based applications*/
 #include <systemc.h>
@@ -32,8 +32,8 @@
 /**
  *  @brief   This sc_module constructs both the PARENT module and the CONFIGURATOR
  *           module.  This also creates a (private broker) responsible for the
- *           PARENT module and all the public parameters of the parent module have
- *           be enlisted and fed to the private broker here.
+ *           PARENT module and all the public parameters of the parent and the
+ *           child modules have be enlisted and fed to the respective broker.
  */
 SC_MODULE(Top)
 {
@@ -44,20 +44,21 @@ SC_MODULE(Top)
 		: privBroker (new cci::cnf::gs_cci_private_broker_accessor(*this, 
 				            boost::assign::list_of("parent_inst.parent_int_buffer")("parent_inst.child_inst.pub_int_param")))
 			// Broker instantiated above is to be passed as an argument to the parent module
-		, parent_inst("parent_inst", privBroker)
-		, param_cfgr("param_cfgr")			
+		, parent_inst(new parent("parent_inst", privBroker))
+		, param_cfgr("param_cfgr")
 		{
-			// Does nothing
+			// Nothing to implement
 		}
 
 		~Top()
 		{
+			delete parent_inst;
 			delete privBroker;
 		}
 
-	public	:
+	protected	:
 		cci::cnf::cci_cnf_broker_if* privBroker;
-		parent  									   parent_inst;
+		parent*  									   parent_inst;
 		configurator                 param_cfgr;
 
 };// End of SC_MODULE

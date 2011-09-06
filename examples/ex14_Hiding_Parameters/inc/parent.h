@@ -16,10 +16,10 @@
 /**
  * @file     parent.h
  * @brief    This header file declares and defines the 'parent' which instantiates
- *           'child' and hides its parameters
+ *           'child' and hides private parameters
  * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
- * @date     2nd September, 2011 (Saturday)
+ * @date     3rd September, 2011 (Saturday)
  */
 #ifndef PARENT_H
 #define PARENT_H
@@ -43,7 +43,7 @@ class parent : public sc_module
 		
 		SC_HAS_PROCESS(parent);	
 	
-		/// Default constructor
+		/// Constructor
 		parent(sc_core::sc_module_name _name, cci::cnf::cci_broker_manager priv_broker)
 		: sc_core::sc_module(_name)
 		, parent_BrokerIF(priv_broker)

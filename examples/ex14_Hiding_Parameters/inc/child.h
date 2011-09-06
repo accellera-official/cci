@@ -20,7 +20,7 @@
  *            parent module hides the private cci-parameter of the 'child'
  *            details from the external world.
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      2nd September, 2011 (Saturday)
+ * @date      3rd September, 2011 (Saturday)
  */
 #ifndef CHILD_H
 #define CHILD_H
@@ -99,8 +99,8 @@ class child : public sc_module
 		cci::cnf::cci_cnf_broker_if*	child_BrokerIF;
 
 		/// Declare instances of mutable CCI parameters of type 'int'
-		cci::cnf::cci_param<int>	  priv_int_param;   /*!To be registered to the private broker*/
-		cci::cnf::cci_param<int>	  pub_int_param;   /*!To be registered to the global broker*/
+		cci::cnf::cci_param<int>	  priv_int_param;   /*!<To be registered to the private broker*/
+		cci::cnf::cci_param<int>	  pub_int_param;   /*!<To be registered to the global broker*/
 
 };// End of SC_MODULE
 
