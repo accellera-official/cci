@@ -195,11 +195,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Registers an observer callback function (with the signature of callback_func_ptr).
     /**
      * Same as @see cci::cnf::cci_base_param::register_callback but additional
-     * - create param callbacks
-     * - callbacks to not yet existing params
+     * - create param callbacks allowed
+     * - callbacks for implicit params possible (caused on json and init value access as 
+     *   long as they are implicit, when the param becomes explicit the callbacks are called 
+     *   (forwarded) from the param object)
      * - (optionally) callbacks for regex names
      * 
-     * This will forward callback registration to the parameter object.
+     * This will forward callback registration to the explicit parameter object or handle self.
      *
      * Usage example:
      * \code
@@ -250,7 +252,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *     // some action
      *   }
      *
-     *   std::vector< shared_ptr<callb_adapt_b> > my_callbacks;
+     *   std::vector< shared_ptr<callb_adapt> > my_callbacks;
      * };
      * \endcode
      *
@@ -260,13 +262,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param function    Function pointer to the function being called.
      * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-    shared_ptr<callb_adapt_b> register_callback(const callback_type type, const std::string& parname, void* observer, callb_func_ptr function) {
+    shared_ptr<callb_adapt> register_callback(const callback_type type, const std::string& parname, void* observer, broker_callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(parname, type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, NULL)));
+      return register_callback(parname, type, shared_ptr< callb_adapt>(new callb_adapt(observer, function, NULL)));
     }
     
     /// Function handling the callback (should not be called by user)
-    virtual shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb) = 0;
+    virtual shared_ptr< callb_adapt> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt> callb) = 0;
 
     
     /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
@@ -295,7 +297,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(callb_adapt* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks(const std::string& parname) = 0;

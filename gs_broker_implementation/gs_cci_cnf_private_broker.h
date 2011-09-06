@@ -81,11 +81,11 @@ namespace cnf {
     
     bool is_used(const std::string &parname);
     
-    shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb);
+    shared_ptr< callb_adapt> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt> callb);
     
     void unregister_all_callbacks(void* observer);
     
-    bool unregister_param_callback(callb_adapt_b* callb);
+    bool unregister_param_callback(callb_adapt* callb);
     
     bool has_callbacks(const std::string& parname);
     

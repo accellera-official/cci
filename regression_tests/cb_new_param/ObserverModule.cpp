@@ -30,7 +30,7 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector< cci::shared_ptr<cci::cnf::callb_adapt_b> >::iterator iter;
+  std::vector< cci::shared_ptr<cci::cnf::callb_adapt> >::iterator iter;
   for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
     (*iter)->unregister_at_parameter();
   }
@@ -42,7 +42,7 @@ void ObserverModule::main_action() {
 
   // ******** register for new parameter callbacks ***************
   DEMO_DUMP(name(), "register for new parameter callbacks");
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb_new_pa;
+  cci::shared_ptr<cci::cnf::callb_adapt> cb_new_pa;
   cb_new_pa = mApi->register_callback(cci::cnf::create_param, "*", this, 
                                    cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
@@ -51,7 +51,7 @@ void ObserverModule::main_action() {
   DEMO_DUMP(name(), "register for post_write callbacks");
   cci::cnf::cci_base_param* p = mApi->get_param("Owner.int_param");
   assert(p != NULL);
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb1, cb3;
+  cci::shared_ptr<cci::cnf::callb_adapt> cb1, cb3;
   cb1 = p->register_callback(cci::cnf::post_write, this, 
                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
   cci::cnf::cci_base_param* p2 = mApi->get_param("Owner.uint_param");

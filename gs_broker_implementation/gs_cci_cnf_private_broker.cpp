@@ -115,7 +115,7 @@ const std::vector<std::string> cci::cnf::gs_cci_private_broker::get_param_list()
   return gs::cnf::GCnf_private_Api::getParamList();
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt_b> cci::cnf::gs_cci_private_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
+cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_private_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
   // TODO
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return callb;
@@ -126,7 +126,7 @@ void cci::cnf::gs_cci_private_broker::unregister_all_callbacks(void* observer) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
 }
 
-bool cci::cnf::gs_cci_private_broker::unregister_param_callback(cci::cnf::callb_adapt_b* callb) {
+bool cci::cnf::gs_cci_private_broker::unregister_param_callback(cci::cnf::callb_adapt* callb) {
   // TODO
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return false;

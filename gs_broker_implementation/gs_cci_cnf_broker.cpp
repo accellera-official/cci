@@ -50,9 +50,12 @@ const char* cci::cnf::gs_cci_cnf_broker::name() const {
 
 void cci::cnf::gs_cci_cnf_broker::set_init_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
+  // TODO: if <parname> is implicit parameter, cause a reject_write-callback here!
+  // TODO: if <parname> is implicit parameter, cause a pre_write-callback here!
   if ( !gs::cnf::GCnf_Api::setInitValue(parname, json_value) ) {
     cci_report_handler::set_param_failed("Setting initial value failed.");
   }
+  // TODO: if <parname> is implicit parameter, cause a post_write-callback here!
 }
 
 void cci::cnf::gs_cci_cnf_broker::lock_init_value(const std::string &parname) {
@@ -63,6 +66,7 @@ void cci::cnf::gs_cci_cnf_broker::lock_init_value(const std::string &parname) {
 
 const std::string cci::cnf::gs_cci_cnf_broker::get_json_string(const std::string &parname) {
   // TODO: use JSON
+  // TODO: if <parname> is implicit parameter, cause a pre_read-callback here!
   return gs::cnf::GCnf_Api::getValue(parname);
 }
 
@@ -100,9 +104,25 @@ const std::vector<std::string> cci::cnf::gs_cci_cnf_broker::get_param_list() {
   return gs::cnf::GCnf_Api::getParamList();
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt_b> cci::cnf::gs_cci_cnf_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
+cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
   // TODO
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
+
+  switch (type) {
+    case pre_read:
+    case reject_write:
+    case pre_write:
+    case post_write:
+    case destroy_param:
+      // callback forwarded to parameter object
+      break;
+    case create_param:
+      // callback forwarded to GCnf_Api
+      break;
+    default:
+      break;
+      
+  }
   return callb;
 }
 
@@ -111,7 +131,7 @@ void cci::cnf::gs_cci_cnf_broker::unregister_all_callbacks(void* observer) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
 }
 
-bool cci::cnf::gs_cci_cnf_broker::unregister_param_callback(callb_adapt_b* callb) {
+bool cci::cnf::gs_cci_cnf_broker::unregister_param_callback(callb_adapt* callb) {
   // TODO
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return false;

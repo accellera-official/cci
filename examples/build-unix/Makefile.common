@@ -8,12 +8,12 @@ DEFAULT_CCI_EXAMPLES_HOME=/Users/schroede/mydev/cci_git/cci/examples
 
 #----------- [Update] Update the following based on your system environment settings ------------
 # PVS :  CST System Paths 
-DEFAULT_SYSTEMC_HOME=/home/pvs/MyInstallations/SystemC-2.2.0
-DEFAULT_TLM_HOME=/home/pvs/MyInstallations/TLM-2009-07-15/
-DEFAULT_BOOST_HOME=/home/pvs/MyInstallations/boost_1_46_1/boost
-DEFAULT_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/api
-DEFAULT_GS_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622
-DEFAULT_CCI_EXAMPLES_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/examples
+#DEFAULT_SYSTEMC_HOME=/home/pvs/MyInstallations/SystemC-2.2.0
+#DEFAULT_TLM_HOME=/home/pvs/MyInstallations/TLM-2009-07-15/
+#DEFAULT_BOOST_HOME=/home/pvs/MyInstallations/boost_1_46_1/boost
+#DEFAULT_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/api
+#DEFAULT_GS_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622
+#DEFAULT_CCI_EXAMPLES_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/examples
 #-------------------------------------------------------------------------------------------------
 
 #--------------------------------------- 

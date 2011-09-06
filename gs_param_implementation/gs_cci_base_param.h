@@ -46,7 +46,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
      */
     class internal_callback_forwarder {
     public:
-      internal_callback_forwarder(cci::shared_ptr<cci::cnf::callb_adapt_b> _adapt, const gs::cnf::callback_type _type, my_type& _par)
+      internal_callback_forwarder(cci::shared_ptr<cci::cnf::callb_adapt> _adapt, const gs::cnf::callback_type _type, my_type& _par)
       : adapt(_adapt.get())
       , type(_type)
       , param(&_par)
@@ -100,7 +100,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
         return type;
       }
 
-      cci::cnf::callb_adapt_b* adapt;
+      cci::cnf::callb_adapt* adapt;
       gs::cnf::callback_type type;
       my_type *param;
       cci::shared_ptr< gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
@@ -222,12 +222,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     // /////////////////// CALLBACKS ///////////////////// //
 
-    virtual cci::shared_ptr<cci::cnf::callb_adapt_b> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function) {
+    virtual cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(type, cci::shared_ptr<cci::cnf::callb_adapt_b>(new cci::cnf::callb_adapt_b(observer, function, get_cci_base_param())));
+      return register_callback(type, cci::shared_ptr<cci::cnf::callb_adapt>(new cci::cnf::callb_adapt(observer, function, get_cci_base_param())));
     }
     
-    virtual cci::shared_ptr<cci::cnf::callb_adapt_b> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
+    virtual cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
       gs::cnf::callback_type cb = gs::cnf::no_callback;
       switch(type) {
         case cci::cnf::pre_read:
@@ -283,11 +283,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       }
     }
     
-    virtual bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt_b> callb)  {
+    virtual bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)  {
       return unregister_param_callback(callb.get());
     }
     
-    virtual bool unregister_param_callback(cci::cnf::callb_adapt_b* callb)  {
+    virtual bool unregister_param_callback(cci::cnf::callb_adapt* callb)  {
       internal_callback_forwarder* fw;
       for (unsigned int i = 0; i < fw_vec.size(); ++i) {
         if (fw_vec[i]->adapt == callb) {
@@ -325,7 +325,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     bool m_init_called;
 
-    cci::shared_ptr<cci::cnf::callb_adapt_b> m_post_write_callback;
+    cci::shared_ptr<cci::cnf::callb_adapt> m_post_write_callback;
     
     cci::cnf::cci_cnf_broker_if* m_broker_accessor;
     

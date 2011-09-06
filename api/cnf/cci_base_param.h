@@ -45,11 +45,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual void set_invalid_value() = 0;
     virtual bool is_initial_value() = 0;
     virtual const std::string& get_name() const = 0;
-    virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) = 0;
-    virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) = 0;
+    virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) = 0;
+    virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) = 0;
     virtual void unregister_all_callbacks(void* observer) = 0;
-    virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) = 0;
-    virtual bool unregister_param_callback(callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt> callb) = 0;
+    virtual bool unregister_param_callback(callb_adapt* callb) = 0;
     virtual bool has_callbacks() = 0;
     virtual bool lock(void* pwd = NULL) = 0;
     virtual bool unlock(void* pwd = NULL) = 0;

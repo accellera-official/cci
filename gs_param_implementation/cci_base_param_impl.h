@@ -57,11 +57,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual void set_invalid_value() {get_pImpl()->set_invalid_value();}
     virtual bool is_initial_value() {return get_pImpl()->is_initial_value();};
     virtual const std::string& get_name() const {return get_pImpl()->get_name();}
-    virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
-    virtual cci::shared_ptr<callb_adapt_b> register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()-> register_callback(type, callb);}
+    virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
+    virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) {return get_pImpl()-> register_callback(type, callb);}
     virtual void unregister_all_callbacks(void* observer) {get_pImpl()->unregister_all_callbacks(observer);}
-    virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {return get_pImpl()->unregister_param_callback(callb);}
-    virtual bool unregister_param_callback(callb_adapt_b* callb) {return get_pImpl()->unregister_param_callback(callb);}
+    virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt> callb) {return get_pImpl()->unregister_param_callback(callb);}
+    virtual bool unregister_param_callback(callb_adapt* callb) {return get_pImpl()->unregister_param_callback(callb);}
     virtual bool has_callbacks(){return get_pImpl()->has_callbacks();}
     virtual bool lock(void* pwd = NULL){return get_pImpl()->lock();}
     virtual bool unlock(void* pwd = NULL){return get_pImpl()->unlock();}

@@ -261,17 +261,17 @@ const std::string& cci_param<T,TM>::get_name() const {
 }
 
 template<typename T, param_mutable_type TM>
-cci::shared_ptr<callb_adapt_b> cci_param<T,TM>::register_callback(const callback_type type, void* observer, callb_func_ptr function) {
+cci::shared_ptr<callb_adapt> cci_param<T,TM>::register_callback(const callback_type type, void* observer, param_callb_func_ptr function) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  const cci::shared_ptr<callb_adapt_b>& ret = get_pImpl()-> register_callback(type, observer, function);
+  const cci::shared_ptr<callb_adapt>& ret = get_pImpl()-> register_callback(type, observer, function);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
 
 template<typename T, param_mutable_type TM>
-cci::shared_ptr<callb_adapt_b> cci_param<T,TM>::register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {
+cci::shared_ptr<callb_adapt> cci_param<T,TM>::register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  const cci::shared_ptr<callb_adapt_b>& ret = get_pImpl()-> register_callback(type, callb);
+  const cci::shared_ptr<callb_adapt>& ret = get_pImpl()-> register_callback(type, callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -284,7 +284,7 @@ void cci_param<T,TM>::unregister_all_callbacks(void* observer) {
 }
 
 template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {
+bool cci_param<T,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   bool ret = get_pImpl()->unregister_param_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
@@ -292,7 +292,7 @@ bool cci_param<T,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt_b> c
 }
 
 template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::unregister_param_callback(callb_adapt_b* callb) {
+bool cci_param<T,TM>::unregister_param_callback(callb_adapt* callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   bool ret = get_pImpl()->unregister_param_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
@@ -628,17 +628,17 @@ const std::string& cci_param<std::string,TM>::get_name() const {
 }
 
 template<param_mutable_type TM>
-cci::shared_ptr<callb_adapt_b> cci_param<std::string,TM>::register_callback(const callback_type type, void* observer, callb_func_ptr function) {
+cci::shared_ptr<callb_adapt> cci_param<std::string,TM>::register_callback(const callback_type type, void* observer, param_callb_func_ptr function) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  const cci::shared_ptr<callb_adapt_b>& ret = get_pImpl()-> register_callback(type, observer, function);
+  const cci::shared_ptr<callb_adapt>& ret = get_pImpl()-> register_callback(type, observer, function);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
 
 template<param_mutable_type TM>
-cci::shared_ptr<callb_adapt_b> cci_param<std::string,TM>::register_callback(const callback_type type, cci::shared_ptr<callb_adapt_b> callb) {
+cci::shared_ptr<callb_adapt> cci_param<std::string,TM>::register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  const cci::shared_ptr<callb_adapt_b>& ret = get_pImpl()-> register_callback(type, callb);
+  const cci::shared_ptr<callb_adapt>& ret = get_pImpl()-> register_callback(type, callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -651,7 +651,7 @@ void cci_param<std::string,TM>::unregister_all_callbacks(void* observer) {
 }
 
 template<param_mutable_type TM>
-bool cci_param<std::string,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt_b> callb) {
+bool cci_param<std::string,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   bool ret = get_pImpl()->unregister_param_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
@@ -659,7 +659,7 @@ bool cci_param<std::string,TM>::unregister_param_callback(cci::shared_ptr<callb_
 }
 
 template<param_mutable_type TM>
-bool cci_param<std::string,TM>::unregister_param_callback(callb_adapt_b* callb) {
+bool cci_param<std::string,TM>::unregister_param_callback(callb_adapt* callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   bool ret = get_pImpl()->unregister_param_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer

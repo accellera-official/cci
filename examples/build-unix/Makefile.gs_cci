@@ -10,10 +10,8 @@ USR=$(shell whoami)
 OBJDIR=/tmp/$(USR)
 
 #-- api/
-GS_CCI_API_CNF_SRCS_WOPATH =cci_broker_manager_module.cpp \
-                            cci_broker_manager.cpp \
-                            cci_broker_stack.cpp \
-                            cci_broker_registry.cpp 
+GS_CCI_API_CNF_SRCS_WOPATH =cci_broker_manager.cpp \
+                            cci_broker_stack.cpp
 GS_CCI_API_CNF_SRCS_PATH   =$(GS_CCI_HOME)/api/cnf/
 GS_CCI_API_CNF_SRCS        =$(addprefix $(GS_CCI_API_CNF_SRCS_PATH),$(GS_CCI_API_CNF_SRCS_WOPATH))
 GS_CCI_API_CNF_OBJS_TMP    =$(addprefix $(OBJDIR)/,$(GS_CCI_API_CNF_SRCS_WOPATH))

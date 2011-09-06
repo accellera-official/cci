@@ -108,9 +108,9 @@ const std::vector<std::string> cci::cnf::gs_cci_cnf_broker_accessor::get_param_l
   return ret;
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt_b> cci::cnf::gs_cci_cnf_broker_accessor::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb) {
+cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker_accessor::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  const cci::shared_ptr<cci::cnf::callb_adapt_b>& ret = m_broker->register_callback(parname, type, callb);
+  const cci::shared_ptr<cci::cnf::callb_adapt>& ret = m_broker->register_callback(parname, type, callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -121,7 +121,7 @@ void cci::cnf::gs_cci_cnf_broker_accessor::unregister_all_callbacks(void* observ
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
-bool cci::cnf::gs_cci_cnf_broker_accessor::unregister_param_callback(callb_adapt_b* callb) {
+bool cci::cnf::gs_cci_cnf_broker_accessor::unregister_param_callback(callb_adapt* callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   bool ret = m_broker->unregister_param_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer

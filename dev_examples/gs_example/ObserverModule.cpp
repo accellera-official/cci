@@ -32,7 +32,7 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector< cci::shared_ptr<cci::cnf::callb_adapt_b> >::iterator iter;
+  std::vector< cci::shared_ptr<cci::cnf::callb_adapt> >::iterator iter;
   for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
     (*iter)->unregister_at_parameter();
   }
@@ -42,12 +42,12 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   cout << "----------------------------" << endl;
 
-  /*DEMO_DUMP(name(), "register for new parameter callbacks");
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb_new_pa;
+  DEMO_DUMP(name(), "register for new parameter callbacks");
+  cci::shared_ptr<cci::cnf::callb_adapt> cb_new_pa;
   cb_new_pa = mBroker->register_callback(cci::cnf::create_param, "*", this, 
                                    cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
-  */
+  
   DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");
 
   // get access to a foreign parameter using the module's config API
@@ -55,7 +55,7 @@ void ObserverModule::main_action() {
   assert(p != NULL);
 
   // ******** register for parameter change callback ***************
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb1a, cb1b, cb3a, cb3b;
+  cci::shared_ptr<cci::cnf::callb_adapt> cb1a, cb1b, cb3a, cb3b;
   cb1a = p->register_callback(cci::cnf::pre_write, this, 
                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
   cb1b = p->register_callback(cci::cnf::post_write, this, 
@@ -71,7 +71,7 @@ void ObserverModule::main_action() {
 
   // ******* Testing parameter lock with callback returns *************
   // Register Callback for parameter int_param in module other_ip (IP1)
-  cci::shared_ptr<cci::cnf::callb_adapt_b> cb2;
+  cci::shared_ptr<cci::cnf::callb_adapt> cb2;
   cb2 = p->register_callback(cci::cnf::reject_write, this,
                              cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
   std::string str = p->json_serialize();
@@ -126,10 +126,12 @@ cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_bas
 }
 
 /// Callback function with default signature announcing new parameters.
-cci::cnf::callback_return_type ObserverModule::config_new_param_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
+cci::cnf::callback_return_type ObserverModule::config_new_param_callback(const std::string& par_name, const cci::cnf::callback_type& cb_reason) {
   assert(cb_reason == cci::cnf::create_param);
-  std::string str = par.json_serialize();
-  DEMO_DUMP(name(), "New parameter callback '" << par.get_name() << "', value '"<<str<<"'");
+  cci::cnf::cci_base_param* p = mBroker->get_param(par_name);
+  assert(p && "This new param should already be available!");
+  std::string str = p->json_serialize();
+  DEMO_DUMP(name(), "New parameter callback '" << par_name << "', value '"<<str<<"'");
   return cci::cnf::return_nothing;
 }
 

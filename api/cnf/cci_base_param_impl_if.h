@@ -320,8 +320,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *     return cci::cnf::return_nothing;
      *   }
      * protected:
-     *   cci::shared_ptr<callb_adapt_b> p1cb;
-     *   cci::shared_ptr<callb_adapt_b> p2cb;
+     *   cci::shared_ptr<callb_adapt> p1cb;
+     *   cci::shared_ptr<callb_adapt> p2cb;
      * };
      * \endcode
      *
@@ -330,13 +330,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param function    Function pointer to the function being called.
      * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
-    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, void* observer, callb_func_ptr function) = 0;/* {
+    virtual shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) = 0;/* {
       // call the pure virtual function performing the registration
-      return register_callback(type, shared_ptr< callb_adapt_b>(new callb_adapt_b(observer, function, this)));
+      return register_callback(type, shared_ptr< callb_adapt>(new callb_adapt(observer, function, this)));
     }*/
     
     /// Function registering a callback object (should not be called by user)
-    virtual shared_ptr<callb_adapt_b> register_callback(const callback_type type, shared_ptr<callb_adapt_b> callb) = 0;
+    virtual shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb) = 0;
     
     
     /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
@@ -361,9 +361,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt_b> callb) = 0;
+    virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt> callb) = 0;
     /// @see unregister_param_callback(shared_ptr<>) 
-    virtual bool unregister_param_callback(cci::cnf::callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(cci::cnf::callb_adapt* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;

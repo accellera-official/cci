@@ -42,7 +42,7 @@ public:
   cci::cnf::callback_return_type config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
 
   /// Callback function with default signature announcing new parameters.
-  cci::cnf::callback_return_type config_new_param_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
+  cci::cnf::callback_return_type config_new_param_callback(const std::string& par_name, const cci::cnf::callback_type& cb_reason);
 
   /// Callback function with default signature rejecting all changes.
   cci::cnf::callback_return_type config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
@@ -52,7 +52,7 @@ protected:
   cci::cnf::cci_cnf_broker_if* mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
-  std::vector< cci::shared_ptr<cci::cnf::callb_adapt_b> > mCallbacks;
+  std::vector< cci::shared_ptr<cci::cnf::callb_adapt> > mCallbacks;
   
 };
 

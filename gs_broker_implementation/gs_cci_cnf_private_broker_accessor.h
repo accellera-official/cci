@@ -76,11 +76,11 @@ namespace cci {
       
       const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern = "");
       
-      shared_ptr< cci::cnf::callb_adapt_b> register_callback(const std::string& parname, const cci::cnf::callback_type type, shared_ptr< cci::cnf::callb_adapt_b> callb);
+      shared_ptr< cci::cnf::callb_adapt> register_callback(const std::string& parname, const cci::cnf::callback_type type, shared_ptr< cci::cnf::callb_adapt> callb);
       
       void unregister_all_callbacks(void* observer);
       
-      bool unregister_param_callback(cci::cnf::callb_adapt_b* callb);
+      bool unregister_param_callback(cci::cnf::callb_adapt* callb);
       
       bool has_callbacks(const std::string& parname);
       

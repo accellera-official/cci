@@ -56,11 +56,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
     virtual bool is_used(const std::string &parname) = 0;
 
-    virtual shared_ptr< callb_adapt_b> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt_b> callb) = 0;
+    virtual shared_ptr< callb_adapt> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt> callb) = 0;
 
     virtual void unregister_all_callbacks(void* observer) = 0;
 
-    virtual bool unregister_param_callback(callb_adapt_b* callb) = 0;
+    virtual bool unregister_param_callback(callb_adapt* callb) = 0;
     
     virtual bool has_callbacks(const std::string& parname) = 0;
     
