@@ -16,10 +16,10 @@
 /**
  * @file     parent.h
  * @brief    This header file declares and defines the 'parent' which instantiates
- *           'child' and hides its parameters
+ *           'child' and hides private parameters
  * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
- * @date     5th June, 2011 (Tuesday)
+ * @date     3rd September, 2011 (Saturday)
  */
 #ifndef PARENT_H
 #define PARENT_H
@@ -32,7 +32,6 @@
 
 #include "child.h"
 
-#include "gs_cci_cnf_private_broker_accessor.h"
 
 /**
  * @brief    The 'parent' module derives from the 'cci_broker_manager'
@@ -44,11 +43,11 @@ class parent : public sc_module
 		
 		SC_HAS_PROCESS(parent);	
 	
-		/// Default constructor
+		/// Constructor
 		parent(sc_core::sc_module_name _name, cci::cnf::cci_broker_manager priv_broker)
 		: sc_core::sc_module(_name)
-	  ,	child_inst("child_inst")
 		, parent_BrokerIF(priv_broker)
+	  ,	child_inst("child_inst")
 		,	parent_int_param("parent_int_param", 300, *priv_broker)
 		, parent_buffer("parent_int_buffer", 350, *priv_broker)
 		{
@@ -129,11 +128,11 @@ class parent : public sc_module
 
 	private	:
 
-		/// Owner Module instantiation
-		child                        child_inst;
-
 		/// Configuration Broker for TOP_MODULE
 		cci::cnf::cci_cnf_broker_if* parent_BrokerIF;
+
+		/// Owner Module instantiation
+		child                        child_inst;
 	
 		/// Declare cci-parameters (registered with the private broker)
 		cci::cnf::cci_param<int>	   parent_int_param;
