@@ -18,9 +18,9 @@
   * @brief   This function instantiates a parameter OWNER, CONFIGURATOR and an
   *          OBSERVER class
   * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    31st August, 2011 (Wednesday)
+  * @date    12th September, 2011 (Monday)
   */
-#include <cci.h>        /*!This header must be added in all CCI-based applications*/
+#include <cci.h>        /*!<This header must be added in all CCI-based applications*/
 #include <systemc.h>
 #include <assert.h>
 
@@ -60,4 +60,5 @@ int sc_main(int sc_argc, char* sc_argv[])
 	sc_start(12.0, SC_NS);
 
 	return EXIT_SUCCESS;
+
 }// End of SC_MAIN

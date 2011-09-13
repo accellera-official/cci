@@ -14,12 +14,12 @@
  *******************************************************************************/
 
 /**
-  * @file    main.cpp
-  * @brief   This function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
-  *          modules and 'OBSERVER' class
-  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    17th August, 2011 : 18:03 hrs IST
-  */
+	* @file    main.cpp
+	* @brief   This function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
+	*          modules and 'OBSERVER' class
+	* @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+	* @date    12th September, 2011
+	*/
 #include <cci.h>          /// Contains all the definitions for CCI-infrastructure
 #include <systemc.h>      /// Contains all the definitions for SystemC
 #include <assert.h>

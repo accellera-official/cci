@@ -18,7 +18,7 @@
   * @brief   This file instantiates defines a 'PARAMETER_OWNER' sc_module which,
   *          in turn, 'int-type' & 'string-type'cci-parameters with default values
   * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    18th April, 2011 (Monday) : 17:13 hrs IST
+  * @date    12th September, 2011 (Monday)
   */
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
@@ -64,9 +64,10 @@ SC_MODULE(parameter_owner)
 
 			/// Query default value of a parameter using 'get_default_type()' API
 			std::cout << "\n\t[OWNER -> Retrieve] : Using 'get_default_value()' : " << int_param.get_default_value() << endl;			
-			std::cout << "\n\t[OWNER -> Set] : Param doc - 'Initial documentation'" << endl;
-			
-			const std::string init_doc = "Initial documentation";
+
+			/// Set Documentation - This gives the meta-data about the parameter
+			std::cout << "\n\t[OWNER -> Set] : Param documentation - 'This is a mutable type integer parameter'" << endl;			
+			const std::string init_doc = "This is a mutable type integer parameter";
 			int_param.set_documentation(init_doc);
 
 		}// End of Constructor
@@ -92,12 +93,6 @@ SC_MODULE(parameter_owner)
 				/// Setting value to the integer type parameter
 				int_param = 1;
 
-				///
-				const std::string doc2 = "Modified by initial value";					
-
-				std::cout << "\n\t[OWNER -> Set] : Int param doc - 'Modified by initial value'" << endl;
-				int_param.set_documentation(doc2);
-		
 				wait(17.0, SC_NS);
 
 				/*****************************************************************************************************************
@@ -124,10 +119,17 @@ SC_MODULE(parameter_owner)
 				int_param.set_invalid_value();				
 			
 				/// Query a cci parameter value validity using 'is_invalid_value()' API	
-				if(int_param.is_invalid_value())
-					std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is invalid : " << int_param.get() << endl;
+				if(int_param.is_invalid_value())	{
+					std::cout << "\t[OWNER] : Is Invalid Value ? " << "\tReturned Status : "\
+						<< std::boolalpha << int_param.is_invalid_value() << endl;
+					std::cout << "\n\t[OWNER] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
+				}
 				else
-					std::cout << "\n\t[OWNER] : " << int_param.get_name() << " value is not invalid." << endl;					
+				{
+					std::cout << "\t[OWNER] : Is Invalid Value ? " << "\tReturned Status : "\
+						<< std::boolalpha << int_param.is_invalid_value() << endl;
+					std::cout << "\n\t[OWNER] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
+				}//End of IF-ELSE
 
 				wait(20.0, SC_NS); 
 

@@ -17,8 +17,9 @@
   * @file    parameter_configurer.h
   * @brief   This class demonstrates means to access and set various  
   *          attributes of a cci parameter
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    18th April, 2011 (Monday) : 17:43 hrs IST
+  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+  *          Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
+  * @date    12th September, 2011 (Monday)
   */
 #ifndef PARAMETER_CONFIGURER_H
 #define PARAMETER_CONFIGURER_H
@@ -30,8 +31,6 @@
 /**
   * @brief   This sc_module instantiates a cci configuration broker which accessess
   *          and sets the various attributes of a cci parameter 
-  * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
-  * @date    28th April, 2011 (Thursday) : 14:45 hrs IST
   */
 SC_MODULE(parameter_configurer)
 {
@@ -50,14 +49,14 @@ SC_MODULE(parameter_configurer)
 			/// Check for the broker type (default or private) using 'is_private_broker()' API
 			if(myBrokerInterface->is_private_broker())
 				/// Access broker's name using 'name()' 
-				std::cout << "\n\t[CFGR] : Broker Type : " << myBrokerInterface->name() << endl;
+				std::cout << "\n\t[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name() << endl;
 			else
-				std::cout << "\n\t[CFGR] : " << myBrokerInterface->name() << " is not a private broker." << endl; 
+				std::cout << "\n\t[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name() << " - is not a private broker." << endl; 
 
 
 			udt_param_str = "param_owner.User_data_type_param";
 
-			
+			/// Check the existence of the user-defined data type cci-parameter
 			if(myBrokerInterface->exists_param(udt_param_str))
 			{
 				/// If parameter exists, get handle of the parameter using 'get_param' API
@@ -67,7 +66,7 @@ SC_MODULE(parameter_configurer)
 				assert(str_param_ptr != NULL && "User define data type CCI Parameter Handle returned NULL");
 			}
 			else
-				std::cout << "\n\t[CFGR] : User define datatype  parameter does not exist" << endl;
+				std::cout << "\n\t[CFGR C_TOR] : User define datatype  parameter does not exist" << endl;
 
 
  			/// Registering SC_THREAD process 
@@ -109,21 +108,15 @@ SC_MODULE(parameter_configurer)
 				std::string set_string ("{\"s_address\":1024,\"d_address\":1280,\"index\":3}");
 				udt_param_ptr->json_deserialize(set_string);
 
-				std::cout << "\n\t[CFGR-> Set] : Parameter doc - 'Modified with CFGR'" << endl;					
-				const std::string documentation_string = "Modified with CFGR";
-				udt_param_ptr->set_documentation(documentation_string);
-	
+
 				wait(2.0, SC_NS);
-				std::cout << "\n@ : " << sc_time_stamp() << std::endl;
+				std::cout << "\n@ " << sc_time_stamp() << std::endl;
 
 				/// Access parameter's name using 'get_name()' API
 				std::cout << "\n\t[CFGR -> Retrieve] : Parameter name : " << udt_param_ptr->get_name() << endl;
 
 				/// Access parameter's value using 'json_serialize' API
 				std::cout << "\n\t[CFGR -> Retrieve] : Parameter value: " << udt_param_ptr->json_serialize() << endl;
-
-				/// Access parameter's documentation using 'get_documentation()' API
-				std::cout << "\n\t[CFGR -> Retrieve] : Parameter doc : " << udt_param_ptr->get_documentation() << endl;
 
 				wait(20.0, SC_NS);
 

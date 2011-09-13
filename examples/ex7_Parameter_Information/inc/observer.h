@@ -17,7 +17,7 @@
   * @file    observer.h
   * @brief   This file defines an observer class demonstrates
   * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    17th August, 2011 (Wednesday) : 17:43 hrs IST
+  * @date    12th September, 2011 (Monday)
   */
 #ifndef OBSERVER_H
 #define OBSERVER_H
@@ -52,9 +52,9 @@ class observer
 			/// Check for the broker type (default or private) using 'is_private_broker()' API
 			if(observerBrokerIF->is_private_broker())
 				/// Access broker's name using 'name()' 
-				std::cout << "\n\t[OBSERVER] : Broker Type : " << observerBrokerIF->name() << endl;
+				std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF->name() << endl;
 			else
-				std::cout << "\n\t[OBSERVER] : " << observerBrokerIF->name() << " is not a private broker." << endl; 
+				std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF->name() << "- is not a private broker." << endl; 
 
 
 			/// Gets the reference to the 'int' type cci-parameter of OWNER module
@@ -96,7 +96,7 @@ class observer
 						break;	}
 			
 					default	:
-						std::cout << "\n\t[OBSERVER] - Unknown Callback Type" << std::endl;
+						std::cout << "\n\t[OBSERVER pre_read_cb] - Unknown Callback Type" << std::endl;
 
 				}// End of SWITCH-CASE
 
@@ -124,7 +124,7 @@ class observer
 						break;}
 									
 					default	:
-						std::cout << "\n\t[OWNER] - Unknown Callback Type" << std::endl;
+						std::cout << "\n\t[OBSERVER write_cb] - Unknown Callback Type" << std::endl;
 
 				}// End of SWITCH-CASE
 

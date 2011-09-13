@@ -18,7 +18,7 @@
   * @brief   This header instantiates various CCI parameters with default values
   * @author  Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
   *          P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    31st Augsut, 2011 (Wednesday)
+  * @date    12th September, 2011 (Monday)
   */
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
@@ -27,7 +27,6 @@
 #include "cci.h"
 
 #include "user_datatype.h"
-
 
 /**
  	* @brief   This sc_module instantiates an object of user-defined data type of
@@ -53,9 +52,9 @@ SC_MODULE(parameter_owner)
 			std::cout << "\n\t[OWNER -> Retrieve] : Using 'get_default_value()' : " << udt_param.get_default_value() << endl;			
 			std::cout << "\n\t[OWNER -> Retrieve] : Parameter Value' : " << udt_param.get() << endl;			
 
-			std::cout << "\n\t[OWNER -> Set] : Param doc - 'Initial documentation'" << endl;
-			
-			const std::string init_doc = "Initial documentation";
+			/// Set documentation for the user-defined data type
+			std::cout << "\n\t[OWNER -> Set] : Param doc - 'This is user-defined data type" << endl;			
+			const std::string init_doc = "This is user-defined data type";
 			udt_param.set_documentation(init_doc);
 		}
 
@@ -79,9 +78,6 @@ SC_MODULE(parameter_owner)
 					<< "\t's_address:768,d_address:1024,index:2'" << std::endl;				
 				udt_param.json_deserialize("{\"s_address\":768,\"d_address\":1024,\"index\":2}");
 
-				const std::string doc2 = "Modified by Owner";					
-				std::cout << "\n\t[OWNER -> Set] : UDT Documentation - 'Modified by Owner'" << endl;
-				udt_param.set_documentation(doc2);
 
 				wait(2.0, SC_NS);		
 				std::cout << "@ " << sc_time_stamp() << endl;
@@ -89,8 +85,6 @@ SC_MODULE(parameter_owner)
 				// Access parameter's value
 				std::cout << "\n\t[OWNER -> Retrieve] : UDT Value : " << udt_param.get() << std::endl;
 
-				// Access parameter's documentation
-				std::cout << "\n\t[OWNER -> Retrieve] : UDT Doc : " << udt_param.get_documentation() << std::endl;
 
 				wait(8.0, SC_NS);
 
@@ -102,9 +96,17 @@ SC_MODULE(parameter_owner)
 			
 				/// Query a cci parameter value validity using 'is_invalid_value()' API	
 				if(udt_param.is_invalid_value())
+				{
 					std::cout << "\n\t[OWNER] : " << udt_param.get_name() << " value is invalid : " << udt_param.get() << endl;
+					std::cout << "\n\t[OWNER] : Is Invalid Value ? " << "\tReturned status : "\
+						<< std::boolalpha << udt_param.is_invalid_value() << endl;
+				}
 				else
+				{
 					std::cout << "\n\t[OWNER] : " << udt_param.get_name() << " value is not invalid." << endl;					
+					std::cout << "\n\t[OWNER] : Is Invalid Value ? " << "\tReturned status : "\
+						<< std::boolalpha << udt_param.is_invalid_value() << endl;
+				}// End of IF-ELSE
 
 				wait(20.0, SC_NS); 
 
@@ -116,7 +118,7 @@ SC_MODULE(parameter_owner)
 	private	:
 		
 		/// CCI parameters declarations
-		cci::cnf::cci_param<route_table_ut> udt_param; /*!user define data type  Parameter*/
+		cci::cnf::cci_param<route_table_ut> udt_param; /*!<User-defined data type parameter*/
 
 };//End of PARAMETER_OWNER
 

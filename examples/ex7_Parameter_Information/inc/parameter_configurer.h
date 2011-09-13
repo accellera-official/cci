@@ -19,7 +19,7 @@
   *          cci-parameters by name-based look up access approach and set their
   *          various attributes
   * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    18th April, 2011 (Monday) : 17:43 hrs IST
+  * @date    12th September, 2011 (Monday)
   */
 #ifndef PARAMETER_CONFIGURER_H
 #define PARAMETER_CONFIGURER_H
@@ -51,9 +51,9 @@ SC_MODULE(parameter_configurer)
 			/// Check for the broker type (default or private) using 'is_private_broker()' API
 			if(myBrokerInterface->is_private_broker())
 				/// Access broker's name using 'name()' 
-				std::cout << "\n\t[CFGR] : Broker Type : " << myBrokerInterface->name() << endl;
+				std::cout << "\n\t[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name() << endl;
 			else
-				std::cout << "\n\t[CFGR] : " << myBrokerInterface->name() << " is not a private broker." << endl; 
+				std::cout << "\n\t[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name() << " - is not a private broker." << endl; 
 
 
 			int_param_str = "param_owner.mutable_int_param";
@@ -61,8 +61,25 @@ SC_MODULE(parameter_configurer)
 			
 			intParamExists = false;
 			strParamExists = false;	
-		
 	
+	
+			// Broker interface checks for the existance of a (int type) parameter
+			if(myBrokerInterface->exists_param(int_param_str))
+			{
+				int_param_ptr =	myBrokerInterface->get_param(int_param_str);
+		
+				assert(int_param_ptr != NULL && "Integer CCI Parameter Handle returned NULL");					
+				
+				intParamExists = true;
+			}
+			else
+			{
+				std::cout << "\n\t[CFGR C_TOR] : Integer parameter does not exist." << endl;
+				
+				intParamExists = false;
+			} // End of IF
+
+
 			/// Broker interface checks for existance of a (std::string type) parameter using 'exists_param' API
 			if(myBrokerInterface->exists_param(string_param_str))
 			{
@@ -76,28 +93,16 @@ SC_MODULE(parameter_configurer)
 			}
 			else
 			{
-				std::cout << "\n\t[CFGR] : String parameter does not exist" << endl;
+				std::cout << "\n\t[CFGR C_TOR] : String parameter does not exist" << endl;
 					
 				strParamExists = false;
 			} // End of IF
 
 
-			// Broker interface checks for the existance of a (int type) parameter
-			if(myBrokerInterface->exists_param(int_param_str))
-			{
-				int_param_ptr =	myBrokerInterface->get_param(int_param_str);
-		
-				assert(int_param_ptr != NULL && "Integer CCI Parameter Handle returned NULL");					
-				
-				intParamExists = true;
-			}
-			else
-			{
-				std::cout << "\n\t[CFGR] : Integer parameter does not exist." << endl;
-				
-				intParamExists = false;
-			} // End of IF
-
+			/// Set documentation to the string type cci-parameter
+			std::cout << "\n\t[CFGR C_TOR] : Set documentation to the string-type cci-parameter" << std::endl;
+			std::string str_doc = "This is a mutable type string parameter";
+			str_param_ptr->set_documentation(str_doc);
 
  			/// Registering SC_THREAD process 
 			SC_THREAD(run_accessor);
@@ -120,18 +125,29 @@ SC_MODULE(parameter_configurer)
 					
 					/// Access parameter's default value status using 'is_default_value()' API
 					if(int_param_ptr->is_default_value())
+					{	
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " default value hasn't been modified." << endl; 
+						std::cout << "\t[CFGR] : Is Default Value ? " << "\tReturned status : "\
+							<< std::boolalpha << int_param_ptr->is_default_value() << endl; 
+					}
 					else
+					{
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " default value has been modified." << endl; 
-					
+						std::cout << "\t[CFGR] : Is Default Value ? " << "\tReturned status : "\
+							<< std::boolalpha << int_param_ptr->is_default_value() << endl; 
+					}
+
 					wait(2.0, SC_NS);				
 	
 					std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'is_default_value()'" << endl;
-				
 	
 					// Access parameter's default value status using 'is_default_value()' API
 					if(!int_param_ptr->is_default_value())
+					{
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " value has been modified." << endl; 
+						std::cout << "\t[CFGR] : Is Default Value ? " << "\tReturned status : " \
+							<< std::boolalpha << int_param_ptr->is_default_value() << endl; 
+					}//End of IF
 
 
 					if(str_param_ptr->is_default_value())
@@ -141,7 +157,7 @@ SC_MODULE(parameter_configurer)
 						std::cout << "\n\t[CFGR -> Retrieve] : Parameter value : " << str_param_ptr->json_serialize() << endl;			
 					}
 					else
-						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " New Value : "
+						std::cout << "\n\t[CFGR] : " << str_param_ptr->get_name() << " New Value : "\
 							<< str_param_ptr->json_serialize()<< endl; 
 
 
@@ -152,19 +168,24 @@ SC_MODULE(parameter_configurer)
 
 					/// Check parameter's value validity using 'is_invalid_value()' API
 					if(int_param_ptr->is_invalid_value())
-						std::cout << "\n\t[CFGR] : Invalid parameter value." << endl;
+					{
+						std::cout << "\n\t[CFGR] : Is Invalid Value ? " << "\tReturned status : "\
+							<< std::boolalpha << int_param_ptr->is_invalid_value() << endl; 
+						std::cout << "\t[CFGR] : Parameter value is invalid" << endl;
+					}
 					else
 					{
-						std::cout << "\n\t[CFGR] : Valid parameter value." << endl;
+						std::cout << "\n\t[CFGR] : Is Invalid Value ? " << "\tReturned status : "\
+							<< std::boolalpha << int_param_ptr->is_invalid_value() << endl; 
+						std::cout << "\t[CFGR] : Valid parameter value" << endl;
+					}//End of IF-ELSE
 
-						// Access parameter's name using 'get_name()' API
-						std::cout << "\n\t[CFGR -> Retrieve] Parameter's name : " << int_param_ptr->get_name() << endl;
-					}// End of IF
 
+					// Access parameter's name using 'get_name()' API
+					std::cout << "\n\t[CFGR -> Retrieve] Parameter's name : " << int_param_ptr->get_name() << endl;
 
 					// Access parameter's value using 'json_serialize' API
 					std::cout << "\n\t[CFGR -> Retrieve] Parameter's value : " << int_param_ptr->json_serialize() << endl;
-					
 
 					// Access parameter's documentationu using 'get_documentation()' API
 					std::cout << "\n\t[CFGR -> Retreive] Parameter's doc : " << int_param_ptr->get_documentation() << endl;
@@ -180,25 +201,17 @@ SC_MODULE(parameter_configurer)
 					int_param_ptr->json_deserialize("10"); 
 
 
-					wait(2.0, SC_NS);
+					//wait(2.0, SC_NS);
+					wait(4.0, SC_NS);
 
 					std::cout << "\n@ " << sc_time_stamp() << endl;
-					std::cout << "\n\t[CFGR-> Set] : Parameter doc - 'Modified with Configuration tool'" << endl;
-					
-					const std::string documentation_string = "Modified with Configuration tool";
-					
 
-					/// Set parameter's documentation using 'set_documentation' API
-					int_param_ptr->set_documentation(documentation_string);
-	
-					wait(2.0, SC_NS);
-				
-
-					std::cout << "\n@ " << sc_time_stamp() << endl;
 					/// Access parameter's name using 'get_name()' API
 					std::cout << "\n\t[CFGR -> Retrieve] : Parameter name : " << int_param_ptr->get_name() << endl;
+
 					/// Access parameter's value using 'json_serialize' API
 					std::cout << "\n\t[CFGR -> Retrieve] : Parameter value: " << int_param_ptr->json_serialize() << endl;
+
 					/// Access parameter's documentation using 'get_documentation()' API
 					std::cout << "\n\t[CFGR -> Retrieve] : Parameter doc : " << int_param_ptr->get_documentation() << endl;
 			
@@ -248,15 +261,22 @@ SC_MODULE(parameter_configurer)
 					
 					/// Access invalid state of a cci parameter using 'is_invalid_value()' API
 					if(int_param_ptr->is_invalid_value())
+					{
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " value is set to invalid." << endl;
+						std::cout << "\t[CFGR] : Is Invalid Value ? " << std::boolalpha << int_param_ptr->is_invalid_value() << endl; 
+					}
 					else
+					{
 						std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " value not set to invalid." << endl;
-					
+						std::cout << "\t[CFGR] : Is Invalid Value ? " << "\tReturned status : "
+							<< std::boolalpha << int_param_ptr->is_invalid_value() << endl; 
+					}//End of IF-ELSE
+
 
 					wait(2.0, SC_NS);
 					
-					std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'set_value()' using cci_value" << endl;
-				
+					std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'set_value()' for string-type param using cci_value" << endl;
+					std::cout << "\n\t[CFGR] : Parameter Documentation : " << str_param_ptr->get_documentation() << endl;
 						
 					cci::cnf::cci_value str_value("Hello_New_String");
 					

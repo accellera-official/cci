@@ -13,15 +13,18 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Retrieve] : Using 'get_default_value()' : 0
 
-	[OWNER -> Set] : Param doc - 'Initial documentation'
+	[OWNER -> Set] : Param documentation - 'This is a mutable type integer parameter'
 
-	[CFGR] : DEFAULT_BROKER is not a private broker.
+	[CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
 
-	[OBSERVER] : DEFAULT_BROKER is not a private broker.
+	[CFGR C_TOR] : Set documentation to the string-type cci-parameter
+
+	[OBSERVER C_TOR] : Broker Type : DEFAULT_BROKER- is not a private broker.
 
 @ 0 s	demonstrating 'is_default_value()'
 
 	[CFGR] : param_owner.mutable_int_param default value hasn't been modified.
+	[CFGR] : Is Default Value ? 	Returned status : true
 @ 1 ns
 
 	[OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 1
@@ -30,11 +33,10 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OBSERVER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
 
-	[OWNER -> Set] : Int param doc - 'Modified by initial value'
-
 @ 2 ns	demonstrating 'is_default_value()'
 
 	[CFGR] : param_owner.mutable_int_param value has been modified.
+	[CFGR] : Is Default Value ? 	Returned status : false
 
 	[CFGR] : param_owner.mutable_string_param value hasn't been modified
 
@@ -44,7 +46,8 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 @ 4 ns	demonstrating 'is_invalid_value()'
 
-	[CFGR] : Valid parameter value.
+	[CFGR] : Is Invalid Value ? 	Returned status : false
+	[CFGR] : Valid parameter value
 
 	[CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
 
@@ -52,7 +55,7 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR -> Retrieve] Parameter's value : 1
 
-	[CFGR -> Retreive] Parameter's doc : Modified by initial value
+	[CFGR -> Retreive] Parameter's doc : This is a mutable type integer parameter
 
 @ 6 ns
 
@@ -62,10 +65,6 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OBSERVER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
 
-@ 8 ns
-
-	[CFGR-> Set] : Parameter doc - 'Modified with Configuration tool'
-
 @ 10 ns
 
 	[CFGR -> Retrieve] : Parameter name : param_owner.mutable_int_param
@@ -74,7 +73,7 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR -> Retrieve] : Parameter value: 10
 
-	[CFGR -> Retrieve] : Parameter doc : Modified with Configuration tool
+	[CFGR -> Retrieve] : Parameter doc : This is a mutable type integer parameter
 
 @ 12 ns
 
@@ -101,16 +100,20 @@ Prior to 0 s	demonstrating 'get_default_value()'
 @ 18 ns demonstrating 'set_value_invalid()'
 
 	[OWNER -> Set] : param_owner.mutable_int_param value invalid.
+	[OWNER] : Is Invalid Value ? 	Returned Status : true
 
 	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
 
-	[OWNER] : param_owner.mutable_int_param value is invalid : 10
+	[OWNER] : param_owner.mutable_int_param	Value : 10
 
 @ 20 ns	demonstrating 'is_invalid_value()'
 
 	[CFGR] : param_owner.mutable_int_param value is set to invalid.
+	[CFGR] : Is Invalid Value ? true
 
-@ 22 ns	demonstrating 'set_value()' using cci_value
+@ 22 ns	demonstrating 'set_value()' for string-type param using cci_value
+
+	[CFGR] : Parameter Documentation : This is a mutable type string parameter
 
 	[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : 4
 
