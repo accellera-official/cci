@@ -24,25 +24,26 @@
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-/// Include 'cci.h' header in all CCI-based applications
-#include "cci.h"
+#include "cci.h"    // Include 'cci.h' header in all CCI-based applications
 
 /*!
- * \class   parameter_owner.h
+ * \class   parameter_owner parameter_owner.h
  * \brief   The various CCI-based parameters are initialized within this sc_module
  */ 
-class parameter_owner : public struct sc_module
+class parameter_owner : public sc_core::sc_module
 {
 	public	:
+		
+		SC_HAS_PROCESS(parameter_owner);
 
 		/*!
 		 * \fn    parameter_owner::parameter_owner
 		 * \brief Default Constructor
 		 */
-		SC_CTOR(parameter_owner)
-
+		parameter_owner(sc_module_name _name)
+		: sc_module(_name)
 			// Assign name and default value to the cci 'int-type' parameter.
-		: int_param("mutable_int_param", 0)
+		, int_param("mutable_int_param", 0)
 			// Assign name to the cci 'string-type' parameter (Default value NOT ASSIGNED)
 		, string_param("mutable_string_param","Default_Value")
 		{
@@ -151,9 +152,9 @@ class parameter_owner : public struct sc_module
 
 	private	:
 		
-		/// CCI parameters declarations
-		cci::cnf::cci_param<int>         int_param;    /*!<Integer Parameter*/
-		cci::cnf::cci_param<std::string> string_param; /*!<String Parameter*/
+		// CCI parameters declarations
+		cci::cnf::cci_param<int>         int_param;    //!< Integer type cci-parameter
+		cci::cnf::cci_param<std::string> string_param; //!< String type cci-parameter
 
 };// End of (SC_MODULE) class
 

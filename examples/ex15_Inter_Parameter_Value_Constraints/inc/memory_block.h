@@ -23,27 +23,46 @@
 #ifndef MEMORY_BLOCK_H
 #define MEMORY_BLOCK_H
 
-/// Include the 'cci.h' header in all cci-based applications
-#include <cci.h>
+#include <cci.h> // Include the 'cci.h' header in all cci-based applications
 
 /**
+ * @class      memory_block  memory_block.h
  * @brief      The 'Memory Stack' initializes a cci-parameter for defining the memory size
  */
-SC_MODULE(memory_block)
+class memory_block : public sc_core::sc_module
 {
 	public:
 
-		SC_CTOR(memory_block)
-		: mem_size("mem_size", 500)
+		SC_HAS_PROCESS(memory_block);
+
+		/**
+		 * \fn    memory_block::memory_block(sc_module_name )
+		 * \brief Constructor
+		 * \param sc_module_name  SC_MODULE name
+		 */
+		memory_block(sc_module_name _name)
+		: sc_module(_name)
+		, mem_size("mem_size", 500)
 		{
 			std::cout << "\n\t[MEMORY_BLOCK C_TOR] : Default Memory Size : " << mem_size.get() << "\n" << std::endl;
 
 		}// End of Constructor
 		
+
+		/**
+		 * @fn    memory_block::~memory_block
+		 * @brief Destructor
+		 */
+		~memory_block()
+		{
+			// Nothing to destruct
+		}
+
+
 	private	:
 	
-		/// Declare a cci-parameter to hold an address value
-		cci::cnf::cci_param<int>                     mem_size;
+		/** Declare a cci-parameter to set memory size*/
+		cci::cnf::cci_param<int>                     mem_size; //!< Memory Size
 
 };// End of SC_MODULE
 

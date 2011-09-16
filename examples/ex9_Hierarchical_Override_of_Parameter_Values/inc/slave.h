@@ -13,40 +13,46 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/**
- * @file     slave.h
- * @brief    This file declares and implements the functionality of the slave.
+/*!
+ * \file     slave.h
+ * \brief    Slave module implementation.
+ *           This file declares and implements the functionality of the slave.
  *           Few of the parameters of the slave sc_module are configured by the 
  *           router sc_module
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
- * @date     5th May, 2011 (Thursday)
+ * \date     5th May, 2011 (Thursday)
  */
 #ifndef SLAVE_H
 #define SLAVE_H
 
-// This header must be included in all cci-applications
-#include <cci.h>
+#include <cci.h>  // This header must be included in all cci-applications
 
-// These headers are included for tlm2 communication
-#include "tlm.h"
-#include "tlm_utils/simple_target_socket.h"
+#include "tlm.h"                            // TLM2 headers
+#include "tlm_utils/simple_target_socket.h" // TLM2 simple initiator sockets
 
-/**
- * @brief    This module implements the slave functionality and contains tlm 
+/*!
+ * \class    slave  slave.h
+ * \brief    This module implements the slave functionality and contains tlm 
  *           socket for communication with router
  */
-SC_MODULE(slave)
+class slave : public sc_core::sc_module
 {
 
 	public :
 		
-		tlm_utils::simple_target_socket<slave,32> Slave_socket;
-		sc_time read_latency,write_latency;
+		tlm_utils::simple_target_socket<slave,32> Slave_socket; //!< Simple Initiator Socket
+		sc_time read_latency,write_latency;                     //!< latency
 
-		/// Slave's Default Constructor
-		SC_CTOR(slave)
-		:	Slave_socket("Slave_socket")
+		SC_HAS_PROCESS(slave);
+
+		/*!
+		 * \fn     slave::slave
+		 * \brief   Slave's Default Constructor
+		 */
+		slave(sc_module_name _name)
+		: sc_module(_name)
+		,	Slave_socket("Slave_socket")
 		,	slave_ID("slave_ID", "slave_default")
 		,	s_base_addr("s_base_addr", 0)
 		,	s_size("s_size", 256)
@@ -54,7 +60,7 @@ SC_MODULE(slave)
 			std::cout << "\n[" << slave_ID.json_serialize() << " C_TOR] --------- [SLAVE CONSTRUCTOR BEGINS HERE] ----------" << endl;
 			std::cout << "[" << slave_ID.json_serialize() << " C_TOR] : Base Address : " << s_base_addr.get() << endl;
 
-			// Registering b_transport 
+			/// Register b_transport 
 			Slave_socket.register_b_transport(this,&slave::b_transport);
 			
 			write_latency=sc_time(3,SC_NS);
@@ -67,19 +73,35 @@ SC_MODULE(slave)
 
 			/// Slave's SC_THREAD declaration
 			SC_THREAD(run_slave);
-		}
 
-		/// Slave's SC_THREAD implementation
+		}// End of constructor
+
+
+		/*!
+		 * \fn     slave::~slave()
+		 * \brief  Slave's default destructor
+		 */
+		~slave()
+		{
+			// Nothing to destruct
+		} 
+
+
+		/*!
+		 * \fn     void run_slave void ()
+		 * \brief  Slave's SC_THREAD implementation
+		 */
 		void run_slave (void)
 		{
 			// Implements no functionality				
 		}
 		
-		/**
- 		 * @brief         TLM2.0 b_transport layer callback
- 		 * @param         tlm::tlm_generic_payload&
- 		 * @param         sc_time&
- 		 * @return        void
+		/*!
+		 * \fn            void b_transport(tlm::tlm_generic_payload&, sc_time&)
+ 		 * \brief         TLM2.0 b_transport layer callback
+ 		 * \param         tlm::tlm_generic_payload&  Transaction payload object
+ 		 * \param         sc_time&                   Annotated time delay
+ 		 * \return        void
  		 */
 		void b_transport(tlm::tlm_generic_payload& trans,sc_time& delay)
 		{
@@ -123,14 +145,14 @@ SC_MODULE(slave)
 
 	private :
 
-		/// Elaboration Time Parameter for assigning slave ID (initialized by top_module)
-		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> slave_ID;
+		// Elaboration Time Parameter for assigning slave ID (initialized by top_module)
+		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> slave_ID; //!< Elaboration Time Parameter for Slave ID
 		
-		/// Mutable time parameter for setting slave's base address (initialized by router)
-		cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> s_base_addr;
+		// Mutable time parameter for setting slave's base address (initialized by router)
+		cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> s_base_addr; //!< Slave's base address*/
 
-		/// Mutable time parameter for setting slave's size (initialized by router);
-		cci::cnf::cci_param<unsigned int>	s_size;
+		// Mutable time parameter for setting slave's size (initialized by router);
+		cci::cnf::cci_param<unsigned int>	s_size;  //!< Slave's size
 
 		int* mem;
 

@@ -28,6 +28,7 @@
 
 
 /**
+ * @class      parameter_owner parameter_owner.h
  * @brief      This sc_module declares an integer parameter and also illustrates
  *             usage of CCI infrastructure in locking and unlocking of the parameter
  */
@@ -35,7 +36,7 @@ SC_MODULE(parameter_owner)
 {
 	public	:
 		
-		/// Default Constructor		
+		/** Default Constructor*/
 		SC_CTOR(parameter_owner)
 		:	int_param("mutable_int_param", 0)
 		{
@@ -46,7 +47,19 @@ SC_MODULE(parameter_owner)
 	
 		}// End of constructor
 
+		
 		/**
+		 * @fn     	parameter_owner::~parameter_owner
+		 * @brief   Destructor
+		 */
+		~parameter_owner()
+		{
+
+		}
+
+
+		/**
+		 * @fn            void run_owner (void)
 		 * @brief         This process demonstrates usages of various locking and unlocking APIs
 		 */
 		void run_owner (void)
@@ -102,10 +115,10 @@ SC_MODULE(parameter_owner)
 
 	private	:
 	
-		/// CCI parameter
-		cci::cnf::cci_param<int>	int_param;
+		// CCI parameter
+		cci::cnf::cci_param<int>	int_param;  //!< Integer type cci-parameter
 		
-		void* key;		/*!Some password to lock the parameter with*/
+		void* key;		//!< Arbitrary password to lock the parameter with
 
 };// End of SC_MODULE
 

@@ -22,13 +22,12 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-/// Include 'cci.h' header in all CCI-based applications
-#include <cci.h>
+#include <cci.h>    // Include 'cci.h' header in all CCI-based applications
 #include <assert.h>
 #include <vector>
 
 /*!
- * @class   observer.h
+ * @class   observer observer.h
  * @brief   This observer class registers all types of callbacks on the 
  *          cci-parameter values of interest in order to find the originator
  *          for the appropriate actions on the respective cci-parameters
@@ -92,7 +91,7 @@ class observer
 		 *  \fn      cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
 		 *  \brief   'PRE_READ' Callbacks Implementations
 		 *  \param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre-read) callback is registered
-		 *  \param   const cci::cnf::callback_type&  Callback type
+		 *  \param   cci::cnf::callback_type&  Callback type
 		 *  \return  cci::cnf::callback_return_type  Callback return type
 		 */
 		cci::cnf::callback_return_type
@@ -119,10 +118,10 @@ class observer
 
 
 		/*!
-		 *  \fn      cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+		 *  \fn      cci::cnf::callback_return_type write_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
 		 *  \brief   'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
 		 *  \param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre/post-write) callback is registered
-		 *  \param   const cci::cnf::callback_type&  Callback type (pre-read or post-read)
+		 *  \param   cci::cnf::callback_type&  Callback type (pre-read or post-read)
 		 *  \return  cci::cnf::callback_return_type  Callback return type
 		 */
 		cci::cnf::callback_return_type
@@ -154,16 +153,16 @@ class observer
 
 	private	:
 
-		/// CCI configuration broker instance
-		cci::cnf::cci_cnf_broker_if*            observerBrokerIF;
+		// CCI configuration broker instance
+		cci::cnf::cci_cnf_broker_if*            observerBrokerIF; //!< Configuration broker instance
 
-		/// Declare cci_base_param for int type cci-parameter
-		cci::cnf::cci_base_param*               obsv_int_base_ptr;
+		// Declare cci_base_param for int type cci-parameter
+		cci::cnf::cci_base_param*               obsv_int_base_ptr;//!< cci_base_param for integer type cci-param
 
-		/// Callback Adaptor Objects for 'int' type parameter
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_read_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_write_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb;
+		// Callback Adaptor Objects for 'int' type parameter
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_read_cb;   //!< 'pre_read' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb; //!< 'post_write' callback adaptor obj for int type cci-param
 
 };// End of Class
 

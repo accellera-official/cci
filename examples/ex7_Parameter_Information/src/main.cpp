@@ -21,8 +21,8 @@
  * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * \date    12th September, 2011
  */
-#include <cci.h>          ///< Contains all the definitions for CCI-infrastructure
-#include <systemc.h>      ///< Contains all the definitions for SystemC
+#include <cci.h>          // Includes cci-infrastructure
+#include <systemc.h>      // Contains all the definitions for SystemC
 #include <assert.h>
 
 #include "parameter_owner.h"

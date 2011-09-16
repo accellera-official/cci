@@ -23,28 +23,47 @@
 #ifndef ADDRESS_LINES_REGISTER_H
 #define ADDRESS_LINES_REGISTER_H
 
-/// Include the 'cci.h' header in all cci-based applications
-#include <cci.h>
+#include <cci.h>  // Include the 'cci.h' header in all cci-based applications
 
 /**
+ * @class      address_lines_register address_lines_register.h
  * @brief      The Address  Lines Register initializes a cci-parameter
  *             for maintaining the number of address lines
  */
-SC_MODULE(address_lines_register)
+class address_lines_register : public sc_core::sc_module
 {
 	public:
 
-		SC_CTOR(address_lines_register)
-		: no_of_addr_lines("curr_addr_lines", 9)
+		SC_HAS_PROCESS(address_lines_register);
+
+		/**
+		 * @fn    address_lines_register::address_lines_register(sc_module_name )
+		 * @brief Constructor
+		 * @param sc_module_name  SC_MODULE name
+		 */
+		address_lines_register(sc_module_name _name)
+		: sc_module(_name)
+		, no_of_addr_lines("curr_addr_lines", 9)
 		{
 			std::cout << "\n\t[ADDR_LINES_REG C_TOR] : Default Address Lines : " << no_of_addr_lines.get() << std::endl;
 
 		}// End of Constructor
 		
+	
+		/**
+		 * @fn    address_lines_register::~address_lines_register
+		 * @brief Destructor
+		 */
+		~address_lines_register()
+		{
+			// Nothing to destruct
+		}
+
+
 	private	:
 	
-		/// Declare a cci-parameter for specifying the number of address lines (defines the max' addressable range) 
-		cci::cnf::cci_param<int>            no_of_addr_lines;
+		/** Declare a cci-parameter for specifying the number of address lines (defines the max' addressable range)*/
+		cci::cnf::cci_param<int>            no_of_addr_lines; //!< Number of address lines
 
 };// End of SC_MODULE
 

@@ -13,11 +13,11 @@
  * language governing rights and limitations under the License.
  * *******************************************************************************/
 
-/**
- * @file     parameter_configurator.h
- * @brief    This file declares and defines the configurator module
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     16th May, 2011 (Monday)
+/*!
+ * \file     parameter_configurator.h
+ * \brief    This file declares and defines the configurator module
+ * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date     16th May, 2011 (Monday)
  */
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
@@ -26,8 +26,9 @@
 #include <cci.h>
 #include <assert.h>
 
-/**
- * @brief    The configurator class illustrates the different ways in which the
+/*!
+ * \class    parameter_configurator parameter_configurator.h
+ * \brief    The configurator class illustrates the different ways in which the
  *           value of a cci-parameter of the owner class can be accessed using 
  *           both a cci_base_parameter object and a cci_param object (by making the
  *           configurator a friend class to the owner) 
@@ -36,7 +37,10 @@ class parameter_configurator : public ::sc_core::sc_module
 {
 	public:
 		
-		/// Default constructor
+		/*!
+		 * \fn     SC_CTOR(parameter_configurator)
+		 * \brief  Default constructor
+		 */
 		SC_CTOR(parameter_configurator)
 		{
 			// Get handle of the broker responsible for the class/module
@@ -69,11 +73,13 @@ class parameter_configurator : public ::sc_core::sc_module
 
 		}// End of Constructor	
 
-		/**
-		  * @brief      This process illustrates use of the cci_param (shared parameter)
-		  *             that stores the reference of the owner cci-parameter to make changes
-		  *             to the parameter's value
-		  */ 	
+
+		/*!
+		 * \fn         void run_mutable_cfgr (void)
+		 * \brief      This process illustrates use of the cci_param (shared parameter)
+		 *             that stores the reference of the owner cci-parameter to make changes
+		 *             to the parameter's value
+		 */ 	
 		void run_mutable_cfgr (void)
 		{
 			while(1)
@@ -95,13 +101,13 @@ class parameter_configurator : public ::sc_core::sc_module
 		}// End of SC_THREAD
 
 
-		/**
- 		  *  @brief     This parameter gets the reference of the 'int_param', a
- 		  *             private-type cci-parameter member of the owner class
- 		  *  @see       ../src/main.cpp
- 		  *  @param     pointer of the owner 'parameter_owner' class
- 		  *  @return    void
- 		  */
+		/*!
+ 		 *  \brief     This parameter gets the reference of the 'int_param', a
+ 		 *             private-type cci-parameter member of the owner class
+ 		 *  \see       ../src/main.cpp
+ 		 *  \param     pointer of the owner 'parameter_owner' class
+ 		 *  \return    void
+ 		 */
   	void set_cfgr_parameter(parameter_owner *owner)
 		{
 			// Getting reference of the owner parameter
@@ -110,14 +116,12 @@ class parameter_configurator : public ::sc_core::sc_module
 
 	private	:
 	
-	/// Declaring a CCI configuration broker interface instance
-	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF; //!< cci configuration broker interface instance
 
-	/// Declaring a CCI base parameter pointer
-	cci::cnf::cci_base_param* cfgr_param_ptr;
+	cci::cnf::cci_base_param* cfgr_param_ptr;  //!< CCI base parameter pointer
 
-  /// Declaring a CCI parameter pointer (which will hold the reference of the 
-  /// owner CCI parameter 'int_param'
+  /*! Declaring a CCI parameter pointer (which will hold the reference of the 
+      owner CCI parameter 'int_param'*/
 	cci::cnf::cci_param<int>* cfgr_shared_param;
 
 };// End of Class/SC_MODULE

@@ -13,22 +13,22 @@
  * language governing rights and limitations under the License.
  * *******************************************************************************/
 
-/**
- * @file     configurator.h
- * @brief    This header declares and defines the 'configurator' module functionality
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     5th July, 2011 (Tuesday)
+/*!
+ * \file     configurator.h
+ * \brief    This header declares and defines the 'configurator' module functionality
+ * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date     5th July, 2011 (Tuesday)
  */
 #ifndef CONFIGURATOR_H
 #define CONFIGURATOR_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci.h>  //!< Include the "cci.h" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 
-/**
- * @brief    The 'configurator' module functionality is defined within this module.
+/*!
+ * \class    configurator configurator.h
+ * \brief    The 'configurator' module functionality is defined within this module.
  *           To make changes to the 'priv_int_param' of the 'child' module, the
  *           'configurator' will be making changes to the 'parent_inst.parent_buffer'
  *           cci-parameter.
@@ -37,8 +37,14 @@ class configurator : public sc_module
 {
 	public:
 		
-		/// Default constructor
-		SC_CTOR(configurator)
+		SC_HAS_PROCESS(configurator);
+
+		/*!
+		 * \fn     configurator::configurator
+		 * \brief  Default constructor
+		 */
+		configurator(sc_core::sc_module_name _name)
+		: sc_module(_name)
 		{
 			/// Gets the reference of a DEFAULT GLOBAL BROKER
 			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -70,8 +76,21 @@ class configurator : public sc_module
 
 		}// End of Constructor
 
+
+		/*!
+		 * \fn     configurator::~configurator
+		 * \brief  Destructor
+		 */
+		~configurator()
+		{
+
+		}
 		
-		/// Implementation of SC_THREAD
+
+		/*!
+		 * \fn     void run_cfgr (void)
+		 * \brief  Implementation of SC_THREAD
+		 */
 		void run_cfgr (void)
 		{
 			while(1)
@@ -107,11 +126,11 @@ class configurator : public sc_module
 
 	private	:
 
-		/// Configuration Broker for TOP_MODULE
-		cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+		// Configuration Broker for TOP_MODULE
+		cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  //!< CCI Configuration broker instance
 	
-		/// Few directly accessible cci-parameters
-		cci::cnf::cci_base_param*	   parent_base_param_ptr;
+		// Few directly accessible cci-parameters
+		cci::cnf::cci_base_param*	   parent_base_param_ptr;//!< cci_base_param for PARENT's (public param) "parent_int_buffer"
 
 };// End of Class
 

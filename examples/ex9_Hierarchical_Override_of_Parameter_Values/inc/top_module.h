@@ -13,19 +13,20 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/**
- * @file     top_module.h
- * @brief    This header contains code related to the top module which decides
+/*!
+ * \file     top_module.h
+ * \brief    Implementation the TOP_MODULE.
+ *           This header contains code related to the top module which decides
  *           the model hierarchy for example#9.  
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
+ * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Girish Verma, CircuitSutra Technologies      <girish@circuitsutra.com>
  *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
- * @date     29th April, 2011 (Friday) : 10:55 hrs IST
+ * \date     29th April, 2011 (Friday)
  */
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
 
-#include <cci.h>      /*!To be included in all CCI-based applications*/
+#include <cci.h>      // To be included in all CCI-based applications
 #include <assert.h>
 #include <vector>
 #include <sstream>
@@ -34,20 +35,27 @@
 #include "slave.h"
 #include "router.h"
 
-#include "tlm.h"
+#include "tlm.h"     // Include TLM2 headers
 
-/**
- * @brief     This SC_MODULE instantiates the router, master and slave modules.
+/*!
+ * \class     top_module  top_module.h
+ * \brief     This SC_MODULE instantiates the router, master and slave modules.
  *            Also, it creates the binding or communication between these modules.
  */
-SC_MODULE(top_module)
+class top_module : public sc_core::sc_module
 {
 
 	public :
 		
-		/// Top Module's Default Constructor
-		SC_CTOR(top_module)
-		:	n_masters("number_of_masters", 0)
+		SC_HAS_PROCESS(top_module);
+
+		/*!
+		 * \fn     top_module::top_module
+		 * \brief  Top Module's Default Constructor
+		 */
+		top_module(sc_module_name _name)
+		: sc_module(_name)
+		,	n_masters("number_of_masters", 0)
 		,	n_slaves("number_of_slaves", 0)
 		{
 			std::stringstream ss;
@@ -104,16 +112,14 @@ SC_MODULE(top_module)
 				myDefaultBroker->set_init_value(stringMisc, masterName);
 				masterList.push_back(new master(masterName));
       
-				/**
-				 * @brief     Binding of Master to Router
-				 */ 
+				///     Binding of Master to Router 
 				std::cout<< "\n[TOP MODULE C_TOR] : Binding Router_Initiator to " << masterName <<endl;
 				masterList[i]->Master_socket.bind(routerInstance->Router_target); 
 
 			}// End of FOR  
 
 
-			slaveSize = 128;                                    /*!<Defining slave size*/
+			slaveSize = 128;                                    // Defining slave size
 
 			/// Creating instances of slave(s)
 			for(int i = 0; i < n_slaves; i++)      
@@ -133,9 +139,7 @@ SC_MODULE(top_module)
 				myDefaultBroker->set_init_value(stringMisc, ss.str());
 				slaveList.push_back(new slave(slaveName));
 
-				/**
-				 * @brief       Binding Router to Slave
-				 */
+				///       Binding Router to Slave
 				std::cout<< "\n[TOP MODULE C_TOR] : Binding Router_Initiator to " << slaveName <<endl;
 				routerInstance->Router_initiator.bind(slaveList[i]->Slave_socket);
 
@@ -187,10 +191,13 @@ SC_MODULE(top_module)
 		}// End of constructor
 		
 
-		/// Destructor of the top module
+		/*!
+		 *  \fn     top_module::~top_module
+		 *  \brief  Destructor of the top module
+		 */
 		~top_module()
 		{
-		  // TODO De-allocate all master and slave properly 
+		  // @TODO De-allocate all master and slave properly 
 			if(!masterList.empty())
 				masterList.clear();
 
@@ -201,30 +208,27 @@ SC_MODULE(top_module)
 
 	private :
 
-		/// Number of Masters to be instantiated
-		cci::cnf::cci_param<int, cci::cnf::immutable_parameter> n_masters;
+		// Immutable type cci-parameters
 
-		/// Number of Slaves to be instantiated
-		cci::cnf::cci_param<int, cci::cnf::immutable_parameter> n_slaves;
+		cci::cnf::cci_param<int, cci::cnf::immutable_parameter> n_masters; //!< Number of Masters to be instantiated
+		cci::cnf::cci_param<int, cci::cnf::immutable_parameter> n_slaves;  //!< Number of Slaves to be instantiated
 
-		/// Configuration broker instance 
-		cci::cnf::cci_cnf_broker_if* myDefaultBroker;
+		cci::cnf::cci_cnf_broker_if* myDefaultBroker;		//!< Configuration broker instance 
 
-		/// Declaration of a router pointer
-		router*	routerInstance;
+		router*	routerInstance;  	//!< Declaration of a router pointer
 
 		// STD::VECTORs for creating instances of master and slave
-		std::vector<master*>  masterList;
-		std::vector<slave*>   slaveList;
+		std::vector<master*>  masterList;  //!< STD::VECTOR for masters
+		std::vector<slave*>   slaveList;   //!< STD::VECTOR for slaves
 	
-		char masterName[15];               /*!<Master_ID>*/
-		char slaveName[15] ;               /*!<Slave_ID>*/
-		char stringMisc[50];               /*!<String to be used for misc things>*/
+		char masterName[15];               //!< Master_ID
+		char slaveName[15] ;               //!< Slave_ID
+		char stringMisc[50];               //!< String to be used for misc things
 		char slaveBaseAddr[50];			
 
-		int addrValue;
-		int slaveSize;                     /*!<Maximum Slave Size (initial value)*/
-		int r_addr_max;                    /*!<Maximum Router Table's memory range*/
+		int addrValue;                     //!< Address Value
+		int slaveSize;                     //!< Maximum Slave Size (initial value)
+		int r_addr_max;                    //!< Maximum Router Table's memory range
 
 };// End of SC_MODULE
 

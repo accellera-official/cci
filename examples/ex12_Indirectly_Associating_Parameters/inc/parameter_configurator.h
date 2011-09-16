@@ -24,12 +24,12 @@
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci.h>    //!< Include the "cci.h" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 
 /**
+ * @class    parameter_configurator parameter_configurator.h
  * @brief    The configurator class searches for the owner parameters using the
  *           get_param API.  'get_param_list' API implementation is resulting in warnings,
  *           though the parameters are being searched as per the string pattern provided.
@@ -39,10 +39,16 @@ class parameter_configurator : public ::sc_core::sc_module
 {
 	public:
 		
-		/// Default constructor
-		SC_CTOR(parameter_configurator)
+		SC_HAS_PROCESS(parameter_configurator);
+
+		/**
+		 * @fn     parameter_configurator::parameter_configurator
+		 * @brief  Default constructor
+		 */
+		parameter_configurator(sc_module_name _name)
+		:	sc_module(_name)
 		{
-			// Get handle of the broker responsible for the class/module
+			/// Get handle of the broker responsible for the class/module
 			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 
 			// Report if handle returned is NULL
@@ -78,19 +84,20 @@ class parameter_configurator : public ::sc_core::sc_module
 			else
 				std::cout << "\t[CFGR] : Parameter " << cfgr_param_str1 << "\tdoesn't exists in top_module" << std::endl;
 				
-			/// Registering SC_THREAD with the SystemC kernel
+			/// Register SC_THREAD with the SystemC kernel
 			SC_THREAD(run_cfgr);
 
 		}// End of Constructor	
 
 
 		/**
-		  * @brief    Within this 'before_end_of_elaboration' callback phase, the
-		  *           value of the cci_parameter of owner(1) is modified and the
-		  *           (updated) values of both the owners are read
-		  * @param    void
-		  * @return   void
-		  */
+		 * @fn       void before_end_of_elaboration (void)
+		 * @brief    Within this 'before_end_of_elaboration' callback phase, the
+		 *           value of the cci_parameter of owner(1) is modified and the
+		 *           (updated) values of both the owners are read
+		 * @param    void
+		 * @return   void
+		 */
 		void before_end_of_elaboration (void)
 		{
 			/// Change the value of the cci_parameter 'clk_freq_Hz' of OWNER (1) to '5000' (Hz)
@@ -111,9 +118,20 @@ class parameter_configurator : public ::sc_core::sc_module
 
 
 		/**
-		  * @brief      Within this sc_process, the value of the cci_parameter of owner(2)
-		  *             is modified and the (updated) values of both the owners are read
-		  */ 	
+		 * @fn      parameter_configurator::~parameter_configurator
+		 * @brief   Destructor
+		 */
+		~parameter_configurator()
+		{
+			
+		}
+
+
+		/**
+		 * @fn         void run_cfgr (void)
+		 * @brief      Within this sc_process, the value of the cci_parameter of owner(2)
+		 *             is modified and the (updated) values of both the owners are read
+		 */ 	
 		void run_cfgr (void)
 		{
 			while(1)
@@ -141,10 +159,10 @@ class parameter_configurator : public ::sc_core::sc_module
 
 	private	:
 	
-	/// Declaring a CCI configuration broker interface instance
-	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+	// Declaring a CCI configuration broker interface instance
+	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF; //!< CCI configuration broker instance
 
-	/// CCI base parameters
+	// CCI base parameters
 	cci::cnf::cci_base_param* cfgr_param_ptr1;
 	cci::cnf::cci_base_param* cfgr_param_ptr2;
 

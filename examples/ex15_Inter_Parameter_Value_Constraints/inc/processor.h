@@ -22,8 +22,7 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-/// Include the 'cci.h' header in all cci-based applications
-#include <cci.h>
+#include <cci.h>   // Include the 'cci.h' header in all cci-based applications
 
 #include <assert.h>
 #include <math.h>
@@ -33,6 +32,7 @@
 #include "memory_block.h"
 
 /**
+ * @class      processor processor.h
  * @brief      The 'processor' module register's callbacks on the references of the
  *             cci-parameters of the two register module and the memory stack module,
  *             and does few checkings and comparisons in order to validate whether
@@ -40,15 +40,23 @@
  * @author     P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date       4th August, 2011 (Thursday)
  */
-SC_MODULE(processor)
+class processor : public sc_core::sc_module
 {
 	public:
+		
+		SC_HAS_PROCESS(processor);
 
-		/// Default Constructor		
-		SC_CTOR(processor)
-		: addr_lines_module("addr_lines_mod")
+		/**
+		 * @fn    processor::processor(sc_module_name )
+		 * @brief Default Constructor
+		 * @param sc_module_name  SC_MODULE name
+		 */
+		processor(sc_module_name _name)
+		: sc_module(_name)
+		, addr_lines_module("addr_lines_mod")
 		, memory_block_module("memory_block")
 		{
+			/// Get reference of the broker responsible for the module
 			processor_BrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 
 			assert(processor_BrokerIF != NULL && "Broker's Handle for the 'processor' module is returned NULL");
@@ -104,7 +112,14 @@ SC_MODULE(processor)
 		}// End of constructor
 
 		
-		// Implementation of the callback function - 'addr_lines_post_wr_cb_func'
+		/**
+		 * @fn     cci::cnf::callback_return_type addr_lines_post_wr_cb_func(cci::cnf::cci_base_param &, const cci::cnf::callback_type &, cci_base_param*)
+		 * @brief  Implementation of the callback function - 'addr_lines_post_wr_cb_func'
+		 * @param  cci::cnf::cci_base_param&  Reference of the cci_base_param of the selected cci_parameter (address_lines)
+		 * @param  cci::cnf::callback_type&   Callback Type
+		 * @param  ccu::cnf::cci_base_param*  cci_base_param for another base param (memory_size)
+		 * @return cci::cnf::callback_return_type Callback Return Type
+		 */
 		cci::cnf::callback_return_type
 			addr_lines_post_wr_cb_func(cci::cnf::cci_base_param & _base_param,
 			 const cci::cnf::callback_type & cb_reason, cci::cnf::cci_base_param * _mem_size_base_ptr)
@@ -126,7 +141,14 @@ SC_MODULE(processor)
 			}// End of Callback
 		
 
-		// Implementation of the callback function - 'mem_block_post_wr_cb_func'
+		/**
+		 * @fn     cci::cnf::callback_return_type addr_lines_post_wr_cb_func(cci::cnf::cci_base_param &, const cci::cnf::callback_type &, cci_base_param*)
+		 * @brief  Implementation of the callback function - 'mem_block_post_wr_cb_func'
+		 * @param  cci::cnf::cci_base_param&  Reference of the cci_base_param of the selected cci_parameter (memory_size)
+		 * @param  cci::cnf::callback_type&   Callback Type
+		 * @param  ccu::cnf::cci_base_param*  cci_base_param for another base param (either address_lines)
+		 * @return cci::cnf::callback_return_type Callback Return Type
+		 */
 		cci::cnf::callback_return_type
 			mem_block_post_wr_cb_func(cci::cnf::cci_base_param & _base_param,
 			 const cci::cnf::callback_type & cb_reason, cci::cnf::cci_base_param * _addr_lines_base_ptr)
@@ -148,9 +170,10 @@ SC_MODULE(processor)
 
 
 		/**
+		 * @fn      void TestCondition (int, int )
  		 * @brief   This function validates the consistency of the system based on the
  		 *          two inputs fed to it
- 		 * @param   lines
+ 		 * @param   address lines
  		 * @param   memory_size
  		 */ 
 		void TestCondition(int lines, int memory_size)
@@ -178,23 +201,22 @@ SC_MODULE(processor)
 	
 	private	:
 	
-		/// Declare parameter_owner instance
-		address_lines_register                       addr_lines_module;
-		memory_block                                 memory_block_module;
+		// Declare parameter_owner instance
+		address_lines_register                addr_lines_module;   //!< 'address_lines_register' module instance
+		memory_block                          memory_block_module; //!< 'memory_block' module instance
 		
-		/// Configuration broker instance
-		cci::cnf::cci_cnf_broker_if*                 processor_BrokerIF;
+		cci::cnf::cci_cnf_broker_if*          processor_BrokerIF;  //!< CCI Configuration broker instance
 
-		int total_addr_lines;
+		int total_addr_lines;                 
 		int mem_block_size;
 
-		/// CCI Base parameter pointer
-		cci::cnf::cci_base_param*                    addr_lines_base_ptr;
-		cci::cnf::cci_base_param*                    mem_size_base_ptr;
+		// CCI Base parameter pointer
+		cci::cnf::cci_base_param*             addr_lines_base_ptr; //!< cci_base_param for addr_lines cci_param
+		cci::cnf::cci_base_param*             mem_size_base_ptr;   //!< cci_base_param for mem_size cci_param
 
-		/// Callbacks
-		cci::shared_ptr<cci::cnf::callb_adapt_b>     addr_lines_post_wr_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>     mem_block_post_wr_cb;
+		/// Callback Adaptor Objects
+		cci::shared_ptr<cci::cnf::callb_adapt_b>  addr_lines_post_wr_cb; //!< 'post_write' cb for addr_lines_reg module
+		cci::shared_ptr<cci::cnf::callb_adapt_b>  mem_block_post_wr_cb;  //!< 'post_write' cb for memory_block module
 
 };// End of SC_MODULE
 

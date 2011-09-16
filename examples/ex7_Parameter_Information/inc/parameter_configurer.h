@@ -25,26 +25,28 @@
 #ifndef PARAMETER_CONFIGURER_H
 #define PARAMETER_CONFIGURER_H
 
-/// Include 'cci.h' header in all CCI-based applications
-#include <cci.h>
+#include <cci.h>     // Include 'cci.h' header in all CCI-based applications
 #include <assert.h>
 
 /*!
- * \class   parameter_configurer.h
+ * \class   parameter_configurer parameter_configurer.h
  * \brief   This sc_module instantiates a cci configuration broker which accesses
  *          the references of the cci-parameters and sets their attributes like 
  *          value, documentation, etc. 
  */
-class parameter_configurer : public struct sc_module
+class parameter_configurer : public sc_core::sc_module
 {
 	public	:
+		
+		SC_HAS_PROCESS(parameter_configurer);
 
 		/*!
 		 *  \fn     parameter_configurer::parameter_configurer
 		 *  \brief  Default constructor
 		 */
-		SC_CTOR(parameter_configurer)
-		:	check(0)
+		parameter_configurer(sc_module_name _name)
+		: sc_module(_name)
+		,	check(0)
 		{
 			/// Get the broker responsible for this module using 'get_current_broker' API
 			myBrokerInterface = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -109,7 +111,7 @@ class parameter_configurer : public struct sc_module
 			std::string str_doc = "This is a mutable type string parameter";
 			str_param_ptr->set_documentation(str_doc);
 
- 			/// Registering SC_THREAD process 
+ 			/// Register SC_THREAD process 
 			SC_THREAD(run_accessor);
 		}
 
@@ -309,9 +311,10 @@ class parameter_configurer : public struct sc_module
 
 					/*!	
 					 *  \par Based on the type returned by 'get_basic_type()', query value of cci_value.
-					 *       For instance,
-					 *       -#if basic parameter type is 'std::string', use 'get_string()' API with cci_value
-					 *       -#if basic parameter type is 'int', use 'get_int()' API with cci_value
+					 *  \par    
+					 *  If basic parameter type is 'std::string', use 'get_string()' API with cci_value
+					 *  \par
+					 *  If basic parameter type is 'int', use 'get_int()' API with cci_value, etc.
 					 */
 					std::cout << "\n\t[CFGR -> Retrieve2] : " << rx_value.get_string() << endl;
 
@@ -326,21 +329,21 @@ class parameter_configurer : public struct sc_module
 
 	private	:
 
-		cci::cnf::cci_cnf_broker_if* myBrokerInterface;  ///< CCI configuration broker instance
+		cci::cnf::cci_cnf_broker_if* myBrokerInterface;  //!< CCI configuration broker instance
 
-		std::string int_param_str;    /**< For storing hierarchical path of std::string type cci-parameter*/
-		std::string string_param_str; /**< For storing hierarchical path of integer type cci-parameter*/
+		std::string int_param_str;    //!< For storing hierarchical path of std::string type cci-parameter
+		std::string string_param_str; //!< For storing hierarchical path of integer type cci-parameter
 			
-		/// Declaring cci_base_parameters
-		cci::cnf::cci_base_param* int_param_ptr;
-		cci::cnf::cci_base_param* str_param_ptr;			
+		// Declaring cci_base_parameters
+		cci::cnf::cci_base_param* int_param_ptr; //!< cci_base_param for int type cci-param
+		cci::cnf::cci_base_param* str_param_ptr; //!< cci_base_param for string type cci-param
 
 		// Few Local parameters
-		bool  intParamExists; /*!Stores the status whether integer type parameter exists*/
-		bool  strParamExists; /*!Stores the status whether string type parameter exists*/	
-		int 	check;          /*!Local Variable*/
-		bool	lock_status;    /*!Holds lock status of a parameter*/
-		void*	lock_passwd; 	  /*!Holds the key(password) for lock/unlock*/
+		bool  intParamExists; //!< Stores the status whether integer type parameter exists
+		bool  strParamExists; //!< Stores the status whether string type parameter exists	
+		int 	check;          //!< Local Variable
+		bool	lock_status;    //!< Holds lock status of a parameter
+		void*	lock_passwd; 	  //!< Holds the key(password) for lock/unlock
 
 };// End of (SC_MODULE) class
 
