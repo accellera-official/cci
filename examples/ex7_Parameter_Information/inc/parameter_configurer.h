@@ -13,14 +13,15 @@
  *   language governing rights and limitations under the License.
  *******************************************************************************/
 
-/**
-  * @file    parameter_configurer.h
-  * @brief   This file defines a sc_module which demonstrates means to access
-  *          cci-parameters by name-based look up access approach and set their
-  *          various attributes
-  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    12th September, 2011 (Monday)
-  */
+/*!
+ * \file    parameter_configurer.h
+ * \brief   This file defines a CONFIGURATOR.
+ *          This file declares and defines a sc_module which demonstrates the 
+ *          means to access the cci-parameters using name-based look up access
+ *          approach and set their various attributes
+ * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date    12th September, 2011 (Monday)
+ */
 #ifndef PARAMETER_CONFIGURER_H
 #define PARAMETER_CONFIGURER_H
 
@@ -28,16 +29,20 @@
 #include <cci.h>
 #include <assert.h>
 
-/**
-  * @brief   This sc_module instantiates a cci configuration broker which accesses
-  *          the references of the cci-parameters and sets their attributes like 
-  *          value, documentation, etc. 
-  */
-SC_MODULE(parameter_configurer)
+/*!
+ * \class   parameter_configurer.h
+ * \brief   This sc_module instantiates a cci configuration broker which accesses
+ *          the references of the cci-parameters and sets their attributes like 
+ *          value, documentation, etc. 
+ */
+class parameter_configurer : public struct sc_module
 {
 	public	:
 
-		/// Default constructor
+		/*!
+		 *  \fn     parameter_configurer::parameter_configurer
+		 *  \brief  Default constructor
+		 */
 		SC_CTOR(parameter_configurer)
 		:	check(0)
 		{
@@ -108,13 +113,23 @@ SC_MODULE(parameter_configurer)
 			SC_THREAD(run_accessor);
 		}
 
-		/// Destructor
+		/*!
+		 *  \fn       parameter_configurer::~parameter_configurer
+		 *  \brief    Default Destructor
+		 */
 		~parameter_configurer()
 		{
 			// Destructor does nothing
 		}
 
-		/// Within SC_THREAD process definition
+
+		/*!
+		 *  \fn     void run_accessor (void)
+		 *  \brief  It uses various APIs like 'is_default_value', 'is_invalid_value'
+		 *          to check the status of parameters.  It also illustrates various
+		 *          APIs required to set, get, lock, unlock the parameter values and
+		 *          their documentation
+		 */
 		void run_accessor(void)
 		{
 			while(1) 
@@ -292,10 +307,12 @@ SC_MODULE(parameter_configurer)
 					/// Query a (std::string) parameter's value by using 'get_value()'API with cci_value
 					cci::cnf::cci_value rx_value = str_param_ptr->get_value();
 
-					/**	
-					  * Based on the type returned by 'get_basic_type()', query value of cci_value.
-					  * For example, if returned type is 'std::string', use 'get_string()' API with cci_value
-					  */
+					/*!	
+					 *  \par Based on the type returned by 'get_basic_type()', query value of cci_value.
+					 *       For instance,
+					 *       -#if basic parameter type is 'std::string', use 'get_string()' API with cci_value
+					 *       -#if basic parameter type is 'int', use 'get_int()' API with cci_value
+					 */
 					std::cout << "\n\t[CFGR -> Retrieve2] : " << rx_value.get_string() << endl;
 
 					wait(2.0, SC_NS);
@@ -304,16 +321,15 @@ SC_MODULE(parameter_configurer)
 					std::cout << "\nParameter by name " << int_param_str << " not found." << endl; 
 
 			}// End of outer while
+
 		}// End of SC_THREAD
 
 	private	:
 
-		/// CCI configuration broker instance
-		cci::cnf::cci_cnf_broker_if* myBrokerInterface;
+		cci::cnf::cci_cnf_broker_if* myBrokerInterface;  ///< CCI configuration broker instance
 
-		/// std::string types for storing parameters hierarchical paths
-		std::string int_param_str;
-		std::string string_param_str;
+		std::string int_param_str;    /**< For storing hierarchical path of std::string type cci-parameter*/
+		std::string string_param_str; /**< For storing hierarchical path of integer type cci-parameter*/
 			
 		/// Declaring cci_base_parameters
 		cci::cnf::cci_base_param* int_param_ptr;
@@ -325,6 +341,7 @@ SC_MODULE(parameter_configurer)
 		int 	check;          /*!Local Variable*/
 		bool	lock_status;    /*!Holds lock status of a parameter*/
 		void*	lock_passwd; 	  /*!Holds the key(password) for lock/unlock*/
-};
+
+};// End of (SC_MODULE) class
 
 #endif	// End of PARAMETER_CONFIGURER_H

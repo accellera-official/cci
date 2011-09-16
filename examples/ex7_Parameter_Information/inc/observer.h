@@ -13,12 +13,12 @@
  *   language governing rights and limitations under the License.
  *******************************************************************************/
 
-/**
-  * @file    observer.h
-  * @brief   This file defines an observer class demonstrates
-  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    12th September, 2011 (Monday)
-  */
+/*!
+ * \file    observer.h
+ * \brief   This file defines an observer class
+ * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date    12th September, 2011 (Monday)
+ */
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
@@ -27,16 +27,20 @@
 #include <assert.h>
 #include <vector>
 
-/**
-  * @brief   This observer class registers all types of callbacks on the 
-  *          cci-parameter values of interest in order to find the originator
-  *          for the appropriate actions on the respective cci-parameters
-  */
+/*!
+ * @class   observer.h
+ * @brief   This observer class registers all types of callbacks on the 
+ *          cci-parameter values of interest in order to find the originator
+ *          for the appropriate actions on the respective cci-parameters
+ */
 class observer
 {
 	public	:
 
-		/// Default constructor
+		/*!
+		 *  \fn    observer::observer
+		 *  \brief Default constructor
+		 */
 		observer()
 		{
 			/// Instantiate a cci_originator in order to get hold of the configuration broker interface
@@ -74,14 +78,23 @@ class observer
 		}// End of Constructor
 
 
-		/// Destructor
+		/*!
+		 *  \fn     observer::~observer
+		 *  \brief  Default Destructor
+		 */
 		~observer()
 		{
 			// Destructor does nothing
 		}
 
 		
-		/// 'PRE_READ' Callbacks Implementations
+		/*!
+		 *  \fn      cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+		 *  \brief   'PRE_READ' Callbacks Implementations
+		 *  \param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre-read) callback is registered
+		 *  \param   const cci::cnf::callback_type&  Callback type
+		 *  \return  cci::cnf::callback_return_type  Callback return type
+		 */
 		cci::cnf::callback_return_type
 			read_callback (cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
 			{
@@ -105,7 +118,13 @@ class observer
 			}// End of read_callback
 
 
-		/// 'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
+		/*!
+		 *  \fn      cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+		 *  \brief   'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
+		 *  \param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre/post-write) callback is registered
+		 *  \param   const cci::cnf::callback_type&  Callback type (pre-read or post-read)
+		 *  \return  cci::cnf::callback_return_type  Callback return type
+		 */
 		cci::cnf::callback_return_type
 			write_callbacks	(cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
 			{			

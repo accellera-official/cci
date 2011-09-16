@@ -13,35 +13,40 @@
  *   language governing rights and limitations under the License.
  *******************************************************************************/
 
-/**
-  * @file    parameter_owner.h
-  * @brief   This file instantiates defines a 'PARAMETER_OWNER' sc_module which,
-  *          in turn, 'int-type' & 'string-type'cci-parameters with default values
-  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    12th September, 2011 (Monday)
-  */
+/*!
+ * \file    parameter_owner.h
+ * \brief   This file defines the OWNER module's functionality.
+ *          This file defines a 'PARAMETER_OWNER' sc_module which, in turn,
+ *          'int-type' & 'string-type'cci-parameters with default values
+ * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date    12th September, 2011 (Monday)
+ */
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
 /// Include 'cci.h' header in all CCI-based applications
 #include "cci.h"
 
-/**
- 	* @brief   The various CCI-based parameters are initialized within this sc_module
-  */ 
-SC_MODULE(parameter_owner)
+/*!
+ * \class   parameter_owner.h
+ * \brief   The various CCI-based parameters are initialized within this sc_module
+ */ 
+class parameter_owner : public struct sc_module
 {
 	public	:
 
-		/// Default Constructor
+		/*!
+		 * \fn    parameter_owner::parameter_owner
+		 * \brief Default Constructor
+		 */
 		SC_CTOR(parameter_owner)
 
-			/// Assign name and value to the cci 'int-type' parameter.
+			// Assign name and default value to the cci 'int-type' parameter.
 		: int_param("mutable_int_param", 0)
-			/// Assign name to the cci 'string-type' parameter (Value NOT ASSIGNED)
+			// Assign name to the cci 'string-type' parameter (Default value NOT ASSIGNED)
 		, string_param("mutable_string_param","Default_Value")
 		{
-			// Registering SC_THREAD process
+			/// Register a SC_THREAD process
 			SC_THREAD(run_thread);
 
 			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'get_default_value()'" << endl;			
@@ -72,14 +77,20 @@ SC_MODULE(parameter_owner)
 
 		}// End of Constructor
 
-		/// Destructor
+		/*!
+		 * \fn    paramter_owner::~parameter_owner
+		 * \brief Default Destructor
+		 */
 		~parameter_owner()
 		{
 			// Destructor does nothing here
 		}
 
 	
-		/// SC_THREAD process definition
+		/*!
+		 * \fn     void run_thread (void)
+		 * \brief  SC_THREAD process definition
+		 */
 		void run_thread (void)
 		{
 			while(1)
@@ -141,10 +152,10 @@ SC_MODULE(parameter_owner)
 	private	:
 		
 		/// CCI parameters declarations
-		cci::cnf::cci_param<int>         int_param;    /*!Integer Parameter*/
-		cci::cnf::cci_param<std::string> string_param; /*!String Parameter*/
+		cci::cnf::cci_param<int>         int_param;    /*!<Integer Parameter*/
+		cci::cnf::cci_param<std::string> string_param; /*!<String Parameter*/
 
-};
+};// End of (SC_MODULE) class
 
 #endif	// End of PARAMETER_OWNER_H
 
