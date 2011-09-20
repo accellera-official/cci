@@ -13,21 +13,23 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/**
- * @file     main.cpp 
- * @brief    This file declares and implements the functionality of the slave.
+/*!
+ * \file     main.cpp 
+ * \brief    Testbench file
+ *           This file declares and implements the functionality of the slave.
  *           Few of the parameters of the slave sc_module are configured by the 
- *           router sc_module
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     29th April, 2011 (Friday) : 12:52 hrs IST
+ *           router sc_module.
+ * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date     29th April, 2011 (Friday)
  */
-#include <cci.h>             /*!<Always include this header in all CCI applications>*/
-#include <systemc.h>         /*!<SystemC header file for 'sc_main'*/
+#include <cci.h>             // Always include this header in all CCI applications>
+#include <systemc.h>         // SystemC header file for 'sc_main'
 #include <assert.h>          
-#include "top_module.h"      /*!<'top_module' instance shall be created within main*/
+#include "top_module.h"      // 'top_module' instance shall be created within main
 
-/**
- * @brief     The sc_main function instantiates the top module which, in turn,
+/*!
+ * \fn        int sc_main (int, char**)
+ * \brief     The sc_main function instantiates the top module which, in turn,
  *            instantiates master, router and slave modules
  */
 int sc_main(int sc_argc, char* sc_argv[])

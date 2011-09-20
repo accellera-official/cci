@@ -25,13 +25,13 @@
 #ifndef PARAM_VALUE_SYNC_H
 #define PARAM_VALUE_SYNC_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci.h>   //!< Include the "cci.h" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 #include <sstream>
 
 /**
+ * @class    param_value_sync param_value_sync.h
  * @brief    The 'param_vale_sync' class registers 'post_write' callbacks on the
  *           owner's parameters in order to update an owner cci_parameter directly
  *           when another cci_parameter value is modified. 
@@ -54,16 +54,21 @@ class param_value_sync
 	
 			
 			for(unsigned int i = 1; i < returnBaseParamList.size(); i++)	{
-				//float conversion_factor;
-				//conversion_factor = multiplyWithConversionFactor(returnBaseParamList[0]->get_name(), returnBaseParamList[i]->get_name());
 				synchValues(returnBaseParamList[0], returnBaseParamList[i]);
 			}// End of FOR
 		
 	}// End of Constructor
 
 		
-	/// Pre-Write and Post-Write Callbacks Implementation
-	cci::cnf::callback_return_type
+	/**
+	 * @fn     cci::cnf::callback_return_type write_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type, cci::cnf::cci_base_param)
+	 * @brief  'PRE_WRITE' and 'POST-WRITE' Callbacks Implementation
+	 * @param  cci::cnf::cci_base_param&  Reference of the cci_base_param of the selected cci-parameter
+	 * @param  cci::cnf::callback_type&   Callback Type (pre/post-write type)
+	 * @param  cci::cnf::cci_base_param*  Other selected cci_base_param's (to be synchronized) with \a cci::cnf::cci_base_param&
+	 * @return cci::cnf::callback_return_type  Callback return type
+	 */
+	cci::cnf::callback_return_type       
 		write_callback(cci::cnf::cci_base_param & _base_param_1,\
 										const cci::cnf::callback_type& cb_reason,\
 										cci::cnf::cci_base_param * _base_param_2)
@@ -78,55 +83,9 @@ class param_value_sync
 
 		}// End of Write Callbacks
 
-#if 0
-		/**
- 		  * @brief     Function computing the conversion factor to be multiplied
- 		  *            with the 'main_clk_Hz' parameter of the PARAM_VALUE_SYNC while
- 		  *            assigning the same value to owner parameters consistent with
- 		  *            their units
- 		  * @param     parent_str parameter name of the top_module that has registered pre_write and post_write callbacks
- 		  * @param     child_str  parameter name of the owner modules which have been selected based on string patterns
- 		  * @return    float      Conversion factor with which the owner parameter value will be multiplied with
- 		  */ 
-		float multiplyWithConversionFactor(std::string parent_str, std::string child_str)
-		{
-			float returnValue = 0.0;			
-			
-			char* str1 = &parent_str[0];
-			char* str2 = &child_str[0];
-			char* ans1 = strrchr(str1, '_');
-			char* ans2 = strrchr(str2, '_');
-			std::string s1(ans1);
-			std::string s2(ans2);
-
-			if((s1 == "_Hz") && (s2 == "_Hz")) 
-				returnValue = 1.0;
-			else if((s1 == "_Hz") && (s2 == "_KHz")) 
-				returnValue = 0.001;
-			else if((s1 == "_Hz") && (s2 == "_MHz")) 
-				returnValue = 0.000001;
-			else if((s1 == "_KHz") && (s2 == "_Hz")) 
-				returnValue = 1000.0;
-			else if((s1 == "_KHz") && (s2 == "_KHz")) 
-				returnValue = 1.0;
-			else if((s1 == "_KHz") && (s2 == "_MHz")) 
-				returnValue = 0.001;
-			else if((s1 == "_MHz") && (s2 == "_Hz")) 
-				returnValue = 1000000.0;
-			else if((s1 == "_MHz") && (s2 == "_KHz")) 
-				returnValue = 1000.0;
-			else if((s1 == "_MHz") && (s2 == "_MHz")) 
-				returnValue = 1.0;
-					
-			std::cout << "\n\tParameter1_str: " << parent_str << std::endl;
-			std::cout << "\tParameter2_str : " << child_str << std::endl;
-			std::cout << "\tConversionFactor : " << returnValue << std::endl;
-
-			return returnValue;
-		} 
-#endif
 		
-		/**
+		/** 
+		  * @fn        void synchValues (cci::cnf::cci_base_param*, cci::cnf::cci_base_param*)
  		  * @brief     Function for synchronizing the values of cci_parameter of OWNER modules via the PARAM_VALUE_SYNC
  		  * @param     _input_param Reference of Integer type CCI parameter
  		  * @param     _out_param   Reference of cci_base_param pointers to the selected owner parameters
@@ -134,12 +93,9 @@ class param_value_sync
  		  */	
 		void synchValues (cci::cnf::cci_base_param * _base_param_1, cci::cnf::cci_base_param * _base_param_2)
 		{
-			// In order to synchronize even the default values of the owner modules, there could be two procedures
-			// 1. Create 'create_param' callbacks on these cci-parameters using the PARAM_VALUE_SYNC's broker interface APIs
-			//    and then upon creation, read their default values using post-write callbacks and if found unequal,
-			//    synchronize them.
-			// 2. Using cci_base_param of one parameter as reference, write the same value to the other
-			//    pararmeter's cci_base_param using JSON serialize/deserialize APIs
+			/// In order to synchronize even the default values of the owner modules,
+			/// use cci_base_param of one parameter as reference, write the same value
+			/// to the other pararmeter's cci_base_param using JSON serialize/deserialize APIs
 			 _base_param_2->json_deserialize(_base_param_1->json_serialize());
 			
 			post_write_cb_vec.push_back(_base_param_1->register_callback(cci::cnf::post_write,\
@@ -147,22 +103,22 @@ class param_value_sync
 
 			post_write_cb_vec.push_back(_base_param_2->register_callback(cci::cnf::post_write,\
 				this, cci::bind(&param_value_sync::write_callback, this, _1, _2, _base_param_1)) );
-		}
+		}// End of synchValues function
 
 
 	private	:
 	
-	/// Declaring a CCI configuration broker interface instance
-	cci::cnf::cci_originator     ValueSyncOriginator;
+	// Declaring a CCI originator
+	cci::cnf::cci_originator     ValueSyncOriginator; //!< cci-originator instance
 
-	/// Declaring a CCI configuration broker interface instance
-	cci::cnf::cci_cnf_broker_if* ValueSyncBrokerIF;
+	// Declaring a CCI configuration broker interface instance
+	cci::cnf::cci_cnf_broker_if* ValueSyncBrokerIF;   //!< CCI configuration broker interface instance
 
-	/// Callback Adaptor Objects
-	std::vector<cci::shared_ptr<cci::cnf::callb_adapt_b> > post_write_cb_vec;
+	// Callback Adaptor Objects
+	std::vector<cci::shared_ptr<cci::cnf::callb_adapt_b> > post_write_cb_vec;  //!< post_write callback adaptor object
 
-	/// std::vector storing the searched owner parameters references to CCI base parameter pointers
-	std::vector<cci::cnf::cci_base_param*> returnBaseParamList;
+	// std::vector storing the searched owner parameters references to CCI base parameter pointers
+	std::vector<cci::cnf::cci_base_param*> returnBaseParamList; //!< STD::VECTOR for cci_base_params
 
 };// End of Class
 

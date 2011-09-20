@@ -24,6 +24,7 @@
 #include "configurator.h"
 
 /**
+ * @fn        int sc_main (int, char** )
  * @brief     This function instantiates the two modules - PROCESSOR & CONFIGURATOR modules
  */
 int sc_main(int sc_argc, char* sc_argv[])

@@ -44,8 +44,8 @@ void ObserverModule::main_action() {
 
   DEMO_DUMP(name(), "register for new parameter callbacks");
   cci::shared_ptr<cci::cnf::callb_adapt> cb_new_pa;
-  cb_new_pa = mBroker->register_callback(cci::cnf::create_param, "*", this, 
-                                   cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
+  cb_new_pa = mBroker->register_str_callback(cci::cnf::create_param, "*", this, 
+                                             cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
   
   DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");

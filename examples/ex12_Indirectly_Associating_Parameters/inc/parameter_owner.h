@@ -28,22 +28,24 @@
 #include <string.h>
 
 /**
+ * @class      parameter_owner parameter_owner.h
  * @brief      This sc_module declares the cci_parameters and they are created
  *             with the names passed from the TOP_MODULE
  */
-SC_MODULE(parameter_owner)
+class parameter_owner : public sc_core::sc_module
 {
 	public:
 		
-		/// Default Constructor		
+		/** Default Constructor*/
 		SC_HAS_PROCESS(parameter_owner);
 		
 		/**
- 			* @brief    The constructor SC_HAS_PROCESS takes in two arguments, one among them being
- 			*           name of the parameter passed from the TOP_MODULE
- 			* @param    _name         Name of the SC_MODULE
- 			* @param    _param_name   (std::string) Name of the cci_parameter
- 			*/
+		 * @fn       parameter_owner::parameter_owner(sc_module_name, std::string, float)
+ 		 * @brief    The constructor SC_HAS_PROCESS takes in two arguments, one among them being
+ 		 *           name of the parameter passed from the TOP_MODULE
+ 		 * @param    _name         Name of the SC_MODULE
+ 		 * @param    _param_name   (std::string) Name of the cci_parameter
+ 		 */
 		parameter_owner(sc_module_name _name, std::string  _param_name = "clock_speed_KHz", float _freq = 10.0) : sc_module(_name)
 		{
 		
@@ -53,11 +55,21 @@ SC_MODULE(parameter_owner)
 
 		}// End of constructor
 
+		
+		/**
+		 * @fn     parameter_owner::~parameter_owner
+		 * @brief  Destructor
+		 */
+		~parameter_owner()
+		{
+
+		}
+
 
 	private	:
 	
-		/// Declare an instance of mutable CCI parameter of type 'float'
-		cci::cnf::cci_param<float>*	clk;
+		// Declare an instance of mutable CCI parameter of type 'float'
+		cci::cnf::cci_param<float>*	clk;  //!< Float type mutable cci-parameter
 
 };// End of SC_MODULE
 

@@ -28,6 +28,7 @@
 #include <string.h>
 
 /**
+ * @class      parameter_owner parameter_owner.h
  * @brief      This sc_module declares the cci_parameters and they are created
  *             with the names passed from the TOP_MODULE
  */
@@ -35,10 +36,13 @@ SC_MODULE(parameter_owner)
 {
 	public:
 		
-		/// Default Constructor		
+		/**
+		 * @brief  MACRO for declaring constructor with more than one argument
+		 */	
 		SC_HAS_PROCESS(parameter_owner);
 		
 		/**
+		  * 
  			* @brief    The constructor SC_HAS_PROCESS takes in two arguments, one among them being
  			*           name of the parameter passed from the TOP_MODULE
  			* @param    _name         Name of the SC_MODULE
@@ -54,10 +58,20 @@ SC_MODULE(parameter_owner)
 		}// End of constructor
 
 
+		/**
+		 * @fn     parameter_owner::~parameter_owner
+		 * @brief  Destructor
+		 */
+		~parameter_owner()
+		{
+			// Nothing to destruct
+		}
+
+
 	private	:
 	
-		/// Declare an instance of mutable CCI parameter of type 'int'
-		cci::cnf::cci_param<int>*	clk;
+		// Declare an instance of mutable CCI parameter of type 'int'
+		cci::cnf::cci_param<int>*	clk;  //!< Interger type mutable cci-parameter
 
 };// End of SC_MODULE
 

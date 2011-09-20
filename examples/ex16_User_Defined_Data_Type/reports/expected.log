@@ -9,29 +9,25 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Retrieve] : Parameter Value' : {"s_address":256,"d_address":512,"index":0}
 
-	[OWNER -> Set] : Param doc - 'Initial documentation'
+	[OWNER -> Set] : Param doc - 'This is user-defined data type
 
-	[CFGR] : DEFAULT_BROKER is not a private broker.
+	[CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
 
-	[OBSERVER] : DEFAULT_BROKER is not a private broker.
+	[OBSERVER C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
 @ 0 s
 
-	[OWNER -> Retrieve] : Documentation : Initial documentation
+	[OWNER -> Retrieve] : Documentation : This is user-defined data type
 
 	[OWNER -> Set] : New Value param_owner.User_data_type_param	's_address:768,d_address:1024,index:2'
 
 	[OBSERVER pre_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
 
 	[OBSERVER post_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
-
-	[OWNER -> Set] : UDT Documentation - 'Modified by Owner'
 @ 2 ns
 
 	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
 
 	[OWNER -> Retrieve] : UDT Value : {"s_address":768,"d_address":1024,"index":2}
-
-	[OWNER -> Retrieve] : UDT Doc : Modified by Owner
 
 @ 4 ns
 
@@ -41,7 +37,7 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[CFGR -> Retrieve] : Parameter value: {"s_address":768,"d_address":1024,"index":2}
 
-	[CFGR -> Retrieve] : Parameter doc: Modified by Owner
+	[CFGR -> Retrieve] : Parameter doc: This is user-defined data type
 
 @ 6 ns
 	[CFGR -> Set] : Value - 's_address:1024,d_address:1280,index:3
@@ -50,17 +46,13 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OBSERVER post_write_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
 
-	[CFGR-> Set] : Parameter doc - 'Modified with CFGR'
-
-@ : 8 ns
+@ 8 ns
 
 	[CFGR -> Retrieve] : Parameter name : param_owner.User_data_type_param
 
 	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
 
 	[CFGR -> Retrieve] : Parameter value: {"s_address":1024,"d_address":1280,"index":3}
-
-	[CFGR -> Retrieve] : Parameter doc : Modified with CFGR
 
 @ 10 ns demonstrating 'set_value_invalid()'
 
@@ -69,3 +61,5 @@ Prior to 0 s	demonstrating 'get_default_value()'
 	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.User_data_type_param	Originator info : owning_param
 
 	[OWNER] : param_owner.User_data_type_param value is invalid : {"s_address":1024,"d_address":1280,"index":3}
+
+	[OWNER] : Is Invalid Value ? 	Returned status : true

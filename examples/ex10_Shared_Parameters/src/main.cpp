@@ -13,20 +13,22 @@
  * language governing rights and limitations under the License.
  * *******************************************************************************/
 
-/**
- * @file      main.cpp
- * @brief     This file shows the up-front planning needed to be done in order to
+/*!
+ * \file      main.cpp
+ * \brief     This file shows the up-front planning needed to be done in order to
  *            access an owner class private memmbers accessible within the 
  *            configurator class by making the configurator a friend class of the owner
- * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com> 
- * @date      16th May, 2011 (Monday)
+ * \author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com> 
+ * \date      16th May, 2011 (Monday)
  */
-#include <systemc.h>
+#include <systemc.h>                 // SystemC definitions
+
 #include "parameter_owner.h"
 #include "parameter_configurator.h"
 
-/**
- * @brief      This function instantiates owner and configurator class objects
+/*!
+ * \fn         int sc_main(int, char** )
+ * \brief      This function instantiates owner and configurator class objects
  *             and shows details of the up-front planning required to make the owner
  *             class private members accesible within the configurator 
  */

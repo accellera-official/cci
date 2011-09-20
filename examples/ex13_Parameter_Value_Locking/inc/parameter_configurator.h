@@ -28,6 +28,7 @@
 #include <assert.h>
 
 /**
+ * @class    parameter_configurator parameter_configurator.h
  * @brief    This class lists and defines the locking and unlocking mechnanisms
  *           by a parameter-setter(configurator)
  */ 
@@ -35,7 +36,7 @@ class parameter_configurator : public sc_module
 {
 	public	:
 		
-		/// Default constructor
+		/** Default constructor*/
 		SC_CTOR(parameter_configurator)
 		{
 			/// Getting handle of the default broker for the class/sc_module
@@ -59,12 +60,24 @@ class parameter_configurator : public sc_module
 
 		}// End of Constructor	
 
+
 		/**
-		  * @brief      This process illustrates various locking and unlocking mechanisms
-		  *             of a parameter using 'lock()', 'lock(&password)'. 'unlock()',
-		  *             'unlock(&password)' APIs.  'locked()' API is used to query the 
-		  *             locking status of the parameter
-		  */ 	
+		 * @fn     parameter_configurator::~parameter_configurator
+		 * @brief  Destructor
+		 */
+		~parameter_configurator()
+		{
+
+		}
+
+
+		/**
+		 * @fn         void run_mutable_cfgr (void)
+		 * @brief      This process illustrates various locking and unlocking mechanisms
+		 *             of a parameter using 'lock()', 'lock(&password)'. 'unlock()',
+		 *             'unlock(&password)' APIs.  'locked()' API is used to query the 
+		 *             locking status of the parameter
+		 */ 	
 		void run_mutable_cfgr (void)
 		{
 			while(1)
@@ -139,18 +152,19 @@ class parameter_configurator : public sc_module
 
 	private	:
 	
-		/// CCI configuration broker interface instance
-		cci::cnf::cci_cnf_broker_if* myConfigBroker;
+		// CCI configuration broker interface instance
+		cci::cnf::cci_cnf_broker_if* myConfigBroker;  //!< CCI Configuration broker instance
 
-		/// CCI base parameter handle to access the actual owner's parameter
-		cci::cnf::cci_base_param*     int_param_ptr;
+		// CCI base parameter handle to access the actual owner's parameter
+		cci::cnf::cci_base_param*     int_param_ptr;  //!< cci_base_param to store reference of 'int' type cci-param
 
 		char* paramName;
 	
-		// Some passwords local to the configurator
+		/// Some passwords local to the configurator
 		void* psswd;
 		void* newpsswd;
-};
+
+};// End of class (SC_MODULE)
 
 #endif	// End of PARAMETER_CONFIGURATOR_H
 

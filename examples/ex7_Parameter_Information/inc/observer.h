@@ -13,30 +13,33 @@
  *   language governing rights and limitations under the License.
  *******************************************************************************/
 
-/**
-  * @file    observer.h
-  * @brief   This file defines an observer class demonstrates
-  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    17th August, 2011 (Wednesday) : 17:43 hrs IST
-  */
+/*!
+ * \file    observer.h
+ * \brief   This file defines an observer class
+ * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date    12th September, 2011 (Monday)
+ */
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-/// Include 'cci.h' header in all CCI-based applications
-#include <cci.h>
+#include <cci.h>    // Include 'cci.h' header in all CCI-based applications
 #include <assert.h>
 #include <vector>
 
-/**
-  * @brief   This observer class registers all types of callbacks on the 
-  *          cci-parameter values of interest in order to find the originator
-  *          for the appropriate actions on the respective cci-parameters
-  */
+/*!
+ * @class   observer observer.h
+ * @brief   This observer class registers all types of callbacks on the 
+ *          cci-parameter values of interest in order to find the originator
+ *          for the appropriate actions on the respective cci-parameters
+ */
 class observer
 {
 	public	:
 
-		/// Default constructor
+		/*!
+		 *  \fn    observer::observer
+		 *  \brief Default constructor
+		 */
 		observer()
 		{
 			/// Instantiate a cci_originator in order to get hold of the configuration broker interface
@@ -52,9 +55,9 @@ class observer
 			/// Check for the broker type (default or private) using 'is_private_broker()' API
 			if(observerBrokerIF->is_private_broker())
 				/// Access broker's name using 'name()' 
-				std::cout << "\n\t[OBSERVER] : Broker Type : " << observerBrokerIF->name() << endl;
+				std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF->name() << endl;
 			else
-				std::cout << "\n\t[OBSERVER] : " << observerBrokerIF->name() << " is not a private broker." << endl; 
+				std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF->name() << "- is not a private broker." << endl; 
 
 
 			/// Gets the reference to the 'int' type cci-parameter of OWNER module
@@ -74,14 +77,23 @@ class observer
 		}// End of Constructor
 
 
-		/// Destructor
+		/*!
+		 *  \fn     observer::~observer
+		 *  \brief  Default Destructor
+		 */
 		~observer()
 		{
 			// Destructor does nothing
 		}
 
 		
-		/// 'PRE_READ' Callbacks Implementations
+		/*!
+		 *  \fn      cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+		 *  \brief   'PRE_READ' Callbacks Implementations
+		 *  \param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre-read) callback is registered
+		 *  \param   cci::cnf::callback_type&  Callback type
+		 *  \return  cci::cnf::callback_return_type  Callback return type
+		 */
 		cci::cnf::callback_return_type
 			read_callback (cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
 			{
@@ -96,7 +108,7 @@ class observer
 						break;	}
 			
 					default	:
-						std::cout << "\n\t[OBSERVER] - Unknown Callback Type" << std::endl;
+						std::cout << "\n\t[OBSERVER pre_read_cb] - Unknown Callback Type" << std::endl;
 
 				}// End of SWITCH-CASE
 
@@ -105,7 +117,13 @@ class observer
 			}// End of read_callback
 
 
-		/// 'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
+		/*!
+		 *  \fn      cci::cnf::callback_return_type write_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+		 *  \brief   'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
+		 *  \param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre/post-write) callback is registered
+		 *  \param   cci::cnf::callback_type&  Callback type (pre-read or post-read)
+		 *  \return  cci::cnf::callback_return_type  Callback return type
+		 */
 		cci::cnf::callback_return_type
 			write_callbacks	(cci::cnf::cci_base_param & _selected_base_param, const cci::cnf::callback_type & cb_reason)
 			{			
@@ -124,7 +142,7 @@ class observer
 						break;}
 									
 					default	:
-						std::cout << "\n\t[OWNER] - Unknown Callback Type" << std::endl;
+						std::cout << "\n\t[OBSERVER write_cb] - Unknown Callback Type" << std::endl;
 
 				}// End of SWITCH-CASE
 
@@ -135,16 +153,16 @@ class observer
 
 	private	:
 
-		/// CCI configuration broker instance
-		cci::cnf::cci_cnf_broker_if*            observerBrokerIF;
+		// CCI configuration broker instance
+		cci::cnf::cci_cnf_broker_if*            observerBrokerIF; //!< Configuration broker instance
 
-		/// Declare cci_base_param for int type cci-parameter
-		cci::cnf::cci_base_param*               obsv_int_base_ptr;
+		// Declare cci_base_param for int type cci-parameter
+		cci::cnf::cci_base_param*               obsv_int_base_ptr;//!< cci_base_param for integer type cci-param
 
-		/// Callback Adaptor Objects for 'int' type parameter
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_read_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_write_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb;
+		// Callback Adaptor Objects for 'int' type parameter
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_read_cb;   //!< 'pre_read' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb; //!< 'post_write' callback adaptor obj for int type cci-param
 
 };// End of Class
 

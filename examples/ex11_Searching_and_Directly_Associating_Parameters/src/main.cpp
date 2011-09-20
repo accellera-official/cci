@@ -19,11 +19,12 @@
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      9th June, 2011 (Thursday)
  */
-#include <systemc.h>
+#include <systemc.h>          // SystemC Headers
 #include "top_module.h"
 #include "parameter_configurator.h"
 
 /**
+ * @fn         int sc_main (int, char** )
  * @brief      The TOP_MODULE instantiated within this function, in turn,
  *             instantiates the PARAMETER_OWNER module
  */
@@ -33,7 +34,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 	top_module                top_mod("top_mod");
 	parameter_configurator    param_cfgr("param_cfgr");
 
-	// Start and run the simulation till 50 nanoseconds
+	// Start and run the simulation
 	sc_core::sc_start(30.0, sc_core::SC_NS);
 
 	return EXIT_SUCCESS;

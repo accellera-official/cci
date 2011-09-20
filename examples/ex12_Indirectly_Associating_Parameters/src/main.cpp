@@ -19,11 +19,12 @@
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      9th June, 2011 (Thursday)
  */
-#include <systemc.h>
+#include <systemc.h>      // SystemC headers
 #include "top_module.h"
 #include "parameter_configurator.h"
 
 /**
+ * @fn         int sc_main (int, char**)
  * @brief      The TOP_MODULE instanitated by the TOP_MODULE, in turn, instantiates
  *             the PARAMETER_OWNER module
  */

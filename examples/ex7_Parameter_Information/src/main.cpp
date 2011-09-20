@@ -13,32 +13,34 @@
  *   language governing rights and limitations under the License.
  *******************************************************************************/
 
-/**
-  * @file    main.cpp
-  * @brief   This function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
-  *          modules and 'OBSERVER' class
-  * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
-  * @date    17th August, 2011 : 18:03 hrs IST
-  */
-#include <cci.h>          /// Contains all the definitions for CCI-infrastructure
-#include <systemc.h>      /// Contains all the definitions for SystemC
+/*!
+ * \file    main.cpp
+ * \brief   The main function starts here.
+ *          The sc_main function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
+ *          modules and 'OBSERVER' class
+ * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \date    12th September, 2011
+ */
+#include <cci.h>          // Includes cci-infrastructure
+#include <systemc.h>      // Contains all the definitions for SystemC
 #include <assert.h>
 
 #include "parameter_owner.h"
 #include "parameter_configurer.h"
 #include "observer.h"
 
-/// SystemC main function
+/*!
+ * \fn     int sc_main (int, char**)
+ * \brief  The main functions begins the hierarchy construction and sets simulation
+ *         related details
+ */
 int sc_main(int sc_argc, char* sc_argv[])
 {
-	// @date 28th April, 2011 (Thursday) 
-	// Appended the code for originator, broker and 'set_init_value' API
-	
-	// Creating an originator to access the global broker
+	/// Creating an originator to access the global broker
 	const std::string myOrgStr = "sc_main_originator";
 	cci::cnf::cci_originator myOriginator(myOrgStr);
 
-	// Get handle of the broker using the originator
+	/// Get handle of the broker using the originator
 	cci::cnf::cci_cnf_broker_if* globalBroker = &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
 
 	// Assert if broker handle returned is NULL

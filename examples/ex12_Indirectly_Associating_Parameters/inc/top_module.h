@@ -15,15 +15,16 @@
 
 /**
  * @file     top_module.h
- * @brief    This header declares and defines the top module which instantiates the two owner modules 
+ * @brief    A brief on TOP_MODULE.
+ *           This header declares and defines the top module which instantiates
+ *           the two owner modules 
  * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     9th June, 2011 (Thursday)
  */
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci.h>  //!< Include the "cci.h" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 #include <sstream>
@@ -32,6 +33,7 @@
 #include "param_value_sync.h"
 
 /**
+ * @class    top_module top_module.h
  * @brief    The configurator class registers 'post_write' callbacks on the
  *           owner's parameters in order to update an owner cci_parameter directly
  *           when another cci_parameter value is modified 
@@ -40,26 +42,32 @@ class top_module : public sc_module
 {
 	public:
 		
-		/// Pointers to the owner module
-		parameter_owner*   param_owner1;
-		parameter_owner*   param_owner2;
+		// Pointers to the owner module
+		parameter_owner*   param_owner1; //!< Owner module #1
+		parameter_owner*   param_owner2; //!< Owner module #2
 
-		/// Create an instance of the 'param_value_sync' class
-		param_value_sync   *param_sync;
+		// Create an instance of the 'param_value_sync' class
+		param_value_sync   *param_sync;  //!< 'param_value_sync' instance
 
-		/// Default constructor
-		SC_CTOR(top_module)
+		SC_HAS_PROCESS(top_module);
+
+		/**
+		 * @fn     top_module top_module.h
+		 * @brief  Default constructor
+		 */
+		top_module(sc_module_name _name)
+		: sc_module(_name)
 		{
 			/// Get handle of the broker responsible for the class/module
 			myTopModBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 		
-			std::string str1,str2;		/*!Strings to store the names of the owner's parameters*/
+			std::string str1,str2;		//!< Strings to store the names of the owner's parameters
 			str1="clk_freq_Hz";
 			str2="clock_speed_KHz";	
 			param_owner1	= new parameter_owner("param_owner1", str1, 1);
 			param_owner2	= new parameter_owner("param_owner2", str2, 2);
 
-			/// Report if handle returned is NULL
+			// Report if handle returned is NULL
 			assert(myTopModBrokerIF != NULL && "Configuration Broker handle is NULL");
 			
 			/// Check for existence of the owner cci_parameter using name-based look up access
@@ -96,16 +104,26 @@ class top_module : public sc_module
 			/// synchronization related activity
 			param_sync	=	new param_value_sync(selectedBaseParamList);
 			
-	}// End of Constructor
+		}// End of Constructor
+
+	
+		/**
+		 * @fn     top_module::~top_module
+		 * @brief  Destructor
+		 */
+		~top_module()
+		{
+
+		}
 
 
 	private	:
 	
-	/// Declaring a CCI configuration broker interface instance
-	cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;
+	// Declaring a CCI configuration broker interface instance
+	cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;  //!< Configuration broker instance
 	
-	/// std::vector storing the searched owner parameters references to CCI base parameter pointers
-	std::vector<cci::cnf::cci_base_param*> selectedBaseParamList;
+	/** std::vector storing the searched owner parameters references to CCI base parameter pointers*/
+	std::vector<cci::cnf::cci_base_param*> selectedBaseParamList; //!< Selected cci_base_parameter list (selection done by top_module)
 
 };// End of Class/SC_MODULE
 

@@ -24,12 +24,12 @@
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci.h>    // Include the "cci.h" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 
 /**
+ * @class    parameter_configurator parameter_configurator.h
  * @brief    The configurator class searches for the owner parameters using the
  *           get_param API.  Implementation using 'get_param_list' API is ignore
  *           though the parameters are being searched as per the string pattern
@@ -39,7 +39,7 @@ class parameter_configurator : public ::sc_core::sc_module
 {
 	public:
 		
-		/// Default constructor
+		/** Default constructor*/
 		SC_CTOR(parameter_configurator)
 		{
 			// Get handle of the broker responsible for the class/module
@@ -83,7 +83,9 @@ class parameter_configurator : public ::sc_core::sc_module
 
 		}// End of Constructor	
 
+
 		/**
+			* @fn       void before_end_of_elaboration (void)
  			* @brief    Within this 'before_end_of_elaboration' callback phase, the
 		  *           value of the cci_parameter of owner(1) is modified and the
 		  *           (updated) values of both the owners are read
@@ -110,6 +112,7 @@ class parameter_configurator : public ::sc_core::sc_module
 
 
 		/**
+ 			* @fn         void run_cfgr (void)
 		  * @brief      Within this sc_process, the value of the cci_parameter of owner(2)
 		  *             is modified and the (updated) values of both the owners are read
 		  *             parameters
@@ -141,10 +144,10 @@ class parameter_configurator : public ::sc_core::sc_module
 
 	private	:
 	
-	/// Declaring a CCI configuration broker interface instance
-	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+	// Declaring a CCI configuration broker interface instance
+	cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  //!< CCI configuration broker interface instance
 
-	/// CCI base parameters
+	// CCI base parameters
 	cci::cnf::cci_base_param* cfgr_param_ptr1;
 	cci::cnf::cci_base_param* cfgr_param_ptr2;
 

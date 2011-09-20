@@ -14,42 +14,47 @@
  * language governing rights and limitations under the License.
  ********************************************************************************/
 
-/**
- * @file     master.h
- * @brief    This file declares and implements the functionality of the master.
+/*!
+ * \file     master.h
+ * \brief    Master module implementation.
+ *           This file declares and implements the functionality of the master.
  *           Few of the parameters of the master sc_module are configured by the
  *           router sc_module
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
- * @date     29th April, 2011 (Friday) : 11:37 hrs IST
+ * \date     29th April, 2011 (Friday)
  */
 #ifndef MASTER_H
 #define MASTER_H
 
-/// This header file must be included in every cci-based application
-#include <cci.h>
+#include <cci.h>  // This header file must be included in every cci-based application
 
-/// Includes the definitions for TLM2 and TLM2 Communication
-#include "tlm.h"                 
-#include "tlm_utils/simple_initiator_socket.h" 
+#include "tlm.h"       // Includes the definitions for TLM2
+#include "tlm_utils/simple_initiator_socket.h" // TLM2 simple initiator socket
 
-/**
- * @brief     This module implements the master functionality and contains
+/*!
+ * \class     master master.h
+ * \brief     This module implements the master functionality and contains
  *            tlm2-based socket for communication with the router
  */
-SC_MODULE(master)
+class master : public sc_core::sc_module
 {
 
 	public :
 
 		int data;	
 
-		/// Declare instance of tlm2-base simple initiator socket
-		tlm_utils::simple_initiator_socket<master,32> Master_socket;
+		tlm_utils::simple_initiator_socket<master,32> Master_socket; //!< Instance of TLM2 simple initiator socket
 
-		/// Master's Default Constructor
-		SC_CTOR(master)
-		: data(0)
+		SC_HAS_PROCESS(master);
+
+		/*!
+		 * \fn     master::master
+		 * \brief  Master's Default Constructor
+		 */
+		master(sc_module_name _name)
+		: sc_module(_name)
+		, data(0)
 		,	Master_socket("Master_socket")
 		,	master_ID("master_ID", "master_default")
 		{
@@ -59,9 +64,19 @@ SC_MODULE(master)
 			SC_THREAD(run_master);
 		}
 
-		/** 
-		 * @brief     :   This sc_thread contains the description for tlm2
-		 *                socket and communication with router
+		/*!
+		 * \fn     master::~master
+		 * \brief  Master module's default destructor
+		 */
+		~master()
+		{
+			// Nothing to destruct
+		}
+
+		/*!
+		 * \fn        void run_thread (void) 
+		 * \brief     This sc_thread contains the description for tlm2
+		 *            socket and communication with router
 		 */ 
 		void run_master (void)
 		{
@@ -130,8 +145,8 @@ SC_MODULE(master)
 
 	private :
 		
-		/// Elaboration Time Parameter for assigning master ID (initialized by top_module)
-		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> master_ID;
+		// Elaboration Time Parameter for assigning master ID (initialized by top_module)
+		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> master_ID; //!< Elaboration Time Parameter for Master ID
 
 };// End of SC_MODULE
 
