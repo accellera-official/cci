@@ -180,9 +180,6 @@ const std::vector<std::string> cci::cnf::gs_cci_cnf_broker::get_param_list() {
 
 cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_callback(const std::string& parname, const callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
 
-  if (parname.compare("*") != 0)
-    SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "This implementation cannot handle patterns as parname here");
-
   internal_callback_forwarder *fw = NULL;
   cci_base_param *p = NULL;
   gs::cnf::callback_type cb = gs::cnf::no_callback;
@@ -240,7 +237,7 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
       break;
     case cci::cnf::create_param:
       if (parname.compare("*") != 0)
-        SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "This implementation cannot listen for special new parameters - will register for all new params");      
+        SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "This implementation cannot handle patterns / listen for special new parameters - will register for all new params");      
       fw = new internal_callback_forwarder(callb, cb, *this);
       fw_vec.push_back(fw);
       //assert(fw->caller_broker && "create_param callbacks only can be used with string callback functions!");
