@@ -1,5 +1,18 @@
 ChangeLog
 ---------
+20.09.2011
+- slightly changed callback function in broker if: cci_cnf_broker_if::register_str_callback and cci_cnf_broker_if::register_callback which was not complete yet
+- added some callback abilities to prototype in gs_cci_cnf_broker
+- added dev_example/callback_example
+
+06.09.2011
+several small changes to callbacks:
+- renamed internal callb_adapt_b -> callb_adapt
+- added new callback function type with param name: param_callback_func_ptr
+- for consistency renamed callback_func_ptr -> param_callback_func_ptr
+
+
+
 01.09.2011
 - removed totally outdated dev_example priv_broker_example_dl
 - changed gs private broker's constructor: does not need originator which is created automatically from owner now

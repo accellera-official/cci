@@ -43,6 +43,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     /**
      * This is instantiated and registered at the base param to forward a 
      * callback to the cci world when called by the gs_base_param.
+     * @see also see similar gs_cci_cnf_broker::internal_callback_forwarder
      */
     class internal_callback_forwarder {
     public:

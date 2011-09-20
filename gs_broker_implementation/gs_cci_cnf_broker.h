@@ -42,6 +42,36 @@ namespace cnf {
   , public gs::cnf::gs_cnf_api_accessor
   , public cci::cnf::gs_cci_cnf_broker_accessor_handler
   {
+  protected:
+    
+    /// Typedef for the param itself.
+    typedef gs_cci_cnf_broker my_type;
+
+    /// Callback forwarder class
+    /**
+     * This is instantiated and registered at the base param to forward a 
+     * callback to the cci world when called by the gs_base_param.
+     * @see also see similar gs_cci_base_param::internal_callback_forwarder
+     */
+    class internal_callback_forwarder {
+    public:
+      internal_callback_forwarder(cci::shared_ptr<cci::cnf::callb_adapt> _adapt, const gs::cnf::callback_type _type, my_type& _par);
+      ~internal_callback_forwarder();
+      
+      // This gets called by the base gs_param
+      gs::cnf::callback_return_type call(const std::string& parname, gs::cnf::callback_type cbtype);
+      void call_create_param(const std::string parname, const std::string value);
+      const gs::cnf::callback_type get_type();
+      
+      cci::cnf::callb_adapt* adapt;
+      gs::cnf::callback_type type;
+      my_type *param;
+      cci::shared_ptr< gs::cnf::CallbAdapt_b> calling_gs_adapter;
+    };
+    
+    /// Typedef for internal new param callback handling map
+    typedef std::multimap<std::string, internal_callback_forwarder*> observerCallbackMap;
+    
   public:
 
     cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::cnf::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
@@ -97,10 +127,24 @@ namespace cnf {
     
   protected:
     
+    /// Iterates the observer callback map and makes the callbacks.
+    /**
+     * @param search     Search string for the map (parameter name or dummy for new parameters).
+     * @param par_name   Name of the changed parameter.
+     * @param value      New value of the changed parameter.
+     */
+    void make_create_param_callbacks(const std::string &search, const std::string &par_name, const std::string &value);
+
+  protected:
+      
     std::map<std::string, cci::cnf::cci_base_param*> m_mirrored_registry;
     
     std::string m_name;
     
+    std::vector<internal_callback_forwarder*> fw_vec;
+
+    /// Map to save an observer callback function pointer for each parameter (if needed).
+    observerCallbackMap m_observer_callback_map;
   };
   
   

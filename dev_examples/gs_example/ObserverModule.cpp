@@ -113,7 +113,7 @@ cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_bas
   switch (cb_reason) {
   case cci::cnf::pre_write:
     str = par.json_serialize();
-    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change to value '"<<str<<"'");
+    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change value");
     break;
   case cci::cnf::post_write:
     str = par.json_serialize();
