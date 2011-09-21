@@ -33,7 +33,9 @@
 #include "cci_params.h"
 
 /** 
- * @brief   route_table_ut structure takes in the f
+ * @class   route_table_ut route_table_ut.h
+ * @brief   route_table_ut structure defines three fields of a typical
+ *          router - 'source_addr', 'dest_addr' and 'index'
  */
 struct route_table_ut
 {
@@ -60,73 +62,16 @@ struct route_table_ut
 
 	public	:
 	    
-	  int    s_address;
-	  int    d_address;
-	  int    index;
+	  int    s_address;   //!< Source Address field
+	  int    d_address;   //!< Destination Address field
+	  int    index;       //!< Index field
 
 };// End of STRUCT  
 
 
-#if 0
+typedef gs::cnf::gs_param<route_table_ut> user_data_type;  //!< Provide parameter vendor implementation support for user-defined data type
 
-template <cci::cnf::param_mutable_type TM = cci::cnf::mutable_parameter>
-struct cci_route_table_ut_param : public __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<route_table_ut,TM> 
-{
-  /// Typedef for the value
-  typedef route_table_ut val_type;
-
-  /// Typedef for the param itself
-  typedef __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<val_type, TM> my_type;
-
-  /// Typedef for base type
-  typedef __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param_t<val_type, TM> base_type;
-
-
-  cci_route_table_ut_param (cci::cnf::cci_param<val_type, TM>& owner_par, 
-	                           const char* nam, const char* val, 
-	                           const bool is_top_level_name, 
-	                           cci::cnf::cci_cnf_broker_if* broker_accessor)
-	: __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<val_type, TM>( owner_par, nam, val, is_top_level_name, broker_accessor )
-	{ 
-
-	}
-
-	cci_route_table_ut_param (cci::cnf::cci_param<val_type, TM>& owner_par, 
-	                           const char* nam, const val_type& val, 
-	                           const bool is_top_level_name, 
-	                           cci::cnf::cci_cnf_broker_if* broker_accessor)
-	: __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<val_type, TM>( owner_par, nam, val, is_top_level_name, broker_accessor )
-	{ 
-
-	}
-
-	cci_route_table_ut_param (cci::cnf::cci_param<val_type, TM>& owner_par, 
-	                           const char* nam,  
-	                           const bool is_top_level_name, 
-	                           cci::cnf::cci_cnf_broker_if* broker_accessor)
-	: __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<val_type, TM>( owner_par, nam,  is_top_level_name, broker_accessor )
-	{ 
-
-	}
-
-	/// Destructor
-	~cci_route_table_ut_param()
-	{
-		// Nothing to destruct 
-	}
-
-};// End of cci_route_table_ut_param
-
-#endif
-
-template <typename UDT = route_table_ut>
-struct user_data_type : public gs::cnf::gs_param<UDT>
-{
-	public	:
-		user_data_type();
-		~user_data_type();
-};
-
+/// Overload extraction operator of C++
 std::ostream& operator << (std::ostream& os, const route_table_ut& ud)
 {
 
@@ -146,10 +91,9 @@ std::ostream& operator << (std::ostream& os, const route_table_ut& ud)
   return os;
 }
 
-
+/// Overload insersion operation of C++
 std::istream& operator >> (std::istream& is, route_table_ut& ud)
 {
-
     json_spirit::Value jvalue;
     read( is, jvalue );
     json_spirit::Object  usr_dt_obj = jvalue.get_value<json_spirit::Object>();
