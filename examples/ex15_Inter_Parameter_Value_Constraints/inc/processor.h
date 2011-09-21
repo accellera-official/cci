@@ -215,8 +215,8 @@ class processor : public sc_core::sc_module
 		cci::cnf::cci_base_param*             mem_size_base_ptr;   //!< cci_base_param for mem_size cci_param
 
 		/// Callback Adaptor Objects
-		cci::shared_ptr<cci::cnf::callb_adapt_b>  addr_lines_post_wr_cb; //!< 'post_write' cb for addr_lines_reg module
-		cci::shared_ptr<cci::cnf::callb_adapt_b>  mem_block_post_wr_cb;  //!< 'post_write' cb for memory_block module
+		cci::shared_ptr<cci::cnf::callb_adapt>  addr_lines_post_wr_cb; //!< 'post_write' cb for addr_lines_reg module
+		cci::shared_ptr<cci::cnf::callb_adapt>  mem_block_post_wr_cb;  //!< 'post_write' cb for memory_block module
 
 };// End of SC_MODULE
 

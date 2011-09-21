@@ -175,7 +175,7 @@ class parent : public sc_module
     cci::cnf::cci_base_param*    child_base_param_ptr; //!< cci_base_param storing reference of CHILD's private parameter
 
 		// Callback Adaptor Object
-		cci::shared_ptr<cci::cnf::callb_adapt_b> parent_post_write_cb; //!< POST_WRITE callback adaptor object
+		cci::shared_ptr<cci::cnf::callb_adapt> parent_post_write_cb; //!< POST_WRITE callback adaptor object
 
 };// End of Class
 

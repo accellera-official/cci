@@ -37,30 +37,37 @@
  */
 struct route_table_ut
 {
-	/// Default Constructor
-	route_table_ut()
-	: s_address(0x0)	//Source Address
-	, d_address(0x0)	//Destination Address
-	, index(0x0)	    //Index
-	{
-		// Nothing to implement
-	} 
+	public	:
 
-	/// Overloaded Constructor
-  route_table_ut(int saddr, int daddr, int idx)
-  : s_address(saddr)
-  , d_address(daddr)
-  , index(idx)
-  {
-		// Nothing to implement
-	}
-    
-  int    s_address;
-  int    d_address;
-  int    index;
+		/// Default Constructor
+		route_table_ut()
+		: s_address(0x0)	//Source Address
+		, d_address(0x0)	//Destination Address
+		, index(0x0)	    //Index
+		{
+			// Nothing to implement
+		} 
+	
+
+		/// Overloaded Constructor
+	  route_table_ut(int saddr, int daddr, int idx)
+	  : s_address(saddr)
+	  , d_address(daddr)
+	  , index(idx)
+	  {
+			// Nothing to implement
+		}
+
+	public	:
+	    
+	  int    s_address;
+	  int    d_address;
+	  int    index;
 
 };// End of STRUCT  
 
+
+#if 0
 
 template <cci::cnf::param_mutable_type TM = cci::cnf::mutable_parameter>
 struct cci_route_table_ut_param : public __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<route_table_ut,TM> 
@@ -108,8 +115,17 @@ struct cci_route_table_ut_param : public __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATIO
 		// Nothing to destruct 
 	}
 
-};// End of SC_MODULE
+};// End of cci_route_table_ut_param
 
+#endif
+
+template <typename UDT = route_table_ut>
+struct user_data_type : public gs::cnf::gs_param<UDT>
+{
+	public	:
+		user_data_type();
+		~user_data_type();
+};
 
 std::ostream& operator << (std::ostream& os, const route_table_ut& ud)
 {

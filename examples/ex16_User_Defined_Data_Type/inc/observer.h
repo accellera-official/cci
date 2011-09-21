@@ -143,9 +143,9 @@ class observer
 		cci::cnf::cci_base_param*               obsv_udt_base_ptr;
 
 		/// Callback Adaptor Objects for 'int' type parameter
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    udt_pre_read_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    udt_pre_write_cb;
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    udt_post_write_cb;
+		cci::shared_ptr<cci::cnf::callb_adapt>    udt_pre_read_cb;
+		cci::shared_ptr<cci::cnf::callb_adapt>    udt_pre_write_cb;
+		cci::shared_ptr<cci::cnf::callb_adapt>    udt_post_write_cb;
 
 };// End of Class
 

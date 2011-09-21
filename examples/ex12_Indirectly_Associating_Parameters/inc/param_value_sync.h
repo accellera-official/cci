@@ -201,7 +201,7 @@ class param_value_sync
 	cci::cnf::cci_cnf_broker_if* ValueSyncBrokerIF;   //!< CCI configuration broker instance
 
 	// Callback Adaptor Objects
-	std::vector<cci::shared_ptr<cci::cnf::callb_adapt_b> > post_write_cb_vec; //!< 'post_write' callback adaptor object
+	std::vector<cci::shared_ptr<cci::cnf::callb_adapt> > post_write_cb_vec; //!< 'post_write' callback adaptor object
 
 	/** std::vector storing the searched owner parameters references to CCI base parameter pointers*/
 	std::vector<cci::cnf::cci_base_param*> returnBaseParamList; //!< Searched and selected base parameters list passed by the top_module
