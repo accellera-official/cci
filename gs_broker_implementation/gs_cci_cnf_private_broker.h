@@ -29,8 +29,6 @@
 namespace cci {
 namespace cnf {
   
-  class cci_base_param_if;
-  
   class gs_cci_private_broker
   : public cci::cnf::cci_cnf_broker_if
   , public gs_cci_cnf_broker_if // used internally by broker accessors

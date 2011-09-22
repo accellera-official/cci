@@ -93,7 +93,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   protected:
 
     /// Allows cci::cnf::cci_base_param to access the caller_param to set to NULL.
-    //friend class cci_base_param_if; 
+    //friend class cci_base_param; 
         
   public:
     
