@@ -55,7 +55,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual bool is_default_value() {return get_pImpl()->is_default_value();}
     virtual bool is_invalid_value() {return get_pImpl()->is_invalid_value();}
     virtual void set_invalid_value() {get_pImpl()->set_invalid_value();}
-    virtual bool is_initial_value() {return get_pImpl()->is_initial_value();};
+    virtual bool is_initial_value() const {return get_pImpl()->is_initial_value();};
     virtual const std::string& get_name() const {return get_pImpl()->get_name();}
     virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) {return get_pImpl()-> register_callback(type, observer, function);}
     virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) {return get_pImpl()-> register_callback(type, callb);}

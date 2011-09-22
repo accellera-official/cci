@@ -1,0 +1,20 @@
+
+**** Parameter list:    
+int_param_only_implicit : impl. (is always initial), val=130
+int_param_with_initial_value : expl., initial, val=100
+int_param_with_late_initial_value : expl., val=12
+int_param_without_initial_value : expl., val=11
+
+
+**** Parameter list:    
+int_param_only_implicit : impl. (is always initial), val=130
+int_param_with_initial_value : expl., initial, val=100
+int_param_with_late_initial_value : expl., val=120
+int_param_without_initial_value : expl., val=11
+
+
+------ sc_start() ----------------
+
+
+------ sc_start() returned -------
+

@@ -116,7 +116,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       cci::cnf::callback_return_type call(cci::cnf::cci_base_param& changed_param, const cci::cnf::callback_type& cb_reason) {
         owner->m_is_default_value = false;
         owner->m_is_invalid_value = false;
-        owner->m_is_initial_value = false;
         return cci::cnf::return_nothing;
       }
       my_type* owner;
@@ -136,7 +135,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
-    , m_is_initial_value(false)
     , m_status_guard(*this)
     , m_init_called(false)
     , m_broker_accessor(broker_accessor)
@@ -204,11 +202,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return m_is_default_value;
     }
     
-    virtual bool is_initial_value() {
-      // TODO: should be located where the init value is applied in the API (if object is already existing) and during param instantiation when database initial value is applied
-      SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
-      assert(m_init_called && "init must have been called on construction");
-      return m_is_initial_value;
+    virtual bool is_initial_value() const {
+      assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+      return m_gs_param_base->is_initial_value();
     }
     
     virtual bool is_invalid_value() {
@@ -319,7 +315,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     bool m_is_default_value;
     bool m_is_invalid_value;
-    bool m_is_initial_value;
     status_guard m_status_guard;
     
     std::string my_documentation;

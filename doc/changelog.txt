@@ -1,5 +1,11 @@
 ChangeLog
 ---------
+22.09.2011
+added is_initial_value feature
+- added is_initial_value support to prototype
+- is_initial_value now const
+- added dev_example/is_initial_value_example
+
 20.09.2011
 - slightly changed callback function in broker if: cci_cnf_broker_if::register_str_callback and cci_cnf_broker_if::register_callback which was not complete yet
 - added some callback abilities to prototype in gs_cci_cnf_broker

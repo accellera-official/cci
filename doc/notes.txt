@@ -79,7 +79,7 @@ The proposal uses sc_report to report errors/warnings/infos like
 bad values, bad types etc. The used message type prefix is 
 "/OSCI/CCI/". These sc_reports can be handled by the application
 very elegant and SystemC-like, and can be switched off or even 
-catched locally.
+caught locally.
 Using sc_report for throwing exceptions is advisable because 
 catching other exceptions being thrown in e.g. sc_threads is
 hard to do for the user.
@@ -111,7 +111,7 @@ Background Notes:
 Internal broker stack:
 An internal broker stack is maintained by the broker manager.
 During construction private brokers are pushed to top and later
-poped. During construction of the user module the top broker is
+popped. During construction of the user module the top broker is
 the one being responsible for the module. 
 There is the option to get the second most top one (TODO: maybe 
 not needed, this WAS for a new priv. broker to get its hierarchical 
@@ -125,13 +125,13 @@ cci_broker_manager_module any more!
 
 INIT VALUE PRECEDENCE (TIME ORDERED / HIERARCHICAL)
 
-The porposal default is time ordered precedence for initial values. This means the latest call to set_init_value on the broker for a specific parameter is the one that actually get applied when the parameter comes to existence.
+The proposal default is time ordered precedence for initial values. This means the latest call to set_init_value on the broker for a specific parameter is the one that actually get applied when the parameter comes to existence.
 To emulate a hierarchical precedence (like e.g. the OVM mechanism uses), the following can be done with the proposed standard (also see file discussions.txt):
 - before creating the subsystem which creates the parameter,
 - Set the initial value using broker->set_init_value()
 - lock the initial value  using broker->lock_init_value()
 - instantiate the subsystem
-Effect: When any module in the subsystem tries to set the initial value again, this is locked, thus the second setting being ignored. Hence the hierachically highest module has the control over the initial value. (Remark this has no influence on writes to the parameter object.)
+Effect: When any module in the subsystem tries to set the initial value again, this is locked, thus the second setting being ignored. Hence the hierarchically highest module has the control over the initial value. (Remark this has no influence on writes to the parameter object.)
 
 ----------------------------------------------------------------
 
@@ -165,7 +165,7 @@ CLASS NAMES
 
 The cci prefix is doubled: in the namespace and often in 
 the class names. E.g.: cci::cci_base_param.
-We discussed and this is OSCI pratice thus ok this way.
+We discussed and this is OSCI practice thus ok this way.
 
 ----------------------------------------------------------
 NO POST_READ CALLBACKS

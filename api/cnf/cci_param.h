@@ -126,7 +126,7 @@ public:
   virtual bool is_default_value();
   virtual bool is_invalid_value();
   virtual void set_invalid_value();
-  virtual bool is_initial_value();
+  virtual bool is_initial_value() const;
   virtual const std::string& get_name() const;
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb);
@@ -261,7 +261,7 @@ public:
   virtual bool is_default_value();
   virtual bool is_invalid_value();
   virtual void set_invalid_value();
-  virtual bool is_initial_value();
+  virtual bool is_initial_value() const;
   virtual const std::string& get_name() const;
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb);

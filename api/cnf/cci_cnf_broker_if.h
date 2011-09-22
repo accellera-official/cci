@@ -89,6 +89,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Set a parameter's init value. 
     /**
      * The init value has priority to the default value being set by the owner!
+     * If called for an explicit parameter this is a usual set, including not
+     * setting the is_initial_value state to true!
      *
      * @exception        cci::cnf::cci_report::set_param_failed Setting parameter object failed
      * @param parname    Full hierarchical parameter name.

@@ -62,12 +62,15 @@ protected:
   /// Struct for parameter information to be saved in map
   struct parameter {
 
-    /// The init value (string representation) of the parameter.
+    /// The init value (string representation) of the parameter. Only valid if had_initial_value is true.
     std::string init_value;
     
     /// Lock for the init value (only of interest if param == NULL)
     bool init_value_locked;
-    
+
+    /// If this parameter had an initial value
+    bool had_initial_value;
+   
     /// Status if this parameter ever has been used (object or read init value)
     bool is_used;
 
@@ -77,6 +80,7 @@ protected:
     /// Contructor
     parameter(gs_param_base_T* par)
     : init_value_locked(false)
+    , had_initial_value(false)
     , is_used(false) {
       param = par;
       if (param != NULL) is_used = true;
@@ -85,6 +89,7 @@ protected:
     /// Contructor with init value
     parameter(gs_param_base_T* par, const std::string ivalue)
     : init_value_locked(false)
+    , had_initial_value(true)
     , is_used(false) {
       if (par != NULL) SC_REPORT_ERROR("ConfigDtabase::parameter constructor", "When creating implicit parameter with init value you cannot set the parmeter pointer!");
       assert(par == NULL);
@@ -142,10 +147,11 @@ public:
         }
         // set init value anyway which has priority!
         parameter *p = &pos->second;
-        if ((p->init_value).length() > 0) {
+        if (p->had_initial_value) {
           GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<"): set init value to '"<<p->init_value.c_str()<<"'");
+          par->m_setting_initial_value_now = true; // mark the following setString as initial value write
           par->setString(p->init_value);
-          // TODO: is_initial_value = true here
+          par->m_is_initial_value = true; // mark the parameter's value as initial value
         }
         p->is_used = true;
         return false;
@@ -156,10 +162,11 @@ public:
         parameter *p = &pos->second;
         p->param = par;
         // set init value which has priority!
-        if ((p->init_value).length() > 0) {
+        if (p->had_initial_value) {
           GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<") (type: "<<par->getTypeString()<<"): set init value to '"<<p->init_value.c_str()<<"'");
+          par->m_setting_initial_value_now = true; // mark the following setString as initial value write
           p->param->setString(p->init_value);
-          // TODO: is_initial_value = true here
+          par->m_is_initial_value = true; // mark the parameter's value as initial value
         }
         p->is_used = true;
       }
@@ -208,8 +215,7 @@ public:
     // If parameter not exists
     if (pos == m_parameter_database.end()) {
       GCNF_DUMP_N(name(), "setInitValue: parameter not yet exists: create implicit parameter.");
-      m_parameter_database.insert( make_pair(hier_parname, parameter(NULL, ivalue)) );
-      // TODO: is_initial_value = true here
+      m_parameter_database.insert( make_pair(hier_parname, parameter(NULL, ivalue)) ); // had_initial_value gets true here
       return true; // parameter was new added to database
     }
     // If parameter exists
@@ -225,12 +231,13 @@ public:
         GCNF_DUMP_N(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
         SC_REPORT_WARNING(name(), "setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!");
         pos->second.init_value = ivalue;
+        pos->second.had_initial_value = true;
       }
       else {
         parameter *par = &pos->second;
         par->param->setString(ivalue);
       }
-      // TODO: is_initial_value = true here
+      // had/is_initial_value is NOT been set here true because this is a usual set of an explicit parameter
     }
     return false; // parameter not new
   }

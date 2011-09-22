@@ -108,6 +108,8 @@ public:
   /// Set a parameter's init value. 
   /**
    * The init value has priority to the default value set by the owner!
+   * If called for an explicit parameter this is a usual set, including not
+   * setting the is_initial_value state to true!
    *
    * @param parname Hierarchical parameter name.
    * @param value   Init value the parameter has to be set to.

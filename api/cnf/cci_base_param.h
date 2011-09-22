@@ -43,7 +43,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual bool is_default_value() = 0;
     virtual bool is_invalid_value() = 0;
     virtual void set_invalid_value() = 0;
-    virtual bool is_initial_value() = 0;
+    virtual bool is_initial_value() const = 0;
     virtual const std::string& get_name() const = 0;
     virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) = 0;
     virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) = 0;

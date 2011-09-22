@@ -54,6 +54,9 @@ class gs_param_base
 : public sc_object  
 , public log_if
 {
+  /// Friend class to allow the plugin/database to access m_setting_initial_value_now and m_is_initial_value
+  friend class ConfigDatabase_T<gs_param_base>;
+  
 protected:
 
   /// Typedef to store a callback pointer
@@ -103,6 +106,8 @@ public:
   , m_update_event_enabled(false)
   , m_locked(false)
   , m_lock_pwd(NULL)
+  , m_is_initial_value(false)
+  , m_setting_initial_value_now(false)
   {
     //GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<(unsigned long) parent_array<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor");
     GS_PARAM_DUMP("gs_param_base(name='"<<n<<"', register_at_db="<<(unsigned int)register_at_db<<", parent_array="<<((parent_array!=NULL)?"yes":"no")<<", force_top_level_name="<<(unsigned int)force_top_level_name<<") constructor"); // <omitted ptr addr for diff>
@@ -503,6 +508,21 @@ public:
     return m_locked;
   }
   
+  /// If the current value is an initial one being set by the plugin/database when this parameter was implicit
+  /**
+   * Returns true only if the current value had been set by the plugin/database
+   * and was not overwritten by a usual set. This is false even if the value is 
+   * the same. This is false when the GCnf API call setInitValue had been used
+   * to set an explicit parameter's value!
+   *
+   * Becomes false on post_write_callback.
+   *
+   * @return If the current value is an initial one being set by the plugin/database
+   */
+  bool is_initial_value() const {
+    return m_is_initial_value;
+  }
+  
   // ///////////   Observer and callbacks   //////////////
 
 
@@ -854,6 +874,8 @@ protected:
   /// Deprecated, use make_post_write_callbacks() instead
   inline void makeCallbacks() {
     DEPRECATED_WARNING(name(), "DEPRECATED: internal function makeCallbacks() is deprecated! Use 'make_post_write_callbacks()' instead.");
+    if (!m_setting_initial_value_now) m_is_initial_value = false; // only invalidate initial_value if this is not a write of the plugin for a initial value
+    m_setting_initial_value_now = false;
     make_post_write_callbacks();
   }
  
@@ -1013,6 +1035,10 @@ protected:
   /// Set of the param attributes
   std::set<param_attribute> m_attributes;
   
+  /// If the current value is an initial one being set by the plugin/database. Becomes false on post_write_callback.
+  bool m_is_initial_value;
+  /// Helper for the Plugin to mark the following setString as initial value write
+  bool m_setting_initial_value_now;
 };
 
 

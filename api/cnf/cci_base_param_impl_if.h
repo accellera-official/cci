@@ -238,14 +238,18 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Marks the value to be invalid. (Does not impact the actual value.)
     virtual void set_invalid_value() = 0;
     
-    /// OPTIONAL: Returns if the current value is an initial value being set by the database (OPTIONAL:) and not been modified
+    /// Returns if the current value is an initial value being set by the database and not been modified
     /**
      * True if the value has been set using the cnf_broker's
-     * set_initial_value function (OPTIONAL:) and not been modified since then.
+     * set_initial_value function and not been modified since then.
      *
-     * @return If the parameter's current value is an initial value being set by the database
+     * Note: this will return false if a value that has been set as non-initial
+     *       value but is equals the initial value.
+     *
+     * @return If the parameter's current value is an initial value being set 
+     *         using the broker function set_initial_value
      */
-    virtual bool is_initial_value() = 0;
+    virtual bool is_initial_value() const = 0;
     
     
     // //////////////////////////////////////////////////////////////////// //
