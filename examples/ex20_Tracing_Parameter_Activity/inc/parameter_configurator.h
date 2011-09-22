@@ -164,11 +164,11 @@ class parameter_configurator : public sc_module
 	parameter_owner*          param_owner;
 
 	/// Registering all the various callbacks of the owner module cci_parameters
-	cci::shared_ptr<cci::cnf::callb_adapt_b>    cfgr_create_param_cb;
-	cci::shared_ptr<cci::cnf::callb_adapt_b>    cfgr_pre_read_param_cb;
-	cci::shared_ptr<cci::cnf::callb_adapt_b>    cfgr_pre_write_param_cb;
-	cci::shared_ptr<cci::cnf::callb_adapt_b>    cfgr_post_write_param_cb;
-	cci::shared_ptr<cci::cnf::callb_adapt_b>    cfgr_destroy_param_cb;
+	cci::shared_ptr<cci::cnf::callb_adapt>    cfgr_create_param_cb;
+	cci::shared_ptr<cci::cnf::callb_adapt>    cfgr_pre_read_param_cb;
+	cci::shared_ptr<cci::cnf::callb_adapt>    cfgr_pre_write_param_cb;
+	cci::shared_ptr<cci::cnf::callb_adapt>    cfgr_post_write_param_cb;
+	cci::shared_ptr<cci::cnf::callb_adapt>    cfgr_destroy_param_cb;
 
 };// End of Class/SC_MODULE
 

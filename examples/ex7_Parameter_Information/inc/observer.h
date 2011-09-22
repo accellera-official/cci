@@ -160,9 +160,9 @@ class observer
 		cci::cnf::cci_base_param*               obsv_int_base_ptr;//!< cci_base_param for integer type cci-param
 
 		// Callback Adaptor Objects for 'int' type parameter
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_read_cb;   //!< 'pre_read' callback adaptor obj for int type cci-param
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param
-		cci::shared_ptr<cci::cnf::callb_adapt_b>    int_post_write_cb; //!< 'post_write' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt>    int_pre_read_cb;   //!< 'pre_read' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt>    int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param
+		cci::shared_ptr<cci::cnf::callb_adapt>    int_post_write_cb; //!< 'post_write' callback adaptor obj for int type cci-param
 
 };// End of Class
 
