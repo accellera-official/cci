@@ -28,6 +28,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 /**
  * The implementation is in file cci_param.hpp, which has to be included 
  * in the headers as well because the class is a template class.
+ *
+ * Documentation for the undocumented functions can be found in
+ * cci_base_param_impl_if and cci_param_impl_if
  */
 template<typename T, param_mutable_type TM = mutable_parameter>
 class cci_param 
@@ -137,7 +140,8 @@ public:
   virtual bool lock(void* pwd = NULL);
   virtual bool unlock(void* pwd = NULL);
   virtual bool locked() const;
-
+  virtual const cci_originator* get_latest_write_originator() const;
+  
   // Type dependent functions
   virtual cci_param<val_type, TM>& operator = (const cci_param<val_type, TM>& v);
   virtual cci_param<val_type, TM>& operator = (const val_type& v);
@@ -156,7 +160,7 @@ public:
    * @return If this is a parameter accessor
    */
   bool is_accessor() const;
-
+  
   /// Copy myself; The copy is a parameter accessor object holding the originator information and pointing to the same parameter
   /**
    * This shall be used by the broker when returning a not yet created parameter accessor.
@@ -272,6 +276,7 @@ public:
   virtual bool lock(void* pwd = NULL);
   virtual bool unlock(void* pwd = NULL);
   virtual bool locked() const;
+  virtual const cci_originator* get_latest_write_originator() const;
   
   // Type dependent functions
   virtual cci::cnf::cci_param<val_type, TM>& operator = (const cci::cnf::cci_param<val_type, TM>& v);

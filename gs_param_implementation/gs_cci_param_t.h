@@ -131,6 +131,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       }
       if (!m_gs_param.setValue(val))
         cci::cnf::cci_report_handler::set_param_failed("Value rejected by callback.");
+      else
+        update_latest_write_originator();
     }
     
     virtual const val_type& get() const {
@@ -144,6 +146,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       }
       if (!m_gs_param.setValue(val, lock_pwd))
         cci::cnf::cci_report_handler::set_param_failed("Bad value.");
+      else
+        update_latest_write_originator();
     }
     
   protected:

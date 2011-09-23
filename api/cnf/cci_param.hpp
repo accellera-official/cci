@@ -331,6 +331,14 @@ bool cci_param<T,TM>::locked() const {
   return ret;
 }
 
+template<typename T, param_mutable_type TM>
+const cci_originator* cci_param<T,TM>::get_latest_write_originator() const {
+  //const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
+  return get_pImpl()->get_latest_write_originator();
+  //cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
+  //return ret;
+}
+
 // Other
 template<typename T, param_mutable_type TM>
 cci_param<T, TM>& cci_param<T,TM>::operator = (const cci_param<T, TM>& v) {
@@ -696,6 +704,14 @@ bool cci_param<std::string,TM>::locked() const {
   bool ret = get_pImpl()->locked();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
+}
+
+template<param_mutable_type TM>
+const cci_originator* cci_param<std::string,TM>::get_latest_write_originator() const {
+  //const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
+  return get_pImpl()->get_latest_write_originator();
+  //cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
+  //return ret;
 }
 
 // Other

@@ -138,6 +138,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_status_guard(*this)
     , m_init_called(false)
     , m_broker_accessor(broker_accessor)
+    , m_latest_write_access_originator_cp("NONE")
+    , m_latest_write_access_originator_valid(false)
     {
     }
 
@@ -214,6 +216,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     virtual void set_invalid_value() {
       assert(m_init_called && "init must have been called on construction");
+      update_latest_write_originator();
       m_is_invalid_value = true;
     }
     
@@ -301,6 +304,28 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return (fw_vec.size() > 0);
     }
     
+    virtual const cci::cnf::cci_originator* get_latest_write_originator() const {
+      if (!m_latest_write_access_originator_valid) return NULL;
+      return &m_latest_write_access_originator_cp;
+    }
+    
+  protected:
+    
+    /// Updates the internal member m_latest_write_access_originator_cp
+    /**
+     * This is called by function that writes successfully to the value of this parameter
+     */
+    void update_latest_write_originator() {
+      const cci::cnf::cci_originator* orig = cci::cnf::cci_originator::get_global_originator();
+      if (orig) {
+        m_latest_write_access_originator_valid = true;
+        m_latest_write_access_originator_cp = *orig;
+      }
+      else {
+        m_latest_write_access_originator_valid = false;       
+      }
+    }
+    
   protected:
     
     /// String whose reference can be returned as string value
@@ -324,6 +349,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     cci::shared_ptr<cci::cnf::callb_adapt> m_post_write_callback;
     
     cci::cnf::cci_cnf_broker_if* m_broker_accessor;
+    
+    /// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
+    cci::cnf::cci_originator m_latest_write_access_originator_cp;
+    /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
+    bool m_latest_write_access_originator_valid;
     
   };
 

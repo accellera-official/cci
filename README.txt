@@ -2,33 +2,40 @@ README.txt
 ----------
 
 OSCI CCI WG internal document with
-GreenSocs interface proposal.
+the WG's API proposal and
+GreenSocs' proof-of-concept implementation.
 
-- checkout from svn 
+- checkout from git repository 
   https://svn.greensocs.com/private/packages/greenstarcore
-  (ask Mark Burton or Christian Schršder for access)
+  (ask David Black for access)
 
+- generate doxygen documentation in doc:
+   doxygen cci_doxygen_api_ref.conf
+    and
+   doxygen cci_doxygen_gs_impl_ref.conf
 - start looking at documentation in doc/API_ref/index.html
 
-- edit Makefiles
-  - gs_broker_implementation/Makefile
-  - gs_param_implementation/Makefile
-  - api/Makefile
-  - Makefiles.defs
-
-- compile in
-  - api
-  - gs_broker_implementation
-  - gs_param_implementation
-  - dev_examples/gs_example (or other example)
-  (currently there are compiler warnings)
-  (read README.txt files if existing)
-
-- run ./testbench in gs_example (or any other example dir)
-
+- for compile development examples:
+  - edit Makefiles
+    - gs_broker_implementation/Makefile
+    - gs_param_implementation/Makefile
+    - api/Makefile
+    - Makefiles.defs
+  - compile in
+    - api
+    - gs_broker_implementation
+    - gs_param_implementation
+    - dev_examples/gs_example (or other example)
+    (currently there are compiler warnings)
+    (read README.txt files if existing)
+  - run ./testbench in gs_example (or any other example dir)
 (Note that instead of providing one Makefile or compile script for all
 there are different compiles to be done manually to demonstrate the 
 independency and make it easier to provide alternative implementations)
+
+- for compile official examples
+  - read examples/README.txt
+
 
 
 Contained Files:
@@ -44,4 +51,3 @@ dev_examples/                     :  some development examples
              priv_broker_example/ :  Example demonstrating usage of a private broker
              gs_example_diff_impl :  still TODO!!
 examples/  :  directory for official examples
-              to be added by anyone who is in charge of implementing them

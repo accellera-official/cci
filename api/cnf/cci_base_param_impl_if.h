@@ -262,6 +262,16 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      */
     virtual const std::string& get_name() const = 0;
    
+    /// Returns the originator of the latest successful write access 
+    /**
+     * This is an alternative to get originator information within the callback(s). <br>
+     * This returns the originator of the latest post_write. <br>
+     * This returns NULL as long as no write had been made.
+     *
+     * The originator is updated on the calls of the following functions: 
+     * json_deserialize(), set_value(), set_invalid_value(), cci_param::set(), cci_param::operator=()
+     */
+    virtual const cci_originator* get_latest_write_originator() const = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////   Callback Handling   //////////////////////////// //

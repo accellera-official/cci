@@ -1,5 +1,13 @@
 ChangeLog
 ---------
+23.09.2011
+persistent access to latest value originator 
+- API: added cci_base_param::get_latest_write_originator()
+- updated README
+- POC imp: added get_latest_write_originator()
+- added observer-demonstration to dev_examples/gs_example
+  using global get observer API as well as new parameter observer API
+
 22.09.2011
 added is_initial_value feature
 - added is_initial_value support to prototype

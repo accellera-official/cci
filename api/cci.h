@@ -30,7 +30,9 @@
  * <a href="../discussions.txt">discussions.txt</a> - Motivation for some important discussions.<br>
  * <a href="../guidelines.txt">guidelines.txt</a> - Guidelines for implementations of the proposed API.<br>
  * <a href="../notes.txt">notes.txt</a> - Some general notes and hints on the API and the example implementation.<br>
- * <a href="../Proposal_Status.xls">Proposal_Status.xls</a> - Status and TODOs of the example implementation.<br>
+ * 
+ * Other files document the status of the prototype, e.g.<br>
+ * <a href="http://www.systemc.org/apps/org/workgroup/cciwg/document.php?document_id=5434">CCI-to-do Spreadsheet</a> - Status and TODOs of the API, POC implementation etc.<br>
  * 
  *
  *

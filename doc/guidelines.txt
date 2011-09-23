@@ -262,7 +262,7 @@ cci_originator pointer. An originator stack is built by using the call stack (al
 some entity updates the originator information it first needs to backup the previous
 originator and restore it after the action had been performed).
 
-The end user has two places where he encounters the originator information: 
+The end user has several situations where he encounters the originator information: 
 1/ When asking for the responsible broker accessor it is important to give the originator 
    information (using a cci_originator) to the global get function. This 
    information is internally attached to the broker accessor which cares for setting the 
@@ -271,6 +271,10 @@ The end user has two places where he encounters the originator information:
 2/ Each time an action happens which allows to ask for the originator - e.g. a 
    parameter callback happens - the global get originator function can be asked for the 
    originator.
+   e.g. within a config callback use:
+   const cci::cnf::cci_originator* myOriginator = cci::cnf::cci_originator::get_global_originator();
+3/ Ask any explicit parameter for the originator of the latest value write:
+   cci_base_param::get_latest_write_originator() // Note this function name might change
 
 
 ----------------------------------------------------------------

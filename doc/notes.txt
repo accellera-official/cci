@@ -141,7 +141,7 @@ Guidelines how to emulate a hierarchical setting mechanism with
 the parameter object proposal (e.g. for OVM).
 (Decision on 6/2)
 
-This aproach needs the subsystem to be created after the initial 
+This approach needs the subsystem to be created after the initial 
 value being set and locked before the param construction within 
 the child module.
 

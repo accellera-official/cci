@@ -1,6 +1,6 @@
 // LICENSETEXT
 //
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
+//   Copyright (C) 2009-2011 : GreenSocs Ltd
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by:
@@ -121,6 +121,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     void set_value(const cci::cnf::cci_value& val) {
       cci::cnf::cci_report_handler::cci_value_failure("Set cci value not implemented for not specialized parameter types.");
+      base_type::update_latest_write_originator();
       // TODO: this could use a cci value's json representation to set the parameter
     }
 
@@ -208,6 +209,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return base_type::m_gs_param.get_default_value();
     }
     
+    // TODO: update_latest_write_originator() for each successfull set
     void set_value(const cci::cnf::cci_value& val) {
       if (val.type() != get_basic_type()) {
         cci::cnf::cci_report_handler::cci_value_failure("Wrong cci value type applied to parameter.");
@@ -229,6 +231,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           break;
         case cci::cnf::partype_string:
           base_type::set(val.get_string());
+          base_type::update_latest_write_originator();
           break;
         default:
           assert(false && "This should never happen!");

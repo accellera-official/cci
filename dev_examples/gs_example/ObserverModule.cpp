@@ -103,21 +103,30 @@ void ObserverModule::main_action() {
   cout << endl;
   
   std::cout << std::endl;
-
+  
+  wait(11, SC_NS);
+  // **** check for latest originator using the alternative API on parameter objects 
+  // (instead of global originator function within callbacks)
+  
+  DEMO_DUMP(name(), "latest write originator of parameter '"<< p->get_name() << "': " << p->get_latest_write_originator()->name());
+  p->json_deserialize("666666");
+  DEMO_DUMP(name(), "latest write originator of parameter '"<< p->get_name() << "': " << p->get_latest_write_originator()->name());
+  
 }
 
 
 /// Callback function with default signature showing changes.
 cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
   std::string str;
+  assert(cci::cnf::cci_originator::get_global_originator() && "Originator shall not be null!");
   switch (cb_reason) {
   case cci::cnf::pre_write:
     str = par.json_serialize();
-    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change value");
+    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change value, originator: "<< cci::cnf::cci_originator::get_global_originator()->name());
     break;
   case cci::cnf::post_write:
     str = par.json_serialize();
-    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
+    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"', originator: "<< cci::cnf::cci_originator::get_global_originator()->name());
     break;
   default:
     assert(false && "not awaited cb reason");
@@ -131,7 +140,7 @@ cci::cnf::callback_return_type ObserverModule::config_new_param_callback(const s
   cci::cnf::cci_base_param* p = mBroker->get_param(par_name);
   assert(p && "This new param should already be available!");
   std::string str = p->json_serialize();
-  DEMO_DUMP(name(), "New parameter callback '" << par_name << "', value '"<<str<<"'");
+  DEMO_DUMP(name(), "New parameter callback '" << par_name << "', value '"<<str<<"', originator: "<< cci::cnf::cci_originator::get_global_originator()->name());
   return cci::cnf::return_nothing;
 }
 
@@ -139,7 +148,7 @@ cci::cnf::callback_return_type ObserverModule::config_new_param_callback(const s
 cci::cnf::callback_return_type ObserverModule::config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
   assert(cb_reason == cci::cnf::reject_write);
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
-  cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
+  cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << ", originator: "<< cci::cnf::cci_originator::get_global_originator()->name() << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;
   cout << endl;
   return cci::cnf::return_value_change_rejected;

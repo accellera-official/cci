@@ -12,11 +12,12 @@ In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/
 ------ sc_start() ----------------
 
 ----------------------------
+@0 s /0 (Observer): register for new parameter callbacks
 @0 s /0 (Observer): register pre write callback for int_param to check value settings and reject them
 int_param has value = 11
 int_param set value = 99 (shall fail)
 @0 s /0 (Observer): Callback method called (which rejects changes):
-  Parameter 'Owner.int_param' type 1
+  Parameter 'Owner.int_param' type 1, originator: Observer
   REJECT VALUE CHANGE!!
 
 
@@ -31,12 +32,12 @@ MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param Mutabili
 Owner: uint_param get_default_value()=12000
 Owner: uint_param=12000
 Owner: uint_param is_default_value()=1
-@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' will change to value '12000'
-@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12000'
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: owning_param
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12000', originator: owning_param
 Owner: set uint_param=12000
 Owner: uint_param is_default_value()=0
-@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' will change to value '12000'
-@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '10'
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: owning_param
+@0 s /0 (Observer): Callback for parameter 'Owner.uint_param' changed to value '10', originator: owning_param
 Owner: set uint_param=10
 Owner: uint_param is_default_value()=0
 
@@ -76,29 +77,46 @@ MutabilityOwner:  unlock mutable_int_param
 MutabilityOwner:    set mutable_int_param should succeed
 ----------------------------
 Owner: Owner.int_param.json_serialize() = 11
+@1 ns /1 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: owning_param
+@1 ns /1 (Observer): Callback for parameter 'Owner.int_param' changed to value '555000', originator: owning_param
 Owner: Owner.int_param.json_deserialize(555000) results in 555000
 Owner: set int_param = 100
+@1 ns /1 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: owning_param
+@1 ns /1 (Observer): Callback for parameter 'Owner.int_param' changed to value '100', originator: owning_param
 Owner: set int_param.set(200)
+@1 ns /1 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: owning_param
+@1 ns /1 (Observer): Callback for parameter 'Owner.int_param' changed to value '200', originator: owning_param
 Owner: create parameter 
+@1 ns /1 (Observer): New parameter callback 'Owner.uchar_param', value '0', originator: owning_param
   created Owner.uchar_param
 Owner: Set the new parameter uchar_param
 
-Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will change to value '10'
-@1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12'
+Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: owning_param
+@1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' changed to value '12', originator: owning_param
 ----------------------------
 @10 ns /2 (Manipulator): Set parameter Owner.int_param to value=5000
+@10 ns /2 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Manipulator
+@10 ns /2 (Observer): Callback for parameter 'Owner.int_param' changed to value '5000', originator: Manipulator
 
 @10 ns /3 (Manipulator): Set parameter Owner.int_param to value=5001
+@10 ns /3 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Manipulator
+@10 ns /3 (Observer): Callback for parameter 'Owner.int_param' changed to value '5001', originator: Manipulator
 
 @10 ns /4 (Manipulator): Set parameter Owner.int_param to value=5002
+@10 ns /4 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Manipulator
+@10 ns /4 (Observer): Callback for parameter 'Owner.int_param' changed to value '5002', originator: Manipulator
 
 @10 ns /5 (Manipulator): Set parameter Owner.uint_param to value=9000
-@10 ns /5 (Observer): Callback for parameter 'Owner.uint_param' will change to value '12'
-@10 ns /5 (Observer): Callback for parameter 'Owner.uint_param' changed to value '9000'
+@10 ns /5 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: Manipulator
+@10 ns /5 (Observer): Callback for parameter 'Owner.uint_param' changed to value '9000', originator: Manipulator
 
+@11 ns /7 (Observer): latest write originator of parameter 'Owner.int_param': Manipulator
+@11 ns /7 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Observer
+@11 ns /7 (Observer): Callback for parameter 'Owner.int_param' changed to value '666666', originator: Observer
+@11 ns /7 (Observer): latest write originator of parameter 'Owner.int_param': Observer
 
 ----------------------------
-@20 ns /7 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
+@20 ns /8 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
 
 ValueMod: Caught Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:49
@@ -106,7 +124,7 @@ In process: ValueMod.main_action @ 20 ns
 uint_param has value = 9000
 
 str_param has value = This is a test string.
-@20 ns /7 (ValueMod): Set parameter Owner.str_param to value="test cci value string" using cci_value
+@20 ns /8 (ValueMod): Set parameter Owner.str_param to value="test cci value string" using cci_value
 str_param has value = test cci value string
 
 ----------------------------
