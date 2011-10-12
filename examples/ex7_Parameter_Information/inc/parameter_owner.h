@@ -50,9 +50,6 @@ class parameter_owner : public sc_core::sc_module
 			/// Register a SC_THREAD process
 			SC_THREAD(run_thread);
 
-			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'get_default_value()'" << endl;			
-			std::cout << "\n\t[OWNER -> Retrieve] : Parameter name  : " << int_param.get_name() << endl;
-			
 			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'is_initial_value' API" << std::endl;
 
 			std::cout << "\n\t[OWNER] : Parameter : " << int_param.get_name()\
@@ -60,6 +57,9 @@ class parameter_owner : public sc_core::sc_module
 
 			std::cout << "\tIs initial value ?\t" << std::boolalpha	<< int_param.is_initial_value() << std::endl;
 
+
+			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'get_default_value()'" << endl;			
+			std::cout << "\n\t[OWNER -> Retrieve] : Parameter name  : " << int_param.get_name() << endl;
 
 			//Setting parameter value using 'cci_value' not implemented
 			//Used something like : int_param = 1; (see code within the SC_THREAD)
@@ -138,12 +138,6 @@ class parameter_owner : public sc_core::sc_module
 						<< std::boolalpha << int_param.is_invalid_value() << endl;
 					std::cout << "\n\t[OWNER] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
 				}//End of IF-ELSE
-
-				//wait(8.0, SC_NS); 
-
-				//std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'is_initial_value' API" << std::endl;
-				//std::cout << "\n\t[OWNER] : Parameter : " << int_param.get_name()\
-				//	<< "\t'is_initial_value' ?\t" << std::boolalpha	<< int_param.is_initial_value() << std::endl;
 
 				wait(10.0, SC_NS);
 

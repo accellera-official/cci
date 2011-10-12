@@ -7,14 +7,14 @@
 
 	'Integer type' has 'pre_read', 'pre/post_write' callback registered within the OBSERVER
 
-Prior to 0 s	demonstrating 'get_default_value()'
-
-	[OWNER -> Retrieve] : Parameter name  : param_owner.mutable_int_param
-
 Prior to 0 s	demonstrating 'is_initial_value' API
 
 	[OWNER] : Parameter : param_owner.mutable_int_param	Value : 0
 	Is initial value ?	false
+
+Prior to 0 s	demonstrating 'get_default_value()'
+
+	[OWNER -> Retrieve] : Parameter name  : param_owner.mutable_int_param
 
 	[OWNER -> Retrieve] : Using 'get_default_value()' : 0
 
