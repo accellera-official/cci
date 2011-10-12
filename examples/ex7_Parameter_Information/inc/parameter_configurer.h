@@ -105,6 +105,19 @@ class parameter_configurer : public sc_core::sc_module
 				strParamExists = false;
 			} // End of IF
 
+			
+			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'is_initial_value' API" << std::endl;
+
+			/// Check if string type cci-parameter has any initial value using 'is_initial_value' API
+			if(str_param_ptr->is_initial_value())
+				std::cout << "\n\t[CFGR C_TOR] : " << str_param_ptr->get_name()\
+					<< "\tInitial Value : " << str_param_ptr->json_serialize() << std::endl;
+			else
+				std::cout << "\t[CFGR] : No initial value set for " << str_param_ptr->get_name() << std::endl;
+
+			std::cout << "\t[CFGR C_TOR] : Is initial value ?\t"\
+				<< std::boolalpha << str_param_ptr->is_initial_value() << std::endl;
+
 
 			/// Set documentation to the string type cci-parameter
 			std::cout << "\n\t[CFGR C_TOR] : Set documentation to the string-type cci-parameter" << std::endl;
@@ -127,10 +140,10 @@ class parameter_configurer : public sc_core::sc_module
 
 		/*!
 		 *  \fn     void run_accessor (void)
-		 *  \brief  It uses various APIs like 'is_default_value', 'is_invalid_value'
-		 *          to check the status of parameters.  It also illustrates various
-		 *          APIs required to set, get, lock, unlock the parameter values and
-		 *          their documentation
+		 *  \brief  It uses various APIs like 'is_default_value', 'is_invalid_value',
+		 *          'is_initial_value', etc. to check the status of parameters.  It
+		 *          also illustrates various APIs required to set, get, lock, unlock
+		 *          the parameter values and their documentation
 		 */
 		void run_accessor(void)
 		{
@@ -302,7 +315,18 @@ class parameter_configurer : public sc_core::sc_module
 
 					/// Set a (std::string) parameter's value using 'set_value' API with cci_value
 					str_param_ptr->set_value(str_value);
+
+					wait(2.0, SC_NS);
+
+					std::cout << "\n@ " << sc_time_stamp() << " demonstrating 'get_latest_write_originator' API" <<  std::endl;
+
+					/// Get the latest write originator for the write value to the string type cci-parameter
+					const cci::cnf::cci_originator* str_originator = str_param_ptr->get_latest_write_originator();
+					std::cout << "\n\t[CFGR] : Originator for the latest write on string type cci-parameter : "\
+						<< str_originator->name() << std::endl;
+
 					
+					std::cout << "\n@ " << sc_time_stamp() << " demonstrating 'get_value' for string-type param using cci_value" <<  std::endl;
 					std::cout << "\n\t[CFGR] : 'Retrieve1' using 'json_serialize' and 'Retrieve2' using 'get_value()'" << endl;
 					std::cout << "\n\t[CFGR -> Retrieve1] : " << str_param_ptr->get_name() << " value is " << str_param_ptr->json_serialize() << endl;  					
 					
@@ -322,6 +346,8 @@ class parameter_configurer : public sc_core::sc_module
 				}
 				else
 					std::cout << "\nParameter by name " << int_param_str << " not found." << endl; 
+
+				//wait(20.0, SC_NS);
 
 			}// End of outer while
 

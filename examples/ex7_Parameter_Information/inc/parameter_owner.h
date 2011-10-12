@@ -53,18 +53,14 @@ class parameter_owner : public sc_core::sc_module
 			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'get_default_value()'" << endl;			
 			std::cout << "\n\t[OWNER -> Retrieve] : Parameter name  : " << int_param.get_name() << endl;
 			
-			//TODO :  The following code generates a warning :
-			//
-			//Warning: GreenSocs/cci/not_implemented: not implemented
-			//In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_param_implementation/gs_cci_base_param.h:210 
-			//
-			//Also, the status value returned is 'FALSE' (in this case) for integer type parameter
-			//
-			//if(int_param.is_initial_value())
-			//	itd::cout << "\n\t[OWNER] : Value has not been modified since it is initialized by CCI tool." << endl;
-			//else
-			//	std::cout << "\n\t[OWNER] : is_initial_value() - Value has been modified." << endl;
-			//
+			std::cout << "\nPrior to " << sc_time_stamp() << "\tdemonstrating 'is_initial_value' API" << std::endl;
+
+			std::cout << "\n\t[OWNER] : Parameter : " << int_param.get_name()\
+				<< "\tValue : " << int_param.get() << std::endl;
+
+			std::cout << "\tIs initial value ?\t" << std::boolalpha	<< int_param.is_initial_value() << std::endl;
+
+
 			//Setting parameter value using 'cci_value' not implemented
 			//Used something like : int_param = 1; (see code within the SC_THREAD)
 
@@ -143,7 +139,13 @@ class parameter_owner : public sc_core::sc_module
 					std::cout << "\n\t[OWNER] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
 				}//End of IF-ELSE
 
-				wait(20.0, SC_NS); 
+				//wait(8.0, SC_NS); 
+
+				//std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'is_initial_value' API" << std::endl;
+				//std::cout << "\n\t[OWNER] : Parameter : " << int_param.get_name()\
+				//	<< "\t'is_initial_value' ?\t" << std::boolalpha	<< int_param.is_initial_value() << std::endl;
+
+				wait(10.0, SC_NS);
 
 			}// End of WHILE
 

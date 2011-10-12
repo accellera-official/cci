@@ -9,7 +9,7 @@ CCI_PARAM_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_im
 
 GS_CONTROL_DIR = /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch
 GREENSTARCORE_DIR = /Users/schroede/mydev/cci_git/cci
-BOOST = /cad/tools/boost_1_42_0
+BOOST = /cad/tools/boost
 SYSTEMC = /cad/tools/systemc
 
 ## Your compiler

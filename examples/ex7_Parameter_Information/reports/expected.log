@@ -11,11 +11,21 @@ Prior to 0 s	demonstrating 'get_default_value()'
 
 	[OWNER -> Retrieve] : Parameter name  : param_owner.mutable_int_param
 
+Prior to 0 s	demonstrating 'is_initial_value' API
+
+	[OWNER] : Parameter : param_owner.mutable_int_param	Value : 0
+	Is initial value ?	false
+
 	[OWNER -> Retrieve] : Using 'get_default_value()' : 0
 
 	[OWNER -> Set] : Param documentation - 'This is a mutable type integer parameter'
 
 	[CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
+
+Prior to 0 s	demonstrating 'is_initial_value' API
+
+	[CFGR C_TOR] : param_owner.mutable_string_param	Initial Value : Initialized within sc_main
+	[CFGR C_TOR] : Is initial value ?	true
 
 	[CFGR C_TOR] : Set documentation to the string-type cci-parameter
 
@@ -116,6 +126,12 @@ Prior to 0 s	demonstrating 'get_default_value()'
 	[CFGR] : Parameter Documentation : This is a mutable type string parameter
 
 	[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : 4
+
+@ 24 ns demonstrating 'get_latest_write_originator' API
+
+	[CFGR] : Originator for the latest write on string type cci-parameter : param_cfgr
+
+@ 24 ns demonstrating 'get_value' for string-type param using cci_value
 
 	[CFGR] : 'Retrieve1' using 'json_serialize' and 'Retrieve2' using 'get_value()'
 

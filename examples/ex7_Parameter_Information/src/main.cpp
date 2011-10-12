@@ -67,7 +67,7 @@ int sc_main(int sc_argc, char* sc_argv[])
 	observer              observer_class;
 
 	/// Simulation time
-	sc_start(24.0, SC_NS);
+	sc_start(26.0, SC_NS);
 
 	return EXIT_SUCCESS;
 
