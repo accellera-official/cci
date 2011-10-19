@@ -71,12 +71,17 @@ namespace cnf {
     
     /// Typedef for internal new param callback handling map
     typedef std::multimap<std::string, internal_callback_forwarder*> observerCallbackMap;
-    
+
+    /// Typedef for internal implicit param originator map
+    typedef std::multimap<std::string, cci::cnf::cci_originator> implicitOriginatorMap;
+
   public:
 
     cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::cnf::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
 
     const cci_originator* get_originator() const { return NULL; }
+
+    const cci_originator* get_latest_write_originator(const std::string &parname) const;
 
     gs_cci_cnf_broker(const std::string& name);
     
@@ -135,6 +140,9 @@ namespace cnf {
      */
     void make_create_param_callbacks(const std::string &search, const std::string &par_name, const std::string &value);
 
+    /// Internal const function to be used by get_param and get_latest_write_originator
+    cci::cnf::cci_base_param* get_param_const(const std::string &parname) const;
+
   protected:
       
     std::map<std::string, cci::cnf::cci_base_param*> m_mirrored_registry;
@@ -145,6 +153,9 @@ namespace cnf {
 
     /// Map to save an observer callback function pointer for each parameter (if needed).
     observerCallbackMap m_observer_callback_map;
+
+    /// Map to save the latest write originator for implicit param sets (this is a HACK - should be within the database)
+    implicitOriginatorMap m_implicit_originator_map;
   };
   
   

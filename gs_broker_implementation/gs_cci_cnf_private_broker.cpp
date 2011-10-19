@@ -69,7 +69,23 @@ void cci::cnf::gs_cci_private_broker::set_init_value(const std::string &parname,
   // TODO: use JSON
   if ( !gs::cnf::GCnf_private_Api::setInitValue(parname, json_value) ) {
     cci_report_handler::set_param_failed("Setting initial value failed.");
+  } else {
+    m_implicit_originator_map.insert( std::pair<std::string, cci::cnf::cci_originator>(parname, *cci_originator::get_global_originator()));
   }
+}
+
+const cci::cnf::cci_originator* cci::cnf::gs_cci_private_broker::get_latest_write_originator(const std::string &parname) const {
+  cci::cnf::cci_base_param* p = get_param_const(parname);
+  if (p) {
+    if (p->get_latest_write_originator()) 
+      return p->get_latest_write_originator();
+  }
+  implicitOriginatorMap::const_iterator it;
+  it = m_implicit_originator_map.find(parname);
+  if (it != m_implicit_originator_map.end()) {
+    return &(it->second);
+  }
+  return NULL;
 }
 
 void cci::cnf::gs_cci_private_broker::lock_init_value(const std::string &parname) {
@@ -89,7 +105,10 @@ const std::string cci::cnf::gs_cci_private_broker::get_json_string_keep_unused(c
 }
 
 cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param(const std::string &parname) {
-  std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
+  return get_param_const(parname);
+}
+cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param_const(const std::string &parname) const {
+  std::map<std::string,cci_base_param*>::const_iterator iter = m_mirrored_registry.find(parname);
   if( iter != m_mirrored_registry.end() )
     return iter->second;
   else {

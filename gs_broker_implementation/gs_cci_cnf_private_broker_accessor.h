@@ -104,6 +104,8 @@ namespace cci {
        */
       const cci_originator* get_originator() const;
       
+      const cci_originator* get_latest_write_originator(const std::string &parname) const;
+      
       gs_cci_cnf_broker_if* get_gs_broker();
       
       /// Returns the underlying gs_GCnf_Api (implements gs_cnf_api_accessor)

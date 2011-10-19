@@ -42,6 +42,14 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   cout << "----------------------------" << endl;
 
+  const cci::cnf::cci_originator* orig = mBroker->get_latest_write_originator("Owner.int_param");
+  assert (orig && "Originator must not be NULL here!");
+  if (mBroker->get_param("Owner.int_param")) {
+    DEMO_DUMP(name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
+  } else {
+    DEMO_DUMP(name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig->name());
+  }
+  
   DEMO_DUMP(name(), "register for new parameter callbacks");
   cci::shared_ptr<cci::cnf::callb_adapt> cb_new_pa;
   cb_new_pa = mBroker->register_str_callback(cci::cnf::create_param, "*", this, 
@@ -111,6 +119,14 @@ void ObserverModule::main_action() {
   DEMO_DUMP(name(), "latest write originator of parameter '"<< p->get_name() << "': " << p->get_latest_write_originator()->name());
   p->json_deserialize("666666");
   DEMO_DUMP(name(), "latest write originator of parameter '"<< p->get_name() << "': " << p->get_latest_write_originator()->name());
+  
+  orig = mBroker->get_latest_write_originator(p->get_name());
+  assert (orig && "Originator must not be NULL here!");
+  if (mBroker->get_param(p->get_name())) {
+    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param "<<p->get_name()<<" (from broker): " << orig->name());
+  } else {
+    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param "<<p->get_name()<<" (from broker): " << orig->name());
+  }
   
 }
 
