@@ -1,4 +1,5 @@
 Owner.int_param exists (implicit or explicit)
+@0 s /0 (Manipulator): Write originator for IMPLICIT param Owner.int_param (from broker): Manipulator
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
 In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
@@ -12,6 +13,7 @@ In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/
 ------ sc_start() ----------------
 
 ----------------------------
+@0 s /0 (Observer): Write originator for EXPLICIT param Owner.int_param (from broker): Manipulator
 @0 s /0 (Observer): register for new parameter callbacks
 @0 s /0 (Observer): register pre write callback for int_param to check value settings and reject them
 int_param has value = 11
@@ -114,6 +116,7 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 @11 ns /7 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Observer
 @11 ns /7 (Observer): Callback for parameter 'Owner.int_param' changed to value '666666', originator: Observer
 @11 ns /7 (Observer): latest write originator of parameter 'Owner.int_param': Observer
+@11 ns /7 (Observer): Write originator for EXPLICIT param Owner.int_param (from broker): Observer
 
 ----------------------------
 @20 ns /8 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value

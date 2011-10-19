@@ -98,6 +98,19 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      */
     virtual void set_init_value(const std::string &parname, const std::string &json_value) = 0;
     
+    /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
+    /**
+     * For explicit parameters it is recommended to use the parameter object's get_latest_write_originator() function.
+     * Returns NULL if there is no parameter with the given name
+     * or there is no originator.
+     * If there is an explicit parameter and its originator is not NULL 
+     * this returns the explicit parameter's originator information!
+     *
+     * @param parname  Name of an implicit or explicit parameter.
+     * @return Originator pointer; NULL if there was not yet any write
+     */
+    virtual const cci_originator* get_latest_write_originator(const std::string &parname) const = 0;
+
     /// Lock a parameter's init value. 
     /**
      * Lock so that this parameter's init value cannot be overwritten by

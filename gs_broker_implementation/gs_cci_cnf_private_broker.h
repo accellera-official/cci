@@ -36,11 +36,18 @@ namespace cnf {
   , public gs::cnf::gs_cnf_api_accessor
   , public cci::cnf::gs_cci_cnf_broker_accessor_handler
   {
+  protected:
+    
+    /// Typedef for internal implicit param originator map
+    typedef std::multimap<std::string, cci::cnf::cci_originator> implicitOriginatorMap;
+
   public:
 
     cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::cnf::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
     
     const cci_originator* get_originator() const { return NULL; }
+
+    const cci_originator* get_latest_write_originator(const std::string &parname) const;
 
     //gs_cci_private_broker(const char* name, sc_core::sc_module& owner, std::vector<const char*> pub_params);
     /// Constructor
@@ -99,6 +106,11 @@ namespace cnf {
     gs::cnf::cnf_api_if* get_gs_cnf_api();
     
   protected:
+
+    /// Internal const function to be used by get_param and get_latest_write_originator
+    cci::cnf::cci_base_param* get_param_const(const std::string &parname) const;
+
+  protected:
     
     //gs::cnf::cnf_api_if* m_gcnf_api;
     
@@ -109,7 +121,11 @@ namespace cnf {
   
     /// This broker's name
     std::string m_name;
-
+    
+    // TODO: add observerCallbackMap m_observer_callback_map;
+    
+    /// Map to save the latest write originator for implicit param sets (this is a HACK - should be within the database)
+    implicitOriginatorMap m_implicit_originator_map;
   };
   
   

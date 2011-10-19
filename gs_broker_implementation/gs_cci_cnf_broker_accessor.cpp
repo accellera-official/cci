@@ -177,6 +177,10 @@ const cci::cnf::cci_originator* cci::cnf::gs_cci_cnf_broker_accessor::get_origin
   return &m_originator;
 }
 
+const cci::cnf::cci_originator* cci::cnf::gs_cci_cnf_broker_accessor::get_latest_write_originator(const std::string &parname) const {
+  return m_broker->get_latest_write_originator(parname);
+}
+
 cci::cnf::gs_cci_cnf_broker_if* cci::cnf::gs_cci_cnf_broker_accessor::get_gs_broker() {
   return m_broker;
 }

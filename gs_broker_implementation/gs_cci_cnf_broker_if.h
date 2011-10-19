@@ -40,6 +40,8 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
     virtual void set_init_value(const std::string &parname, const std::string &json_value) = 0;
 
+    virtual const cci_originator* get_latest_write_originator(const std::string &parname) const = 0;
+
     virtual void lock_init_value(const std::string &parname) = 0;
     
     virtual const std::string get_json_string(const std::string &parname) = 0;
