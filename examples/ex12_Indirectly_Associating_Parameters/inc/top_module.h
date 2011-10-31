@@ -30,7 +30,7 @@
 #include <sstream>
 
 #include "parameter_owner.h"
-#include "param_value_sync.h"
+#include "param_value_sync_with_cf.h"
 
 /**
  * @class    top_module top_module.h
@@ -46,8 +46,8 @@ class top_module : public sc_module
 		parameter_owner*   param_owner1; //!< Owner module #1
 		parameter_owner*   param_owner2; //!< Owner module #2
 
-		// Create an instance of the 'param_value_sync' class
-		param_value_sync   *param_sync;  //!< 'param_value_sync' instance
+		// Create an instance of the 'param_value_sync_with_cf' class
+		param_value_sync_with_cf   *param_sync;  //!< 'param_value_sync' instance
 
 		SC_HAS_PROCESS(top_module);
 
@@ -100,9 +100,9 @@ class top_module : public sc_module
 				std::cout << "\t[TOP_MODULE C_TOR] : Parameter Name : " << param2_str << "\tnot found." << std::endl;
 
 
-			/// Pass the selected base parameters list to the 'param_value_sync' class
+			/// Pass the selected base parameters list to the 'param_value_sync_with_cf' class
 			/// synchronization related activity
-			param_sync	=	new param_value_sync(selectedBaseParamList);
+			param_sync	=	new param_value_sync_with_cf(selectedBaseParamList);
 			
 		}// End of Constructor
 

@@ -14,8 +14,8 @@
  * *******************************************************************************/
 
 /**
- * @file     param_value_sync.h
- * @brief    This file declares and defines the 'param_value_sync' class that
+ * @file     param_value_sync_with_cf.h
+ * @brief    This file declares and defines the 'param_value_sync_with_cf' class that
  *           registers callbacks on the cci-parameters of the owner modules.  This
  *           registration of callbacks is in order to establish synchronization between
  *           the respective cci-parameters
@@ -31,21 +31,21 @@
 #include <sstream>
 
 /**
- * @class    param_value_sync param_value_sync.h
+ * @class    param_value_sync_with_cf param_value_sync.h
  * @brief    The 'param_vale_sync' class registers 'post_write' callbacks on the
  *           owner's parameters in order to update an owner cci_parameter directly
  *           when another cci_parameter value is modified. 
  */ 
-class param_value_sync
+class param_value_sync_with_cf
 {
 	public:
 		
 		/**
-		 * @fn     param_value_sync::param_value_sync(std::vector<cci::cnf::cci_base_param * > )
+		 * @fn     param_value_sync_with_cf::param_value_sync(std::vector<cci::cnf::cci_base_param * > )
 		 * @brief  Overloaded constructor // No default constructor
 		 * @param  std::vector<cci::cnf::cci_base_param*>  Selected base parameters list passed from the top_module
 		 */
-		param_value_sync(std::vector<cci::cnf::cci_base_param * > BaseParamList) 
+		param_value_sync_with_cf(std::vector<cci::cnf::cci_base_param * > BaseParamList) 
 			/// Define an originator for the class in order to get hold of the default broker
 		:	ValueSyncOriginator("ValueSyncOriginator")
 		{
@@ -73,10 +73,10 @@ class param_value_sync
 
 		
 		/**
-		 * @fn     param_value_sync::~param_value_sync
+		 * @fn     param_value_sync_with_cf::~param_value_sync
 		 * @brief  Destructor
 		 */
-		~param_value_sync()
+		~param_value_sync_with_cf()
 		{
 			
 		}
@@ -184,10 +184,10 @@ class param_value_sync
 			 _base_param_2->json_deserialize(ss.str());
 			
 			post_write_cb_vec.push_back(_base_param_1->register_callback(cci::cnf::post_write,\
-				this, cci::bind(&param_value_sync::write_callback, this, _1, _2,_base_param_2,conv_fact)) );
+				this, cci::bind(&param_value_sync_with_cf::write_callback, this, _1, _2,_base_param_2,conv_fact)) );
 
 			post_write_cb_vec.push_back(_base_param_2->register_callback(cci::cnf::post_write,\
-				this, cci::bind(&param_value_sync::write_callback, this, _1, _2, _base_param_1,(1.0/conv_fact))) );
+				this, cci::bind(&param_value_sync_with_cf::write_callback, this, _1, _2, _base_param_1,(1.0/conv_fact))) );
 
 		}// End of synchValuesWithCF
 
