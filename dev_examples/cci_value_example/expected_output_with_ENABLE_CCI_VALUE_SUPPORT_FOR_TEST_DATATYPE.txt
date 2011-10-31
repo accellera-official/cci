@@ -1,0 +1,48 @@
+
+------ sc_start() ----------------
+
+@0 s /0 (Owner): Set and get parameter Owner.int_param - value = -10
+@0 s /0 (Owner):   got -10
+
+@0 s /0 (Owner): Set and get parameter Owner.uint_param - value = 10
+@0 s /0 (Owner):   got 10
+
+@0 s /0 (Owner): Set and get parameter Owner.bool_param - value = 1
+@0 s /0 (Owner):   got 1
+
+@0 s /0 (Owner): Set and get parameter Owner.double_param - value = 10.123
+@0 s /0 (Owner):   got 10.123
+
+@0 s /0 (Owner): Set and get parameter Owner.float_param - value = 98.765
+@0 s /0 (Owner):   got 98.765
+
+@0 s /0 (Owner): Set and get parameter Owner.str_param - value = This is a string
+@0 s /0 (Owner):   got "This is a string"
+
+@0 s /0 (Owner): Set and get parameter Owner.ll_param - value = 1000000000000000001
+@0 s /0 (Owner):   got 1000000000000000001
+
+@0 s /0 (Owner): Set and get parameter Owner.uchar_param - value = F
+@0 s /0 (Owner):   got F
+
+@0 s /0 (Owner): Set and get parameter Owner.schar_param - value = G
+@0 s /0 (Owner):   got G
+
+@0 s /0 (Owner): Set and get parameter Owner.char_param - value = H
+@0 s /0 (Owner):   got H
+
+@0 s /0 (Owner): Set and get parameter Owner.ushort_param - value = 244
+@0 s /0 (Owner):   got 244
+
+
+-------------------------
+@0 s /0 (Owner): Set unsigned integer parameter Owner.uint_param to string value="Hello" using WRONG cci_value type!
+
+Owner: Caught Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value called with wrong value type.
+In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:49
+In process: Owner.main_action @ 0 s
+
+@0 s /0 (Owner): Set user data type parameter that does not support cci_values using a cci_value (disabled ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE)!
+
+------ sc_start() returned -------
+

@@ -120,11 +120,9 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 
 ----------------------------
 @20 ns /8 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
-
-ValueMod: Caught Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
-In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:49
-In process: ValueMod.main_action @ 20 ns
-uint_param has value = 9000
+@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: ValueMod
+@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' changed to value '555', originator: ValueMod
+uint_param has value = 555
 
 str_param has value = This is a test string.
 @20 ns /8 (ValueMod): Set parameter Owner.str_param to value="test cci value string" using cci_value

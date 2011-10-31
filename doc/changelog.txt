@@ -1,5 +1,10 @@
 ChangeLog
 ---------
+31.10.2011
+cci_value support for standard cci_param data types
+- added cci_value_helper template class for cci_value support
+- added dev_example/cci_value_example
+
 19.10.2011
 track initial value originators
 - added broker function get_latest_write_originator to interface
