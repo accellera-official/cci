@@ -62,7 +62,7 @@ class observer
 		 * @fn     observer::~observer()
 		 * @brief  Destructor
 		 */
-		observer::~observer()
+		~observer()
 		{
 			//@TODO
 		}
@@ -117,6 +117,7 @@ class observer
 				}// End of SWITCH-CASE
 
 				return cci::cnf::return_nothing;
+
 			}// End of 'config_new_param_callback'
 
 
@@ -133,7 +134,7 @@ class observer
 				switch(cb_reason)
 				{
 					case cci::cnf::pre_read	:	{
-						std::cout << "\n\t[OBSERVER - pre_read_cb] : Parammeter Name : " << _base_param.get_name() << "\tvalue will be read." << std::endl;
+						std::cout << "\t[OBSERVER - pre_read_cb] : Parammeter Name : " << _base_param.get_name() << "\tvalue will be read." << std::endl;
 						break;	}
 
 					default :
@@ -157,12 +158,14 @@ class observer
 				switch(cb_reason)
 				{
 					case cci::cnf::pre_write	:	{
-						std::cout	<< "\n\t[OBSERVER - pre_write_cb] : Parameter Name : " << _base_param.get_name()
+						std::cout << "\n\t[OBSERVER - pre_write_cb] : Retrieving details of new cci-parameter" << std::endl;
+						std::cout	<< "\t[OBSERVER - pre_write_cb] : Parameter Name : " << _base_param.get_name()
 							<< "\tParameter Value : " << _base_param.json_serialize() << std::endl;
 						break;	}
 				
 					case cci::cnf::post_write	:	{
-						std::cout << "\n\t[OBSERVER - post_write_cb] : Parameter Name : " << _base_param.get_name()
+						std::cout << "\n\t[OBSERVER - post_write_cb] : Retrieving details of new cci-parameter" << std::endl;
+						std::cout << "\t[OBSERVER - post_write_cb] : Parameter Name : " << _base_param.get_name()
 							<< "\tParameter Value : " << _base_param.json_serialize() << std::endl;
 						break;	}
 

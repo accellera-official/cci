@@ -103,22 +103,6 @@ class parameter_owner : public sc_core::sc_module
 
 				wait(17.0, SC_NS);
 
-				/*****************************************************************************************************************
-				// The code (commented) below notifies the following error :
-				//
-				// Error: /OSCI/CCI/cci_value_failure: Set cci value not implemented for not specialized parameter types.
-				// In file: /home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/gs_param_implementation/gs_cci_param.h:125
-				// In process: param_acc.run_accessor @ 20 ns
-					
-				std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating 'set_value' using cci_value for int" << endl;
-				
-				cci::cnf::cci_value int_value(55);
-				int_param.set_value(int_value);
-			
-				std::cout << "\n\t[OWNER -> Retrieve] : " << int_param.get_name() << " value is " << int_param.get() << endl;
-							
-				wait(2.0, SC_NS);
-				******************************************************************************************************************/
 
 				std::cout << "\n@ " << sc_time_stamp() << " demonstrating 'set_value_invalid()'" << endl;	
 				std::cout << "\n\t[OWNER -> Set] : " << int_param.get_name() << " value invalid." << endl;
@@ -130,15 +114,32 @@ class parameter_owner : public sc_core::sc_module
 				if(int_param.is_invalid_value())	{
 					std::cout << "\t[OWNER] : Is Invalid Value ? " << "\tReturned Status : "\
 						<< std::boolalpha << int_param.is_invalid_value() << endl;
-					std::cout << "\n\t[OWNER] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
+					std::cout << "\n\t[OWNER -> Retrieve] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
 				}
 				else
 				{
 					std::cout << "\t[OWNER] : Is Invalid Value ? " << "\tReturned Status : "\
 						<< std::boolalpha << int_param.is_invalid_value() << endl;
-					std::cout << "\n\t[OWNER] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
+					std::cout << "\n\t[OWNER -> Retrieve] : " << int_param.get_name() << "\tValue : " << int_param.get() << endl;
 				}//End of IF-ELSE
 
+				wait(8.0, SC_NS);
+
+				std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating setting values by OWNER using cci_value" << std::endl;
+				std::cout << "\t[OWNER -> Set] : New String Value : 'String_Value_Set_by_OWNER"  << std::endl;
+	
+				cci::cnf::cci_value str_value("String_Value_Set_by_OWNER");
+				string_param.set_value(str_value);
+
+				wait(2.0, SC_NS);
+
+				std::cout << "\n@ " << sc_time_stamp() << "\tdemonstrating retrieving values by OWNER using cci_value" << std::endl;
+	
+				cci::cnf::cci_value rec_str_value = string_param.get_value();
+				std::string recv_str = rec_str_value.get_string();
+
+				std::cout << "\t[OWNER -> Retrieve] : Receive str_value using 'cci_value' : " << recv_str << std::endl;
+				
 				wait(10.0, SC_NS);
 
 			}// End of WHILE

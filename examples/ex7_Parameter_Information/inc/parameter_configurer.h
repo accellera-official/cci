@@ -347,7 +347,7 @@ class parameter_configurer : public sc_core::sc_module
 				else
 					std::cout << "\nParameter by name " << int_param_str << " not found." << endl; 
 
-				//wait(20.0, SC_NS);
+				wait(20.0, SC_NS);
 
 			}// End of outer while
 

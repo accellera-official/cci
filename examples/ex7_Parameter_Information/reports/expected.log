@@ -114,7 +114,7 @@ Prior to 0 s	demonstrating 'is_initial_value' API
 
 	[OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
 
-	[OWNER] : param_owner.mutable_int_param	Value : 10
+	[OWNER -> Retrieve] : param_owner.mutable_int_param	Value : 10
 
 @ 20 ns	demonstrating 'is_invalid_value()'
 
@@ -138,3 +138,9 @@ Prior to 0 s	demonstrating 'is_initial_value' API
 	[CFGR -> Retrieve1] : param_owner.mutable_string_param value is Hello_New_String
 
 	[CFGR -> Retrieve2] : Hello_New_String
+
+@ 26 ns	demonstrating setting values by OWNER using cci_value
+	[OWNER -> Set] : New String Value : 'String_Value_Set_by_OWNER
+
+@ 28 ns	demonstrating retrieving values by OWNER using cci_value
+	[OWNER -> Retrieve] : Receive str_value using 'cci_value' : String_Value_Set_by_OWNER
