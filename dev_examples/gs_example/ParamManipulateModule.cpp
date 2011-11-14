@@ -27,6 +27,8 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value
+  mBroker->set_init_value("Owner.int_param", "10");
+  // demonstrate waring issued by a second initial value
   mBroker->set_init_value("Owner.int_param", "11");
   // demonstrate testing for existence
   if (mBroker->exists_param("Owner.int_param"))

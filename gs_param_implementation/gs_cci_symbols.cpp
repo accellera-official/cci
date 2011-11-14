@@ -61,6 +61,10 @@ namespace cci { namespace cnf {
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_bit)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_logic)
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_core::sc_time)
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_int<64>)  // as an example
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_uint<64>) // as an example
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_bigint<128>)  // as an example
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_biguint<128>) // as an example
 
 } } // end namespace
 

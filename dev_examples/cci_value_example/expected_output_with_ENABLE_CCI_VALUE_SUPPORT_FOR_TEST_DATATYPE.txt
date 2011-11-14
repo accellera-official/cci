@@ -1,4 +1,9 @@
 
+Info: (I804) /IEEE_Std_1666/deprecated: sc_bit is deprecated, use bool instead
+
+Warning: gs_param<sc_bit>: DEPRECATED: sc_bit is deprecated use bool instead.
+In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_systemc.hpp:628
+
 ------ sc_start() ----------------
 
 @0 s /0 (Owner): Set and get parameter Owner.int_param - value = -10
@@ -31,8 +36,64 @@
 @0 s /0 (Owner): Set and get parameter Owner.char_param - value = H
 @0 s /0 (Owner):   got H
 
+@0 s /0 (Owner): Set and get parameter Owner.char_param - value = A
+@0 s /0 (Owner):   got A
+
 @0 s /0 (Owner): Set and get parameter Owner.ushort_param - value = 244
 @0 s /0 (Owner):   got 244
+
+@0 s /0 (Owner): Set and get parameter Owner.strvec_param - value = 
+value1, value2, value3, 
+@0 s /0 (Owner):   got 
+value1, value2, value3, 
+
+@0 s /0 (Owner): Set and get parameter Owner.scintbase_param - value = -1000
+@0 s /0 (Owner):   got -1000
+
+@0 s /0 (Owner): Set and get parameter Owner.scintbase_param - value = -111000
+@0 s /0 (Owner):   got -111000
+
+@0 s /0 (Owner): Set and get parameter Owner.scuintbase_param - value = 1000
+@0 s /0 (Owner):   got 1000
+
+@0 s /0 (Owner): Set and get parameter Owner.scuintbase_param - value = 111000
+@0 s /0 (Owner):   got 111000
+
+@0 s /0 (Owner): Set and get parameter Owner.scsigned_param - value = -3000
+@0 s /0 (Owner):   got -3000
+
+@0 s /0 (Owner): Set and get parameter Owner.scsigned_param - value = -2000
+@0 s /0 (Owner):   got -2000
+
+@0 s /0 (Owner): Set and get parameter Owner.scunsigned_param - value = 3000
+@0 s /0 (Owner):   got 3000
+
+@0 s /0 (Owner): Set and get parameter Owner.scunsigned_param - value = 2000
+@0 s /0 (Owner):   got 2000
+
+@0 s /0 (Owner): Set and get parameter Owner.sclogic_param - value = 1
+@0 s /0 (Owner):   got 1
+
+get cci_value X: X
+set cci_value  Z 
+get cci_value: Z
+
+1 fs 1 ps 1 ns 1 us 1 ms 1 s
+@0 s /0 (Owner): Set and get parameter Owner.sctime_param - value = 10.123 SC_NS
+raw from cci_value (real, string): 1.0123e+07 ps
+@0 s /0 (Owner):   got 10123 ns
+
+@0 s /0 (Owner): Set and get parameter Owner.scint64_param - value = -9223372036854775807
+@0 s /0 (Owner):   got -9223372036854775807
+
+@0 s /0 (Owner): Set and get parameter Owner.scuint64_param - value = 18446744073709551615
+@0 s /0 (Owner):   got 18446744073709551615
+
+@0 s /0 (Owner): Set and get parameter Owner.scbigint128_param - value = -170141183460469200000000000000000000000
+@0 s /0 (Owner):   got -170141183460469200000000000000000000000
+
+@0 s /0 (Owner): Set and get parameter Owner.scbiguint128_param - value = 340282366920938463463374607431760000000
+@0 s /0 (Owner):   got 340282366920938463463374607431760000000
 
 
 -------------------------
@@ -45,4 +106,12 @@ In process: Owner.main_action @ 0 s
 @0 s /0 (Owner): Set user data type parameter that does not support cci_values using a cci_value (disabled ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE)!
 
 ------ sc_start() returned -------
+
+
+Info: (I804) /IEEE_Std_1666/deprecated: You can turn off warnings about
+             IEEE 1666 deprecated features by placing this method call as the
+             first statement in your sc_main() function:
+
+  sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", SC_DO_NOTHING);
+
 

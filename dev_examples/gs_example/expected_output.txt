@@ -1,3 +1,6 @@
+
+Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
+In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/plugin/configdatabase.h:232
 Owner.int_param exists (implicit or explicit)
 @0 s /0 (Manipulator): Write originator for IMPLICIT param Owner.int_param (from broker): Manipulator
 

@@ -120,10 +120,10 @@ Uninitialized and invalid:
 
 sc_time:
  Represenatation for sc_time values:
- as a JSON string: "10 SC_NS"
+ as a JSON string: "10 ns"
  The string shall begin with a JSON double number string followed
  by a space and followed by an sc_time_unit string represenation 
- ("SC_FS", "SC_PS", "SC_NS", "SC_US", "SC_MS", "SC_SEC"). 
+ ("fs", "ps", "ns", "us", "ms", "s"). 
  The sc_time_unit string shall be not case sensitiv.
 
 ----------------------------------------------------------------
@@ -196,6 +196,65 @@ Examples:
  Objects:
   {"any string":{"any object":42,"another member":43}}
 
+
+----------------------------------------------------------------
+
+CCI VALUE REPRESENTATION
+
+For the standard parameter types it needs to be clear what kind of cci_value
+can be used to set the parameter and what kind of cci_value returns from a
+parameter.
+
+parameter.get_value() RETURNs the following cci_values:
+  int                      :  partype_number
+  unsigned int             :  partype_number
+  bool                     :  partype_bool
+  double                   :  partype_real
+  float                    :  partype_real
+  std::string              :  partype_string
+  long long                :  partype_number
+  unsigned char            :  partype_number
+  signed char              :  partype_number
+  char                     :  partype_number
+  unsigned short           :  partype_number
+  std::vector<std::string> :  partype_list (members partype_string)
+  sc_dt::sc_int_base       :  partype_number
+  sc_dt::sc_uint_base      :  partype_number
+  sc_dt::sc_signed         :  partype_string (partype_number is too small)
+  sc_dt::sc_unsigned       :  partype_string (partype_number is too small)
+  sc_dt::sc_bit            :  partype_number
+  sc_dt::sc_logic          :  partype_string
+  sc_core::sc_time         :  partype_list (member1: partype_real, 
+                               member2: partype_string "fs", "ps", "ns", "us", "ms", "s")
+  sc_dt::sc_int<w>         :  partype_number
+  sc_dt::sc_uint<w>        :  partype_number
+  sc_dt::sc_bigint<w>      :  partype_string (partype_number is too small)
+  sc_dt::sc_biguint<w>     :  partype_string (partype_number is too small)
+
+parameter.set_value() PERMITs the following cci_values:
+  int                      :  partype_number
+  unsigned int             :  partype_number
+  bool                     :  partype_bool, partype_number (>0=true)
+  double                   :  partype_real, partype_number
+  float                    :  partype_real, partype_number
+  std::string              :  partype_string
+  long long                :  partype_number
+  unsigned char            :  partype_number, partype_string
+  signed char              :  partype_number, partype_string
+  char                     :  partype_number, partype_string
+  unsigned short           :  partype_number
+  std::vector<std::string> :  partype_list (members partype_string)
+  sc_dt::sc_int_base       :  partype_number, partype_string
+  sc_dt::sc_uint_base      :  partype_number, partype_string
+  sc_dt::sc_signed         :  partype_string, partype_number
+  sc_dt::sc_unsigned       :  partype_string, partype_number
+  sc_dt::sc_bit            :  partype_number
+  sc_dt::sc_logic          :  partype_string, partype_number, partype_bool
+  sc_core::sc_time         :  partype_list, partype_string
+  sc_dt::sc_int<w>         :  partype_number
+  sc_dt::sc_uint<w>        :  partype_number
+  sc_dt::sc_bigint<w>      :  partype_string, partype_number
+  sc_dt::sc_biguint<w>     :  partype_string, partype_number
 
 ----------------------------------------------------------------
 

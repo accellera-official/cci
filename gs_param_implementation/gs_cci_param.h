@@ -31,6 +31,7 @@
 #include <sstream>
 
 #include "json_spirit/json_spirit.h"
+#include <boost/algorithm/string.hpp>
 
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
@@ -59,6 +60,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return val;    
     }
   };
+
+  // Helper class specializations
+  // C++ data types for standard cci parameter types
 
   /// Helper class UNSIGNED INT template specialization: to make cci_values work
   template<cci::cnf::param_mutable_type TM>
@@ -110,6 +114,10 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           // TODO one could implement further checks or conversions from int etc.
           param.set(val.get_bool());
           break;
+        case cci::cnf::partype_number:
+          if (val.get_int() > 0) param.set(true);
+          else param.set(false);
+          break;
         default:
           cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
       }
@@ -130,6 +138,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           // TODO one could implement further checks or conversions from int etc.
           param.set(val.get_real());
           break;
+        case cci::cnf::partype_number:
+          param.set(val.get_int());
+          break;
         default:
           cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
       }
@@ -149,6 +160,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
         case cci::cnf::partype_real:
           // TODO one could implement further checks or conversions from int etc.
           param.set(val.get_real());
+          break;
+        case cci::cnf::partype_number:
+          param.set(val.get_int());
           break;
         default:
           cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
@@ -211,9 +225,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           param.set(val.get_int());
           break;
         case cci::cnf::partype_string:
-          // TODO one could implement further checks or conversions from int etc.
-          //TODO
-          //break;
+          // TODO
+          cci::cnf::cci_report_handler::cci_value_failure("not implemented");
+          break;
         default:
           cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
       }
@@ -235,9 +249,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           param.set(val.get_int());
           break;
         case cci::cnf::partype_string:
-          // TODO one could implement further checks or conversions from int etc.
-          //TODO
-          //break;
+          // TODO
+          cci::cnf::cci_report_handler::cci_value_failure("not implemented");
+          break;
         default:
           cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
       }
@@ -261,9 +275,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
           param.set(val.get_int());
           break;
         case cci::cnf::partype_string:
-          // TODO one could implement further checks or conversions from int etc.
-          //TODO
-          //break;
+          if (val.get_string().length() > 0) {
+            param.set(val.get_string().at(0));
+          } else {
+            param.set(0);
+          }
+          break;
         default:
           cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
       }
@@ -294,10 +311,410 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     }
   };
 
-//TODO weitere datentypen
+  // TODO:
+  /// Helper class VECTOR<STRING> template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<std::vector<std::string>, TM> {
+    typedef std::vector<std::string> my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_list: {
+          cci::cnf::cci_value_list lst_v = val.get_list();
+          std::vector<std::string> l;
+          for (cci::cnf::cci_value_list::iterator iter = lst_v.begin(); iter != lst_v.end(); iter++) {
+            if (iter->type() == cci::cnf::partype_string) {
+              l.push_back(iter->get_string());
+            } else {
+              cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with malformed value type - not all items of list are strings.");              
+              break;              
+            }
+          }
+          param.set(l);
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value_list lst_v;
+      const std::vector<std::string>& vec = param.get();
+      for (std::vector<std::string>::const_iterator iter = vec.begin(); iter != vec.end(); iter++) {
+        cci::cnf::cci_value v(*iter);
+        lst_v.push_back(v);
+      }
+      cci::cnf::cci_value val(lst_v);
+      return val;    
+    }
+  };
+
+  // SystemC data types for standard cci parameter types
+  // TODO SystemC data types
+
+  /// Helper class SC_INT_BASE template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_dt::sc_int_base, TM> {
+    typedef sc_dt::sc_int_base my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_number: {
+            // TODO one could implement further checks or conversions
+            sc_dt::sc_int<64> ib = val.get_int64();
+            param.set(ib); 
+          }
+          break;
+        case cci::cnf::partype_string: 
+        {
+          sc_dt::sc_int_base ib(param.get().length());
+          ib = val.get_string().c_str();
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_UINT_BASE template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_dt::sc_uint_base, TM> {
+    typedef sc_dt::sc_uint_base my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_number: 
+        {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_uint<64> ib = val.get_int64();
+          param.set(ib); 
+        }
+          break;
+        case cci::cnf::partype_string: 
+        {
+          sc_dt::sc_uint_base ib(param.get().length());
+          ib = val.get_string().c_str();
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val((sc_dt::int64)param.get());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_SIGNED template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_dt::sc_signed, TM> {
+    typedef sc_dt::sc_signed my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_string: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_signed ib(param.get().length());
+          ib = val.get_string().c_str();
+          param.set(ib); 
+        }
+          break;
+        case cci::cnf::partype_number: 
+        {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_bigint<64> ib = val.get_int64(); // note the limitation of number sizes in the cci_values does not fulfill this data type size! Use string instead.
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get().to_string());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_UNSIGNED template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_dt::sc_unsigned, TM> {
+    typedef sc_dt::sc_unsigned my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_string: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_unsigned ib(param.get().length());
+          ib = val.get_string().c_str();
+          param.set(ib); 
+        }
+          break;
+        case cci::cnf::partype_number: 
+        {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_biguint<64> ib = val.get_int64(); // note the limitation of number sizes in the cci_values does not fulfill this data type size! Use string instead.
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get().to_string());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_BIT template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_dt::sc_bit, TM> {
+    typedef sc_dt::sc_bit my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_number: 
+          cci::cnf::cci_report_handler::cci_value_failure("not implemented because deprecated");
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_LOGIC template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_dt::sc_logic, TM> {
+    typedef sc_dt::sc_logic my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_string: { // valid are "0" "1" "Z" "z" "X" "x"
+          if      (val.get_string().compare("0") == 0) param.set(sc_dt::Log_0);
+          else if (val.get_string().compare("1") == 0) param.set(sc_dt::Log_1);
+          else if (val.get_string().compare("Z") == 0
+                   || val.get_string().compare("z") == 0) param.set(sc_dt::Log_Z);
+          else if (val.get_string().compare("X") == 0
+                   || val.get_string().compare("x") == 0) param.set(sc_dt::Log_X);
+          else {
+            cci::cnf::cci_report_handler::cci_value_failure("Unsupported cci_value string for sc_logic.");
+          }
+        }
+          break;
+        case cci::cnf::partype_number: {
+          sc_dt::sc_logic l(val.get_int()); // valid are 0 (Log_0), 1 (Log_1), 2 (Log_Z), 3 (Log_X)
+          param.set(l);
+        }
+          break;
+        case cci::cnf::partype_bool: {
+          sc_dt::sc_logic l(val.get_bool()); // valid are false (Log_0), true (Log_1)
+          param.set(l);
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      std::string str(1, param.get().to_char());
+      cci::cnf::cci_value val(str);
+      return val;    
+    }
+  };
+
+  /// Helper class SC_TIME template specialization: to make cci_values work
+  /**
+   * allows following values:
+   * - list of   partype_real, partype_string  :  time , sc_time_unit as string "SC_FS", "sc_fs", "SC_PC", "sc_pc" etc.
+   * - list of   partype_real, partype_number  :  time , sc_time_unit as number according enum sc_core::sc_time_unit 
+   * - partype_string  :  string  TODO
+   */
+  template<cci::cnf::param_mutable_type TM>
+  struct cci_value_helper<sc_core::sc_time, TM> {
+    typedef sc_core::sc_time my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_list: {
+          if (   val.get_list().at(0).type() == cci::cnf::partype_real
+              && val.get_list().at(1).type() == cci::cnf::partype_string) {
+            sc_core::sc_time tim;
+            double      d = val.get_list().at(0).get_real();
+            std::string s = val.get_list().at(1).get_string();
+            boost::to_upper(s);
+            if      (s.compare("SC_FS") == 0 || s.compare("fs") == 0)  tim = sc_core::sc_time(d, sc_core::SC_FS);
+            else if (s.compare("SC_PS") == 0 || s.compare("ps") == 0)  tim = sc_core::sc_time(d, sc_core::SC_PS);
+            else if (s.compare("SC_NS") == 0 || s.compare("ns") == 0)  tim = sc_core::sc_time(d, sc_core::SC_NS);
+            else if (s.compare("SC_US") == 0 || s.compare("us") == 0)  tim = sc_core::sc_time(d, sc_core::SC_US);
+            else if (s.compare("SC_MS") == 0 || s.compare("ms") == 0)  tim = sc_core::sc_time(d, sc_core::SC_MS);
+            else if (s.compare("SC_SEC") == 0 || s.compare("sec") == 0) tim = sc_core::sc_time(d, sc_core::SC_SEC);
+            param.set(tim);
+          }
+          else if (   val.get_list().at(0).type() == cci::cnf::partype_real
+                   && val.get_list().at(1).type() == cci::cnf::partype_number) {
+            sc_core::sc_time tim;
+            double d = val.get_list().at(0).get_real();
+            int    i = val.get_list().at(1).get_int();
+            if      (i == 0)  tim = sc_core::sc_time(d, sc_core::SC_FS);
+            else if (i == 1)  tim = sc_core::sc_time(d, sc_core::SC_PS);
+            else if (i == 2)  tim = sc_core::sc_time(d, sc_core::SC_NS);
+            else if (i == 3)  tim = sc_core::sc_time(d, sc_core::SC_US);
+            else if (i == 4)  tim = sc_core::sc_time(d, sc_core::SC_MS);
+            else if (i == 5)  tim = sc_core::sc_time(d, sc_core::SC_SEC);
+            param.set(tim);
+          }
+          else {
+            cci::cnf::cci_report_handler::cci_value_failure("Unsupported cci_value list for sc_time.");
+          }
+        }
+          break;
+        case cci::cnf::partype_string: {
+          cci::cnf::cci_report_handler::cci_value_failure("not implemented");
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    /// Returns cci_value (partype_list) with members partype_double (time) and partype_string (sc_time_unit)
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value_list sctime_v_lst;
+      std::string strtime = param.get().to_string();
+      std::size_t found_SC = strtime.find("SC_");
+      std::size_t found_space = strtime.find_last_of(" ");
+      if (found_SC != std::string::npos) {
+        std::string strtimeunit = strtime.substr(found_SC, std::string::npos); // find and store time unit as string                                            
+        sctime_v_lst.push_back(cci::cnf::cci_value(param.get().to_double()));
+        sctime_v_lst.push_back(strtimeunit);
+        cci::cnf::cci_value val(sctime_v_lst);
+        return val;        
+      }
+      else if (found_space + 1 != std::string::npos) {
+        std::string strtimeunit = strtime.substr(found_space+1, std::string::npos); // find and store time unit as string                                            
+        sctime_v_lst.push_back(cci::cnf::cci_value(param.get().to_double()));
+        sctime_v_lst.push_back(strtimeunit);
+        cci::cnf::cci_value val(sctime_v_lst);
+        return val;        
+      }
+      else {
+        std::cout << strtime << std::endl;
+        cci::cnf::cci_report_handler::cci_value_failure("Creating cci value for sc_time value failed!");
+      }
+      cci::cnf::cci_value val;
+      return val;        
+    }
+  };
+
+  /// Helper class SC_INT<> template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM, int W>
+  struct cci_value_helper<sc_dt::sc_int<W>, TM> {
+    typedef sc_dt::sc_int<W> my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_number: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_int<W> ib = val.get_int64();
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_UINT<> template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM, int W>
+  struct cci_value_helper<sc_dt::sc_uint<W>, TM> {
+    typedef sc_dt::sc_uint<W> my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_number: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_uint<W> ib = val.get_int64();
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val((sc_dt::int64)param.get());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_BIGINT<> template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM, int W>
+  struct cci_value_helper<sc_dt::sc_bigint<W>, TM> {
+    typedef sc_dt::sc_bigint<W> my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_string: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_bigint<W> ib = val.get_string().c_str();
+          param.set(ib); 
+        }
+          break;
+        // just for small numbers, default is string representation
+        case cci::cnf::partype_number: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_bigint<W> ib = val.get_int64();
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get().to_string());
+      return val;    
+    }
+  };
+
+  /// Helper class SC_BIGUINT<> template specialization: to make cci_values work
+  template<cci::cnf::param_mutable_type TM, int W>
+  struct cci_value_helper<sc_dt::sc_biguint<W>, TM> {
+    typedef sc_dt::sc_biguint<W> my_type;
+    static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
+      switch (val.type() ) {
+        case cci::cnf::partype_string: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_biguint<W> ib = val.get_string().c_str();
+          param.set(ib); 
+        }
+          break;
+          // just for small numbers, default is string representation
+        case cci::cnf::partype_number: {
+          // TODO one could implement further checks or conversions
+          sc_dt::sc_biguint<W> ib = val.get_int64();
+          param.set(ib); 
+        }
+          break;
+        default:
+          cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with wrong value type.");
+      }
+    }
+    static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
+      cci::cnf::cci_value val(param.get().to_string());
+      return val;    
+    }
+  };
 
 
 
+  /// Prototype parameter implementation
   template<typename T, cci::cnf::param_mutable_type TM = cci::cnf::mutable_parameter>
   class gs_cci_param 
   : public gs_cci_param_t <T, TM>
@@ -393,6 +810,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       
   
 
+  /// Prototype parameter implementation, specialization for string
   template<cci::cnf::param_mutable_type TM>
   class gs_cci_param<std::string, TM>
   : public gs_cci_param_t<std::string, TM>

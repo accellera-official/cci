@@ -1,5 +1,10 @@
 ChangeLog
 ---------
+14.11.2011
+cci_value support for SystemC data types
+- added full support for SystemC parameter cci_values and string vector parameters
+- updated example and guidelines.txt
+
 31.10.2011
 cci_value support for standard cci_param data types
 - added cci_value_helper template class for cci_value support
