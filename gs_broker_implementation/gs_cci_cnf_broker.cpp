@@ -186,6 +186,12 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param_const(const std
 }
 
 bool cci::cnf::gs_cci_cnf_broker::exists_param(const std::string &parname) {
+  std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
+  if( iter != m_mirrored_registry.end() ) {
+    cci::cnf::cci_base_param* ret = dynamic_cast<cci::cnf::cci_base_param*>(iter->second);
+    assert(ret != NULL && "This param shall be a cci::cnf::cci_base_param!");
+    return true;
+  }
   return gs::cnf::GCnf_Api::existsParam(parname);
 }
 

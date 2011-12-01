@@ -1,5 +1,8 @@
 ChangeLog
 ---------
+01.12.2011
+small broker implementation change to provide compatibility for example #16
+
 14.11.2011
 cci_value support for SystemC data types
 - added full support for SystemC parameter cci_values and string vector parameters
