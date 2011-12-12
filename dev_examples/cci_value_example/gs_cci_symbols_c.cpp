@@ -50,6 +50,9 @@ std::ostream& operator <<(std::ostream &os,const test_datatype_without_parameter
   os<<obj.strVal;
   return os;
 }
+bool operator==(test_datatype_without_parameter_implementation const& lhs, test_datatype_without_parameter_implementation const& rhs) {
+  return lhs.strVal.compare(rhs.strVal);
+}
 
 // The following code enables the new data type parameter to work with cci_values !!!!
 #ifdef ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE

@@ -41,5 +41,8 @@ std::ostream& operator <<(std::ostream &os,const test_datatype &obj)
   os<<obj.strVal;
   return os;
 }
-*/
+bool operator==(test_datatype const& lhs, test_datatype const& rhs) {
+  return lhs.strVal.compare(rhs.strVal);
+}
+ */
 #endif

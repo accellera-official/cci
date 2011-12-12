@@ -152,7 +152,7 @@ public:
   virtual std::string json_serialize(const val_type& val) const;
   virtual void json_deserialize(val_type& target_val, const std::string& str);
   virtual const val_type& get_default_value();
-
+  
   virtual cci_base_param_impl_if* get_pImpl() const;
 
   /// If this parameter is a parameter accessor (if not it is an original parameter)
@@ -330,7 +330,7 @@ private:
 /**
  * This operator compares the value returned by the get-function
  */
-template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2);
+template<class T, param_mutable_type TM, param_mutable_type TM2> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM2>& p2);
 
 /// Equals operator comparing a param and a value
 /**

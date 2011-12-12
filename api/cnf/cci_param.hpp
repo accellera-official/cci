@@ -807,7 +807,7 @@ cci_base_param* cci_param<std::string,TM>::create_accessor(const cci_originator&
 
 // == Operators
 
-template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2) {
+template<class T, param_mutable_type TM, param_mutable_type TM2> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM2>& p2) {
   return p1.get() == p2.get();
 }
 

@@ -39,6 +39,11 @@ int sc_main(int argc, char *argv[]) {
   OwnerModuleA     ownerA     ("OwnerA");
   OwnerModuleB     ownerB     ("OwnerB");
 
+  // test == operator
+  std::cout << "ownerA.int_param == ownerB.int_param: " << 
+  ((ownerA.int_param == ownerB.int_param) ? "true" : "false") << std::endl;
+
+  
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
   sc_core::sc_start(); 
   std::cout << std::endl << "------ sc_start() returned -------" << std::endl << std::endl;

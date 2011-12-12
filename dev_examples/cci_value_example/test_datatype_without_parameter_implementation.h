@@ -21,4 +21,6 @@ struct test_datatype_without_parameter_implementation {
   std::string strVal;
 };
 
+// operators >>, << and == see gs_cci_symbols_c.cpp!
+
 #endif

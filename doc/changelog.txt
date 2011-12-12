@@ -1,5 +1,10 @@
 ChangeLog
 ---------
+12.12.2011
+enabled comparison of parameters of different mutability (but same type)
+- modified == operator (in API headers)
+- updated parameter implementations
+
 01.12.2011
 small broker implementation change to provide compatibility for example #16
 
