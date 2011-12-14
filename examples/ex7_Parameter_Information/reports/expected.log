@@ -1,6 +1,10 @@
 
 [MAIN] : Setting 'param_owner.mutable_string_param' value to 'Initialized within sc_main()'
 
+	[MAIN] : Demonstrating 'comparison' between the values of a data type for different mutability types
+	[MAIN] : 'mutable' & 'immutable' type String parameters - VALUES MATCH
+	[MAIN] : 'mutable' & 'elaboration_time' type String - VALUES DO NOT MATCH
+
 [MAIN] : parameter_container module declares two cci type parameters.
 
 	One is of 'Integer type' and the other is of 'String type'

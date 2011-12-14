@@ -54,6 +54,26 @@ int sc_main(int sc_argc, char* sc_argv[])
 	/// construction of the model hierarchy begins.
 	globalBroker->set_init_value("param_owner.mutable_string_param", "Initialized within sc_main");
 
+	cout << "\n\t[MAIN] : Demonstrating 'comparison' between the values of a data type for different mutability types" << endl;
+
+	/// Instantiate cci-parameters of all the three mutability types for a
+	/// particular (say String) data-type
+         
+	cci::cnf::cci_param<std::string, cci::cnf::mutable_parameter>           mutab_str_param("string_mutab_param", "String_Value_A");
+	cci::cnf::cci_param<std::string, cci::cnf::immutable_parameter>         immutab_str_param("string_immutab_param", "String_Value_A");
+	cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter>  elab_str_param("string_elab_param", "String_Value_B");
+
+	if (mutab_str_param.get() == immutab_str_param.get())
+		std::cout << "\t[MAIN] : 'mutable' & 'immutable' type String parameters - VALUES MATCH" << endl;
+	else
+		std::cout << "\t[MAIN] : 'mutable' & 'immutable' type String parameters - VALUES DO NOT MATCH" << endl;
+
+	if (mutab_str_param.get() == elab_str_param.get())
+		std::cout << "\t[MAIN] : 'mutable' & 'elaboration_time' type String - VALUES MATCH" << endl;
+	else
+		std::cout << "\t[MAIN] : 'mutable' & 'elaboration_time' type String - VALUES DO NOT MATCH" << endl;
+	
+
 	/// Infrastructure created within the example for example illustration
 	std::cout << "\n[MAIN] : parameter_container module declares two cci type parameters." << endl;
 	std::cout << "\n\tOne is of 'Integer type' and the other is of 'String type'" << endl;
