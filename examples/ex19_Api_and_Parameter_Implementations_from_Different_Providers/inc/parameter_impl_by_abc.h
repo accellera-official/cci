@@ -52,7 +52,7 @@ struct user_data_type {
 };//End of USER DATA STRUCTURE
 
 
-struct cci_param_user_data_type : public sc_object, 
+struct cci_param_user_data_type : 
                                   public cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>
 {
 
@@ -95,15 +95,15 @@ struct cci_param_user_data_type : public sc_object,
 
 	const std::string& get_name() const;
 
-	cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function );
+	cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function );
 
-	cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb);
+	cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb);
 
 	void unregister_all_callbacks(void* observer) ;
 
-	bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb);
+	bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb);
 
-	bool unregister_param_callback(cci::cnf::callb_adapt * callb);
+	bool unregister_param_callback(cci::cnf::callb_adapt_B<cci::cnf::cci_base_param>  * callb);
 
 	 bool has_callbacks() ;
 

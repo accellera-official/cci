@@ -33,8 +33,7 @@ std::ostream& operator << (std::ostream& os, const user_data_type& ud)
 
 //__CCI_OPEN_CONFIG_NAMESPACE__
 cci_param_user_data_type::cci_param_user_data_type (const std::string& _name, const user_data_type&  _dvalue ) 
-	: sc_object(_name.c_str())
-	, value(_dvalue)
+	: value(_dvalue)
 	, default_value(_dvalue)
 	, default_flag(true)
 	, invalid_flag(false)
@@ -43,7 +42,7 @@ cci_param_user_data_type::cci_param_user_data_type (const std::string& _name, co
 	, l_password(NULL)
 	, documentation("")
 	{
-	  nam = name() ; // + _name	;
+	  nam = _name ; 
 
 		/* DO some hack for cci_value */
 	}
@@ -174,14 +173,14 @@ const std::string& cci_param_user_data_type::get_name() const
 	return nam;
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function)
+cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
 
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_b> callb)
+cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
@@ -195,14 +194,14 @@ void cci_param_user_data_type::unregister_all_callbacks(void* observer)
 	/* Complex Later */
 }
 
-bool cci_param_user_data_type::unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt_b> callb)
+bool cci_param_user_data_type::unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
 	/* Complex Later */
 }
 
-bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt_b* callb)
+bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> * callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 

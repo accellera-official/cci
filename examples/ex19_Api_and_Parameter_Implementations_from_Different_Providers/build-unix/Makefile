@@ -4,7 +4,7 @@ DEPTH=../../build-unix
 
 #-- [Update] 
 #---- Add source files to be compiled for this example without path
-SRCS_WOPATH=main.cpp user_data_type.cpp
+SRCS_WOPATH=main.cpp parameter_impl_by_abc.cpp
 #SRCS_WOPATH=main.cpp 
 
 #-- [Update, if required] 
