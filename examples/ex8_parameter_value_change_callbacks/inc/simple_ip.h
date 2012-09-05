@@ -108,14 +108,14 @@ SC_MODULE(simple_ip) {
   cci::cnf::cci_param<int> param_2;
 
   /// Callback pointers
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_1_pre_read_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_1_pre_write_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_1_post_write_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_1_pre_read_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_1_pre_write_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_1_post_write_cb;
 
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_2_pre_read_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_2_pre_write_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_2_reject_write_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt_b> param_2_post_write_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_2_pre_read_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_2_pre_write_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_2_reject_write_cb;
+  cci::shared_ptr<cci::cnf::callb_adapt> param_2_post_write_cb;
 }; // simple_ip
 
 #endif // INC_SIMPLE_IP_H

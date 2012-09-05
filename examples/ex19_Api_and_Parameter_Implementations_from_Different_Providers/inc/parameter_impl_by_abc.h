@@ -91,19 +91,19 @@ struct cci_param_user_data_type :
 
 	void set_invalid_value();
 
-	bool is_initial_value();
+	bool is_initial_value() const;
 
 	const std::string& get_name() const;
 
-	cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function );
+	cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function );
 
-	cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb);
+	cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb);
 
 	void unregister_all_callbacks(void* observer) ;
 
-	bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb);
+	bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb);
 
-	bool unregister_param_callback(cci::cnf::callb_adapt_B<cci::cnf::cci_base_param>  * callb);
+	bool unregister_param_callback(cci::cnf::callb_adapt * callb);
 
 	 bool has_callbacks() ;
 
@@ -112,6 +112,10 @@ struct cci_param_user_data_type :
 	bool unlock(void* pwd = NULL);
 
 	bool locked() const;
+
+  cci::cnf::cci_originator* get_latest_write_originator() const
+    { return NULL; /* TODO */ }
+
 
 	//Constructor 
 	cci_param_user_data_type (const std::string& _name, const user_data_type &  _dvalue);

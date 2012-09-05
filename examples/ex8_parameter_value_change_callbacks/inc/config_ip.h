@@ -74,9 +74,9 @@ SC_MODULE(config_ip) {
       try {
         param_2_ptr->json_deserialize("20"); /// @note This should be rejected
       } 
-      catch(sc_core::sc_report &e) {
+      catch(sc_core::sc_report const &e) {
         // Catch exception, if value-change is rejected and handle it
-        if (strcmp(e.get_msg_type(), cci::cnf::cci_report::set_param_failed().get_msg_type()) == 0) {
+        if (cci::cnf::CCI_SET_PARAM_FAILURE == cci::cnf::cci_report_handler::get_param_failure(e)) {
           XREPORT_WARNING("Caught exception: " << e.what());
         }
         else {

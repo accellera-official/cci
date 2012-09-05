@@ -159,7 +159,7 @@ void cci_param_user_data_type::set_invalid_value()
 	invalid_flag=true;
 }
 
-bool cci_param_user_data_type::is_initial_value()
+bool cci_param_user_data_type::is_initial_value() const
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	return initial_flag;
@@ -173,14 +173,14 @@ const std::string& cci_param_user_data_type::get_name() const
 	return nam;
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::callb_func_ptr function)
+cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
 
 }
 
-cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb)
+cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
@@ -194,14 +194,14 @@ void cci_param_user_data_type::unregister_all_callbacks(void* observer)
 	/* Complex Later */
 }
 
-bool cci_param_user_data_type::unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> > callb)
+bool cci_param_user_data_type::unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
 	/* Complex Later */
 }
 
-bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt_B<cci::cnf::cci_base_param> * callb)
+bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt* callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
