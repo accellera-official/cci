@@ -1056,11 +1056,19 @@ public:
     my_value.cancel();
   }
   
-  sc_event_or_list& operator | (const sc_event& e) const {
+  sc_event_or_list
+# if SYSTEMC_API != 230
+    &
+# endif
+    operator | (const sc_event& e) const {
     return my_value.operator | (e);
   }
   
-  sc_event_and_list& operator & (const sc_event& e) const {
+  sc_event_and_list
+# if SYSTEMC_API != 230
+    &
+# endif
+  operator & (const sc_event& e) const {
     return my_value.operator & (e);
   }
 
