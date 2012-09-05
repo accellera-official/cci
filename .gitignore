@@ -1,0 +1,5 @@
+*.[oax]
+*.exe
+Makefile.*deps
+run.log
+diff.log
