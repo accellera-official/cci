@@ -61,10 +61,11 @@ LIBDIR = -L. -L$(SYSTEMC)/lib-$(TARGET_ARCH) \
 EXTRA_LIBS = -lccibrokerimpl -lcciapi
 LIBS       = $(EXTRA_LIBS) -lsystemc -lm
 
-CC     = g++
-OPT    = -O0 -Wall
-OTHER  = -pedantic -Wno-long-long
-CFLAGS = $(OPT) $(OTHER)
+CC       = gcc
+CXX       = g++
+OPT      = -O0 -Wall
+OTHER    = -pedantic -Wno-long-long
+CXXFLAGS = $(OPT) $(OTHER)
 
 
 ## ---------------  MAKE RULES  ---------------------------------------------------------------------
@@ -73,7 +74,7 @@ CFLAGS = $(OPT) $(OTHER)
 all: $(EXEC)
 
 $(EXEC): missing_symbols.o
-	$(CC) $(CFLAGS) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) missing_symbols.o $(PARAM_LIB_OBJS_STD) $(LIBS) 2>&1 | c++filt
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) missing_symbols.o $(PARAM_LIB_OBJS_STD) $(LIBS) 2>&1 | c++filt
 
 missing_symbols.o: missing_symbols.cpp
   ## fallback to default rule
@@ -86,10 +87,10 @@ missing_symbols.cpp: $(OBJS) $(PARAM_LIB_OBJS_STD)
 	echo "}}" >> missing_symbols.cpp
 
 .cpp.o:
-	$(CC) $(CFLAGS) $(DEFFLAGS) $(INCDIR) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -o $@ -c $<
 
 .cc.o:
-	$(CC) $(CFLAGS) $(DEFFLAGS) $(INCDIR) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -o $@ -c $<
 
 clean:
 	rm -f $(OBJS) $(PARAM_LIB_OBJS_STD) missing_symbols.o missing_symbols.out.cpp missing_symbols.cpp

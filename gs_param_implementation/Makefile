@@ -15,7 +15,8 @@
 #
 
 
-CC     = g++
+CC     = gcc
+CXX    = g++
 OPT    = -O0 -Wall
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
@@ -35,56 +36,59 @@ OBJS = json_spirit/json_spirit_reader.o \
 # Makefile.defs
 ## ------------------------------------------------------------------------------------
 
-## target architecture (if not defined before)
-ifndef TARGET_ARCH
- TARGET_ARCH = macosx
+BOOST  ?=/cad/tools/boost
+
+ifdef SYSTEMC_HOME
+SYSTEMC=$(SYSTEMC_HOME)
+else
+SYSTEMC?=/cad/tools/systemc
 endif
 
 ## set some directories 
-GS_CONTROL_DIR = /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch
-GREENSTARCORE_DIR = /Users/schroede/mydev/cci_git/cci
-CCI_DIR = /Users/schroede/mydev/cci_git/cci/api
-GS_CCI_PARAM_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
-GS_CCI_API_DIR = /Users/schroede/mydev/cci_git/cci/gs_api_implementation
-BOOST = /cad/tools/boost
-SYSTEMC = /cad/tools/systemc
+GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
+GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GREENSTARCORE_DIR = $(GS_CCI_HOME)
+CCI_DIR = $(GS_CCI_HOME)/api
+GS_CCI_PARAM_DIR = $(GS_CCI_HOME)/gs_param_implementation
+GS_CCI_API_DIR = $(GS_CCI_HOME)/gs_api_implementation
+BOOST ?= /cad/tools/boost
+SYSTEMC ?= /cad/tools/systemc
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
-
-## muldefs should be avoided in the source code, not by the linker
-LDFLAGS =
-
-INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
-         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_PARAM_DIR) -I$(GS_CCI_API_DIR)
-LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH)
-
-## here may be needed to write -lscv at the beginning - which also may cause problems!
-LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
+INCDIR = -I$(CCI_DIR) \
+         -I$(GS_CONTROL_DIR) \
+         -I$(SYSTEMC)/include -I$(BOOST) # \
+#        -I$(GS_CCI_BROKER_DIR) -I$(GREENSTARCORE_DIR) -I$(GS_CCI_API_DIR)
 
 ## ------------------------------------------------------------------------------------
 
+LIB=libcciparamimpl.a
 
+all: $(LIB)
 
-all: myprog
-	ar -r "libcciparamimpl.a" *.o
-	rm -f  *.o
-
-myprog: $(OBJS)
+$(LIB): $(OBJS)
+	$(AR) rcs $@ $^
+	ranlib $@
 
 .cpp.o:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
+	  -c $< -o $@
 
 .cc.o:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
+	  -c $< -o $@
 
 clean:
-	rm -f  *.o libcciparamimpl.a
+	rm -f  $(OBJS) $(LIB)
 
 bigsymbols:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) -DCCI_SYMBOLS_LOWER_BOUND=$(CCI_SYMBOLS_LOWER_BOUND) -DCCI_SYMBOLS_UPPER_BOUND=$(CCI_SYMBOLS_UPPER_BOUND) $(INCDIR) -c gs_cci_symbols_templ_big_int.cpp -o $(OBJNAME).o $<
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) \
+		-DCCI_SYMBOLS_LOWER_BOUND=$(CCI_SYMBOLS_LOWER_BOUND) \
+		-DCCI_SYMBOLS_UPPER_BOUND=$(CCI_SYMBOLS_UPPER_BOUND) \
+		$(INCDIR) \
+		-c gs_cci_symbols_templ_big_int.cpp -o $(OBJNAME).o $<
 
-full_library:
-	ar -r "libcciparamimpl.a" *.o
-	rm -f  *.o
-
+full_library: $(OBJS) $(OBJNAME).o
+	$(AR) rcs $(LIB) $^
+	ranlib $(LIB)

@@ -16,7 +16,7 @@ OBJS = testbench.o \
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-EXTRA_LIBS = -lccibrokerimpl -lcciparamimpl -lcciapi
+EXTRA_LIBS = -lcciparamimpl -lcciapi -lccibrokerimpl
 
 include ../../Makefile.defs
 

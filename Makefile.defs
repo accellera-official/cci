@@ -1,19 +1,29 @@
+## root of Git tree
+GS_CCI_HOME?=/Users/schroede/mydev/cci_git/cci
+
 ## set some directories 
-CCI_INC_DIR = /Users/schroede/mydev/cci_git/cci/api
-CCI_LIB_DIR = /Users/schroede/mydev/cci_git/cci/api
+CCI_INC_DIR = $(GS_CCI_HOME)/api
+CCI_LIB_DIR = $(GS_CCI_HOME)/api
 
-CCI_API_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/cci_git/cci/gs_broker_implementation
-CCI_API_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/cci_git/cci/gs_broker_implementation
-CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
-CCI_PARAM_IMPLEMENTATION_LIB_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
+CCI_API_IMPLEMENTATION_INC_DIR   ?= $(GS_CCI_HOME)/gs_broker_implementation
+CCI_API_IMPLEMENTATION_LIB_DIR   ?= $(GS_CCI_HOME)/gs_broker_implementation
+CCI_PARAM_IMPLEMENTATION_INC_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
+CCI_PARAM_IMPLEMENTATION_LIB_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
 
-GS_CONTROL_DIR = /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch
-GREENSTARCORE_DIR = /Users/schroede/mydev/cci_git/cci
-BOOST = /cad/tools/boost
-SYSTEMC = /cad/tools/systemc
+GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GREENSTARCORE_DIR = $(GS_CCI_HOME)
+
+BOOST  ?=/cad/tools/boost
+
+ifdef SYSTEMC_HOME
+SYSTEMC=$(SYSTEMC_HOME)
+else
+SYSTEMC?=/cad/tools/systemc
+endif
 
 ## Your compiler
-CC = g++
+CC  ?= gcc
+CXX ?= g++
 
 #SCV_INCLUDE = /cad/tools/systemc-scv/include
 #SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
@@ -23,15 +33,23 @@ ifndef TARGET_ARCH
  TARGET_ARCH = macosx
 endif
 
+ifdef SYSTEMC_LIB
+ SYSTEMC_LIB_DIR=$(SYSTEMC_LIB)
+endif
+SYSTEMC_LIB_DIR?=$(SYSTEMC)/lib-$(TARGET_ARCH)
+
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
 LDFLAGS =
 
-INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
-         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_INC_DIR) \
-         -I$(CCI_API_IMPLEMENTATION_INC_DIR) -I$(CCI_PARAM_IMPLEMENTATION_INC_DIR)
+INCDIR = -I. -I$(CCI_INC_DIR) \
+         -I$(SYSTEMC)/include -I$(BOOST) # \
+#         -I$(GS_CONTROL_DIR) \
+#         -I$(GREENSTARCORE_DIR)  # \
+#         -I$(CCI_API_IMPLEMENTATION_INC_DIR) # \
+#         -I$(CCI_PARAM_IMPLEMENTATION_INC_DIR)
 
-LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH) -L$(CCI_LIB_DIR) \
+LIBDIR = -L. -L.. -L$(SYSTEMC_LIB_DIR) -L$(CCI_LIB_DIR) \
          -L$(CCI_API_IMPLEMENTATION_LIB_DIR) -L$(CCI_PARAM_IMPLEMENTATION_LIB_DIR) \
          $(EXTRA_LIBS_DIRS)
 
@@ -39,19 +57,22 @@ LIBS   =  $(EXTRA_LIBS) -lsystemc -lm
 
 EXE    = $(MODULE).x
 
-.SUFFIXES: .cc .cpp .o .x
+.SUFFIXES: .cc .cpp .o
 
-$(EXE): $(OBJS_W_PATHS) $(SYSTEMC)/lib-$(TARGET_ARCH)/libsystemc.a 
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
+$(EXE): $(OBJS_W_PATHS) $(SYSTEMC_LIB_DIR)/libsystemc.a 
+	$(CXX) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
 #	strip $(EXE)
 
 .cpp.o:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
 
 .cc.o:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
 
-clean::
+run: $(EXE)
+	./$(EXE) $(EXE_FLAGS)
+
+clean:
 	rm -f $(OBJS) *~ $(EXE) core
 
 ultraclean: clean

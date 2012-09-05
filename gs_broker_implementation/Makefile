@@ -1,10 +1,11 @@
 # enable compiler flag -DCCI_CNF_IMPL_VERBOSE to get broker
 #  implementation debug output (see CFLAGS)
 
-CC     = g++
-OPT    = -g -Wall 
-OTHER  = -pedantic -Wno-long-long
-CFLAGS = $(OPT) $(OTHER) # -DCCI_CNF_IMPL_VERBOSE 
+CC       = gcc
+CXX      = g++
+OPT      = -g -Wall 
+OTHER    = -pedantic -Wno-long-long
+CXXFLAGS = $(OPT) $(OTHER) # -DCCI_CNF_IMPL_VERBOSE 
 
 SRCS = gs_cci_broker.cpp \
        gs_cci_cnf_broker.cpp \
@@ -28,19 +29,22 @@ OBJS_W_PATHS = $(SRCS:.cpp=.o)
 #include ../Makefile.defs
 ## ------------------------------------------------------------------------------------
 
-## target architecture (if not defined in Makefile)
-ifndef TARGET_ARCH
- TARGET_ARCH = macosx
+BOOST  ?=/cad/tools/boost
+
+ifdef SYSTEMC_HOME
+SYSTEMC=$(SYSTEMC_HOME)
+else
+SYSTEMC?=/cad/tools/systemc
 endif
 
 ## set some directories 
-GS_CONTROL_DIR = /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch
-GREENSTARCORE_DIR = /Users/schroede/mydev/cci_git/cci
-CCI_DIR = /Users/schroede/mydev/cci_git/cci/api
-GS_CCI_PARAM_DIR = /Users/schroede/mydev/cci_git/cci/gs_param_implementation
-GS_CCI_API_DIR = /Users/schroede/mydev/cci_git/cci/gs_api_implementation
-BOOST = /cad/tools/boost
-SYSTEMC = /cad/tools/systemc
+GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
+GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GREENSTARCORE_DIR = $(GS_CCI_HOME)
+CCI_DIR = $(GS_CCI_HOME)/api
+GS_CCI_PARAM_DIR = $(GS_CCI_HOME)/gs_param_implementation
+GS_CCI_BROKER_DIR = $(GS_CCI_HOME)/gs_broker_implementation
+GS_CCI_API_DIR = $(GS_CCI_HOME)/gs_api_implementation
 
 #SCV_INCLUDE = /cad/tools/systemc-scv/include
 #SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
@@ -51,29 +55,28 @@ DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 ## muldefs should be avoided in the source code, not by the linker
 LDFLAGS =
 
-INCDIR = -I$(GS_CONTROL_DIR) -I$(BOOST) \
-         -I. -I.. -I$(SYSTEMC)/include -I$(GREENSTARCORE_DIR) -I$(CCI_DIR) -I$(GS_CCI_PARAM_DIR) -I$(GS_CCI_API_DIR)
-LIBDIR = -L. -L.. -L$(SYSTEMC)/lib-$(TARGET_ARCH)
-
-## here may be needed to write -lscv at the beginning - which also may cause problems!
-LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
+INCDIR = -I. -I$(CCI_DIR) \
+          -I$(GS_CCI_BROKER_DIR) -I$(GS_CONTROL_DIR) -I$(GREENSTARCORE_DIR) \
+         -I$(SYSTEMC)/include -I$(BOOST) \
+#        -I$(GS_CCI_API_DIR)
 
 ## ------------------------------------------------------------------------------------
 
+LIB=libccibrokerimpl.a
 
-#all: $(EXE)
+all: $(LIB)
 
-all: myprog
-	ar -r "libccibrokerimpl.a" *.o
-	rm -f  *.o
-
-myprog: $(OBJS)
+$(LIB): $(OBJS)
+	$(AR) rcs $@ $^
+	ranlib $@
 
 .cpp.o:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
+	  -c $< -o $@
 
 .cc.o:
-	$(CC) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
+	  -c $< -o $@
 
 clean:
-	rm -f  *.o libccibrokerimpl.a
+	rm -f  $(OBJS) $(LIB)

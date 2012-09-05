@@ -23,9 +23,12 @@ OBJS = testbench.o \
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-EXTRA_LIBS = -lccibrokerimpl -lcciparamimpl -lcciapi
+EXTRA_LIBS = -lcciparamimpl -lcciapi -lccibrokerimpl
 
 include ../../Makefile.defs
+
+INCDIR+=-I$(CCI_API_IMPLEMENTATION_INC_DIR)
+INCDIR+=-I$(GS_CONTROL_DIR)
 
 all: $(EXE)
 
