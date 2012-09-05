@@ -17,12 +17,13 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex16_User_Defined_Data_Type
+EXE=ex16_User_Defined_Data_Type.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 
 #-- [Do not Update]
 include $(DEPTH)/Makefile.config
 
-INC_DIR+=-I${DEFAULT_GS_CCI_HOME}/gs_param_implementation/json_spirit
-INC_DIR+=-I${DEFAULT_GS_CCI_HOME}/gs_param_implementation
+INC_DIR+=-I${GS_CCI_HOME}/gs_param_implementation
+INC_DIR+=-I${GS_CCI_HOME}/gs_param_implementation/json_spirit
+INC_DIR+=-I${GS_CCI_HOME}/greencontrol_cci_branch

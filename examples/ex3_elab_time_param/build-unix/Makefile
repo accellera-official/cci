@@ -15,7 +15,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=elab_time_param.exe
+EXE=elab_time_param.x
 
 #-- [Do not Update]
 include $(DEPTH)/Makefile.config

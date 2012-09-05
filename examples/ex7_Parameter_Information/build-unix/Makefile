@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex7_Parameter_Information
+EXE=ex7_Parameter_Information.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

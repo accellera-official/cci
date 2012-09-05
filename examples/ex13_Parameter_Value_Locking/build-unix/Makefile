@@ -12,11 +12,11 @@ SRCS=$(addprefix ../src/,$(SRCS_WOPATH))
 OBJS=$(SRCS:.cpp=.o)
 
 #---- Any extra include/ dirs and libraries to be linked in
-INC_DIR=-I../inc -I/home/pvs/MyInstallations/TLM-2009-07-15/include/tlm
+INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex13_Parmeter_Value_Locking
+EXE=ex13_Parmeter_Value_Locking.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

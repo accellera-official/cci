@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex20_Tracing_Parameter_Activity
+EXE=ex20_Tracing_Parameter_Activity.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

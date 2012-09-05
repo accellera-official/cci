@@ -16,10 +16,10 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex17_Specifying_Parmeter_Values_via_a_Configuration_File
+EXE=ex17_Specifying_Parmeter_Values_via_a_Configuration_File.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 
 #-- [Do not Update]
 include $(DEPTH)/Makefile.config
-INCS+=-I${DEFAULT_GS_CCI_HOME}/greencontrol_cci_branch/greencontrol/gcnf/apis/configFileApi/
+INCS+=-I${GS_CCI_HOME}/greencontrol_cci_branch/greencontrol/gcnf/apis/configFileApi/

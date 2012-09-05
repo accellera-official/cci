@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex10_Shared_Parmeter
+EXE=ex10_Shared_Parmeter.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

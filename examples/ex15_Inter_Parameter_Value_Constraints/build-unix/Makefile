@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=./ex15_Inter_Parameter_Value_Constraints
+EXE=ex15_Inter_Parameter_Value_Constraints.x
 
 #EXE_ARGS= | tee ../reports/expected.log 
 
