@@ -28,7 +28,6 @@ CFLAGS = $(OPT) $(OTHER)
 
 OBJS = json_spirit/json_spirit_reader.o \
        json_spirit/json_spirit_writer.o \
-       gs_cci_value.o \
        gs_cci_symbols_templ_small_int.o \
        gs_cci_symbols.o
  

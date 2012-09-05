@@ -15,7 +15,8 @@
 // ENDLICENSETEXT
 
 
-#include "cci_params.h"
+#include "cci_config.h"
+#include "cci_value.h"
 
 cci::cnf::cci_value::cci_value() 
 : m_type(partype_not_available) {
