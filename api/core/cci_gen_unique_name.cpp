@@ -15,15 +15,19 @@
 
 #include "cci_gen_unique_name.h"
 #include <sstream>
+#include <cassert>
 
+inline
 const char* cci::cci_gen_unique_name(const char* name) {
   
   // static (system-wide) map <name, current counter - 1>
   static std::map<std::string, int> unique_name_map;
   
-  std::map<std::string,int>::iterator it;
   std::pair<std::map<std::string,int>::iterator,bool> ret;
   
+  // TODO: add error reporting
+  assert(name && *name && "cci_gen_unique_name: empty name not allowed!");
+
   // Try to insert name
   ret = unique_name_map.insert(std::pair<std::string, int>(name, 0));
   if (ret.second==false)

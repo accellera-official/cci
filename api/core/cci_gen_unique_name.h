@@ -30,4 +30,7 @@ namespace cci {
 
 } // end namespace cci
 
+// TODO: add to proper core library
+#include "cci_gen_unique_name.cpp"
+
 #endif

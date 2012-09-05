@@ -6,11 +6,9 @@ CFLAGS = $(OPT) $(OTHER)
 
 SRCS = cnf/cci_broker_manager.cpp \
        cnf/cci_broker_stack.cpp \
-       core/cci_gen_unique_name.cpp
 
 OBJS = cnf/cci_broker_manager.o \
        cnf/cci_broker_stack.o \
-       core/cci_gen_unique_name.o
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
