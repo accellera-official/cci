@@ -41,9 +41,12 @@ class parameter_configurator : public ::sc_core::sc_module
 		
 		/// Default constructor
 		SC_CTOR(parameter_configurator)
+			: cfgr_param_ptr(0)
+			, cfgr_user_param_ptr(0)
+			, cfgr_shared_param(0)
 		{
 			// Get handle of the broker responsible for the class/module
-			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+			myCfgrBrokerIF	=	&cci::cnf::cci_broker_manager::get_current_broker(*this);
 
 			// Report if handle returned is NULL
 			assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
