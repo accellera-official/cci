@@ -63,7 +63,7 @@ SC_MODULE(parameter_configurer)
 				udt_param_ptr = myBrokerInterface->get_param(udt_param_str);		
 					
 				// Report if parameter handle is returned NULL
-				assert(str_param_ptr != NULL && "User define data type CCI Parameter Handle returned NULL");
+				assert(udt_param_ptr != NULL && "User define data type CCI Parameter Handle returned NULL");
 			}
 			else
 				std::cout << "\n\t[CFGR C_TOR] : User define datatype  parameter does not exist" << endl;

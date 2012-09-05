@@ -63,7 +63,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			{
 				cfgr_param_ptr1	=	myCfgrBrokerIF->get_param(cfgr_param_str1);
 
-				assert(cfgr_param_str1	!= NULL && "Configuration parameter returned is NULL");
+				assert(cfgr_param_ptr1	!= NULL && "Configuration parameter returned is NULL");
 
 				std::cout << "\n\t[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr1->get_name()	\
 					<< "\tParameter Value : " << cfgr_param_ptr1->json_serialize() << std::endl; 
@@ -76,7 +76,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			{
 				cfgr_param_ptr2	=	myCfgrBrokerIF->get_param(cfgr_param_str2);
 
-				assert(cfgr_param_str2	!= NULL && "Configuration parameter returned is NULL");
+				assert(cfgr_param_ptr2	!= NULL && "Configuration parameter returned is NULL");
 
 				std::cout << "\n\t[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr2->get_name()	\
 					<< "\tParameter Value : " << cfgr_param_ptr2->json_serialize() << std::endl; 

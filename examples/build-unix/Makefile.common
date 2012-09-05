@@ -18,10 +18,10 @@ DEFAULT_CCI_EXAMPLES_HOME=/Users/schroede/mydev/cci_git/cci/examples
 
 #--------------------------------------- 
 #-- [Update, if required]
+CC=gcc
 CXX=g++
-# Swami: Added -DNDEBUG to get example-6 to run (without assertions)
-CFLAGS=-m32 -g -Wall -pedantic -Wno-long-long \
-       -DSC_INCLUDE_DYNAMIC_PROCESSES -DNDEBUG
+CXXFLAGS=-m32 -g -Wall -pedantic -Wno-long-long \
+         -DSC_INCLUDE_DYNAMIC_PROCESSES
 LD=g++
 LDFLAGS=-m32
 AR=ar
@@ -109,8 +109,8 @@ INCS=$(INC_DIR) \
 ## Make suffix rules 
 .SUFFIXES: .cpp .c .o
 .cpp.o: 
-	$(CXX) $(CFLAGS) $(INCS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(INCS) -o $@ -c $<
 
 .c.o: 
-	$(CC) $(CFLAGS) $(INCS) -o $@ -c $<
+	$(CC) $(CXXFLAGS) $(INCS) -o $@ -c $<
 
