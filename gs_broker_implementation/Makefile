@@ -3,7 +3,7 @@
 
 CC       = gcc
 CXX      = g++
-OPT      = -g -Wall 
+OPT      = -g -Wall
 OTHER    = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER) # -DCCI_CNF_IMPL_VERBOSE 
 
@@ -28,8 +28,7 @@ OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
 #include ../Makefile.defs
 ## ------------------------------------------------------------------------------------
-
-BOOST  ?=/cad/tools/boost
+# BOOST  ?=/cad/tools/boost
 
 ifdef SYSTEMC_HOME
 SYSTEMC=$(SYSTEMC_HOME)
@@ -55,10 +54,9 @@ DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 ## muldefs should be avoided in the source code, not by the linker
 LDFLAGS =
 
-INCDIR = -I. -I$(CCI_DIR) \
-          -I$(GS_CCI_BROKER_DIR) -I$(GS_CONTROL_DIR) -I$(GREENSTARCORE_DIR) \
-         -I$(SYSTEMC)/include -I$(BOOST) \
-#        -I$(GS_CCI_API_DIR)
+INCDIR = -I. -I$(CCI_DIR) -I$(GS_CCI_BROKER_DIR)\
+	 -I$(GS_CONTROL_DIR) -I$(GREENSTARCORE_DIR) -I$(SYSTEMC)/include
+# 	 -I$(BOOST) -I$(GS_CCI_API_DIR)
 
 ## ------------------------------------------------------------------------------------
 
@@ -71,12 +69,10 @@ $(LIB): $(OBJS)
 	ranlib $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
-	  -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
-	  -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 clean:
 	rm -f  $(OBJS) $(LIB)

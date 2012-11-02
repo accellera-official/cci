@@ -19,7 +19,7 @@ OBJS_W_PATHS = $(SRCS:.cpp=.o)
 #include ../Makefile.defs
 ## ------------------------------------------------------------------------------------
 
-BOOST  ?=/cad/tools/boost
+# BOOST  ?=/cad/tools/boost
 
 ifdef SYSTEMC_HOME
 SYSTEMC = $(SYSTEMC_HOME)
@@ -45,7 +45,8 @@ DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
 
 INCDIR = -I. -I$(CCI_DIR)\
-         -I$(SYSTEMC)/include -I$(BOOST) # \
+         -I$(SYSTEMC)/include
+#	 -I$(BOOST) 
 #        -I$(GREENSTARCORE_DIR) -I$(GS_CONTROL_DIR) -I$(GS_CCI_API_DIR)
 
 ## ------------------------------------------------------------------------------------
@@ -59,12 +60,10 @@ $(LIB): $(OBJS)
 	ranlib $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
-	  -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
-	  -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 clean:
 	rm -f  $(OBJS) $(LIB)

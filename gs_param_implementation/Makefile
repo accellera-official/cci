@@ -36,7 +36,11 @@ OBJS = json_spirit/json_spirit_reader.o \
 # Makefile.defs
 ## ------------------------------------------------------------------------------------
 
-BOOST  ?=/cad/tools/boost
+ifdef BOOST_HOME
+BOOST=$(BOOST_HOME)
+else
+BOOST?=/cad/tools/boost
+endif
 
 ifdef SYSTEMC_HOME
 SYSTEMC=$(SYSTEMC_HOME)
@@ -56,9 +60,9 @@ SYSTEMC ?= /cad/tools/systemc
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
-INCDIR = -I$(CCI_DIR) \
-         -I$(GS_CONTROL_DIR) \
-         -I$(SYSTEMC)/include -I$(BOOST) # \
+INCDIR = -I$(CCI_DIR)\
+         -I$(GS_CONTROL_DIR)\
+         -I$(SYSTEMC)/include -I$(BOOST) #\
 #        -I$(GS_CCI_BROKER_DIR) -I$(GREENSTARCORE_DIR) -I$(GS_CCI_API_DIR)
 
 ## ------------------------------------------------------------------------------------
@@ -72,12 +76,10 @@ $(LIB): $(OBJS)
 	ranlib $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
-	  -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) \
-	  -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 clean:
 	rm -f  $(OBJS) $(LIB)

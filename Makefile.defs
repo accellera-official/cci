@@ -13,7 +13,11 @@ CCI_PARAM_IMPLEMENTATION_LIB_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
 GREENSTARCORE_DIR = $(GS_CCI_HOME)
 
-BOOST  ?=/cad/tools/boost
+ifdef BOOST_HOME
+BOOST=$(BOOST_HOME)
+else
+BOOST?=/cad/tools/boost
+endif
 
 ifdef SYSTEMC_HOME
 SYSTEMC=$(SYSTEMC_HOME)
