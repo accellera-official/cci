@@ -6,7 +6,7 @@ the WG's API proposal and
 GreenSocs' proof-of-concept implementation.
 
 - checkout from git repository 
-  https://svn.greensocs.com/private/packages/greenstarcore
+  https://github.com/OSCI-WG/cci.git
   (ask David Black for access)
 
 - generate doxygen documentation in doc:
@@ -51,3 +51,4 @@ dev_examples/                     :  some development examples
              priv_broker_example/ :  Example demonstrating usage of a private broker
              gs_example_diff_impl :  still TODO!!
 examples/  :  directory for official examples
+
