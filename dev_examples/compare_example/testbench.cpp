@@ -20,9 +20,7 @@
 
 /// Testbench for the CCI development example testing the compare functionality of parameters of different mutability
 int sc_main(int argc, char *argv[]) {
-  
-  cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator("SCMAIN"));
-  
+
   cci::cnf::cci_param<int, cci::cnf::mutable_parameter>          int_param_mutable  ("int_param_mutable",   10);
   cci::cnf::cci_param<int, cci::cnf::mutable_parameter>          int_param_mutable2 ("int_param_mutable2",  100);
   cci::cnf::cci_param<int, cci::cnf::immutable_parameter>        int_param_immutable("int_param_immutable", 11);

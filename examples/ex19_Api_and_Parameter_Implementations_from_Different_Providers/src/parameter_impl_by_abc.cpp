@@ -178,12 +178,16 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callba
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
 
+	static cci::shared_ptr<cci::cnf::callb_adapt> dummy;
+	return dummy; // dummy return value for now
+
 }
 
 cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
+	return callb; // dummy return value for now
 
 }
 
@@ -199,6 +203,7 @@ bool cci_param_user_data_type::unregister_param_callback(cci::shared_ptr<cci::cn
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
 	/* Complex Later */
+	return true; // dummy return value for now
 }
 
 bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt* callb)
@@ -206,6 +211,7 @@ bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt* 
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
 	/* Complex Later */
+	return true; // dummy return value for now
 }
 
 bool cci_param_user_data_type::has_callbacks() 

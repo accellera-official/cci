@@ -27,12 +27,10 @@
 
 #include <iostream>
 #include <string>
+#include <stdint.h>
 #include <cci.h>
 #include <core/cci_shared_ptr.h>
 #include <systemc.h>
-
-typedef unsigned long long uint64_t;
-typedef unsigned int       uint32_t;
 
 /// A user-defined data structure
 struct user_data_type {

@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex18_Superset_Parmeter_Value_Specification.x
+EXE=Superset_Parmeter_Value_Specification
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

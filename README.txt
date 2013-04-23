@@ -1,7 +1,7 @@
 README.txt
 ----------
 
-OSCI CCI WG internal document with
+Accellera CCI WG internal document with
 the WG's API proposal and
 GreenSocs' proof-of-concept implementation.
 
@@ -16,11 +16,11 @@ GreenSocs' proof-of-concept implementation.
 - start looking at documentation in doc/API_ref/index.html
 
 - for compile development examples:
-  - edit Makefiles
-    - gs_broker_implementation/Makefile
-    - gs_param_implementation/Makefile
-    - api/Makefile
-    - Makefiles.defs
+  - Initialize environment variables
+    - CCI_HOME (git root)
+    - BOOST_HOME (Boost include dir)
+    - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.0)
+    - TARGET_ARCH (e.g. linux64)
   - compile in
     - api
     - gs_broker_implementation
@@ -33,7 +33,7 @@ GreenSocs' proof-of-concept implementation.
 there are different compiles to be done manually to demonstrate the 
 independency and make it easier to provide alternative implementations)
 
-- for compile official examples
+- To build and run the user examples:
   - read examples/README.txt
 
 
