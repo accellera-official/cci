@@ -23,7 +23,7 @@
 #define   _USER_DATATYPE_H_
 
 #include <iostream>
-#include <cci.h>
+#include <cci>
 #include <core/cci_shared_ptr.h>
 #include <systemc.h>
 #include <string>

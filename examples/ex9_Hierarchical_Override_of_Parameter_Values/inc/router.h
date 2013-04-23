@@ -26,7 +26,7 @@
 #ifndef ROUTER_H
 #define ROUTER_H
 
-#include <cci.h>       // Include this header in all cci-base applications
+#include <cci>       // Include this header in all cci-base applications
 #include <assert.h>
 #include <vector> 
 

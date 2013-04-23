@@ -23,8 +23,8 @@
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-/// Include cci.h header in all CCI-based applications
-#include "cci.h"
+/// Include cci header in all CCI-based applications
+#include "cci"
 
 #include "user_datatype.h"
 

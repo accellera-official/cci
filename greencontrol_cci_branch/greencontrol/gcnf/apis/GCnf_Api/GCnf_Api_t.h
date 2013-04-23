@@ -46,7 +46,7 @@
 #define DUMMY_NAME "**dummy.NewParamObservers**"
 
 // TODO: CCI modification
-#include <cci.h>
+#include <cci>
 
 namespace gs {
 namespace cnf {

@@ -25,7 +25,7 @@
 
 //------------------------------------------------------------------------------
 #include <string>
-#include "cci.h"
+#include "cci"
 #include "xreport.hpp"
 //#include "boost/cstdint.hpp"
 

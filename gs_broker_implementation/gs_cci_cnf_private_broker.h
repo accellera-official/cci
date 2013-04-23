@@ -18,7 +18,7 @@
 #ifndef __GS_CCI_CNF_PRIVATE_BROKER_H__
 #define __GS_CCI_CNF_PRIVATE_BROKER_H__
 
-#include <cci.h>
+#include <cci>
 #include "greencontrol/config.h"
 #include "gs_cci_broker.h"
 #include "gs_cci_cnf_broker_accessor.h"

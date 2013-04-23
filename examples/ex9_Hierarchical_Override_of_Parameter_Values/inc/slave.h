@@ -26,7 +26,7 @@
 #ifndef SLAVE_H
 #define SLAVE_H
 
-#include <cci.h>  // This header must be included in all cci-applications
+#include <cci>  // This header must be included in all cci-applications
 
 #include "tlm.h"                            // TLM2 headers
 #include "tlm_utils/simple_target_socket.h" // TLM2 simple initiator sockets

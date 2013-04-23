@@ -35,7 +35,7 @@
 /// close namespace macro
 #define __CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__ }
 
-#include "cci.h"
+#include "cci"
 #include "greencontrol/config.h"
 
 #ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__

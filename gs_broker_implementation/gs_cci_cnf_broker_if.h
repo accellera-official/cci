@@ -19,7 +19,7 @@
 #ifndef __GS_CCI_CNF_BROKER_IF_H__
 #define __GS_CCI_CNF_BROKER_IF_H__
 
-#include <cci.h>
+#include <cci>
 
 
 __CCI_OPEN_CONFIG_NAMESPACE__

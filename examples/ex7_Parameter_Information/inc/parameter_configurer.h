@@ -25,7 +25,7 @@
 #ifndef PARAMETER_CONFIGURER_H
 #define PARAMETER_CONFIGURER_H
 
-#include <cci.h>     // Include 'cci.h' header in all CCI-based applications
+#include <cci>     // Include 'cci' header in all CCI-based applications
 #include <assert.h>
 
 /*!

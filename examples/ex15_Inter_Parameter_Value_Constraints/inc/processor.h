@@ -22,7 +22,7 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-#include <cci.h>   // Include the 'cci.h' header in all cci-based applications
+#include <cci>   // Include the 'cci' header in all cci-based applications
 
 #include <assert.h>
 #include <math.h>

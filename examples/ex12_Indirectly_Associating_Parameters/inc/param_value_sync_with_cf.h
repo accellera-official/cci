@@ -25,7 +25,7 @@
 #ifndef PARAM_VALUE_SYNC_H
 #define PARAM_VALUE_SYNC_H
 
-#include <cci.h>  // Include the "cci.h" header file in all cci-based applications
+#include <cci>  // Include the "cci" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 #include <sstream>

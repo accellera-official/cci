@@ -27,7 +27,7 @@
 #ifndef MASTER_H
 #define MASTER_H
 
-#include <cci.h>  // This header file must be included in every cci-based application
+#include <cci>  // This header file must be included in every cci-based application
 
 #include "tlm.h"       // Includes the definitions for TLM2
 #include "tlm_utils/simple_initiator_socket.h" // TLM2 simple initiator socket

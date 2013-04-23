@@ -20,7 +20,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci.h"
+#include "cci"
 #include "param_impl/test_datatype.h"
 
 /// Module which owns some std cci parameters (provided by lib A) and one additional one of lib implementation B.

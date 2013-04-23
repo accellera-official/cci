@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci.h"
+#include "cci"
 
 #include "gs_cci_cnf_private_broker_accessor.h"
 

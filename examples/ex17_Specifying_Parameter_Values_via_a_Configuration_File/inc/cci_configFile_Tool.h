@@ -30,7 +30,7 @@
 #ifndef __CCI_CONFIGFILE_TOOL_H__
 #define __CCI_CONFIGFILE_TOOL_H__
 
-#include <cci.h>
+#include <cci>
 
 #include <sstream>
 

@@ -24,8 +24,7 @@
 #ifndef PARENT_H
 #define PARENT_H
 
-#include <cci.h>  // Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+#include <cci>  // Include the "cci" header file in all cci-based applications
 #include <assert.h>
 #include <string>
 #include <vector>

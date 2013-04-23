@@ -25,7 +25,7 @@
 
 //
 //  This is the main include file for the config part of the CCI.
-//  The top-level include file is cci.h
+//  The top-level include file is "cci".
 //
 
 //#define CCI_CNF_VERBOSE

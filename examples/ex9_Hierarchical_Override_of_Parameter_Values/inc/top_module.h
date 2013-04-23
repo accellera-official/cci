@@ -26,7 +26,7 @@
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
 
-#include <cci.h>      // To be included in all CCI-based applications
+#include <cci>      // To be included in all CCI-based applications
 #include <assert.h>
 #include <vector>
 #include <sstream>

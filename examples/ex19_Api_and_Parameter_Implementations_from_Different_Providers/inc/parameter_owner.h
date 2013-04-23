@@ -24,8 +24,8 @@
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-/// Include the 'cci.h' header in all cci-based applications
-#include <cci.h>
+/// Include the 'cci' header in all cci-based applications
+#include <cci>
 
 #include "parameter_impl_by_abc.h"
 

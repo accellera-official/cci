@@ -23,7 +23,7 @@
 #define INC_SIMPLE_IP_H
 
 //------------------------------------------------------------------------------
-#include "cci.h"
+#include "cci"
 #include <cnf/cci_datatypes.h>
 #include "xreport.hpp"
 

@@ -22,7 +22,7 @@
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-#include <cci.h>    // Include the 'cci.h' header in all cci-based applications
+#include <cci>    // Include the 'cci' header in all cci-based applications
 
 class parameter_configurator;  /// Declare configurator class
 
