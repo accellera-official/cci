@@ -20,7 +20,7 @@
   * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
   * @date    12th September, 2011 (Monday)
   */
-#include <cci.h>        /*!<This header must be added in all CCI-based applications*/
+#include <cci>        /*!<This header must be added in all CCI-based applications*/
 #include <systemc.h>
 #include <assert.h>
 

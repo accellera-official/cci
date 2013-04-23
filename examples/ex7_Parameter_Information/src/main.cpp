@@ -21,7 +21,7 @@
  * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * \date    12th September, 2011
  */
-#include <cci.h>          // Includes cci-infrastructure
+#include <cci>          // Includes cci-infrastructure
 #include <systemc.h>      // Contains all the definitions for SystemC
 #include <assert.h>
 

@@ -14,7 +14,7 @@
 // ENDLICENSETEXT
 
 
-#include "cci.h"
+#include "cci"
 
 #if (false)
 //

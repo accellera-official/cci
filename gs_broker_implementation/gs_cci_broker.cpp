@@ -16,7 +16,7 @@
 
 // This file is broker vendor dependent
 
-#include <cci.h>
+#include <cci>
 #include "gs_cci_broker.h" // Broker vendor dependent
 
 namespace cci {

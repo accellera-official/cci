@@ -21,7 +21,7 @@
  * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date     21st July, 2011 (Thursday)
  */
-#include <cci.h>      /*!This header must be included wherever cci-infrastructure is used*/
+#include <cci>      /*!This header must be included wherever cci-infrastructure is used*/
 #include <systemc.h>
 #include <assert.h>
 #include <string.h>

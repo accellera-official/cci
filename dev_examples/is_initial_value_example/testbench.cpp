@@ -16,7 +16,7 @@
 
 
 #include <systemc>
-#include "cci.h"
+#include "cci"
 
 
 /// Shows a parameter list with information about value, explicit/implicit status and is_initial_value status

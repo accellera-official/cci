@@ -15,7 +15,7 @@
 
 
 #include <systemc>
-#include "cci.h"
+#include "cci"
 
 
 /// Testbench for the CCI development example testing the compare functionality of parameters of different mutability

@@ -22,7 +22,7 @@
  * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * \date     29th April, 2011 (Friday)
  */
-#include <cci.h>             // Always include this header in all CCI applications>
+#include <cci>             // Always include this header in all CCI applications>
 #include <systemc.h>         // SystemC header file for 'sc_main'
 #include <assert.h>          
 #include "top_module.h"      // 'top_module' instance shall be created within main

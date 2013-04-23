@@ -16,7 +16,7 @@
 
 
 #include <systemc>
-#include <cci.h>
+#include <cci>
 
 #include "ModuleA.h"
 #include "ObserverModule.h"
