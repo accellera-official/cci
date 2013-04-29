@@ -255,7 +255,7 @@ namespace cci {
 		template <>
 		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>	\
 		   *create_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter> *owner_par,
-		                                                                  const char* nam,
+		                                                                  const std::string &nam,
 		                                                                  const user_data_type & val,
 		                                                                  bool is_top_level_name,
 		                                                                  cci::cnf::cci_cnf_broker_if* broker_accessor)
@@ -274,7 +274,7 @@ namespace cci {
 		template <>
 		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>	\
 			*create_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter> *owner_par,
-	  		                                                              char const* nam,
+	  		                                                            const std::string &nam,
 	    		                                                            const bool is_top_level_name,
 	      		                                                          cci::cnf::cci_cnf_broker_if* broker_accessor)
 		{
@@ -291,7 +291,7 @@ namespace cci {
 		template <>
 		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>	\
 			*create_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter> *owner_par,
-			                                                               const char * nam,
+			                                                               const std::string &nam,
 	  		                                                             const char * pval,
 	    		                                                           const bool is_top_level_name,
 	      		                                                         cci::cnf::cci_cnf_broker_if* broker_accessor)

@@ -102,12 +102,6 @@ public:
   : m_originator_obj(NULL)
   , m_originator_str(originator) {    
   }
-
-  /// Constructor with an originator name
-  cci_originator(const char* originator) 
-  : m_originator_obj(NULL)
-  , m_originator_str(originator) {    
-  }
   
   /// Set the originator using its object (preferred!)
   /**
@@ -122,15 +116,6 @@ public:
    * @param originator  Originator name
    */
   //void set_originator_name(const std::string& originator) {
-  //  m_originator_obj = NULL;
-  //  m_originator_str = originator;
-  //}
-
-  /// Set the originator using its name (only use if no sc_object available!)
-  /**
-   * @param originator  Originator name
-   */
-  //void set_originator_name(const char* originator) {
   //  m_originator_obj = NULL;
   //  m_originator_str = originator;
   //}

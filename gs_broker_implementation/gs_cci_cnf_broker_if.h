@@ -36,7 +36,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     // Destructor
     virtual ~gs_cci_cnf_broker_if() { };
     
-    virtual const char* name() const = 0;
+    virtual const std::string &name() const = 0;
 
     virtual void set_init_value(const std::string &parname, const std::string &json_value) = 0;
 

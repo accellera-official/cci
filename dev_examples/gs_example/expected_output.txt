@@ -8,9 +8,6 @@ Warning: deserialize: Conversion error: 'This is a param with top-level-name'
 In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
-In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:313
-
-Warning: deserialize: Conversion error: 'This is a param with top-level-name'
 In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 ------ sc_start() ----------------

@@ -50,7 +50,7 @@ namespace cci {
     public:
       ~gs_cci_private_broker_accessor();
       
-      const char* name() const;
+      const std::string &name() const;
 
       // ////////////////////////////////////////////////////////////// //
       // /////////////// cci_cnf_broker_if functions ////////////////// //

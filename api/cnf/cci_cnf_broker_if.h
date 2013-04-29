@@ -80,7 +80,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *
      * @return broker name
      */
-    virtual const char* name() const = 0;
+    virtual const std::string &name() const = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //

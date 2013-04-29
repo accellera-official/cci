@@ -46,7 +46,7 @@ cci::cnf::gs_cci_cnf_broker_accessor::~gs_cci_cnf_broker_accessor() {
   }
 }
 
-const char* cci::cnf::gs_cci_cnf_broker_accessor::name() const {
+const std::string &cci::cnf::gs_cci_cnf_broker_accessor::name() const {
   return m_broker->name();
 }
 

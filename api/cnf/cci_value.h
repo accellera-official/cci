@@ -49,6 +49,11 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Constructor with no (null) value (sets type to cci::partype_not_available)
     cci_value();  
     /// Constructor setting the string value (sets type to cci::partype_string)
+    /**
+     * A (const char *) variant is a necessity; without it, literal char arrays
+     * will use the built-in implicit conversion to bool rather than the (user defined)
+     * conversion to (const string &).
+     */
     cci_value(const char*           value); 
     /// Constructor setting the string value (sets type to cci::partype_string)
     cci_value(const std::string&    value);

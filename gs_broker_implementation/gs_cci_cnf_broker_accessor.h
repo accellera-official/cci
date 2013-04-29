@@ -60,7 +60,7 @@ namespace cci {
       
       ~gs_cci_cnf_broker_accessor();
       
-      const char* name() const;
+      const std::string &name() const;
 
       // ////////////////////////////////////////////////////////////// //
       // /////////////// cci_cnf_broker_if functions ////////////////// //

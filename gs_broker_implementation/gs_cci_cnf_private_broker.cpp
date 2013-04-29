@@ -61,8 +61,8 @@ cci::cnf::gs_cci_private_broker::~gs_cci_private_broker() {
   //delete m_gcnf_api; m_gcnf_api = NULL;
 }
 
-const char* cci::cnf::gs_cci_private_broker::name() const {
-  return m_name.c_str();
+const std::string &cci::cnf::gs_cci_private_broker::name() const {
+  return m_name;
 }
 
 void cci::cnf::gs_cci_private_broker::set_init_value(const std::string &parname, const std::string &json_value) {

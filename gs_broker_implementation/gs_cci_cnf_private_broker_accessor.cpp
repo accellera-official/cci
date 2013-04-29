@@ -45,7 +45,7 @@ cci::cnf::gs_cci_private_broker_accessor::~gs_cci_private_broker_accessor() {
   delete m_broker; m_broker = NULL;
 }
 
-const char* cci::cnf::gs_cci_private_broker_accessor::name() const {
+const std::string &cci::cnf::gs_cci_private_broker_accessor::name() const {
   return m_broker->name();
 }
 

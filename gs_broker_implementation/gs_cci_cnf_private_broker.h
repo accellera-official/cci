@@ -64,7 +64,7 @@ namespace cnf {
           
     ~gs_cci_private_broker();
     
-    const char* name() const;
+    const std::string &name() const;
 
     void set_init_value(const std::string &parname, const std::string &json_value);
     
