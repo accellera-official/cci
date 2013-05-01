@@ -13,6 +13,8 @@
   WARRANTY OF ANY KIND, either express or implied. See the License for the
   specific language governing rights and limitations under the License.
 
+ *****************************************************************************
+ Original Authors: Christian Schroeder and Mark Burton, GreenSocs Ltd.
  *****************************************************************************/
 
 #ifndef __CCI_INCLUDED__
