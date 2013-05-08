@@ -782,9 +782,9 @@ public:
    */
   void update_event_callback(gs_param_base& changed_param) {
     // Check if simulation is running, if not, do NOT notify but cause a warning
-    //SC_REPORT_WARNING(name(), "OSCI SystemC 2.1 does not provide sc_is_running() though it cannot be checked here, this might lead to misbehavior.");
+    //SC_REPORT_WARNING(name(), "SystemC 2.1 does not provide sc_is_running() though it cannot be checked here, this might lead to misbehavior.");
 #if SYSTEMC_VERSION == 20050714
-    if (simcontext()->is_running()) // This is not standard conform thus _only_ for the OSCI version 20050714 needed
+    if (simcontext()->is_running()) // This is not standard conform thus _only_ for the version 20050714 needed
 #else
     if (sc_core::sc_is_running())
 #endif

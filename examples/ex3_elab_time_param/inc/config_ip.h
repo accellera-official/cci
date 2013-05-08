@@ -24,7 +24,7 @@
 
 //------------------------------------------------------------------------------
 #include <cassert>
-#include "cci.h"
+#include "cci"
 #include "xreport.hpp"
 
 //------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ SC_MODULE(config_ip) {
     wait(20, sc_core::SC_NS);
 
     // Check for existance of the structure_param
-    if( m_cci->exists_param(struc_param_name) ) {
+    if( m_cci->param_exists(struc_param_name) ) {
       // Get handle to the param
       cci::cnf::cci_base_param *struc_param_ptr = m_cci->get_param(struc_param_name);
       assert(struc_param_ptr != NULL);

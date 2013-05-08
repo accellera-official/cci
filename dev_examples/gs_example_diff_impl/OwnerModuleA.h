@@ -20,7 +20,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci.h"
+#include "cci"
 
 
 /// Module which owns some std cci parameters.

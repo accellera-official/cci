@@ -23,7 +23,7 @@
 #ifndef MEMORY_BLOCK_H
 #define MEMORY_BLOCK_H
 
-#include <cci.h> // Include the 'cci.h' header in all cci-based applications
+#include <cci> // Include the 'cci' header in all cci-based applications
 
 /**
  * @class      memory_block  memory_block.h

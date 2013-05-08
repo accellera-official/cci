@@ -3,7 +3,7 @@
 #SYSTEMC21V1 = yes
 
 CC     = g++
-OPT    = -g -Wall 
+OPT    = -g -Wall -Werror
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 
@@ -24,9 +24,9 @@ OBJS_W_PATHS = $(SRCS:.cpp=.o)
 EXTRA_LIBS = -lcciparamimpl -lcciparamimpl_test_type -lcciapi -lccibrokerimpl
 EXTRA_LIBS_DIRS = -L./param_impl
 
-all: $(EXE)
-
 include ../../Makefile.defs
+
+all: $(EXE)
 
 $(EXE): impl-all
 clean:  impl-clean

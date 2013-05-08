@@ -20,7 +20,7 @@
 
 // NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
-#include <cci.h>
+#include <cci>
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_broker_if.h"
 #include "gs_cci_cnf_broker_accessor_handler.h"
@@ -90,15 +90,15 @@ namespace cnf {
 
     ~gs_cci_cnf_broker();
     
-    const char* name() const;
+    const std::string &name() const;
     
-    void set_init_value(const std::string &parname, const std::string &json_value);
+    void json_deserialize_initial_value(const std::string &parname, const std::string &json_value);
     
-    void lock_init_value(const std::string &parname);
+    void lock_initial_value(const std::string &parname);
     
-    const std::string get_json_string(const std::string &parname);
+    const std::string json_serialize(const std::string &parname);
     
-    const std::string get_json_string_keep_unused(const std::string &parname);
+    const std::string json_serialize_keep_unused(const std::string &parname);
     
     cci_base_param* get_param(const std::string &parname);
     
@@ -108,7 +108,7 @@ namespace cnf {
 
     const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern);
     
-    bool exists_param(const std::string &parname);
+    bool param_exists(const std::string &parname);
     
     bool is_used(const std::string &parname);
     
@@ -116,7 +116,7 @@ namespace cnf {
     
     void unregister_all_callbacks(void* observer);
     
-    bool unregister_param_callback(callb_adapt* callb);
+    bool unregister_callback(callb_adapt* callb);
     
     bool has_callbacks(const std::string& parname);
     
@@ -138,7 +138,7 @@ namespace cnf {
      * @param par_name   Name of the changed parameter.
      * @param value      New value of the changed parameter.
      */
-    void make_create_param_callbacks(const std::string &search, const std::string &par_name, const std::string &value);
+    void make_create_callbacks(const std::string &search, const std::string &par_name, const std::string &value);
 
     /// Internal const function to be used by get_param and get_latest_write_originator
     cci::cnf::cci_base_param* get_param_const(const std::string &parname) const;

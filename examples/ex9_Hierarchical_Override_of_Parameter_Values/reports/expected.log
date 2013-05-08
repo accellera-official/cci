@@ -70,7 +70,7 @@ In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/greencontrol_cci_branch/greenc
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
-[ROUTER : Caught] : Error: /OSCI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+[ROUTER : Caught] : Error: /ASI/CCI/SET_PARAM_FAILED: Setting initial value failed.
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:33
 
 [TOP_MODULE C_TOR] : Re-setting start addr of Slave_1
@@ -78,7 +78,7 @@ In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:3
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
-[ROUTER : Caught] : Error: /OSCI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+[ROUTER : Caught] : Error: /ASI/CCI/SET_PARAM_FAILED: Setting initial value failed.
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:33
 
 [TOP_MODULE C_TOR] : Re-setting end addr of Slave_1
@@ -86,7 +86,7 @@ In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:3
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:519
 
-[ROUTER : Caught] : Error: /OSCI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+[ROUTER : Caught] : Error: /ASI/CCI/SET_PARAM_FAILED: Setting initial value failed.
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:33
 
 [TOP_MODULE C_TOR] : Re-setting fields of Slave_2

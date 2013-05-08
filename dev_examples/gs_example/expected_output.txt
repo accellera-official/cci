@@ -8,9 +8,6 @@ Warning: deserialize: Conversion error: 'This is a param with top-level-name'
 In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
-In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:313
-
-Warning: deserialize: Conversion error: 'This is a param with top-level-name'
 In file: /Users/schroede/mydev/cci_git/cci/greencontrol_cci_branch/greencontrol/gcnf/apis/gs_param/gs_param_native.hpp:123
 
 ------ sc_start() ----------------
@@ -26,7 +23,7 @@ int_param set value = 99 (shall fail)
   REJECT VALUE CHANGE!!
 
 
-Observer: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Value rejected by callback.
+Observer: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Value rejected by callback.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: Observer.main_action @ 0 s
 int_param has value = 11
@@ -48,7 +45,7 @@ Owner: uint_param is_default_value()=0
 
 Owner: uint_param get_default_value()=12000
 Owner: bool_param get_default_value()=
-Owner: Caught Error: /OSCI/CCI/GET_PARAM_FAILED: Param has no default value.
+Owner: Caught Error: /ASI/CCI/GET_PARAM_FAILED: Param has no default value.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:37
 In process: Owner.main_action @ 0 s
 Owner: bool_param is_invalid_value()=1
@@ -63,17 +60,17 @@ MutabilityOwner:  mutable_int_param=150
 MutabilityOwner:  lock mutable_int_param
 MutabilityOwner:    set mutable_int_param should fail
 
-MutabilityOwner: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Parameter locked.
+MutabilityOwner: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Parameter locked.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
 MutabilityOwner:    set mutable_int_param with wrong key
 
-MutabilityOwner: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Wrong key.
+MutabilityOwner: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Wrong key.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: MutabilityOwner.main_action @ 0 s
 
-MutabilityOwner: Caught Error: /OSCI/CCI/SET_PARAM_FAILED: Wrong key.
+MutabilityOwner: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Wrong key.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:33
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:    set mutable_int_param with key - should succeed

@@ -17,7 +17,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex16_User_Defined_Data_Type.x
+EXE=User_Defined_Data_Type
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

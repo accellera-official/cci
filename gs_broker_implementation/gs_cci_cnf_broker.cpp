@@ -118,11 +118,11 @@ cci::cnf::gs_cci_cnf_broker::~gs_cci_cnf_broker() {
   }
 }
 
-const char* cci::cnf::gs_cci_cnf_broker::name() const {
-  return m_name.c_str();
+const std::string &cci::cnf::gs_cci_cnf_broker::name() const {
+  return m_name;
 }
 
-void cci::cnf::gs_cci_cnf_broker::set_init_value(const std::string &parname, const std::string &json_value) {
+void cci::cnf::gs_cci_cnf_broker::json_deserialize_initial_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
   // TODO: if <parname> is implicit parameter, cause a reject_write-callback here!
   // TODO: if <parname> is implicit parameter, cause a pre_write-callback here!
@@ -148,19 +148,19 @@ const cci::cnf::cci_originator* cci::cnf::gs_cci_cnf_broker::get_latest_write_or
   return NULL;
 }
 
-void cci::cnf::gs_cci_cnf_broker::lock_init_value(const std::string &parname) {
+void cci::cnf::gs_cci_cnf_broker::lock_initial_value(const std::string &parname) {
   if ( !gs::cnf::GCnf_Api::lockInitValue(parname) ) {
     cci_report_handler::set_param_failed("Locking initial value failed.");
   }
 }
 
-const std::string cci::cnf::gs_cci_cnf_broker::get_json_string(const std::string &parname) {
+const std::string cci::cnf::gs_cci_cnf_broker::json_serialize(const std::string &parname) {
   // TODO: use JSON
   // TODO: if <parname> is implicit parameter, cause a pre_read-callback here!
   return gs::cnf::GCnf_Api::getValue(parname);
 }
 
-const std::string cci::cnf::gs_cci_cnf_broker::get_json_string_keep_unused(const std::string &parname) {
+const std::string cci::cnf::gs_cci_cnf_broker::json_serialize_keep_unused(const std::string &parname) {
   // TODO: use JSON
   return gs::cnf::GCnf_Api::getValue(parname, "", true);
 }
@@ -185,7 +185,7 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker::get_param_const(const std
    else return NULL;*/
 }
 
-bool cci::cnf::gs_cci_cnf_broker::exists_param(const std::string &parname) {
+bool cci::cnf::gs_cci_cnf_broker::param_exists(const std::string &parname) {
   std::map<std::string,cci_base_param*>::iterator iter = m_mirrored_registry.find(parname);
   if( iter != m_mirrored_registry.end() ) {
     cci::cnf::cci_base_param* ret = dynamic_cast<cci::cnf::cci_base_param*>(iter->second);
@@ -285,7 +285,7 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
   return callb;
 }
 
-void cci::cnf::gs_cci_cnf_broker::make_create_param_callbacks(const std::string &search, const std::string &par_name, const std::string &value) {
+void cci::cnf::gs_cci_cnf_broker::make_create_callbacks(const std::string &search, const std::string &par_name, const std::string &value) {
   internal_callback_forwarder *callb;
   observerCallbackMap::iterator it;
   std::pair<observerCallbackMap::iterator, observerCallbackMap::iterator> begin_end;        
@@ -315,7 +315,7 @@ void cci::cnf::gs_cci_cnf_broker::unregister_all_callbacks(void* observer) {
   }
 }
 
-bool cci::cnf::gs_cci_cnf_broker::unregister_param_callback(callb_adapt* callb) {
+bool cci::cnf::gs_cci_cnf_broker::unregister_callback(callb_adapt* callb) {
   internal_callback_forwarder* fw;
   for (unsigned int i = 0; i < fw_vec.size(); ++i) {
     if (fw_vec[i]->adapt == callb) {
@@ -340,7 +340,7 @@ void cci::cnf::gs_cci_cnf_broker::add_param(cci_base_param* par) {
    assert(p != NULL && "This demo example implementation only works with the gs parameter implementation (TODO: internally to be changed!)");
    gs::cnf::GCnf_Api::addPar(p);*/
   // Make create_param callbacks if there are any
-  make_create_param_callbacks("**dummy.NewParamObservers**", par->get_name(), par->json_serialize());
+  make_create_callbacks("**dummy.NewParamObservers**", par->get_name(), par->json_serialize());
 }
 
 void cci::cnf::gs_cci_cnf_broker::remove_param(cci_base_param* par) {

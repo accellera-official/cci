@@ -21,7 +21,7 @@
 // Detect SystemC API and define the macro SYSTEMC_API
 // (include detection for other SystemC vendors if necessary)
 //
-// 2008-10-02: Detect OSCI SystemC versions 2.1 and 2.2
+// 2008-10-02: Detect SystemC versions 2.1 and 2.2
 //
 ////////////////////////////////////////////////////////
 
@@ -42,12 +42,12 @@
 // So it is not defined externally, detect it!
 #else
 
-// OSCI SystemC 2.1
+// SystemC 2.1
 #if SYSTEMC_VERSION == 20050714
 #define SYSTEMC_API 210
 #endif
 
-// OSCI SystemC 2.2.0 and 2.2.05jun06
+// SystemC 2.2.0 and 2.2.05jun06
 #if SYSTEMC_VERSION == 20070314 || SYSTEMC_VERSION == 20060505
 #define SYSTEMC_API 220
 #endif

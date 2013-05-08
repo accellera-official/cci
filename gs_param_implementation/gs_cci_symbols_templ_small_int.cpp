@@ -27,17 +27,17 @@
 //
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const char* nam,                   const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const char* nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const char* nam, const char* val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
+  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam,                   const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
+  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
+  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const char* val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
   template                                                  void  init_cci_param   (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par); \
   template                                                  void  destroy_cci_param(cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE>* param    );
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::mutable_parameter) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::immutable_parameter) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_parameter) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_parameter)
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::mutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::immutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_param)
 
 
 
@@ -122,10 +122,10 @@ using namespace sc_dt;
   void (*call_create5_##T##TM)(cci_param<T<LOWER>, TM>*);
 
 #define PLACE_FUNCTION_POINTERS_T(T) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, mutable_parameter) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, immutable_parameter) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, elaboration_time_parameter) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, other_parameter)
+  PLACE_FUNCTION_POINTERS_T_TM(T, mutable_param) \
+  PLACE_FUNCTION_POINTERS_T_TM(T, immutable_param) \
+  PLACE_FUNCTION_POINTERS_T_TM(T, elaboration_time_param) \
+  PLACE_FUNCTION_POINTERS_T_TM(T, other_param)
 #define PLACE_FUNCTION_POINTERS() \
   PLACE_FUNCTION_POINTERS_T(sc_int) \
   PLACE_FUNCTION_POINTERS_T(sc_uint)
@@ -137,10 +137,10 @@ using namespace sc_dt;
   call_create4_##T##TM(&init_cci_param<T<LOWER>, TM>), \
   call_create5_##T##TM(&destroy_cci_param<T<LOWER>, TM>), 
 #define PLACE_FUNCTION_CALLS_T(T) \
-  PLACE_FUNCTION_CALLS_T_TM(T, mutable_parameter) \
-  PLACE_FUNCTION_CALLS_T_TM(T, immutable_parameter) \
-  PLACE_FUNCTION_CALLS_T_TM(T, elaboration_time_parameter) \
-  PLACE_FUNCTION_CALLS_T_TM(T, other_parameter)
+  PLACE_FUNCTION_CALLS_T_TM(T, mutable_param) \
+  PLACE_FUNCTION_CALLS_T_TM(T, immutable_param) \
+  PLACE_FUNCTION_CALLS_T_TM(T, elaboration_time_param) \
+  PLACE_FUNCTION_CALLS_T_TM(T, other_param)
 #define PLACE_FUNCTION_CALLS() \
   PLACE_FUNCTION_CALLS_T(sc_int) \
   PLACE_FUNCTION_CALLS_T(sc_uint)

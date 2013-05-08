@@ -24,7 +24,7 @@
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-#include <cci.h>    //!< Include the "cci.h" header file in all cci-based applications
+#include <cci>    //!< Include the "cci" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 
@@ -59,7 +59,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			std::string cfgr_param_str2	=	"top_mod.param_owner2.clock_speed_KHz";
 
 			/// Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
-			if(myCfgrBrokerIF->exists_param(cfgr_param_str1))
+			if(myCfgrBrokerIF->param_exists(cfgr_param_str1))
 			{
 				cfgr_param_ptr1	=	myCfgrBrokerIF->get_param(cfgr_param_str1);
 
@@ -72,7 +72,7 @@ class parameter_configurator : public ::sc_core::sc_module
 				std::cout << "\t[CFGR] : Parameter " << cfgr_param_str1 << "\tdoesn't exists in top_module" << std::endl;
 
 			/// Check for the existence of 'clock_speed_Hz' cci_parameter of owner module 2
-			if(myCfgrBrokerIF->exists_param(cfgr_param_str2))
+			if(myCfgrBrokerIF->param_exists(cfgr_param_str2))
 			{
 				cfgr_param_ptr2	=	myCfgrBrokerIF->get_param(cfgr_param_str2);
 

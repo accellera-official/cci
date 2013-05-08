@@ -23,7 +23,7 @@
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-#include <cci.h>    /*!This header file must be included wherever cci-infrastructure is used*/
+#include <cci>    /*!This header file must be included wherever cci-infrastructure is used*/
 #include <assert.h>
 #include <vector>
 

@@ -38,7 +38,7 @@ Observer::~Observer() {
 
 /// Callback function with string signature showing changes for implicit and explicit parameters.
 cci::cnf::callback_return_type Observer::config_str_callback(const std::string& par_name, const cci::cnf::callback_type& cb_reason) {
-  std::string str = mBroker->get_json_string(par_name);
+  std::string str = mBroker->json_serialize(par_name);
   switch (cb_reason) {
   case cci::cnf::pre_write:
     DEMO_DUMP(name(), "**** String callback for parameter '" << par_name << "' will change value");

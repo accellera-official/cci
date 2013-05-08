@@ -17,15 +17,9 @@
 
 CC     = gcc
 CXX    = g++
-OPT    = -O0 -Wall
+OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long
-CFLAGS = $(OPT) $(OTHER)
-
-#SRCS = json_spirit/json_spirit_reader.cpp \
-#       json_spirit/json_spirit_writer.cpp \
-#       gs_cci_value.cpp \
-#       gs_cci_symbols_templ_small_int.cpp \
-#       gs_cci_symbols.cpp
+CXXFLAGS = $(OPT) $(OTHER)
 
 OBJS = json_spirit/json_spirit_reader.o \
        json_spirit/json_spirit_writer.o \
@@ -33,39 +27,34 @@ OBJS = json_spirit/json_spirit_reader.o \
        gs_cci_symbols.o
  
 
-# Makefile.defs
-## ------------------------------------------------------------------------------------
+#include Makefile.defs
+## -----------------------------------------------------------------------------
 
 ifdef BOOST_HOME
-BOOST=$(BOOST_HOME)
-else
-BOOST?=/cad/tools/boost
+BOOST = $(BOOST_HOME)
 endif
+BOOST ?= /cad/tools/boost
 
 ifdef SYSTEMC_HOME
-SYSTEMC=$(SYSTEMC_HOME)
-else
-SYSTEMC?=/cad/tools/systemc
+SYSTEMC = $(SYSTEMC_HOME)
 endif
+SYSTEMC ?= /cad/tools/systemc
+
+ifdef CCI_HOME
+GS_CCI_HOME = $(CCI_HOME)
+endif
+GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
 
 ## set some directories 
-GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
-GREENSTARCORE_DIR = $(GS_CCI_HOME)
 CCI_DIR = $(GS_CCI_HOME)/api
-GS_CCI_PARAM_DIR = $(GS_CCI_HOME)/gs_param_implementation
-GS_CCI_API_DIR = $(GS_CCI_HOME)/gs_api_implementation
-BOOST ?= /cad/tools/boost
-SYSTEMC ?= /cad/tools/systemc
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
-INCDIR = -I$(CCI_DIR)\
-         -I$(GS_CONTROL_DIR)\
-         -I$(SYSTEMC)/include -I$(BOOST) #\
-#        -I$(GS_CCI_BROKER_DIR) -I$(GREENSTARCORE_DIR) -I$(GS_CCI_API_DIR)
+INCDIR = -I$(CCI_DIR) -I$(GS_CONTROL_DIR)\
+         -I$(SYSTEMC)/include -I$(BOOST) 
 
-## ------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 LIB=libcciparamimpl.a
 
@@ -76,16 +65,16 @@ $(LIB): $(OBJS)
 	ranlib $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 clean:
 	rm -f  $(OBJS) $(LIB)
 
 bigsymbols:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) \
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) \
 		-DCCI_SYMBOLS_LOWER_BOUND=$(CCI_SYMBOLS_LOWER_BOUND) \
 		-DCCI_SYMBOLS_UPPER_BOUND=$(CCI_SYMBOLS_UPPER_BOUND) \
 		$(INCDIR) \

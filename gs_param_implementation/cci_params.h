@@ -35,7 +35,7 @@
 /// close namespace macro
 #define __CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__ }
 
-#include "cci.h"
+#include "cci"
 #include "greencontrol/config.h"
 
 #ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
@@ -56,7 +56,7 @@ namespace cci { namespace cnf {
   
   /// Implementation of parameter factory create function function declared in cci_config.h
   template<typename T, cci::cnf::param_mutable_type TM>
-  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
+  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
     cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, is_top_level_name, broker_accessor);
     //std::cout << (std::hex) << "new impl_par=" << impl_par << std::endl;
     return impl_par;
@@ -65,7 +65,7 @@ namespace cci { namespace cnf {
   
   /// Implementation of parameter factory create function function declared in cci_config.h
   template<typename T, cci::cnf::param_mutable_type TM>
-  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const T& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
+  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const T& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
     cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor);
     //std::cout << (std::hex) << "new impl_par=" << impl_par << std::endl;
     return impl_par;
@@ -74,7 +74,7 @@ namespace cci { namespace cnf {
 
   /// Implementation of parameter factory create function function declared in cci_config.h
   template<typename T, cci::cnf::param_mutable_type TM>
-  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const char* nam, const char* val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
+  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const char* val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
     cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor);
     //std::cout << (std::hex) << "new impl_par=" << impl_par << std::endl;
     return impl_par;

@@ -16,7 +16,7 @@ INC_DIR=-I../inc -I/home/pvs/MyInstallations/TLM-2009-07-15/include/tlm
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex9_Hierarchical_Override_of_Parameter_Values.x
+EXE=Hierarchical_Override_of_Parameter_Values
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

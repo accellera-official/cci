@@ -22,7 +22,7 @@
 #ifndef CONFIGURATOR_H
 #define CONFIGURATOR_H
 
-#include <cci.h>  //!< Include the "cci.h" header file in all cci-based applications
+#include <cci>  //!< Include the "cci" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 
@@ -54,7 +54,7 @@ class configurator : public sc_module
 
 			if(myCfgrBrokerIF != NULL)
 			{
-				if(myCfgrBrokerIF->exists_param("Top.parent_inst.parent_int_buffer"))
+				if(myCfgrBrokerIF->param_exists("Top.parent_inst.parent_int_buffer"))
 				{
 					/// Get handle of the parent_module's cci-parameter
 					parent_base_param_ptr = myCfgrBrokerIF->get_param("Top.parent_inst.parent_int_buffer");

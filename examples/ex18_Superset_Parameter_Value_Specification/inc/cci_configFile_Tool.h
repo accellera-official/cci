@@ -30,7 +30,7 @@
 #ifndef __CCI_CONFIGFILE_TOOL_H__
 #define __CCI_CONFIGFILE_TOOL_H__
 
-#include <cci.h>
+#include <cci>
 
 #include <sstream>
 
@@ -43,7 +43,7 @@ namespace cci {
 namespace cnf {
     
 #define CONFIG_FILE_TOOL_BUFSIZE 1024
-#define TRACENAME "/OSCI/CCI/CONFIG_FILE_TOOL"
+#define TRACENAME "/ASI/CCI/CONFIG_FILE_TOOL"
 
 enum gc_config_parse_result {
   parse_result_ignore = 0,
@@ -110,7 +110,7 @@ public:
     gs::cnf::ConfigSet::cnf_data_map_type::const_iterator it;
     for ( it=cnf_set.get_config_map().begin() ; it != cnf_set.get_config_map().end(); it++ ) {
       std::cout << "ConfigFile_Api: Applying initial value of param '"<<it->first<<"' to '"<<it->second<<"'"<<std::endl;
-      mApi->set_init_value(it->first.c_str(), it->second.c_str());
+      mApi->json_deserialize_initial_value(it->first.c_str(), it->second.c_str());
     }
     
   }

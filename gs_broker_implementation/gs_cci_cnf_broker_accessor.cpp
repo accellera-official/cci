@@ -46,34 +46,34 @@ cci::cnf::gs_cci_cnf_broker_accessor::~gs_cci_cnf_broker_accessor() {
   }
 }
 
-const char* cci::cnf::gs_cci_cnf_broker_accessor::name() const {
+const std::string &cci::cnf::gs_cci_cnf_broker_accessor::name() const {
   return m_broker->name();
 }
 
-void cci::cnf::gs_cci_cnf_broker_accessor::set_init_value(const std::string &parname, const std::string &json_value) {
+void cci::cnf::gs_cci_cnf_broker_accessor::json_deserialize_initial_value(const std::string &parname, const std::string &json_value) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  m_broker->set_init_value(parname, json_value);
+  m_broker->json_deserialize_initial_value(parname, json_value);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
-void cci::cnf::gs_cci_cnf_broker_accessor::lock_init_value(const std::string &parname) {
+void cci::cnf::gs_cci_cnf_broker_accessor::lock_initial_value(const std::string &parname) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  m_broker->lock_init_value(parname);
+  m_broker->lock_initial_value(parname);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
-const std::string cci::cnf::gs_cci_cnf_broker_accessor::get_json_string(const std::string &parname) {
+const std::string cci::cnf::gs_cci_cnf_broker_accessor::json_serialize(const std::string &parname) {
   // TODO: use JSON
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  std::string ret = m_broker->get_json_string(parname);
+  std::string ret = m_broker->json_serialize(parname);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
 
-const std::string cci::cnf::gs_cci_cnf_broker_accessor::get_json_string_keep_unused(const std::string &parname) {
+const std::string cci::cnf::gs_cci_cnf_broker_accessor::json_serialize_keep_unused(const std::string &parname) {
   // TODO: use JSON
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  const std::string& ret = m_broker->get_json_string_keep_unused(parname);
+  const std::string& ret = m_broker->json_serialize_keep_unused(parname);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -87,9 +87,9 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_cnf_broker_accessor::get_param(const 
   else return NULL;
 }
 
-bool cci::cnf::gs_cci_cnf_broker_accessor::exists_param(const std::string &parname) {
+bool cci::cnf::gs_cci_cnf_broker_accessor::param_exists(const std::string &parname) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = m_broker->exists_param(parname);
+  bool ret = m_broker->param_exists(parname);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -121,9 +121,9 @@ void cci::cnf::gs_cci_cnf_broker_accessor::unregister_all_callbacks(void* observ
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
-bool cci::cnf::gs_cci_cnf_broker_accessor::unregister_param_callback(callb_adapt* callb) {
+bool cci::cnf::gs_cci_cnf_broker_accessor::unregister_callback(callb_adapt* callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = m_broker->unregister_param_callback(callb);
+  bool ret = m_broker->unregister_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }

@@ -26,7 +26,7 @@
 #ifndef SLAVE_H
 #define SLAVE_H
 
-#include <cci.h>  // This header must be included in all cci-applications
+#include <cci>  // This header must be included in all cci-applications
 
 #include "tlm.h"                            // TLM2 headers
 #include "tlm_utils/simple_target_socket.h" // TLM2 simple initiator sockets
@@ -146,10 +146,10 @@ class slave : public sc_core::sc_module
 	private :
 
 		// Elaboration Time Parameter for assigning slave ID (initialized by top_module)
-		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> slave_ID; //!< Elaboration Time Parameter for Slave ID
+		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> slave_ID; //!< Elaboration Time Parameter for Slave ID
 		
 		// Mutable time parameter for setting slave's base address (initialized by router)
-		cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> s_base_addr; //!< Slave's base address*/
+		cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> s_base_addr; //!< Slave's base address*/
 
 		// Mutable time parameter for setting slave's size (initialized by router);
 		cci::cnf::cci_param<unsigned int>	s_size;  //!< Slave's size

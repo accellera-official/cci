@@ -23,7 +23,7 @@
 #ifndef ADDRESS_LINES_REGISTER_H
 #define ADDRESS_LINES_REGISTER_H
 
-#include <cci.h>  // Include the 'cci.h' header in all cci-based applications
+#include <cci>  // Include the 'cci' header in all cci-based applications
 
 /**
  * @class      address_lines_register address_lines_register.h

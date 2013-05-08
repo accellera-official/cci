@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci.h"
+#include "cci"
 
 
 /// Module which sets/accesses parameter values using cci_values

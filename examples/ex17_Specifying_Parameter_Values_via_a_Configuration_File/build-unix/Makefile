@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex17_Specifying_Parmeter_Values_via_a_Configuration_File.x
+EXE=Specifying_Parmeter_Values_via_a_Configuration_File
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

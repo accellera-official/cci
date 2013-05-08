@@ -17,39 +17,31 @@ OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
 
 #include ../Makefile.defs
-## ------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
-# BOOST  ?=/cad/tools/boost
+ifdef BOOST_HOME
+BOOST = $(BOOST_HOME)
+endif
+BOOST ?= /cad/tools/boost
 
 ifdef SYSTEMC_HOME
 SYSTEMC = $(SYSTEMC_HOME)
-else
-SYSTEMC ?= /cad/tools/systemc
 endif
+SYSTEMC ?= /cad/tools/systemc
+
+ifdef CCI_HOME
+GS_CCI_HOME = $(CCI_HOME)
+endif
+GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
 
 ## set some directories 
-
-## root of Git tree
-GS_CCI_HOME?=/Users/schroede/mydev/cci_git/cci
-
-GS_CONTROL_DIR ?= $(GS_CCI_HOME)/greencontrol_cci_branch
-GREENSTARCORE_DIR ?= $(GS_CCI_HOME)
 CCI_DIR ?= $(GS_CCI_HOME)/api
-GS_CCI_PARAM_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
-GS_CCI_API_DIR ?= $(GS_CCI_HOME)/gs_api_implementation
-
-#SCV_INCLUDE = /cad/tools/systemc-scv/include
-#SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
+INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST) 
 
-INCDIR = -I. -I$(CCI_DIR)\
-         -I$(SYSTEMC)/include
-#	 -I$(BOOST) 
-#        -I$(GREENSTARCORE_DIR) -I$(GS_CONTROL_DIR) -I$(GS_CCI_API_DIR)
-
-## ------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 LIB=libcciapi.a
 
@@ -60,10 +52,10 @@ $(LIB): $(OBJS)
 	ranlib $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 clean:
 	rm -f  $(OBJS) $(LIB)

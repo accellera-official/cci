@@ -27,7 +27,7 @@
 #ifndef MASTER_H
 #define MASTER_H
 
-#include <cci.h>  // This header file must be included in every cci-based application
+#include <cci>  // This header file must be included in every cci-based application
 
 #include "tlm.h"       // Includes the definitions for TLM2
 #include "tlm_utils/simple_initiator_socket.h" // TLM2 simple initiator socket
@@ -146,7 +146,7 @@ class master : public sc_core::sc_module
 	private :
 		
 		// Elaboration Time Parameter for assigning master ID (initialized by top_module)
-		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter> master_ID; //!< Elaboration Time Parameter for Master ID
+		cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> master_ID; //!< Elaboration Time Parameter for Master ID
 
 };// End of SC_MODULE
 

@@ -14,7 +14,7 @@
 // ENDLICENSETEXT
 
 
-#include "cci.h"
+#include "cci"
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 

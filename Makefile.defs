@@ -1,5 +1,9 @@
 ## root of Git tree
+ifdef CCI_HOME
+GS_CCI_HOME = $(CCI_HOME)
+else
 GS_CCI_HOME?=/Users/schroede/mydev/cci_git/cci
+endif
 
 ## set some directories 
 CCI_INC_DIR = $(GS_CCI_HOME)/api
@@ -14,23 +18,18 @@ GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
 GREENSTARCORE_DIR = $(GS_CCI_HOME)
 
 ifdef BOOST_HOME
-BOOST=$(BOOST_HOME)
-else
-BOOST?=/cad/tools/boost
+BOOST = $(BOOST_HOME)
 endif
+BOOST ?= /cad/tools/boost
 
 ifdef SYSTEMC_HOME
 SYSTEMC=$(SYSTEMC_HOME)
-else
-SYSTEMC?=/cad/tools/systemc
 endif
+SYSTEMC ?= /cad/tools/systemc
 
 ## Your compiler
 CC  ?= gcc
 CXX ?= g++
-
-#SCV_INCLUDE = /cad/tools/systemc-scv/include
-#SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
 
 ## target architecture (if not defined in Makefile)
 ifndef TARGET_ARCH
@@ -38,40 +37,34 @@ ifndef TARGET_ARCH
 endif
 
 ifdef SYSTEMC_LIB
- SYSTEMC_LIB_DIR=$(SYSTEMC_LIB)
+ SYSTEMC_LIB_DIR = $(SYSTEMC_LIB)
 endif
-SYSTEMC_LIB_DIR?=$(SYSTEMC)/lib-$(TARGET_ARCH)
+SYSTEMC_LIB_DIR ?= $(SYSTEMC)/lib-$(TARGET_ARCH)
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
 LDFLAGS =
 
-INCDIR = -I. -I$(CCI_INC_DIR) \
-         -I$(SYSTEMC)/include -I$(BOOST) # \
-#         -I$(GS_CONTROL_DIR) \
-#         -I$(GREENSTARCORE_DIR)  # \
-#         -I$(CCI_API_IMPLEMENTATION_INC_DIR) # \
-#         -I$(CCI_PARAM_IMPLEMENTATION_INC_DIR)
+INCDIR = -I. -I$(CCI_INC_DIR) -I$(SYSTEMC)/include -I$(BOOST)
 
 LIBDIR = -L. -L.. -L$(SYSTEMC_LIB_DIR) -L$(CCI_LIB_DIR) \
-         -L$(CCI_API_IMPLEMENTATION_LIB_DIR) -L$(CCI_PARAM_IMPLEMENTATION_LIB_DIR) \
-         $(EXTRA_LIBS_DIRS)
+         -L$(CCI_API_IMPLEMENTATION_LIB_DIR) \
+	 -L$(CCI_PARAM_IMPLEMENTATION_LIB_DIR) $(EXTRA_LIBS_DIRS)
 
 LIBS   =  $(EXTRA_LIBS) -lsystemc -lm
 
-EXE    = $(MODULE).x
+EXE    = $(MODULE)
 
 .SUFFIXES: .cc .cpp .o
 
 $(EXE): $(OBJS_W_PATHS) $(SYSTEMC_LIB_DIR)/libsystemc.a 
-	$(CXX) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
-#	strip $(EXE)
+	$(CXX) $(CFLAGS) $(DEFFLAGS) $(LDFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
 
 .cpp.o:
-	$(CXX) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CFLAGS) $(DEFFLAGS) $(INCDIR) -c $<
 
 .cc.o:
-	$(CXX) $(CFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $<
+	$(CXX) $(CFLAGS) $(DEFFLAGS) $(INCDIR) -c $<
 
 run: $(EXE)
 	./$(EXE) $(EXE_FLAGS)

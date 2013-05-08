@@ -20,7 +20,7 @@
 
 #include <boost/assign/list_of.hpp> 
 
-#include <cci.h>
+#include <cci>
 #include "greencontrol/config.h"
 
 namespace cci {

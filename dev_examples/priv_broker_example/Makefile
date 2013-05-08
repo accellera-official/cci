@@ -3,7 +3,7 @@
 #SYSTEMC21V1 = yes
 
 CC     = g++
-OPT    = -g -Wall 
+OPT    = -g -Wall -Werror
 OTHER  = -pedantic -Wno-long-long
 CFLAGS = $(OPT) $(OTHER)
 

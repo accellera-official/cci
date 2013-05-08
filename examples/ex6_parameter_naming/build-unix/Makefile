@@ -15,7 +15,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=parameter_naming.x
+EXE=parameter_naming
 
 #-- [Do not Update]
 include $(DEPTH)/Makefile.config

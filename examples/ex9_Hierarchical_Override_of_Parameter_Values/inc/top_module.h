@@ -26,7 +26,7 @@
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
 
-#include <cci.h>      // To be included in all CCI-based applications
+#include <cci>      // To be included in all CCI-based applications
 #include <assert.h>
 #include <vector>
 #include <sstream>
@@ -75,13 +75,13 @@ class top_module : public sc_core::sc_module
 
 
 			/// Set and lock the number of masters in Router Table to value passed from 'sc_main'
-			myDefaultBroker->set_init_value("top_module_inst.RouterInstance.r_masters", n_masters.json_serialize());
-			myDefaultBroker->lock_init_value("top_module_inst.RouterInstance.r_masters");
+			myDefaultBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_masters", n_masters.json_serialize());
+			myDefaultBroker->lock_initial_value("top_module_inst.RouterInstance.r_masters");
 
 
 			/// Set and lock the number of slaves in Router Table to value passed from 'sc_main'
-			myDefaultBroker->set_init_value("top_module_inst.RouterInstance.r_slaves", n_slaves.json_serialize());
-			myDefaultBroker->lock_init_value("top_module_inst.RouterInstance.r_slaves");
+			myDefaultBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_slaves", n_slaves.json_serialize());
+			myDefaultBroker->lock_initial_value("top_module_inst.RouterInstance.r_slaves");
 
 
 			/// Declaring and defining router module
@@ -93,7 +93,7 @@ class top_module : public sc_core::sc_module
 			/// Top_Module begins construction of the model hierarchy from here
 			// ----------------------------------------------------------------
 
-			if(myDefaultBroker->exists_param("top_module_inst.RouterInstance.addr_limit"))
+			if(myDefaultBroker->param_exists("top_module_inst.RouterInstance.addr_limit"))
 			{
 				cci::cnf::cci_base_param* r_addr_limit_ptr = myDefaultBroker->get_param("top_module_inst.RouterInstance.addr_limit");
 				r_addr_max =  atoi((r_addr_limit_ptr->json_serialize()).c_str());
@@ -109,7 +109,7 @@ class top_module : public sc_core::sc_module
       
 				sprintf(stringMisc, "%s.%s.master_ID", name(), masterName);
      
-				myDefaultBroker->set_init_value(stringMisc, masterName);
+				myDefaultBroker->json_deserialize_initial_value(stringMisc, masterName);
 				masterList.push_back(new master(masterName));
       
 				///     Binding of Master to Router 
@@ -128,7 +128,7 @@ class top_module : public sc_core::sc_module
 				std::cout << "\n[TOP_MODULE C_TOR] : Creating Slave : " << slaveName << endl;
      
 				sprintf(stringMisc, "%s.%s.slave_ID", name(), slaveName);
-				myDefaultBroker->set_init_value(stringMisc, slaveName);
+				myDefaultBroker->json_deserialize_initial_value(stringMisc, slaveName);
 
 				// Set initial value for maximum slave size(memory)
 				sprintf(stringMisc, "%s.%s.s_size", name(), slaveName);
@@ -136,7 +136,7 @@ class top_module : public sc_core::sc_module
 				ss.str("");
 				ss << slaveSize;
 
-				myDefaultBroker->set_init_value(stringMisc, ss.str());
+				myDefaultBroker->json_deserialize_initial_value(stringMisc, ss.str());
 				slaveList.push_back(new slave(slaveName));
 
 				///       Binding Router to Slave
@@ -156,7 +156,7 @@ class top_module : public sc_core::sc_module
 
 				try	{
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting fields of Slave_" << i << endl;
-					myDefaultBroker->set_init_value(slaveName, ss.str());
+					myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
 				}	catch (sc_core::sc_report exception)	{
   				std::cout <<  "\n[ROUTER : Caught] : " << exception.what() << endl;}
 	
@@ -166,11 +166,11 @@ class top_module : public sc_core::sc_module
 				ss << (i*slaveSize);				
 				
 				sprintf(slaveBaseAddr, "%s.Slave_%d.s_base_addr", name(), i);
-				myDefaultBroker->set_init_value(slaveBaseAddr, ss.str());
+				myDefaultBroker->json_deserialize_initial_value(slaveBaseAddr, ss.str());
 
 				try	{
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting start addr of Slave_" << i << endl;
-					myDefaultBroker->set_init_value(slaveName, ss.str());
+					myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
 				}	catch (sc_core::sc_report exception)	{
 	  				std::cout <<  "\n[ROUTER : Caught] : " << exception.what() << endl;	}
 	
@@ -182,7 +182,7 @@ class top_module : public sc_core::sc_module
 
 				try	{
 					std::cout << "\n[TOP_MODULE C_TOR] : Re-setting end addr of Slave_" << i << endl;
-					myDefaultBroker->set_init_value(slaveName, ss.str());
+					myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
 				}	catch (sc_core::sc_report exception)	{
 	  				std::cout <<  "\n[ROUTER : Caught] : " << exception.what() << endl;	}
 
@@ -210,8 +210,8 @@ class top_module : public sc_core::sc_module
 
 		// Immutable type cci-parameters
 
-		cci::cnf::cci_param<int, cci::cnf::immutable_parameter> n_masters; //!< Number of Masters to be instantiated
-		cci::cnf::cci_param<int, cci::cnf::immutable_parameter> n_slaves;  //!< Number of Slaves to be instantiated
+		cci::cnf::cci_param<int, cci::cnf::immutable_param> n_masters; //!< Number of Masters to be instantiated
+		cci::cnf::cci_param<int, cci::cnf::immutable_param> n_slaves;  //!< Number of Slaves to be instantiated
 
 		cci::cnf::cci_cnf_broker_if* myDefaultBroker;		//!< Configuration broker instance 
 
