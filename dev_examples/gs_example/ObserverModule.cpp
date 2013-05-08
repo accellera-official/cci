@@ -101,7 +101,7 @@ void ObserverModule::main_action() {
   str = p->json_serialize();
   cout << "int_param has value = " << str << endl;
   //p->unregister_all_callbacks(this); // this would unregister all calbacks to this module
-  p->unregister_param_callback(cb2); // unregister a callback
+  p->unregister_callback(cb2); // unregister a callback
   
   // ********* show param list **************
   cout << "param list:" << endl;

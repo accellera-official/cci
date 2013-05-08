@@ -80,7 +80,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      *
      * @return broker name
      */
-    virtual const char* name() const = 0;
+    virtual const std::string &name() const = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //
@@ -96,7 +96,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param parname    Full hierarchical parameter name.
      * @param json_value JSON string representation of the init value the parameter has to be set to.
      */
-    virtual void set_init_value(const std::string &parname, const std::string &json_value) = 0;
+    virtual void json_deserialize_initial_value(const std::string &parname, const std::string &json_value) = 0;
     
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
@@ -125,29 +125,29 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @exception     cci::cnf::cci_report::set_param_failed Locking parameter object failed
      * @param parname Hierarchical parameter name.
      */
-    virtual void lock_init_value(const std::string &parname) = 0;
+    virtual void lock_initial_value(const std::string &parname) = 0;
 
     /// Get a parameter's value (JSON string representation). Independent of the implicit or explicit status.
     /**
      * This accesses the parameter's NVP and works
      * for implicit and explicit parameters.
      *
-     * See cci_cnf_broker_if::get_json_string_keep_unused to do the same without impacting the used status.
+     * See cci_cnf_broker_if::json_serialize_keep_unused to do the same without impacting the used status.
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  JSON string of the parameter's value
      */
-    virtual const std::string get_json_string(const std::string &parname) = 0;
+    virtual const std::string json_serialize(const std::string &parname) = 0;
 
-    /// Get a parameter's value (like cci_cnf_broker_if::get_json_string), but not impacting the used status
+    /// Get a parameter's value (like cci_cnf_broker_if::json_serialize), but not impacting the used status
     /**
      * This is to be used only by tools, e.g. functional coverage tools.
      *
-     * @see get_json_string
+     * @see json_serialize
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  JSON string of the parameter's value
      */
-    virtual const std::string get_json_string_keep_unused(const std::string &parname) = 0;
+    virtual const std::string json_serialize_keep_unused(const std::string &parname) = 0;
 
     /// Get a parameter accessor pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
     /**
@@ -178,7 +178,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param parname  Full hierarchical parameter name.
      * @return Whether the parameter < parname > exists in the registry.
      */
-    virtual bool exists_param(const std::string &parname) = 0;
+    virtual bool param_exists(const std::string &parname) = 0;
     
     /// Returns if the parameter has ever been used.
     /**
@@ -326,7 +326,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(callb_adapt* callb) = 0;
+    virtual bool unregister_callback(callb_adapt* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks(const std::string& parname) = 0;

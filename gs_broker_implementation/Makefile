@@ -5,7 +5,7 @@ CC       = gcc
 CXX      = g++
 OPT      = -g -Wall
 OTHER    = -pedantic -Wno-long-long
-CXXFLAGS = $(OPT) $(OTHER) # -DCCI_CNF_IMPL_VERBOSE 
+CXXFLAGS = $(OPT) $(OTHER)
 
 SRCS = gs_cci_broker.cpp \
        gs_cci_cnf_broker.cpp \
@@ -27,38 +27,39 @@ OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
 
 #include ../Makefile.defs
-## ------------------------------------------------------------------------------------
-# BOOST  ?=/cad/tools/boost
+## -----------------------------------------------------------------------------
+
+ifdef BOOST_HOME
+BOOST = $(BOOST_HOME)
+endif
+BOOST ?= /cad/tools/boost
 
 ifdef SYSTEMC_HOME
-SYSTEMC=$(SYSTEMC_HOME)
-else
-SYSTEMC?=/cad/tools/systemc
+SYSTEMC = $(SYSTEMC_HOME)
 endif
+SYSTEMC ?= /cad/tools/systemc
+
+ifdef CCI_HOME
+GS_CCI_HOME = $(CCI_HOME)
+endif
+GS_CCI_HOME ?=/ Users/schroede/mydev/cci_git/cci
 
 ## set some directories 
-GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
 GREENSTARCORE_DIR = $(GS_CCI_HOME)
 CCI_DIR = $(GS_CCI_HOME)/api
-GS_CCI_PARAM_DIR = $(GS_CCI_HOME)/gs_param_implementation
 GS_CCI_BROKER_DIR = $(GS_CCI_HOME)/gs_broker_implementation
-GS_CCI_API_DIR = $(GS_CCI_HOME)/gs_api_implementation
-
-#SCV_INCLUDE = /cad/tools/systemc-scv/include
-#SCV_LIB = /cad/tools/systemc-scv/lib-$(TARGET_ARCH)
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
-
 
 ## muldefs should be avoided in the source code, not by the linker
 LDFLAGS =
 
 INCDIR = -I. -I$(CCI_DIR) -I$(GS_CCI_BROKER_DIR)\
-	 -I$(GS_CONTROL_DIR) -I$(GREENSTARCORE_DIR) -I$(SYSTEMC)/include
-# 	 -I$(BOOST) -I$(GS_CCI_API_DIR)
+	 -I$(GS_CONTROL_DIR) -I$(GREENSTARCORE_DIR) -I$(SYSTEMC)/include\
+ 	 -I$(BOOST) 
 
-## ------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 LIB=libccibrokerimpl.a
 
@@ -69,10 +70,10 @@ $(LIB): $(OBJS)
 	ranlib $@
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(SCCFLAG) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
 
 clean:
 	rm -f  $(OBJS) $(LIB)

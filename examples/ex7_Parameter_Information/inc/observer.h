@@ -22,7 +22,7 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
-#include <cci.h>    // Include 'cci.h' header in all CCI-based applications
+#include <cci>    // Include 'cci' header in all CCI-based applications
 #include <assert.h>
 #include <vector>
 

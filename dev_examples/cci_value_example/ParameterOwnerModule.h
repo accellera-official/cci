@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci.h"
+#include "cci"
 #include "test_datatype_without_parameter_implementation.h"
 #include <boost/algorithm/string.hpp>
 

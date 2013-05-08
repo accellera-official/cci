@@ -4,26 +4,15 @@ DEFAULT_TLM_HOME=/Users/schroede/mydev/TLM-2008-06-09/include/tlm
 DEFAULT_BOOST_HOME=/cad/tools/boost
 DEFAULT_CCI_HOME=$(GS_CCI_HOME)/api
 DEFAULT_GS_CCI_HOME=/Users/schroede/mydev/cci_git/cci
-DEFAULT_CCI_EXAMPLES_HOME=$(GS_CCI_HOME)/examples
-
-#----------- [Update] Update the following based on your system environment settings ------------
-# PVS :  CST System Paths 
-#DEFAULT_SYSTEMC_HOME=/home/pvs/MyInstallations/SystemC-2.2.0
-#DEFAULT_TLM_HOME=/home/pvs/MyInstallations/TLM-2009-07-15/
-#DEFAULT_BOOST_HOME=/home/pvs/MyInstallations/boost_1_46_1/boost
-#DEFAULT_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/api
-#DEFAULT_GS_CCI_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622
-#DEFAULT_CCI_EXAMPLES_HOME=/home/pvs/MyInstallations/greenstarcore/greenstarcore_rev_622/examples
-#-------------------------------------------------------------------------------------------------
 
 #--------------------------------------- 
 #-- [Update, if required]
 CC=gcc
 CXX=g++
-CXXFLAGS=-m32 -g -Wall -pedantic -Wno-long-long \
+CXXFLAGS=-g -Wall -Werror -pedantic -Wno-long-long \
          -DSC_INCLUDE_DYNAMIC_PROCESSES
 LD=g++
-LDFLAGS=-m32
+LDFLAGS=
 AR=ar
 ARFLAGS=rs
 
@@ -35,7 +24,12 @@ ifeq "$(PLATFORM)" "SunOS"
      TARGET_ARCH = gccsparcOS5
 endif
 ifeq "$(PLATFORM)" "Linux"
-     TARGET_ARCH=linux
+     MACHINE=$(shell uname -m)
+     ifeq "$(MACHINE)" "x86_64"
+          TARGET_ARCH=linux64
+     else
+          TARGET_ARCH=linux
+     endif
 endif
 ifeq "$(PLATFORM)" "MacOS"
      TARGET_ARCH=macosx
@@ -52,49 +46,40 @@ ifndef SYSTEMC_HOME
      SYSTEMC_HOME=$(DEFAULT_SYSTEMC_HOME)
 endif
 #-- [Update, if required]
-#SYSTEMC_INC=-I$(SYSTEMC_HOME)/src
-#SYSTEMC_LIB=-L$(SYSTEMC_HOME)/lib/linux/gcc3.4/debug -lsystemc
 SYSTEMC_INC=-I$(SYSTEMC_HOME)/include
 SYSTEMC_LIB=-L$(SYSTEMC_HOME)/lib-$(TARGET_ARCH) -lsystemc
 
 ifndef TLM_HOME
-     TLM_HOME=$(DEFAULT_TLM_HOME)
+     TLM_HOME=$(SYSTEMC_HOME)
 endif
-TLM_INC=-I$(TLM_HOME)/include
+ifneq "$(TLM_HOME)" "$(SYSTEMC_HOME)"
+     TLM_INC=-I$(TLM_HOME)/include
+endif
 
 ifndef BOOST_HOME
      BOOST_HOME=$(DEFAULT_BOOST_HOME)
 endif
 BOOST_INC=-I$(BOOST_HOME)
 
-ifndef CCI_HOME
-     CCI_HOME=$(DEFAULT_CCI_HOME)
+ifndef GS_CCI_HOME
+     GS_CCI_HOME=$(CCI_HOME)
 endif
-CCI_INC=-I$(CCI_HOME)/api
+CCI_INC=-I$(GS_CCI_HOME)/api
 
 ifndef CCI_EXAMPLES_HOME
-     CCI_EXAMPLES_HOME=$(DEFAULT_CCI_EXAMPLES_HOME)
+     CCI_EXAMPLES_HOME=$(GS_CCI_HOME)/examples
 endif
 CCI_EXAMPLES_INC=-I$(CCI_EXAMPLES_HOME)/common/inc
-
-ifndef GS_CCI_HOME
-     GS_CCI_HOME=$(DEFAULT_GS_CCI_HOME)
-endif
 
 #-- only include api directory per default for example builds
 GS_CCI_INC=-I$(GS_CCI_HOME)/api
 
-GS_INST_DIR=$(CCI_EXAMPLES_HOME)/common/lib
 GS_CCI_API_LIB=$(GS_INST_DIR)/libcciapi.a
 GS_CCI_BROKER_LIB=$(GS_INST_DIR)/libccibrokerimpl.a
 GS_CCI_PARAM_LIB =$(GS_INST_DIR)/libcciparamimpl.a
-GS_CCI_LIB=-L$(GS_INST_DIR) -lcciparamimpl -lcciapi -lccibrokerimpl 
-
-# Swami: Am getting link error if I try to link the libs separately.
-#        Hence am consolidating the libs before linking.
-#GS_CCI= $(GS_CCI_PARAM_LIB) $(GS_CCI_BROKER_LIB) $(GS_CCI_API_LIB)
-#GS_CCI_ALL_LIB=$(GS_INST_DIR)/libgs_cci.a
-#GS_CCI_LIB=-L$(GS_INST_DIR) -lgs_cci
+GS_CCI_LIB=-L$(GS_CCI_HOME)/api -lcciapi \
+           -L$(GS_CCI_HOME)/gs_param_implementation -lcciparamimpl \
+	   -L$(GS_CCI_HOME)/gs_broker_implementation -lccibrokerimpl
 
 #-------------------------------------------------------------------------------
 #-- [Do not Update]

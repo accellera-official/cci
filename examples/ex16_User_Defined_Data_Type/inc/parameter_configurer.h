@@ -24,8 +24,8 @@
 #ifndef PARAMETER_CONFIGURER_H
 #define PARAMETER_CONFIGURER_H
 
-/// Include 'cci.h' header in all CCI-based applications
-#include <cci.h>
+/// Include 'cci' header in all CCI-based applications
+#include <cci>
 #include <assert.h>
 
 /**
@@ -57,7 +57,7 @@ SC_MODULE(parameter_configurer)
 			udt_param_str = "param_owner.User_data_type_param";
 
 			/// Check the existence of the user-defined data type cci-parameter
-			if(myBrokerInterface->exists_param(udt_param_str))
+			if(myBrokerInterface->param_exists(udt_param_str))
 			{
 				/// If parameter exists, get handle of the parameter using 'get_param' API
 				udt_param_ptr = myBrokerInterface->get_param(udt_param_str);		

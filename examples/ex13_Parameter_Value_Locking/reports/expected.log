@@ -6,7 +6,7 @@
 	[OWNER] : Parameter locking status : 1	Value : 0
 	[OWNER] : Try to set parameter value to 1 from 0
 	[OWNER] : param_owner	Failed to set parameter value to 1 from 0.
-	[OWNER] : Caught Exception : Error: /OSCI/CCI/SET_PARAM_FAILED: Parameter locked.
+	[OWNER] : Caught Exception : Error: /ASI/CCI/SET_PARAM_FAILED: Parameter locked.
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:33
 In process: param_owner.run_owner @ 0 s
 	[OWNER] : Parameter locking status : 1	Value : 0
@@ -37,7 +37,7 @@ In process: param_owner.run_owner @ 0 s
 	[CFGR] : Set parameter value to '4'
 
 Info: /GreenSocs/GreenControl/GreenConfig/param_owner.mutable_int_param: parameter is locked!
-	[CFGR] : Caught Exception : Error: /OSCI/CCI/SET_PARAM_FAILED: String conversion failed.
+	[CFGR] : Caught Exception : Error: /ASI/CCI/SET_PARAM_FAILED: String conversion failed.
 In file: /home/pvs/MyInstallations/CCIWG_Repo/cci/api/cnf/cci_report_handler.h:33
 In process: param_cfgr.run_mutable_cfgr @ 7 ns
 	[CFGR] : Parameter locking status : 1	Value : 3

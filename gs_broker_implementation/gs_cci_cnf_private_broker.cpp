@@ -61,11 +61,11 @@ cci::cnf::gs_cci_private_broker::~gs_cci_private_broker() {
   //delete m_gcnf_api; m_gcnf_api = NULL;
 }
 
-const char* cci::cnf::gs_cci_private_broker::name() const {
-  return m_name.c_str();
+const std::string &cci::cnf::gs_cci_private_broker::name() const {
+  return m_name;
 }
 
-void cci::cnf::gs_cci_private_broker::set_init_value(const std::string &parname, const std::string &json_value) {
+void cci::cnf::gs_cci_private_broker::json_deserialize_initial_value(const std::string &parname, const std::string &json_value) {
   // TODO: use JSON
   if ( !gs::cnf::GCnf_private_Api::setInitValue(parname, json_value) ) {
     cci_report_handler::set_param_failed("Setting initial value failed.");
@@ -88,18 +88,18 @@ const cci::cnf::cci_originator* cci::cnf::gs_cci_private_broker::get_latest_writ
   return NULL;
 }
 
-void cci::cnf::gs_cci_private_broker::lock_init_value(const std::string &parname) {
+void cci::cnf::gs_cci_private_broker::lock_initial_value(const std::string &parname) {
   if ( !gs::cnf::GCnf_private_Api::lockInitValue(parname) ) {
     cci_report_handler::set_param_failed("Locking initial value failed.");
   }
 }
 
-const std::string cci::cnf::gs_cci_private_broker::get_json_string(const std::string &parname) {
+const std::string cci::cnf::gs_cci_private_broker::json_serialize(const std::string &parname) {
   // TODO: use JSON
   return gs::cnf::GCnf_private_Api::getValue(parname);
 }
 
-const std::string cci::cnf::gs_cci_private_broker::get_json_string_keep_unused(const std::string &parname) {
+const std::string cci::cnf::gs_cci_private_broker::json_serialize_keep_unused(const std::string &parname) {
   // TODO: use JSON
   return gs::cnf::GCnf_private_Api::getValue(parname, "", true);
 }
@@ -122,7 +122,7 @@ cci::cnf::cci_base_param* cci::cnf::gs_cci_private_broker::get_param_const(const
   return NULL;
 }
 
-bool cci::cnf::gs_cci_private_broker::exists_param(const std::string &parname) {
+bool cci::cnf::gs_cci_private_broker::param_exists(const std::string &parname) {
   return gs::cnf::GCnf_private_Api::existsParam(parname);
 }
 
@@ -145,7 +145,7 @@ void cci::cnf::gs_cci_private_broker::unregister_all_callbacks(void* observer) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
 }
 
-bool cci::cnf::gs_cci_private_broker::unregister_param_callback(cci::cnf::callb_adapt* callb) {
+bool cci::cnf::gs_cci_private_broker::unregister_callback(cci::cnf::callb_adapt* callb) {
   // TODO
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "not implemented");
   return false;

@@ -21,7 +21,7 @@
  *            Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
  * \date      3rd September, 2011 (Saturday)
  */
-#include <cci.h>           // Include this header in all cci-based applications
+#include <cci>             // Include this header in all cci-based applications
 #include <systemc.h>       // SystemC Headers
 
 #include "parent.h"

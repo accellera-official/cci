@@ -18,7 +18,7 @@ INC_DIR=-I../inc \
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex14_Hiding_Parameters.x
+EXE=Hiding_Parameters
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

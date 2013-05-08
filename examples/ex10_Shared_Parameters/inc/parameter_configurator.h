@@ -22,8 +22,8 @@
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+/// Include the "cci" header file in all cci-based applications
+#include <cci>
 #include <assert.h>
 
 /*!
@@ -50,7 +50,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
 
 			// Checks the parameter exists using name-based look-up 
-			if(myCfgrBrokerIF->exists_param("param_owner.mutable_int_param"))
+			if(myCfgrBrokerIF->param_exists("param_owner.mutable_int_param"))
 			{
 				std::cout << "[CFGR C_TOR] : Parameter exists" << std::endl; 
 				

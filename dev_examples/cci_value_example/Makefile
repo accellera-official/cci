@@ -2,8 +2,9 @@
 # for the data type test_datatype_without_parameter_implementation
 
 CC     = g++
-OPT    = -g -Wall 
-OTHER  = -pedantic -Wno-long-long  # -DENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE
+OPT    = -g -Wall -Werror
+OTHER  = -pedantic -Wno-long-long
+       # -DENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE
 CFLAGS = $(OPT) $(OTHER)
 
 MODULE = testbench

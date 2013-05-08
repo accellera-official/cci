@@ -32,88 +32,67 @@ __CCI_OPEN_CONFIG_NAMESPACE__
  * Documentation for the undocumented functions can be found in
  * cci_base_param_impl_if and cci_param_impl_if
  */
-template<typename T, param_mutable_type TM = mutable_parameter>
+template<typename T, param_mutable_type TM = mutable_param>
 class cci_param 
 : public cci_base_param
 , public cci_param_impl_if<T, TM> // TODO: Just to make sure they are compatible // needed to be removed due to originator difference
 {
-protected:
-  typedef T val_type;
-
 private:
   /// Private copy constructor to prevent parameters from being copied
   cci_param(const cci_param<T, TM>&);
   
 public:
+  /// The parameter's value type.
+  typedef T value_type;
   
   // //////////////////////////////////////////////////////////////////// //
   // ///////////////   Construction / Destruction   ///////////////////// //
   
   /// Constructor with a complete implementation parameter
-  explicit cci_param(cci_param_impl_if<val_type, TM>* param);
+  explicit cci_param(cci_param_impl_if<value_type, TM>* param);
 
   /// Constructor with (local/hierarchical) name.
   explicit cci_param(const std::string& nam);
-  explicit cci_param(const char* nam       );
   
   /// Constructor with (local/hierarchical) name and string representation of default value.
   cci_param(const std::string& nam, const std::string& val);
-  cci_param(const char* nam,        const char* val       );
-  cci_param(const std::string& nam, const char* val       );
-  cci_param(const char* nam,        const std::string& val);
 
   /// Constructor with (local/hierarchical) name and initial value.
-  cci_param(const std::string& nam, const val_type& val);
-  cci_param(const char* nam,        const val_type& val);
+  cci_param(const std::string& nam, const value_type& val);
 
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name.
   cci_param(const std::string& nam, cci_top_level_name);
-  cci_param(const char* nam,        cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and NO initial value and private broker.
   cci_param(const std::string& nam, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name and private broker.
   cci_param(const std::string& nam, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        cci_top_level_name, cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name.
   cci_param(const std::string& nam, const std::string& val, cci_top_level_name);
-  cci_param(const char* nam,        const char* val       , cci_top_level_name);
-  cci_param(const std::string& nam, const char* val       , cci_top_level_name);
-  cci_param(const char* nam,        const std::string& val, cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and private broker.
   cci_param(const std::string& nam, const std::string& val,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const std::string& nam, const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const std::string& val,                                  cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name and private broker.
   cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const std::string& nam, const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and initial value and top-level name.
-  cci_param(const std::string& nam, const val_type& val, cci_top_level_name);
-  cci_param(const char* nam,        const val_type& val, cci_top_level_name);
+  cci_param(const std::string& nam, const value_type& val, cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and initial value and private broker.
-  cci_param(const std::string& nam, const val_type& val,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const val_type& val,                                  cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const value_type& val,                                  cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-  cci_param(const std::string& nam, const val_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const val_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
+  cci_param(const std::string& nam, const value_type& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
 
   /// Constructor for a parameter accessor object
   /**
    * @param original_param  Parameter that shall be accessed with the constructed accessor
    * @param originator      Originator the constructed accessor shall hold
    */
-  cci_param(cci_param<val_type, TM>& param, const cci_originator& originator);
+  cci_param(cci_param<value_type, TM>& param, const cci_originator& originator);
 
   /// Destructor
   virtual ~cci_param();
@@ -134,24 +113,24 @@ public:
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb);
   virtual void unregister_all_callbacks(void* observer);
-  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt> callb);
-  virtual bool unregister_param_callback(callb_adapt* callb);
+  virtual bool unregister_callback(cci::shared_ptr<callb_adapt> callb);
+  virtual bool unregister_callback(callb_adapt* callb);
   virtual bool has_callbacks();
   virtual bool lock(void* pwd = NULL);
   virtual bool unlock(void* pwd = NULL);
-  virtual bool locked() const;
+  virtual bool is_locked() const;
   virtual const cci_originator* get_latest_write_originator() const;
   
   // Type dependent functions
-  virtual cci_param<val_type, TM>& operator = (const cci_param<val_type, TM>& v);
-  virtual cci_param<val_type, TM>& operator = (const val_type& v);
-  virtual operator const val_type& () const;
-  virtual void set(const val_type& val);
-  virtual const val_type& get() const;
-  virtual void set(const val_type& val, void* lock_pwd);
-  virtual std::string json_serialize(const val_type& val) const;
-  virtual void json_deserialize(val_type& target_val, const std::string& str);
-  virtual const val_type& get_default_value();
+  virtual cci_param<value_type, TM>& operator = (const cci_param<value_type, TM>& v);
+  virtual cci_param<value_type, TM>& operator = (const value_type& v);
+  virtual operator const value_type& () const;
+  virtual void set(const value_type& val);
+  virtual const value_type& get() const;
+  virtual void set(const value_type& val, void* lock_pwd);
+  virtual std::string json_serialize(const value_type& val) const;
+  virtual void json_deserialize(value_type& target_val, const std::string& str);
+  virtual const value_type& get_default_value();
   
   virtual cci_base_param_impl_if* get_pImpl() const;
 
@@ -174,7 +153,7 @@ public:
 protected:
 
   /// Pointer to the parameter object with the actual implementation
-  cci_param_impl_if<val_type, TM> *m_pImpl; // TODO: this was mutable, why?
+  cci_param_impl_if<value_type, TM> *m_pImpl; // TODO: this was mutable, why?
 
   /// If this is a parameter accessor object
   bool m_is_accessor;
@@ -193,63 +172,46 @@ class cci_param<std::string, TM>
 : public cci_base_param
 , public cci_param_impl_if<std::string, TM> // TODO: Just to make sure they are compatible
 {
-protected:
-  typedef std::string val_type;
-
 public:
+  // The parameter's value type.
+  typedef std::string value_type;
   
   // //////////////////////////////////////////////////////////////////// //
   // ///////////////   Construction / Destruction   ///////////////////// //
 
   /// Constructor with a complete implementation parameter
-  explicit cci_param(cci_param_impl_if<val_type, TM>* param);
+  explicit cci_param(cci_param_impl_if<value_type, TM>* param);
   
   /// Constructor with (local/hierarchical) name.
   explicit cci_param(const std::string& nam);
-  explicit cci_param(const char* nam       );
   
   /// Constructor with (local/hierarchical) name and string representation of default value.
   cci_param(const std::string& nam, const std::string& val);
-  cci_param(const char* nam,        const char* val       );
-  cci_param(const std::string& nam, const char* val       );
-  cci_param(const char* nam,        const std::string& val);
   
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name.
   cci_param(const std::string& nam, cci_top_level_name);
-  cci_param(const char* nam,        cci_top_level_name);
   
   /// Constructor with (local/hierarchical) name and NO initial value and private broker.
   cci_param(const std::string& nam, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        cci_cnf_broker_if& private_broker);
   
   /// Constructor with (local/hierarchical) name and NO initial value and top-level name and private broker.
   cci_param(const std::string& nam, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        cci_top_level_name, cci_cnf_broker_if& private_broker);
   
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name.
   cci_param(const std::string& nam, const std::string& val, cci_top_level_name);
-  cci_param(const char* nam,        const char* val       , cci_top_level_name);
-  cci_param(const std::string& nam, const char* val       , cci_top_level_name);
-  cci_param(const char* nam,        const std::string& val, cci_top_level_name);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and private broker.
   cci_param(const std::string& nam, const std::string& val,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const std::string& nam, const char* val       ,                                  cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const std::string& val,                                  cci_cnf_broker_if& private_broker);
 
   /// Constructor with (local/hierarchical) name and string representation of default value and top-level name and private broker.
   cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const std::string& nam, const char* val       , cci_top_level_name, cci_cnf_broker_if& private_broker);
-  cci_param(const char* nam,        const std::string& val, cci_top_level_name, cci_cnf_broker_if& private_broker);
   
   /// Constructor for a parameter accessor object
   /**
    * @param original_param  Parameter that shall be accessed with the constructed accessor
    * @param originator      Originator the constructed accessor shall hold
    */
-  cci_param(cci_param<val_type, TM>& param, const cci_originator& originator);
+  cci_param(cci_param<value_type, TM>& param, const cci_originator& originator);
   
   /// Destructor
   virtual ~cci_param();
@@ -270,24 +232,24 @@ public:
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
   virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb);
   virtual void unregister_all_callbacks(void* observer);
-  virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt> callb);
-  virtual bool unregister_param_callback(callb_adapt* callb);
+  virtual bool unregister_callback(cci::shared_ptr<callb_adapt> callb);
+  virtual bool unregister_callback(callb_adapt* callb);
   virtual bool has_callbacks();
   virtual bool lock(void* pwd = NULL);
   virtual bool unlock(void* pwd = NULL);
-  virtual bool locked() const;
+  virtual bool is_locked() const;
   virtual const cci_originator* get_latest_write_originator() const;
   
   // Type dependent functions
-  virtual cci::cnf::cci_param<val_type, TM>& operator = (const cci::cnf::cci_param<val_type, TM>& v);
-  virtual cci::cnf::cci_param<val_type, TM>& operator = (const val_type& v);
-  virtual operator const val_type& () const;
-  virtual void set(const val_type& val);
-  virtual const val_type& get() const;
-  virtual void set(const val_type& val, void* lock_pwd);
-  virtual std::string json_serialize(const val_type& val) const;
-  virtual void json_deserialize(val_type& target_val, const std::string& str);
-  virtual const val_type& get_default_value();
+  virtual cci::cnf::cci_param<value_type, TM>& operator = (const cci::cnf::cci_param<value_type, TM>& v);
+  virtual cci::cnf::cci_param<value_type, TM>& operator = (const value_type& v);
+  virtual operator const value_type& () const;
+  virtual void set(const value_type& val);
+  virtual const value_type& get() const;
+  virtual void set(const value_type& val, void* lock_pwd);
+  virtual std::string json_serialize(const value_type& val) const;
+  virtual void json_deserialize(value_type& target_val, const std::string& str);
+  virtual const value_type& get_default_value();
   
   virtual cci_base_param_impl_if* get_pImpl() const;
   
@@ -312,7 +274,7 @@ public:
 protected:
 
   /// Pointer to the parameter object with the actual implementation
-  mutable cci_param_impl_if<val_type, TM> *m_pImpl;
+  mutable cci_param_impl_if<value_type, TM> *m_pImpl;
   
   /// If this is a parameter accessor object
   bool m_is_accessor;

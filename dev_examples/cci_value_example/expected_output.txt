@@ -99,13 +99,13 @@ raw from cci_value (real, string): 1.0123e+07 ps
 -------------------------
 @0 s /0 (Owner): Set unsigned integer parameter Owner.uint_param to string value="Hello" using WRONG cci_value type!
 
-Owner: Caught Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value called with wrong value type.
+Owner: Caught Error: /ASI/CCI/CCI_VALUE_FAILURE: Set cci value called with wrong value type.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:49
 In process: Owner.main_action @ 0 s
 
 @0 s /0 (Owner): Set user data type parameter that does support cci_values using a cci_value (enabled ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE)!
 
-Owner: Caught Error: /OSCI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
+Owner: Caught Error: /ASI/CCI/CCI_VALUE_FAILURE: Set cci value not implemented for not specialized parameter types.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:49
 In process: Owner.main_action @ 0 s
 

@@ -23,8 +23,8 @@
 #ifndef PARAMETER_CONFIGURATOR_H
 #define PARAMETER_CONFIGURATOR_H
 
-/// Include the "cci.h" header file in all cci-based applications
-#include <cci.h>
+/// Include the "cci" header file in all cci-based applications
+#include <cci>
 #include <assert.h>
 
 /**
@@ -45,7 +45,7 @@ class parameter_configurator : public sc_module
 			// Assert if broker handle returned is NULL
 			assert(myConfigBroker != NULL && "Broker handle returned is NULL");
 
-			if(myConfigBroker->exists_param("param_owner.mutable_int_param"))
+			if(myConfigBroker->param_exists("param_owner.mutable_int_param"))
 			{	
 				// Getting handle for the integer parameter of onwer module by the configurator
 				int_param_ptr = myConfigBroker->get_param("param_owner.mutable_int_param");
@@ -75,7 +75,7 @@ class parameter_configurator : public sc_module
 		 * @fn         void run_mutable_cfgr (void)
 		 * @brief      This process illustrates various locking and unlocking mechanisms
 		 *             of a parameter using 'lock()', 'lock(&password)'. 'unlock()',
-		 *             'unlock(&password)' APIs.  'locked()' API is used to query the 
+		 *             'unlock(&password)' APIs.  'is_locked()' API is used to query the 
 		 *             locking status of the parameter
 		 */ 	
 		void run_mutable_cfgr (void)
@@ -87,33 +87,33 @@ class parameter_configurator : public sc_module
 				/// Before configurator tries to assign a new value to the parameter, it
 				/// is always recommended to check the locking status of the parameter	
 				std::cout << "\n@ " << sc_time_stamp() << std::endl;
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 				
 				/// 'locked' API returns TRUE when a parameter is in LOCKED STATE and FALSE when in UNLOCKED STATE
-				if(int_param_ptr->locked())
+				if(int_param_ptr->is_locked())
 					std::cout << "\t[CFGR] :  Cannot assign new value to the parameter as it is already locked!!" << endl;
 				else
 					int_param_ptr->json_deserialize("2");
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 				wait(5.0, SC_NS);
 				
 				std::cout << "\n@ " << sc_time_stamp() << std::endl;
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 				std::cout << "\t[CFGR] : Parameter is not locked!! Assign a new value '3' to it" << std::endl;	
 				int_param_ptr->json_deserialize("3");
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 
 				/// Demonstrating 'lock' API to lock a parameter without a password
 				std::cout << "\n\t[CFGR] : Lock parameter without password" << std::endl;	
 				int_param_ptr->lock();
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 				
 				/// Demonstrating 'unlock' API to lock a parameter without a password
 				std::cout << "\n\t[CFGR] : Unlock parameter without password" << std::endl;
 				int_param_ptr->unlock();				
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 
 				/// Demonstrating 'lock' API to lock a parameter with a password
@@ -126,7 +126,7 @@ class parameter_configurator : public sc_module
 				else
 					std::cout << "\t[CFGR] : Could not lock the parameter." << std::endl;	
 
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 
 				try	{
@@ -135,13 +135,13 @@ class parameter_configurator : public sc_module
 				}	catch	(sc_core::sc_report exception)	{
 						std::cout << "\t[CFGR] : Caught Exception : " << exception.what() << endl;	}
 
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 				// 'Unlock' API returns TRUE if parameter is unlocked successfully and FALSE if it could not be unlocked
 				/// Demonstrating unlocking with the right password
 				std::cout << "\n\t[CFGR] : Now, unlock with the correct password" << std::endl;
 				int_param_ptr->unlock(&psswd);
-				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
+				std::cout << "\t[CFGR] : Parameter locking status : " << int_param_ptr->is_locked() << "\tValue : " << int_param_ptr->json_serialize() << std::endl;
 
 				wait(50.0, SC_NS);	
 

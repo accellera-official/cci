@@ -20,7 +20,7 @@
   * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
   * @date    12th September, 2011 (Monday)
   */
-#include <cci.h>        /*!<This header must be added in all CCI-based applications*/
+#include <cci>        /*!<This header must be added in all CCI-based applications*/
 #include <systemc.h>
 #include <assert.h>
 
@@ -45,10 +45,10 @@ int sc_main(int sc_argc, char* sc_argv[])
 	// their constructor begins
 	std::cout << "\n[MAIN] : Setting initial value 's_address:256,d_address:512,index:0' to UDT" << endl;
 
-	/// Demonstrating use of 'set_init_value' API to assign initial value before the
+	/// Demonstrating use of 'json_deserialize_initial_value' API to assign initial value before the
 	/// construction of the model hierarchy begins.
 	std::string init_str("{\"s_address\":256,\"d_address\":512,\"index\":0}");
-	globalBroker->set_init_value("param_owner.User_data_type_param", init_str);
+	globalBroker->json_deserialize_initial_value("param_owner.User_data_type_param", init_str);
 
 	/// Instantiation of sc_modules
 	parameter_owner     	param_owner("param_owner");

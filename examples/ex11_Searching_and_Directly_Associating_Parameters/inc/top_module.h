@@ -22,7 +22,7 @@
 #ifndef TOP_MODULE_H
 #define TOP_MODULE_H
 
-#include <cci.h>      // Include the "cci.h" header file in all cci-based applications
+#include <cci>      // Include the "cci" header file in all cci-based applications
 #include <assert.h>
 #include <vector>
 
@@ -68,7 +68,7 @@ class top_module : public sc_module
 
 			/// Check for existence of the owner cci_parameter using name-based look up access
 			/// and then assign their reference to respective cci_base_param
-			if(myTopModBrokerIF->exists_param(param1_str))
+			if(myTopModBrokerIF->param_exists(param1_str))
 			{
 				cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
 				selected_base_param_list.push_back(temp);
@@ -81,7 +81,7 @@ class top_module : public sc_module
 
 			/// Check for existence of the owner cci_parameter using name-based look up access
 			/// and then assign their reference to respective cci_base_param
-			if(myTopModBrokerIF->exists_param(param2_str))
+			if(myTopModBrokerIF->param_exists(param2_str))
 			{
 				cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
 				selected_base_param_list.push_back(temp);

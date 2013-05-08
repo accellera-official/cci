@@ -109,7 +109,7 @@ const cci::cnf::basic_param_type cci_param_user_data_type::get_basic_type() cons
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
-	return cci::cnf::partype_list;
+	return cci::cnf::param_type_list;
 }
 
 void cci_param_user_data_type::set_value(const cci::cnf::cci_value& val)
@@ -178,12 +178,16 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callba
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
 
+	static cci::shared_ptr<cci::cnf::callb_adapt> dummy;
+	return dummy; // dummy return value for now
+
 }
 
 cci::shared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	/* Complex Later */
+	return callb; // dummy return value for now
 
 }
 
@@ -194,18 +198,20 @@ void cci_param_user_data_type::unregister_all_callbacks(void* observer)
 	/* Complex Later */
 }
 
-bool cci_param_user_data_type::unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)
+bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
 	/* Complex Later */
+	return true; // dummy return value for now
 }
 
-bool cci_param_user_data_type::unregister_param_callback(cci::cnf::callb_adapt* callb)
+bool cci_param_user_data_type::unregister_callback(cci::cnf::callb_adapt* callb)
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 
 	/* Complex Later */
+	return true; // dummy return value for now
 }
 
 bool cci_param_user_data_type::has_callbacks() 
@@ -236,7 +242,7 @@ bool cci_param_user_data_type::unlock(void* pwd )
 
 }
 
-bool cci_param_user_data_type::locked() const
+bool cci_param_user_data_type::is_locked() const
 {
 	std::cout<<"Function "<<__FUNCTION__<<" Called "<<std::endl;
 	return lock_flag;
@@ -247,14 +253,14 @@ namespace cci {
 	namespace cnf {
 
 		template <>
-		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>	\
-		   *create_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter> *owner_par,
-		                                                                  const char* nam,
+		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_param>	\
+		   *create_cci_param<user_data_type, cci::cnf::mutable_param>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_param> *owner_par,
+		                                                                  const std::string &nam,
 		                                                                  const user_data_type & val,
 		                                                                  bool is_top_level_name,
 		                                                                  cci::cnf::cci_cnf_broker_if* broker_accessor)
 		{
-			std::cout << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::cnf::mutable_parameter" << std::endl;
+			std::cout << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::cnf::mutable_param" << std::endl;
 
 			std::cout << "\t[PARAM_IMPL] : Called with Default Value as reference object" << val << std::endl;
 	
@@ -266,13 +272,13 @@ namespace cci {
 
 		// Creating CCI-parameter
 		template <>
-		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>	\
-			*create_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter> *owner_par,
-	  		                                                              char const* nam,
+		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_param>	\
+			*create_cci_param<user_data_type, cci::cnf::mutable_param>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_param> *owner_par,
+	  		                                                            const std::string &nam,
 	    		                                                            const bool is_top_level_name,
 	      		                                                          cci::cnf::cci_cnf_broker_if* broker_accessor)
 		{
-			std::cout << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type With cci::cnf::mutable_parameter" << std::endl;
+			std::cout << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type With cci::cnf::mutable_param" << std::endl;
 
 			cci_param_user_data_type *param_impl = new cci_param_user_data_type(nam,user_data_type(0,0,0));
 	
@@ -283,14 +289,14 @@ namespace cci {
 
 		// With char pointer
 		template <>
-		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>	\
-			*create_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter> *owner_par,
-			                                                               const char * nam,
+		cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_param>	\
+			*create_cci_param<user_data_type, cci::cnf::mutable_param>(cci::cnf::cci_param<user_data_type, cci::cnf::mutable_param> *owner_par,
+			                                                               const std::string &nam,
 	  		                                                             const char * pval,
 	    		                                                           const bool is_top_level_name,
 	      		                                                         cci::cnf::cci_cnf_broker_if* broker_accessor)
 		{
-			std::cout << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::cnf::mutable_parameter "<< std::endl;
+			std::cout << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::cnf::mutable_param "<< std::endl;
 		
 			//std::cout<<"Called with Default Value char string "<<string(pval)<<std::endl;
 			//cci_param_user_data_type *param_impl = new cci_param_user_data_type();
@@ -305,17 +311,17 @@ namespace cci {
 
 		//This provides an implmentation for initializing CCI_PARAM with an init_value
 		template <>
-		void init_cci_param<user_data_type, cci::cnf::mutable_parameter>(cci::cnf::cci_param<user_data_type,
- 		                                                                 cci::cnf::mutable_parameter> *owner_par)
+		void init_cci_param<user_data_type, cci::cnf::mutable_param>(cci::cnf::cci_param<user_data_type,
+ 		                                                                 cci::cnf::mutable_param> *owner_par)
 		{
-			std::cout << "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::cnf::mutable_parameter" << std::endl;
+			std::cout << "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::cnf::mutable_param" << std::endl;
 		}
 
 		//This provides an implmentation for destroying CCI_PARAM
 		template <>
-		void destroy_cci_param<user_data_type, cci::cnf::mutable_parameter> (cci::cnf::cci_param<user_data_type, cci::cnf::mutable_parameter>* param)
+		void destroy_cci_param<user_data_type, cci::cnf::mutable_param> (cci::cnf::cci_param<user_data_type, cci::cnf::mutable_param>* param)
 		{
-			std::cout << "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::cnf::mutable_parameter" << std::endl;
+			std::cout << "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::cnf::mutable_param" << std::endl;
 		}
 
 

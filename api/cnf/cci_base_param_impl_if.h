@@ -100,7 +100,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      */
     virtual void json_deserialize(const std::string& json_string) = 0;
     
-    /// Get the JSON string representation of this parameter's value. @todo Alternative function name: get_json_string
+    /// Get the JSON string representation of this parameter's value.
     /**
      * @exception cci_exception_get_param Getting value failed
      * @return  The value of this parameter represented as a JSON string.
@@ -116,7 +116,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /**
      * @return Type
      */
-    virtual const basic_param_type get_basic_type() const = 0;// { return partype_not_available; }
+    virtual const basic_param_type get_basic_type() const = 0;// { return param_type_not_available; }
     
 #define CCI_NOT_SUPPORTED_WRN SC_REPORT_WARNING(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Not supported for this parameter type!")
 
@@ -241,13 +241,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /// Returns if the current value is an initial value being set by the database and not been modified
     /**
      * True if the value has been set using the cnf_broker's
-     * set_initial_value function and not been modified since then.
+     * json_deserialize_initial_value function and not been modified since then.
      *
      * Note: this will return false if a value that has been set as non-initial
      *       value but is equals the initial value.
      *
      * @return If the parameter's current value is an initial value being set 
-     *         using the broker function set_initial_value
+     *         using the broker function json_deserialize_initial_value
      */
     virtual bool is_initial_value() const = 0;
     
@@ -375,9 +375,9 @@ __CCI_OPEN_CONFIG_NAMESPACE__
      * @param callb  Parameter callback adapter
      * @return       If the callback adapter existed in this parameter.
      */
-    virtual bool unregister_param_callback(shared_ptr<cci::cnf::callb_adapt> callb) = 0;
-    /// @see unregister_param_callback(shared_ptr<>) 
-    virtual bool unregister_param_callback(cci::cnf::callb_adapt* callb) = 0;
+    virtual bool unregister_callback(shared_ptr<cci::cnf::callb_adapt> callb) = 0;
+    /// @see unregister_callback(shared_ptr<>) 
+    virtual bool unregister_callback(cci::cnf::callb_adapt* callb) = 0;
     
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks() = 0;
@@ -414,7 +414,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     /**
      * @return If this parameter is locked
      */
-    virtual bool locked() const = 0;
+    virtual bool is_locked() const = 0;
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Parameter syncronization   /////////////////////// //

@@ -37,7 +37,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   {
   /*protected:
     /// Typedef for the value.
-    typedef T val_type;
+    typedef T value_type;
     /// Typedef for the param itself.
     typedef cci_param<T, TM> my_type;*/
 

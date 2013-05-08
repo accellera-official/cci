@@ -42,8 +42,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     public cci::cnf::cci_param_impl_if<T, TM>
   {
   protected:
-    /// Typedef for the value.
-    typedef T val_type;
     /// Typedef for the param itself.
     typedef gs_cci_param_t<T, TM> my_type;
     /// Typedef for base type
@@ -54,6 +52,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     typedef gs::gs_param<T> gs_param_type;
 
   public:
+    /// Typedef for the value.
+    typedef T value_type;
 
     //using cci_param<T,TM>::operator=;
 
@@ -84,7 +84,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     gs_cci_param_t(my_return_type& owner_par
                    , const std::string& n 
-                   , const val_type &val
+                   , const value_type &val
                    , bool is_top_level_name /*= false*/
                    , bool register_at_db /*= true*/
                    , bool this_is_with_a_value // Just to make a difference (allow overloading) the constructor taking a string value 
@@ -105,7 +105,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     my_return_type* get_cci_param() { return &m_owner_par; }
     operator my_return_type& () { return m_owner_par; }
     
-    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::partype_not_available; }
+    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::param_type_not_available; }
    
     /*virtual my_return_type& operator = (const my_return_type& v) { 
       set(v.get());
@@ -113,18 +113,18 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return m_owner_par;
     }
 
-    virtual my_return_type& operator = (const val_type& v) { 
+    virtual my_return_type& operator = (const value_type& v) { 
       set(v);
       //return *this;
       return m_owner_par;
     }*/
     
 
-    virtual operator const val_type& () const {
+    virtual operator const value_type& () const {
       return get(); 
     }
     
-    virtual void set(const val_type& val) {
+    virtual void set(const value_type& val) {
       if (m_gs_param.locked()) {
         cci::cnf::cci_report_handler::set_param_failed("Parameter locked.");
         return;
@@ -135,11 +135,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
         update_latest_write_originator();
     }
     
-    virtual const val_type& get() const {
+    virtual const value_type& get() const {
       return m_gs_param.getValue();
     }
     
-    virtual void set(const val_type& val, void* lock_pwd) {
+    virtual void set(const value_type& val, void* lock_pwd) {
       if (!m_gs_param.check_pwd(lock_pwd)) {
         cci::cnf::cci_report_handler::set_param_failed("Wrong key.");
         return;

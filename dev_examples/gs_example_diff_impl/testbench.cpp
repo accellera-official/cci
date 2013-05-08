@@ -16,7 +16,7 @@
 
 
 #include <systemc>
-#include <cci.h>
+#include <cci>
 
 #include "OwnerModuleA.h"
 #include "OwnerModuleB.h"
@@ -32,8 +32,8 @@ int sc_main(int argc, char *argv[]) {
   //sc_core::sc_report_handler::set_actions(sc_core::SC_WARNING, sc_core::SC_ABORT);
 
   // Note: this prevents from catching the error!!
-  //sc_core::sc_report_handler::set_actions("/OSCI/CCI/set_param_failed",  sc_core::SC_DISPLAY);
-  sc_core::sc_report_handler::set_actions("/OSCI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
+  //sc_core::sc_report_handler::set_actions("/ASI/CCI/set_param_failed",  sc_core::SC_DISPLAY);
+  sc_core::sc_report_handler::set_actions("/ASI/CCI/cci_value_failure", sc_core::SC_DISPLAY);
 
 
   OwnerModuleA     ownerA     ("OwnerA");

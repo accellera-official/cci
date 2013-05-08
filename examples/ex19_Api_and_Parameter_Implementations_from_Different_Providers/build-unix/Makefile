@@ -17,7 +17,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex19_Api_and_Parameter_Implementations_from_Different_Providers.x
+EXE=Api_and_Parameter_Implementations_from_Different_Providers
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

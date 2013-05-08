@@ -25,7 +25,7 @@
 
 //------------------------------------------------------------------------------
 #include <cassert>
-#include "cci.h"
+#include "cci"
 #include "xreport.hpp"
 
 //------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ SC_MODULE(config_ip) {
 
     cci::cnf::cci_base_param *base_int_param_ptr = NULL;
     // Check for existance of int_param
-    if( m_cci->exists_param(param_name) ) {
+    if( m_cci->param_exists(param_name) ) {
       // Get handle to the param
       base_int_param_ptr = m_cci->get_param(param_name);
       assert(base_int_param_ptr != NULL);

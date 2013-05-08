@@ -23,7 +23,7 @@
  * @date      12th July, 2011 (Tuesday)
  */
 
-#include <cci.h>                  /*!To be included in all CCI based applications*/
+#include <cci>                  /*!To be included in all CCI based applications*/
 #include <systemc.h>
 
 #include "cci_configFile_Tool.h"

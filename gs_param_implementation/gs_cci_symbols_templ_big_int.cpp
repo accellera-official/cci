@@ -51,10 +51,10 @@ using namespace sc_dt;
   void (*call_create4_##T##TM)(cci_param<T<LOWER>, TM>*); \
   void (*call_create5_##T##TM)(cci_param<T<LOWER>, TM>*);
 #define PLACE_FUNCTION_POINTERS_T(T) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, mutable_parameter) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, immutable_parameter) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, elaboration_time_parameter) \
-  PLACE_FUNCTION_POINTERS_T_TM(T, other_parameter)
+  PLACE_FUNCTION_POINTERS_T_TM(T, mutable_param) \
+  PLACE_FUNCTION_POINTERS_T_TM(T, immutable_param) \
+  PLACE_FUNCTION_POINTERS_T_TM(T, elaboration_time_param) \
+  PLACE_FUNCTION_POINTERS_T_TM(T, other_param)
 
 #define PLACE_FUNCTION_CALLS_T_TM(T,TM) \
   call_create1_##T##TM(&create_cci_param<T<LOWER>, TM>), \
@@ -63,10 +63,10 @@ using namespace sc_dt;
   call_create4_##T##TM(&init_cci_param<T<LOWER>, TM>), \
   call_create5_##T##TM(&destroy_cci_param<T<LOWER>, TM>), 
 #define PLACE_FUNCTION_CALLS_T(T) \
-  PLACE_FUNCTION_CALLS_T_TM(T, mutable_parameter) \
-  PLACE_FUNCTION_CALLS_T_TM(T, immutable_parameter) \
-  PLACE_FUNCTION_CALLS_T_TM(T, elaboration_time_parameter) \
-  PLACE_FUNCTION_CALLS_T_TM(T, other_parameter)
+  PLACE_FUNCTION_CALLS_T_TM(T, mutable_param) \
+  PLACE_FUNCTION_CALLS_T_TM(T, immutable_param) \
+  PLACE_FUNCTION_CALLS_T_TM(T, elaboration_time_param) \
+  PLACE_FUNCTION_CALLS_T_TM(T, other_param)
 
 
 #define PLACE_BIG_FUNCTION_POINTERS() \

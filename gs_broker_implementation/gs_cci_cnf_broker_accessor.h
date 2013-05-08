@@ -17,7 +17,7 @@
 
 // NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
-#include <cci.h>
+#include <cci>
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_broker_if.h"
 
@@ -60,23 +60,23 @@ namespace cci {
       
       ~gs_cci_cnf_broker_accessor();
       
-      const char* name() const;
+      const std::string &name() const;
 
       // ////////////////////////////////////////////////////////////// //
       // /////////////// cci_cnf_broker_if functions ////////////////// //
       // ////////////////////////////////////////////////////////////// //
 
-      void set_init_value(const std::string &parname, const std::string &value);
+      void json_deserialize_initial_value(const std::string &parname, const std::string &value);
       
-      void lock_init_value(const std::string &parname);
+      void lock_initial_value(const std::string &parname);
       
-      const std::string get_json_string(const std::string &parname);
+      const std::string json_serialize(const std::string &parname);
       
-      const std::string get_json_string_keep_unused(const std::string &parname);
+      const std::string json_serialize_keep_unused(const std::string &parname);
       
       cci_base_param* get_param(const std::string &parname);
       
-      bool exists_param(const std::string &parname);
+      bool param_exists(const std::string &parname);
       
       bool is_used(const std::string &parname);
       
@@ -86,7 +86,7 @@ namespace cci {
       
       void unregister_all_callbacks(void* observer);
       
-      bool unregister_param_callback(cci::cnf::callb_adapt* callb);
+      bool unregister_callback(cci::cnf::callb_adapt* callb);
       
       bool has_callbacks(const std::string& parname);
       

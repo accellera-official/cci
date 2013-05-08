@@ -23,13 +23,12 @@
 #define INC_SIMPLE_IP_H
 
 //------------------------------------------------------------------------------
-#include "cci.h"
+#include "cci"
 #include "xreport.hpp"
 
 //------------------------------------------------------------------------------
 /// The SimpleIP owns a CCI param
 SC_MODULE(simple_ip)
-, public cci::cnf::cci_broker_manager
 {
  public:
   /// Ctor
@@ -41,17 +40,17 @@ SC_MODULE(simple_ip)
     , int_param_ip_dup("sim_ip.int_param_ip"             // Param name (Duplicate)
                        , 2                               // Default value
                        , cci::cnf::CCI_TOP_LEVEL_NAME    // Force to top-level
-                       , get_broker())                   // Get Global broker
+                       , cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this))) // Get Global broker
 
     , int_param_top("int_param_top"                      // Param name - Absolute
                     , 3                                  // Default value
                     , cci::cnf::CCI_TOP_LEVEL_NAME       // Force to top-level
-                    , get_broker())                      // Get Global broker
+                    , cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this))) // Get Global broker
 
     , int_param_custom("top.sub.int_param_custom"        // Param name - Custom
                        , 4                               // Default value
                        , cci::cnf::CCI_TOP_LEVEL_NAME    // Force to top-level
-                       , get_broker())                   // Get global broker
+                       , cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this))) // Get global broker
     {
       SC_THREAD(execute);
       XREPORT("Ctor: Default value of "<< int_param_ip.get_name()<< " is "<< int_param_ip);

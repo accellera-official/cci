@@ -16,7 +16,7 @@ INC_DIR=-I../inc
 LIB_DIR=
 
 #-- [Update] Name of executable
-EXE=ex13_Parmeter_Value_Locking.x
+EXE=Parmeter_Value_Locking
 
 #EXE_ARGS= | tee ../reports/expected.log 
 

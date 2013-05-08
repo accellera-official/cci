@@ -23,7 +23,7 @@
 #ifndef PARAMETER_OWNER_H
 #define PARAMETER_OWNER_H
 
-#include <cci.h>  /*!This header must be included wherever cci-infrastructure is used*/
+#include <cci>  /*!This header must be included wherever cci-infrastructure is used*/
 
 /**
  *  @brief    This SC_MODULE class instantiates two 'integer' type cci-parameters along
