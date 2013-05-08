@@ -53,7 +53,7 @@ SC_MODULE(config_ip) {
     wait(20, sc_core::SC_NS);
 
     // Check for existance of the param
-    if( m_cci->exists_param(sim_ip_int_param_ip_name) ) {
+    if( m_cci->param_exists(sim_ip_int_param_ip_name) ) {
       // Get handle to the param
       int_param_ptr = m_cci->get_param(sim_ip_int_param_ip_name);
       assert(int_param_ptr != NULL);
@@ -72,7 +72,7 @@ SC_MODULE(config_ip) {
     }
 
     // Check for existance of the param
-    if( m_cci->exists_param(sc_main_int_param_top_name) ) {
+    if( m_cci->param_exists(sc_main_int_param_top_name) ) {
       // Get handle to the param
       int_param_ptr = m_cci->get_param(sc_main_int_param_top_name);
       assert(int_param_ptr != NULL);
@@ -91,7 +91,7 @@ SC_MODULE(config_ip) {
     }
 
     // Check for existance of the param
-    if( m_cci->exists_param(int_param_custom_name) ) {
+    if( m_cci->param_exists(int_param_custom_name) ) {
       // Get handle to the param
       int_param_ptr = m_cci->get_param(int_param_custom_name);
       assert(int_param_ptr != NULL);

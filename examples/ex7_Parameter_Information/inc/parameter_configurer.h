@@ -71,7 +71,7 @@ class parameter_configurer : public sc_core::sc_module
 	
 	
 			// Broker interface checks for the existance of a (int type) parameter
-			if(myBrokerInterface->exists_param(int_param_str))
+			if(myBrokerInterface->param_exists(int_param_str))
 			{
 				int_param_ptr =	myBrokerInterface->get_param(int_param_str);
 		
@@ -87,8 +87,8 @@ class parameter_configurer : public sc_core::sc_module
 			} // End of IF
 
 
-			/// Broker interface checks for existance of a (std::string type) parameter using 'exists_param' API
-			if(myBrokerInterface->exists_param(string_param_str))
+			/// Broker interface checks for existance of a (std::string type) parameter using 'param_exists' API
+			if(myBrokerInterface->param_exists(string_param_str))
 			{
 				/// If parameter exists, get handle of the parameter using 'get_param' API
 				str_param_ptr = myBrokerInterface->get_param(string_param_str);		
@@ -248,7 +248,7 @@ class parameter_configurer : public sc_core::sc_module
 					wait(2.0, SC_NS);
 			
 
-					/// Access locking status of a parameter using 'locked()' API
+					/// Access locking status of a parameter using 'is_locked()' API
 					//
 					// Set password to lock/unlock parameter
 					
@@ -260,7 +260,7 @@ class parameter_configurer : public sc_core::sc_module
 						std::cout << "\n\t[CFGR] : Checking locked status of parameter" << endl;
 						
 						// Try accessing and modify value after locking
-						lock_status = int_param_ptr->locked();
+						lock_status = int_param_ptr->is_locked();
 						
 						if(lock_status)
 							std::cout << "\n\t[CFGR] : " << int_param_ptr->get_name() << " is in locked state!!" << endl;

@@ -84,8 +84,8 @@ SC_MODULE(simple_ip) {
 
  private:
   /// CCI immutable param to hold buffer size
-  cci::cnf::cci_param<int, cci::cnf::immutable_parameter> param_1;
-  cci::cnf::cci_param<int, cci::cnf::immutable_parameter> param_2;
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_1;
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_2;
 }; // simple_ip
 
 #endif // INC_SIMPLE_IP_H

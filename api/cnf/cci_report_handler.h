@@ -52,12 +52,12 @@ public:
   // function to return cci_param_failure that matches thrown (or cached) report
   static cci_param_failure get_param_failure(const sc_core::sc_report& rpt) {
     std::string failure_type_string = rpt.get_msg_type();
-    if ( failure_type_string.compare(0,10,"/OSCI/CCI/") == 0) {
-      if (failure_type_string == "/OSCI/CCI/SET_PARAM_FAILED") return CCI_SET_PARAM_FAILURE;
-      else if (failure_type_string == "/OSCI/CCI/GET_PARAM_FAILED") return CCI_GET_PARAM_FAILURE;
-      else if (failure_type_string == "/OSCI/CCI/ADD_PARAM_FAILED") return CCI_ADD_PARAM_FAILURE;
-      else if (failure_type_string == "/OSCI/CCI/REMOVE_PARAM_FAILED") return CCI_REMOVE_PARAM_FAILURE;
-      else if (failure_type_string == "/OSCI/CCI/CCI_VALUE_FAILURE") return CCI_VALUE_FAILURE;
+    if ( failure_type_string.compare(0,9,__CCI_SC_REPORT_MSG_TYPE_PREFIX__) == 0) {
+      if (failure_type_string == "/ASI/CCI/SET_PARAM_FAILED") return CCI_SET_PARAM_FAILURE;
+      else if (failure_type_string == "/ASI/CCI/GET_PARAM_FAILED") return CCI_GET_PARAM_FAILURE;
+      else if (failure_type_string == "/ASI/CCI/ADD_PARAM_FAILED") return CCI_ADD_PARAM_FAILURE;
+      else if (failure_type_string == "/ASI/CCI/REMOVE_PARAM_FAILED") return CCI_REMOVE_PARAM_FAILURE;
+      else if (failure_type_string == "/ASI/CCI/CCI_VALUE_FAILURE") return CCI_VALUE_FAILURE;
       else return CCI_UNDEFINED_FAILURE;
     }
     else //not a CCI failure report

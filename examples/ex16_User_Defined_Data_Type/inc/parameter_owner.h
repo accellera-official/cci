@@ -118,7 +118,7 @@ SC_MODULE(parameter_owner)
 	private	:
 		
 		/// CCI parameters declarations
-		cci::cnf::cci_param<route_table_ut, cci::cnf::mutable_parameter> udt_param; /*!<User-defined data type parameter*/
+		cci::cnf::cci_param<route_table_ut, cci::cnf::mutable_param> udt_param; /*!<User-defined data type parameter*/
 
 };//End of PARAMETER_OWNER
 

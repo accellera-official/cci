@@ -55,16 +55,16 @@ int sc_main(int sc_argc, char* sc_argv[])
 	assert(myMainBrokerIF != NULL && "SC_MAIN_BROKER_IF handle is returned NULL");
 
 	std::cout << "\n\t[MAIN] : Set initial value to 'integer type parameter'" << std::endl;
-	myMainBrokerIF->set_init_value("param_owner.int_param", "10");
+	myMainBrokerIF->json_deserialize_initial_value("param_owner.int_param", "10");
 
 	std::cout << "\n\t[MAIN] : Set initial value to 'float type parameter'" << std::endl;
-	myMainBrokerIF->set_init_value("param_owner.float_param", "11.11");
+	myMainBrokerIF->json_deserialize_initial_value("param_owner.float_param", "11.11");
 
 	std::cout << "\n\t[MAIN] : Set initial value to 'string type parameter'" << std::endl;
-	myMainBrokerIF->set_init_value("param_owner.string_param", "Used_parameter");
+	myMainBrokerIF->json_deserialize_initial_value("param_owner.string_param", "Used_parameter");
 
 	std::cout << "\n\t[MAIN] : Set initial value to 'double type parameter'" << std::endl;
-	myMainBrokerIF->set_init_value("param_owner.double_param", "100.123456789");
+	myMainBrokerIF->json_deserialize_initial_value("param_owner.double_param", "100.123456789");
 #endif
 
 	/// Instatiation of 'parameter_owner' and 'parameter_configurator' modules

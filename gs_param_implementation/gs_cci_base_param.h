@@ -169,7 +169,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     cci::cnf::cci_base_param* get_cci_base_param() { return &m_owner_par; }
     operator cci::cnf::cci_base_param& () { return m_owner_par; }
     
-    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::partype_not_available; }
+    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::param_type_not_available; }
 
     virtual const std::string& get_name() const {
       assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
@@ -188,9 +188,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                                             return m_gs_param_base->lock(pwd);    }
     virtual bool unlock(void* pwd = NULL) { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
                                             return m_gs_param_base->unlock(pwd);  }
-    virtual bool locked() const           { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+    virtual bool is_locked() const        { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
                                             return m_gs_param_base->locked();     }
-    //void set(const val_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
+    //void set(const value_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
 
     virtual void set_documentation(const std::string& doc) {
       my_documentation = doc;
@@ -283,11 +283,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       }
     }
     
-    virtual bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)  {
-      return unregister_param_callback(callb.get());
+    virtual bool unregister_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)  {
+      return unregister_callback(callb.get());
     }
     
-    virtual bool unregister_param_callback(cci::cnf::callb_adapt* callb)  {
+    virtual bool unregister_callback(cci::cnf::callb_adapt* callb)  {
       internal_callback_forwarder* fw;
       for (unsigned int i = 0; i < fw_vec.size(); ++i) {
         if (fw_vec[i]->adapt == callb) {

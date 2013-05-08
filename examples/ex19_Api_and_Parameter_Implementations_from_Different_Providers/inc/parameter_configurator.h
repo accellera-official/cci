@@ -52,7 +52,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
 
 			// Checks the parameter exists using name-based look-up 
-			if(myCfgrBrokerIF->exists_param("param_owner.mutable_int_param"))
+			if(myCfgrBrokerIF->param_exists("param_owner.mutable_int_param"))
 			{
 				std::cout << "[CFGR C_TOR] : Parameter param_owner.mutable_int_param exists" << std::endl; 
 				
@@ -65,7 +65,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			else
 				std::cout << "[CFGR C_TOR] : Parameter param_owner.mutable_int_param doesn't exists." << std::endl;
 
-			if(myCfgrBrokerIF->exists_param("param_owner.mutable_udtype_param"))
+			if(myCfgrBrokerIF->param_exists("param_owner.mutable_udtype_param"))
 			{
 				std::cout << "[CFGR C_TOR] : Parameter param_owner.mutable_udtype_param  exists" << std::endl; 
 				
@@ -82,7 +82,7 @@ class parameter_configurator : public ::sc_core::sc_module
 				std::cout << "[CFGR C_TOR] : Parameter param_owner.mutable_udtype_param doesn't exists." << std::endl;
 				std::cout << "Try Again with mutable_udtype_param "<< std::endl;
 
-				if(myCfgrBrokerIF->exists_param("mutable_udtype_param")) {
+				if(myCfgrBrokerIF->param_exists("mutable_udtype_param")) {
 					std::cout <<"Got Now with mutable_udtype_param "<<std::endl;
 				}
 				else {

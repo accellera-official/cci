@@ -24,12 +24,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
 // private contructor
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const cci_param<val_type, TM>& param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::cnf::PARAM_ORIGINATOR), m_broker_accessor(&cci::cnf::cci_broker_manager::get_current_broker(m_originator)) { assert(false && "Not allowed to copy parameter objects!"); }
+cci_param<T,TM>::cci_param(const cci_param<value_type, TM>& param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::cnf::PARAM_ORIGINATOR), m_broker_accessor(&cci::cnf::cci_broker_manager::get_current_broker(m_originator)) { assert(false && "Not allowed to copy parameter objects!"); }
 
 // Constructors without options
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(cci_param_impl_if<val_type, TM>* param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::cnf::PARAM_ORIGINATOR), m_broker_accessor(&cci::cnf::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = param;                                                         m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(cci_param_impl_if<value_type, TM>* param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::cnf::PARAM_ORIGINATOR), m_broker_accessor(&cci::cnf::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = param;                                                         m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name.
 
@@ -224,17 +224,17 @@ void cci_param<T,TM>::unregister_all_callbacks(void* observer) {
 }
 
 template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt> callb) {
+bool cci_param<T,TM>::unregister_callback(cci::shared_ptr<callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->unregister_param_callback(callb);
+  bool ret = get_pImpl()->unregister_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
 
 template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::unregister_param_callback(callb_adapt* callb) {
+bool cci_param<T,TM>::unregister_callback(callb_adapt* callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->unregister_param_callback(callb);
+  bool ret = get_pImpl()->unregister_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -264,9 +264,9 @@ bool cci_param<T,TM>::unlock(void* pwd) {
 }
 
 template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::locked() const {
+bool cci_param<T,TM>::is_locked() const {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->locked();
+  bool ret = get_pImpl()->is_locked();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -551,17 +551,17 @@ void cci_param<std::string,TM>::unregister_all_callbacks(void* observer) {
 }
 
 template<param_mutable_type TM>
-bool cci_param<std::string,TM>::unregister_param_callback(cci::shared_ptr<callb_adapt> callb) {
+bool cci_param<std::string,TM>::unregister_callback(cci::shared_ptr<callb_adapt> callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->unregister_param_callback(callb);
+  bool ret = get_pImpl()->unregister_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
 
 template<param_mutable_type TM>
-bool cci_param<std::string,TM>::unregister_param_callback(callb_adapt* callb) {
+bool cci_param<std::string,TM>::unregister_callback(callb_adapt* callb) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->unregister_param_callback(callb);
+  bool ret = get_pImpl()->unregister_callback(callb);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -591,9 +591,9 @@ bool cci_param<std::string,TM>::unlock(void* pwd) {
 }
 
 template<param_mutable_type TM>
-bool cci_param<std::string,TM>::locked() const {
+bool cci_param<std::string,TM>::is_locked() const {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->locked();
+  bool ret = get_pImpl()->is_locked();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }

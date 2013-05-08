@@ -48,12 +48,12 @@ SC_MODULE(config_ip) {
   void setup_sim_ip(const char *msg, const char *key, const char *val) {
     XREPORT(msg);
     
-    if( m_cci->exists_param(key) ) {
+    if( m_cci->param_exists(key) ) {
       XREPORT_ERROR("Instantiate config_ip ahead of simple_ip to demonstrate this example");
     }
     else {
       XREPORT("Set init-value of "<< key<< " to "<< val);
-      m_cci->set_init_value(key, val);
+      m_cci->json_deserialize_initial_value(key, val);
     }
   }
 
@@ -61,7 +61,7 @@ SC_MODULE(config_ip) {
   void execute() {
     wait(10, sc_core::SC_NS);
 
-    if( m_cci->exists_param("sim_ip.param_2") ) {
+    if( m_cci->param_exists("sim_ip.param_2") ) {
       cci::cnf::cci_base_param *param_2_ptr = m_cci->get_param("sim_ip.param_2");
       if(param_2_ptr == NULL) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2_ptr'!");

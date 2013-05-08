@@ -50,18 +50,18 @@ int sc_main(int sc_argc, char* sc_argv[])
 	// their constructor begins
 	std::cout << "\n[MAIN] : Setting 'param_owner.mutable_string_param' value to 'Initialized within sc_main()'" << endl;
 	
-	/// Demonstrating use of 'set_init_value' API to assign initial value before the
+	/// Demonstrating use of 'json_deserialize_initial_value' API to assign initial value before the
 	/// construction of the model hierarchy begins.
-	globalBroker->set_init_value("param_owner.mutable_string_param", "Initialized within sc_main");
+	globalBroker->json_deserialize_initial_value("param_owner.mutable_string_param", "Initialized within sc_main");
 
 	cout << "\n\t[MAIN] : Demonstrating 'comparison' between the values of a data type for different mutability types" << endl;
 
 	/// Instantiate cci-parameters of all the three mutability types for a
 	/// particular (say String) data-type
          
-	cci::cnf::cci_param<std::string, cci::cnf::mutable_parameter>           mutab_str_param("string_mutab_param", "String_Value_A");
-	cci::cnf::cci_param<std::string, cci::cnf::immutable_parameter>         immutab_str_param("string_immutab_param", "String_Value_A");
-	cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_parameter>  elab_str_param("string_elab_param", "String_Value_B");
+	cci::cnf::cci_param<std::string, cci::cnf::mutable_param>           mutab_str_param("string_mutab_param", "String_Value_A");
+	cci::cnf::cci_param<std::string, cci::cnf::immutable_param>         immutab_str_param("string_immutab_param", "String_Value_A");
+	cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param>  elab_str_param("string_elab_param", "String_Value_B");
 
 	if (mutab_str_param.get() == immutab_str_param.get())
 		std::cout << "\t[MAIN] : 'mutable' & 'immutable' type String parameters - VALUES MATCH" << endl;

@@ -50,7 +50,7 @@ SC_MODULE(config_ip) {
     wait(20, sc_core::SC_NS);
 
     // Check for existance of the param
-    if( m_cci->exists_param(int_param_name) ) {
+    if( m_cci->param_exists(int_param_name) ) {
       // Get handle to the param
       cci::cnf::cci_base_param *int_param_ptr = m_cci->get_param(int_param_name);
       assert(int_param_ptr != NULL);

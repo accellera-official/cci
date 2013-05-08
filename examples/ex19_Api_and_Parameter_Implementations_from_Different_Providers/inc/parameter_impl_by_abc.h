@@ -51,7 +51,7 @@ struct user_data_type {
 
 
 struct cci_param_user_data_type : 
-                                  public cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_parameter>
+                                  public cci::cnf::cci_param_impl_if<user_data_type, cci::cnf::mutable_param>
 {
 
 	//Virtual function in cci_param_impl_if
@@ -99,9 +99,9 @@ struct cci_param_user_data_type :
 
 	void unregister_all_callbacks(void* observer) ;
 
-	bool unregister_param_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb);
+	bool unregister_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb);
 
-	bool unregister_param_callback(cci::cnf::callb_adapt * callb);
+	bool unregister_callback(cci::cnf::callb_adapt * callb);
 
 	 bool has_callbacks() ;
 
@@ -109,7 +109,7 @@ struct cci_param_user_data_type :
 
 	bool unlock(void* pwd = NULL);
 
-	bool locked() const;
+	bool is_locked() const;
 
   cci::cnf::cci_originator* get_latest_write_originator() const
     { return NULL; /* TODO */ }

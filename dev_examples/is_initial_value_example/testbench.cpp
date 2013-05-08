@@ -38,7 +38,7 @@ void show_param_list() {
       ss_show << ", val=" << p->json_serialize();
     } else {
       ss_show << "impl. (is always initial)";
-      ss_show << ", val=" << mBroker->get_json_string(*iter);
+      ss_show << ", val=" << mBroker->json_serialize(*iter);
     }
   }
   std::cout << "   " << ss_show.str() << std::endl<<std::endl;
@@ -49,8 +49,8 @@ int sc_main(int argc, char *argv[]) {
   
   cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator("SCMAIN"));
   
-  mBroker->set_init_value("int_param_with_initial_value", "100");
-  mBroker->set_init_value("int_param_only_implicit", "130");
+  mBroker->json_deserialize_initial_value("int_param_with_initial_value", "100");
+  mBroker->json_deserialize_initial_value("int_param_only_implicit", "130");
   
   cci::cnf::cci_param<int> int_param_with_initial_value     ("int_param_with_initial_value",      10);
   cci::cnf::cci_param<int> int_param_without_initial_value  ("int_param_without_initial_value",   11);
@@ -60,7 +60,7 @@ int sc_main(int argc, char *argv[]) {
 
   // This does NOT change the status to initial because this write to an explicit parameter is translated 
   // 'just' into a usual write
-  mBroker->set_init_value("int_param_with_late_initial_value", "120");
+  mBroker->json_deserialize_initial_value("int_param_with_late_initial_value", "120");
   
   show_param_list();
 

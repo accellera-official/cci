@@ -44,7 +44,7 @@ class parameter_configurator : public ::sc_core::sc_module
 			assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
 
 			// Get handle of the 'int_param' cci-parameter
-			if(myCfgrBrokerIF->exists_param("param_owner.mutable_int_param"))
+			if(myCfgrBrokerIF->param_exists("param_owner.mutable_int_param"))
 			{
 				std::cout << "\n\t[CFGR C_TOR] : Integer parameter exists" << std::endl; 
 				
@@ -57,7 +57,7 @@ class parameter_configurator : public ::sc_core::sc_module
 
 
 			// Get handle of the 'float_param' cci-parameter
-			if(myCfgrBrokerIF->exists_param("param_owner.mutable_float_param"))
+			if(myCfgrBrokerIF->param_exists("param_owner.mutable_float_param"))
 			{
 				std::cout << "\n\t[CFGR C_TOR] : Float parameter exists" << std::endl; 
 				
@@ -70,7 +70,7 @@ class parameter_configurator : public ::sc_core::sc_module
 
 
 			// Get handle of the 'string_param' cci-parameter
-			if(myCfgrBrokerIF->exists_param("param_owner.mutable_string_param"))
+			if(myCfgrBrokerIF->param_exists("param_owner.mutable_string_param"))
 			{
 				std::cout << "\n\t[CFGR C_TOR] : String parameter exists" << std::endl; 
 				

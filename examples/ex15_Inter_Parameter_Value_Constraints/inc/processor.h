@@ -67,7 +67,7 @@ class processor : public sc_core::sc_module
 				std::string param_path(name());
 				param_path.append(".addr_lines_mod.curr_addr_lines");
 
-				if(processor_BrokerIF->exists_param(param_path))
+				if(processor_BrokerIF->param_exists(param_path))
 				{
 					addr_lines_base_ptr	=	processor_BrokerIF->get_param(param_path);
 
@@ -85,7 +85,7 @@ class processor : public sc_core::sc_module
 				std::string param_path(name());
 				param_path.append(".memory_block.mem_size");
 
-				if(processor_BrokerIF->exists_param(param_path))
+				if(processor_BrokerIF->param_exists(param_path))
 				{
 					mem_size_base_ptr	=	processor_BrokerIF->get_param(param_path);
 

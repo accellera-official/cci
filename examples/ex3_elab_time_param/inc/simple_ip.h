@@ -15,7 +15,7 @@
 
 /**
  *  @file   simple_ip.h
- *  @brief  A simple IP that demonstartes the use of elaboration_time_parameter
+ *  @brief  A simple IP that demonstartes the use of elaboration_time_param
  *  @author Udaya Ranga, TI
  */
 
@@ -87,7 +87,7 @@ SC_MODULE(simple_ip) {
     }
 
     ///Create an elab-time param after end_of elaboration()
-    cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> struc_param_post_eoe("struc_param_post_eoe", 0);
+    cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> struc_param_post_eoe("struc_param_post_eoe", 0);
     XREPORT("execute: Creating a struc_param_post_eoe after end_of elaboration(), with a default value:" << struc_param_post_eoe); 
 
     // Wait for 10ns 
@@ -110,7 +110,7 @@ SC_MODULE(simple_ip) {
 
  private:
   /// CCI param 
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> struc_param;
+  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> struc_param;
 }; // simple_ip
 
 #endif // INC_SIMPLE_IP_H

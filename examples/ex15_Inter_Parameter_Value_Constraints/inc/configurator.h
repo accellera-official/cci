@@ -50,7 +50,7 @@ class configurator : public sc_module
 
 
 			/// Check for the existence of 'curr_addr_lines' cci_parameter of ADDRESS_LINES_REGISTER
-			if(myCfgrBrokerIF->exists_param(cfgr_param_str1))
+			if(myCfgrBrokerIF->param_exists(cfgr_param_str1))
 			{
 				addr_lines_base_ptr	=	myCfgrBrokerIF->get_param(cfgr_param_str1);
 
@@ -61,7 +61,7 @@ class configurator : public sc_module
 
 
 			/// Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
-			if(myCfgrBrokerIF->exists_param(cfgr_param_str2))
+			if(myCfgrBrokerIF->param_exists(cfgr_param_str2))
 			{
 				mem_size_base_ptr	=	myCfgrBrokerIF->get_param(cfgr_param_str2);
 

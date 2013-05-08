@@ -40,7 +40,7 @@ SC_MODULE(parameter_owner)
 		SC_CTOR(parameter_owner)
 		:	int_param("mutable_int_param", 0)
 		{
-			std::cout << "\n\t[OWNER C_TOR] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+			std::cout << "\n\t[OWNER C_TOR] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 
 			/// SC_THREAD declaration
 			SC_THREAD(run_owner);
@@ -70,7 +70,7 @@ SC_MODULE(parameter_owner)
 
 				std::cout << "\t[OWNER] : Locking the parameter without password" << endl;
 				int_param.lock();
-				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 
 				/// Illustrating usage of try and catch mechanism in order to catch the exception
 				/// raised when trying to set a value to the parameter if it is already locked
@@ -82,29 +82,29 @@ SC_MODULE(parameter_owner)
 						std::cout << "\t[OWNER] : Caught Exception : " << e.what() << endl;
 				}// End of TRY-CATCH
 					
-				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 				
 				wait(5.0, SC_NS);	// wait till the configurator executes 'wait'
 		
 				std::cout << "\n@ " << sc_time_stamp() << endl;
 				std::cout << "\t[OWNER] : Unlocking parameter (locked earlier) without password" << endl;
 				int_param.unlock();
-				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 				
 				wait(5.0, SC_NS);
 
 				std::cout << "\n@ " << sc_time_stamp() << endl;
-				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 				key = NULL;
 				std::cout << "\n\t[OWNER] : Directly lock the unlocked parameter with password" << endl;
 				int_param.lock(&key); 				
 	
-				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 
 				/// This 'set' API llustrating assigning new value to an already locked parameter without unlocking it
 				std::cout << "\n\t[OWNER] : Overwrite value of the (locked!) parameter to 4 without unlocking" << endl;
 				int_param.set(4, &key); 				
-				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.locked() << "\tValue : " << int_param.get() << endl;
+				std::cout << "\t[OWNER] : Parameter locking status : " << int_param.is_locked() << "\tValue : " << int_param.get() << endl;
 				
 				wait(30.0, SC_NS);
 

@@ -33,12 +33,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   /// Value class for objects representing arbitrary types of cci parameters
   /**
    * The constructor sets the value and the type, the empty constructor applies
-   * an empty/invalid value, setting the type to partype_not_available.
+   * an empty/invalid value, setting the type to param_type_not_available.
    *
    * The value can be read using the correct get function according the type
    * returned by type().
    * There may be other get functions but the correct one, returning another
-   * representation of the value, e.g. the type is cci::partype_number, the correct
+   * representation of the value, e.g. the type is cci::param_type_number, the correct
    * get function would be get_int64(), but also get_int(), get_string() and get_real() 
    * might return valid string representations. If a particular get function cannot 
    * return a valid representation of the value, an sc_report error of type
@@ -46,27 +46,27 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    */
   class cci_value {
   public:
-    /// Constructor with no (null) value (sets type to cci::partype_not_available)
+    /// Constructor with no (null) value (sets type to cci::param_type_not_available)
     cci_value();  
-    /// Constructor setting the string value (sets type to cci::partype_string)
+    /// Constructor setting the string value (sets type to cci::param_type_string)
     /**
      * A (const char *) variant is a necessity; without it, literal char arrays
      * will use the built-in implicit conversion to bool rather than the (user defined)
      * conversion to (const string &).
      */
     cci_value(const char*           value); 
-    /// Constructor setting the string value (sets type to cci::partype_string)
+    /// Constructor setting the string value (sets type to cci::param_type_string)
     cci_value(const std::string&    value);
-    /// Constructor setting the bool value (sets type to cci::partype_bool)
+    /// Constructor setting the bool value (sets type to cci::param_type_bool)
     cci_value(bool                  value);
-    /// Constructor setting the number value (sets type to cci::partype_number)
+    /// Constructor setting the number value (sets type to cci::param_type_number)
     cci_value(int                   value);
-    /// Constructor setting the number value (sets type to cci::partype_number)
+    /// Constructor setting the number value (sets type to cci::param_type_number)
     cci_value(sc_dt::int64          value);
-    /// Constructor setting the real value (sets type to cci::partype_real)
+    /// Constructor setting the real value (sets type to cci::param_type_real)
     cci_value(double                value);
 
-    /// Constructor setting the list value (sets type to cci::partype_list)
+    /// Constructor setting the list value (sets type to cci::param_type_list)
     cci_value(const cci_value_list& value);
     /// Constructor copying another value
     cci_value(const cci_value& other);

@@ -86,21 +86,32 @@ public:
   }
   
   /// Constructor with an sc_object originator
-  cci_originator(sc_core::sc_object& originator) 
+  cci_originator(const sc_core::sc_object& originator) 
   : m_originator_obj(&originator)
   , m_originator_str() {    
   }
 
   /// Convenience constructor with an sc_module originator
-  cci_originator(sc_core::sc_module& originator) 
-  : m_originator_obj(static_cast<sc_core::sc_object*>(&originator))
+  cci_originator(const sc_core::sc_module& originator) 
+  : m_originator_obj(static_cast<const sc_core::sc_object*>(&originator))
   , m_originator_str() {    
   }
   
-  /// Constructor with an originator name
-  cci_originator(const std::string& originator) 
+  /// Constructor with an originator string name
+  cci_originator(const std::string& originator_name)
   : m_originator_obj(NULL)
-  , m_originator_str(originator) {    
+  , m_originator_str(originator_name) {
+  }
+
+  /// Constructor with an originator (char *) name
+  /**
+   * This form (in addition to std::string) is necessary to avoid ambiguity
+   * between the sc_object, sc_module and std::string overloads for literal
+   * string constant arguments.
+   */
+  cci_originator(const char *originator_name)
+  : m_originator_obj(NULL)
+  , m_originator_str(originator_name) {
   }
   
   /// Set the originator using its object (preferred!)
@@ -132,7 +143,7 @@ public:
    *
    * @return Originator object pointer or NULL
    */
-  sc_core::sc_object* get() const {
+  const sc_core::sc_object* get() const {
     return m_originator_obj;
   }
   
@@ -151,7 +162,7 @@ public:
 protected:
   
   /// Pointer to the current originator object (priority compared to name m_originator_str)
-  sc_core::sc_object* m_originator_obj;
+  const sc_core::sc_object* m_originator_obj;
   
   /// Name of the current originator (no relevance if m_originator_obj not NULL)
   std::string m_originator_str;

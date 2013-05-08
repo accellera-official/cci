@@ -74,7 +74,7 @@ class parent : public sc_module
 				std::string child_param_path(name());
 				child_param_path.append(".child_inst.priv_int_param");
 
-				if(parent_BrokerIF->exists_param(child_param_path))
+				if(parent_BrokerIF->param_exists(child_param_path))
 				{
 					child_base_param_ptr = parent_BrokerIF->get_param(child_param_path);
 

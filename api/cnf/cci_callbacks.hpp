@@ -62,7 +62,7 @@ void callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::unregister_at_paramet
 #endif
     // remove this out of the parameter's callback list
     // Avoid repeated call during destruction by automatically setting caller_param = NULL
-    /*bool succ = */caller_param->unregister_param_callback(this);
+    /*bool succ = */caller_param->unregister_callback(this);
     //assert (succ && "Unregistering this callback at parameter failed!");
   }
   if (caller_broker != NULL) {
@@ -71,7 +71,7 @@ void callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::unregister_at_paramet
     printf("callb_adapt: Unregister broker callback adapter %p at caller broker '%s'.\n", (void*)this, caller_broker->get_name().c_str());
 #endif
     // remove this out of the parameter's callback list
-    //caller_broker->unregister_param_callback(this);
+    //caller_broker->unregister_callback(this);
   }
   
 }

@@ -66,13 +66,13 @@ namespace cnf {
     
     const std::string &name() const;
 
-    void set_init_value(const std::string &parname, const std::string &json_value);
+    void json_deserialize_initial_value(const std::string &parname, const std::string &json_value);
     
-    void lock_init_value(const std::string &parname);
+    void lock_initial_value(const std::string &parname);
     
-    const std::string get_json_string(const std::string &parname);
+    const std::string json_serialize(const std::string &parname);
     
-    const std::string get_json_string_keep_unused(const std::string &parname);
+    const std::string json_serialize_keep_unused(const std::string &parname);
     
     cci_base_param* get_param(const std::string &parname);
     
@@ -82,7 +82,7 @@ namespace cnf {
     
     const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern);
     
-    bool exists_param(const std::string &parname);
+    bool param_exists(const std::string &parname);
     
     bool is_used(const std::string &parname);
     
@@ -90,7 +90,7 @@ namespace cnf {
     
     void unregister_all_callbacks(void* observer);
     
-    bool unregister_param_callback(callb_adapt* callb);
+    bool unregister_callback(callb_adapt* callb);
     
     bool has_callbacks(const std::string& parname);
     

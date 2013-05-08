@@ -34,7 +34,7 @@ Owner: uint_param is_default_value()=0
 
 Owner: uint_param get_default_value()=12000
 Owner: bool_param get_default_value()=
-Owner: Caught Error: /OSCI/CCI/GET_PARAM_FAILED: Param has no default value.
+Owner: Caught Error: /ASI/CCI/GET_PARAM_FAILED: Param has no default value.
 In file: /Users/schroede/mydev/cci_git/cci/api/cnf/cci_report_handler.h:37
 In process: Owner.main_action @ 0 s
 Owner: bool_param is_invalid_value()=1

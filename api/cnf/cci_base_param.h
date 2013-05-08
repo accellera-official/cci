@@ -48,12 +48,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) = 0;
     virtual cci::shared_ptr<callb_adapt> register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb) = 0;
     virtual void unregister_all_callbacks(void* observer) = 0;
-    virtual bool unregister_param_callback(cci::shared_ptr<callb_adapt> callb) = 0;
-    virtual bool unregister_param_callback(callb_adapt* callb) = 0;
+    virtual bool unregister_callback(cci::shared_ptr<callb_adapt> callb) = 0;
+    virtual bool unregister_callback(callb_adapt* callb) = 0;
     virtual bool has_callbacks() = 0;
     virtual bool lock(void* pwd = NULL) = 0;
     virtual bool unlock(void* pwd = NULL) = 0;
-    virtual bool locked() const = 0;
+    virtual bool is_locked() const = 0;
     virtual bool is_accessor() const = 0;
     virtual cci_base_param* create_accessor(const cci_originator& originator) = 0;
     virtual const cci_originator* get_latest_write_originator() const = 0;

@@ -50,40 +50,40 @@ int sc_main(int sc_argc, char* sc_argv[])
 
 	/// Set initial value to the number of master(s) (within top_module)
 	std::string masterHierarchicalName = "top_module_inst.number_of_masters";
-	myGlobalBroker->set_init_value(masterHierarchicalName, "2");
+	myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "2");
 
 
 	std::cout << "\n[MAIN] : Setting initial value of the number of masters to 1" << endl;		
 
 	// The program considers only the last set initial value
-	myGlobalBroker->set_init_value(masterHierarchicalName, "1"); // The program takes in the last set initial value
+	myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "1"); // The program takes in the last set initial value
 
 
 	std::cout << "\n[MAIN] : Setting initial value of the number of slaves to 4" << endl;		
 	
 	/// Set initial value to the number of slave(s) (within top_module)
 	std::string slaveHierarchicalName = "top_module_inst.number_of_slaves";
-	myGlobalBroker->set_init_value(slaveHierarchicalName, "4");
+	myGlobalBroker->json_deserialize_initial_value(slaveHierarchicalName, "4");
 
 
 	/// Set the maximum addressing limit for the router 
-	myGlobalBroker->set_init_value("top_module_inst.RouterInstance.addr_max", "1024");
+	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.addr_max", "1024");
 	
 
 	/// Set and lock the Router Table initials values for slave_1 
 	//  These values have again been tried to set within the Top_MODULE
 	//  @see top_module.h
 	std::cout << "\n[MAIN] : Set and lock Router Table Slave_1 contents" << endl;		
-	myGlobalBroker->set_init_value("top_module_inst.RouterInstance.r_index_1", "1");	
-	myGlobalBroker->lock_init_value("top_module_inst.RouterInstance.r_index_1");	
+	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_index_1", "1");	
+	myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_index_1");	
 	
 	std::cout << "\n[MAIN] : Set and lock Router Table Start Address for Slave_1 to 128" << endl;		
-	myGlobalBroker->set_init_value("top_module_inst.RouterInstance.r_sa_1", "128");	
-	myGlobalBroker->lock_init_value("top_module_inst.RouterInstance.r_sa_1");	
+	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_sa_1", "128");	
+	myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_sa_1");	
 
 	std::cout << "\n[MAIN] : Set and lock Router Table End Address for Slave_1 to 255" << endl;		
-	myGlobalBroker->set_init_value("top_module_inst.RouterInstance.r_ea_1", "255");	
-	myGlobalBroker->lock_init_value("top_module_inst.RouterInstance.r_ea_1");	
+	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_ea_1", "255");	
+	myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_ea_1");	
 
 
 	std::cout << "\n[MAIN] : Instantiate top module after setting initial values to top_module, router and slave parameters" << endl;		

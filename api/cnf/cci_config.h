@@ -36,7 +36,7 @@
 # define CCI_CNF_DUMP(msg) {  } 
 #endif
 
-/// Namespace for OSCI Configuration, Control & Inspection (CCI) standard, Config part
+/// Namespace for ASI Configuration, Control & Inspection (CCI) standard, Config part
 #define __CCI_OPEN_CONFIG_NAMESPACE__  namespace cci { namespace cnf {
 #define __CCI_CLOSE_CONFIG_NAMESPACE__ } }
 
@@ -44,17 +44,17 @@
 #define __CCI_OWNER_ORIGINATOR_STRING__   "OWNER_ORIGINATOR"
 #define __CCI_DEFAULT_BROKER_STRING__     "DEFAULT_BROKER"
 #define __CCI_UNKNOWN_ORIGINATOR_STRING__ "UNKNOWN_ORIGINATOR"
-#define __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "/OSCI/CCI/"
+#define __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "/ASI/CCI/"
 
 
 /// Main CCI namespace
 /**
- * This is the OSCI CCI namespace
+ * This is the ASI CCI namespace
  */
 namespace cci {
   /// Namespace for CCI configuration part
   /**
-   * This is the OSCI CCI config namespace
+   * This is the ASI CCI config namespace
    */
   namespace cnf {
   }

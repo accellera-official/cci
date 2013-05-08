@@ -32,32 +32,32 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
   enum basic_param_type {
     /// default, type unknown
-    partype_not_available = 0, 
+    param_type_not_available = 0, 
     /// used for all param data types that can handle integer numbers
-    partype_number,   
+    param_type_number,   
     /// used for all param data types that can handle real numbers
-    partype_real,     
+    param_type_real,     
     /// used for all param data types that can handle bool
-    partype_bool,     
+    param_type_bool,     
     /// used for all param data types that can handle strings
-    partype_string,   
+    param_type_string,   
     /// used for all param lists 
-    partype_list,     
+    param_type_list,     
     /// used for all param other data types (objects etc.)
-    partype_other     
+    param_type_other     
   };
   
   
   /// Enumeration for cci_param template specifying the parameter type according the lock behavior
   enum param_mutable_type {
     /// Mutable Parameter
-    mutable_parameter = 0,
+    mutable_param = 0,
     /// Immutable Parameter
-    immutable_parameter,
+    immutable_param,
     /// Elaboration Time Parameter (Mutable up to end_of_elaboration)
-    elaboration_time_parameter,
+    elaboration_time_param,
     /// Vendor specific/other Parameter type
-    other_parameter
+    other_param
   };
   
   /// Enumeration for convenient cci_param constructor: for chose if a param gets a top-level-name

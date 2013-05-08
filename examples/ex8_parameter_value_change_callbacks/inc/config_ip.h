@@ -46,7 +46,7 @@ SC_MODULE(config_ip) {
     const std::string param_2_name = "sim_ip.param_2";
 
     // Check for existance of the param_1
-    if( m_cci->exists_param(param_1_name) ) {
+    if( m_cci->param_exists(param_1_name) ) {
       // Get handle to the param
       cci::cnf::cci_base_param *param_1_ptr = m_cci->get_param(param_1_name);
       assert(param_1_ptr != NULL);
@@ -64,7 +64,7 @@ SC_MODULE(config_ip) {
     }
 
     // Check for existence of param_2
-    if( m_cci->exists_param(param_2_name) ) {
+    if( m_cci->param_exists(param_2_name) ) {
       // Get handle to the param
       cci::cnf::cci_base_param *param_2_ptr = m_cci->get_param(param_2_name);
       assert(param_2_ptr != NULL);

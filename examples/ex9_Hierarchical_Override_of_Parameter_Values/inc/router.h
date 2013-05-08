@@ -102,13 +102,13 @@ class router : public sc_core::sc_module
 			for(int i = 0; i < r_slaves; i++)
 			{
 				sprintf(slaveName, "r_index_%d", i);
-				r_slave_index.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter>(slaveName, i));
+				r_slave_index.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param>(slaveName, i));
 				
 				sprintf(slaveName, "r_sa_%d", i);
-				r_addr_start.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter>(slaveName, (i*addrSize)));
+				r_addr_start.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param>(slaveName, (i*addrSize)));
 
 				sprintf(slaveName, "r_ea_%d", i);
-				r_addr_end.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter>(slaveName, ((i+1)*addrSize -1)));
+				r_addr_end.push_back(new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param>(slaveName, ((i+1)*addrSize -1)));
 
 			}// End of FOR
 
@@ -116,7 +116,7 @@ class router : public sc_core::sc_module
 			{
 				sprintf(stringName, "top_module_inst.Slave_%d.s_base_addr", i);				
 
-				if(myBrokerForRouter->exists_param(stringName))
+				if(myBrokerForRouter->param_exists(stringName))
 				{	
 					base_ptr = myBrokerForRouter->get_param(stringName);
 					assert(base_ptr != NULL && "Slave Base Address Handle returned is NULL");
@@ -179,12 +179,12 @@ class router : public sc_core::sc_module
 		/// Elaboration Time Parameters for setting up the model hierarcy;
 
 		// Master ID assigned by the top_module upon instantiation
-		cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> r_masters; //!< Master ID assigned by the top_module
+		cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_masters; //!< Master ID assigned by the top_module
 
 		// Slave ID assigned by the top_module upon instantiation
-		cci::cnf::cci_param<int, cci::cnf::elaboration_time_parameter> r_slaves;  //!< Slave ID assigned by the top_module
+		cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_slaves;  //!< Slave ID assigned by the top_module
 
-		cci::cnf::cci_param<unsigned int, cci::cnf::mutable_parameter> addr_limit;//!< Router Addressing Range
+		cci::cnf::cci_param<unsigned int, cci::cnf::mutable_param> addr_limit;//!< Router Addressing Range
 
 		cci::cnf::cci_cnf_broker_if*	myBrokerForRouter;  //!< CCI configuration broker
 
@@ -195,9 +195,9 @@ class router : public sc_core::sc_module
 		/// Field#2 : Slave#_Start_Addr
 		/// \par
 		/// Field#3 : Slave#_End_Addr
-		std::vector< cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter> * > r_slave_index;
-		std::vector< cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter> * > r_addr_start;
-		std::vector< cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_parameter> * > r_addr_end;
+		std::vector< cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param> * > r_slave_index;
+		std::vector< cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param> * > r_addr_start;
+		std::vector< cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param> * > r_addr_end;
 
 		cci::cnf::cci_base_param* base_ptr;    /*!<CCI base parameter for slave base address*/
 
