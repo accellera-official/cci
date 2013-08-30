@@ -1,6 +1,6 @@
 ================================================================================
-                        OSCI-CCI Examples
-Date: 04/12/2011
+                    Accellera/CCI Examples README
+Date  : 07/05/2013
 ================================================================================
 
 ToC
@@ -8,103 +8,85 @@ ToC
   Introduction
   Directory Structure
   Running the examples
-  The examples
   TODO
   ISSUES
 
-Introduction:
--------------
-This README describes the content and structure of examples in the cci/examples/ 
-folder.
+Introduction
+------------
+  This README provides an overview of the Accellera/CCI package examples and 
+how to build and run them. The build is based on systemc-regressions/ package's
+verify.pl script.
 
-The CCI examples are patterned after the TLM2 examples. The examples implemented 
-here are based on the brief in 'Description of Config Examples.docx'.
-
-Directory Structure:
---------------------
-          examples/
-                |- build-msvc           // Windows build scripts
-                |- build-unix           // *nix build scripts
+Directory Structure
+-------------------
+        cci/                            // CCI_HOME folder
+          examples/                     // Examples folder
+                |- README.txt           // This README
                 |- common               // Code common to one or more examples
                 |       |- inc          //   Common headers
-                |       |- src          //   Common sources
-                |       |- lib*         // Lib folder to install CCI-libs
                 |- ex1_xxx              // ex[Index]_[Example Name]
                 |       |- doc          //   PPT having example description
-                |       |- reports      //   Contains 'expected.log' file
-                |       |- build-msvc   //   Windows build dir
-                |       |- build-unix   //   *nix build dir
-                |       |- inc          //   Example headers
-                |       |- src          //   Example sources
+                |       |- golden       //   Contains 'main.log' golden reference file
+                |       |- *.h *.cpp    //   Contains example sources
                 |- ...                  // More examples
 
-(*) The GS-CCI static libraries are built for the first example and are stored in 
-common/lib folder for use by subsequent examples.
 
-Running the examples:
+Running the examples
 ---------------------
-Support for building the examples and unit tests is provided for 'unix', and
-'msvc' (project and make files).
+1) The following environment variables need to be setup based on your 
+    installation. A sample file has been provided for your reference.
 
-Makefiles work hierarchically. The default target builds the tests; 
-Other targets are:
-   'clean', 
-   'run'  (executes built tests/examples) 
-   'check' (against expected results)
+-- [ cci_env.bash ]
+  export SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/systemc-2.3.0
+  export BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_44_0
+  export CCI_HOME=/proj/sds_cce/cci_ti/cci
+# export SYSTEMC_PTHREADS=1
+  export SYSTEMC_TEST=${CCI_HOME}/examples
+  export CXX=g++
+# export PATH=/apps/free/gcc/4.4.5/bin:${PATH}
+# export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
+--
 
-To run the makefiles the following environment needs to be set:
-   On Unix/Linux/MacOS, 
-      $TLM_HOME should be set to this kit's location
-      $SYSTEMC_HOME should point to the SystemC installation
-      $BOOST_HOME should point to the Boost library installation
-      $GS_CCI_HOME should point to the GreenSocs-CCI reference installation
-      $CCI_EXAMPLES_HOME should point to the cci/examples/ dir
-      $TARGET_ARCH defines the appendix of the systemc library directory
-        these should be set such that $SYSTEMC_HOME/lib-$TARGET_ARCH is a 
-        directory containing the systemc library.  
-   Or alternatively,
-      Update the DEFAULT_* paths in build-unix/Makefile.common with paths
-      specific to your installation.
+2) Ensure that you build the 3 CCI libs before attempting to build the examples.
 
-todo |   On Windows, 
-todo |      the SYSTEMC and TLM environments variables should be used.
-todo |   
-todo |   To run the tests with SystemC-2.1v1 and gcc-3.4.4 you need to change
-todo |   the Makefile.config in build-unix/ to unset the FLAG_WERROR
-todo |   You also need to unset this flag when using gcc-4.1.2 and above
-todo |
-todo | To run the Visual C++ solutions (.sln) or project (.vcproj) files, you must edit  
-todo | the Property sheet as follows:
-todo | 
-todo | 1 Select Property Manager from the View menu
-todo | 2 Under projectName > Debug | Win32 select systemc
-todo | 3 Select Properties from the View menu
-todo | 4 Select User Macros under Common Properties
-todo | 5 Update the SYSTEMC and TLM entries and apply
+3) Create a directory called run/ in your CCI_HOME folder, and 'cd' into it.
++------------------------------------------------+
+  % pwd
+  /proj/sds_cce/cci_ti/cci
+  % mkdir run
+  % cd run
+  % pwd
+  /proj/sds_cce/cci_ti/cci/run
++------------------------------------------------+
 
-The examples:
--------------
-Each examples comes with documentation in the form of a set of powerpoint slides
-that can be found in the docs/ subdirectory of the example.
+4) The verify.pl script needs to be invoked to build/run/compare-golden results.
 
-XREPORT() class of convenience macros are defined in common/inc dir.
+  4.1) To run a specific example, say ex1_simple_int_param, do:
++------------------------------------------------+
+    % ../scripts/verify.pl ex1_simple_int_param
++------------------------------------------------+
 
-The examples have been tested in the following environment:
- - SystemC-2.2
- - greenstarcore_ver613
- - RedHat Enterprise Linux 4
- - gcc-3.4.6 (32-bit)
+  4.2) To run all examples, do:
++-----------------------------------------------+
+    % ../scripts/verify.pl .
++------------------------------------------------+
+ 
+5) The build/run logs are available in the run/ folder.
 
-TODO:
------
-1. Lines prefixed with 'todo |' needs to be updated.
-2. The Windows build scripts need to be created.
+TODO
+----
+1) The flow has been tested only on Linux. Needs to be tested on other hosts like 
+PC, MacOSX etc.
 
-ISSUES:
-------
-1. General
-    a. Unimplemented features are marked with 'Warning's/TBD.
-2. Link time error reported when the 3 component CCI libraries are built 
-and linked independently. Hence the component CCI libs are archived as a single lib
--lgs_cci.
+ISSUES
+-------
+1) Should the scripts/ folder be part of CCI package or should this be imported
+  from systemc-regressions/ package.
+  1.1) If this is imported from systemc-integration package, then
+    a. Everyone using cci/ package should also import systemc-regression/ package.
+    b. The CCI related changes to the script must be protected with flags so as to 
+       not impact systemc-regressions.
+  1.2) If this not imported then,
+    a. The verify.pl scripts may need to be synced up periodically for any new 
+       features and/or bug-fixes.
 

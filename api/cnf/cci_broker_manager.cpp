@@ -11,7 +11,7 @@
 // The contents of this file are subject to the licensing terms specified
 // in the file LICENSE. Please consult this file for restrictions and
 // limitations that may apply.
-// 
+//
 // ENDLICENSETEXT
 
 
@@ -26,13 +26,13 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 // static get function
 cci_cnf_broker_if& cci_broker_manager::get_current_broker(const cci_originator& originator) {
   if (std::string(originator.name()).empty()) {
-#ifdef CCI_CNF_VERBOSE 
+#ifdef CCI_CNF_VERBOSE
     SC_REPORT_INFO("CCI/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
 #endif
   }
   if (cci_broker_stack::stack().size() > 0) {
     return cci_broker_stack::stack().top()->get_accessor(originator);
-  } 
+  }
   // else return global broker
   else {
     return cci::cnf::create_global_cnf_broker().get_accessor(originator);
@@ -42,13 +42,13 @@ cci_cnf_broker_if& cci_broker_manager::get_current_broker(const cci_originator& 
 // static get function
 cci_cnf_broker_if& cci_broker_manager::get_current_parent_broker(const cci_originator& originator) {
   if (std::string(originator.name()).empty()) {
-#ifdef CCI_CNF_VERBOSE 
+#ifdef CCI_CNF_VERBOSE
     SC_REPORT_INFO("CCI/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
 #endif
   }
   if (cci_broker_stack::stack().size() > 1) {
     return cci_broker_stack::stack().second_top()->get_accessor(originator);
-  } 
+  }
   // else return global broker
   else {
     return cci::cnf::create_global_cnf_broker().get_accessor(originator);
@@ -71,14 +71,15 @@ cci_broker_manager::cci_broker_manager(cci_cnf_broker_if* broker)
     } else {
       std::cout << "The private broker (\""<<broker->name()<<"\") given to this broker manager IS NOT an accessor." << std::endl;
       SC_REPORT_INFO("CCI/cci_broker_manager", "It is recommended to provide a broker accessor to the broker manager!");
-      m_broker = &broker->get_accessor(cci_originator("unknown broker manager")); // TODO: what string is reasonable here? 
+      m_broker = &broker->get_accessor(cci_originator("unknown broker manager")); // TODO: what string is reasonable here?
     }
   } else {
-    assert(false && "TODO error");
+	m_broker = NULL;
+    assert(false && "no private broker error");
     // cci_report_handler::TODO("no private broker!");
   }
 }
-  
+
 cci_broker_manager::~cci_broker_manager() {
   // pop private broker from broker stack
   cci_broker_stack::stack().pop();

@@ -1,0 +1,87 @@
+        Release Notes for SystemC 2.3.0 regression test suite
+        =====================================================
+
+
+CONTENTS
+========
+
+  1) What's new in this release?
+
+  2) Bug fixes and enhancements
+
+  3) Other changes
+
+  4) Known limitations
+
+
+1) What's new in this release?
+==============================
+
+TLM2 and SystemC regressions are now combined into this single suite.
+
+Compatibility across different platforms has been greatly improved.
+
+Improved coverage of SystemC features, including new IEEE Std 1666-2011 regression tests.
+
+
+2) Bug fixes and enhancements
+=============================
+
+This is a summary of the main changes:
+
+  - Combined SystemC regressions and TLM2 Unit Tests into a single structure.
+  
+  - Improved include structure.
+  
+  - Regression script verify.pl now tested on many platforms, so multiple copies of the 
+    script have been removed.
+
+
+3) Other changes
+================
+
+Here is an overview of changes with respect to the previous release:
+
+================================================================================
+*** [Swami] Inserting my release notes here!
+
+  - Breaking changes in verify.pl
+    o SYSTEMC_TEST environment variable now should include the trailing (tests/ or examples/) path too.
+    o verify.pl was not stripping the header line - 'SystemC Simulation' in output log. This is fixed. 
+    (Existing systemc-regression golden logs need to strip this extra line at beginning).
+
+  - New Environment Variables
+    o CCI_HOME: CCI home directory path
+    o BOOST_HOME: Boost home directory path
+    o A sample CCI examples/ build source file is given below:
+
+-- [ cci_env.bash ]
+export SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/systemc-2.3.0
+export BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_44_0
+export CCI_HOME=/proj/sds_cce/cci_ti/cci
+# export SYSTEMC_PTHREADS=1
+export SYSTEMC_TEST=${CCI_HOME}/examples
+export CXX=g++
+# export PATH=/apps/free/gcc/4.4.5/bin:${PATH}
+# export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
+--
+
+  - Note: Tested on RHEL4/gcc-4.4/64-bit platform
+
+================================================================================
+
+4) Known limitations
+====================
+
+Here is a list of known limitations in this release:
+
+  - Not all options of the verify.pl script are fully functional.
+
+  - The regression test suite does not cover all the SystemC source code,
+    though it is improved compared to previous versions.
+
+  - Some datatype tests take a long time to either compile or run.
+
+  - On Mac OS X 10.6.8 (Snow Leopard), the verify.pl script does not
+    detect the x86_64 architecture correctly. You can run the
+    regressions against a 32-bit version of SystemC.

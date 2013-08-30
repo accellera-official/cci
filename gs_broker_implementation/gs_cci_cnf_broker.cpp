@@ -110,12 +110,10 @@ cci::cnf::gs_cci_cnf_broker::~gs_cci_cnf_broker() {
     fw_vec[i]->adapt->caller_broker = NULL;      
 
   // Delete all Callbacks in m_observer_callback_map
-  internal_callback_forwarder *cba;
   for (observerCallbackMap::iterator iter = m_observer_callback_map.begin(); iter!=m_observer_callback_map.end(); ++iter) {
-    cba = iter->second;
-    delete cba;
-    m_observer_callback_map.erase(iter);
+    delete iter->second;
   }
+  m_observer_callback_map.clear();
 }
 
 const std::string &cci::cnf::gs_cci_cnf_broker::name() const {
@@ -207,10 +205,8 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
 
   internal_callback_forwarder *fw = NULL;
   cci_base_param *p = NULL;
-  gs::cnf::callback_type cb = gs::cnf::no_callback;
   switch (type) {
     case cci::cnf::pre_read:
-      cb = gs::cnf::pre_read;
       // forward to explicit parameter
       p = get_param(parname); // TODO: get_param_list(pattern) and iterate registering callbacks to all of them
       if (p) {
@@ -220,7 +216,6 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
       }
       break;
     case cci::cnf::reject_write:
-      cb = gs::cnf::reject_write;
       // forward to explicit parameter
       p = get_param(parname); // TODO: get_param_list(pattern) and iterate registering callbacks to all of them
       if (p) {
@@ -230,7 +225,6 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
       }
       break;
     case cci::cnf::pre_write:
-      cb = gs::cnf::pre_write;
       // forward to explicit parameter
       p = get_param(parname); // TODO: get_param_list(pattern) and iterate registering callbacks to all of them
       if (p) {
@@ -240,7 +234,6 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
       }
       break;
     case cci::cnf::post_write:
-      cb = gs::cnf::post_write;
       // forward to explicit parameter or handle internally
       p = get_param(parname); // TODO: get_param_list(pattern) and iterate registering callbacks to all of them
       if (p) {
@@ -250,8 +243,6 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
       }
       break;
     case cci::cnf::destroy_param:
-      // callback forwarded to parameter object
-      cb = gs::cnf::destroy_param;
       // forward to explicit parameter
       p = get_param(parname); // TODO: get_param_list(pattern) and iterate registering callbacks to all of them
       if (p) {
@@ -263,7 +254,7 @@ cci::shared_ptr<cci::cnf::callb_adapt> cci::cnf::gs_cci_cnf_broker::register_cal
     case cci::cnf::create_param:
       if (parname.compare("*") != 0)
         SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "This implementation cannot handle patterns / listen for special new parameters - will register for all new params");      
-      fw = new internal_callback_forwarder(callb, cb, *this);
+      fw = new internal_callback_forwarder(callb, gs::cnf::no_callback, *this);
       fw_vec.push_back(fw);
       //assert(fw->caller_broker && "create_param callbacks only can be used with string callback functions!");
       assert(get_gs_cnf_api() != NULL && "This must be available!");

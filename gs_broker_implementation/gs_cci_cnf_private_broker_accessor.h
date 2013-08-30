@@ -112,6 +112,8 @@ namespace cci {
       gs::cnf::cnf_api_if* get_gs_cnf_api();
       
     protected:
+      gs_cci_private_broker_accessor(const gs_cci_private_broker_accessor&);
+      gs_cci_private_broker_accessor& operator=(const gs_cci_private_broker_accessor&);
       
       /// the appropriate (private or non-private) broker with originator function calls
       gs_cci_cnf_broker_if* m_broker;

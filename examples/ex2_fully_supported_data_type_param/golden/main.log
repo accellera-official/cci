@@ -1,0 +1,32 @@
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.bool_param is 1
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.char_param is A
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uchar_param is U
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int_param is -1
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uint_param is 0xfeedf00d
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.float_param is 3.14
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.double_param is 2.714
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.string_param is C++ String
+
+Info: sc_main: Begin Simulation.
+
+Info: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cnf::cci_param<int> *' succeeded
+
+Info: cfg_ip: @10 ns, @execute: Current value of sim_ip.int_param is -1
+
+Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cnf::cci_param<unsigned int> *' type failed.
+In file: <removed by verify.pl>
+In process: cfg_ip.execute @ 10 ns
+
+Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cnf::cci_param<std::string> *' type failed.
+In file: <removed by verify.pl>
+In process: cfg_ip.execute @ 10 ns
+
+Info: sc_main: End Simulation.

@@ -194,11 +194,9 @@ const std::vector<std::string> cci::cnf::gs_cci_private_broker::get_param_list(c
 
 const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_private_broker::get_params(const std::string& pattern) {
   SC_REPORT_WARNING("GreenSocs/cci/not_implemented", "pattern limited to GreenConfig capabilities");
+  const std::vector<std::string> strvec = get_param_list(pattern);
   std::vector<cci::cnf::cci_base_param*> parvec;
-  std::vector<std::string> strvec;
-  strvec = get_param_list(pattern);
-  std::vector<std::string>::iterator striter;
-  for (striter = strvec.begin(); striter != strvec.end(); striter++) {
+  for (std::vector<std::string>::const_iterator striter = strvec.begin(); striter != strvec.end(); ++striter) {
     cci::cnf::cci_base_param* p = get_param(*striter);
     if (p) parvec.push_back(p);
   }
