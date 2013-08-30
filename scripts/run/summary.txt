@@ -1,0 +1,35 @@
+*** test results
+
+-------------------------------------------------------------------------------
+ Tests that passed :
+-------------------------------------------------------------------------------
+./ex10_Shared_Parameters/main.cpp
+./ex11_Searching_and_Directly_Associating_Parameters/main.cpp
+./ex12_Indirectly_Associating_Parameters/main.cpp
+./ex13_Parameter_Value_Locking/main.cpp
+./ex14_Hiding_Parameters/main.cpp
+./ex15_Inter_Parameter_Value_Constraints/main.cpp
+./ex17_Specifying_Parameter_Values_via_a_Configuration_File/main.cpp
+./ex18_Superset_Parameter_Value_Specification/main.cpp
+./ex19_Api_and_Parameter_Implementations_from_Different_Providers/main.f
+./ex1_simple_int_param/main.cpp
+./ex20_Tracing_Parameter_Activity/main.cpp
+./ex2_fully_supported_data_type_param/main.cpp
+./ex3_elab_time_param/main.cpp
+./ex5_default_and_init_value/main.cpp
+./ex7_Parameter_Information/main.cpp
+./ex8_parameter_value_change_callbacks/main.cpp
+./ex9_Hierarchical_Override_of_Parameter_Values/main.cpp
+
+-------------------------------------------------------------------------------
+ Tests that failed :
+-------------------------------------------------------------------------------
+              linking               : ./ex16_User_Defined_Data_Type/main.cpp
+                diff                : ./ex4_simple_immutable_param/main.cpp
+              running               : ./ex6_parameter_naming/main.cpp
+
+Total passed : 17
+Total failed : 3
+
+   GUT METER : 85 %
+
