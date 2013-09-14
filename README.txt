@@ -33,8 +33,8 @@ GreenSocs' proof-of-concept implementation.
 there are different compiles to be done manually to demonstrate the 
 independency and make it easier to provide alternative implementations)
 
-- To build and run the user examples:
-  - read examples/README.txt
+- To build and run the user examples (needs perl):
+  - read scripts/README_CCI.txt
 
 
 
@@ -51,4 +51,5 @@ dev_examples/                     :  some development examples
              priv_broker_example/ :  Example demonstrating usage of a private broker
              gs_example_diff_impl :  still TODO!!
 examples/  :  directory for official examples
+scripts/   :  directory for build script(s)
 

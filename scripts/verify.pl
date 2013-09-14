@@ -601,7 +601,8 @@ sub init_globals
 
     # [Swami] Adding CCI specific globals
     $rt_cci_home = &get_cci_home;
-    # [Swami] Note that the cci_path and cci_lib indices should match. For e.g.
+    # [Swami] Note that the cci_path and corresponding cci_lib indices should match. 
+    # For e.g.
     #         rt_cci_path[0] = $rt_cci_home/api
     #          rt_cci_lib[0] = cciapi
     #
