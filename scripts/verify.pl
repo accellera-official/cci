@@ -1825,12 +1825,14 @@ sub strip_header
     local( $eval_cmds );
 
     # use eval loop so regex compiles once
+    # -- CCI: Fixed issue here so that the head_pat is acually stripped
     $eval_cmds = <<"EVAL";
     while( \$#strip_logfile >= 0 ) {
-          last if \$strip_logfile[0] =~ /$rt_strip_head_pat/;
-          shift \@strip_logfile;
+          my \$line = shift \@strip_logfile;
+          last if \$line =~ /$rt_strip_head_pat/;
       }
 EVAL
+    # -- /CCI
     eval $eval_cmds;
 }
 
