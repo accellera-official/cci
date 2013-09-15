@@ -733,6 +733,21 @@ sub prepare_environment
     $rt_systemc_home = &get_systemc_home;
     $rt_tlm_home     = &get_tlm_home;
 
+    # CCI: add specific globals and change settings
+    $rt_boost_home   = &get_boost_home;
+    $rt_cci_home     = &get_cci_home;
+
+    my @cci_path = ( "$rt_cci_home/api",
+                     "$rt_cci_home/gs_param_implementation",
+                     "$rt_cci_home/gs_broker_implementation" );
+
+    @rt_cci_includes = @cci_path;
+    push( @rt_cci_includes, "$rt_cci_home/greencontrol_cci_branch" );
+
+    @rt_cci_ldpaths  = @cci_path;
+    @rt_cci_ldlibs   = ( 'cciapi', 'cciparamimpl', 'ccibrokerimpl' );
+    # -- /CCI
+
     # Set compiler and compiler flags
     #
     # defaults
@@ -811,6 +826,13 @@ sub prepare_environment
     # libraries (basenames only)
     @rt_ldlibs   = ( "systemc" );
     push( @rt_ldlibs, "pthread" ) unless (!$rt_pthreads);
+
+    # -- CCI; additional includes, libraries
+    push   ( @rt_includes, $rt_boost_home   ) unless (!$rt_boost_home);
+    unshift( @rt_includes, @rt_cci_includes );
+    unshift( @rt_ldlibs,   @rt_cci_ldlibs   );
+    unshift( @rt_ldpaths,  @rt_cci_ldpaths  );
+    # -- /CCI
 
     # prepend common include directory, if exists
     unshift ( @rt_includes, "$rt_systemc_test/$rt_common_include_dir" )
