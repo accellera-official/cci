@@ -135,6 +135,10 @@ sub create_mail
     printf MAIL "SYSTEMC_ARCH : %s %s\n", $rt_systemc_arch, "$rt_pthreads";
     printf MAIL "SYSTEMC_HOME : %s\n", $rt_systemc_home;
     printf MAIL "TLM_HOME     : %s\n", $rt_tlm_home;
+    # -- CCI: print additional variables
+    printf MAIL "CCI_HOME     : %s\n", $rt_cci_home;
+    printf MAIL "BOOST_HOME   : %s\n", $rt_boost_home;
+    # -- /CCI
     printf MAIL "SYSTEMC_TEST : %s\n", $rt_systemc_test;
     printf MAIL " OUTPUT_DIR  : %s\n", $rt_output_dir;
 
@@ -373,6 +377,46 @@ sub get_tlm_home
     $tlm_home;
 }
 
+# -- CCI: additional environment settings
+#
+# -----------------------------------------------------------------------------
+#  SUB : get_cci_home
+#
+#  Get the CCI_HOME environment variable's value.
+# -----------------------------------------------------------------------------
+
+sub get_cci_home
+{
+    if( ! defined $ENV{ 'CCI_HOME' } ) {
+        &print_log( "Warning: " .
+                   "environment variable CCI_HOME is not defined!\n" );
+        #exit 1;
+    }
+
+    my $cci_home = $ENV{ 'CCI_HOME' } || "";
+    $cci_home =~ s|\\|/|g ;  # replace any backslash with forward slash
+    $cci_home;
+}
+
+# -----------------------------------------------------------------------------
+#  SUB : get_boost_home
+#
+#  Get the BOOST_HOME environment variable's value.
+# -----------------------------------------------------------------------------
+
+sub get_boost_home
+{
+    if( ! defined $ENV{ 'BOOST_HOME' } ) {
+        &print_log( "Warning: " .
+                   "environment variable BOOST_HOME is not defined!\n" );
+        #exit 1;
+    }
+
+    my $boost_home = $ENV{ 'BOOST_HOME' } || "";
+    $boost_home =~ s|\\|/|g ;  # replace any backslash with forward slash
+    $boost_home;
+}
+# -- /CCI
 
 # -----------------------------------------------------------------------------
 #  SUB : get_systemc_arch
@@ -991,6 +1035,18 @@ sub print_intro
         &print_log( "[$working_view] " );
     }
     &print_log( "$rt_tlm_home\n" );
+    # -- CCI: print extra variables
+    &print_log( "CCI_HOME     : " );
+    if( $rt_cci_home =~ m|^$vob| ) {
+        &print_log( "[$working_view] " );
+    }
+    &print_log( "$rt_cci_home\n" );
+    &print_log( "BOOST_HOME   : " );
+    if( $rt_boost_home =~ m|^$vob| ) {
+        &print_log( "[$working_view] " );
+    }
+    &print_log( "$rt_boost_home\n" );
+    # -- /CCI
     &print_log( "SYSTEMC_TEST : " );
     if( $rt_systemc_test =~ m|^$vob| ) {
         &print_log( "[$working_view] " );
