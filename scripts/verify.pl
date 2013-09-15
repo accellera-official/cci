@@ -631,8 +631,12 @@ sub init_globals
     chop( $rt_output_dir = `pwd` );     # directory for output logs
     $rt_prodname = "systemc.exe";       # simulation executable name
     $rt_quick_tests = 0;
-    $rt_tests_dir = "$rt_systemc_test/tests";
-    $rt_common_include_dir = "include/common"; # relative to $rt_systemc_test
+    # -- CCI: Let the user specify tests dir, change common include dir
+    #$rt_tests_dir = "$rt_systemc_test/tests";
+    #$rt_common_include_dir = "include/common"; # relative to $rt_systemc_test
+    $rt_tests_dir = "$rt_systemc_test";
+    $rt_common_include_dir = "common/inc";
+    # -- /CCI
     $rt_time_tests = 0;
     $rt_verbose  = 0;
 
