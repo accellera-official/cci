@@ -3,6 +3,13 @@
 -------------------------------------------------------------------------------
  Tests that passed :
 -------------------------------------------------------------------------------
+./ex01_Simple_Int_Param/main.cpp
+./ex02_Fully_Supported_Data_Type_Param/main.cpp
+./ex03_Elab_Time_Param/main.cpp
+./ex05_Default_and_Initial_Value/main.cpp
+./ex07_Parameter_Information/main.cpp
+./ex08_Parameter_Value_Change_Callbacks/main.cpp
+./ex09_Hierarchical_Override_of_Parameter_Values/main.cpp
 ./ex10_Shared_Parameters/main.cpp
 ./ex11_Searching_and_Directly_Associating_Parameters/main.cpp
 ./ex12_Indirectly_Associating_Parameters/main.cpp
@@ -12,21 +19,14 @@
 ./ex17_Specifying_Parameter_Values_via_a_Configuration_File/main.cpp
 ./ex18_Superset_Parameter_Value_Specification/main.cpp
 ./ex19_Api_and_Parameter_Implementations_from_Different_Providers/main.f
-./ex1_simple_int_param/main.cpp
 ./ex20_Tracing_Parameter_Activity/main.cpp
-./ex2_fully_supported_data_type_param/main.cpp
-./ex3_elab_time_param/main.cpp
-./ex5_default_and_init_value/main.cpp
-./ex7_Parameter_Information/main.cpp
-./ex8_parameter_value_change_callbacks/main.cpp
-./ex9_Hierarchical_Override_of_Parameter_Values/main.cpp
 
 -------------------------------------------------------------------------------
  Tests that failed :
 -------------------------------------------------------------------------------
+                diff                : ./ex04_Simple_Immutable_Param/main.cpp
+              running               : ./ex06_Parameter_Naming/main.cpp
               linking               : ./ex16_User_Defined_Data_Type/main.cpp
-                diff                : ./ex4_simple_immutable_param/main.cpp
-              running               : ./ex6_parameter_naming/main.cpp
 
 Total passed : 17
 Total failed : 3
