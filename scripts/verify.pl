@@ -737,7 +737,7 @@ sub prepare_environment
     $rt_systemc_home = &get_systemc_home;
     $rt_tlm_home     = &get_tlm_home;
 
-    # CCI: add specific globals and change settings
+    # -- CCI: add specific globals and change settings
     $rt_boost_home   = &get_boost_home;
     $rt_cci_home     = &get_cci_home;
 
@@ -831,7 +831,7 @@ sub prepare_environment
     @rt_ldlibs   = ( "systemc" );
     push( @rt_ldlibs, "pthread" ) unless (!$rt_pthreads);
 
-    # -- CCI; additional includes, libraries
+    # -- CCI: additional includes, libraries
     push   ( @rt_includes, $rt_boost_home   ) unless (!$rt_boost_home);
     unshift( @rt_includes, @rt_cci_includes );
     unshift( @rt_ldlibs,   @rt_cci_ldlibs   );
