@@ -1,0 +1,20 @@
+[OWNER C_TOR] : Default Value : 5
+[CFGR C_TOR] : Parameter exists
+
+	[CFGR C_TOR] : Set parameter value to 10 using cci_base_parameter
+
+@ 0 s
+	[OWNER] : Parameter Value : 10
+
+@ 5 ns
+	[OWNER] : Set parameter value to 15.
+
+@ 10 ns
+	[CFGR] : Parameter Value   : 15
+
+@ 15 ns
+
+	[CFGR] : Change value to 20
+
+@ 20 ns
+	[OWNER] : Parameter Value   : 20

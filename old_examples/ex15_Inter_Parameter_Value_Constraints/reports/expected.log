@@ -1,0 +1,34 @@
+
+	[MAIN] : In this example, the following is condition is verified
+
+	[MAIN] : 		x <= 2^n - 1
+
+	[MAIN] : where, 'x' : value of 'mem_block_size' (Memory Block size), and
+	[MAIN] :        'n' : total number of address lines - 'curr_addr_lines'
+
+	[ADDR_LINES_REG C_TOR] : Default Address Lines : 9
+
+	[MEMORY_BLOCK C_TOR] : Default Memory Size : 500
+
+	[PROCESSOR fn] : User may proceed with the present configuration
+
+@ 0 s
+	[CFGR] : Changing the 'mem_size' to 640
+
+	[PROCESSOR mem_block_post_wr_cb] : Parameter Name : processor.memory_block.mem_size	Parameter Value : 640
+	[PROCESSOR mem_block_post_wr_cb] : Parameter Name : processor.addr_lines_mod.curr_addr_lines	Parameter Value : 9
+	[PROCESSOR fn] : The address lines cannot address the current memory size
+
+@ 5 ns
+	[CFGR] : Modify the 'curr_addr_lines' to 10
+
+	[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : processor.addr_lines_mod.curr_addr_lines	Parameter Value : 10
+	[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : processor.memory_block.mem_size	Parameter Value : 640
+	[PROCESSOR fn] : The number of address lines can now address the current memory size
+
+@ 10 ns
+	[CFGR] : Changing the 'mem_size' to 800
+
+	[PROCESSOR mem_block_post_wr_cb] : Parameter Name : processor.memory_block.mem_size	Parameter Value : 800
+	[PROCESSOR mem_block_post_wr_cb] : Parameter Name : processor.addr_lines_mod.curr_addr_lines	Parameter Value : 10
+	[PROCESSOR fn] : User may proceed with the present configuration

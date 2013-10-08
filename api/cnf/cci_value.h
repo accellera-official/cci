@@ -11,7 +11,7 @@
 // The contents of this file are subject to the licensing terms specified
 // in the file LICENSE. Please consult this file for restrictions and
 // limitations that may apply.
-// 
+//
 // ENDLICENSETEXT
 
 
@@ -26,10 +26,10 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
 
   class cci_value;
-  
+
   /// List of cci_values
   typedef std::vector<cci_value> cci_value_list;
-  
+
   /// Value class for objects representing arbitrary types of cci parameters
   /**
    * The constructor sets the value and the type, the empty constructor applies
@@ -39,22 +39,22 @@ __CCI_OPEN_CONFIG_NAMESPACE__
    * returned by type().
    * There may be other get functions but the correct one, returning another
    * representation of the value, e.g. the type is cci::param_type_number, the correct
-   * get function would be get_int64(), but also get_int(), get_string() and get_real() 
-   * might return valid string representations. If a particular get function cannot 
+   * get function would be get_int64(), but also get_int(), get_string() and get_real()
+   * might return valid string representations. If a particular get function cannot
    * return a valid representation of the value, an sc_report error of type
    * cci_report::cci_value_failure is thrown.
    */
   class cci_value {
   public:
     /// Constructor with no (null) value (sets type to cci::param_type_not_available)
-    cci_value();  
+    cci_value();
     /// Constructor setting the string value (sets type to cci::param_type_string)
     /**
      * A (const char *) variant is a necessity; without it, literal char arrays
      * will use the built-in implicit conversion to bool rather than the (user defined)
      * conversion to (const string &).
      */
-    cci_value(const char*           value); 
+    cci_value(const char*           value);
     /// Constructor setting the string value (sets type to cci::param_type_string)
     cci_value(const std::string&    value);
     /// Constructor setting the bool value (sets type to cci::param_type_bool)
@@ -70,51 +70,51 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     cci_value(const cci_value_list& value);
     /// Constructor copying another value
     cci_value(const cci_value& other);
-    
+
     /// Checks for equality
     bool operator==(const cci_value& lhs) const;
 
     /// Assigns a new value and type
     cci_value& operator=(const cci_value& lhs);
-    
+
     /// Returns the best matching basic type
     basic_param_type type() const;
-    
+
     /// Returns the value's string representation
     /**
      * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's string representation.
      */
     const std::string&      get_string()   const;
-    
+
     /// Returns the value's list representation
     /**
      * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's list representation.
      */
     const cci_value_list&   get_list() const;
-    
+
     /// Returns the value's bool representation
     /**
      * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's bool representation.
      */
     bool           get_bool()  const;
-    
+
     /// Returns the value's int representation
     /**
      * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's int representation.
      */
     int            get_int()   const;
-    
+
     /// Returns the value's int64 representation
     /**
      * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
      * @return The value's int64 representation.
      */
     sc_dt::int64 get_int64() const;
-    
+
     /// Returns the value's double representation
     /**
      * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
@@ -135,9 +135,12 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     double m_value_real;
     /// list value (if this is of type cci::cnf::cci_value_list)
     cci_value_list m_value_list;
-    
+
+	//Function to initialize all the private members
+	void initialize_values();
+
   };
-  
+
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
 

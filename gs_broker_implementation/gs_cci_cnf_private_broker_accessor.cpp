@@ -20,8 +20,9 @@
 
 cci::cnf::cci_cnf_broker_if& cci::cnf::gs_cci_private_broker_accessor::get_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  return m_broker->get_accessor(originator);
+  cci::cnf::cci_cnf_broker_if& broker = m_broker->get_accessor(originator);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
+  return broker;
 }
 
 /*cci::cnf::gs_cci_private_broker_accessor::gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<const char*> pub_params, const cci_originator& originator) 
@@ -134,13 +135,13 @@ bool cci::cnf::gs_cci_private_broker_accessor::has_callbacks(const std::string& 
 
 void cci::cnf::gs_cci_private_broker_accessor::add_param(cci_base_param* par) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  return m_broker->add_param(par);
+  m_broker->add_param(par);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
 void cci::cnf::gs_cci_private_broker_accessor::remove_param(cci_base_param* par) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  return m_broker->remove_param(par);
+  m_broker->remove_param(par);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
