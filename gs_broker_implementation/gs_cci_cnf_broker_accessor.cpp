@@ -21,8 +21,9 @@
 
 cci::cnf::cci_cnf_broker_if& cci::cnf::gs_cci_cnf_broker_accessor::get_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  return m_broker->get_accessor(originator);
+  cci::cnf::cci_cnf_broker_if &broker = m_broker->get_accessor(originator);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
+  return broker;
 }
 
 cci::cnf::gs_cci_cnf_broker_accessor::gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cnf::cci_cnf_broker_if& orig_broker) 
@@ -155,13 +156,13 @@ const std::vector<std::string> cci::cnf::gs_cci_cnf_broker_accessor::get_param_l
 }
 
 const std::vector<cci::cnf::cci_base_param*> cci::cnf::gs_cci_cnf_broker_accessor::get_params(const std::string& pattern) {
-  std::vector<cci::cnf::cci_base_param*> orig_params;
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  orig_params = m_broker->get_params(pattern);
+  std::vector<cci::cnf::cci_base_param*> orig_params = m_broker->get_params(pattern);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   std::vector<cci::cnf::cci_base_param*> param_accessors;
-  for (std::vector<cci::cnf::cci_base_param*>::iterator it; it != orig_params.end(); it++) {
-    param_accessors.push_back(get_param_accessor(**it));
+  for (std::vector<cci::cnf::cci_base_param*>::iterator it=orig_params.begin(); it != orig_params.end(); ++it) {
+    cci::cnf::cci_base_param *p = *it;
+    if (p) param_accessors.push_back(get_param_accessor(*p));
   }
   return param_accessors;
 }

@@ -13,6 +13,7 @@
 // 
 // ENDLICENSETEXT
 
+#define SC_INCLUDE_DYNAMIC_PROCESSES
 #include "gs_cci_symbols_c.h"
 #include "test_datatype_without_parameter_implementation.h"
 

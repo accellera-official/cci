@@ -10,7 +10,7 @@
 // The contents of this file are subject to the licensing terms specified
 // in the file LICENSE. Please consult this file for restrictions and
 // limitations that may apply.
-// 
+//
 // ENDLICENSETEXT
 
 #ifndef __CCI_BROKER_STACK_H__
@@ -27,19 +27,22 @@ __CCI_OPEN_CONFIG_NAMESPACE__
  * Stack for system instantiation, similar to sc_module_stack
  * Note there is a broker registry as well. @see cci::cnf::cci_broker_registry
  */
-class cci_broker_stack 
+class cci_broker_stack
 : public std::vector<cci_cnf_broker_if*> {
-  
+
 protected:
   typedef std::vector<cci_cnf_broker_if*> base;
-  
+
   /// Friend class, this shall only be used by the broker manager
   friend class cci_broker_manager;
 
 private:
   /// Private copy constructor to prevent stack from being copied
   cci_broker_stack(const cci_broker_stack&);
-  
+  //private assignment operator for preventing stack from copying
+  cci_broker_stack& operator=(const cci_broker_stack &originator );
+
+
 public:
 
   cci_cnf_broker_if* top();
@@ -49,12 +52,12 @@ public:
   const cci_cnf_broker_if* second_top() const;
 
 protected:
-  
+
   /// Push a broker, protected to be called only by broker manager
   void push(cci_cnf_broker_if* broker);
   /// Pop the top broker, protected to be called only by broker manager
   void pop();
-  
+
   explicit cci_broker_stack() {}
 
   ~cci_broker_stack() {}

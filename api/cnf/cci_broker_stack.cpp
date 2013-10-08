@@ -10,7 +10,7 @@
 // The contents of this file are subject to the licensing terms specified
 // in the file LICENSE. Please consult this file for restrictions and
 // limitations that may apply.
-// 
+//
 // ENDLICENSETEXT
 
 
@@ -34,35 +34,41 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   #define CCI_SHOW_BROKER_STACK(stack, action)
 #endif
 
-cci_cnf_broker_if* cci_broker_stack::top() { 
-  return base::back(); 
+cci_cnf_broker_if* cci_broker_stack::top() {
+  return base::back();
 }
 
-const cci_cnf_broker_if* cci_broker_stack::top() const  { 
-  return base::back(); 
+const cci_cnf_broker_if* cci_broker_stack::top() const  {
+  return base::back();
 }
 
 cci_cnf_broker_if* cci_broker_stack::second_top() {
-  return base::operator[](base::size()-2); 
+  return base::operator[](base::size()-2);
 }
 
-const cci_cnf_broker_if* cci_broker_stack::second_top() const { 
-  return base::operator[](base::size()-2); 
+const cci_cnf_broker_if* cci_broker_stack::second_top() const {
+  return base::operator[](base::size()-2);
 }
 
-void cci_broker_stack::push(cci_cnf_broker_if* broker) { 
-  base::push_back(broker); 
+void cci_broker_stack::push(cci_cnf_broker_if* broker) {
+  base::push_back(broker);
   CCI_SHOW_BROKER_STACK(this, "push")
 }
 
-void cci_broker_stack::pop() { 
+void cci_broker_stack::pop() {
   assert(!base::empty() && "Stack is empty, pop not possible");
-  base::pop_back();  
+  base::pop_back();
   CCI_SHOW_BROKER_STACK(this, "pop")
 }
 
 cci_broker_stack::cci_broker_stack(const cci_broker_stack&) {
   assert(false && "Not allowed to copy stack!");
+}
+
+cci_broker_stack& cci_broker_stack::operator=(const cci_broker_stack &originator )
+{
+	 assert(false && "Not allowed to copy stack!");
+	 return (*this);
 }
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
