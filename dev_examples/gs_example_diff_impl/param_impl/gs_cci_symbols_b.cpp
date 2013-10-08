@@ -13,6 +13,7 @@
 // 
 // ENDLICENSETEXT
 
+#define SC_INCLUDE_DYNAMIC_PROCESSES
 #include "cci_params_b.h"
 #include "test_datatype.h"
 

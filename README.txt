@@ -15,28 +15,20 @@ GreenSocs' proof-of-concept implementation.
    doxygen cci_doxygen_gs_impl_ref.conf
 - start looking at documentation in doc/API_ref/index.html
 
-- for compile development examples:
+- compile and run examples:
   - Initialize environment variables
     - CCI_HOME (git root)
     - BOOST_HOME (Boost include dir)
     - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.0)
     - TARGET_ARCH (e.g. linux64)
-  - compile in
+  - build libraries by invoking 'gmake' in the following directories:
     - api
     - gs_broker_implementation
     - gs_param_implementation
-    - dev_examples/gs_example (or other example)
-    (currently there are compiler warnings)
-    (read README.txt files if existing)
-  - run ./testbench in gs_example (or any other example dir)
-(Note that instead of providing one Makefile or compile script for all
-there are different compiles to be done manually to demonstrate the 
-independency and make it easier to provide alternative implementations)
-
-- To build and run the user examples (needs perl):
-  - read scripts/README_CCI.txt
-
-
+  - run individual examples or the full suite
+    - follow instructions in scripts/README_CCI.txt
+    - be sure to review the PowerPoint presentation in each example's docs/
+      directory for insights and explanations
 
 Contained Files:
 ----------------

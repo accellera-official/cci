@@ -68,6 +68,11 @@ $ ../verify.pl ex1_simple_int_param
 [Do not clean up temporary files and directories (in current dir)]
 $ ../verify.pl -no-cleanup ex1_simple_int_param
 
+[FOR CCI WG MEMBERS: TO ADD DEV_EXAMPLES TO THE REGRESSION]
+$ unset SYSTEMC_TEST
+$ ../verify.pl -I $CCI_HOME/examples/common/inc dev_examples examples
+$ ../verify.pl -I $CCI_HOME/examples/common/inc dev_examples/priv_broker_example
+
 Testing
 -------
 * The script has been verified on Linux-RHEL4/gcc-4.4/64-bit platform

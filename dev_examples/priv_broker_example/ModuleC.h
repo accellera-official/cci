@@ -18,11 +18,11 @@
 #ifndef __MODULEC_H__
 #define __MODULEC_H__
 
-
 #include <systemc>
 #include "ex_globals.h"
 #include "cci"
 
+#define SC_INCLUDE_DYNAMIC_PROCESSES
 #include "gs_cci_cnf_private_broker_accessor.h"
 
 
