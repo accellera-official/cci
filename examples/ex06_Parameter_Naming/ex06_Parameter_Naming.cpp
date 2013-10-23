@@ -14,8 +14,8 @@
 ******************************************************************************/
 
 /**
- *  @file   testbench.cpp
- *  @brief  A testbench that demonstrates how to configure param names to sit
+ *  @file   ex06_Parameter_Naming.cpp
+ *  @brief  A test that demonstrates how to configure param names to sit
  *          in different hierarchies
  *  @author Asif Mondal, TI
  */
@@ -26,7 +26,7 @@
 #include "config_ip.h"
 
 //------------------------------------------------------------------------------ 
-/// Testbench for the CCI simple_int_param example
+/// Testbench for the CCI Parameter Naming example
 int sc_main(int argc, char *argv[]) {
   std::ostringstream sout;
   cci::cnf::cci_param<int> int_param("int_param", 10);
