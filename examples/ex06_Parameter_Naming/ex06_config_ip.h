@@ -14,13 +14,13 @@
 ******************************************************************************/
 
 /**
- *  @file   config_ip.h
+ *  @file   ex06_config_ip.h
  *  @brief  Get handles to sim_ip/sc_main's params and update them
  *  @author Asif Mondal, TI
  */
 
-#ifndef INC_CONFIG_IP_H
-#define INC_CONFIG_IP_H
+#ifndef INC_EX06_CONFIG_IP_H
+#define INC_EX06_CONFIG_IP_H
 
 //------------------------------------------------------------------------------
 #include <cassert>
@@ -28,12 +28,12 @@
 #include "xreport.hpp"
 
 //------------------------------------------------------------------------------
-/// The config_ip configures sim_ip's parameter
-SC_MODULE(config_ip) {
+/// The ex06_config_ip configures sim_ip's parameter
+SC_MODULE(ex06_config_ip) {
  public:
 
   /// Ctor
-  SC_CTOR(config_ip)
+  SC_CTOR(ex06_config_ip)
   {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -113,7 +113,7 @@ SC_MODULE(config_ip) {
  private:
   /// CCI configuration handle
   cci::cnf::cci_cnf_broker_if *m_cci;
-}; // config_ip
+}; // ex06_config_ip
 
-#endif // INC_CONFIG_IP_H
+#endif // INC_EX06_CONFIG_IP_H
 
