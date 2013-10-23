@@ -9,11 +9,14 @@ GreenSocs' proof-of-concept implementation.
   https://github.com/OSCI-WG/cci.git
   (ask David Black for access)
 
-- generate doxygen documentation in doc:
+- generate doxygen documentation in doc/:
+   doxygen cci_doxygen_examples.conf
    doxygen cci_doxygen_api_ref.conf
-    and
    doxygen cci_doxygen_gs_impl_ref.conf
-- start looking at documentation in doc/API_ref/index.html
+- start looking at documentation in:
+   doc/Examples/index.html
+   doc/API_ref/index.html
+   doc/GS_implementation_ref/index.html
 
 - compile and run examples:
   - Initialize environment variables
