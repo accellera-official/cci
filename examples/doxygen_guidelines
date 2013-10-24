@@ -1,0 +1,29 @@
+In the interest of consistency across our examples, please use the following
+doxygen commenting guidelines.  References come from:
+  http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#docstructure
+where more detailed information can be found.
+
+- Use the JavaDoc style:
+  /**
+   * ... text ...
+   */
+
+- Use the following format for single line briefs:
+  /// Brief description.a
+
+- Use the following format for documentation after members:
+  int var; ///< Brief description after the member
+
+- Use '@' command tags vs. '\'
+
+General guideline: avoid styles that use '!'.
+
+Provide at least the following commands:
+- file: @file, @brief, @author
+- class: @class, @brief 
+- class methods: @fn, @brief, @param, @return, @exception
+- sc_main function: @fn, @brief, @param, @return
+Detailed descriptions are encouraged when warranted.
+
+Please send an inquiry to the [cciwg] email reflector regarding any areas that
+require further clarification.
