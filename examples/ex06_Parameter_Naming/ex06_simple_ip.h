@@ -1,26 +1,26 @@
 /*******************************************************************************
   The following code is derived, directly or indirectly, from the SystemC
-  source code Copyright (c) 1996-2010 by all Contributors.
+  source code Copyright (c) 1996-2013 by all Contributors.
   All Rights reserved.
 
   The contents of this file are subject to the restrictions and limitations
-  set forth in the SystemC Open Source License Version 3.0 (the "License");
+  set forth in the SystemC Open Source License Version 3.1 (the "License");
   You may not use this file except in compliance with such restrictions and
   limitations. You may obtain instructions on how to receive a copy of the
-  License at http://www.systemc.org/. Software distributed by Contributors
+  License at http://www.accellera.org/. Software distributed by Contributors
   under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
   ANY KIND, either express or implied. See the License for the specific
   language governing rights and limitations under the License.
 ******************************************************************************/
 
 /**
- *  @file   simple_ip.h
+ *  @file   ex06_simple_ip.h
  *  @brief  A simple IP that has a mutable integer parameter
  *  @author R. Swaminathan, TI
  */
 
-#ifndef INC_SIMPLE_IP_H
-#define INC_SIMPLE_IP_H
+#ifndef INC_EX06_SIMPLE_IP_H
+#define INC_EX06_SIMPLE_IP_H
 
 //------------------------------------------------------------------------------
 #include "cci"
@@ -28,11 +28,11 @@
 
 //------------------------------------------------------------------------------
 /// The SimpleIP owns a CCI param
-SC_MODULE(simple_ip)
+SC_MODULE(ex06_simple_ip)
 {
  public:
   /// Ctor
- SC_CTOR(simple_ip)
+ SC_CTOR(ex06_simple_ip)
    // Initialize int_param with 0
    : int_param_ip("int_param_ip"                         // Param name - In line with SystemC Hierarchy
                   , 1)                                   // Default value
@@ -59,7 +59,7 @@ SC_MODULE(simple_ip)
       XREPORT("Ctor: Default value of "<< int_param_custom.get_name()<< " is "<< int_param_custom); 
     }
 
-  ~simple_ip() {
+  ~ex06_simple_ip() {
       XREPORT_PLAIN("Dtor: Current value of "<< int_param_ip.get_name()<< " is "<< int_param_ip);
       XREPORT_PLAIN("Dtor: Current value of "<< int_param_ip_dup.get_name()<< " is "<< int_param_ip_dup);
       XREPORT_PLAIN("Dtor: Current value of "<< int_param_top.get_name()<< " is "<< int_param_top); 
@@ -97,7 +97,7 @@ SC_MODULE(simple_ip)
   cci::cnf::cci_param<int> int_param_ip_dup;
   cci::cnf::cci_param<int> int_param_top;
   cci::cnf::cci_param<int> int_param_custom;
-}; // simple_ip
+}; // ex06_simple_ip
 
-#endif // INC_SIMPLE_IP_H
+#endif // INC_EX06_SIMPLE_IP_H
 
