@@ -71,7 +71,15 @@ Running the examples
     % ../scripts/verify.pl .
 +------------------------------------------------+
  
-5) The build/run logs are available in the run/ folder.
+5) The build and run logs are placed in the run/ folder; reference logs are
+   provided in the scripts/run/ folder.
+
+6*) For CCI WG members only, dev_examples can be included in the regression testing by:
++-----------------------------------------------+
+    % unsetenv SYSTEMC_TEST
+    %../scripts/verify.pl -I $CCI_HOME/examples/common/inc dev_examples examples
++-----------------------------------------------+
+
 
 TODO
 ----
