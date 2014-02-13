@@ -1,7 +1,7 @@
 
 CC     = gcc
 CXX    = g++
-OPT    = -g -Wall -Werror
+OPT    = -g -Wall -Werror -Wno-unused-local-typedefs
 OTHER  = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER)
 
