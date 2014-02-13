@@ -292,13 +292,11 @@ public:
     // show received Transaction
     GCNF_DUMP_N(name(), "  received transaction: "<<(tr->toString()).c_str());      
 
-    bool success = false;
     // According to the command fill the transaction or make actions
     switch (tr->get_mCmd()) {
 
     case CMD_NOTIFY_NEW_PARAM_OBSERVER:
       {
-        success = true;
         const std::string dummyParName = DUMMY_NAME;
 
         // Notify the oberserver events
@@ -328,7 +326,6 @@ public:
 
     default:
       SC_REPORT_WARNING(name(), "Unknown command in transaction");
-      success = false;
     }
   }
 

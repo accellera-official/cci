@@ -120,6 +120,7 @@ public:
       target_address = pPort->getParent();
       target_string = pPort->getParentName(); // a temp var is used due to limitations caused by forward template declaration of gc_port
       target_name = target_string.c_str();    // otherwise target_name won't be filled
+      (void) target_name; 		      // mark it explicitly unused if GC_DUMP compiled out
       service = pPort->getSupportedControlService();
 
       if(pPort->isPlugin())
