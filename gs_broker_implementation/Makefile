@@ -15,18 +15,11 @@ SRCS = gs_cci_broker.cpp \
        gs_cci_cnf_private_broker_accessor.cpp \
        helpers.cpp
 
-OBJS = gs_cci_broker.o \
-       gs_cci_cnf_broker.o \
-       gs_cci_cnf_broker_accessor.o \
-       gs_cci_cnf_broker_accessor_handler.o \
-       gs_cci_cnf_private_broker.o \
-       gs_cci_cnf_private_broker_accessor.o \
-       helpers.o
- 
+OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
+
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-
-#include ../Makefile.defs
 ## -----------------------------------------------------------------------------
 
 ifdef BOOST_HOME
@@ -42,7 +35,7 @@ SYSTEMC ?= /cad/tools/systemc
 ifdef CCI_HOME
 GS_CCI_HOME = $(CCI_HOME)
 endif
-GS_CCI_HOME ?=/ Users/schroede/mydev/cci_git/cci
+GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 
 ## set some directories 
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
@@ -69,11 +62,13 @@ $(LIB): $(OBJS)
 	$(AR) rcs $@ $^
 	ranlib $@
 
+-include $(DEPS)
+
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 clean:
-	rm -f  $(OBJS) $(LIB)
+	rm -f  $(OBJS) $(DEPS) $(LIB)
