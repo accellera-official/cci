@@ -26,8 +26,8 @@ OBJS = json_spirit/json_spirit_reader.o \
        gs_cci_symbols_templ_small_int.o \
        gs_cci_symbols.o
  
+DEPS = $(OBJS:.o=.d)
 
-#include Makefile.defs
 ## -----------------------------------------------------------------------------
 
 ifdef BOOST_HOME
@@ -43,7 +43,7 @@ SYSTEMC ?= /cad/tools/systemc
 ifdef CCI_HOME
 GS_CCI_HOME = $(CCI_HOME)
 endif
-GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
+GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 
 ## set some directories 
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
@@ -64,14 +64,16 @@ $(LIB): $(OBJS)
 	$(AR) rcs $@ $^
 	ranlib $@
 
+-include $(DEPS)
+
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 clean:
-	rm -f  $(OBJS) $(LIB)
+	rm -f  $(OBJS) $(DEPS) $(LIB)
 
 bigsymbols:
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) \

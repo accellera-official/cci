@@ -15,8 +15,8 @@ OBJS = cnf/cci_broker_manager.o \
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
+DEPS := $(OBJS:.o=.d)
 
-#include ../Makefile.defs
 ## -----------------------------------------------------------------------------
 
 ifdef BOOST_HOME
@@ -32,7 +32,7 @@ SYSTEMC ?= /cad/tools/systemc
 ifdef CCI_HOME
 GS_CCI_HOME = $(CCI_HOME)
 endif
-GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
+GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 
 ## set some directories 
 CCI_DIR ?= $(GS_CCI_HOME)/api
@@ -51,11 +51,13 @@ $(LIB): $(OBJS)
 	$(AR) rcs $@ $^
 	ranlib $@
 
+-include $(DEPS)
+
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -MMD -o $@
 
 .cc.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -MMD -o $@
 
 clean:
-	rm -f  $(OBJS) $(LIB)
+	rm -f  $(OBJS) $(DEPS) $(LIB)

@@ -2,7 +2,7 @@
 ifdef CCI_HOME
 GS_CCI_HOME = $(CCI_HOME)
 else
-GS_CCI_HOME?=/Users/schroede/mydev/cci_git/cci
+GS_CCI_HOME?=$(shell cd $(CURDIR)/.. && pwd)
 endif
 
 ## set some directories 
