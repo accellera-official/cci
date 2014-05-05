@@ -362,3 +362,8 @@ namespace cci {
 
 } // end namespace cci
 
+
+// Borrowing this .cpp to provide a home for this value (creating cci_param.cpp
+// solely for that purpose is overkill. @TODO - review home later in rework
+const char* cci::cnf::PARAM_ORIGINATOR = "owning_param";
+
