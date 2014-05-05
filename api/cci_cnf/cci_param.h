@@ -18,7 +18,14 @@
 #define CCI_CNF_CCI_PARAM_H_INCLUDED_
 
 
+#include "cci_config_macros.h"
+#include "cci_base_param.h"
+#include "cci_param_impl_if.h"
+#include "cci_originator.h"
+
 __CCI_OPEN_CONFIG_NAMESPACE__
+
+class cci_originator;
 
 
 // @TODO: This file contains much redundant code within the two implementations
@@ -308,5 +315,7 @@ template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, T
 
 
 __CCI_CLOSE_CONFIG_NAMESPACE__
+
+#include "cci_param.hpp"   // fold into curr file?
 
 #endif

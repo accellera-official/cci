@@ -15,8 +15,10 @@
 // ENDLICENSETEXT
 
 
-#include "cci_config.h"
+#include "cci_debug.h"
+#include "cci_datatypes.h"
 #include "cci_value.h"
+#include "cci_report_handler.h"
 
 cci::cnf::cci_value::cci_value()
 {

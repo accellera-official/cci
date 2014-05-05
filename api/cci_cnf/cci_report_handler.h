@@ -16,9 +16,8 @@
 #ifndef CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
 #define CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
 
-#include <systemc>
+#include "cci_core/systemc.h"
 #include <string>
-
 
 namespace cci {
 namespace cnf {

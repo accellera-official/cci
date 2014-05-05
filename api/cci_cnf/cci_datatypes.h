@@ -17,12 +17,7 @@
 #ifndef CCI_CNF_CCI_DATATYPES_H_INCLUDED_
 #define CCI_CNF_CCI_DATATYPES_H_INCLUDED_
 
-
-
-
-#include <string>
-#include <iostream>
-
+#include "cci_config_macros.h"
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
@@ -63,15 +58,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   /// Enumeration for convenient cci_param constructor: for chose if a param gets a top-level-name
   enum cci_top_level_name { CCI_TOP_LEVEL_NAME=0 };
   
-// Debug output of the parameter objects
-#ifdef CCI_PARAM_VERBOSE
-# define CCI_PARAM_DUMP(msg) { std::cout<<this->name()<<": "<<msg<<std::endl; } 
-# define CCI_PARAM_DUMP_WITHNAME(name, msg) { std::cout<<name<<": "<<msg<<std::endl; } 
-#else
-# define CCI_PARAM_DUMP(msg)
-# define CCI_PARAM_DUMP_WITHNAME(name, msg)
-#endif
-
   
 __CCI_CLOSE_CONFIG_NAMESPACE__
 

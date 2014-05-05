@@ -20,7 +20,8 @@
 #define CCI_CNF_CCI_BROKER_IF_H_INCLUDED_
 
 
-#include "core/cci_shared_ptr.h"    
+#include "cci_shared_ptr.h"
+#include "cci_callbacks.h"
 
 
 __CCI_OPEN_CONFIG_NAMESPACE__
@@ -416,7 +417,19 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     
   };
 
-      
+ /// Creates or returns the one non-private global config broker provided by the broker implementation
+ /// Called by the header function get_current_broker, NEVER call this as a user!
+ /**
+  * This returns the raw broker, not an accessor, thus this 
+  * shall not be returned directy to the user!
+  *
+  * The implemementation shall register the global broker with the broker registry
+  * cci_broker_registry::registry() !
+  *
+  * @return The one non-private global config broker (not wrapped with an accessor)
+  */
+ cci_cnf_broker_if& create_global_cnf_broker();
+
 __CCI_CLOSE_CONFIG_NAMESPACE__
 
 #endif

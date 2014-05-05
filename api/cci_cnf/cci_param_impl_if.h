@@ -21,13 +21,10 @@
 
 
 #include <string>
-#include <iostream>
-#include <sstream>
-
-#include <systemc>
-
+#include "cci_base_param_impl_if.h"
 
 __CCI_OPEN_CONFIG_NAMESPACE__
+
 
   
   /// Compiler Check Interface for the parameters class

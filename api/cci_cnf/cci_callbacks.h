@@ -19,9 +19,11 @@
 #ifndef CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 #define CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 
-#include "core/cci_function.h"
+#include "cci_function.h"
 
 __CCI_OPEN_CONFIG_NAMESPACE__
+
+  class cci_cnf_broker_if;
   
   /// Callback type
   /**

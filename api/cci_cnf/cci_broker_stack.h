@@ -16,10 +16,11 @@
 #ifndef CCI_CNF_CCI_BROKER_STACK_H_INCLUDED_
 #define CCI_CNF_CCI_BROKER_STACK_H_INCLUDED_
 
-#include <stack>
+#include <vector>
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 
+class cci_cnf_broker_if;
 
 /// Broker stack, for internal use only
 /**

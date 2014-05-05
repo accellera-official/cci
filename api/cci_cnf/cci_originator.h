@@ -17,6 +17,8 @@
 #ifndef CCI_CNF_CCI_ORIGINATOR_H_INCLUDED_
 #define CCI_CNF_CCI_ORIGINATOR_H_INCLUDED_
 
+#include "cci_core/systemc.h"
+
 __CCI_OPEN_CONFIG_NAMESPACE__
 
 
@@ -58,7 +60,7 @@ public:
 
   /// (Static) global getter function for getting the current Golbal Originator Pointer
   /**
-   * @param The current Golbal Originator Pointer (might be NULL if there is none)
+   * @param The current Global Originator Pointer (might be NULL if there is none)
    */
   static const cci_originator* get_global_originator() {
     return handle_current_originator();

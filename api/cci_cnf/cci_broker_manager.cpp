@@ -15,8 +15,13 @@
 // ENDLICENSETEXT
 
 
-#include "cci"
-
+#include "cci_debug.h"
+#include "cci_datatypes.h"
+#include "cci_originator.h"
+#include "cci_param.h"
+#include "cci_broker_manager.h"
+#include "cci_broker_stack.h"
+#include "cci_report_handler.h"
 
 __CCI_OPEN_CONFIG_NAMESPACE__
 

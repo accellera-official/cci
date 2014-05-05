@@ -20,6 +20,7 @@
 
 
 #include "cci_datatypes.h"
+#include "cci_core/systemc.h"
 
 
 __CCI_OPEN_CONFIG_NAMESPACE__
