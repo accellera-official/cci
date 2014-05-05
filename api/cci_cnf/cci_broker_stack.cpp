@@ -18,7 +18,7 @@
 #include "cci_datatypes.h"
 #include "cci_broker_stack.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 #ifdef CCI_CNF_VERBOSE
   static void cci_debug_show_broker_stack(cci_broker_stack* stack, const char* action) {
@@ -73,5 +73,5 @@ cci_broker_stack& cci_broker_stack::operator=(const cci_broker_stack &originator
 	 return (*this);
 }
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 

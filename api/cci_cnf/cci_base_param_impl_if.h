@@ -25,7 +25,7 @@
 #include <string>
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
   template <typename T, param_mutable_type TM> 
@@ -475,6 +475,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
   };
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

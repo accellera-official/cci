@@ -19,7 +19,7 @@
 
 #include "cci_config_macros.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
   /// Originator information when functions being called by the main object (which only the owner shall use)
   extern const char* PARAM_ORIGINATOR;
@@ -59,6 +59,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   enum cci_top_level_name { CCI_TOP_LEVEL_NAME=0 };
   
   
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

@@ -19,7 +19,7 @@
 
 #include "cci_core/systemc.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
 /// Originator class which is used to handle the originator information independently from its data type (object pointer or string)
@@ -180,7 +180,7 @@ protected:
 };
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 
 #endif

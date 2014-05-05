@@ -23,7 +23,7 @@
 #include "cci_core/systemc.h"
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
   class cci_value;
@@ -143,6 +143,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   };
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

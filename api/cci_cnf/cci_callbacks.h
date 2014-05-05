@@ -21,7 +21,7 @@
 
 #include "cci_function.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
   class cci_cnf_broker_if;
   
@@ -158,7 +158,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   typedef callb_adapt_T<cci_base_param, cci_cnf_broker_if> callb_adapt;
   
       
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #include "cci_callbacks.hpp"
 

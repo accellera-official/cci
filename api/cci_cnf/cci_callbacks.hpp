@@ -17,7 +17,7 @@
 
 #include "cci_report_handler.h"   //@TODO - better if use of this could be corralled into a CPP; now it leaks a private class to all users
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
 template<class cci_base_param_T, class cci_cnf_broker_if_T>
@@ -123,4 +123,4 @@ cci_base_param_T* callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::get_call
 }
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_

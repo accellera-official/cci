@@ -25,7 +25,7 @@
  * @brief Declarations of parameter factory functions
  */
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
   
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -97,6 +97,6 @@ void destroy_cci_param(cci::cnf::cci_param<T, TM>* param);
 
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

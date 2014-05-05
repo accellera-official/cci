@@ -24,7 +24,7 @@
 #include "cci_callbacks.h"
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
   // forward declaration 
@@ -430,6 +430,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   */
  cci_cnf_broker_if& create_global_cnf_broker();
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

@@ -22,7 +22,7 @@
 #include <cci>
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
   /// Configuration broker interface with originator information.
@@ -78,7 +78,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
   };
 
-      
-__CCI_CLOSE_CONFIG_NAMESPACE__
+
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

@@ -23,7 +23,7 @@
 #include <string>
 #include "cci_base_param_impl_if.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
   
@@ -168,6 +168,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   }*/
   
   
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

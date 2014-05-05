@@ -20,7 +20,7 @@
 
 #include "cci_broker_if.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
 /// Class taking a private broker within a user module's constructor
@@ -120,6 +120,6 @@ private:
 };
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

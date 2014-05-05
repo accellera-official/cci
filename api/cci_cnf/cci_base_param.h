@@ -20,7 +20,7 @@
 
 #include "cci_base_param_impl_if.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
   // CCI Configuration parameter base class
   /**
@@ -61,6 +61,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual const cci_originator* get_latest_write_originator() const = 0;
   };
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
   
 #endif

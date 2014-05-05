@@ -31,7 +31,6 @@ std::ostream& operator << (std::ostream& os, const user_data_type& ud)
 	return os;
 }	
 
-//__CCI_OPEN_CONFIG_NAMESPACE__
 cci_param_user_data_type::cci_param_user_data_type (const std::string& _name, const user_data_type&  _dvalue ) 
 	: value(_dvalue)
 	, default_value(_dvalue)

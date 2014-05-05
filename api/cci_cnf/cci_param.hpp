@@ -19,7 +19,7 @@
 #include "cci_broker_if.h"
 #include "cci_broker_manager.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
   
 
 // -- ------------------------------------------------------- --
@@ -715,4 +715,4 @@ template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, T
 }
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
