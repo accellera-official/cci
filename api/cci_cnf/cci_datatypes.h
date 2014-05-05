@@ -14,10 +14,10 @@
 // 
 // ENDLICENSETEXT
 
+#ifndef CCI_CNF_CCI_DATATYPES_H_INCLUDED_
+#define CCI_CNF_CCI_DATATYPES_H_INCLUDED_
 
 
-#ifndef __CCI_DATATYPES_H__
-#define __CCI_DATATYPES_H__
 
 
 #include <string>

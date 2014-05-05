@@ -16,8 +16,8 @@
 
 
 
-#ifndef __CCI_CALLBACKS_H__
-#define __CCI_CALLBACKS_H__
+#ifndef CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
+#define CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 
 #include "core/cci_function.h"
 

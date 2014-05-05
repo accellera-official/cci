@@ -15,8 +15,8 @@
 // ENDLICENSETEXT
 
 
-#ifndef __CCI_FUNCTION_H__
-#define __CCI_FUNCTION_H__
+#ifndef CCI_CNF_CCI_FUNCTION_H_INCLUDED_
+#define CCI_CNF_CCI_FUNCTION_H_INCLUDED_
 
 #include <boost/function.hpp>
 #include <boost/bind.hpp>

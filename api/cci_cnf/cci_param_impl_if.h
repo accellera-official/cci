@@ -16,8 +16,8 @@
 
 
 
-#ifndef __CCI_PARAM_IF_H__
-#define __CCI_PARAM_IF_H__
+#ifndef CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
+#define CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
 
 
 #include <string>

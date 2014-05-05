@@ -15,8 +15,8 @@
 // ENDLICENSETEXT
 
 
-#ifndef __CCI_VALUE_H__
-#define __CCI_VALUE_H__
+#ifndef CCI_CNF_CCI_VALUE_H_INCLUDED_
+#define CCI_CNF_CCI_VALUE_H_INCLUDED_
 
 
 #include "cci_datatypes.h"

@@ -13,8 +13,8 @@
 //
 // ENDLICENSETEXT
 
-#ifndef __CCI_BROKER_STACK_H__
-#define __CCI_BROKER_STACK_H__
+#ifndef CCI_CNF_CCI_BROKER_STACK_H_INCLUDED_
+#define CCI_CNF_CCI_BROKER_STACK_H_INCLUDED_
 
 #include <stack>
 

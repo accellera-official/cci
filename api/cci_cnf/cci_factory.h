@@ -14,11 +14,9 @@
 // 
 // ENDLICENSETEXT
 
+#ifndef CCI_CNF_CCI_FACTORY_H_INCLUDED_
+#define CCI_CNF_CCI_FACTORY_H_INCLUDED_
 
-
-
-#ifndef __CCI_CONFIG_H__
-#define __CCI_CONFIG_H__
 
 
 #include <systemc>
