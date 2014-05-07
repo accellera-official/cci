@@ -14,6 +14,7 @@
 // ENDLICENSETEXT
 
 
+#define CCI_CNF_SHARE_LIBRARY_MACROS
 #include <cci>
 #include "gs_cci_cnf_broker_accessor.h"
 #include "gs_cci_broker.h"
