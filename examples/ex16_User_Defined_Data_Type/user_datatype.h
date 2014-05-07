@@ -24,7 +24,7 @@
 
 #include <iostream>
 #include <cci>
-#include <core/cci_shared_ptr.h>
+#include <cci_cnf/cci_shared_ptr.h>	// HACK; a proper publicly shareable CCI wrapper needed
 //#include <greencontrol/gcnf/apis/gs_param/gs_param_base.h>
 #define SC_INCLUDE_DYNAMIC_PROCESSES    // Needed to compile this example, as sc_spawn_opt is used
 #include <greencontrol/config.h>    // gets definition of 'gs'
