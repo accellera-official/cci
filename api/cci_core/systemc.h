@@ -38,4 +38,28 @@
 
 #include <systemc>
 
+#ifdef SC_VERSION_HELPER_
+# define CCI_VERSION_HELPER_ \
+    SC_VERSION_HELPER_
+# else
+# define CCI_VERSION_HELPER_(Major,Minor,Patch) \
+    (((Major)*100000) + ((Minor)*100) + (Patch))
+#endif
+
+#ifdef SC_VERSION_CODE
+# define CCI_SYSTEMC_VERSION_CODE_ \
+    SC_VERSION_CODE
+
+#elif defined(IEEE_1666_SYSTEMC)
+# define CCI_SYSTEMC_VERSION_CODE_ \
+    CCI_VERSION_HELPER_( SC_VERSION_MAJOR \
+                       , SC_VERSION_MINOR \
+                       , SC_VERSION_PATCH )
+#else // pre 1666-2011
+// assume 2.2.0 for now, eventually guess from SYSTEMC_VERSION (date)
+# define CCI_SYSTEMC_VERSION_CODE_ \
+    CCI_VERSION_HELPER_(2,2,0)
+
+#endif // CCI_SYSTEMC_VERSION_CODE_
+
 #endif // CCI_CORE_SYSTEMC_H_INCLUDED_
