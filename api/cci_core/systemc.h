@@ -62,4 +62,15 @@
 
 #endif // CCI_SYSTEMC_VERSION_CODE_
 
+// sc_core::sc_get_current_object()
+#if CCI_SYSTEMC_VERSION_CODE_ < CCI_VERSION_HELPER_(2,3,1)
+namespace sc_core {
+inline sc_object* sc_get_current_object()
+{
+  struct dummy_object : sc_object {} dummy;
+  return dummy.get_parent_object();
+}
+} // namespace sc_core
+#endif // sc_core::sc_get_current_object
+
 #endif // CCI_CORE_SYSTEMC_H_INCLUDED_
