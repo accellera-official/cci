@@ -1,6 +1,4 @@
 
-Info: (I804) /IEEE_Std_1666/deprecated: sc_bit is deprecated, use bool instead
-
 Warning: gs_param<sc_bit>: DEPRECATED: sc_bit is deprecated use bool instead.
 In file: <removed by verify.pl>
 
@@ -110,12 +108,4 @@ In file: <removed by verify.pl>
 In process: Owner.main_action @ 0 s
 
 ------ sc_start() returned -------
-
-
-Info: (I804) /IEEE_Std_1666/deprecated: You can turn off warnings about
-             IEEE 1666 deprecated features by placing this method call as the
-             first statement in your sc_main() function:
-
-  sc_report_handler::set_actions("/IEEE_Std_1666/deprecated", SC_DO_NOTHING);
-
 
