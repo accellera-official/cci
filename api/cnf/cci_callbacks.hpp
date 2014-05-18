@@ -68,7 +68,7 @@ void callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::unregister_at_paramet
   if (caller_broker != NULL) {
     SC_REPORT_ERROR(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Not possible - TODO?.");
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
-    printf("callb_adapt: Unregister broker callback adapter %p at caller broker '%s'.\n", (void*)this, caller_broker->get_name().c_str());
+    printf("callb_adapt: Unregister broker callback adapter %p at caller broker '%s'.\n", (void*)this, caller_broker->name().c_str());
 #endif
     // remove this out of the parameter's callback list
     //caller_broker->unregister_callback(this);
