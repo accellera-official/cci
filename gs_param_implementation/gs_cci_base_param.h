@@ -135,15 +135,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
+    , m_status_guard(*this)
     , m_init_called(false)
     , m_broker_accessor(broker_accessor)
     , m_latest_write_access_originator_cp("NONE")
     , m_latest_write_access_originator_valid(false)
-    , fw_vec()
-    , my_documentation()
-    , return_string()
-    , m_post_write_callback()
-    , m_status_guard(*this)
     {
     }
 

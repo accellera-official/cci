@@ -18,7 +18,7 @@
 CC     = gcc
 CXX    = g++
 OPT    = -g -Wall
-OTHER  = -pedantic -Wno-long-long
+OTHER  = -pedantic -Wno-long-long -Wno-unused-local-typedefs
 CXXFLAGS = $(OPT) $(OTHER)
 
 OBJS = json_spirit/json_spirit_reader.o \

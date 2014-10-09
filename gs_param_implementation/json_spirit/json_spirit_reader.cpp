@@ -10,18 +10,29 @@
 
 //#define BOOST_SPIRIT_THREADSAFE  // uncomment for multithreaded use, requires linking to boost.thead
 
+
+#include <boost/version.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
+#if BOOST_VERSION < 103600
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/utility/confix.hpp>
 #include <boost/spirit/utility/escape_char.hpp>
 #include <boost/spirit/iterator/multi_pass.hpp>
 #include <boost/spirit/iterator/position_iterator.hpp>
+using namespace boost::spirit;
+#else
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_confix.hpp>
+#include <boost/spirit/include/classic_escape_char.hpp>
+#include <boost/spirit/include/classic_multi_pass.hpp>
+#include <boost/spirit/include/classic_position_iterator.hpp>
+using namespace boost::spirit::classic;
+#endif
 
 using namespace json_spirit;
 using namespace std;
 using namespace boost;
-using namespace boost::spirit;
 
 //
 
