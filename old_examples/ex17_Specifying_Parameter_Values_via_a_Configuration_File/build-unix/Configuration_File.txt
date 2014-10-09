@@ -1,3 +1,0 @@
-param_owner.mutable_int_param 10
-param_owner.mutable_string_param initial
-param_owner.mutable_int_param	15
