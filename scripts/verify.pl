@@ -8,14 +8,14 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # *****************************************************************************
 #
 #  The following code is derived, directly or indirectly, from the SystemC
-#  source code Copyright (c) 1996-2012 by all Contributors.
+#  source code Copyright (c) 1996-2014 by all Contributors.
 #  All Rights reserved.
 #
 #  The contents of this file are subject to the restrictions and limitations
-#  set forth in the SystemC Open Source License Version 2.3 (the "License");
+#  set forth in the SystemC Open Source License (the "License");
 #  You may not use this file except in compliance with such restrictions and
 #  limitations. You may obtain instructions on how to receive a copy of the
-#  License at http://www.systemc.org/. Software distributed by Contributors
+#  License at http://www.accellera.org/. Software distributed by Contributors
 #  under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
 #  ANY KIND, either express or implied. See the License for the specific
 #  language governing rights and limitations under the License.
@@ -419,6 +419,21 @@ sub get_boost_home
 # -- /CCI
 
 # -----------------------------------------------------------------------------
+#  SUB : cxx_is_gcc_compatible
+#
+#  Check, whether compiler is GCC compatible
+# -----------------------------------------------------------------------------
+sub cxx_is_gcc_compatible
+{
+    my $cxx = $_[0];
+    my $gcc_chk="( echo '#ifdef __GNUC__' ;"
+                ." echo IS_GCC_COMPATIBLE ; "
+                ." echo '#endif' )";
+    $gcc_chk=` $gcc_chk | $cxx -E - 2>/dev/null `;
+    scalar( $gcc_chk =~ /IS_GCC_COMPATIBLE/ );
+}
+
+# -----------------------------------------------------------------------------
 #  SUB : get_systemc_arch
 #
 #  Get the target architecture.
@@ -454,19 +469,19 @@ sub get_systemc_arch
         if( $uname_s eq "SunOS" and $uname_r =~ /^5/ ) {
             if( $cxx_comp eq "CC" ) {
                 $arch = "sparcOS5";
-            } elsif( $cxx_comp eq "c++" || $cxx_comp eq "g++" ) {
+            } elsif( cxx_is_gcc_compatible($cxx) ) {
                 $arch = "gccsparcOS5";
             }
 
         } elsif( $uname_s eq "HP-UX" and $uname_r =~ /^B.11/ ) {
             if( $cxx_comp eq "aCC" ) {
                 $arch = "hpux11";
-            } elsif( $cxx_comp eq "c++" || $cxx_comp eq "g++" ) {
+            } elsif( cxx_is_gcc_compatible($cxx) ) {
                 $arch = "gcchpux11";
             }
 
         } elsif( $uname_s eq "Darwin" ) {
-            if( $cxx_comp eq "c++" || $cxx_comp eq "g++" )
+            if( cxx_is_gcc_compatible($cxx) )
             {
                 if ( $uname_m =~ /x86_64|[ix].86/ ) {
                     $arch = "macosx";
@@ -483,20 +498,20 @@ sub get_systemc_arch
             }
 
         } elsif( $uname_s eq "Linux" and $uname_r =~ /^[23]/ ) {
-            if( $cxx_comp eq "c++" || $cxx_comp eq "g++" ) {
+            if( cxx_is_gcc_compatible($cxx) ) {
                 $arch = "linux";
                 if ( $uname_m eq "x86_64" || $uname_m eq "amd64" ) {
                     $arch .= "64";
                 }
             }
 
-        } elsif( $uname_s eq "FreeBSD" ) {
-           if( $cxx_comp eq "c++" || $cxx_comp eq "g++" ) {
-                $arch = "freebsd";
+        } elsif( $uname_s =~ /((free|net|open)bsd|dragonfly)/i ) {
+            if( cxx_is_gcc_compatible($cxx) ) {
+                $arch = "bsd";
                 if ( $uname_m eq "x86_64" || $uname_m eq "amd64" ) {
                     $arch .= "64";
                 }
-           }
+            }
 
         } elsif( $uname_s =~ /^(CYGWIN|MINGW32)_NT/ ) {
 
@@ -544,6 +559,9 @@ sub get_systemc_arch
                 elsif ( $v_string =~ /.+Version 17\.00/) {   # 2012
                     $arch = "msvc11";
                 }
+                elsif ( $v_string =~ /.+Version 18\.00/) {   # 2013
+                    $arch = "msvc12";
+                }
                 else {
                     die "Error: unsupported compiler '$cxx' ($v_string)\n";
                 }
@@ -553,7 +571,7 @@ sub get_systemc_arch
                     $arch .= "-x64";
                 }
 
-            } elsif( $cxx_comp eq "c++" || $cxx_comp eq "g++" ) {
+            } elsif( cxx_is_gcc_compatible($cxx) ) {
                 # use MinGW/Cygwin GCC compiler
                 if( $uname_s =~ /^CYGWIN_NT/ ) {
                     # TODO: detect 64-bit capability
@@ -589,9 +607,9 @@ sub get_systemc_arch
         }
     }
 
-    elsif( $arch =~ /^(linux|freebsd|mingw|cygwin)(64)?/ ) {
-        if( $2 eq '64' ) {
-            $rt_cpuarch = $2;
+    elsif( $arch =~ /^(linux|(free)?bsd|mingw|cygwin)(64)?/ ) {
+        if( $3 eq '64' ) {
+            $rt_cpuarch = $3;
         } else {
             $rt_cpuarch = '32';
         }
@@ -787,7 +805,7 @@ sub prepare_environment
     } elsif( $rt_systemc_arch eq "sparcOS5" ) {
         $rt_ccflags       = "";
         $rt_ldflags       = "-xildoff";
-        $rt_debug_flag    = "-g";
+        $rt_ldrpath       = "-Wl,-R";
         $rt_optimize_flag = "-O3";
     } elsif( $rt_systemc_arch eq "gcchpux11" ) {
         #use defaults
@@ -797,7 +815,7 @@ sub prepare_environment
     } elsif( $rt_systemc_arch =~ /^linux(64)?/ ) {
         $rt_ccflags      .= " -m${rt_cpuarch}";
         $rt_ldflags       = $rt_ccflags;
-    } elsif( $rt_systemc_arch =~ /^freebsd(64)?/ ) {
+    } elsif( $rt_systemc_arch =~ /^(free)?bsd(64)?/ ) {
         $rt_ccflags      .= " -m${rt_cpuarch}";
         $rt_ldflags       = $rt_ccflags;
     } elsif( $rt_systemc_arch =~ /^macosx(ppc)?(64)?/ ) {
@@ -819,7 +837,7 @@ sub prepare_environment
         $rt_cc              = "CL.EXE";
         $rt_ccflags         = "-nologo -GR -EHsc -Zm800 -vmg ";
         $rt_ccflags        .= "-MACHINE:X64" unless (!$x64);
-        push @rt_defines, '_USE_MATH:DEFINES';
+        push @rt_defines, '_USE_MATH_DEFINES';
         $rt_ld              = "LINK.EXE";
         $rt_ldflags         = "-nologo -LTCG -NODEFAULTLIB:LIBCD "
                              ."-SUBSYSTEM:CONSOLE ";
@@ -894,6 +912,8 @@ Usage: $0 [<options>] <directories|names>
       -f <file>    Use file to supply tests.
       -g           Compile tests with debug flag.
       -I <dir>     Additional include directory (may be added multiple times).
+      -L <dir>     Additional linker directory (may be added multiple times).
+      -l <libname> Additional library to link (may be added mutliple times).
       -m           Send mail with results.
       -o <opts>    Additional (custom) compiler options.
       -O           Compile tests with optimize flag.
@@ -901,6 +921,7 @@ Usage: $0 [<options>] <directories|names>
       -purify      Link tests with purify.
       -quantify    Link tests with quantify.
       -Q           Run quick tests only.
+      -recheck     Run previously failed tests (taken from $rt_output_file)
       -t <time>    Set the timeout for a test in minutes (default 5 minutes).
       -T           Measure runtime of tests in seconds.
       -v           Verbose output.
@@ -952,8 +973,12 @@ sub parse_args
             }
 
             # add predefined macro
-            if( $arg =~ /^-D/ ) {
-                $arg = shift @arglist;
+            if( $arg =~ /^-D(.*)/ ) {
+                if( length($1) ) {
+                    $arg = $1;
+                } else {
+                    $arg = shift @arglist;
+                }
                 push @rt_add_defines, $arg;
                 next;
             }
@@ -972,9 +997,35 @@ sub parse_args
             }
 
             # add include directory
-            if( $arg =~ /^-I/ ) {
-                $arg = shift @arglist;
+            if( $arg =~ /^-I(.*)/ ) {
+                if( length($1) ) {
+                    $arg = $1;
+                } else {
+                    $arg = shift @arglist;
+                }
                 push @rt_add_includes, $arg;
+                next;
+            }
+
+            # add linker directory
+            if( $arg =~ /^-L(.*)/ ) {
+                if( length($1) ) {
+                    $arg = $1;
+                } else {
+                    $arg = shift @arglist;
+                }
+                push @rt_add_ldpaths, $arg;
+                next;
+            }
+
+            # add library to link
+            if( $arg =~ /^-l(.*)/ ) {
+                if( length($1) ) {
+                    $arg = $1;
+                } else {
+                    $arg = shift @arglist;
+                }
+                push @rt_add_ldlibs, $arg;
                 next;
             }
 
@@ -1021,6 +1072,22 @@ sub parse_args
                 next;
             }
 
+            # re-check previously failing tests
+            if( $arg =~ /^-recheck/ ) {
+                open( OLD_OUTPUT_FH, "<$rt_output_file" )
+                  or die "Error: Cannot open output of previous run (-recheck)\n";
+                while( my $line = <OLD_OUTPUT_FH> ) {
+                    if( $line =~ /^(.*) : (.*)$/ ) {
+                        my $old_test = $2;
+                        if( grep { $_ eq $1 } %rt_error_code ) {
+                            $tests .= ' '.$old_test;
+                        }
+                    }
+                }
+                close OLD_OUTPUT_FH;
+                next;
+            }
+
             # timeout value
             if( $arg =~ /^-t/ ) {
                 $arg = shift @arglist;
@@ -1040,8 +1107,7 @@ sub parse_args
                 next;
             }
 
-            &print_log( "Error: unknown argument '$arg'\n");
-            exit 1;
+            die "Error: unknown argument '$arg'\n";
         }
 
         # must be test
@@ -1161,13 +1227,14 @@ sub get_props
     if( -e "$dir/$rt_dontrun" ) {
         $props = $props | $rt_test_props{ 'dontrun' };
     } else {
-        @tmp = grep( /^\.not/, @files );
-        if( $#tmp >= 0 ) {       # found arch restrictions
-            &print_log( "NYI: .not<arch> control\n" );
+        if( grep( /^\.not$rt_systemc_arch$/, @files ) > 0 ) {
+            # found arch exclusion
+            $props = $props | $rt_test_props{ 'dontrun' };
         }
         @tmp = grep( /^\.only/, @files );
         if( $#tmp >= 0 ) {       # found arch restrictions
-            &print_log( "NYI: .only<arch> control\n" );
+            $props = $props | $rt_test_props{ 'dontrun' }
+                unless ( grep( /^\.only$rt_systemc_arch$/, @tmp ) > 0 );
         }
     }
 
