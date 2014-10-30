@@ -20,23 +20,19 @@
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      10th May, 2011
  */
-#include <systemc.h>           // SystemC headers
-#include "parameter_owner.h"
-#include "parameter_configurator.h"
 
-/**
- * @fn        int sc_main (int sc_argc, char** )
- * @brief     This function instantiates the owner and configurator modules
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// OWNER and CONFIGURATOR modules instantiation
-	parameter_owner            param_owner("param_owner");
-	parameter_configurator     param_cfgr("param_cfgr");
+#include <systemc.h>
+#include "./ex13_parameter_owner.h"
+#include "./ex13_parameter_configurator.h"
 
-	// Setting simulation time and starting the simulation
-	sc_start(25.0, SC_NS);
-	
-	return EXIT_SUCCESS;
+/// Testbench that instantiates an owner and configurator module
+int sc_main(int sc_argc, char* sc_argv[]) {
+  ex13_parameter_owner param_owner("param_owner");
+  ex13_parameter_configurator param_cfgr("param_cfgr");
 
-}// End of sc_main
+  // Setting simulation time and starting the simulation
+  sc_start(25.0, SC_NS);
+
+  return EXIT_SUCCESS;
+}
+// sc_main

@@ -24,79 +24,85 @@
  * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * \date     29th April, 2011 (Friday)
  */
-#include <cci>             // Always include this header in all CCI applications>
-#include <systemc.h>         // SystemC header file for 'sc_main'
-#include <assert.h>          
-#include "top_module.h"      // 'top_module' instance shall be created within main
 
-/*!
- * \fn        int sc_main (int, char**)
- * \brief     The sc_main function instantiates the top module which, in turn,
- *            instantiates master, router and slave modules
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// Instantiating originator to get access to the global broker
-	std::string myString = "sc_main_originator";
-	cci::cnf::cci_originator myOriginator(myString);	
+#include <cci>
+#include <systemc.h>
+#include <cassert>
+#include <string>
+#include "./ex09_top_module.h"
 
-	
-	/// Get handle to the default broker
-	cci::cnf::cci_cnf_broker_if* myGlobalBroker = &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
+/// Testbench for the hierarchical override of parameter values
+int sc_main(int sc_argc, char* sc_argv[]) {
+  /// Instantiating originator to get access to the global broker
+  std::string myString = "sc_main_originator";
+  cci::cnf::cci_originator myOriginator(myString);
 
-	// Assert if broker handle returned is NULL
-	assert(myGlobalBroker != NULL && "Handle of the returned global broker is NULL");
+  /// Get handle to the default broker
+  cci::cnf::cci_cnf_broker_if* myGlobalBroker =
+      &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
 
+  // Assert if broker handle returned is NULL
+  assert(myGlobalBroker != NULL
+         && "Handle of the returned global broker is NULL");
 
-	std::cout << "\n[MAIN] : Setting initial value of the number of masters to 2" << endl;		
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Setting initial value of the number of masters"
+                 " to 2");
 
-	/// Set initial value to the number of master(s) (within top_module)
-	std::string masterHierarchicalName = "top_module_inst.number_of_masters";
-	myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "2");
+  /// Set initial value to the number of master(s) (within top_module)
+  std::string masterHierarchicalName = "top_module_inst.number_of_masters";
+  myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "2");
 
+  SC_REPORT_INFO("sc_main", "[MAIN] : Setting initial value of the number"
+                 " of masters to 1");
 
-	std::cout << "\n[MAIN] : Setting initial value of the number of masters to 1" << endl;		
+  // The program considers only the last set initial value
+  myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "1");
 
-	// The program considers only the last set initial value
-	myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "1"); // The program takes in the last set initial value
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Setting initial value of the number of slaves to 4");
 
+  /// Set initial value to the number of slave(s) (within top_module)
+  std::string slaveHierarchicalName = "top_module_inst.number_of_slaves";
+  myGlobalBroker->json_deserialize_initial_value(slaveHierarchicalName, "4");
 
-	std::cout << "\n[MAIN] : Setting initial value of the number of slaves to 4" << endl;		
-	
-	/// Set initial value to the number of slave(s) (within top_module)
-	std::string slaveHierarchicalName = "top_module_inst.number_of_slaves";
-	myGlobalBroker->json_deserialize_initial_value(slaveHierarchicalName, "4");
+  /// Set the maximum addressing limit for the router
+  myGlobalBroker->json_deserialize_initial_value(
+      "top_module_inst.RouterInstance.addr_max", "1024");
 
+  /// Set and lock the Router Table initials values for slave_1
+  //  These values have again been tried to set within the Top_MODULE
+  //  @see top_module.h
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Set and lock Router Table Slave_1 contents");
+  myGlobalBroker->json_deserialize_initial_value(
+      "top_module_inst.RouterInstance.r_index_1", "1");
+  myGlobalBroker->lock_initial_value(
+      "top_module_inst.RouterInstance.r_index_1");
 
-	/// Set the maximum addressing limit for the router 
-	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.addr_max", "1024");
-	
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Set and lock Router Table Start Address for Slave_1"
+                 " to 128");
+  myGlobalBroker->json_deserialize_initial_value(
+      "top_module_inst.RouterInstance.r_sa_1", "128");
+  myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_sa_1");
 
-	/// Set and lock the Router Table initials values for slave_1 
-	//  These values have again been tried to set within the Top_MODULE
-	//  @see top_module.h
-	std::cout << "\n[MAIN] : Set and lock Router Table Slave_1 contents" << endl;		
-	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_index_1", "1");	
-	myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_index_1");	
-	
-	std::cout << "\n[MAIN] : Set and lock Router Table Start Address for Slave_1 to 128" << endl;		
-	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_sa_1", "128");	
-	myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_sa_1");	
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Set and lock Router Table End Address for Slave_1"
+                 " to 255");
+  myGlobalBroker->json_deserialize_initial_value(
+      "top_module_inst.RouterInstance.r_ea_1", "255");
+  myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_ea_1");
 
-	std::cout << "\n[MAIN] : Set and lock Router Table End Address for Slave_1 to 255" << endl;		
-	myGlobalBroker->json_deserialize_initial_value("top_module_inst.RouterInstance.r_ea_1", "255");	
-	myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_ea_1");	
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Instantiate top module after setting initial"
+                 " values to top_module, router and slave parameters");
 
+  /// Instantiate TOP_MODULE responsible for creating the model hierarchy
+  ex09_top_module top_mod("top_module_inst");
 
-	std::cout << "\n[MAIN] : Instantiate top module after setting initial values to top_module, router and slave parameters" << endl;		
+  /// Start the simulation
+  sc_start(sc_time(1140, SC_NS));
 
-	/// Instantiate TOP_MODULE responsible for creating the model hierarchy
-	top_module	top_mod("top_module_inst");
-
-
-	/// Start the simulation
-	sc_start(sc_time(1140,SC_NS));
-
-	return EXIT_SUCCESS;
-
-}// End of 'sc_main' 
+  return EXIT_SUCCESS;
+}  // End of 'sc_main'
