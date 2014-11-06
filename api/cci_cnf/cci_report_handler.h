@@ -46,24 +46,24 @@ public:
   }
 
   //functions that throw a report for each cci_param_failure type 
-  static void set_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"SET_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void set_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"SET_PARAM_FAILED",msg,file,line);
   }
 
-  static void get_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"GET_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void get_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"GET_PARAM_FAILED",msg,file,line);
   }
 
-  static void add_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"ADD_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void add_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"ADD_PARAM_FAILED",msg,file,line);
   }
 
-  static void remove_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"REMOVE_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void remove_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"REMOVE_PARAM_FAILED",msg,file,line);
   }
 
-  static void cci_value_failure(const char* msg="") {
-    report(sc_core::SC_ERROR,"CCI_VALUE_FAILURE",msg,__FILE__,__LINE__);
+  static void cci_value_failure(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"CCI_VALUE_FAILURE",msg,file,line);
   }
 
   // function to return cci_param_failure that matches thrown (or cached) report
