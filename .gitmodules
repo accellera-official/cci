@@ -1,0 +1,4 @@
+[submodule "rapidjson"]
+	path = packages/rapidjson
+	url = git://github.com/miloyip/rapidjson.git
+	branch = master
