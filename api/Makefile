@@ -22,6 +22,11 @@ BOOST = $(BOOST_HOME)
 endif
 BOOST ?= /cad/tools/boost
 
+ifdef RAPIDJSON_HOME
+RAPIDJSON=$(RAPIDJSON_HOME)
+endif
+RAPIDJSON ?= $(GS_CCI_HOME)/packages/rapidjson
+
 ifdef SYSTEMC_HOME
 SYSTEMC = $(SYSTEMC_HOME)
 endif
@@ -37,7 +42,7 @@ CCI_DIR ?= $(GS_CCI_HOME)/api
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
-INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST) 
+INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST)  -I$(RAPIDJSON)/include
 
 ## -----------------------------------------------------------------------------
 
