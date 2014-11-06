@@ -1,148 +1,255 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2010 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//    Mark Burton, mark@greensocs.com
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-//
-// ENDLICENSETEXT
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
+  Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 #ifndef CCI_CNF_CCI_VALUE_H_INCLUDED_
 #define CCI_CNF_CCI_VALUE_H_INCLUDED_
 
-
 #include "cci_datatypes.h"
-#include "cci_core/systemc.h"
+#include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
+/**
+ * @file   cci_value.h
+ * @author Philipp A. Hartmann, OFFIS
+ */
 
 CCI_OPEN_CONFIG_NAMESPACE_
 
+// define our own typedefs to avoid SystemC dependency?
+using sc_dt::int64;
+using sc_dt::uint64;
 
-  class cci_value;
+// forward declarations
+class cci_value;
+class cci_value_cref;
+class cci_value_ref;
 
-  /// List of cci_values
-  typedef std::vector<cci_value> cci_value_list;
+// --------------------------------------------------------------------------
 
-  /// Value class for objects representing arbitrary types of cci parameters
-  /**
-   * The constructor sets the value and the type, the empty constructor applies
-   * an empty/invalid value, setting the type to param_type_not_available.
-   *
-   * The value can be read using the correct get function according the type
-   * returned by type().
-   * There may be other get functions but the correct one, returning another
-   * representation of the value, e.g. the type is cci::param_type_number, the correct
-   * get function would be get_int64(), but also get_int(), get_string() and get_real()
-   * might return valid string representations. If a particular get function cannot
-   * return a valid representation of the value, an sc_report error of type
-   * cci_report::cci_value_failure is thrown.
-   */
-  class cci_value {
-  public:
-    /// Constructor with no (null) value (sets type to cci::param_type_not_available)
-    cci_value();
-    /// Constructor setting the string value (sets type to cci::param_type_string)
-    /**
-     * A (const char *) variant is a necessity; without it, literal char arrays
-     * will use the built-in implicit conversion to bool rather than the (user defined)
-     * conversion to (const string &).
-     */
-    cci_value(const char*           value);
-    /// Constructor setting the string value (sets type to cci::param_type_string)
-    cci_value(const std::string&    value);
-    /// Constructor setting the bool value (sets type to cci::param_type_bool)
-    cci_value(bool                  value);
-    /// Constructor setting the number value (sets type to cci::param_type_number)
-    cci_value(int                   value);
-    /// Constructor setting the number value (sets type to cci::param_type_number)
-    cci_value(sc_dt::int64          value);
-    /// Constructor setting the real value (sets type to cci::param_type_real)
-    cci_value(double                value);
+/// constant reference to a (nested) @ref cci_value
+class cci_value_cref
+{
+  friend class cci_value_ref;
 
-    /// Constructor setting the list value (sets type to cci::param_type_list)
-    cci_value(const cci_value_list& value);
-    /// Constructor copying another value
-    cci_value(const cci_value& other);
+protected:
+  typedef void impl; // use type-punned pointer for now
 
-    /// Checks for equality
-    bool operator==(const cci_value& lhs) const;
+  explicit cci_value_cref(impl* i = NULL)
+    : pimpl_(i) {}
 
-    /// Assigns a new value and type
-    cci_value& operator=(const cci_value& lhs);
+public:
 
-    /// Returns the best matching basic type
-    basic_param_type type() const;
+  //!@name type queries
+  basic_param_type  basic_type() const;
+  bool is_null()    const;
 
-    /// Returns the value's string representation
-    /**
-     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
-     * @return The value's string representation.
-     */
-    const std::string&      get_string()   const;
+  bool is_bool()    const;
+  bool is_false()   const
+    { return is_bool() && !get_bool(); }
+  bool is_true()    const
+    { return is_bool() &&  get_bool(); }
 
-    /// Returns the value's list representation
-    /**
-     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
-     * @return The value's list representation.
-     */
-    const cci_value_list&   get_list() const;
+  bool is_number()  const
+    { return is_int64() || is_uint64() || is_double(); }
 
-    /// Returns the value's bool representation
-    /**
-     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
-     * @return The value's bool representation.
-     */
-    bool           get_bool()  const;
+  bool is_int()     const;
+  bool is_uint()    const;
+  bool is_int64()   const;
+  bool is_uint64()  const;
+  bool is_double()  const;
 
-    /// Returns the value's int representation
-    /**
-     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
-     * @return The value's int representation.
-     */
-    int            get_int()   const;
+  bool is_string()  const;
 
-    /// Returns the value's int64 representation
-    /**
-     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
-     * @return The value's int64 representation.
-     */
-    sc_dt::int64 get_int64() const;
+  bool is_map()     const;
 
-    /// Returns the value's double representation
-    /**
-     * @throw cci_report::cci_value_failure if the value cannot be represented as this data type (or it is not implemented)
-     * @return The value's double representation.
-     */
-    double         get_real()  const;
+  bool is_list()    const;
+  //@}
 
-  protected:
-    /// Best matching basic param type
-    basic_param_type m_type;
-    /// string value (if this is of type string)
-    std::string m_value_string;
-    /// bool value (if this is of type bool)
-    bool m_value_bool;
-    /// sc_dt::int64 value (if this is of type number / int / sc_dt::int64)
-    sc_dt::int64 m_value_number;
-    /// double value (if this is of type double / real)
-    double m_value_real;
-    /// list value (if this is of type cci::cnf::cci_value_list)
-    cci_value_list m_value_list;
+  //!@name value queries
 
-	//Function to initialize all the private members
-	void initialize_values();
+  bool get_bool()    const;
 
-  };
+  int      get_int()     const;
+  unsigned get_uint()    const;
+  int64    get_int64()   const;
+  uint64   get_uint64()  const;
+  double   get_double()  const;
 
+
+  //@}
+
+  bool json_serialize( std::string& ) const;
+
+protected:
+  void
+  report_error( const char* msg
+              , const char* file = NULL, int line = 0 ) const;
+
+protected:
+  impl* pimpl_;
+
+private:
+  // constant reference, no assignment
+  cci_value_cref operator=( cci_value_cref const& ) /* = delete */;
+};
+
+
+// --------------------------------------------------------------------------
+
+/// mutable reference to a (nested) @ref cci_value
+class cci_value_ref
+  : public cci_value_cref
+{
+  typedef cci_value_cref base_type;
+  typedef cci_value_ref  this_type;
+
+protected:
+  explicit cci_value_ref(impl* i = NULL)
+    : cci_value_cref(i) {}
+
+public:
+  void swap( this_type& that );
+  this_type operator=( const base_type& );
+  this_type operator=( const this_type& );
+
+  cci_value_ref set_null();
+  cci_value_ref set_bool( bool v );
+  cci_value_ref set_int( int v );
+  cci_value_ref set_uint( unsigned v );
+  cci_value_ref set_int64( int64 v );
+  cci_value_ref set_uint64( uint64 v );
+  cci_value_ref set_double( double v );
+
+
+  bool json_deserialize( std::string const& );
+};
+
+inline cci_value_ref
+cci_value_ref::operator=( this_type const & that )
+  { return *this = base_type(that); }
+
+
+// --------------------------------------------------------------------------
+
+class cci_value
+  : public cci_value_ref
+{
+public:
+  typedef cci_value_cref        const_reference;
+  typedef cci_value_ref         reference;
+
+  cci_value()
+    : cci_value_ref(), own_pimpl_() {}
+
+  explicit
+  cci_value( basic_param_type ); ///< @todo drop this?
+
+
+  cci_value( const cci_value& that );
+  cci_value( const_reference that );
+
+  reference operator=( cci_value const& );
+  reference operator=( const_reference );
+
+  void swap( cci_value & that );
+  void swap( reference that )
+    { init(); reference::swap( that ); }
+
+  ~cci_value();
+
+  reference set_bool( bool v )
+    { init(); return reference::set_bool(v); }
+
+  reference set_int( int v )
+    { init(); return reference::set_int(v); }
+  reference set_uint( unsigned v )
+    { init(); return reference::set_uint(v); }
+  reference set_int64( int64 v )
+    { init(); return reference::set_int64(v); }
+  reference set_uint64(uint64 v)
+    { init(); return reference::set_uint64(v); }
+
+  reference set_double(double v)
+    { init(); return cci_value_ref::set_double(v); }
+
+  using const_reference::json_serialize;
+  bool json_deserialize( std::string const & src )
+    { init(); return reference::json_deserialize( src ); }
+
+  static cci_value from_json( std::string const & json );
+  static std::string to_json( const_reference v );
+
+private:
+  impl* init();
+  impl* do_init();
+
+  impl* own_pimpl_;
+};
+
+inline
+cci_value::cci_value( const cci_value & that )
+  : reference(), own_pimpl_()
+{
+  *this = that;
+}
+
+inline
+cci_value::cci_value( const_reference that )
+  : reference(), own_pimpl_()
+{
+  *this = that;
+}
+
+inline cci_value::reference
+cci_value::operator=( cci_value const & that )
+{
+  return operator=( const_reference(that) );
+}
+
+inline cci_value::impl*
+cci_value::init()
+{
+  if( !pimpl_ )
+    pimpl_ = do_init();
+  return pimpl_;
+}
+
+inline cci_value
+cci_value::from_json( std::string const & json )
+{
+  cci_value v;
+  bool ok = v.json_deserialize( json );
+  sc_assert( ok );
+  return v;
+}
+
+inline std::string
+cci_value::to_json( const_reference v )
+{
+  std::string json;
+  bool ok = v.json_serialize( json );
+  sc_assert( ok );
+  return json;
+}
+
+// --------------------------------------------------------------------------
 
 CCI_CLOSE_CONFIG_NAMESPACE_
 
-#endif
+#endif // CCI_CNF_CCI_VALUE_H_INCLUDED_
