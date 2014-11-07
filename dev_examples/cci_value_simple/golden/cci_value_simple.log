@@ -1,0 +1,7 @@
+JSON (null)   : null
+JSON (bool)   : true
+JSON (int)    : 42
+JSON (sc_int) : 42
+JSON (double) : 42.0
+JSON (list)   : [12,34]
+JSON (map)    : {"value":10,"unit":"ns"}
