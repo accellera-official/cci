@@ -44,11 +44,14 @@ typedef json_value impl_type;
 static inline impl_type* impl_cast(void* p)
   { return static_cast<impl_type*>(p); }
 
+#define PIMPL( x ) \
+  (impl_cast((x).pimpl_))
+
 #define DEREF( x ) \
-  (*impl_cast((x).pimpl_))
+  (*PIMPL(x))
 
 #define THIS \
-  (impl_cast(this->pimpl_))
+  (PIMPL(*this))
 
 #define VALUE_ASSERT( Cond, Msg ) \
   do { if( !(Cond) ) \
@@ -62,6 +65,18 @@ void
 cci_value_cref::report_error( const char* msg, const char* file, int line ) const
 {
     cci_report_handler::cci_value_failure( msg, file, line );
+}
+
+bool
+operator == ( cci_value_cref const & left, cci_value_cref const & right )
+{
+  if( PIMPL(left) == PIMPL(right) )
+    return true;
+
+  if( !PIMPL(left) || !PIMPL(right) )
+    return false;
+
+  return DEREF(left) == DEREF(right);
 }
 
 basic_param_type

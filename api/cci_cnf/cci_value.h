@@ -42,12 +42,16 @@ class cci_value_ref;
 
 template<typename T> struct cci_value_traits;
 
+/// @ref cci_value comparisons
+bool operator==( cci_value_cref const &, cci_value_cref const & );
+
 // --------------------------------------------------------------------------
 
 /// constant reference to a (nested) @ref cci_value
 class cci_value_cref
 {
   friend class cci_value_ref;
+  friend bool operator==( cci_value_cref const &, cci_value_cref const & );
 
 protected:
   typedef void impl; // use type-punned pointer for now
