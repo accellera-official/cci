@@ -7,7 +7,8 @@ CXXFLAGS = $(OPT) $(OTHER)
 
 SRCS = cci_cnf/cci_broker_manager.cpp \
        cci_cnf/cci_broker_stack.cpp \
-       cci_cnf/cci_value.cpp
+       cci_cnf/cci_value.cpp \
+       cci_cnf/cci_value_traits.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

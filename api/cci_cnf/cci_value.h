@@ -40,6 +40,8 @@ class cci_value;
 class cci_value_cref;
 class cci_value_ref;
 
+template<typename T> struct cci_value_traits;
+
 // --------------------------------------------------------------------------
 
 /// constant reference to a (nested) @ref cci_value
@@ -91,6 +93,8 @@ public:
   uint64   get_uint64()  const;
   double   get_double()  const;
 
+  template<typename T>  bool try_get( T& dst ) const;
+  template<typename T>  T    get() const;
 
   //@}
 
@@ -109,6 +113,22 @@ private:
   cci_value_cref operator=( cci_value_cref const& ) /* = delete */;
 };
 
+template<typename T>
+bool cci_value_cref::try_get( T& dst ) const
+{
+  typedef cci_value_traits<T> traits;
+  return traits::unpack( dst, *this );
+}
+
+template<typename T>
+T cci_value_cref::get() const
+{
+  T result;
+  if( !try_get(result) ) {
+    report_error("conversion from cci_value failed", __FILE__, __LINE__);
+  }
+  return result;
+}
 
 // --------------------------------------------------------------------------
 
@@ -128,6 +148,9 @@ public:
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
+  template<typename T> cci_value_ref set( T const & dst );
+  template<typename T> bool          try_set( T const & dst );
+
   cci_value_ref set_null();
   cci_value_ref set_bool( bool v );
   cci_value_ref set_int( int v );
@@ -144,6 +167,21 @@ inline cci_value_ref
 cci_value_ref::operator=( this_type const & that )
   { return *this = base_type(that); }
 
+template<typename T>
+bool cci_value_ref::try_set( T const & src )
+{
+  typedef cci_value_traits<T> traits;
+  return traits::pack( *this, src );
+}
+
+template<typename T>
+cci_value_ref cci_value_ref::set( T const& src )
+{
+  if( !try_set(src) ) {
+    report_error("conversion to cci_value failed", __FILE__, __LINE__);
+  }
+  return *this;
+}
 
 // --------------------------------------------------------------------------
 
@@ -160,6 +198,9 @@ public:
   explicit
   cci_value( basic_param_type ); ///< @todo drop this?
 
+  template<typename T>
+  explicit
+  cci_value( T const & src );
 
   cci_value( const cci_value& that );
   cci_value( const_reference that );
@@ -172,6 +213,10 @@ public:
     { init(); reference::swap( that ); }
 
   ~cci_value();
+
+  template< typename T >
+  reference  set( T const & v )
+    { init(); return reference::set(v); }
 
   reference set_bool( bool v )
     { init(); return reference::set_bool(v); }
@@ -201,6 +246,14 @@ private:
 
   impl* own_pimpl_;
 };
+
+template<typename T>
+cci_value::cci_value(T const & v)
+  : cci_value_ref(), own_pimpl_()
+{
+  do_init();
+  set(v);
+}
 
 inline
 cci_value::cci_value( const cci_value & that )
