@@ -178,6 +178,12 @@ double cci_value_cref::get_double() const
   return THIS->GetDouble();
 }
 
+cci_value_string_cref cci_value_cref::get_string() const
+{
+  ASSERT_TYPE(is_string());
+  return cci_value_string_cref(pimpl_);
+}
+
 
 // ----------------------------------------------------------------------------
 // cci_value_ref
@@ -254,6 +260,44 @@ cci_value_ref::set_double(double d)
   sc_assert( THIS );
   THIS->SetDouble(d);
   return this_type( THIS );
+}
+
+cci_value_string_ref
+cci_value_ref::set_string( const char* s, size_t len )
+{
+  sc_assert( THIS );
+  THIS->SetString(s, len, json_allocator);
+  return cci_value_string_ref(THIS);
+}
+
+// ----------------------------------------------------------------------------
+// cci_value_string_cref
+
+cci_value_string_cref::size_type
+cci_value_string_cref::size() const
+  { return THIS->GetStringLength(); }
+
+const char*
+cci_value_string_cref::c_str() const
+  { return THIS->GetString(); }
+
+bool operator==( cci_value_string_cref const & left, const char * right )
+  { return !right ? false : DEREF(left) == right; }
+bool operator==( cci_value_string_cref const & left, std::string const & right )
+  { return DEREF(left) == rapidjson::StringRef( right.c_str(), right.size() ); }
+bool operator==( const char * left, cci_value_string_cref const & right )
+  { return !left ? false : DEREF(right) == left; }
+bool operator==( std::string const & left, cci_value_string_cref const & right )
+  { return DEREF(right) == rapidjson::StringRef( left.c_str(), left.size() ); }
+
+// ----------------------------------------------------------------------------
+// cci_value_string_ref
+
+void
+cci_value_string_ref::swap(this_type & that)
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
 }
 
 

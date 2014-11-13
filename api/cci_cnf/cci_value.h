@@ -24,6 +24,8 @@
 #include "cci_datatypes.h"
 #include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
+#include <cstring> // std::strlen
+
 /**
  * @file   cci_value.h
  * @author Philipp A. Hartmann, OFFIS
@@ -39,6 +41,8 @@ using sc_dt::uint64;
 class cci_value;
 class cci_value_cref;
 class cci_value_ref;
+class cci_value_string_cref;
+class cci_value_string_ref;
 
 template<typename T> struct cci_value_traits;
 
@@ -97,6 +101,8 @@ public:
   uint64   get_uint64()  const;
   double   get_double()  const;
 
+  cci_value_string_cref get_string() const; ///< get string value
+
   template<typename T>  bool try_get( T& dst ) const;
   template<typename T>  T    get() const;
 
@@ -140,6 +146,7 @@ T cci_value_cref::get() const
 class cci_value_ref
   : public cci_value_cref
 {
+  friend class cci_value_string_ref;
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
@@ -163,6 +170,13 @@ public:
   cci_value_ref set_uint64( uint64 v );
   cci_value_ref set_double( double v );
 
+  cci_value_string_ref set_string( const char* s );
+  cci_value_string_ref set_string( const std::string& s );
+  cci_value_string_ref set_string( cci_value_string_cref s );
+  cci_value_string_ref set_string( const char* s, size_t len );
+
+  using base_type::get_string;
+  cci_value_string_ref get_string();
 
   bool json_deserialize( std::string const& );
 };
@@ -189,12 +203,118 @@ cci_value_ref cci_value_ref::set( T const& src )
 
 // --------------------------------------------------------------------------
 
+/** @name cci_value string comparisons */
+///@{
+bool operator==( const char *, cci_value_string_cref const & );
+bool operator==( cci_value_string_cref const &, const char * );
+bool operator==( std::string const &, cci_value_string_cref const & );
+bool operator==( cci_value_string_cref const &, std::string const & );
+///@}
+
+class cci_value_string_cref
+  : public cci_value_cref
+{
+  friend class cci_value_cref;
+  friend bool operator==( const char *, cci_value_string_cref const & );
+  friend bool operator==( cci_value_string_cref const &, const char * );
+  friend bool operator==( std::string const &, cci_value_string_cref const & );
+  friend bool operator==( cci_value_string_cref const &, std::string const & );
+  typedef cci_value_cref        base_type;
+  typedef cci_value_string_cref this_type;
+
+protected:
+  explicit cci_value_string_cref(impl* i = NULL)
+    : base_type(i) {}
+
+public:
+  typedef size_t size_type;
+
+  bool      empty()  const { return size() == 0;  }
+  size_type length() const { return size(); }
+  size_type size()   const;
+
+  operator std::string() const { return std::string( c_str(), length() ); }
+  char const * c_str()   const;
+
+  char operator[]( size_type index ) const
+    { return c_str()[index]; }
+
+private:
+  // exclude non-string value functions
+  using base_type::get_bool;
+  using base_type::get_int;
+  using base_type::get_uint;
+  using base_type::get_int64;
+  using base_type::get_uint64;
+  using base_type::get_double;
+
+private:
+  // constant reference, no assignment
+  this_type& operator=( this_type const& ) /* = delete */;
+};
+
+// --------------------------------------------------------------------------
+
+class cci_value_string_ref
+  : public cci_value_string_cref
+{
+  friend class cci_value_ref;
+  typedef cci_value_string_cref base_type;
+  typedef cci_value_string_ref  this_type;
+
+protected:
+  explicit cci_value_string_ref(impl* i = NULL)
+    : base_type(i) {}
+
+public:
+  void swap( this_type& that );
+
+  this_type operator=( this_type const& );
+  this_type operator=( cci_value_string_cref s );
+  this_type operator=( const char * s );
+  this_type operator=( std::string const & s );
+};
+
+inline cci_value_string_ref
+cci_value_string_ref::operator=( this_type const& s )
+  { return cci_value_ref(pimpl_).set_string(s); }
+
+inline cci_value_string_ref
+cci_value_string_ref::operator=( cci_value_string_cref s )
+  { return cci_value_ref(pimpl_).set_string(s); }
+
+inline cci_value_string_ref
+cci_value_string_ref::operator=( const char * s )
+  { return cci_value_ref(pimpl_).set_string(s); }
+
+inline cci_value_string_ref
+cci_value_string_ref::operator=( std::string const & s )
+  { return cci_value_ref(pimpl_).set_string(s); }
+
+inline cci_value_string_ref
+cci_value_ref::get_string()
+  { return cci_value_string_ref( base_type::get_string().pimpl_ ); }
+
+inline cci_value_string_ref
+cci_value_ref::set_string(char const * s)
+  { return set_string( s ? s : "", s ? std::strlen(s) : 0u ); }
+
+inline cci_value_string_ref
+cci_value_ref::set_string(cci_value_string_cref s)
+  { return set_string( s.c_str(), s.length() ); }
+
+inline cci_value_string_ref
+cci_value_ref::set_string(std::string const & s)
+  { return set_string( s.c_str(), s.length() ); }
+
 class cci_value
   : public cci_value_ref
 {
 public:
   typedef cci_value_cref        const_reference;
   typedef cci_value_ref         reference;
+  typedef cci_value_string_cref const_string_reference;
+  typedef cci_value_string_ref  string_reference;
 
   cci_value()
     : cci_value_ref(), own_pimpl_() {}
@@ -236,6 +356,13 @@ public:
 
   reference set_double(double v)
     { init(); return cci_value_ref::set_double(v); }
+
+  string_reference set_string( const char* s )
+    { init(); return reference::set_string(s); }
+  string_reference set_string( const_string_reference s )
+    { init(); return reference::set_string(s); }
+  string_reference set_string( const std::string& s )
+    { init(); return reference::set_string(s); }
 
   using const_reference::json_serialize;
   bool json_deserialize( std::string const & src )
