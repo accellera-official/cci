@@ -91,6 +91,17 @@ int sc_main( int, char*[] )
     sc_assert( v.json_deserialize(json) );
   }
   {
+    std::string str("string");
+    cci_value v( "string" ), w( str );
+
+    sc_assert( v.is_string() && w.is_string() );
+    sc_assert( str == v.get_string() );
+    sc_assert( w == v.get_string() );
+    sc_assert( v.json_serialize(json) );
+    std::cout << "JSON (string) : " << cci_value::to_json(v) << std::endl;
+    sc_assert( v.json_deserialize(json) );
+  }
+  {
     const char json[] = "[12,34]";
     cci_value v = cci_value::from_json( json );
 
