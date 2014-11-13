@@ -184,6 +184,11 @@ cci_value_string_cref cci_value_cref::get_string() const
   return cci_value_string_cref(pimpl_);
 }
 
+cci_value_list_cref cci_value_cref::get_list() const
+{
+  ASSERT_TYPE(is_list());
+  return cci_value_list_cref(pimpl_);
+}
 
 // ----------------------------------------------------------------------------
 // cci_value_ref
@@ -270,6 +275,14 @@ cci_value_ref::set_string( const char* s, size_t len )
   return cci_value_string_ref(THIS);
 }
 
+cci_value_list_ref
+cci_value_ref::set_list()
+{
+  sc_assert( THIS );
+  THIS->SetArray();
+  return cci_value_list_ref( THIS );
+}
+
 // ----------------------------------------------------------------------------
 // cci_value_string_cref
 
@@ -300,6 +313,43 @@ cci_value_string_ref::swap(this_type & that)
   THIS->Swap( DEREF(that) );
 }
 
+// ----------------------------------------------------------------------------
+// cci_value_list_cref
+
+cci_value_list_cref::size_type
+cci_value_list_cref::size() const
+  { return THIS->Size(); }
+
+cci_value_cref
+cci_value_list_cref::operator[]( size_type index ) const
+  { return cci_value_cref( &(*THIS)[index] ); }
+
+// ----------------------------------------------------------------------------
+// cci_value_list_ref
+
+void
+cci_value_list_ref::swap(this_type & that)
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
+}
+
+cci_value_list_ref
+cci_value_list_ref::clear()
+{
+  THIS->Clear();
+  return *this;
+}
+
+cci_value_list_ref
+cci_value_list_ref::push_back( const_reference value )
+{
+  json_value v;
+  if( PIMPL(value) )
+    v.CopyFrom( DEREF(value), json_allocator );
+  THIS->PushBack( v, json_allocator );
+  return *this;
+}
 
 
 // ----------------------------------------------------------------------------

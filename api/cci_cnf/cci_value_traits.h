@@ -55,6 +55,9 @@ struct cci_value_traits
 template<> struct cci_value_traits<cci_value>;
 template<> struct cci_value_traits<cci_value_cref>;
 template<> struct cci_value_traits<cci_value_ref>;
+template<> struct cci_value_traits<cci_value_list>;
+template<> struct cci_value_traits<cci_value_list_cref>;
+template<> struct cci_value_traits<cci_value_list_ref>;
 
 // ---------------------------------------------------------------------------
 // helper to convert compatible types (implementation artefact)

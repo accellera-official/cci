@@ -43,6 +43,9 @@ class cci_value_cref;
 class cci_value_ref;
 class cci_value_string_cref;
 class cci_value_string_ref;
+class cci_value_list;
+class cci_value_list_cref;
+class cci_value_list_ref;
 
 template<typename T> struct cci_value_traits;
 
@@ -55,6 +58,8 @@ bool operator==( cci_value_cref const &, cci_value_cref const & );
 class cci_value_cref
 {
   friend class cci_value_ref;
+  friend class cci_value_list_cref;
+  friend class cci_value_list_ref;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
 
 protected:
@@ -103,6 +108,8 @@ public:
 
   cci_value_string_cref get_string() const; ///< get string value
 
+  cci_value_list_cref get_list() const;
+
   template<typename T>  bool try_get( T& dst ) const;
   template<typename T>  T    get() const;
 
@@ -147,6 +154,7 @@ class cci_value_ref
   : public cci_value_cref
 {
   friend class cci_value_string_ref;
+  friend class cci_value_list_ref;
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
@@ -175,8 +183,13 @@ public:
   cci_value_string_ref set_string( cci_value_string_cref s );
   cci_value_string_ref set_string( const char* s, size_t len );
 
+  cci_value_list_ref   set_list();
+
   using base_type::get_string;
   cci_value_string_ref get_string();
+
+  using base_type::get_list;
+  cci_value_list_ref get_list();
 
   bool json_deserialize( std::string const& );
 };
@@ -247,6 +260,7 @@ private:
   using base_type::get_int64;
   using base_type::get_uint64;
   using base_type::get_double;
+  using base_type::get_list;
 
 private:
   // constant reference, no assignment
@@ -307,6 +321,107 @@ inline cci_value_string_ref
 cci_value_ref::set_string(std::string const & s)
   { return set_string( s.c_str(), s.length() ); }
 
+// --------------------------------------------------------------------------
+
+class cci_value_list_cref
+  : public cci_value_cref
+{
+  friend class cci_value_cref;
+  typedef cci_value_cref      base_type;
+  typedef cci_value_list_cref this_type;
+
+protected:
+  explicit cci_value_list_cref(impl* i = NULL)
+    : base_type(i) {}
+
+public:
+  typedef size_t         size_type;
+  typedef cci_value_cref const_reference;
+  typedef cci_value_ref  reference;
+
+  bool      empty() const { return size() == 0;  }
+  size_type size()  const;
+
+  const_reference operator[]( size_type index ) const;
+  const_reference at( size_type index ) const
+    { return (*this)[index]; }
+
+private:
+  // exclude non-list value functions
+  using base_type::get_bool;
+  using base_type::get_int;
+  using base_type::get_uint;
+  using base_type::get_int64;
+  using base_type::get_uint64;
+  using base_type::get_double;
+  using base_type::get_string;
+
+private:
+  // constant reference, no assignment
+  this_type& operator=( this_type const& ) /* = delete */;
+};
+
+// --------------------------------------------------------------------------
+
+class cci_value_list_ref
+  : public cci_value_list_cref
+{
+  friend class cci_value_ref;
+  typedef cci_value_list_cref base_type;
+  typedef cci_value_list_ref  this_type;
+
+protected:
+  explicit cci_value_list_ref(impl* i = NULL)
+    : base_type(i) {}
+
+public:
+  this_type operator=( this_type const& );
+  this_type operator=( base_type const& );
+  void swap( this_type& );
+
+  this_type clear();
+
+  using base_type::operator[];
+  reference operator[]( size_type index );
+
+  using base_type::at;
+  reference at( size_type index )
+    { return (*this)[index]; }
+
+  // size_type capacity() const;
+  // void reserve( size_type );
+
+  this_type push_back( const_reference v );
+  template<typename T>
+  this_type push_back( const T & v );
+
+  // TODO: add iterator interface
+};
+
+inline cci_value_list_ref
+cci_value_list_ref::operator=( this_type const & that )
+  { return *this = base_type(that); }
+
+inline cci_value_list_ref
+cci_value_list_ref::operator=( base_type const & that )
+  { cci_value_ref v(pimpl_); v = that; return *this; }
+
+inline cci_value_list_ref::reference
+cci_value_list_ref::operator[]( size_type index )
+  { return reference( base_type::operator[](index).pimpl_ ); }
+
+template<typename T>
+cci_value_list_ref
+cci_value_list_ref::push_back( const T& value )
+{
+  cci_value v(value);
+  return push_back(v);
+}
+
+inline cci_value_list_ref
+cci_value_ref::get_list()
+  { return cci_value_list_ref( base_type::get_list().pimpl_ ); }
+
 class cci_value
   : public cci_value_ref
 {
@@ -315,6 +430,8 @@ public:
   typedef cci_value_ref         reference;
   typedef cci_value_string_cref const_string_reference;
   typedef cci_value_string_ref  string_reference;
+  typedef cci_value_list_cref   const_list_reference;
+  typedef cci_value_list_ref    list_reference;
 
   cci_value()
     : cci_value_ref(), own_pimpl_() {}
@@ -363,6 +480,9 @@ public:
     { init(); return reference::set_string(s); }
   string_reference set_string( const std::string& s )
     { init(); return reference::set_string(s); }
+
+  list_reference set_list()
+    { init(); return cci_value_ref::set_list(); }
 
   using const_reference::json_serialize;
   bool json_deserialize( std::string const & src )
@@ -433,6 +553,32 @@ cci_value::to_json( const_reference v )
 }
 
 // --------------------------------------------------------------------------
+
+class cci_value_list
+  : public cci_value_list_ref
+{
+  typedef cci_value_list this_type;
+public:
+  typedef cci_value_list_cref const_reference;
+  typedef cci_value_list_ref  reference;
+
+  cci_value_list();
+
+  cci_value_list( this_type const & );
+  cci_value_list( const_reference );
+
+  this_type& operator=( this_type const & );
+  this_type& operator=( const_reference );
+  void swap( this_type & );
+  void swap( reference that )
+    { reference::swap( that ); }
+
+  ~cci_value_list();
+
+private:
+  impl* do_init();
+  impl* own_pimpl_;
+};
 
 CCI_CLOSE_CONFIG_NAMESPACE_
 
