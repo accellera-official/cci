@@ -140,6 +140,37 @@ struct cci_value_traits<char[N]>
   }
 };
 
+// ----------------------------------------------------------------------------
+// C++ arrays
+
+template<typename T, int N>
+struct cci_value_traits<T[N]>
+{
+  typedef T type[N]; ///< common type alias
+  static bool pack( cci_value::reference dst, type const & src )
+  {
+    cci_value_list ret;
+    // ret.reserve(N);
+
+    for( size_t i = 0; i < N; ++i )
+      ret.push_back( src[i] );
+    ret.swap( dst.set_list() );
+    return true;
+  }
+  static bool unpack( type & dst, cci_value::const_reference src )
+  {
+    if( !src.is_list() )
+      return false;
+
+    cci_value::const_list_reference lst = src.get_list();
+    size_t i = 0;
+    for( ; i < N && i < lst.size() && lst[i].try_get<T>( dst[i] ); ++i ) {}
+
+    return ( i == lst.size() );
+  }
+};
+
+// ----------------------------------------------------------------------------
 // SystemC builtin types
 
 // default instantiations (in cci_value_traits.cpp)
