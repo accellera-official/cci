@@ -420,36 +420,61 @@ cci_value_map_ref::push_entry( const char * key
 }
 
 // ----------------------------------------------------------------------------
-// cci_value
+// cci_value(, _list, _map ) -- owning wrapper implementations
 
-cci_value::reference
-cci_value::operator=( const_reference that )
-{
-  if( that.is_null() )
-    return set_null();
-  init();
-  return reference::operator=( that );
-}
+#define WRAPPER_ASSIGN_PRECOND_(Kind) \
+  WRAPPER_ASSIGN_PRECOND_FOR_ ## Kind
+#define WRAPPER_ASSIGN_PRECOND_FOR_cci_value \
+    if( that.is_null() ) { set_null(); return *this; } \
+    init()
+#define WRAPPER_ASSIGN_PRECOND_FOR_cci_value_list \
+  sc_assert( is_list() && that.is_list() )
+#define WRAPPER_ASSIGN_PRECOND_FOR_cci_value_map \
+  sc_assert( is_map() && that.is_map() )
 
-void
-cci_value::swap( cci_value & that )
-{
-  using std::swap;
-  swap( pimpl_    , that.pimpl_ );
-  swap( own_pimpl_, that.own_pimpl_ );
-}
+#define WRAPPER_DO_INIT_(Kind) \
+  WRAPPER_DO_INIT_ ## Kind
+#define WRAPPER_DO_INIT_cci_value \
+  ((void)0)
+#define WRAPPER_DO_INIT_cci_value_list \
+  (THIS)->SetArray()
+#define WRAPPER_DO_INIT_cci_value_map \
+  (THIS)->SetObject()
 
-cci_value::impl*
-cci_value::do_init()
-{
-  sc_assert( !own_pimpl_ );
-  return pimpl_ = own_pimpl_ = new impl_type();
-}
+#define DEFINE_WRAPPER_(Kind)                          \
+  Kind::this_type &                                    \
+  Kind::operator=( const_reference that )              \
+  {                                                    \
+    WRAPPER_ASSIGN_PRECOND_( Kind );                   \
+    reference::operator=( that );                      \
+    return *this;                                      \
+  }                                                    \
+                                                       \
+  void                                                 \
+  Kind::swap( this_type & that )                       \
+  {                                                    \
+    using std::swap;                                   \
+    swap( pimpl_    , that.pimpl_ );                   \
+    swap( own_pimpl_, that.own_pimpl_ );               \
+  }                                                    \
+                                                       \
+  Kind::impl*                                          \
+  Kind::do_init()                                      \
+  {                                                    \
+    sc_assert( !own_pimpl_ );                          \
+    pimpl_ = own_pimpl_ = new impl_type();             \
+    WRAPPER_DO_INIT_( Kind );                          \
+    return THIS;                                       \
+  }                                                    \
+                                                       \
+  Kind::~Kind()                                        \
+  {                                                    \
+    delete impl_cast(own_pimpl_);                      \
+  }
 
-cci_value::~cci_value()
-{
-  delete impl_cast(own_pimpl_);
-}
+DEFINE_WRAPPER_(cci_value)
+DEFINE_WRAPPER_(cci_value_list)
+DEFINE_WRAPPER_(cci_value_map)
 
 // ----------------------------------------------------------------------------
 // JSON (de)serialize

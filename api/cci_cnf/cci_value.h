@@ -568,6 +568,7 @@ cci_value_ref::get_map()
 class cci_value
   : public cci_value_ref
 {
+  typedef cci_value this_type;
 public:
   typedef cci_value_cref        const_reference;
   typedef cci_value_ref         reference;
@@ -588,11 +589,11 @@ public:
   explicit
   cci_value( T const & src );
 
-  cci_value( const cci_value& that );
+  cci_value( this_type const & that );
   cci_value( const_reference that );
 
-  reference operator=( cci_value const& );
-  reference operator=( const_reference );
+  this_type& operator=( this_type const & );
+  this_type& operator=( const_reference );
 
   void swap( cci_value & that );
   void swap( reference that )
@@ -655,7 +656,7 @@ cci_value::cci_value(T const & v)
 }
 
 inline
-cci_value::cci_value( const cci_value & that )
+cci_value::cci_value( this_type const & that )
   : reference(), own_pimpl_()
 {
   *this = that;
@@ -668,8 +669,8 @@ cci_value::cci_value( const_reference that )
   *this = that;
 }
 
-inline cci_value::reference
-cci_value::operator=( cci_value const & that )
+inline cci_value &
+cci_value::operator=( this_type const & that )
 {
   return operator=( const_reference(that) );
 }
@@ -728,6 +729,35 @@ private:
   impl* own_pimpl_;
 };
 
+inline
+cci_value_list::cci_value_list()
+  : reference(), own_pimpl_()
+{
+  do_init();
+}
+
+inline
+cci_value_list::cci_value_list( this_type const & that )
+  : reference(), own_pimpl_()
+{
+  do_init();
+  *this = that;
+}
+
+inline
+cci_value_list::cci_value_list( const_reference that )
+  : reference(), own_pimpl_()
+{
+  do_init();
+  *this = that;
+}
+
+inline cci_value_list &
+cci_value_list::operator=( this_type const & that )
+{
+  return operator=( const_reference(that) );
+}
+
 // --------------------------------------------------------------------------
 
 class cci_value_map
@@ -755,6 +785,35 @@ private:
   impl* do_init();
   impl* own_pimpl_;
 };
+
+inline
+cci_value_map::cci_value_map()
+  : reference(), own_pimpl_()
+{
+  do_init();
+}
+
+inline
+cci_value_map::cci_value_map( this_type const & that )
+  : reference(), own_pimpl_()
+{
+  do_init();
+  *this = that;
+}
+
+inline
+cci_value_map::cci_value_map( const_reference that )
+  : reference(), own_pimpl_()
+{
+  do_init();
+  *this = that;
+}
+
+inline cci_value_map &
+cci_value_map::operator=( this_type const & that )
+{
+  return operator=( const_reference(that) );
+}
 
 // --------------------------------------------------------------------------
 
