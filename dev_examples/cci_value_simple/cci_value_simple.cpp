@@ -29,6 +29,7 @@
 
 using cci::cnf::cci_value;
 using cci::cnf::cci_value_list;
+using cci::cnf::cci_value_map;
 
 int sc_main( int, char*[] )
 {
@@ -130,10 +131,17 @@ int sc_main( int, char*[] )
   }
   {
     const char json[] = "{\"value\":10,\"unit\":\"ns\"}";
-    cci_value v = cci_value::from_json( json );
+    cci_value_map v = cci_value::from_json( json ).get_map();
 
     sc_assert( v.is_map() );
+    sc_assert( v.has_entry("value") );
+    sc_assert( v.has_entry("unit") );
+    sc_assert( !v.has_entry("scale") );
+
     sc_assert( cci_value::to_json(v) == json );
+    v.push_entry( "scale", 1 );
+    sc_assert( v.size() == 3 );
+    sc_assert( v.has_entry("scale") );
     std::cout << "JSON (map)    : " << cci_value::to_json(v) << std::endl;
   }
 
