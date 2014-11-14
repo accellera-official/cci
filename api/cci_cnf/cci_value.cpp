@@ -190,6 +190,12 @@ cci_value_list_cref cci_value_cref::get_list() const
   return cci_value_list_cref(pimpl_);
 }
 
+cci_value_map_cref cci_value_cref::get_map() const
+{
+  ASSERT_TYPE(is_map());
+  return cci_value_map_cref(pimpl_);
+}
+
 // ----------------------------------------------------------------------------
 // cci_value_ref
 
@@ -283,6 +289,14 @@ cci_value_ref::set_list()
   return cci_value_list_ref( THIS );
 }
 
+cci_value_map_ref
+cci_value_ref::set_map()
+{
+  sc_assert( THIS );
+  THIS->SetObject();
+  return cci_value_map_ref( THIS );
+}
+
 // ----------------------------------------------------------------------------
 // cci_value_string_cref
 
@@ -351,6 +365,59 @@ cci_value_list_ref::push_back( const_reference value )
   return *this;
 }
 
+// ----------------------------------------------------------------------------
+// cci_value_map_cref
+
+cci_value_map_cref::size_type
+cci_value_map_cref::size() const
+  { return THIS->MemberCount(); }
+
+cci_value_cref::impl*
+cci_value_map_cref::do_lookup( const char* key, size_type keylen
+                             , bool allow_fail /* = false */     ) const
+{
+  json_value kv( rapidjson::StringRef(key, keylen) );
+  json_value::ConstMemberIterator it = THIS->FindMember(kv);
+  if( it == THIS->MemberEnd() )
+  {
+    if( allow_fail ) return NULL;
+
+    std::stringstream ss;
+    ss << "cci_value map has no element with key '" << key << "'";
+    report_error( ss.str().c_str(), __FILE__, __LINE__ );
+    return NULL;
+  }
+  return const_cast<json_value*>(&it->value);
+}
+
+// ----------------------------------------------------------------------------
+// cci_value_map_ref
+
+void
+cci_value_map_ref::swap(this_type & that)
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
+}
+
+cci_value_map_ref
+cci_value_map_ref::clear()
+{
+  THIS->RemoveAllMembers();
+  return *this;
+}
+
+cci_value_map_ref
+cci_value_map_ref::push_entry( const char * key
+                             , cci_value::const_reference const & value )
+{
+  json_value k( key, json_allocator );
+  json_value v;
+  if( PIMPL(value) )
+    v.CopyFrom( DEREF(value), json_allocator );
+  THIS->AddMember( k, v, json_allocator );
+  return *this;
+}
 
 // ----------------------------------------------------------------------------
 // cci_value

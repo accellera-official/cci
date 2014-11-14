@@ -46,6 +46,9 @@ class cci_value_string_ref;
 class cci_value_list;
 class cci_value_list_cref;
 class cci_value_list_ref;
+class cci_value_map;
+class cci_value_map_cref;
+class cci_value_map_ref;
 
 template<typename T> struct cci_value_traits;
 
@@ -60,6 +63,8 @@ class cci_value_cref
   friend class cci_value_ref;
   friend class cci_value_list_cref;
   friend class cci_value_list_ref;
+  friend class cci_value_map_cref;
+  friend class cci_value_map_ref;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
 
 protected:
@@ -106,9 +111,9 @@ public:
   uint64   get_uint64()  const;
   double   get_double()  const;
 
-  cci_value_string_cref get_string() const; ///< get string value
-
-  cci_value_list_cref get_list() const;
+  cci_value_string_cref get_string() const;
+  cci_value_list_cref   get_list() const;
+  cci_value_map_cref    get_map()  const;
 
   template<typename T>  bool try_get( T& dst ) const;
   template<typename T>  T    get() const;
@@ -155,6 +160,7 @@ class cci_value_ref
 {
   friend class cci_value_string_ref;
   friend class cci_value_list_ref;
+  friend class cci_value_map_ref;
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
@@ -184,12 +190,16 @@ public:
   cci_value_string_ref set_string( const char* s, size_t len );
 
   cci_value_list_ref   set_list();
+  cci_value_map_ref    set_map();
 
   using base_type::get_string;
   cci_value_string_ref get_string();
 
   using base_type::get_list;
   cci_value_list_ref get_list();
+
+  using base_type::get_map;
+  cci_value_map_ref  get_map();
 
   bool json_deserialize( std::string const& );
 };
@@ -261,6 +271,7 @@ private:
   using base_type::get_uint64;
   using base_type::get_double;
   using base_type::get_list;
+  using base_type::get_map;
 
 private:
   // constant reference, no assignment
@@ -355,6 +366,7 @@ private:
   using base_type::get_uint64;
   using base_type::get_double;
   using base_type::get_string;
+  using base_type::get_map;
 
 private:
   // constant reference, no assignment
@@ -422,6 +434,137 @@ inline cci_value_list_ref
 cci_value_ref::get_list()
   { return cci_value_list_ref( base_type::get_list().pimpl_ ); }
 
+// --------------------------------------------------------------------------
+
+class cci_value_map_cref
+  : public cci_value_cref
+{
+  friend class cci_value_cref;
+  typedef cci_value_cref     base_type;
+  typedef cci_value_map_cref this_type;
+
+protected:
+  explicit cci_value_map_cref(impl* i = NULL)
+    : base_type(i) {}
+
+public:
+  typedef size_t         size_type;
+  typedef cci_value_cref const_reference;
+  typedef cci_value_ref  reference;
+
+  ///@name map queries
+  bool      empty()    const { return size() == 0;  }
+  size_type size()     const;
+  ///@}
+
+  ///@name map element queries
+  bool has_entry( const char * key ) const
+    { return NULL != do_lookup( key, std::strlen(key)
+                              , /* allow_fail = */ true ); }
+  bool has_entry( cci_value_string_cref key ) const
+    { return NULL != do_lookup( key.c_str(), key.length()
+                              , /* allow_fail = */ true ); }
+  bool has_entry( std::string const & key ) const
+    { return NULL != do_lookup( key.c_str(), key.length()
+                              , /* allow_fail = */ true ); }
+
+  const_reference operator[]( const char* key ) const
+    { return const_reference( do_lookup( key, std::strlen(key) ) ); }
+  const_reference operator[]( cci_value_string_cref key ) const
+    { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
+  const_reference operator[]( std::string const& key ) const
+    { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
+  ///@}
+
+  // TODO: add iterator interface
+
+protected:
+  impl * do_lookup( const char* key, size_type keylen
+                  , bool allow_fail = false           ) const;
+
+private:
+  // exclude non-map value functions
+  using base_type::get_bool;
+  using base_type::get_int;
+  using base_type::get_uint;
+  using base_type::get_int64;
+  using base_type::get_uint64;
+  using base_type::get_double;
+  using base_type::get_string;
+  using base_type::get_list;
+
+private:
+  // constant reference, no assignment
+  this_type& operator=( this_type const& ) /* = delete */;
+};
+
+// --------------------------------------------------------------------------
+
+class cci_value_map_ref
+  : public cci_value_map_cref
+{
+  friend class cci_value_ref;
+  typedef cci_value_map_cref base_type;
+  typedef cci_value_map_ref  this_type;
+protected:
+  explicit cci_value_map_ref(impl* i = NULL)
+    : base_type(i) {}
+
+public:
+
+  this_type operator=( base_type const& );
+  this_type operator=( this_type const& );
+  void swap( this_type& );
+
+  this_type clear();
+
+  ///@name map element query
+  ///@{
+  using base_type::operator[];
+  reference operator[]( const char* key )
+    { return reference( do_lookup( key, std::strlen(key) ) ); }
+  reference operator[]( std::string const& key )
+    { return reference( do_lookup( key.c_str(), key.length() ) ); }
+  ///@}
+
+  ///@name map element addition
+  ///@{
+  this_type push_entry( const char* key, const_reference value );
+  this_type push_entry( std::string const& key, const_reference value )
+    { return push_entry( key.c_str(), value ); }
+
+  template<typename T>
+  this_type push_entry( const char* key, const T & value );
+  template<typename T>
+  this_type push_entry( std::string const & key, const T & value )
+    { return push_entry<T>( key.c_str(), value ); }
+  ///@}
+
+  // TODO: add iterator interface
+};
+
+inline cci_value_map_ref
+cci_value_map_ref::operator=( this_type const & that )
+  { return *this = base_type(that); }
+
+inline cci_value_map_ref
+cci_value_map_ref::operator=( base_type const & that )
+  { cci_value_ref v(pimpl_); v = that; return *this; }
+
+template<typename T>
+cci_value_map_ref
+cci_value_map_ref::push_entry(const char* key, const T& value )
+{
+  cci_value v(value);
+  return push_entry(key, v);
+}
+
+inline cci_value_map_ref
+cci_value_ref::get_map()
+  { return cci_value_map_ref( base_type::get_map().pimpl_ ); }
+
+// --------------------------------------------------------------------------
+
 class cci_value
   : public cci_value_ref
 {
@@ -432,6 +575,8 @@ public:
   typedef cci_value_string_ref  string_reference;
   typedef cci_value_list_cref   const_list_reference;
   typedef cci_value_list_ref    list_reference;
+  typedef cci_value_map_cref    const_map_reference;
+  typedef cci_value_map_ref     map_reference;
 
   cci_value()
     : cci_value_ref(), own_pimpl_() {}
@@ -483,6 +628,9 @@ public:
 
   list_reference set_list()
     { init(); return cci_value_ref::set_list(); }
+
+  map_reference set_map()
+    { init(); return cci_value_ref::set_map(); }
 
   using const_reference::json_serialize;
   bool json_deserialize( std::string const & src )
@@ -579,6 +727,36 @@ private:
   impl* do_init();
   impl* own_pimpl_;
 };
+
+// --------------------------------------------------------------------------
+
+class cci_value_map
+  : public cci_value_map_ref
+{
+  typedef cci_value_map this_type;
+public:
+  typedef cci_value_map_cref const_reference;
+  typedef cci_value_map_ref  reference;
+
+  cci_value_map();
+
+  cci_value_map( this_type const & );
+  cci_value_map( const_reference );
+
+  this_type& operator=( this_type const& );
+  this_type& operator=( const_reference );
+  void swap( this_type & );
+  void swap( reference that )
+    { reference::swap( that ); }
+
+  ~cci_value_map();
+
+private:
+  impl* do_init();
+  impl* own_pimpl_;
+};
+
+// --------------------------------------------------------------------------
 
 CCI_CLOSE_CONFIG_NAMESPACE_
 
