@@ -174,6 +174,40 @@ struct cci_value_traits<T[N]>
 };
 
 // ----------------------------------------------------------------------------
+// std::vector<T, Alloc>
+
+template< typename T, typename Alloc >
+struct cci_value_traits< std::vector<T,Alloc> >
+{
+  typedef std::vector<T,Alloc> type; ///< common type alias
+  static bool pack( cci_value::reference dst, type const & src )
+  {
+    cci_value_list ret;
+    // ret.reserve( src.size() );
+
+    for( size_t i = 0; i < src.size(); ++i )
+      ret.push_back( src[i] );
+    ret.swap( dst.set_list() );
+    return true;
+  }
+  static bool unpack( type & dst, cci_value::const_reference src )
+  {
+    if( !src.is_list() )
+      return false;
+
+    cci_value::const_list_reference lst = src.get_list();
+    type ret;
+    T    cur;
+    size_t i = 0;
+    ret.reserve( lst.size() );
+    for( ; i < lst.size() && lst[i].try_get(cur); ++i )
+      ret.push_back( cur );
+
+    return ( i == lst.size() ) ? ( dst.swap(ret), true) : false;
+  }
+};
+
+// ----------------------------------------------------------------------------
 // SystemC builtin types
 
 // default instantiations (in cci_value_traits.cpp)
