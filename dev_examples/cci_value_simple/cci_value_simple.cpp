@@ -110,10 +110,10 @@ int sc_main( int, char*[] )
     sc_assert( v.is_list() );
     sc_assert( cci_value::to_json(v) == json );
 
-    int seq[2][1] = {};
+    std::vector<int> seq[2];
     v.get_list()
       .push_back("56")
-      .push_back( seq )
+      .push_back( seq ) // array of std::vector
       .push_back(
         cci_value_list()
           .push_back( 0ul )
@@ -123,8 +123,9 @@ int sc_main( int, char*[] )
     sc_assert( v.get_list()[4].get_list().size() == 2 );
 
     cci_value::list_reference vl = v.get_list()[3].get_list();
-    vl[0].get_list()[0].set_int(78);
-    vl[1].get_list()[0].set(9);
+    sc_assert( vl.size() == 2 );
+    vl[0].get_list().push_back(78);
+    vl[1].get_list().push_back(9);
     sc_assert( vl.try_get(seq) );
     sc_assert( seq[0][0] == 78 && seq[1][0] == 9 );
     std::cout << "JSON (list)   : " << cci_value::to_json(v) << std::endl;
