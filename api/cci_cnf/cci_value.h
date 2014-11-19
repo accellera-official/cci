@@ -51,6 +51,12 @@ class cci_value_map_cref;
 class cci_value_map_ref;
 
 template<typename T> struct cci_value_traits;
+#define CCI_VALUE_TRAITS_(Type) \
+  typename cci_value_traits<Type>::type
+#define CCI_VALUE_TRAITS_ENABLED_(Type) \
+  CCI_VALUE_TRAITS_(Type) *
+#define CCI_VALUE_ENABLE_IF_TRAITS_(Type) \
+  CCI_VALUE_TRAITS_ENABLED_(Type) = 0
 
 /// @ref cci_value comparisons
 bool operator==( cci_value_cref const &, cci_value_cref const & );
@@ -115,8 +121,10 @@ public:
   cci_value_list_cref   get_list() const;
   cci_value_map_cref    get_map()  const;
 
-  template<typename T>  bool try_get( T& dst ) const;
-  template<typename T>  T    get() const;
+  template<typename T>
+  bool try_get( T& dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) ) const;
+  template<typename T>
+  CCI_VALUE_TRAITS_(T) get() const;
 
   //@}
 
@@ -136,14 +144,15 @@ private:
 };
 
 template<typename T>
-bool cci_value_cref::try_get( T& dst ) const
+bool
+cci_value_cref::try_get( T& dst, CCI_VALUE_TRAITS_ENABLED_(T) ) const
 {
   typedef cci_value_traits<T> traits;
   return traits::unpack( dst, *this );
 }
 
 template<typename T>
-T cci_value_cref::get() const
+CCI_VALUE_TRAITS_(T) cci_value_cref::get() const
 {
   T result;
   if( !try_get(result) ) {
@@ -173,8 +182,10 @@ public:
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
-  template<typename T> cci_value_ref set( T const & dst );
-  template<typename T> bool          try_set( T const & dst );
+  template<typename T>
+  cci_value_ref set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  template<typename T>
+  bool          try_set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
 
   cci_value_ref set_null();
   cci_value_ref set_bool( bool v );
@@ -209,14 +220,16 @@ cci_value_ref::operator=( this_type const & that )
   { return *this = base_type(that); }
 
 template<typename T>
-bool cci_value_ref::try_set( T const & src )
+bool
+cci_value_ref::try_set( T const & src, CCI_VALUE_TRAITS_ENABLED_(T) )
 {
   typedef cci_value_traits<T> traits;
   return traits::pack( *this, src );
 }
 
 template<typename T>
-cci_value_ref cci_value_ref::set( T const& src )
+cci_value_ref
+cci_value_ref::set( T const& src, CCI_VALUE_TRAITS_ENABLED_(T) )
 {
   if( !try_set(src) ) {
     report_error("conversion to cci_value failed", __FILE__, __LINE__);
@@ -405,7 +418,7 @@ public:
 
   this_type push_back( const_reference v );
   template<typename T>
-  this_type push_back( const T & v );
+  this_type push_back( const T & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
 
   // TODO: add iterator interface
 };
@@ -424,10 +437,10 @@ cci_value_list_ref::operator[]( size_type index )
 
 template<typename T>
 cci_value_list_ref
-cci_value_list_ref::push_back( const T& value )
+cci_value_list_ref::push_back( const T& value, CCI_VALUE_TRAITS_ENABLED_(T) )
 {
   cci_value v(value);
-  return push_back(v);
+  return push_back( const_reference(v) );
 }
 
 inline cci_value_list_ref
@@ -529,14 +542,16 @@ public:
 
   ///@name map element addition
   ///@{
-  this_type push_entry( const char* key, const_reference value );
-  this_type push_entry( std::string const& key, const_reference value )
+  this_type push_entry( const char* key, const_reference const & value );
+  this_type push_entry( std::string const& key, const_reference const & value )
     { return push_entry( key.c_str(), value ); }
 
   template<typename T>
-  this_type push_entry( const char* key, const T & value );
+  this_type push_entry( const char* key, const T & value
+                      , CCI_VALUE_ENABLE_IF_TRAITS_(T) );
   template<typename T>
-  this_type push_entry( std::string const & key, const T & value )
+  this_type push_entry( std::string const & key, const T & value
+                      , CCI_VALUE_ENABLE_IF_TRAITS_(T) )
     { return push_entry<T>( key.c_str(), value ); }
   ///@}
 
@@ -553,10 +568,11 @@ cci_value_map_ref::operator=( base_type const & that )
 
 template<typename T>
 cci_value_map_ref
-cci_value_map_ref::push_entry(const char* key, const T& value )
+cci_value_map_ref::push_entry( const char* key, const T& value
+                             , CCI_VALUE_TRAITS_ENABLED_(T) )
 {
   cci_value v(value);
-  return push_entry(key, v);
+  return push_entry(key, const_reference(v) );
 }
 
 inline cci_value_map_ref
@@ -587,7 +603,7 @@ public:
 
   template<typename T>
   explicit
-  cci_value( T const & src );
+  cci_value( T const & src, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
 
   cci_value( this_type const & that );
   cci_value( const_reference that );
@@ -602,7 +618,7 @@ public:
   ~cci_value();
 
   template< typename T >
-  reference  set( T const & v )
+  reference  set( T const & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) )
     { init(); return reference::set(v); }
 
   reference set_bool( bool v )
@@ -648,7 +664,7 @@ private:
 };
 
 template<typename T>
-cci_value::cci_value(T const & v)
+cci_value::cci_value( T const & v, CCI_VALUE_TRAITS_ENABLED_(T) )
   : cci_value_ref(), own_pimpl_()
 {
   do_init();
@@ -818,5 +834,9 @@ cci_value_map::operator=( this_type const & that )
 // --------------------------------------------------------------------------
 
 CCI_CLOSE_CONFIG_NAMESPACE_
+
+#undef CCI_VALUE_TRAITS_
+#undef CCI_VALUE_TRAITS_ENABLED_
+#undef CCI_VALUE_ENABLE_IF_TRAITS_
 
 #endif // CCI_CNF_CCI_VALUE_H_INCLUDED_

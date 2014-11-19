@@ -52,12 +52,15 @@ struct cci_value_traits
 
 // ---------------------------------------------------------------------------
 // disabled implementation as a safety guard
-template<> struct cci_value_traits<cci_value>;
-template<> struct cci_value_traits<cci_value_cref>;
-template<> struct cci_value_traits<cci_value_ref>;
-template<> struct cci_value_traits<cci_value_list>;
-template<> struct cci_value_traits<cci_value_list_cref>;
-template<> struct cci_value_traits<cci_value_list_ref>;
+
+template<typename T> struct cci_value_traits<T*>        { /* disabled */ };
+
+template<> struct cci_value_traits<cci_value>           { /* disabled */ };
+template<> struct cci_value_traits<cci_value_cref>      { /* disabled */ };
+template<> struct cci_value_traits<cci_value_ref>       { /* disabled */ };
+template<> struct cci_value_traits<cci_value_list>      { /* disabled */ };
+template<> struct cci_value_traits<cci_value_list_cref> { /* disabled */ };
+template<> struct cci_value_traits<cci_value_list_ref>  { /* disabled */ };
 
 // ---------------------------------------------------------------------------
 // helper to convert compatible types (implementation artefact)
