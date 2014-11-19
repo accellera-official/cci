@@ -212,6 +212,7 @@ struct cci_value_traits< std::vector<T,Alloc> >
 
 // default instantiations (in cci_value_traits.cpp)
 template struct cci_value_traits<sc_core::sc_time>;
+template struct cci_value_traits<sc_dt::sc_logic>;
 template struct cci_value_traits<sc_dt::sc_int_base>;
 template struct cci_value_traits<sc_dt::sc_uint_base>;
 template struct cci_value_traits<sc_dt::sc_signed>;
@@ -235,8 +236,72 @@ struct cci_value_traits< sc_dt::sc_uint<N> >
   /// @todo add bounds checks
 };
 
+template<int N>
+struct cci_value_traits< sc_dt::sc_bigint<N> >
+  : cci_value_traits< sc_dt::sc_signed >
+{
+  typedef sc_dt::sc_bigint<N> type;
+  /// @todo add bounds checks
+};
+
+template<int N>
+struct cci_value_traits< sc_dt::sc_biguint<N> >
+  : cci_value_traits< sc_dt::sc_unsigned >
+{
+  typedef sc_dt::sc_biguint<N> type;
+  /// @todo add bounds checks
+};
+
+template<int N>
+struct cci_value_traits< sc_dt::sc_bv<N> >
+  : cci_value_traits< sc_dt::sc_bv_base >
+{
+  typedef sc_dt::sc_bv<N> type;
+  /// @todo add bounds checks
+};
+
+template<int N>
+struct cci_value_traits< sc_dt::sc_lv<N> >
+  : cci_value_traits< sc_dt::sc_lv_base >
+{
+  typedef sc_dt::sc_lv<N> type;
+  /// @todo add bounds checks
+};
+
 CCI_CLOSE_CONFIG_NAMESPACE_
 
-#undef CCI_VALUE_TRAITS_DERIVED_
-
 #endif // CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
+
+///@todo add support for SystemC fixpoint types
+#if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_)
+#define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
+CCI_OPEN_CONFIG_NAMESPACE_
+
+template struct cci_value_traits<sc_dt::sc_fxval>;
+template struct cci_value_traits<sc_dt::sc_fxval_fast>;
+template struct cci_value_traits<sc_dt::sc_fix>;
+template struct cci_value_traits<sc_dt::sc_ufix>;
+template struct cci_value_traits<sc_dt::sc_fixed_fast>;
+
+template<int W, int I, sc_dt::sc_q_mode, sc_dt::sc_o_mode O, int N >
+struct cci_value_traits< sc_dt::sc_fixed<W,I,Q,O,N> >
+  : cci_value_traits< sc_fix >
+{
+  typedef sc_dt::sc_fixed<W,I,Q,O,N> type;
+  /// @todo add bounds checks
+};
+
+template<int W, int I, sc_dt::sc_q_mode, sc_dt::sc_o_mode O, int N >
+struct cci_value_traits< sc_dt::sc_ufixed<W,I,Q,O,N> >
+  : cci_value_traits< sc_ufix >
+{
+  typedef sc_dt::sc_ufixed<W,I,Q,O,N> type;
+  /// @todo add bounds checks
+};
+
+CCI_CLOSE_CONFIG_NAMESPACE_
+#endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
+
+#ifdef CCI_VALUE_TRAITS_DERIVED_
+#undef CCI_VALUE_TRAITS_DERIVED_
+#endif

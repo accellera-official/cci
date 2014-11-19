@@ -64,13 +64,163 @@ DEFINE_BUILTIN_(std::string, string)
 // ----------------------------------------------------------------------------
 // SystemC builtin types
 
-DEFINE_BUILTIN_( sc_dt::sc_uint_base, uint64 )
-DEFINE_BUILTIN_( sc_dt::sc_int_base,  int64 )
+DEFINE_BUILTIN_( sc_dt::sc_bit, bool )
 
-// sc_signed
-// sc_unsigned
-// sc_bv_base
-// sc_lv_base
-// ...
+DEFINE_PACK_( sc_dt::sc_logic )
+{
+  switch( src.value() )
+  {
+  case sc_dt::Log_0:
+  case sc_dt::Log_1:
+    dst.set_bool( src.value() );
+    break;
+  default:
+    dst.set_string( std::string( 1, src.to_char() ) );
+    break;
+  }
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_logic )
+{
+  if( src.is_bool() )
+  {
+    dst = src.get_bool();
+    return true;
+  }
+  else if( src.is_int() )
+  {
+    dst = sc_dt::sc_logic( src.get_int() );
+    return true;
+  }
+  else if( src.is_string() && src.get_string().size() == 1 )
+  {
+    switch( src.get_string()[0] )
+    {
+      case '0': dst = sc_dt::SC_LOGIC_0; return true;
+      case '1': dst = sc_dt::SC_LOGIC_1; return true;
+      case 'z': /* fallthrough */
+      case 'Z': dst = sc_dt::SC_LOGIC_Z; return true;
+      case 'x': /* fallthrough */
+      case 'X': dst = sc_dt::SC_LOGIC_X; return true;
+      default:  /* nothing */ ;
+    }
+  }
+  return false;
+}
+
+DEFINE_PACK_( sc_dt::sc_int_base )
+{
+  dst.set_int64( src );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_int_base )
+{
+  if( src.is_int64() )
+    dst = src.get_int64();
+  else if( src.is_string() )
+    dst = src.get_string().c_str();
+  else
+    return false;
+
+  return true;
+}
+
+DEFINE_PACK_( sc_dt::sc_uint_base )
+{
+  dst.set_uint64( src );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_uint_base )
+{
+  if( src.is_uint64() )
+    dst = src.get_uint64();
+  else if( src.is_string() )
+    dst = src.get_string().c_str();
+  else
+    return false;
+
+  return true;
+}
+
+DEFINE_PACK_( sc_dt::sc_signed )
+{
+  if( src.length() <= 64 )
+    dst.set_int64( src.to_int64() );
+  else
+    dst.set_string( src.to_string() );
+
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_signed )
+{
+  ///@todo add bounds checks
+  if( src.is_int64() )
+    dst = src.get_int64();
+  else if( src.is_string() )
+    dst = src.get_string().c_str();
+  else
+    return false;
+
+  return true;
+}
+
+DEFINE_PACK_( sc_dt::sc_unsigned )
+{
+  if( src.length() <= 64 )
+    dst.set_uint64( src.to_uint64() );
+  else
+    dst.set_string( src.to_string() );
+
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_unsigned )
+{
+  ///@todo add bounds checks
+  if( src.is_uint64() )
+    dst = src.get_uint64();
+  else if( src.is_string() )
+    dst = src.get_string().c_str();
+  else
+    return false;
+
+  return true;
+}
+
+DEFINE_PACK_( sc_dt::sc_bv_base )
+{
+  dst.set_string( src.to_string() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_bv_base )
+{
+  ///@todo add bounds checks
+  if( !src.is_string() )
+    return false;
+
+  dst = src.get_string().c_str();
+  return true;
+}
+
+DEFINE_PACK_( sc_dt::sc_lv_base )
+{
+  dst.set_string( src.to_string() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_lv_base )
+{
+  ///@todo add bounds checks
+  if( !src.is_string() )
+    return false;
+
+  dst = src.get_string().c_str();
+  return true;
+}
 
 CCI_CLOSE_CONFIG_NAMESPACE_
