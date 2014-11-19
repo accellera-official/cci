@@ -118,7 +118,9 @@ int sc_main( int, char*[] )
         cci_value_list()
           .push_back( 0ul )
           .push_back( cci_value() )
-      );
+        )
+      .push_back( sc_dt::SC_LOGIC_Z );
+
     sc_assert( v.get_list()[3].is_list() );
     sc_assert( v.get_list()[4].get_list().size() == 2 );
 
@@ -138,6 +140,10 @@ int sc_main( int, char*[] )
     sc_assert( v.has_entry("value") );
     sc_assert( v.has_entry("unit") );
     sc_assert( !v.has_entry("scale") );
+
+    sc_core::sc_time t;
+    sc_assert( v.try_get(t) );
+    std::cout << "JSON (sc_time): " << cci_value::to_json( cci_value(t) ) << std::endl;
 
     sc_assert( cci_value::to_json(v) == json );
     v.push_entry( "scale", 1 );
