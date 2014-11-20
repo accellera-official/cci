@@ -30,6 +30,8 @@
 #include "cci_cnf/cci_datatypes.h"
 #include "cci_cnf/cci_originator.h"
 #include "cci_cnf/cci_broker_manager.h"
+#include "cci_cnf/cci_value.h"
+#include "cci_cnf/cci_value_traits.h"
 #include "cci_cnf/cci_param.h"
 #include "cci_cnf/cci_macros_undef.h"
 
