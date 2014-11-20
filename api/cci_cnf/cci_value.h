@@ -719,6 +719,14 @@ cci_value::to_json( const_reference v )
   return json;
 }
 
+///@todo drop me later?
+inline std::ostream&
+operator<<( std::ostream& os, cci_value::const_reference v )
+{
+  os << cci_value::to_json( v );
+  return os;
+}
+
 // --------------------------------------------------------------------------
 
 class cci_value_list
