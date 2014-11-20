@@ -5,13 +5,9 @@ OPT      = -g -Wall
 OTHER    = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER)
 
-SRCS = ../../gs_param_implementation/json_spirit/json_spirit_reader.cpp \
-       json_spirit/json_spirit_writer.cpp \
-       gs_cci_symbols_b.cpp
+SRCS = gs_cci_symbols_b.cpp
 
-OBJS = ../../../gs_param_implementation/json_spirit/json_spirit_reader.o \
-       ../../../gs_param_implementation/json_spirit/json_spirit_writer.o \
-       gs_cci_symbols_b.o
+OBJS = $(SRCS:.cpp=.o)
  
 
 # Makefile.defs

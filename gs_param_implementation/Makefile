@@ -21,9 +21,7 @@ OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long -Wno-unused-local-typedefs
 CXXFLAGS = $(OPT) $(OTHER)
 
-OBJS = json_spirit/json_spirit_reader.o \
-       json_spirit/json_spirit_writer.o \
-       gs_cci_symbols_templ_small_int.o \
+OBJS = gs_cci_symbols_templ_small_int.o \
        gs_cci_symbols.o
  
 DEPS = $(OBJS:.o=.d)

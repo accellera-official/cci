@@ -30,7 +30,6 @@
 #include <iostream>
 #include <sstream>
 
-#include "json_spirit/json_spirit.h"
 #include <boost/algorithm/string.hpp>
 
 
