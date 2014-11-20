@@ -498,9 +498,18 @@ bool
 cci_value_ref::json_deserialize( std::string const & src )
 {
   json_document doc;
-  doc.Parse( src.c_str() );
-  if( doc.GetParseError() ) {
-    ///@todo add warning?
+  try {
+    doc.Parse( src.c_str() );
+  }
+  catch ( rapidjson::ParseException const & e )
+  {
+    std::stringstream str;
+    str << "JSON error: " << GetParseError_En(e.Code()) << "\n"
+            "\t'" << src << "' "
+            "(offset: " << e.Offset() << ")";
+    cci_report_handler::report( sc_core::SC_WARNING
+                              , "CCI_VALUE_FAILURE"
+                              , str.str().c_str(), __FILE__, __LINE__ );
     return false;
   }
   THIS->Swap( doc );

@@ -81,6 +81,7 @@ RAPIDJSON_DIAG_OFF( pedantic ) // ignore pedantic errors
   )
 
 #include "rapidjson/error/error.h"
+#include "rapidjson/error/en.h"
 
 RAPIDJSON_NAMESPACE_BEGIN
 
