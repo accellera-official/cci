@@ -116,6 +116,7 @@ public:
   int64    get_int64()   const;
   uint64   get_uint64()  const;
   double   get_double()  const;
+  double   get_number()  const { return get_double(); }
 
   cci_value_string_cref get_string() const;
   cci_value_list_cref   get_list() const;
@@ -194,6 +195,7 @@ public:
   cci_value_ref set_int64( int64 v );
   cci_value_ref set_uint64( uint64 v );
   cci_value_ref set_double( double v );
+  cci_value_ref set_number( double v ) { return set_double(v); }
 
   cci_value_string_ref set_string( const char* s );
   cci_value_string_ref set_string( const std::string& s );
