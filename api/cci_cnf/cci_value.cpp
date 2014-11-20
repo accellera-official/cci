@@ -174,7 +174,7 @@ uint64 cci_value_cref::get_uint64() const
 
 double cci_value_cref::get_double() const
 {
-  ASSERT_TYPE(is_double());
+  ASSERT_TYPE(is_number());
   return THIS->GetDouble();
 }
 
