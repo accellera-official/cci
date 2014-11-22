@@ -16,12 +16,14 @@
 
 
 
-#ifndef __CCI_CALLBACKS_H__
-#define __CCI_CALLBACKS_H__
+#ifndef CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
+#define CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 
-#include "core/cci_function.h"
+#include "cci_function.h"
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
+
+  class cci_cnf_broker_if;
   
   /// Callback type
   /**
@@ -156,7 +158,7 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   typedef callb_adapt_T<cci_base_param, cci_cnf_broker_if> callb_adapt;
   
       
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #include "cci_callbacks.hpp"
 

@@ -15,10 +15,15 @@
 // ENDLICENSETEXT
 
 
-#include "cci"
+#include "cci_debug.h"
+#include "cci_datatypes.h"
+#include "cci_originator.h"
+#include "cci_param.h"
+#include "cci_broker_manager.h"
+#include "cci_broker_stack.h"
+#include "cci_report_handler.h"
 
-
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
 // Implementation cci_broker_manager
@@ -93,4 +98,4 @@ cci_broker_manager::operator cci::cnf::cci_cnf_broker_if*() {
   return m_broker;
 }
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_

@@ -16,18 +16,15 @@
 
 
 
-#ifndef __CCI_PARAM_IF_H__
-#define __CCI_PARAM_IF_H__
+#ifndef CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
+#define CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
 
 
 #include <string>
-#include <iostream>
-#include <sstream>
+#include "cci_base_param_impl_if.h"
 
-#include <systemc>
+CCI_OPEN_CONFIG_NAMESPACE_
 
-
-__CCI_OPEN_CONFIG_NAMESPACE__
 
   
   /// Compiler Check Interface for the parameters class
@@ -171,6 +168,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   }*/
   
   
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

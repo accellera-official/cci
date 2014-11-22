@@ -16,6 +16,7 @@
 
 
 #include "gs_cci_cnf_private_broker.h"
+#include "cci_core/cci_gen_unique_name.h"	// HACK; needs a proper home
 
 
 /*cci::cnf::gs_cci_private_broker::gs_cci_private_broker(const char* name, sc_core::sc_module& owner, std::vector<const char*> pub_params) 
