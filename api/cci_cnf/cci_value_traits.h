@@ -24,6 +24,8 @@
 #include "cci_core/systemc.h"
 #include "cci_cnf/cci_value.h"
 
+#include <cstring> // std::strncpy
+
 /**
  * @file   cci_value_traits.h
  * @brief  conversions from and to a @ref cci_value
@@ -87,6 +89,7 @@ template struct cci_value_traits<int64>;
 template struct cci_value_traits<unsigned>;
 template struct cci_value_traits<uint64>;
 template struct cci_value_traits<double>;
+template struct cci_value_traits<std::string>;
 
 // related numerical types
 // (without range checks for now)
@@ -106,6 +109,34 @@ CCI_VALUE_TRAITS_DERIVED_( uint64, unsigned long );
 CCI_VALUE_TRAITS_DERIVED_( double, float );
 
 // ----------------------------------------------------------------------------
+// C++ string literals
+
+template<int N>
+struct cci_value_traits<char[N]>
+{
+  typedef char type[N]; ///< common type alias
+  static bool pack( cci_value::reference dst, type const & src )
+  {
+    dst.set_string( src );
+    return true;
+  }
+  static bool unpack( type & dst, cci_value::const_reference src )
+  {
+    if( src.is_null() )
+    {
+      dst[0] = '\0'; // convert "null" to empty string
+      return true;
+    }
+    if( !src.is_string() )
+      return false;
+
+    cci_value::const_string_reference str = src.get_string();
+    std::strncpy( dst, str, N-1 );
+    dst[N-1] = '\0';
+    return ( str.size() <= N-1 );
+  }
+};
+
 // SystemC builtin types
 
 // default instantiations (in cci_value_traits.cpp)

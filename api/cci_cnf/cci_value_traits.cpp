@@ -59,6 +59,8 @@ DEFINE_BUILTIN_(unsigned, uint)
 DEFINE_BUILTIN_(uint64,   uint64)
 DEFINE_BUILTIN_(double,   double)
 
+DEFINE_BUILTIN_(std::string, string)
+
 // ----------------------------------------------------------------------------
 // SystemC builtin types
 
