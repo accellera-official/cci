@@ -55,36 +55,32 @@ bool operator==(test_datatype_without_parameter_implementation const& lhs, test_
   return lhs.strVal.compare(rhs.strVal);
 }
 
+#define ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE
 // The following code enables the new data type parameter to work with cci_values !!!!
 #ifdef ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE
 
-__OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
-/// Helper class template specialization: to make cci_values work
-template<cci::cnf::param_mutable_type TM>
-struct cci_value_helper<test_datatype_without_parameter_implementation, TM> {
-  typedef test_datatype_without_parameter_implementation my_type;
-  static void from_value(const cci::cnf::cci_value& val, gs_cci_param<my_type, TM>& param) {
-    test_datatype_without_parameter_implementation d;
-    switch (val.type() ) {
-      case cci::cnf::partype_string:
-        d.strVal = val.get_string();
-        param.set(d);
-        break;
-      default:
-        cci::cnf::cci_report_handler::cci_value_failure("Set cci value called with not supported value type.");
-    }
+namespace cci { namespace cnf {
+template<>
+struct cci_value_traits< test_datatype_without_parameter_implementation >
+{
+  typedef test_datatype_without_parameter_implementation type;
+  static bool pack( cci_value::reference dst, type const & src )
+  {
+    dst.set_string( src.strVal );
+    return true;
   }
-  
-  static cci::cnf::cci_value to_value(gs_cci_param<my_type, TM>& param) {
-    test_datatype_without_parameter_implementation d;
-    std::string s = param.get().strVal;
-    cci::cnf::cci_value val(s);
-    return val;    
+  static bool unpack( type & dst, cci_value::const_reference src )
+  {
+    if( !src.is_string() )
+      return false;
+
+    dst.strVal = src.get_string();
+    return true;
   }
+
 };
-
-__CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
+} /* namespace cnf */ } /* namespace cci */
 
 #endif
 // end if ENABLE_CCI_VALUE_SUPPORT_FOR_TEST_DATATYPE

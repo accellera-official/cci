@@ -44,7 +44,7 @@ cci::cnf::callback_return_type Observer::config_str_callback(const std::string& 
     DEMO_DUMP(name(), "**** String callback for parameter '" << par_name << "' will change value");
     break;
   case cci::cnf::post_write:
-    DEMO_DUMP(name(), "**** String callback for parameter '" << par_name << "' changed to value '"<<str<<"'");
+    DEMO_DUMP(name(), "**** String callback for parameter '" << par_name << "' changed to value="<<str);
     break;
   default:
     assert(false && "not awaited cb reason");
@@ -59,7 +59,7 @@ cci::cnf::callback_return_type Observer::config_new_param_callback(const std::st
   cci::cnf::cci_base_param* p = mBroker->get_param(par_name);
   assert(p && "This new param should already be available!");
   std::string str = p->json_serialize();
-  DEMO_DUMP(name(), "   value '"<<str<<"'");
+  DEMO_DUMP(name(), "   value="<<str);
   // Now register for some other callbacks
   // It is recommended to register with the parameter object directly:
   mCallbacks.push_back(p->register_callback(cci::cnf::pre_write, this, 
@@ -84,7 +84,7 @@ cci::cnf::callback_return_type Observer::config_callback(cci::cnf::cci_base_para
       break;
     case cci::cnf::post_write:
       str = par.json_serialize();
-      DEMO_DUMP(name(), "**** Object callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
+      DEMO_DUMP(name(), "**** Object callback for parameter '" << par.get_name() << "' changed to value="<<str);
       break;
     default:
       assert(false && "not awaited cb reason");
