@@ -17,7 +17,7 @@
 #ifndef CCI_CNF_CCI_DATATYPES_H_INCLUDED_
 #define CCI_CNF_CCI_DATATYPES_H_INCLUDED_
 
-#include "cci_config_macros.h"
+#include "cci_cnf/cci_config_macros.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
 

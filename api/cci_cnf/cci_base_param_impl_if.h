@@ -19,9 +19,9 @@
 #ifndef CCI_BASE_PARAM_IMPL_IF_H_INCLUDED_
 #define CCI_BASE_PARAM_IMPL_IF_H_INCLUDED_
 
-#include "cci_shared_ptr.h"
-#include "cci_callbacks.h"
-#include "cci_value.h"
+#include "cci_cnf/cci_shared_ptr.h"
+#include "cci_cnf/cci_callbacks.h"
+#include "cci_cnf/cci_value.h"
 #include <string>
 
 

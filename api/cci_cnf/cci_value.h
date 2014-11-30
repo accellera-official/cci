@@ -21,7 +21,7 @@
 #ifndef CCI_CNF_CCI_VALUE_H_INCLUDED_
 #define CCI_CNF_CCI_VALUE_H_INCLUDED_
 
-#include "cci_datatypes.h"
+#include "cci_cnf/cci_datatypes.h"
 #include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
 #include <cstring> // std::strlen

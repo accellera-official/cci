@@ -15,9 +15,9 @@
 // ENDLICENSETEXT
 
 
-#include "cci_factory.h"
-#include "cci_broker_if.h"
-#include "cci_broker_manager.h"
+#include "cci_cnf/cci_factory.h"
+#include "cci_cnf/cci_broker_if.h"
+#include "cci_cnf/cci_broker_manager.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
   
