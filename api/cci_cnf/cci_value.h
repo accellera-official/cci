@@ -499,8 +499,10 @@ public:
     { return (*this)[index]; }
   //@}
 
-  // size_type capacity() const;
-  // void reserve( size_type );
+  /// capacity of underlying storage
+  size_type capacity() const;
+  /// reserve space in underlying storage
+  this_type reserve( size_type );
 
   /** @name push new elements to the end of the list */
   //@{

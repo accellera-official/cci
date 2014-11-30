@@ -215,7 +215,7 @@ struct cci_value_traits<T[N]>
   static bool pack( cci_value::reference dst, type const & src )
   {
     cci_value_list ret;
-    // ret.reserve(N);
+    ret.reserve( N );
 
     for( size_t i = 0; i < N; ++i )
       ret.push_back( src[i] );
@@ -245,7 +245,7 @@ struct cci_value_traits< std::vector<T,Alloc> >
   static bool pack( cci_value::reference dst, type const & src )
   {
     cci_value_list ret;
-    // ret.reserve( src.size() );
+    ret.reserve( src.size() );
 
     for( size_t i = 0; i < src.size(); ++i )
       ret.push_back( src[i] );

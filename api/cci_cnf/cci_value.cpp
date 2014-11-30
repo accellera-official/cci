@@ -355,6 +355,19 @@ cci_value_list_ref::clear()
   return *this;
 }
 
+cci_value_list_ref::size_type
+cci_value_list_ref::capacity() const
+{
+  return THIS->Capacity();
+}
+
+cci_value_list_ref
+cci_value_list_ref::reserve( size_type new_capacity )
+{
+  THIS->Reserve( new_capacity, json_allocator );
+  return *this;
+}
+
 cci_value_list_ref
 cci_value_list_ref::push_back( const_reference value )
 {
