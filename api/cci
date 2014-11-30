@@ -21,7 +21,8 @@
 #define CCI_CCI_HEADER_INCLUDED_
 
 // CCI core includes
-// #include "cci_core/cci_version.h"
+
+#include "cci_core/cci_version.h"
 #include "cci_core/cci_gen_unique_name.h"
 
 // CCI config includes
