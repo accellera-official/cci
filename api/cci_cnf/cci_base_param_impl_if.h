@@ -16,23 +16,21 @@
 
 
 
-#ifndef __CCI_BASE_PARAM_IMPL_IF_H__
-#define __CCI_BASE_PARAM_IMPL_IF_H__
+#ifndef CCI_BASE_PARAM_IMPL_IF_H_INCLUDED_
+#define CCI_BASE_PARAM_IMPL_IF_H_INCLUDED_
 
-
-#include <string>
-#include <iostream>
-#include <map>
-#include <set>
-
-#include "core/cci_shared_ptr.h"
+#include "cci_shared_ptr.h"
+#include "cci_callbacks.h"
 #include "cci_value.h"
+#include <string>
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
+
 
   template <typename T, param_mutable_type TM> 
   class cci_param;
+  class cci_originator;
 
   /// Compiler Check Interface for base param which stores string values (can be instantiated) or base class for all cci_param template specializations.
   /**
@@ -477,6 +475,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
 
   };
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

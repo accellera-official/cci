@@ -14,10 +14,12 @@
 // ENDLICENSETEXT
 
 
-#ifndef __CCI_ORIGINATOR_H__
-#define __CCI_ORIGINATOR_H__
+#ifndef CCI_CNF_CCI_ORIGINATOR_H_INCLUDED_
+#define CCI_CNF_CCI_ORIGINATOR_H_INCLUDED_
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+#include "cci_core/systemc.h"
+
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
 /// Originator class which is used to handle the originator information independently from its data type (object pointer or string)
@@ -58,7 +60,7 @@ public:
 
   /// (Static) global getter function for getting the current Golbal Originator Pointer
   /**
-   * @param The current Golbal Originator Pointer (might be NULL if there is none)
+   * @param The current Global Originator Pointer (might be NULL if there is none)
    */
   static const cci_originator* get_global_originator() {
     return handle_current_originator();
@@ -178,7 +180,7 @@ protected:
 };
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 
 #endif

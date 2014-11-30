@@ -75,7 +75,7 @@ $(LIBDIR)/$(LIB): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 clean:
-	rm -f  $(OBJS) $(DEPS)
+	rm -f $(OBJS) $(DEPS)
 	rm -f $(LIBDIR)/$(LIB)
 	-rmdir $(LIBDIR) 2>&1 || true
 

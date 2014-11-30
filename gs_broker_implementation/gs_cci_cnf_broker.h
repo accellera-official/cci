@@ -20,6 +20,7 @@
 
 // NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
+#define CCI_CNF_SHARE_LIBRARY_MACROS
 #include <cci>
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_broker_if.h"

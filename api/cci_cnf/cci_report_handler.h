@@ -1,6 +1,23 @@
-#include <systemc>
-#include <string>
+// LICENSETEXT
+//
+//   Copyright (C) 2011 : GreenSocs Ltd
+// 	 http://www.greensocs.com/ , email: info@greensocs.com
+//
+//   Developed by:
+//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
+//
+//
+// The contents of this file are subject to the licensing terms specified
+// in the file LICENSE. Please consult this file for restrictions and
+// limitations that may apply.
+//
+// ENDLICENSETEXT
 
+#ifndef CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
+#define CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
+
+#include "cci_core/systemc.h"
+#include <string>
 
 namespace cci {
 namespace cnf {
@@ -81,3 +98,5 @@ cci_report_handler::report(SC_FATAL,_id,_message,__FILE__,__LINE__);
 
 } //namespace cnf
 } //namespace cci
+
+#endif // CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
