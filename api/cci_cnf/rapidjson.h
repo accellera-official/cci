@@ -48,6 +48,10 @@
 // enable support for std::string
 #define RAPIDJSON_HAS_STD_STRING 1
 
+// parse floating point numbers with full precision
+#define RAPIDJSON_PARSE_DEFAULT_FLAGS \
+  ::RAPIDJSON_NAMESPACE::kParseFullPrecisionFlag
+
 RAPIDJSON_NAMESPACE_BEGIN
 
 struct AssertException
