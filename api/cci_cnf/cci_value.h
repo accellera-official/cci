@@ -51,19 +51,22 @@ class cci_value_map_cref;
 class cci_value_map_ref;
 
 template<typename T> struct cci_value_traits;
+
+///@cond CCI_HIDDEN_FROM_DOXYGEN
 #define CCI_VALUE_TRAITS_(Type) \
   typename cci_value_traits<Type>::type
 #define CCI_VALUE_TRAITS_ENABLED_(Type) \
   CCI_VALUE_TRAITS_(Type) *
 #define CCI_VALUE_ENABLE_IF_TRAITS_(Type) \
   CCI_VALUE_TRAITS_ENABLED_(Type) = 0
+///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
 /// @ref cci_value comparisons
 bool operator==( cci_value_cref const &, cci_value_cref const & );
 
 // --------------------------------------------------------------------------
 
-/// constant reference to a (nested) @ref cci_value
+/// reference to a constant (nested) @ref cci_value
 class cci_value_cref
 {
   friend class cci_value_ref;
@@ -81,7 +84,8 @@ protected:
 
 public:
 
-  //!@name type queries
+  /** @name type queries */
+  ///@{
   basic_param_type  basic_type() const;
   bool is_null()    const;
 
@@ -107,28 +111,48 @@ public:
   bool is_list()    const;
   //@}
 
-  //!@name value queries
+  /** @name value queries */
+  //@{
 
+  /// get boolean value
   bool get_bool()    const;
 
+  /// get integer value
   int      get_int()     const;
+  /// get unsigned integer value
   unsigned get_uint()    const;
+  /// get 64-bit integer value
   int64    get_int64()   const;
+  /// get 64-bit unsigned integer value
   uint64   get_uint64()  const;
+  /// get floating point value
   double   get_double()  const;
+  /// get the numeric value (alias for get_double())
   double   get_number()  const { return get_double(); }
+  //@}
 
+  /**
+   * @name complex value queries
+   * These functions return (constant) references to the complex value types
+   * that can be stored in a cci_value (strings, lists, maps).
+   */
+  //@{
   cci_value_string_cref get_string() const;
   cci_value_list_cref   get_list() const;
   cci_value_map_cref    get_map()  const;
-
-  template<typename T>
-  bool try_get( T& dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) ) const;
-  template<typename T>
-  CCI_VALUE_TRAITS_(T) get() const;
-
   //@}
 
+  /** @name arbitrary type value queries */
+  //@{
+  /// try to get a value of a @ref cci_value_traits enabled type
+  template<typename T>
+  bool try_get( T& dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) ) const;
+  /// get a value of a @ref cci_value_traits enabled type
+  template<typename T>
+  CCI_VALUE_TRAITS_(T) get() const;
+  //@}
+
+  /// convert value to JSON
   bool json_serialize( std::string& ) const;
 
 protected:
@@ -140,7 +164,7 @@ protected:
   impl* pimpl_;
 
 private:
-  // constant reference, no assignment
+  /// constant reference, disabled assignment
   cci_value_cref operator=( cci_value_cref const& ) /* = delete */;
 };
 
@@ -164,7 +188,7 @@ CCI_VALUE_TRAITS_(T) cci_value_cref::get() const
 
 // --------------------------------------------------------------------------
 
-/// mutable reference to a (nested) @ref cci_value
+/// reference to a mutable (nested) @ref cci_value
 class cci_value_ref
   : public cci_value_cref
 {
@@ -179,32 +203,67 @@ protected:
     : cci_value_cref(i) {}
 
 public:
+  /// exchange contents with another cci_value
   void swap( this_type& that );
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
+  /** @name set value functions
+   *
+   * The various @c set_* functions update the represented value
+   * (and its @ref basic_type()) accordingly.
+   *
+   * These functions provide a "fluent interface" by returning a reference
+   * to the surrounding variant object.  This enables chained function calls,
+   * which is especially convenient for complex values like lists and maps.
+   */
+  ///@{
+
+  /// set value to cci_value_traits enabled type
   template<typename T>
   cci_value_ref set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  /// try to set value to cci_value_traits enabled type
   template<typename T>
   bool          try_set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
 
+  /// set value to @c null
   cci_value_ref set_null();
+  /// set boolean value (@c true, @c false)
   cci_value_ref set_bool( bool v );
+  /// set integer value
   cci_value_ref set_int( int v );
+  /// set unsigned integer value
   cci_value_ref set_uint( unsigned v );
+  /// set 64-bit integer value
   cci_value_ref set_int64( int64 v );
+  /// set unsigned 64-bit integer value
   cci_value_ref set_uint64( uint64 v );
+  /// set double value
   cci_value_ref set_double( double v );
+  /// set double value (alias for set_double())
   cci_value_ref set_number( double v ) { return set_double(v); }
 
+  /// set string value from null-terminated string
   cci_value_string_ref set_string( const char* s );
+  /// set string value from std::string
   cci_value_string_ref set_string( const std::string& s );
+  /// set string value from cci_value::const_string_reference
   cci_value_string_ref set_string( cci_value_string_cref s );
+  /// set string value from null-terminated string and length
   cci_value_string_ref set_string( const char* s, size_t len );
 
+  /// set value to an (empty) list
   cci_value_list_ref   set_list();
+  /// set value to an (empty) map
   cci_value_map_ref    set_map();
+  ///@}
 
+  /** @name complex value queries
+   *
+   * The functions return a reference to a (mutable) @ref cci_value object
+   * of the corresponding complex value type (string, list, map).
+   */
+  ///@{
   using base_type::get_string;
   cci_value_string_ref get_string();
 
@@ -213,7 +272,9 @@ public:
 
   using base_type::get_map;
   cci_value_map_ref  get_map();
+  ///@}
 
+  /// try to set the value from a JSON-encoded string
   bool json_deserialize( std::string const& );
 };
 
@@ -249,6 +310,7 @@ bool operator==( std::string const &, cci_value_string_cref const & );
 bool operator==( cci_value_string_cref const &, std::string const & );
 ///@}
 
+/// reference to constant cci_value string value
 class cci_value_string_cref
   : public cci_value_cref
 {
@@ -267,13 +329,17 @@ protected:
 public:
   typedef size_t size_type;
 
+  /// empty string?
   bool      empty()  const { return size() == 0;  }
   size_type length() const { return size(); }
   size_type size()   const;
 
+  /// implicit conversion to std::string
   operator std::string() const { return std::string( c_str(), length() ); }
+  /// obtain underlying null-terminated string
   char const * c_str()   const;
 
+  /// character access by index
   char operator[]( size_type index ) const
     { return c_str()[index]; }
 
@@ -295,6 +361,7 @@ private:
 
 // --------------------------------------------------------------------------
 
+/// reference to mutable cci_value string value
 class cci_value_string_ref
   : public cci_value_string_cref
 {
@@ -307,12 +374,16 @@ protected:
     : base_type(i) {}
 
 public:
+  /// exchange contents with another string value
   void swap( this_type& that );
 
+  /** @name assign string contents */
+  //@{
   this_type operator=( this_type const& );
   this_type operator=( cci_value_string_cref s );
   this_type operator=( const char * s );
   this_type operator=( std::string const & s );
+  //@}
 };
 
 inline cci_value_string_ref
@@ -349,6 +420,7 @@ cci_value_ref::set_string(std::string const & s)
 
 // --------------------------------------------------------------------------
 
+/// reference to constant cci_value list value
 class cci_value_list_cref
   : public cci_value_cref
 {
@@ -365,12 +437,18 @@ public:
   typedef cci_value_cref const_reference;
   typedef cci_value_ref  reference;
 
+  /** @name list queries */
+  //@{
   bool      empty() const { return size() == 0;  }
   size_type size()  const;
+  //@}
 
+  /** @name (constant) element access by index */
+  //@{
   const_reference operator[]( size_type index ) const;
   const_reference at( size_type index ) const
     { return (*this)[index]; }
+  //@}
 
 private:
   // exclude non-list value functions
@@ -390,6 +468,7 @@ private:
 
 // --------------------------------------------------------------------------
 
+/// reference to mutable cci_value list value
 class cci_value_list_ref
   : public cci_value_list_cref
 {
@@ -404,23 +483,35 @@ protected:
 public:
   this_type operator=( this_type const& );
   this_type operator=( base_type const& );
+  /// exchange contents with another list value
   void swap( this_type& );
 
+  /// clear list elements
   this_type clear();
 
+  /** @name (mutable) element access by index */
+  //@{
   using base_type::operator[];
   reference operator[]( size_type index );
 
   using base_type::at;
   reference at( size_type index )
     { return (*this)[index]; }
+  //@}
 
   // size_type capacity() const;
   // void reserve( size_type );
 
+  /** @name push new elements to the end of the list */
+  //@{
+
+  /// append value obtained from a constant cci_value reference
   this_type push_back( const_reference v );
+  /// append arbitrary cci_value_traits enabled value
   template<typename T>
   this_type push_back( const T & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+
+  //@}
 
   // TODO: add iterator interface
 };
@@ -438,7 +529,7 @@ cci_value_list_ref::operator[]( size_type index )
   { return reference( base_type::operator[](index).pimpl_ ); }
 
 template<typename T>
-cci_value_list_ref
+cci_value_list_ref::this_type
 cci_value_list_ref::push_back( const T& value, CCI_VALUE_TRAITS_ENABLED_(T) )
 {
   cci_value v(value);
@@ -451,6 +542,7 @@ cci_value_ref::get_list()
 
 // --------------------------------------------------------------------------
 
+/// reference to constant cci_value map
 class cci_value_map_cref
   : public cci_value_cref
 {
@@ -467,12 +559,16 @@ public:
   typedef cci_value_cref const_reference;
   typedef cci_value_ref  reference;
 
-  ///@name map queries
+  /** @name map queries */
+  //@{
   bool      empty()    const { return size() == 0;  }
   size_type size()     const;
-  ///@}
+  //@}
 
-  ///@name map element queries
+  /** @name map element queries
+   * Check for the existence of an entry with a given key
+   */
+  //@{
   bool has_entry( const char * key ) const
     { return NULL != do_lookup( key, std::strlen(key)
                               , /* allow_fail = */ true ); }
@@ -482,7 +578,12 @@ public:
   bool has_entry( std::string const & key ) const
     { return NULL != do_lookup( key.c_str(), key.length()
                               , /* allow_fail = */ true ); }
+  //@}
 
+  /** @name map element access
+   * Accessing an entry with a given key
+   */
+  //@{
   const_reference operator[]( const char* key ) const
     { return const_reference( do_lookup( key, std::strlen(key) ) ); }
   const_reference operator[]( cci_value_string_cref key ) const
@@ -515,6 +616,7 @@ private:
 
 // --------------------------------------------------------------------------
 
+/// reference to mutable cci_value map
 class cci_value_map_ref
   : public cci_value_map_cref
 {
@@ -533,7 +635,7 @@ public:
 
   this_type clear();
 
-  ///@name map element query
+  /** @name map element access */
   ///@{
   using base_type::operator[];
   reference operator[]( const char* key )
@@ -544,13 +646,17 @@ public:
 
   ///@name map element addition
   ///@{
+  /// add value obtained from a constant cci_value reference
   this_type push_entry( const char* key, const_reference const & value );
+  /// add value obtained from a constant cci_value reference
   this_type push_entry( std::string const& key, const_reference const & value )
     { return push_entry( key.c_str(), value ); }
 
+  /// add an arbitrary cci_value_traits enabled value
   template<typename T>
   this_type push_entry( const char* key, const T & value
                       , CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  /// add an arbitrary cci_value_traits enabled value
   template<typename T>
   this_type push_entry( std::string const & key, const T & value
                       , CCI_VALUE_ENABLE_IF_TRAITS_(T) )
@@ -583,26 +689,62 @@ cci_value_ref::get_map()
 
 // --------------------------------------------------------------------------
 
+/**
+ * @brief generic variant type
+ *
+ * This class provides the first-class type for representing arbitrary values.
+ * It can represent its values via a set of primitive types:
+ *  * @c null (default)
+ *  * boolean values (@c true, @c false)
+ *  * numeric values (signed/unsigned integral or floating-point numbers)
+ *  * strings
+ *  * lists of values
+ *  * maps of (key, value) pairs
+ *
+ * First-class objects of this class have strict value semantics, i.e. each
+ * value represents a distinct object.  Due to the hierarchical nature of the
+ * data structure, values embedded somewhere in a list or map are referenced
+ * by dedicated reference objects (cci_value_cref, cci_value_ref, and their
+ * specialized variants for strings, lists and maps), with or without constness.
+ *
+ * Users can add automatic conversions from/to cci_value objects by providing
+ * an implementation (or specialisation) of the cci_value_traits class.
+ * Corresponding specializations for the builtin types, the SystemC data types
+ * and some freuquently used standard types are provided by default already.
+ *
+ * \see cci_value_list, cci_value_map, cci_value_traits
+ */
 class cci_value
   : public cci_value_ref
 {
   typedef cci_value this_type;
 public:
+  /// reference to a constant value
   typedef cci_value_cref        const_reference;
+  /// reference to a mutable value
   typedef cci_value_ref         reference;
+  /// reference to a constant string value
   typedef cci_value_string_cref const_string_reference;
+  /// reference to a mutable string value
   typedef cci_value_string_ref  string_reference;
+  /// reference to a constant list value
   typedef cci_value_list_cref   const_list_reference;
+  /// reference to a mutable list value
   typedef cci_value_list_ref    list_reference;
+  /// reference to a constant map value
   typedef cci_value_map_cref    const_map_reference;
+  /// reference to a mutable map value
   typedef cci_value_map_ref     map_reference;
 
+  /// default constructor
   cci_value()
     : cci_value_ref(), own_pimpl_() {}
 
+  /// constructor from basic type
   explicit
   cci_value( basic_param_type ); ///< @todo drop this?
 
+  /// constructor from arbitrary cci_value_traits enabled value
   template<typename T>
   explicit
   cci_value( T const & src, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
@@ -619,22 +761,33 @@ public:
 
   ~cci_value();
 
+  /** @name set value functions
+   * \see cci_value_ref
+   */
+  //@{
+  /// set to arbitrary cci_value_traits enabled value
   template< typename T >
   reference  set( T const & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) )
     { init(); return reference::set(v); }
 
+  /// set boolean value
   reference set_bool( bool v )
     { init(); return reference::set_bool(v); }
 
+  /// set integer value
   reference set_int( int v )
     { init(); return reference::set_int(v); }
+  /// set unsigned integer value
   reference set_uint( unsigned v )
     { init(); return reference::set_uint(v); }
+  /// set 64-bit integer value
   reference set_int64( int64 v )
     { init(); return reference::set_int64(v); }
+  /// set unsigned 64-bit integer value
   reference set_uint64(uint64 v)
     { init(); return reference::set_uint64(v); }
 
+  /// set floating-point value
   reference set_double(double v)
     { init(); return cci_value_ref::set_double(v); }
 
@@ -650,13 +803,17 @@ public:
 
   map_reference set_map()
     { init(); return cci_value_ref::set_map(); }
+  //@}
 
+  /** @name JSON (de)serialization
+   */
   using const_reference::json_serialize;
   bool json_deserialize( std::string const & src )
     { init(); return reference::json_deserialize( src ); }
 
   static cci_value from_json( std::string const & json );
   static std::string to_json( const_reference v );
+  //@}
 
 private:
   impl* init();
@@ -729,6 +886,12 @@ operator<<( std::ostream& os, cci_value::const_reference v )
 
 // --------------------------------------------------------------------------
 
+/**
+ * @brief list of cci_value values
+ *
+ * This class is equivalent to a cci_value after calling @c set_list().
+ * @see cci_value, cci_value_list_cref, cci_value_list_ref
+ */
 class cci_value_list
   : public cci_value_list_ref
 {
@@ -786,6 +949,12 @@ cci_value_list::operator=( this_type const & that )
 
 // --------------------------------------------------------------------------
 
+/**
+ * @brief map of (key, cci_value) pairs
+ *
+ * This class is equivalent to a cci_value after calling @c set_map().
+ * @see cci_value, cci_value_map_cref, cci_value_map_ref
+ */
 class cci_value_map
   : public cci_value_map_ref
 {

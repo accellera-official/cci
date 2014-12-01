@@ -39,16 +39,76 @@ CCI_OPEN_CONFIG_NAMESPACE_
  * @brief traits class for cci_value conversions
  * @tparam T C++ datatype to convert to/from @ref cci_value
  *
+ * Whenever a C++ type @c T is used in conjunction with a cci_value,
+ * the requireed value conversion is performed by this traits class,
+ * providing the two conversion functions @ref pack and @ref unpack.
+ * Both functions return @c true upon success and @c false otherwise.
+ * In case of a failing conversion, it is recommended to leave the given
+ * destination object @c dst untouched.
+ *
  * @note By default, the primary template is not implemented to
  *       enable instantiations with incomplete types.
+ *
+ * You only need to implement the two functions @ref pack / @ref unpack
+ * to enable conversion support for your custom datatype:
+ * @code
+ * struct my_int { int value; };
+ *
+ * template<> bool
+ * cci_value_traits<my_int>::pack( cci_value::reference dst, type const & src )
+ * {
+ *    dst.set_int( src.value );
+ *    return true;
+ * }
+ * template<> bool
+ * cci_value_traits<my_int>::unpack( type & dst, cci_value::const_reference src )
+ * {
+ *    if( ! src.is_int() ) return false;
+ *    dst.value  = src.get_int();
+ *    return true;
+ * }
+ * @endcode
+ *
+ * To @em disable conversion support for a given type, you can refer
+ * to the helper template @ref cci_value_traits_disabled.
  */
 template<typename T>
 struct cci_value_traits
 {
   typedef T type; ///< common type alias
+  /// convert from \ref type value to a \ref cci_value
   static bool pack( cci_value::reference dst, type const & src );
+  /// convert from \ref cci_value to a \ref type value
   static bool unpack( type & dst, cci_value::const_reference src );
 };
+
+// ---------------------------------------------------------------------------
+/**
+ * @brief helper to disable cci_value conversion for a given type
+ * @tparam T type without cci_value conversions
+ *
+ * In order to disable the conversion from/to a cci_value for a given type
+ * @c T during @em run-time, you can simply inherit from this helper in
+ * the specialization of cci_value_traits:
+ * @code
+ * struct my_type { ... };
+ * template<>
+ * struct cci_value_traits<my_type>
+ *   : cci_value_traits_disabled<my_type> {};
+ * @endcode
+ *
+ * \note In order to disable support for a given type at @em compile-time,
+ *       the specialization of cci_value_traits can be left empty.
+ */
+template< typename T >
+struct cci_value_traits_disabled
+{
+  typedef T type;
+  static bool pack( cci_value::reference, T const & ) { return false; }
+  static bool unpack( type &, cci_value::const_reference ) { return false; }
+};
+
+///@cond CCI_HIDDEN_FROM_DOXYGEN
 
 // ---------------------------------------------------------------------------
 // disabled implementation as a safety guard
@@ -63,7 +123,7 @@ template<> struct cci_value_traits<cci_value_list_cref> { /* disabled */ };
 template<> struct cci_value_traits<cci_value_list_ref>  { /* disabled */ };
 
 // ---------------------------------------------------------------------------
-// helper to convert compatible types (implementation artefact)
+/// helper to convert compatible types (implementation artefact)
 template< typename T, typename U >
 struct cci_value_traits_convert
 {
@@ -113,6 +173,8 @@ CCI_VALUE_TRAITS_DERIVED_( unsigned, unsigned short );
 CCI_VALUE_TRAITS_DERIVED_( int64, long );
 CCI_VALUE_TRAITS_DERIVED_( uint64, unsigned long );
 CCI_VALUE_TRAITS_DERIVED_( double, float );
+
+///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
 // ----------------------------------------------------------------------------
 // C++ string literals
