@@ -14,11 +14,18 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef __CCI_PARAM_H___
-#define __CCI_PARAM_H___
+#ifndef CCI_CNF_CCI_PARAM_H_INCLUDED_
+#define CCI_CNF_CCI_PARAM_H_INCLUDED_
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+#include "cci_config_macros.h"
+#include "cci_base_param.h"
+#include "cci_param_impl_if.h"
+#include "cci_originator.h"
+
+CCI_OPEN_CONFIG_NAMESPACE_
+
+class cci_originator;
 
 
 // @TODO: This file contains much redundant code within the two implementations
@@ -307,6 +314,8 @@ template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1,
 template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2);
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
+
+#include "cci_param.hpp"   // fold into curr file?
 
 #endif

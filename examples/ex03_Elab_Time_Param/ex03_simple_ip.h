@@ -23,7 +23,6 @@
 #define EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_SIMPLE_IP_H_
 
 #include <cci>
-#include "cnf/cci_datatypes.h"
 #include "xreport.hpp"
 
 /// The SimpleIP owns a CCI param

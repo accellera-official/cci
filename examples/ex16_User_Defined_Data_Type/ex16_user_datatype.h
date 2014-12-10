@@ -27,7 +27,7 @@
 
 #include <cci>
 #include <systemc.h>
-#include <core/cci_shared_ptr.h>
+#include <cci_cnf/cci_shared_ptr.h>  // HACK; a proper publicly shareable CCI wrapper needed
 #include <greencontrol/config.h>
 #include <string>
 #include <iostream>

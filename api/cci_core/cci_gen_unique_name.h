@@ -13,8 +13,8 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef __CCI_GEN_UNIQUE_NAME_H__
-#define __CCI_GEN_UNIQUE_NAME_H__
+#ifndef CCI_CORE_CCI_GEN_UNIQUE_NAME_H_INCLUDED_
+#define CCI_CORE_CCI_GEN_UNIQUE_NAME_H_INCLUDED_
 
 #include <iostream>
 #include <map>

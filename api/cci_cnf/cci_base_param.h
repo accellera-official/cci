@@ -15,10 +15,12 @@
 // ENDLICENSETEXT
 
 
-#ifndef __CCI_BASE_PARAM_H___
-#define __CCI_BASE_PARAM_H___
+#ifndef CCI_CNF_BASE_PARAM_H_INCLUDED_
+#define CCI_CNF_BASE_PARAM_H_INCLUDED_
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+#include "cci_base_param_impl_if.h"
+
+CCI_OPEN_CONFIG_NAMESPACE_
 
   // CCI Configuration parameter base class
   /**
@@ -59,6 +61,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
     virtual const cci_originator* get_latest_write_originator() const = 0;
   };
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
   
 #endif

@@ -28,7 +28,6 @@
 
 #include <stdint.h>
 #include <cci>
-#include <core/cci_shared_ptr.h>
 #include <systemc.h>
 #include <iostream>
 #include <string>

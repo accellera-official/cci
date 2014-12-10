@@ -1,9 +1,19 @@
-*.[oax]
+### make intermediates and products
+*.[oaxd]
 *.exe
 Makefile.*deps
-run.log
-diff.log
+
 .cproject
 .project
 .settings
 testbench
+
+### self-test intermediates + results (except for reference golden.log)
+run.log
+diff.log
+examples/**/*.log
+*.stripped
+!golden/*.log
+
+### editor autosave
+\#*#

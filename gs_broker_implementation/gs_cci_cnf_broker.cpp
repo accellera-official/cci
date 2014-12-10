@@ -16,6 +16,7 @@
 
 
 #include "gs_cci_cnf_broker.h"
+#include "cci_core/cci_gen_unique_name.h"	// HACK; needs a proper home
 
 // TODO: remove (this is for debug)
 /*static void show_accessor_map(std::map<std::string, cci::cnf::cci_base_param*> mmap) {

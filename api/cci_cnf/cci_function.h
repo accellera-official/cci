@@ -14,14 +14,18 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef __CCI_SHARED_PTR_H__
-#define __CCI_SHARED_PTR_H__
 
-#include <boost/shared_ptr.hpp>
+#ifndef CCI_CNF_CCI_FUNCTION_H_INCLUDED_
+#define CCI_CNF_CCI_FUNCTION_H_INCLUDED_
+
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace cci {
   
-  using boost::shared_ptr;
+  using boost::function;
+  using boost::function2;
+  using boost::bind;
   
 } // end namespace cci
 

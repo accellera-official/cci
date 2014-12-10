@@ -15,14 +15,15 @@
 // ENDLICENSETEXT
 
 
-#ifndef __CCI_VALUE_H__
-#define __CCI_VALUE_H__
+#ifndef CCI_CNF_CCI_VALUE_H_INCLUDED_
+#define CCI_CNF_CCI_VALUE_H_INCLUDED_
 
 
 #include "cci_datatypes.h"
+#include "cci_core/systemc.h"
 
 
-__CCI_OPEN_CONFIG_NAMESPACE__
+CCI_OPEN_CONFIG_NAMESPACE_
 
 
   class cci_value;
@@ -142,6 +143,6 @@ __CCI_OPEN_CONFIG_NAMESPACE__
   };
 
 
-__CCI_CLOSE_CONFIG_NAMESPACE__
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif
