@@ -21,8 +21,8 @@
  */
 
 #include <systemc>
-#include "./ex08_simple_ip.h"
-#include "./ex08_config_ip.h"
+#include "ex08_Parameter_Value_Change_Callbacks/ex08_simple_ip.h"
+#include "ex08_Parameter_Value_Change_Callbacks/ex08_config_ip.h"
 
 /// Testbench for the CCI simple_int_param example
 int sc_main(int argc, char *argv[]) {

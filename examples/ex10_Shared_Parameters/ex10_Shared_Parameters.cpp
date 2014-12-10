@@ -24,8 +24,8 @@
 
 #include <systemc>
 
-#include "./ex10_parameter_owner.h"
-#include "./ex10_parameter_configurator.h"
+#include "ex10_Shared_Parameters/ex10_parameter_owner.h"
+#include "ex10_Shared_Parameters/ex10_parameter_configurator.h"
 
 /// Testbench instantiates owner and configurator modules and shows up-front
 /// planning required to make the owner's private memvers accessible within
