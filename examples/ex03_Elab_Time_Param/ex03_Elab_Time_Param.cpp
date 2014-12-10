@@ -32,8 +32,8 @@
  */
 
 #include <systemc>
-#include "./ex03_simple_ip.h"
-#include "./ex03_config_ip.h"
+#include "ex03_Elab_Time_Param/ex03_simple_ip.h"
+#include "ex03_Elab_Time_Param/ex03_config_ip.h"
 
 /// Testbench for the CCI elab_time_param example
 int sc_main(int argc, char *argv[]) {

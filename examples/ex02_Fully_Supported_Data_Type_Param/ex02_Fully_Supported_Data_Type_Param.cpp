@@ -20,8 +20,8 @@
  */
 
 #include <systemc>
-#include "./ex02_simple_ip.h"
-#include "./ex02_config_ip.h"
+#include "ex02_Fully_Supported_Data_Type_Param/ex02_simple_ip.h"
+#include "ex02_Fully_Supported_Data_Type_Param/ex02_config_ip.h"
 
 /// Testbench for the CCI ex2_fully_supported_data_type_param example
 int sc_main(int argc, char *argv[]) {
