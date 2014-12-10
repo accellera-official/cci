@@ -21,8 +21,8 @@
  */
 
 #include <systemc.h>
-#include "./ex12_top_module.h"
-#include "./ex12_parameter_configurator.h"
+#include "ex12_Indirectly_Associating_Parameters/ex12_top_module.h"
+#include "ex12_Indirectly_Associating_Parameters/ex12_parameter_configurator.h"
 
 /// Testbench which instantiates a top module and a parameter configurator
 /// the top module will instantiate the rest of the platform

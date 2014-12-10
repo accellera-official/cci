@@ -26,10 +26,10 @@
 #include <systemc.h>
 #include <cci>
 
-#include "./ex14_parent.h"
-#include "./ex14_configurator.h"
+#include "ex14_Hiding_Parameters/ex14_parent.h"
+#include "ex14_Hiding_Parameters/ex14_configurator.h"
 
-#include "./gs_cci_cnf_private_broker_accessor.h"
+#include "gs_cci_cnf_private_broker_accessor.h"
 
 /// This module creates the parent and configurator modules as well as the
 /// private broker responsible for the parent module and all parameters of the

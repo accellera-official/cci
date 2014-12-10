@@ -22,8 +22,8 @@
  */
 
 #include <systemc.h>
-#include "./ex13_parameter_owner.h"
-#include "./ex13_parameter_configurator.h"
+#include "ex13_Parameter_Value_Locking/ex13_parameter_owner.h"
+#include "ex13_Parameter_Value_Locking/ex13_parameter_configurator.h"
 
 /// Testbench that instantiates an owner and configurator module
 int sc_main(int sc_argc, char* sc_argv[]) {

@@ -28,8 +28,8 @@
 #include <vector>
 #include <string>
 
-#include "./ex11_parameter_owner.h"
-#include "./ex11_param_value_sync.h"
+#include "ex11_Searching_and_Directly_Associating_Parameters/ex11_parameter_owner.h"
+#include "ex11_Searching_and_Directly_Associating_Parameters/ex11_param_value_sync.h"
 #include "xreport.hpp"
 
 /// Instantiates the platform (param_value_sync and param owners)

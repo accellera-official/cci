@@ -31,8 +31,8 @@
 #include <sstream>
 #include <string>
 
-#include "./ex12_parameter_owner.h"
-#include "./ex12_param_value_sync_with_cf.h"
+#include "ex12_Indirectly_Associating_Parameters/ex12_parameter_owner.h"
+#include "ex12_Indirectly_Associating_Parameters/ex12_param_value_sync_with_cf.h"
 #include "xreport.hpp"
 
 /// This module instantiates the rest of the platform (configurator and owners)
