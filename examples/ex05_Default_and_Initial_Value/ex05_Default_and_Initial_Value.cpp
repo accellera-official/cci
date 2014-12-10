@@ -25,8 +25,8 @@
  */
 
 #include <systemc>
-#include "./ex05_simple_ip.h"
-#include "./ex05_config_ip.h"
+#include "ex05_Default_and_Initial_Value/ex05_simple_ip.h"
+#include "ex05_Default_and_Initial_Value/ex05_config_ip.h"
 
 /// Testbench for the CCI simple_int_param example
 int sc_main(int argc, char *argv[]) {

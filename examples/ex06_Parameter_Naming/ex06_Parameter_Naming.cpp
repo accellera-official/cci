@@ -21,8 +21,8 @@
  */
 
 #include <systemc>
-#include "./ex06_simple_ip.h"
-#include "./ex06_config_ip.h"
+#include "ex06_Parameter_Naming/ex06_simple_ip.h"
+#include "ex06_Parameter_Naming/ex06_config_ip.h"
 
 /// Testbench for the CCI Parameter Naming example
 int sc_main(int argc, char *argv[]) {
