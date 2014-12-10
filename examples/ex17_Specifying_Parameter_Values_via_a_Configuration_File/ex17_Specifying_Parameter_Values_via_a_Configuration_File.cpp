@@ -28,9 +28,9 @@
 #include <unistd.h>
 #include <string>
 
-#include "./ex17_cci_configFile_Tool.h"
-#include "./ex17_parameter_owner.h"
-#include "./ex17_parameter_configurator.h"
+#include "ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_cci_configFile_Tool.h"
+#include "ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_parameter_owner.h"
+#include "ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_parameter_configurator.h"
 
 /// This function illustrates the way of reading parameters name-value
 /// pair from an external configuration file and then, assigns the

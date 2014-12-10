@@ -38,7 +38,7 @@
 #include <string>
 #include <vector>
 
-#include "./ex17_configset.h"
+#include "ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_configset.h"
 
 namespace cci {
 namespace cnf {

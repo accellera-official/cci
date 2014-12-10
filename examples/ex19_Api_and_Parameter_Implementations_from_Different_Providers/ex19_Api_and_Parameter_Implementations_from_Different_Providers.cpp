@@ -27,8 +27,8 @@
 
 #include <systemc.h>
 
-#include "./ex19_parameter_owner.h"
-#include "./ex19_parameter_configurator.h"
+#include "ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_parameter_owner.h"
+#include "ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_parameter_configurator.h"
 
 /// This function instantiates owner and configurator class objects and shows
 /// details of the up-front planning required to make the owner class private

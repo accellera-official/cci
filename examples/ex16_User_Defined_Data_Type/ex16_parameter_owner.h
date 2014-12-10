@@ -27,7 +27,7 @@
 #include <cci>
 #include <string>
 
-#include "./ex16_user_datatype.h"
+#include "ex16_User_Defined_Data_Type/ex16_user_datatype.h"
 #include "xreport.hpp"
 
 /// This module instantiates an object of user-defined data type of

@@ -27,7 +27,7 @@
 
 #include <cci>
 
-#include "./ex19_parameter_impl_by_abc.h"
+#include "ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_parameter_impl_by_abc.h"
 #include "xreport.hpp"
 
 /// Forward declaration of the configurator class
