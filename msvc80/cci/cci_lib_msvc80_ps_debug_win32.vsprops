@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="cci_lib_msvc80_ps_debug_win32"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalOptions="/vmg"
+		Optimization="0"
+		AdditionalIncludeDirectories="&quot;$(BOOST_HOME)&quot;;&quot;$(SYSTEMC_HOME)\src&quot;"
+		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;SC_INCLUDE_DYNAMIC_PROCESSES;SC_INCLUDE_FX"
+		MinimalRebuild="true"
+		BasicRuntimeChecks="3"
+		RuntimeLibrary="1"
+		WarningLevel="3"
+		DebugInformationFormat="4"
+	/>
+	<UserMacro
+		Name="SYSTEMC_HOME"
+		Value="c:\systemc-2.3.1"
+	/>
+	<UserMacro
+		Name="BOOST_HOME"
+		Value="c:\boost\x86\boost_1_57_0"
+	/>
+</VisualStudioPropertySheet>
