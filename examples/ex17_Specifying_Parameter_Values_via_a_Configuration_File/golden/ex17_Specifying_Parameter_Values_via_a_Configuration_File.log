@@ -1,23 +1,28 @@
 ConfigFile_Api: Applying initial value of param 'param_owner.mutable_int_param' to '15'
 ConfigFile_Api: Applying initial value of param 'param_owner.mutable_string_param' to 'initial'
 
-	[OWNER C_TOR] : Int Parameter Value : 15
+Info: param_owner: @0 s, [OWNER C_TOR] : Int Parameter Value : 15
 
-	[OWNER C_TOR] : Float Parameter Value : 123.45
+Info: param_owner: @0 s, [OWNER C_TOR] : Float Parameter Value : 123.45
 
-	[OWNER C_TOR] : String Parameter Value : initial
+Info: param_owner: @0 s, [OWNER C_TOR] : String Parameter Value : initial
 
-	[CFGR C_TOR] : Integer parameter exists
+Info: param_setter: @0 s, [CFGR C_TOR] : Integer parameter exists
 
-	[CFGR C_TOR] : Float parameter exists
+Info: param_setter: @0 s, [CFGR C_TOR] : Float parameter exists
 
-	[CFGR C_TOR] : String parameter exists
+Info: param_setter: @0 s, [CFGR C_TOR] : String parameter exists
 
-@ 0 s
-	[CFGR] : Set integer parameter value to '20' using cci_base_parameter
-	[CFGR] : Set string  parameter value to 'configure' using cci_base_parameter
+Info: param_setter: @0 s, @ 0 s
 
-@ 5 ns
-	[OWNER] : Int Parameter Value : 20
-	[OWNER] : Float Parameter Value : 123.45
-	[OWNER] : String Parameter Value : configure
+Info: param_setter: @0 s, [CFGR] : Set integer parameter value to '20' using cci_base_parameter
+
+Info: param_setter: @0 s, [CFGR] : Set string  parameter value to 'configure' using cci_base_parameter
+
+Info: param_owner: @5 ns, @ 5 ns
+
+Info: param_owner: @5 ns, [OWNER] : Int Parameter Value : 20
+
+Info: param_owner: @5 ns, [OWNER] : Float Parameter Value : 123.45
+
+Info: param_owner: @5 ns, [OWNER] : String Parameter Value : configure

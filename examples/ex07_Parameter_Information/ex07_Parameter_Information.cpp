@@ -21,74 +21,88 @@
  * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * \date    12th September, 2011
  */
-#include <cci>          // Includes cci-infrastructure
-#include <systemc.h>      // Contains all the definitions for SystemC
-#include <assert.h>
+#include <systemc>
+#include <cci>
+#include <cassert>
+#include <string>
 
-#include "parameter_owner.h"
-#include "parameter_configurer.h"
-#include "observer.h"
+#include "ex07_Parameter_Information/ex07_parameter_owner.h"
+#include "ex07_Parameter_Information/ex07_parameter_configurer.h"
+#include "ex07_Parameter_Information/ex07_observer.h"
 
-/*!
- * \fn     int sc_main (int, char**)
- * \brief  The main functions begins the hierarchy construction and sets simulation
- *         related details
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// Creating an originator to access the global broker
-	const std::string myOrgStr = "sc_main_originator";
-	cci::cnf::cci_originator myOriginator(myOrgStr);
+/// Testbench for parameter information example
+int sc_main(int sc_argc, char* sc_argv[]) {
+  /// Creating an originator to access the global broker
+  const std::string myOrgStr = "sc_main_originator";
+  cci::cnf::cci_originator myOriginator(myOrgStr);
 
-	/// Get handle of the broker using the originator
-	cci::cnf::cci_cnf_broker_if* globalBroker = &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
+  /// Get handle of the broker using the originator
+  cci::cnf::cci_cnf_broker_if* globalBroker =
+      &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
 
-	// Assert if broker handle returned is NULL
-	assert(globalBroker != NULL && "Reference to global broker returned (in sc_main) is NULL.");
+  // Assert if broker handle returned is NULL
+  assert(globalBroker != NULL
+         && "Reference to global broker returned (in sc_main) is NULL.");
 
-	// Set initial value to the 'int_param' of 'parameter_owner' class before
-	// their constructor begins
-	std::cout << "\n[MAIN] : Setting 'param_owner.mutable_string_param' value to 'Initialized within sc_main()'" << endl;
-	
-	/// Demonstrating use of 'json_deserialize_initial_value' API to assign initial value before the
-	/// construction of the model hierarchy begins.
-	globalBroker->json_deserialize_initial_value("param_owner.mutable_string_param", "Initialized within sc_main");
+  // Set initial value to the 'int_param' of 'parameter_owner' class before
+  // their constructor begins
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Setting 'param_owner.mutable_string_param'"
+                 " value to 'Initialized within sc_main()'");
 
-	cout << "\n\t[MAIN] : Demonstrating 'comparison' between the values of a data type for different mutability types" << endl;
+  /// Demonstrating use of 'json_deserialize_initial_value'
+  /// API to assign initial value before the
+  /// construction of the model hierarchy begins.
+  globalBroker->json_deserialize_initial_value(
+      "param_owner.mutable_string_param", "Initialized within sc_main");
 
-	/// Instantiate cci-parameters of all the three mutability types for a
-	/// particular (say String) data-type
-         
-	cci::cnf::cci_param<std::string, cci::cnf::mutable_param>           mutab_str_param("string_mutab_param", "String_Value_A");
-	cci::cnf::cci_param<std::string, cci::cnf::immutable_param>         immutab_str_param("string_immutab_param", "String_Value_A");
-	cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param>  elab_str_param("string_elab_param", "String_Value_B");
+  SC_REPORT_INFO("sc_main",
+                 "[MAIN] : Demonstrating 'comparison' between the values"
+                 " of a data type for different mutability types");
 
-	if (mutab_str_param.get() == immutab_str_param.get())
-		std::cout << "\t[MAIN] : 'mutable' & 'immutable' type String parameters - VALUES MATCH" << endl;
-	else
-		std::cout << "\t[MAIN] : 'mutable' & 'immutable' type String parameters - VALUES DO NOT MATCH" << endl;
+  /// Instantiate cci-parameters of all the three mutability types for a
+  /// particular (say String) data-type
 
-	if (mutab_str_param.get() == elab_str_param.get())
-		std::cout << "\t[MAIN] : 'mutable' & 'elaboration_time' type String - VALUES MATCH" << endl;
-	else
-		std::cout << "\t[MAIN] : 'mutable' & 'elaboration_time' type String - VALUES DO NOT MATCH" << endl;
-	
+  cci::cnf::cci_param<std::string, cci::cnf::mutable_param>
+      mutab_str_param("string_mutab_param", "String_Value_A");
+  cci::cnf::cci_param<std::string, cci::cnf::immutable_param>
+      immutab_str_param("string_immutab_param", "String_Value_A");
+  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param>
+      elab_str_param("string_elab_param", "String_Value_B");
 
-	/// Infrastructure created within the example for example illustration
-	std::cout << "\n[MAIN] : parameter_container module declares two cci type parameters." << endl;
-	std::cout << "\n\tOne is of 'Integer type' and the other is of 'String type'" << endl;
-	std::cout << "\n\t'Integer type' has 'pre_read', 'pre/post_write' callback registered within the OBSERVER" << std::endl;
+  if (mutab_str_param.get() == immutab_str_param.get()) {
+    SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'immutable' type String"
+                   " parameters - VALUES MATCH");
+  } else {
+    SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'immutable' type String"
+                   " parameters - VALUES DO NOT MATCH");
+  }
 
-	/// Instantiation of sc_modules
-	parameter_owner     	param_owner("param_owner");
-	parameter_configurer	param_cfgr("param_cfgr");
+  if (mutab_str_param.get() == elab_str_param.get()) {
+    SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
+                   " String - VALUES MATCH");
+  } else {
+    SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
+                   " String - VALUES DO NOT MATCH");
+  }
 
-	/// Instantiating observer class
-	observer              observer_class;
+  /// Infrastructure created within the example for example illustration
+  SC_REPORT_INFO("sc_main", "[MAIN] : parameter_container module declares two"
+                 " cci type parameters.");
+  SC_REPORT_INFO("sc_main", "One is of 'Integer type' and the other is of"
+                 " 'String type'");
+  SC_REPORT_INFO("sc_main", "'Integer type' has 'pre_read', 'pre/post_write'"
+                 " callback registered within the OBSERVER");
 
-	/// Simulation time
-	sc_start(30.0, SC_NS);
+  /// Instantiation of sc_modules
+  ex07_parameter_owner param_owner("param_owner");
+  ex07_parameter_configurer param_cfgr("param_cfgr");
 
-	return EXIT_SUCCESS;
+  /// Instantiating observer class
+  ex07_observer observer_class("observer");
 
-}// End of sc_main
+  /// Simulation time
+  sc_start(30.0, sc_core::SC_NS);
+
+  return EXIT_SUCCESS;
+}  // End of sc_main
