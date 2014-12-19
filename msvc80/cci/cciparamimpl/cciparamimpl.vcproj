@@ -50,6 +50,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4250"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -112,6 +113,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4250"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -174,6 +176,7 @@
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4250"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -237,6 +240,7 @@
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4250"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
