@@ -114,8 +114,8 @@ SC_MODULE(ex09_router) {
                && "Slave Base Address Handle returned is NULL");
       }
 
-      XREPORT("|\t" << r_slave_index[i]->get() << "\t\t|\t" << hex
-              << r_addr_start[i]->get() << "\t\t|\t" << hex
+      XREPORT("|\t" << r_slave_index[i]->get() << "\t\t|\t" << std::hex
+              << r_addr_start[i]->get() << "\t\t|\t" << std::hex
               << r_addr_end[i]->get() << "\t\t|\t"
               << base_ptr->json_serialize() << "\t\t|");
       XREPORT("-----------------------------------------------"
@@ -124,10 +124,10 @@ SC_MODULE(ex09_router) {
   }
 
   /// Blocking transport implementation of the router
-  void b_transport(int i, tlm::tlm_generic_payload& trans, sc_time& delay) {
+  void b_transport(int i, tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
     wait(delay);
 
-    delay = SC_ZERO_TIME;
+    delay = sc_core::SC_ZERO_TIME;
 
     sc_dt::uint64 addr = trans.get_address();
 
@@ -140,10 +140,10 @@ SC_MODULE(ex09_router) {
       if ((addr >= (r_addr_start[i]->get()))
           && (addr <= (r_addr_end[i]->get()))) {
         XREPORT("[Router in 'b_transport' layer]");
-        XREPORT("Address       = " << hex << addr);
+        XREPORT("Address       = " << std::hex << addr);
         XREPORT("Index         = " << (r_slave_index[i])->get());
-        XREPORT("Start addres  = " << hex << (r_addr_start[i]->get()));
-        XREPORT("End   Address = " << hex << (r_addr_end[i]->get()));
+        XREPORT("Start addres  = " << std::hex << (r_addr_start[i]->get()));
+        XREPORT("End   Address = " << std::hex << (r_addr_end[i]->get()));
         Router_initiator[(r_slave_index[i])->get()]->b_transport(trans, delay);
         break;
       }

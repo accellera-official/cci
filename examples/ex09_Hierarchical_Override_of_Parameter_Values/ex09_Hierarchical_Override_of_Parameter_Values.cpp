@@ -101,7 +101,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   ex09_top_module top_mod("top_module_inst");
 
   /// Start the simulation
-  sc_start(sc_time(1140, SC_NS));
+  sc_core::sc_start(1140, sc_core::SC_NS);
 
   return EXIT_SUCCESS;
 }  // End of 'sc_main'

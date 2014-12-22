@@ -30,7 +30,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   ex13_parameter_configurator param_cfgr("param_cfgr");
 
   // Setting simulation time and starting the simulation
-  sc_start(25.0, SC_NS);
+  sc_core::sc_start(25.0, sc_core::SC_NS);
 
   return EXIT_SUCCESS;
 }

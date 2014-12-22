@@ -71,16 +71,16 @@ SC_MODULE(ex09_master) {
       trans->set_byte_enable_ptr(0);
       trans->set_dmi_allowed(false);
       trans->set_response_status(tlm::TLM_INCOMPLETE_RESPONSE);
-      sc_time delay = sc_time(0, SC_NS);
+      sc_core::sc_time delay = sc_core::sc_time(0, sc_core::SC_NS);
 
       if (cmd == tlm::TLM_WRITE_COMMAND) {
-        XREPORT("[Initiators Message]=>At address " << hex << i
+        XREPORT("[Initiators Message]=>At address " << std::hex << i
                 << " sending transaction with command = Write" << ", data="
-                << hex << data << " at time " << sc_time_stamp());
+                << std::hex << data << " at time " << sc_core::sc_time_stamp());
       } else {
-        XREPORT("[Initiators Message]=>At address " << hex << i
+        XREPORT("[Initiators Message]=>At address " << std::hex << i
                 << " sending transaction with command= Read " << " at time "
-                << sc_time_stamp());
+                << sc_core::sc_time_stamp());
       }
 
       Master_socket->b_transport(*trans, delay);
@@ -92,18 +92,18 @@ SC_MODULE(ex09_master) {
         wait(delay);
 
       if (cmd == tlm::TLM_WRITE_COMMAND) {
-        XREPORT("[Initiators Message]=>At address " << hex << i
+        XREPORT("[Initiators Message]=>At address " << std::hex << i
                 << " received response of Write transaction " << " at time "
-                << sc_time_stamp());
+                << sc_core::sc_time_stamp());
       } else {
-        XREPORT("[Initiators Message]=>At address " << hex << i
+        XREPORT("[Initiators Message]=>At address " << std::hex << i
                 << " received response of Read transaction " << " data "
-                << data << " at time " << sc_time_stamp());
+                << data << " at time " << sc_core::sc_time_stamp());
       }
 
       XREPORT("--------------------------------------------------------");
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
       i = i + 4;
     }

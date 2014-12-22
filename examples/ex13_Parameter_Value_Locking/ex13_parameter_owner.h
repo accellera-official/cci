@@ -43,7 +43,7 @@ SC_MODULE(ex13_parameter_owner) {
   /// This process demonstrates various locking/unlocking APIs
   void run_owner(void) {
     while (1) {
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[OWNER] : Locking the parameter without password");
       int_param.lock();
@@ -65,18 +65,18 @@ SC_MODULE(ex13_parameter_owner) {
       XREPORT("[OWNER] : Parameter locking status : "
               << int_param.is_locked() << "\tValue : " << int_param.get());
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[OWNER] : Unlocking parameter (locked earlier) without"
               " password");
       int_param.unlock();
       XREPORT("[OWNER] : Parameter locking status : "
               << int_param.is_locked() << "\tValue : " << int_param.get());
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[OWNER] : Parameter locking status : "
               << int_param.is_locked() << "\tValue : " << int_param.get());
       key = NULL;
@@ -94,7 +94,7 @@ SC_MODULE(ex13_parameter_owner) {
       XREPORT("[OWNER] : Parameter locking status : "
               << int_param.is_locked() << "\tValue : " << int_param.get());
 
-      wait(30.0, SC_NS);
+      wait(30.0, sc_core::SC_NS);
     }
   }
 

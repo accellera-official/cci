@@ -149,7 +149,7 @@ SC_MODULE(ex09_top_module) {
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting fields of Slave_" << i);
         myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
-      } catch (sc_core::sc_report exception) {
+      } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
 
@@ -166,7 +166,7 @@ SC_MODULE(ex09_top_module) {
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of Slave_" << i);
         myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
-      } catch (sc_core::sc_report exception) {
+      } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
 
@@ -179,7 +179,7 @@ SC_MODULE(ex09_top_module) {
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting end addr of Slave_" << i);
         myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
-      } catch (sc_core::sc_report exception) {
+      } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
     }

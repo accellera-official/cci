@@ -38,7 +38,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   ex15_configurator param_cfgr("param_cfgr");
 
   // Start and run the simulation till 50 nanoseconds
-  sc_start(15.0, SC_NS);
+  sc_core::sc_start(15.0, sc_core::SC_NS);
 
   return EXIT_SUCCESS;
 }

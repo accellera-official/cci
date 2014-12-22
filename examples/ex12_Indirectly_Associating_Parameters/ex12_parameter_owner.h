@@ -34,7 +34,7 @@ SC_MODULE(ex12_parameter_owner) {
  public:
   SC_HAS_PROCESS(ex12_parameter_owner);
 
-  ex12_parameter_owner(sc_module_name _name,
+  ex12_parameter_owner(sc_core::sc_module_name _name,
                        std::string _param_name = "clock_speed_KHz",
                        float _freq = 10.0)
       : sc_module(_name) {

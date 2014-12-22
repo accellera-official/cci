@@ -38,7 +38,7 @@ SC_MODULE(ex09_slave) {
  public:
   tlm_utils::simple_target_socket<ex09_slave, 32> Slave_socket;
   //!< latency
-  sc_time read_latency, write_latency;
+  sc_core::sc_time read_latency, write_latency;
 
   SC_CTOR(ex09_slave)
       : Slave_socket("Slave_socket"),
@@ -53,8 +53,8 @@ SC_MODULE(ex09_slave) {
     /// Register b_transport
     Slave_socket.register_b_transport(this, &ex09_slave::b_transport);
 
-    write_latency = sc_time(3, SC_NS);
-    read_latency = sc_time(5, SC_NS);
+    write_latency = sc_core::sc_time(3, sc_core::SC_NS);
+    read_latency = sc_core::sc_time(5, sc_core::SC_NS);
 
     mem = new int[s_size.get()];
 
@@ -69,7 +69,7 @@ SC_MODULE(ex09_slave) {
   }
 
   /// Implementation of the blocking transport in the slave
-  void b_transport(tlm::tlm_generic_payload& trans, sc_time& delay) {
+  void b_transport(tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
     tlm::tlm_command cmd = trans.get_command();
     sc_dt::uint64 adr = trans.get_address() - s_base_addr.get();
     unsigned char* ptr = trans.get_data_ptr();
@@ -77,8 +77,8 @@ SC_MODULE(ex09_slave) {
     unsigned char* byt = trans.get_byte_enable_ptr();
     unsigned int wid = trans.get_streaming_width();
 
-    XREPORT("[SLAVE] : adr ---- " << hex << adr);
-    XREPORT("[SLAVE] : base addr ---- " << hex << s_base_addr.get());
+    XREPORT("[SLAVE] : adr ---- " << std::hex << adr);
+    XREPORT("[SLAVE] : base addr ---- " << std::hex << s_base_addr.get());
 
     // Check for storage address overflow
     if (adr > s_size.get()) {

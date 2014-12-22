@@ -109,7 +109,7 @@ SC_MODULE(ex11_parameter_configurator) {
       /// Change the value of the cci_parameter 'clock_speed_Hz' of
       /// OWNER (2) to '12000' (Hz)
       if (cfgr_param_ptr2 != NULL) {
-        XREPORT("@ " << sc_time_stamp());
+        XREPORT("@ " << sc_core::sc_time_stamp());
         XREPORT("[CFGR] : Changing the 'clock_speed_Hz' of OWNER (2)"
                 " to 12000 (Hz).");
         cfgr_param_ptr2->json_deserialize("12000");

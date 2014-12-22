@@ -40,7 +40,7 @@ SC_MODULE(ex11_param_value_sync) {
 
   /// Overloaded constructor
   //// No default constructor
-  ex11_param_value_sync(sc_module_name _name,
+  ex11_param_value_sync(sc_core::sc_module_name _name,
                         std::vector<cci::cnf::cci_base_param *> BaseParamList)
       /// Define an originator in order to get hold of the default broker
       : ValueSyncOriginator("ValueSyncOriginator") {
