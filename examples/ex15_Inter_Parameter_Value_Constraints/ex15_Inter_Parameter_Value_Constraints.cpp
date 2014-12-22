@@ -20,9 +20,8 @@
  * @date      10th June, 2011 (Friday)
  */
 
-#include <systemc.h>
-#include "ex15_Inter_Parameter_Value_Constraints/ex15_processor.h"
-#include "ex15_Inter_Parameter_Value_Constraints/ex15_configurator.h"
+#include "ex15_processor.h"
+#include "ex15_configurator.h"
 
 /// Testbench function that instantiates the processor and configurator modules
 int sc_main(int sc_argc, char* sc_argv[]) {

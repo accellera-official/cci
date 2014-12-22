@@ -28,8 +28,8 @@
 #include <cassert>
 #include <string>
 
-#include "ex15_Inter_Parameter_Value_Constraints/ex15_address_lines_register.h"
-#include "ex15_Inter_Parameter_Value_Constraints/ex15_memory_block.h"
+#include "ex15_address_lines_register.h"
+#include "ex15_memory_block.h"
 #include "xreport.hpp"
 
 /// This module instantiates a processor module which register's callbacks on

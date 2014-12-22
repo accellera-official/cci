@@ -26,10 +26,9 @@
  */
 
 #include <cci>
-#include <systemc.h>
 #include <cassert>
 #include <string>
-#include "ex09_Hierarchical_Override_of_Parameter_Values/ex09_top_module.h"
+#include "ex09_top_module.h"
 
 /// Testbench for the hierarchical override of parameter values
 int sc_main(int sc_argc, char* sc_argv[]) {

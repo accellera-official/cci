@@ -38,7 +38,7 @@
 #include <string>
 #include <vector>
 
-#include "ex18_Superset_Parameter_Value_Specification/ex18_configset.h"
+#include "ex18_configset.h"
 
 namespace cci {
 namespace cnf {

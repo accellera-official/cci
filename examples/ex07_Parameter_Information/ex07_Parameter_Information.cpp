@@ -26,9 +26,9 @@
 #include <cassert>
 #include <string>
 
-#include "ex07_Parameter_Information/ex07_parameter_owner.h"
-#include "ex07_Parameter_Information/ex07_parameter_configurer.h"
-#include "ex07_Parameter_Information/ex07_observer.h"
+#include "ex07_parameter_owner.h"
+#include "ex07_parameter_configurer.h"
+#include "ex07_observer.h"
 
 /// Testbench for parameter information example
 int sc_main(int sc_argc, char* sc_argv[]) {

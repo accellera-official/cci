@@ -29,14 +29,14 @@
 
 #include <cci>
 #include <tlm>
-#include <assert.h>
+#include <cassert>
 #include <vector>
 #include <sstream>
 #include "xreport.hpp"
 
-#include "ex09_Hierarchical_Override_of_Parameter_Values/ex09_master.h"
-#include "ex09_Hierarchical_Override_of_Parameter_Values/ex09_slave.h"
-#include "ex09_Hierarchical_Override_of_Parameter_Values/ex09_router.h"
+#include "ex09_master.h"
+#include "ex09_slave.h"
+#include "ex09_router.h"
 
 /// This module instantiates a master, slave, and router
 /// and binds them correctly for communication

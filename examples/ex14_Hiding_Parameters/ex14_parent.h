@@ -30,7 +30,7 @@
 #include <string>
 #include <vector>
 
-#include "ex14_Hiding_Parameters/ex14_child.h"
+#include "ex14_child.h"
 #include "xreport.hpp"
 
 /// The parent module derives from the 'cci_broker_manager' class and manages
