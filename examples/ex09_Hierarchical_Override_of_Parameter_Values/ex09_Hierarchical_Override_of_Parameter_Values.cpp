@@ -18,8 +18,8 @@
 /*!
  * \file     main.cpp 
  * \brief    Testbench file
- *           This file declares and implements the functionality of the slave.
- *           Few of the parameters of the slave sc_module are configured by the 
+ *           This file declares and implements the functionality of the target.
+ *           Few of the parameters of the target sc_module are configured by the 
  *           router sc_module.
  * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * \date     29th April, 2011 (Friday)
@@ -45,49 +45,49 @@ int sc_main(int sc_argc, char* sc_argv[]) {
          && "Handle of the returned global broker is NULL");
 
   SC_REPORT_INFO("sc_main",
-                 "[MAIN] : Setting initial value of the number of masters"
+                 "[MAIN] : Setting initial value of the number of initiators"
                  " to 2");
 
-  /// Set initial value to the number of master(s) (within top_module)
-  std::string masterHierarchicalName = "top_module_inst.number_of_masters";
-  myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "2");
+  /// Set initial value to the number of initiator(s) (within top_module)
+  std::string initiatorHierarchicalName = "top_module_inst.number_of_initiators";
+  myGlobalBroker->json_deserialize_initial_value(initiatorHierarchicalName, "2");
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Setting initial value of the number"
-                 " of masters to 1");
+                 " of initiators to 1");
 
   // The program considers only the last set initial value
-  myGlobalBroker->json_deserialize_initial_value(masterHierarchicalName, "1");
+  myGlobalBroker->json_deserialize_initial_value(initiatorHierarchicalName, "1");
 
   SC_REPORT_INFO("sc_main",
-                 "[MAIN] : Setting initial value of the number of slaves to 4");
+                 "[MAIN] : Setting initial value of the number of targets to 4");
 
-  /// Set initial value to the number of slave(s) (within top_module)
-  std::string slaveHierarchicalName = "top_module_inst.number_of_slaves";
-  myGlobalBroker->json_deserialize_initial_value(slaveHierarchicalName, "4");
+  /// Set initial value to the number of target(s) (within top_module)
+  std::string targetHierarchicalName = "top_module_inst.number_of_targets";
+  myGlobalBroker->json_deserialize_initial_value(targetHierarchicalName, "4");
 
   /// Set the maximum addressing limit for the router
   myGlobalBroker->json_deserialize_initial_value(
       "top_module_inst.RouterInstance.addr_max", "1024");
 
-  /// Set and lock the Router Table initials values for slave_1
+  /// Set and lock the Router Table initials values for target_1
   //  These values have again been tried to set within the Top_MODULE
   //  @see top_module.h
   SC_REPORT_INFO("sc_main",
-                 "[MAIN] : Set and lock Router Table Slave_1 contents");
+                 "[MAIN] : Set and lock Router Table target_1 contents");
   myGlobalBroker->json_deserialize_initial_value(
       "top_module_inst.RouterInstance.r_index_1", "1");
   myGlobalBroker->lock_initial_value(
       "top_module_inst.RouterInstance.r_index_1");
 
   SC_REPORT_INFO("sc_main",
-                 "[MAIN] : Set and lock Router Table Start Address for Slave_1"
+                 "[MAIN] : Set and lock Router Table Start Address for target_1"
                  " to 128");
   myGlobalBroker->json_deserialize_initial_value(
       "top_module_inst.RouterInstance.r_sa_1", "128");
   myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_sa_1");
 
   SC_REPORT_INFO("sc_main",
-                 "[MAIN] : Set and lock Router Table End Address for Slave_1"
+                 "[MAIN] : Set and lock Router Table End Address for target_1"
                  " to 255");
   myGlobalBroker->json_deserialize_initial_value(
       "top_module_inst.RouterInstance.r_ea_1", "255");
@@ -95,7 +95,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Instantiate top module after setting initial"
-                 " values to top_module, router and slave parameters");
+                 " values to top_module, router and target parameters");
 
   /// Instantiate TOP_MODULE responsible for creating the model hierarchy
   ex09_top_module top_mod("top_module_inst");

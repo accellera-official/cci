@@ -34,17 +34,17 @@
 #include <sstream>
 #include "xreport.hpp"
 
-#include "ex09_master.h"
-#include "ex09_slave.h"
+#include "ex09_initiator.h"
+#include "ex09_target.h"
 #include "ex09_router.h"
 
-/// This module instantiates a master, slave, and router
+/// This module instantiates a initiator, target, and router
 /// and binds them correctly for communication
 SC_MODULE(ex09_top_module) {
  public:
   SC_CTOR(ex09_top_module)
-      : n_masters("number_of_masters", 0),
-        n_slaves("number_of_slaves", 0) {
+      : n_initiators("number_of_initiators", 0),
+        n_targets("number_of_targets", 0) {
     std::stringstream ss;
 
     XREPORT("[TOP_MODULE C_TOR] -- [TOP MODULE CONSTRUCTOR BEGINS HERE]");
@@ -57,24 +57,24 @@ SC_MODULE(ex09_top_module) {
     assert(myDefaultBroker != NULL
            && "Default broker accessed by TOP_MODULE is NULL");
 
-    XREPORT("[TOP_MODULE C_TOR] :  Number of masters : "
-            << n_masters.json_serialize());
-    XREPORT("[TOP_MODULE C_TOR] :  Number of slaves : "
-            << n_slaves.json_serialize());
+    XREPORT("[TOP_MODULE C_TOR] :  Number of initiators : "
+            << n_initiators.json_serialize());
+    XREPORT("[TOP_MODULE C_TOR] :  Number of targets : "
+            << n_targets.json_serialize());
 
-    /// Set and lock the number of masters in Router Table
+    /// Set and lock the number of initiators in Router Table
     /// to value passed from 'sc_main'
     myDefaultBroker->json_deserialize_initial_value(
-        "top_module_inst.RouterInstance.r_masters", n_masters.json_serialize());
+        "top_module_inst.RouterInstance.r_initiators", n_initiators.json_serialize());
     myDefaultBroker->lock_initial_value(
-        "top_module_inst.RouterInstance.r_masters");
+        "top_module_inst.RouterInstance.r_initiators");
 
-    /// Set and lock the number of slaves in Router Table
+    /// Set and lock the number of targets in Router Table
     /// to value passed from 'sc_main'
     myDefaultBroker->json_deserialize_initial_value(
-        "top_module_inst.RouterInstance.r_slaves", n_slaves.json_serialize());
+        "top_module_inst.RouterInstance.r_targets", n_targets.json_serialize());
     myDefaultBroker->lock_initial_value(
-        "top_module_inst.RouterInstance.r_slaves");
+        "top_module_inst.RouterInstance.r_targets");
 
     /// Declaring and defining router module
     char routerName[15] = "RouterInstance";
@@ -94,91 +94,91 @@ SC_MODULE(ex09_top_module) {
               << r_addr_max);
     }
 
-    /// Creating instances of master(s)
-    for (int i = 0; i < n_masters; i++) {
-      snprintf(masterName, sizeof(masterName), "Master_%d", i);
-      XREPORT("[TOP_MODULE C_TOR] : Creating Master : " << masterName);
+    /// Creating instances of initiator(s)
+    for (int i = 0; i < n_initiators; i++) {
+      snprintf(initiatorName, sizeof(initiatorName), "initiator_%d", i);
+      XREPORT("[TOP_MODULE C_TOR] : Creating initiator : " << initiatorName);
 
-      snprintf(stringMisc, sizeof(stringMisc), "%s.%s.master_ID", name(),
-               masterName);
+      snprintf(stringMisc, sizeof(stringMisc), "%s.%s.initiator_ID", name(),
+               initiatorName);
 
-      myDefaultBroker->json_deserialize_initial_value(stringMisc, masterName);
-      masterList.push_back(new ex09_master(masterName));
+      myDefaultBroker->json_deserialize_initial_value(stringMisc, initiatorName);
+      initiatorList.push_back(new ex09_initiator(initiatorName));
 
-      ///     Binding of Master to Router
+      ///     Binding of initiator to Router
       XREPORT("[TOP MODULE C_TOR] : Binding Router_Initiator to "
-              << masterName);
-      masterList[i]->Master_socket.bind(routerInstance->Router_target);
+              << initiatorName);
+      initiatorList[i]->initiator_socket.bind(routerInstance->Router_target);
     }
 
-    // Defining slave size
-    slaveSize = 128;
+    // Defining target size
+    targetSize = 128;
 
-    /// Creating instances of slave(s)
-    for (int i = 0; i < n_slaves; i++) {
-      snprintf(slaveName, sizeof(slaveName), "Slave_%d", i);
-      XREPORT("[TOP_MODULE C_TOR] : Creating Slave : " << slaveName);
+    /// Creating instances of target(s)
+    for (int i = 0; i < n_targets; i++) {
+      snprintf(targetName, sizeof(targetName), "target_%d", i);
+      XREPORT("[TOP_MODULE C_TOR] : Creating target : " << targetName);
 
-      snprintf(stringMisc, sizeof(stringMisc), "%s.%s.slave_ID", name(),
-               slaveName);
-      myDefaultBroker->json_deserialize_initial_value(stringMisc, slaveName);
+      snprintf(stringMisc, sizeof(stringMisc), "%s.%s.target_ID", name(),
+               targetName);
+      myDefaultBroker->json_deserialize_initial_value(stringMisc, targetName);
 
-      // Set initial value for maximum slave size(memory)
+      // Set initial value for maximum target size(memory)
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.s_size", name(),
-               slaveName);
+               targetName);
       ss.clear();
       ss.str("");
-      ss << slaveSize;
+      ss << targetSize;
 
       myDefaultBroker->json_deserialize_initial_value(stringMisc, ss.str());
-      slaveList.push_back(new ex09_slave(slaveName));
+      targetList.push_back(new ex09_target(targetName));
 
-      /// Binding Router to Slave
-      XREPORT("[TOP MODULE C_TOR] : Binding Router_Initiator to " << slaveName);
-      routerInstance->Router_initiator.bind(slaveList[i]->Slave_socket);
+      /// Binding Router to target
+      XREPORT("[TOP MODULE C_TOR] : Binding Router_Initiator to " << targetName);
+      routerInstance->Router_initiator.bind(targetList[i]->target_socket);
     }
 
     /// Try re-setting locked values for Router Table contents
-    for (int i = 0; i < n_slaves; i++) {
-      snprintf(slaveName, sizeof(slaveName), "%s.RouterInstance.r_index_%d",
+    for (int i = 0; i < n_targets; i++) {
+      snprintf(targetName, sizeof(targetName), "%s.RouterInstance.r_index_%d",
                name(), i);
       ss.clear();
       ss.str("");
       ss << i;
 
       try {
-        XREPORT("[TOP_MODULE C_TOR] : Re-setting fields of Slave_" << i);
-        myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
+        XREPORT("[TOP_MODULE C_TOR] : Re-setting fields of target_" << i);
+        myDefaultBroker->json_deserialize_initial_value(targetName, ss.str());
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
 
-      snprintf(slaveName, sizeof(slaveName), "%s.RouterInstance.r_sa_%d",
+      snprintf(targetName, sizeof(targetName), "%s.RouterInstance.r_sa_%d",
                name(), i);
       ss.clear();
       ss.str("");
-      ss << (i * slaveSize);
+      ss << (i * targetSize);
 
-      snprintf(slaveBaseAddr, sizeof(slaveBaseAddr), "%s.Slave_%d.s_base_addr",
+      snprintf(targetBaseAddr, sizeof(targetBaseAddr), "%s.target_%d.s_base_addr",
                name(), i);
-      myDefaultBroker->json_deserialize_initial_value(slaveBaseAddr, ss.str());
+      myDefaultBroker->json_deserialize_initial_value(targetBaseAddr, ss.str());
 
       try {
-        XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of Slave_" << i);
-        myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
+        XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of target_" << i);
+        myDefaultBroker->json_deserialize_initial_value(targetName, ss.str());
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
 
-      snprintf(slaveName, sizeof(slaveName), "%s.RouterInstance.r_ea_%d",
+      snprintf(targetName, sizeof(targetName), "%s.RouterInstance.r_ea_%d",
                name(), i);
       ss.clear();
       ss.str("");
-      ss << ((i + 1) * slaveSize - 1);
+      ss << ((i + 1) * targetSize - 1);
 
       try {
-        XREPORT("[TOP_MODULE C_TOR] : Re-setting end addr of Slave_" << i);
-        myDefaultBroker->json_deserialize_initial_value(slaveName, ss.str());
+        XREPORT("[TOP_MODULE C_TOR] : Re-setting end addr of target_" << i);
+        myDefaultBroker->json_deserialize_initial_value(targetName, ss.str());
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -186,20 +186,20 @@ SC_MODULE(ex09_top_module) {
   }
 
   ~ex09_top_module() {
-    // @TODO De-allocate all master and slave properly
-    if (!masterList.empty())
-      masterList.clear();
+    // @TODO De-allocate all initiator and target properly
+    if (!initiatorList.empty())
+      initiatorList.clear();
 
-    if (!slaveList.empty())
-      slaveList.clear();
+    if (!targetList.empty())
+      targetList.clear();
   }
 
  private:
   // Immutable type cci-parameters
-  //!< Number of Masters to be instantiated
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_masters;
-  //!< Number of Slaves to be instantiated
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_slaves;
+  //!< Number of initiators to be instantiated
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_initiators;
+  //!< Number of targets to be instantiated
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_targets;
 
   //!< Configuration broker instance
   cci::cnf::cci_cnf_broker_if* myDefaultBroker;
@@ -207,24 +207,24 @@ SC_MODULE(ex09_top_module) {
   //!< Declaration of a router pointer
   ex09_router* routerInstance;
 
-  // STD::VECTORs for creating instances of master and slave
-  //!< STD::VECTOR for masters
-  std::vector<ex09_master*> masterList;
-  //!< STD::VECTOR for slaves
-  std::vector<ex09_slave*> slaveList;
+  // STD::VECTORs for creating instances of initiator and target
+  //!< STD::VECTOR for initiators
+  std::vector<ex09_initiator*> initiatorList;
+  //!< STD::VECTOR for targets
+  std::vector<ex09_target*> targetList;
 
-  //!< Master_ID
-  char masterName[50];
-  //!< Slave_ID
-  char slaveName[50];
+  //!< initiator_ID
+  char initiatorName[50];
+  //!< target_ID
+  char targetName[50];
   //!< String to be used for misc things
   char stringMisc[50];
-  char slaveBaseAddr[50];
+  char targetBaseAddr[50];
 
   //!< Address Value
   int addrValue;
-  //!< Maximum Slave Size (initial value)
-  int slaveSize;
+  //!< Maximum target Size (initial value)
+  int targetSize;
   //!< Maximum Router Table's memory range
   int r_addr_max;
 };
