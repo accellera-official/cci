@@ -55,7 +55,8 @@ static inline impl_type* impl_cast(void* p)
 
 #define VALUE_ASSERT( Cond, Msg ) \
   do { if( !(Cond) ) \
-      report_error( Msg "\n Condition: " #Cond, __FILE__, __LINE__ ); \
+    cci_report_handler::cci_value_failure \
+      ( Msg "\n Condition: " #Cond, __FILE__, __LINE__ ); \
   } while( false )
 
 // ----------------------------------------------------------------------------
@@ -196,6 +197,18 @@ cci_value_map_cref cci_value_cref::get_map() const
   return cci_value_map_cref(pimpl_);
 }
 
+std::ostream& operator<<( std::ostream& os, cci_value_cref const& v )
+{
+  if( v.is_null() ) {
+    os << "null";
+  } else {
+    rapidjson::StdOutputStream wos(os);
+    rapidjson::Writer<rapidjson::StdOutputStream> writer(wos);
+    DEREF(v).Accept( writer );
+  }
+  return os;
+}
+
 // ----------------------------------------------------------------------------
 // cci_value_ref
 
@@ -295,6 +308,22 @@ cci_value_ref::set_map()
   sc_assert( THIS );
   THIS->SetObject();
   return cci_value_map_ref( THIS );
+}
+
+std::istream& operator>>( std::istream& is, cci_value_ref v )
+{
+  sc_assert( PIMPL(v) );
+  json_document d;
+  rapidjson::StdInputStream wis(is);
+
+  d.ParseStream< rapidjson::kParseStopWhenDoneFlag >( wis );
+  // VALUE_ASSERT( !d.HasParseError(), "cci_value stream extraction failed" );
+  if( !d.HasParseError() )
+    DEREF(v).Swap( d );
+  else
+    is.setstate( std::istream::failbit );
+
+  return is;
 }
 
 // ----------------------------------------------------------------------------

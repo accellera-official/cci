@@ -64,6 +64,12 @@ template<typename T> struct cci_value_traits;
 /// @ref cci_value comparisons
 bool operator==( cci_value_cref const &, cci_value_cref const & );
 
+/// @ref cci_value ostream insertion
+std::ostream& operator<<( std::ostream&, cci_value_cref const & );
+
+/// @ref cci_value istream extraction
+std::istream& operator>>( std::istream&, cci_value_ref );
+
 // --------------------------------------------------------------------------
 
 /// reference to a constant (nested) @ref cci_value
@@ -75,6 +81,7 @@ class cci_value_cref
   friend class cci_value_map_cref;
   friend class cci_value_map_ref;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
+  friend std::ostream& operator<<( std::ostream&, cci_value_cref const & );
 
 protected:
   typedef void impl; // use type-punned pointer for now
@@ -195,6 +202,7 @@ class cci_value_ref
   friend class cci_value_string_ref;
   friend class cci_value_list_ref;
   friend class cci_value_map_ref;
+  friend std::istream& operator>>( std::istream&, cci_value_ref );
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
@@ -358,6 +366,14 @@ private:
   // constant reference, no assignment
   this_type& operator=( this_type const& ) /* = delete */;
 };
+
+/// specialisation for printing a plain string reference (not JSON encoded)
+inline std::ostream&
+operator<<( std::ostream& os, cci_value_string_cref const& s )
+{
+  os.write( s.c_str(), s.length() );
+  return os;
+}
 
 // --------------------------------------------------------------------------
 
@@ -815,6 +831,9 @@ public:
 
   static cci_value from_json( std::string const & json );
   static std::string to_json( const_reference v );
+
+  friend std::istream& operator>>( std::istream& is, this_type & v )
+    { v.init(); return is >> reference(v); }
   //@}
 
 private:
@@ -876,14 +895,6 @@ cci_value::to_json( const_reference v )
   bool ok = v.json_serialize( json );
   sc_assert( ok );
   return json;
-}
-
-///@todo drop me later?
-inline std::ostream&
-operator<<( std::ostream& os, cci_value::const_reference v )
-{
-  os << cci_value::to_json( v );
-  return os;
 }
 
 // --------------------------------------------------------------------------
