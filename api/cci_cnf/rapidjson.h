@@ -36,6 +36,7 @@
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 
 #include <stdexcept>
+#include <iosfwd>
 
 // --------------------------------------------------------------------------
 // configure RapidJSON
@@ -102,6 +103,92 @@ RAPIDJSON_NAMESPACE_END
 
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
+
+// -----------------------------------------------------------------------
+// std::basic_(i/o)stream wrapper
+
+RAPIDJSON_NAMESPACE_BEGIN
+
+template<typename Encoding>
+class StdBasicInputStream {
+public:
+  typedef typename Encoding::Ch  Ch;  //!< character type
+  typedef std::basic_istream<Ch> Str; //!< C++ stream type
+
+  /*!
+    \param is C++ input stream to wrap
+  */
+  StdBasicInputStream(Str& is) : str_(&is) {
+    RAPIDJSON_ASSERT(str_->good());
+  }
+
+  Ch Peek() const {
+    typename Str::int_type c = str_->peek();
+    return (c == Str::traits_type::eof()) ? Ch() : static_cast<Ch>(c);
+  }
+
+  Ch Take() {
+    typename Str::int_type c = str_->get();
+    return (c == Str::traits_type::eof()) ? Ch() : static_cast<Ch>(c);
+  }
+
+  size_t Tell() const {
+    return static_cast<size_t>(str_->tellg());
+  }
+
+  // Not yet implemented (needed for encoding detection)
+  const Ch* Peek4() const { RAPIDJSON_ASSERT(false); return 0; }
+
+  // Not implemented
+  void   Put(Ch c)   { RAPIDJSON_ASSERT(false); }
+  void   Flush()     { RAPIDJSON_ASSERT(false); }
+  Ch*    PutBegin()  { RAPIDJSON_ASSERT(false); return 0; }
+  size_t PutEnd(Ch*) { RAPIDJSON_ASSERT(false); return 0; }
+
+private:
+  Str* str_; //!< wrapped C++ character stream
+};
+
+typedef StdBasicInputStream<UTF8<> >  StdInputStream;
+
+template<typename Encoding>
+class StdBasicOutputStream {
+public:
+  typedef typename Encoding::Ch  Ch;  //!< character type
+  typedef std::basic_ostream<Ch> Str; //!< C++ stream type
+
+  /*!
+    \param os C++ output stream to wrap
+  */
+  StdBasicOutputStream(Str& os) : str_(&os) {
+    RAPIDJSON_ASSERT(str_->good());
+  }
+
+  void Put(Ch c) {
+    str_->put(c);
+  }
+
+  void Flush() {
+    str_->flush();
+  }
+
+  size_t Tell() const {
+    return static_cast<size_t>(str_->tellp());
+  }
+
+  // Not implemented
+  Ch     Peek() const { RAPIDJSON_ASSERT(false); return Ch(); }
+  Ch     Take()       { RAPIDJSON_ASSERT(false); return Ch(); }
+  Ch*    PutBegin()   { RAPIDJSON_ASSERT(false); return 0; }
+  size_t PutEnd(Ch*)  { RAPIDJSON_ASSERT(false); return 0; }
+
+private:
+  Str* str_; //!< wrapped C++ character stream
+};
+
+typedef StdBasicOutputStream<UTF8<> > StdOutputStream;
+
+RAPIDJSON_NAMESPACE_END
 
 #ifdef __GNUC__
 RAPIDJSON_DIAG_POP
