@@ -125,7 +125,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       this->set( v );
     }
 
-    cci::cnf::cci_value get_value() {
+    cci::cnf::cci_value get_value() const {
       return cci::cnf::cci_value( this->get() );
     }
     
@@ -214,7 +214,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       this->set( v );
     }
     
-    cci::cnf::cci_value get_value() {
+    cci::cnf::cci_value get_value() const {
       return cci::cnf::cci_value( this->get() );
     }
     

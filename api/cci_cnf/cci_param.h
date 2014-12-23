@@ -109,7 +109,7 @@ public:
   virtual std::string json_serialize() const;
   virtual const basic_param_type get_basic_type() const;
   virtual void set_value(const cci_value& val);
-  virtual cci_value get_value();
+  virtual cci_value get_value() const;
   virtual void set_documentation(const std::string& doc);
   virtual std::string get_documentation() const;
   virtual bool is_default_value();
@@ -228,7 +228,7 @@ public:
   virtual std::string json_serialize() const;
   virtual const basic_param_type get_basic_type() const;
   virtual void set_value(const cci_value& val);
-  virtual cci_value get_value();
+  virtual cci_value get_value() const;
   virtual void set_documentation(const std::string& doc);
   virtual std::string get_documentation() const;
   virtual bool is_default_value();

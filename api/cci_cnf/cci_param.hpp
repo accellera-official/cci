@@ -142,7 +142,7 @@ void cci_param<T,TM>::set_value(const cci_value& val) {
 }
 
 template<typename T, param_mutable_type TM>
-cci_value cci_param<T,TM>::get_value() {
+cci_value cci_param<T,TM>::get_value() const {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   const cci_value& ret = get_pImpl()->get_value();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
@@ -469,7 +469,7 @@ void cci_param<std::string,TM>::set_value(const cci_value& val) {
 }
 
 template<param_mutable_type TM>
-cci_value cci_param<std::string,TM>::get_value() {
+cci_value cci_param<std::string,TM>::get_value() const {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   const cci_value& ret = get_pImpl()->get_value();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer

@@ -183,7 +183,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * @exception cci_exception_get_param Getting value failed
      * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
-    virtual cci_value get_value() = 0;
+    virtual cci_value get_value() const = 0;
 
     
     // //////////////////////////////////////////////////////////////////// //
