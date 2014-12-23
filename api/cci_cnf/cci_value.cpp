@@ -253,7 +253,7 @@ cci_value_ref
 cci_value_ref::set_int64(int64 v)
 {
   sc_assert( THIS );
-  THIS->SetInt(v);
+  THIS->SetInt64(v);
   return this_type( THIS );
 }
 
