@@ -88,7 +88,7 @@ SC_MODULE(ex17_parameter_configurator) {
       /// Set value to the 'string' parameter of the owner module
       XREPORT("[CFGR] : Set string  parameter value to 'configure'"
               " using cci_base_parameter");
-      str_param_ptr->json_deserialize("configure");
+      str_param_ptr->json_deserialize("\"configure\"");
 
       wait(50.0, sc_core::SC_NS);
     }
