@@ -105,7 +105,7 @@ void cci_param_user_data_type::set_value(const cci::cnf::cci_value& val) {
   c_value = val;
 }
 
-cci::cnf::cci_value cci_param_user_data_type::get_value() {
+cci::cnf::cci_value cci_param_user_data_type::get_value() const {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
   return c_value;
 }
