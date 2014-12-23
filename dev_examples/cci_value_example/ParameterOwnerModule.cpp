@@ -214,13 +214,13 @@ void ParameterOwnerModule::main_action() {
   sc_core::sc_time sctime( sctime_param.get_value().get<sc_core::sc_time>() );
   DEMO_DUMP(name(), "  got " << sctime.to_string() << endl);
     
-  cci::cnf::cci_value scint_v(-9223372036854775806ll);
+  cci::cnf::cci_value scint_v(-9223372036854775807ll);
   DEMO_DUMP(name(), "Set and get parameter Owner.scint64_param - value = " << scint_v);
   scint64_param.set_value(scint_v);
   DEMO_DUMP(name(), "  got " << scint64_param.get_value() << endl);
   
-  cci::cnf::cci_value scuint_v((sc_dt::int64)18446744073709551615ull);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scuint64_param - value = " << (sc_dt::uint64) scuint_v.get_int64());
+  cci::cnf::cci_value scuint_v(18446744073709551615ull);
+  DEMO_DUMP(name(), "Set and get parameter Owner.scuint64_param - value = " << scuint_v.get_uint64());
   scuint64_param.set_value(scuint_v);
   DEMO_DUMP(name(), "  got " << scuint64_param.get_value() << endl);
   
@@ -244,7 +244,7 @@ void ParameterOwnerModule::main_action() {
   cci::cnf::cci_value valStr("Hello");
   try {
     uint_param.set_value(valStr);
-  } catch(sc_core::sc_report e) {
+  } catch(sc_core::sc_report const & e) {
     switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
       case cci::cnf::CCI_VALUE_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
@@ -264,7 +264,7 @@ void ParameterOwnerModule::main_action() {
 #endif
   try {
     some_param.set_value(valStr);
-  } catch(sc_core::sc_report e) {
+  } catch(sc_core::sc_report const & e) {
     switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
       case cci::cnf::CCI_VALUE_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
