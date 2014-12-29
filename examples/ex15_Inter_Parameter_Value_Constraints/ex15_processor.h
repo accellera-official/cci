@@ -150,7 +150,7 @@ SC_MODULE(ex15_processor) {
   void TestCondition(int lines, int memory_size) {
     static int check = 0;
 
-    if (memory_size < (pow(2, lines) - 1)) {
+    if (memory_size < (1 << lines) - 1) {
       if (check == 0) {
         XREPORT("[PROCESSOR fn] : User may proceed with the present"
                 " configuration");
