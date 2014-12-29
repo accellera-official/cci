@@ -140,14 +140,14 @@ bool cci_value_cref::is_list() const
 bool cci_value_cref::is_map() const
   { return THIS && THIS->IsObject(); }
 
-bool cci_value_cref::get_bool() const
-{
-  (is_bool());
-  return THIS->GetBool();
-}
-
 #define ASSERT_TYPE( Cond ) \
   VALUE_ASSERT( Cond, "invalid type access" )
+
+bool cci_value_cref::get_bool() const
+{
+  ASSERT_TYPE(is_bool());
+  return THIS->GetBool();
+}
 
 int cci_value_cref::get_int() const
 {
