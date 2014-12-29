@@ -2314,6 +2314,10 @@ sub run_test
     # add local include dir, if exists
     push ( @test_set_includes, "$rt_systemc_test/include/$test_set" )
         if ( defined $test_set && -d "$rt_systemc_test/include/$test_set" );
+    # -- CCI
+    push ( @test_set_includes, "$rt_systemc_test/$test_set/$rt_common_include_dir" )
+        if ( defined $test_set && -d "$rt_systemc_test/$test_set/$rt_common_include_dir" );
+    # -- /CCI
     # add global include dirs
     push ( @test_set_includes, @rt_includes );
 
