@@ -20,10 +20,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\libs\Debug"
-			IntermediateDirectory="..\libs\Debug"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="..\cci_lib_msvc80_ps_debug_win32.vsprops"
+			InheritedPropertySheets="..\cci_lib.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -43,15 +42,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/bigobj"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\centoshare\cci\greencontrol_cci_branch;C:\centoshare\cci\api"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\api&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				RuntimeLibrary="1"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -84,9 +81,9 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\cci_lib.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -107,14 +104,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/bigobj"
 				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\api&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
-				MinimalRebuild="true"
+				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				RuntimeLibrary="1"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -147,9 +143,9 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\cci_lib.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -170,11 +166,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/bigobj"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\api&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="2"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="0"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -207,9 +205,9 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\cci_lib.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -231,11 +229,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/bigobj"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\api&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="2"
+				MinimalRebuild="false"
+				BasicRuntimeChecks="0"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -276,15 +276,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_missing_symbols_template.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\gs_param_implementation\gs_cci_symbols.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_symbols_templ_big_int.cpp"
 				>
 			</File>
 			<File
@@ -322,6 +314,7 @@
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			ParseFiles="false"
 			>
 		</Filter>
 		<File
