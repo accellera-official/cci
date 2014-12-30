@@ -24,33 +24,28 @@
  * @date      14th December, 2011 (Wednesday).
  *            (Modified On) 16th May, 2011 (Monday)
  */
+
 #include <systemc.h>
 
-#include "parameter_owner.h"
-#include "parameter_configurator.h"
+#include "ex19_parameter_owner.h"
+#include "ex19_parameter_configurator.h"
 
-/**
- * @brief      This function instantiates owner and configurator class objects
- *             and shows details of the up-front planning required to make the
- *             owner class private members accesible within the configurator 
- * @author     P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date       14th December, 2011 (Wednesday)
- *             (Modified On) 16th May, 2011 (Monday)
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// Instantiation of the owner and configurator sc_modules
-	parameter_owner           param_owner("param_owner");
-	parameter_configurator    param_cfgr("param_setter");
+/// This function instantiates owner and configurator class objects and shows
+/// details of the up-front planning required to make the owner class private
+/// members accesible within the configurator
+int sc_main(int sc_argc, char* sc_argv[]) {
+  /// Instantiation of the owner and configurator sc_modules
+  ex19_parameter_owner param_owner("param_owner");
+  ex19_parameter_configurator param_cfgr("param_setter");
 
-	/// The instance of the owner class being passed as an argument to an API of the
-	/// configurator class will serve in getting references to the owner class
-	/// protected/private members within the configurator later
-	param_cfgr.set_cfgr_parameter (&param_owner);
+  /// The instance of the owner class being passed as an argument to an API of
+  /// the configurator class will serve in getting references to the owner class
+  /// protected/private members within the configurator later
+  param_cfgr.set_cfgr_parameter(&param_owner);
 
-	// Start and run the simulation till 50 nanoseconds
-	sc_core::sc_start(50.0, sc_core::SC_NS);
+  // Start and run the simulation till 50 nanoseconds
+  sc_core::sc_start(50.0, sc_core::SC_NS);
 
-	return EXIT_SUCCESS;
-
-}// End of MAIN
+  return EXIT_SUCCESS;
+}
+/// sc_main

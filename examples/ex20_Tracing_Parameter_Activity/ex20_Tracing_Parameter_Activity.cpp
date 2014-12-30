@@ -19,29 +19,21 @@
  * \author  P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
  * \date    11th October, 2011
  */
-#include <systemc.h>
-#include "observer.h"
-#include "parameter_owner.h"
 
+#include "ex20_observer.h"
+#include "ex20_parameter_owner.h"
 
-/*!
- * \fn      int sc_main (int, char **)
- * \brief   sc_main function
- * \param   sc_argc
- * \param   sc_argv[]
- * \return  int
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// Instantiate the observer class
-	observer                 observer_inst;
+/// Main testbench function which instantiates an observer and parameter owner
+int sc_main(int sc_argc, char* sc_argv[]) {
+  /// Instantiate the observer class
+  ex20_observer observer_inst;
 
-	/// Instantiate the parameter_owner module
-	parameter_owner          param_owner("param_owner");
+  /// Instantiate the parameter_owner module
+  ex20_parameter_owner param_owner("param_owner");
 
-	/// Simulation starts
-	sc_start(15.0, SC_NS);
+  /// Simulation starts
+  sc_core::sc_start(15.0, sc_core::SC_NS);
 
-	return EXIT_SUCCESS;
-
-}// End of 'sc_main'
+  return EXIT_SUCCESS;
+}
+/// sc_main

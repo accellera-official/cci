@@ -19,24 +19,20 @@
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      9th June, 2011 (Thursday)
  */
-#include <systemc.h>          // SystemC Headers
-#include "top_module.h"
-#include "parameter_configurator.h"
 
-/**
- * @fn         int sc_main (int, char** )
- * @brief      The TOP_MODULE instantiated within this function, in turn,
- *             instantiates the PARAMETER_OWNER module
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// Instantiation of the owner and configurator sc_modules
-	top_module                top_mod("top_mod");
-	parameter_configurator    param_cfgr("param_cfgr");
+#include "ex11_top_module.h"
+#include "ex11_parameter_configurator.h"
 
-	// Start and run the simulation
-	sc_core::sc_start(30.0, sc_core::SC_NS);
+/// Testbench that instantiates the ex11_top_module, which in turn
+/// instantiates the rest of the platform.
+int sc_main(int sc_argc, char* sc_argv[]) {
+  /// Instantiation of the owner and configurator sc_modules
+  ex11_top_module top_mod("top_mod");
+  ex11_parameter_configurator param_cfgr("param_cfgr");
 
-	return EXIT_SUCCESS;
+  // Start and run the simulation
+  sc_core::sc_start(30.0, sc_core::SC_NS);
 
-}// End of MAIN
+  return EXIT_SUCCESS;
+}
+// sc_main

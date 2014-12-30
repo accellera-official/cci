@@ -21,31 +21,26 @@
  * \author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com> 
  * \date      16th May, 2011 (Monday)
  */
-#include <systemc.h>                 // SystemC definitions
 
-#include "parameter_owner.h"
-#include "parameter_configurator.h"
+#include "ex10_parameter_owner.h"
+#include "ex10_parameter_configurator.h"
 
-/*!
- * \fn         int sc_main(int, char** )
- * \brief      This function instantiates owner and configurator class objects
- *             and shows details of the up-front planning required to make the owner
- *             class private members accesible within the configurator 
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	/// Instantiation of the owner and configurator sc_modules
-	parameter_owner           param_onwer("param_owner");
-	parameter_configurator    param_cfgr("param_setter");
+/// Testbench instantiates owner and configurator modules and shows up-front
+/// planning required to make the owner's private memvers accessible within
+/// the configurator
+int sc_main(int sc_argc, char* sc_argv[]) {
+  /// Instantiation of the owner and configurator sc_modules
+  ex10_parameter_owner param_owner("param_owner");
+  ex10_parameter_configurator param_cfgr("param_setter");
 
-	/// The instance of the owner class being passed as an argument to an API of the
-	/// configurator class will serve in getting references to the owner class
-	/// protected/private members within the configurator later
-	param_cfgr.set_cfgr_parameter (&param_onwer);
+  /// The instance of the owner class being passed as an argument to an API
+  /// of the configurator class will serve in getting references to the owner
+  /// class protected/private members within the configurator later
+  param_cfgr.set_cfgr_parameter(&param_owner);
 
-	// Start and run the simulation till 50 nanoseconds
-	sc_core::sc_start(50.0, sc_core::SC_NS);
+  // Start and run the simulation till 50 nanoseconds
+  sc_core::sc_start(50.0, sc_core::SC_NS);
 
-	return EXIT_SUCCESS;
-
-}// End of MAIN
+  return EXIT_SUCCESS;
+}
+// sc_main

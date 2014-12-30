@@ -19,28 +19,27 @@
  * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  * @date      10th June, 2011 (Friday)
  */
-#include <systemc.h>
-#include "processor.h"
-#include "configurator.h"
 
-/**
- * @fn        int sc_main (int, char** )
- * @brief     This function instantiates the two modules - PROCESSOR & CONFIGURATOR modules
- */
-int sc_main(int sc_argc, char* sc_argv[])
-{
-	std::cout << "\n\t[MAIN] : In this example, the following is condition is verified" << std::endl;
-	std::cout << "\n\t[MAIN] : \t\tx <= 2^n - 1" << std::endl;
-	std::cout << "\n\t[MAIN] : where, 'x' : value of 'mem_block_size' (Memory Block size), and" << std::endl;
-	std::cout << "\t[MAIN] :        'n' : total number of address lines - 'curr_addr_lines'" << std::endl;
+#include "ex15_processor.h"
+#include "ex15_configurator.h"
 
-	/// Instantiation of the owner and configurator sc_modules
-	processor                 processor("processor");
-	configurator              param_cfgr("param_cfgr");
+/// Testbench function that instantiates the processor and configurator modules
+int sc_main(int sc_argc, char* sc_argv[]) {
+  SC_REPORT_INFO("sc_main", "[MAIN] : In this example, the following is"
+                 " condition is verified");
+  SC_REPORT_INFO("sc_main", "[MAIN] : \t\tx <= 2^n - 1");
+  SC_REPORT_INFO("sc_main", "[MAIN] : where, 'x' : value of 'mem_block_size'"
+                 " (Memory Block size), and");
+  SC_REPORT_INFO("sc_main", "[MAIN] :        'n' : total number of address"
+                 " lines - 'curr_addr_lines'");
 
-	// Start and run the simulation till 50 nanoseconds
-	sc_start(15.0, SC_NS);
+  /// Instantiation of the owner and configurator sc_modules
+  ex15_processor processor("processor");
+  ex15_configurator param_cfgr("param_cfgr");
 
-	return EXIT_SUCCESS;
+  // Start and run the simulation till 50 nanoseconds
+  sc_core::sc_start(15.0, sc_core::SC_NS);
 
-}// End of MAIN
+  return EXIT_SUCCESS;
+}
+/// sc_main
