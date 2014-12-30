@@ -57,10 +57,12 @@ INCDIR = -I$(CCI_DIR) -I$(GS_CONTROL_DIR)\
 ## -----------------------------------------------------------------------------
 
 LIB=libcciparamimpl.a
+LIBDIR=$(GS_CCI_HOME)/lib
 
-all: $(LIB)
+all: $(LIBDIR)/$(LIB)
 
-$(LIB): $(OBJS)
+$(LIBDIR)/$(LIB): $(OBJS)
+	mkdir -p $(LIBDIR)
 	$(AR) rcs $@ $^
 	ranlib $@
 
@@ -73,7 +75,9 @@ $(LIB): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 clean:
-	rm -f  $(OBJS) $(DEPS) $(LIB)
+	rm -f $(OBJS) $(DEPS)
+	rm -f $(LIBDIR)/$(LIB)
+	-rmdir $(LIBDIR) 2>&1 || true
 
 bigsymbols:
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) \
@@ -83,5 +87,5 @@ bigsymbols:
 		-c gs_cci_symbols_templ_big_int.cpp -o $(OBJNAME).o $<
 
 full_library: $(OBJS) $(OBJNAME).o
-	$(AR) rcs $(LIB) $^
-	ranlib $(LIB)
+	$(AR) rcs $(LIBDIR)/$(LIB) $^
+	ranlib $(LIBDIR)/$(LIB)
