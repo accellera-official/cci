@@ -234,7 +234,7 @@ public:
    * @param parname   Name of the observed parameter
    * @return          Event which is notified at parameter change.
    */
-  virtual sc_event& getUpdateEvent(const std::string &parname)  throw (RegisterObserverFailedException) = 0;
+  virtual sc_event& getUpdateEvent(const std::string &parname) = 0;
   
   // DEPRECATED Makro for registering callback functions (see method registerCallback). DEPRECATED
 #define REGISTER_CALLBACK(class, method, parname)                \
@@ -322,7 +322,7 @@ registerNewParamCallback(new gs::cnf::CallbAdapt< class >(this, &class::method))
    *
    * @return          Event which is notified when new parameter is added.
    */
-  virtual sc_event& getNewParamEvent() throw (RegisterObserverFailedException) = 0;
+  virtual sc_event& getNewParamEvent() = 0;
   
   /// Register callback function for notifications of new added (as explicite) or first time implicitely set parameters.
   /**
