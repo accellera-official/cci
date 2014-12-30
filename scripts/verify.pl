@@ -387,13 +387,21 @@ sub get_tlm_home
 
 sub get_cci_home
 {
+    my $cci_home = $ENV{ 'CCI_HOME' } || "";
+
     if( ! defined $ENV{ 'CCI_HOME' } ) {
         &print_log( "Warning: " .
                    "environment variable CCI_HOME is not defined!\n" );
-        #exit 1;
+
+        # guess CCI_HOME from script location
+        my $wdir;
+        chop( $wdir = `pwd` );
+        $ARGV[0] =~  m|^(.*)/|;
+        chdir( "$1/.." );
+        chop( $cci_home = `pwd` );
+        chdir( "$wdir" );
     }
 
-    my $cci_home = $ENV{ 'CCI_HOME' } || "";
     $cci_home =~ s|\\|/|g ;  # replace any backslash with forward slash
     $cci_home;
 }
