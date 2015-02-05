@@ -56,8 +56,12 @@ SC_MODULE(config_ip) {
       assert(struc_param_ptr != NULL);
 
       // Update the structure_param value to 3 (invalid)
-      XREPORT("execute: [EXTERNAL] Set value of "<< struc_param_name<< " to 3");
-      struc_param_ptr->json_deserialize("3");
+      try {
+        XREPORT("execute: [EXTERNAL] Set value of "<< struc_param_name<< " to 3");
+        struc_param_ptr->json_deserialize("3");
+      }catch(std::exception &x) {
+        XREPORT_WARNING(x.what());
+      }
 
       // Display new value
       std::string new_value = struc_param_ptr->json_serialize();

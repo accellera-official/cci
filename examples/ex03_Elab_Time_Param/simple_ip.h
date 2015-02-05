@@ -72,8 +72,14 @@ SC_MODULE(simple_ip) {
     wait(10, sc_core::SC_NS);
 
     // Update struc_param value to 2 (invalid)
-    XREPORT("execute: Set value of struc_param to 2"); 
-    struc_param = 2;
+    try {
+      XREPORT("execute: Set value of struc_param to 2");
+      struc_param = 2;
+    }catch(std::exception &x)
+    {
+      XREPORT_WARNING(x.what());
+    }
+
     if( 1 == struc_param )  {
         XREPORT("execute: Value of struc_param unchanged: "<< struc_param); 
     }
@@ -93,8 +99,14 @@ SC_MODULE(simple_ip) {
     wait(10, sc_core::SC_NS);
 
     // Update struc_param_post_eoe value to 1 (invalid)
-    XREPORT("execute: Set value of struc_param_post_eoe to 1"); 
-    struc_param_post_eoe = 1;
+    try {
+      XREPORT("execute: Set value of struc_param_post_eoe to 1");
+      struc_param_post_eoe = 1;
+    }catch(std::exception &x)
+    {
+      XREPORT_WARNING(x.what());
+    }
+
     if( 0 == struc_param_post_eoe )  {
         XREPORT("execute: Value of struc_param_post_eoe remains unchanged "<< struc_param_post_eoe); 
     }

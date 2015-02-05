@@ -129,6 +129,16 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
         cci::cnf::cci_report_handler::set_param_failed("Parameter locked.");
         return;
       }
+      if (TM==cci::cnf::immutable_param) {
+        cci::cnf::cci_report_handler::set_param_failed("Parameter is immutable.");
+        return;
+      }
+      if (TM==cci::cnf::elaboration_time_param) {
+        if(!m_gs_param.isScElabPhase()){
+          cci::cnf::cci_report_handler::set_param_failed("Elab Parameter update failed.");
+          return;
+        }
+      }
       if (!m_gs_param.setValue(val))
         cci::cnf::cci_report_handler::set_param_failed("Value rejected by callback.");
       else

@@ -793,6 +793,22 @@ public:
       SC_REPORT_WARNING(name(), "The update event is not notified although the value changed, because simulation is not running!");
   }
   
+  //Used for elaboration parameter
+  /**
+   * Before setValue is called for elaboration parameter updates,
+   * this function is called to determine whether the value updates
+   * shall be rejected or not
+   */
+  bool isScElabPhase(){
+    if ( sc_get_status() &
+        (   SC_BEFORE_END_OF_ELABORATION |
+            SC_ELABORATION |
+            SC_END_OF_ELABORATION
+        )
+       )return true;
+    return false;
+  }
+
 protected:
 
   /*void show_callbacks() {

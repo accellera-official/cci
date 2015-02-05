@@ -67,11 +67,10 @@ SC_MODULE(config_ip) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2_ptr'!");
       }
       else {
-	try {
-	  XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
+        try {
+          XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
 	  param_2_ptr->json_deserialize("200");
-	}
-	catch(std::exception &x) {
+	}catch(std::exception &x) {
 	  XREPORT_WARNING(x.what());
 	}
       }

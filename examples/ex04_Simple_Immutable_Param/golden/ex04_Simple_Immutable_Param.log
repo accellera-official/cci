@@ -13,7 +13,29 @@ Info: sim_ip: Info: Ctor: immutable param:param_2 = 2 (expected)
 
 Info: sc_main: Begin Simulation
 
+Info: cfg_ip: @0 s, config_ip::end_of_elaboration: Set value of sim_ip.param_1 to 10
+
+Warning: cfg_ip: @0 s, Caught exception: Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+In file: <removed by verify.pl>
+In file: <removed by verify.pl>
+
+Info: cfg_ip: @0 s, config_ip::end_of_elaboration: Current value of sim_ip.param_1 is 100
+
+Info: cfg_ip: @0 s, config_ip::end_of_elaboration: Set value of sim_ip.param_2 to 20
+
+Warning: cfg_ip: @0 s, Caught exception: Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+In file: <removed by verify.pl>
+In file: <removed by verify.pl>
+
+Info: cfg_ip: @0 s, config_ip::end_of_elaboration: Current value of sim_ip.param_2 is 2
+
 Info: cfg_ip: @10 ns, Attempting to set value of 'sim_ip.param_2' to 200
+
+Warning: cfg_ip: @10 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+In file: <removed by verify.pl>
+In process: cfg_ip.execute @ 10 ns
+In file: <removed by verify.pl>
+In process: cfg_ip.execute @ 10 ns
 
 Info: sim_ip: Info: @Run: param_1 = 100 (expected)
 
@@ -21,9 +43,21 @@ Info: sim_ip: Info: @Run: param_2 = 2 (expected)
 
 Info: sim_ip: @20 ns, @Run: Assign new value (10) to sim_ip.param_1
 
+Warning: sim_ip: @20 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+In file: <removed by verify.pl>
+In process: sim_ip.execute @ 20 ns
+In file: <removed by verify.pl>
+In process: sim_ip.execute @ 20 ns
+
 Info: sim_ip: Info: @Run: param_1 = 100 (expected)
 
 Info: sim_ip: @20 ns, @Run: Assign new value (20) to sim_ip.param_2
+
+Warning: sim_ip: @20 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+In file: <removed by verify.pl>
+In process: sim_ip.execute @ 20 ns
+In file: <removed by verify.pl>
+In process: sim_ip.execute @ 20 ns
 
 Info: sim_ip: Info: @Run: param_2 = 2 (expected)
 
