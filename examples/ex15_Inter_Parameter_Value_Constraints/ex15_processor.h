@@ -28,8 +28,8 @@
 #include <cassert>
 #include <string>
 
-#include "ex15_Inter_Parameter_Value_Constraints/ex15_address_lines_register.h"
-#include "ex15_Inter_Parameter_Value_Constraints/ex15_memory_block.h"
+#include "ex15_address_lines_register.h"
+#include "ex15_memory_block.h"
 #include "xreport.hpp"
 
 /// This module instantiates a processor module which register's callbacks on
@@ -150,7 +150,7 @@ SC_MODULE(ex15_processor) {
   void TestCondition(int lines, int memory_size) {
     static int check = 0;
 
-    if (memory_size < (pow(2, lines) - 1)) {
+    if (memory_size < (1 << lines) - 1) {
       if (check == 0) {
         XREPORT("[PROCESSOR fn] : User may proceed with the present"
                 " configuration");

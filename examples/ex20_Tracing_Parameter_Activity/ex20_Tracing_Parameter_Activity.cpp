@@ -20,9 +20,8 @@
  * \date    11th October, 2011
  */
 
-#include <systemc.h>
-#include "ex20_Tracing_Parameter_Activity/ex20_observer.h"
-#include "ex20_Tracing_Parameter_Activity/ex20_parameter_owner.h"
+#include "ex20_observer.h"
+#include "ex20_parameter_owner.h"
 
 /// Main testbench function which instantiates an observer and parameter owner
 int sc_main(int sc_argc, char* sc_argv[]) {
@@ -33,7 +32,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   ex20_parameter_owner param_owner("param_owner");
 
   /// Simulation starts
-  sc_start(15.0, SC_NS);
+  sc_core::sc_start(15.0, sc_core::SC_NS);
 
   return EXIT_SUCCESS;
 }

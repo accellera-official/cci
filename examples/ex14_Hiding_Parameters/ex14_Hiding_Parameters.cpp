@@ -23,11 +23,10 @@
  * \date      3rd September, 2011 (Saturday)
  */
 
-#include <systemc.h>
 #include <cci>
 
-#include "ex14_Hiding_Parameters/ex14_parent.h"
-#include "ex14_Hiding_Parameters/ex14_configurator.h"
+#include "ex14_parent.h"
+#include "ex14_configurator.h"
 
 #include "gs_cci_cnf_private_broker_accessor.h"
 

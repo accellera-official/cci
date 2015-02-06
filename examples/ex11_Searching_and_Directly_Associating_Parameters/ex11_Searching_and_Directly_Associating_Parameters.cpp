@@ -20,9 +20,8 @@
  * @date      9th June, 2011 (Thursday)
  */
 
-#include <systemc.h>
-#include "ex11_Searching_and_Directly_Associating_Parameters/ex11_top_module.h"
-#include "ex11_Searching_and_Directly_Associating_Parameters/ex11_parameter_configurator.h"
+#include "ex11_top_module.h"
+#include "ex11_parameter_configurator.h"
 
 /// Testbench that instantiates the ex11_top_module, which in turn
 /// instantiates the rest of the platform.

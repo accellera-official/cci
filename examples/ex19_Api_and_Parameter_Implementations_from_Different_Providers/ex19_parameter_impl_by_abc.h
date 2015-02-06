@@ -26,7 +26,6 @@
 #ifndef EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_IMPL_BY_ABC_H_
 #define EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_IMPL_BY_ABC_H_
 
-#include <stdint.h>
 #include <cci>
 #include <systemc.h>
 #include <iostream>
@@ -36,15 +35,15 @@
 struct user_data_type {
   friend std::ostream& operator <<(std::ostream& os, const user_data_type& ud);
 
-  user_data_type(uint64_t saddr, uint64_t daddr, uint32_t idx)
+  user_data_type(sc_dt::uint64 saddr, sc_dt::uint64 daddr, unsigned idx)
       : s_address(saddr),
         d_address(daddr),
         index(idx) {
   }
 
-  uint64_t s_address;
-  uint64_t d_address;
-  uint32_t index;
+  sc_dt::uint64 s_address;
+  sc_dt::uint64 d_address;
+  unsigned      index;
 };
 // End of USER DATA STRUCTURE
 

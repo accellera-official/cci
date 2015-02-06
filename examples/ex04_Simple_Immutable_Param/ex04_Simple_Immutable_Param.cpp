@@ -19,9 +19,8 @@
  *  @author Vishal Goel, TI
  */
 
-#include <systemc>
-#include "ex04_Simple_Immutable_Param/ex04_simple_ip.h"
-#include "ex04_Simple_Immutable_Param/ex04_config_ip.h"
+#include "ex04_simple_ip.h"
+#include "ex04_config_ip.h"
 
 /// Testbench for the CCI simple immutable parameters example
 int sc_main(int argc, char *argv[]) {

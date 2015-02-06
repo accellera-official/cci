@@ -35,7 +35,7 @@ SC_MODULE(ex11_parameter_owner) {
   SC_HAS_PROCESS(ex11_parameter_owner);
 
   /// Constructor for ex11_parameter_owner that takes in multiple arguments
-  ex11_parameter_owner(sc_module_name _name,
+  ex11_parameter_owner(sc_core::sc_module_name _name,
                        std::string _param_name = "clock_speed_Hz",
                        int _param_value = 1000) {
     clk = new cci::cnf::cci_param<int>(_param_name.c_str(), _param_value);

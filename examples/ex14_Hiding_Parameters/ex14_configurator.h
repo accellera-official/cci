@@ -72,18 +72,18 @@ SC_MODULE(ex14_configurator) {
       std::vector<std::string> cfgr_param_list =
           myCfgrBrokerIF->get_param_list();
 
-      wait(15.0, SC_NS);
+      wait(15.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp()
+      XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to the 'configurator' module");
 
       for (unsigned int i = 0; i < cfgr_param_list.size(); i++) {
         XREPORT("[CFGR] : Parameter Name : " << cfgr_param_list[i]);
       }
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Change the value of the 'parent_int_buffer' to '1000'");
 
@@ -93,7 +93,7 @@ SC_MODULE(ex14_configurator) {
               << parent_base_param_ptr->get_name() << "\tParameter Value : "
               << parent_base_param_ptr->json_serialize());
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
     }
   }
 

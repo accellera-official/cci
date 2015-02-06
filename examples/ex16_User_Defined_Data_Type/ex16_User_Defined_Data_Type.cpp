@@ -26,9 +26,9 @@
 #include <cassert>
 #include <string>
 
-#include "ex16_User_Defined_Data_Type/ex16_parameter_owner.h"
-#include "ex16_User_Defined_Data_Type/ex16_parameter_configurer.h"
-#include "ex16_User_Defined_Data_Type/ex16_observer.h"
+#include "ex16_parameter_owner.h"
+#include "ex16_parameter_configurer.h"
+#include "ex16_observer.h"
 
 /// Main testbanch function, instantiates an observers, owner, and configurer
 int sc_main(int sc_argc, char* sc_argv[]) {
