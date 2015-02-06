@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="cci_lib"
+	OutputDirectory="$(ProjectDir)\..\libs\$(IntDir)"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalOptions="/vmg"
+		AdditionalIncludeDirectories="&quot;$(BOOST)&quot;;&quot;$(SYSTEMC)\..\src&quot;"
+		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;SC_INCLUDE_DYNAMIC_PROCESSES;SC_INCLUDE_FX"
+		RuntimeTypeInfo="true"
+		WarningLevel="3"
+	/>
+	<UserMacro
+		Name="MSVC"
+		Value="msvc80"
+	/>
+	<UserMacro
+		Name="SYSTEMC"
+		Value="$(SYSTEMC_HOME)\$(MSVC)"
+	/>
+	<UserMacro
+		Name="BOOST"
+		Value="$(BOOST_HOME)"
+	/>
+</VisualStudioPropertySheet>

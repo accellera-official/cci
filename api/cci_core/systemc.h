@@ -36,7 +36,17 @@
 #ifndef CCI_CORE_SYSTEMC_H_INCLUDED_
 #define CCI_CORE_SYSTEMC_H_INCLUDED_
 
+#if defined(_MSC_VER)
+#pragma warning( push )
+#pragma warning( disable: 4244 )
+#pragma warning( disable: 4267 )
+#endif
+
 #include <systemc>
+
+#if defined(_MSC_VER)
+#pragma warning( pop )
+#endif
 
 #ifdef SC_VERSION_HELPER_
 # define CCI_VERSION_HELPER_ \
