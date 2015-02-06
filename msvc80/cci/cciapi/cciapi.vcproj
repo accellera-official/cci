@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -105,7 +105,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -166,7 +166,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -228,7 +228,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -283,6 +283,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\api\cci_cnf\cci_value.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\api\cci_cnf\cci_value_traits.cpp"
 				>
 			</File>
 		</Filter>
@@ -380,11 +384,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\api\cci_cnf\cci_value_traits.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\api\cci_core\cci_version.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\api\cci_core\systemc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\api\cci_cnf\rapidjson.h"
 				>
 			</File>
 		</Filter>
