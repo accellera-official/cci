@@ -45,9 +45,9 @@ SC_MODULE(ex20_parameter_owner) {
       wait(5.0, SC_NS);
       XREPORT("@ " << sc_time_stamp());
 
-      XREPORT("[OWNER] : Creating new float type cci-parameter with default"
+      XREPORT("[OWNER] : Creating new 'double' type cci-parameter with default"
               " value : 12.345");
-      float_param = new cci::cnf::cci_param<float>("float_param", 12.345);
+      dbl_param = new cci::cnf::cci_param<double>("double_param", 12.345);
 
       wait(15.0, SC_NS);
     }
@@ -57,7 +57,7 @@ SC_MODULE(ex20_parameter_owner) {
   /// Integer-type cci-parameter
   cci::cnf::cci_param<int>* int_param;
   /// Float-type cci-parameter
-  cci::cnf::cci_param<float>* float_param;
+  cci::cnf::cci_param<double>* dbl_param;
 };
 /// ex20_parameter_owner
 

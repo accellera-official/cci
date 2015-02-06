@@ -45,9 +45,9 @@ SC_MODULE(ex09_target) {
         target_ID("target_ID", "target_default"),
         s_base_addr("s_base_addr", 0),
         s_size("s_size", 256) {
-    XREPORT("[" << target_ID.json_serialize()
+    XREPORT("[" << target_ID.get()
             << " C_TOR] ------- [TARGET CONSTRUCTOR BEGINS HERE] --------");
-    XREPORT("[" << target_ID.json_serialize() << " C_TOR] : Base Address : "
+    XREPORT("[" << target_ID.get() << " C_TOR] : Base Address : "
             << s_base_addr.get());
 
     /// Register b_transport

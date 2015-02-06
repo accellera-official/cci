@@ -7,7 +7,8 @@ CXXFLAGS = $(OPT) $(OTHER)
 
 SRCS = cci_cnf/cci_broker_manager.cpp \
        cci_cnf/cci_broker_stack.cpp \
-       cci_cnf/cci_value.cpp
+       cci_cnf/cci_value.cpp \
+       cci_cnf/cci_value_traits.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -21,6 +22,11 @@ ifdef BOOST_HOME
 BOOST = $(BOOST_HOME)
 endif
 BOOST ?= /cad/tools/boost
+
+ifdef RAPIDJSON_HOME
+RAPIDJSON=$(RAPIDJSON_HOME)
+endif
+RAPIDJSON ?= $(GS_CCI_HOME)/packages/rapidjson
 
 ifdef SYSTEMC_HOME
 SYSTEMC = $(SYSTEMC_HOME)
@@ -37,7 +43,7 @@ CCI_DIR ?= $(GS_CCI_HOME)/api
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
 
-INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST) 
+INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST)  -I$(RAPIDJSON)/include
 
 ## -----------------------------------------------------------------------------
 

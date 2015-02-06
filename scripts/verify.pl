@@ -863,7 +863,7 @@ sub prepare_environment
     push( @rt_cci_includes, "$rt_cci_home/greencontrol_cci_branch" );
 
     $rt_cci_ldpath   = $rt_cci_home;
-    @rt_cci_ldlibs   = ( 'cciapi', 'cciparamimpl', 'ccibrokerimpl' );
+    @rt_cci_ldlibs   = ( 'cciparamimpl', 'cciapi', 'ccibrokerimpl' );
     # -- /CCI
 
     # Set compiler and compiler flags

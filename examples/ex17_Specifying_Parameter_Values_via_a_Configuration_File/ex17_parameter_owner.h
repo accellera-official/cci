@@ -58,7 +58,7 @@ SC_MODULE(ex17_parameter_owner) {
       XREPORT("[OWNER] : Int Parameter Value : " << int_param.get());
       XREPORT("[OWNER] : Float Parameter Value : " << float_param.get());
       XREPORT("[OWNER] : String Parameter Value : "
-              << string_param.json_serialize());
+              << string_param.get());
 
       wait(50.0, sc_core::SC_NS);
     }

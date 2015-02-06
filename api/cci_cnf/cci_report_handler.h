@@ -16,11 +16,12 @@
 #ifndef CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
 #define CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
 
+#include "cci_cnf/cci_config_macros.h"
+
 #include "cci_core/systemc.h"
 #include <string>
 
-namespace cci {
-namespace cnf {
+CCI_OPEN_CONFIG_NAMESPACE_
 
 enum cci_param_failure {
   CCI_NOT_FAILURE = 0,
@@ -46,24 +47,24 @@ public:
   }
 
   //functions that throw a report for each cci_param_failure type 
-  static void set_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"SET_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void set_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"SET_PARAM_FAILED",msg,file,line);
   }
 
-  static void get_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"GET_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void get_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"GET_PARAM_FAILED",msg,file,line);
   }
 
-  static void add_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"ADD_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void add_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"ADD_PARAM_FAILED",msg,file,line);
   }
 
-  static void remove_param_failed(const char* msg="") {
-    report(sc_core::SC_ERROR,"REMOVE_PARAM_FAILED",msg,__FILE__,__LINE__);
+  static void remove_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"REMOVE_PARAM_FAILED",msg,file,line);
   }
 
-  static void cci_value_failure(const char* msg="") {
-    report(sc_core::SC_ERROR,"CCI_VALUE_FAILURE",msg,__FILE__,__LINE__);
+  static void cci_value_failure(const char* msg="", const char* file=NULL, int line = 0) {
+    report(sc_core::SC_ERROR,"CCI_VALUE_FAILURE",msg,file,line);
   }
 
   // function to return cci_param_failure that matches thrown (or cached) report
@@ -96,7 +97,6 @@ cci_report_handler::report(SC_ERROR,_id,_message,__FILE__,__LINE__);
 cci_report_handler::report(SC_FATAL,_id,_message,__FILE__,__LINE__);
 
 
-} //namespace cnf
-} //namespace cci
+CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif // CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_

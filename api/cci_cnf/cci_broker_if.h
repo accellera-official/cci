@@ -20,8 +20,8 @@
 #define CCI_CNF_CCI_BROKER_IF_H_INCLUDED_
 
 
-#include "cci_shared_ptr.h"
-#include "cci_callbacks.h"
+#include "cci_cnf/cci_shared_ptr.h"
+#include "cci_cnf/cci_callbacks.h"
 
 
 CCI_OPEN_CONFIG_NAMESPACE_

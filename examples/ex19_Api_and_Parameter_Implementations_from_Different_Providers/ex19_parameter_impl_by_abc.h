@@ -72,7 +72,7 @@ struct cci_param_user_data_type
 
   void set_value(const cci::cnf::cci_value& val);
 
-  cci::cnf::cci_value get_value();
+  cci::cnf::cci_value get_value() const;
 
   void set_documentation(const std::string& doc);
 

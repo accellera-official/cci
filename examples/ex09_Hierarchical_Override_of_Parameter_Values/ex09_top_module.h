@@ -58,9 +58,9 @@ SC_MODULE(ex09_top_module) {
            && "Default broker accessed by TOP_MODULE is NULL");
 
     XREPORT("[TOP_MODULE C_TOR] :  Number of initiators : "
-            << n_initiators.json_serialize());
+            << n_initiators.get());
     XREPORT("[TOP_MODULE C_TOR] :  Number of targets : "
-            << n_targets.json_serialize());
+            << n_targets.get());
 
     /// Set and lock the number of initiators in Router Table
     /// to value passed from 'sc_main'
