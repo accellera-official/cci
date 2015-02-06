@@ -387,13 +387,21 @@ sub get_tlm_home
 
 sub get_cci_home
 {
+    my $cci_home = $ENV{ 'CCI_HOME' } || "";
+
     if( ! defined $ENV{ 'CCI_HOME' } ) {
         &print_log( "Warning: " .
                    "environment variable CCI_HOME is not defined!\n" );
-        #exit 1;
+
+        # guess CCI_HOME from script location
+        my $wdir;
+        chop( $wdir = `pwd` );
+        $ARGV[0] =~  m|^(.*)/|;
+        chdir( "$1/.." );
+        chop( $cci_home = `pwd` );
+        chdir( "$wdir" );
     }
 
-    my $cci_home = $ENV{ 'CCI_HOME' } || "";
     $cci_home =~ s|\\|/|g ;  # replace any backslash with forward slash
     $cci_home;
 }
@@ -757,6 +765,80 @@ sub init_globals
 }
 
 # -----------------------------------------------------------------------------
+#  SUB : add_to_ldpath
+#
+#  Add a directory to the library search path, if it exists.
+#
+#  Prefer an arch-specific suffix first.  In case an optional second argument
+#  is given, it is used as a specific relative path on MSVC, that is interleaved
+#  with the different suffixes according to the patterns below.
+#
+#  The following locations are checked for a given `$dir' (+ optional `$local`)
+#  and the _first_ match is returned:
+#
+#  Unix-like architectures:
+#    1. `$dir/lib-<arch>`
+#    2. `$dir-<arch>`
+#    3. `$dir/lib`
+#    4. `$dir`
+#
+#  MS Visual C++ (assuming `<config>` matches `Debug` or `Release`):
+#    1. `$dir/msvc<ver>/$local/x64/<config>`  (64-bit only)
+#    2. `$dir/$local/x64/<config>`            (64-bit only)
+#    2. `$dir/msvc<ver>/$local/<config>`
+#    3. `$dir/$local/<config>`
+#    4. `$dir`
+#
+# -----------------------------------------------------------------------------
+
+sub add_to_ldpath
+{
+    my ( $dir, $local ) = @_;
+    my @candidates = ();
+
+    &print_log( "\nDIAG: check ldpath '$dir'\n" ) if $rt_diag >= 4;
+
+    if( $rt_systemc_arch =~ /^(msvc[0-9]*)(-x64)?$/ ) {
+        my $msvc = "/$1";
+        my $x64  = $2;
+        my $suffix;
+        $x64 =~ s|-|/|;
+
+        $local = "/$local" if ( $local );
+
+        if( $rt_props & $rt_test_props{ 'debug' } ) {
+            $suffix = '/Debug';
+        } else {
+            $suffix = '/Release';
+        }
+        push @candidates, "$dir$msvc$local$x64$suffix" if ( -d "$dir$msvc$local$x64$suffix" );
+        push @candidates, "$dir$local$x64$suffix"      if ( -d "$dir$local$x64$suffix" );
+        push @candidates, "$dir$msvc$local$suffix"     if ( -d "$dir$msvc$local$suffix" );
+        push @candidates, "$dir$local$suffix"          if ( -d "$dir$local$suffix" );
+        push @candidates, "$dir$local$suffix"          if ( -d "$dir$local$suffix" );
+
+    } else {
+        my $lib  = "/lib";
+        my $arch = "-$rt_systemc_arch";
+        push @candidates, "$dir$lib$arch"        if ( -d "$dir$lib$arch" );
+        push @candidates, "$dir$arch"            if ( -d "$dir$arch" );
+        push @candidates, "$dir$lib"             if ( -d "$dir$lib" );
+    }
+
+    # use given (existing) directory directly
+    push @candidates, $dir if ( -d "$dir" );
+
+    &print_log( "WARN: ignoring invalid ldpath '$dir'\n" )
+      unless scalar @candidates;
+
+    &print_log( "DIAG: add ldpath '".$candidates[0]."'\n" )
+      if scalar @candidates && $rt_diag >= 2;
+
+    # return first found directory
+    ( scalar @candidates ) ? ( $candidates[0] ) : ();
+}
+
+# -----------------------------------------------------------------------------
 #  SUB : prepare_environment
 #
 #  Setup compiler/architecture environment.
@@ -780,7 +862,7 @@ sub prepare_environment
     @rt_cci_includes = @cci_path;
     push( @rt_cci_includes, "$rt_cci_home/greencontrol_cci_branch" );
 
-    @rt_cci_ldpaths  = @cci_path;
+    $rt_cci_ldpath   = $rt_cci_home;
     @rt_cci_ldlibs   = ( 'cciapi', 'cciparamimpl', 'ccibrokerimpl' );
     # -- /CCI
 
@@ -795,10 +877,11 @@ sub prepare_environment
     $rt_debug_ldflags = "";
     $rt_optimize_flag = "-O2";
     $rt_systemc_include = "$rt_systemc_home/include";
-    $rt_systemc_ldpath  = "$rt_systemc_home/lib-$rt_systemc_arch";
+    $rt_systemc_ldpath  = "$rt_systemc_home";
 
     # predefined macros
     @rt_defines = ();
+    push @rt_defines, 'SC_ENABLE_ASSERTIONS';
 
     if( $rt_systemc_arch eq "gccsparcOS5" ) {
         $rt_ldrpath       = "-Wl,-R";
@@ -845,13 +928,6 @@ sub prepare_environment
         $rt_debug_flag      = "-GZ -MTd -Zi";
         $rt_debug_ldflags   = "-DEBUG -PDB:$rt_prodname.pdb";
         $rt_systemc_include = "$rt_systemc_home/src";
-
-        $rt_systemc_ldpath  = "$rt_systemc_home/$msvc/systemc${x64}";
-        if( $rt_props & $rt_test_props{ 'debug' } ) {
-            $rt_systemc_ldpath .= "/Debug";
-        } else {
-            $rt_systemc_ldpath .= "/Release";
-        }
     }
 
     # include directories
@@ -861,7 +937,7 @@ sub prepare_environment
     push( @rt_includes, $rt_systemc_include );
 
     # libraries paths
-    @rt_ldpaths  = ( $rt_systemc_ldpath );
+    @rt_ldpaths  = add_to_ldpath( $rt_systemc_ldpath, "systemc" );
     # libraries (basenames only)
     @rt_ldlibs   = ( "systemc" );
     push( @rt_ldlibs, "pthread" ) unless (!$rt_pthreads);
@@ -870,7 +946,7 @@ sub prepare_environment
     push   ( @rt_includes, $rt_boost_home   ) unless (!$rt_boost_home);
     unshift( @rt_includes, @rt_cci_includes );
     unshift( @rt_ldlibs,   @rt_cci_ldlibs   );
-    unshift( @rt_ldpaths,  @rt_cci_ldpaths  );
+    unshift( @rt_ldpaths,  add_to_ldpath( $rt_cci_ldpath, "cci/libs" )  );
     # -- /CCI
 
     # add additional predefined macros
@@ -884,7 +960,7 @@ sub prepare_environment
     unshift ( @rt_includes, @rt_add_includes );
 
     # additional libraries
-    push( @rt_ldpaths, @rt_add_ldpaths );
+    push( @rt_ldpaths, map { add_to_ldpath($_) } @rt_add_ldpaths );
     push( @rt_ldlibs,  @rt_add_ldlibs );
 }
 
@@ -2235,18 +2311,23 @@ sub run_test
     $rt_current_test = "$currtestdir/$testname.$type";
 
     # determine the test set
-    ( $test_set = $currtestdir ) =~ s|^([^/]+)/.*|\1|;
-
-    # add local include dir, if exists
-    push ( @test_set_includes, "$rt_systemc_test/include/$test_set" )
-        unless (!-d "$rt_systemc_test/include/$test_set" );
-    push ( @test_set_includes, @rt_includes );
-
-    # check for compiler
-    # include your compiler check in here
+    ( $test_set = $currtestdir ) =~ s|^(\./)*([^/]+)/.*|\2|;
+    $test_set = undef if ( $test_set eq '.' );
 
     # cd and create symlink
     $linkdir = &setup_for_test( $currtestdir );
+
+    # add test directory to includes
+    push ( @test_set_includes, $linkdir );
+    # add local include dir, if exists
+    push ( @test_set_includes, "$rt_systemc_test/include/$test_set" )
+        if ( defined $test_set && -d "$rt_systemc_test/include/$test_set" );
+    # -- CCI
+    push ( @test_set_includes, "$rt_systemc_test/$test_set/$rt_common_include_dir" )
+        if ( defined $test_set && -d "$rt_systemc_test/$test_set/$rt_common_include_dir" );
+    # -- /CCI
+    # add global include dirs
+    push ( @test_set_includes, @rt_includes );
 
     # extract base name
     $basename = "$linkdir/$testname";
