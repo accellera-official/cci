@@ -342,22 +342,39 @@ CCI_OPEN_CONFIG_NAMESPACE_
 template struct cci_value_traits<sc_dt::sc_fxval>;
 template struct cci_value_traits<sc_dt::sc_fxval_fast>;
 template struct cci_value_traits<sc_dt::sc_fix>;
+template struct cci_value_traits<sc_dt::sc_fix_fast>;
 template struct cci_value_traits<sc_dt::sc_ufix>;
-template struct cci_value_traits<sc_dt::sc_fixed_fast>;
+template struct cci_value_traits<sc_dt::sc_ufix_fast>;
 
-template<int W, int I, sc_dt::sc_q_mode, sc_dt::sc_o_mode O, int N >
+template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
 struct cci_value_traits< sc_dt::sc_fixed<W,I,Q,O,N> >
-  : cci_value_traits< sc_fix >
+  : cci_value_traits< sc_dt::sc_fix >
 {
   typedef sc_dt::sc_fixed<W,I,Q,O,N> type;
   /// @todo add bounds checks
 };
 
-template<int W, int I, sc_dt::sc_q_mode, sc_dt::sc_o_mode O, int N >
+template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
+struct cci_value_traits< sc_dt::sc_fixed_fast<W,I,Q,O,N> >
+  : cci_value_traits< sc_dt::sc_fix_fast >
+{
+  typedef sc_dt::sc_fixed_fast<W,I,Q,O,N> type;
+  /// @todo add bounds checks
+};
+
+template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
 struct cci_value_traits< sc_dt::sc_ufixed<W,I,Q,O,N> >
-  : cci_value_traits< sc_ufix >
+  : cci_value_traits< sc_dt::sc_ufix >
 {
   typedef sc_dt::sc_ufixed<W,I,Q,O,N> type;
+  /// @todo add bounds checks
+};
+
+template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
+struct cci_value_traits< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
+  : cci_value_traits< sc_dt::sc_ufix_fast >
+{
+  typedef sc_dt::sc_ufixed_fast<W,I,Q,O,N> type;
   /// @todo add bounds checks
 };
 
