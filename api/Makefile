@@ -41,7 +41,7 @@ GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 ## set some directories 
 CCI_DIR ?= $(GS_CCI_HOME)/api
 
-DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
+DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
 INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST)  -I$(RAPIDJSON)/include
 

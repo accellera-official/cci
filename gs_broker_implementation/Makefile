@@ -43,7 +43,7 @@ GREENSTARCORE_DIR = $(GS_CCI_HOME)
 CCI_DIR = $(GS_CCI_HOME)/api
 GS_CCI_BROKER_DIR = $(GS_CCI_HOME)/gs_broker_implementation
 
-DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
+DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
 ## muldefs should be avoided in the source code, not by the linker
 LDFLAGS =
