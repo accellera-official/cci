@@ -132,7 +132,7 @@ struct cci_value_traits_convert
 
   static bool pack( cci_value::reference dst, type const & src )
   {
-    return traits_type::pack( dst, U(src) );
+    return traits_type::pack( dst, static_cast<U>(src) );
   }
 
   static bool unpack( type & dst, cci_value::const_reference src )
@@ -140,7 +140,7 @@ struct cci_value_traits_convert
       U u_dst;
       bool ret = traits_type::unpack( u_dst, src );
       if( ret )
-        dst = u_dst;
+        dst = static_cast<T>(u_dst);
       return ret;
   }
 };
