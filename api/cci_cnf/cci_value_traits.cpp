@@ -155,7 +155,7 @@ DEFINE_PACK_( sc_dt::sc_logic )
   {
   case sc_dt::Log_0:
   case sc_dt::Log_1:
-    dst.set_bool( src.value() );
+    dst.set_bool( src.to_bool() );
     break;
   default:
     dst.set_string( std::string( 1, src.to_char() ) );

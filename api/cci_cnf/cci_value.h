@@ -371,7 +371,7 @@ private:
 inline std::ostream&
 operator<<( std::ostream& os, cci_value_string_cref const& s )
 {
-  os.write( s.c_str(), s.length() );
+  os.write( s.c_str(), static_cast<std::streamsize>(s.length()) );
   return os;
 }
 

@@ -290,7 +290,7 @@ cci_value_string_ref
 cci_value_ref::set_string( const char* s, size_t len )
 {
   sc_assert( THIS );
-  THIS->SetString(s, len, json_allocator);
+  THIS->SetString(s, static_cast<rapidjson::SizeType>(len), json_allocator);
   return cci_value_string_ref(THIS);
 }
 
@@ -365,7 +365,7 @@ cci_value_list_cref::size() const
 
 cci_value_cref
 cci_value_list_cref::operator[]( size_type index ) const
-  { return cci_value_cref( &(*THIS)[index] ); }
+  { return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] ); }
 
 // ----------------------------------------------------------------------------
 // cci_value_list_ref
@@ -393,7 +393,8 @@ cci_value_list_ref::capacity() const
 cci_value_list_ref
 cci_value_list_ref::reserve( size_type new_capacity )
 {
-  THIS->Reserve( new_capacity, json_allocator );
+  THIS->Reserve( static_cast<rapidjson::SizeType>(new_capacity)
+               , json_allocator );
   return *this;
 }
 
