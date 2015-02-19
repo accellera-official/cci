@@ -245,6 +245,14 @@ struct cci_value_traits<T[N]>
   }
 };
 
+template<typename T, int N>
+struct cci_value_traits<const T[N]> : cci_value_traits<T[N]>
+{
+  typedef const T type[N]; ///< common type alias
+  // deliberately not implemented
+  static bool unpack( type & dst, cci_value::const_reference src );
+};
+
 // ----------------------------------------------------------------------------
 // std::vector<T, Alloc>
 
