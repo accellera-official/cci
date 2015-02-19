@@ -18,6 +18,16 @@
   limitations under the License.
  *****************************************************************************/
 
+#ifndef CCI_EXTERN_
+#ifdef _MSC_VER
+# pragma warning(push)
+# pragma warning(disable: 4231) // don't warn about extern templates
+# define CCI_EXTERN_ extern
+#else
+# define CCI_EXTERN_
+#endif
+#endif // CCI_EXTERN_
+
 #ifndef CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
 #define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
 
@@ -149,13 +159,13 @@ struct cci_value_traits_convert
 // C++ builtin types
 
 // default instantiations (in cci_value_traits.cpp)
-template struct cci_value_traits<bool>;
-template struct cci_value_traits<int>;
-template struct cci_value_traits<int64>;
-template struct cci_value_traits<unsigned>;
-template struct cci_value_traits<uint64>;
-template struct cci_value_traits<double>;
-template struct cci_value_traits<std::string>;
+CCI_EXTERN_ template struct cci_value_traits<bool>;
+CCI_EXTERN_ template struct cci_value_traits<int>;
+CCI_EXTERN_ template struct cci_value_traits<int64>;
+CCI_EXTERN_ template struct cci_value_traits<unsigned>;
+CCI_EXTERN_ template struct cci_value_traits<uint64>;
+CCI_EXTERN_ template struct cci_value_traits<double>;
+CCI_EXTERN_ template struct cci_value_traits<std::string>;
 
 // related numerical types
 // (without range checks for now)
@@ -273,14 +283,14 @@ struct cci_value_traits< std::vector<T,Alloc> >
 // SystemC builtin types
 
 // default instantiations (in cci_value_traits.cpp)
-template struct cci_value_traits<sc_core::sc_time>;
-template struct cci_value_traits<sc_dt::sc_logic>;
-template struct cci_value_traits<sc_dt::sc_int_base>;
-template struct cci_value_traits<sc_dt::sc_uint_base>;
-template struct cci_value_traits<sc_dt::sc_signed>;
-template struct cci_value_traits<sc_dt::sc_unsigned>;
-template struct cci_value_traits<sc_dt::sc_bv_base>;
-template struct cci_value_traits<sc_dt::sc_lv_base>;
+CCI_EXTERN_ template struct cci_value_traits<sc_core::sc_time>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_logic>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_int_base>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_uint_base>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_signed>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_unsigned>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_bv_base>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_lv_base>;
 
 template<int N>
 struct cci_value_traits< sc_dt::sc_int<N> >
@@ -339,12 +349,12 @@ CCI_CLOSE_CONFIG_NAMESPACE_
 #define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
 CCI_OPEN_CONFIG_NAMESPACE_
 
-template struct cci_value_traits<sc_dt::sc_fxval>;
-template struct cci_value_traits<sc_dt::sc_fxval_fast>;
-template struct cci_value_traits<sc_dt::sc_fix>;
-template struct cci_value_traits<sc_dt::sc_fix_fast>;
-template struct cci_value_traits<sc_dt::sc_ufix>;
-template struct cci_value_traits<sc_dt::sc_ufix_fast>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fxval>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fxval_fast>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fix>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fix_fast>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_ufix>;
+CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_ufix_fast>;
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
 struct cci_value_traits< sc_dt::sc_fixed<W,I,Q,O,N> >
@@ -384,3 +394,10 @@ CCI_CLOSE_CONFIG_NAMESPACE_
 #ifdef CCI_VALUE_TRAITS_DERIVED_
 #undef CCI_VALUE_TRAITS_DERIVED_
 #endif
+
+#ifdef CCI_EXTERN_
+# undef CCI_EXTERN_
+# ifdef _MSC_VER
+#  pragma warning(pop)
+# endif
+#endif // CCI_EXTERN_
