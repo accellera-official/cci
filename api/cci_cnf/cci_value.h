@@ -546,14 +546,6 @@ inline cci_value_list_ref::reference
 cci_value_list_ref::operator[]( size_type index )
   { return reference( base_type::operator[](index).pimpl_ ); }
 
-template<typename T>
-cci_value_list_ref::this_type
-cci_value_list_ref::push_back( const T& value, CCI_VALUE_TRAITS_ENABLED_(T) )
-{
-  cci_value v(value);
-  return push_back( const_reference(v) );
-}
-
 inline cci_value_list_ref
 cci_value_ref::get_list()
   { return cci_value_list_ref( base_type::get_list().pimpl_ ); }
@@ -691,15 +683,6 @@ cci_value_map_ref::operator=( this_type const & that )
 inline cci_value_map_ref
 cci_value_map_ref::operator=( base_type const & that )
   { cci_value_ref v(pimpl_); v = that; return *this; }
-
-template<typename T>
-cci_value_map_ref
-cci_value_map_ref::push_entry( const char* key, const T& value
-                             , CCI_VALUE_TRAITS_ENABLED_(T) )
-{
-  cci_value v(value);
-  return push_entry(key, const_reference(v) );
-}
 
 inline cci_value_map_ref
 cci_value_ref::get_map()
@@ -895,6 +878,27 @@ cci_value::to_json( const_reference v )
   bool ok = v.json_serialize( json );
   sc_assert( ok );
   return json;
+}
+
+// --------------------------------------------------------------------------
+// The following two functions depend on the completeness of the cci_value
+// class, enforced by some compilers (e.g. Clang).
+
+template<typename T>
+cci_value_list_ref::this_type
+cci_value_list_ref::push_back( const T& value, CCI_VALUE_TRAITS_ENABLED_(T) )
+{
+  cci_value v(value);
+  return push_back( const_reference(v) );
+}
+
+template<typename T>
+cci_value_map_ref
+cci_value_map_ref::push_entry( const char* key, const T& value
+                             , CCI_VALUE_TRAITS_ENABLED_(T) )
+{
+  cci_value v(value);
+  return push_entry( key, const_reference(v) );
 }
 
 // --------------------------------------------------------------------------
