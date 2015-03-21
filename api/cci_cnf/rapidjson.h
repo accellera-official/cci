@@ -1,8 +1,11 @@
 /*****************************************************************************
-  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  Copyright 2006-2015 Accellera Systems Initiative Inc.
   All rights reserved.
 
   Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
+
+  Copyright 2006-2015 Intel Corporation
   All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +24,7 @@
 /**
  * @file   rapidjson.h
  * @brief  internal include file for the RapidJSON library
- * @author Philipp A. Hartmann, OFFIS
+ * @author Philipp A. Hartmann, OFFIS/Intel
  *
  * This file provides a local indirection to include RapidJSON from within
  * the CCI library.  RapidJSON is used for serialization from/to

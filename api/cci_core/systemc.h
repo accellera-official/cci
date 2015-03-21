@@ -1,8 +1,11 @@
 /*****************************************************************************
-  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  Copyright 2006-2015 Accellera Systems Initiative Inc.
   All rights reserved.
 
   Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
+
+  Copyright 2006-2015 Intel Corporation
   All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +25,7 @@
  * @file   systemc.h
  * @brief  include SystemC from within the CCI library
  * @author Thomas Goodfellow, OFFIS
- * @author Philipp A. Hartmann, OFFIS
+ * @author Philipp A. Hartmann, OFFIS/Intel
  *
  * This file provides a local indirection to include SystemC from within
  * the CCI library.  Prefer this file over direct inclusion of the SystemC
