@@ -73,26 +73,26 @@ SC_MODULE(ex15_configurator) {
 
   void run_cfgr(void) {
     while (1) {
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Changing the 'mem_size' to 640");
       mem_size_base_ptr->json_deserialize("640");
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Modify the 'curr_addr_lines' to 10");
       addr_lines_base_ptr->json_deserialize("10");
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Changing the 'mem_size' to 800");
       mem_size_base_ptr->json_deserialize("800");
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
     }
   }
 

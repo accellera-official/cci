@@ -98,7 +98,7 @@ SC_MODULE(ex07_parameter_configurer) {
     /// 'is_initial_value' API
     if (str_param_ptr->is_initial_value()) {
       XREPORT("[CFGR C_TOR] : " << str_param_ptr->get_name()
-              << "\tInitial Value : " << str_param_ptr->json_serialize());
+              << "\tInitial Value : " << str_param_ptr->get_value().get_string());
     } else {
       XREPORT_ERROR("[CFGR] : No initial value set for "
                     << str_param_ptr->get_name());
@@ -156,10 +156,10 @@ SC_MODULE(ex07_parameter_configurer) {
           XREPORT("[CFGR -> Retrieve] : Parameter name  : "
                   << str_param_ptr->get_name());
           XREPORT("[CFGR -> Retrieve] : Parameter value : "
-                  << str_param_ptr->json_serialize());
+                  << str_param_ptr->get_value().get_string());
         } else {
           XREPORT("[CFGR] : " << str_param_ptr->get_name() << " New Value : "
-                  << str_param_ptr->json_serialize());
+                  << str_param_ptr->get_value().get_string());
         }
 
         wait(2.0, sc_core::SC_NS);

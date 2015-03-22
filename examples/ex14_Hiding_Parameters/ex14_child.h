@@ -76,21 +76,21 @@ SC_MODULE(ex14_child) {
         child_BrokerIF->get_param_list();
 
     while (1) {
-      XREPORT("@ " << sc_time_stamp()
+      XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to 'child' module");
 
       for (unsigned int i = 0; i < child_param_list.size(); i++) {
         XREPORT("[CHILD] : Parameter Name : " << child_param_list[i]);
       }
 
-      wait(25.0, SC_NS);
+      wait(25.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CHILD] : Parameter Name : " << priv_int_param.get_name()
               << "\tParameter Value : " << priv_int_param.get());
 
-      wait(10.0, SC_NS);
+      wait(10.0, sc_core::SC_NS);
     }
   }
 

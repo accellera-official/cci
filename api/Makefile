@@ -7,7 +7,8 @@ CXXFLAGS = $(OPT) $(OTHER)
 
 SRCS = cci_cnf/cci_broker_manager.cpp \
        cci_cnf/cci_broker_stack.cpp \
-       cci_cnf/cci_value.cpp
+       cci_cnf/cci_value.cpp \
+       cci_cnf/cci_value_traits.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -22,6 +23,11 @@ BOOST = $(BOOST_HOME)
 endif
 BOOST ?= /cad/tools/boost
 
+ifdef RAPIDJSON_HOME
+RAPIDJSON=$(RAPIDJSON_HOME)
+endif
+RAPIDJSON ?= $(GS_CCI_HOME)/packages/rapidjson
+
 ifdef SYSTEMC_HOME
 SYSTEMC = $(SYSTEMC_HOME)
 endif
@@ -35,17 +41,19 @@ GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 ## set some directories 
 CCI_DIR ?= $(GS_CCI_HOME)/api
 
-DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
+DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
-INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST) 
+INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST)  -I$(RAPIDJSON)/include
 
 ## -----------------------------------------------------------------------------
 
 LIB=libcciapi.a
+LIBDIR=$(GS_CCI_HOME)/lib
 
-all: $(LIB)
+all: $(LIBDIR)/$(LIB)
 
-$(LIB): $(OBJS)
+$(LIBDIR)/$(LIB): $(OBJS)
+	mkdir -p $(LIBDIR)
 	$(AR) rcs $@ $^
 	ranlib $@
 
@@ -58,4 +66,6 @@ $(LIB): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -MMD -o $@
 
 clean:
-	rm -f  $(OBJS) $(DEPS) $(LIB)
+	rm -f $(OBJS) $(DEPS)
+	rm -f $(LIBDIR)/$(LIB)
+	-rmdir $(LIBDIR) 2>&1 || true

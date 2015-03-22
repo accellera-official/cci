@@ -39,7 +39,7 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
  public:
   SC_HAS_PROCESS(ex12_param_value_sync_with_cf);
 
-  ex12_param_value_sync_with_cf(sc_module_name _name,
+  ex12_param_value_sync_with_cf(sc_core::sc_module_name _name,
       std::vector<cci::cnf::cci_base_param *> BaseParamList)
       /// Define an originator in order to get hold of the default broker
       : ValueSyncOriginator("ValueSyncOriginator") {
@@ -51,10 +51,9 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
     returnBaseParamList = BaseParamList;
 
     for (unsigned int i = 1; i < returnBaseParamList.size(); i++) {
-      float conversion_factor;
 
       /// Determine the 'conversion factor' b/w the two cci_base_params
-      conversion_factor = multiplyWithConversionFactor(
+      double conversion_factor = multiplyWithConversionFactor(
           returnBaseParamList[0]->get_name(),
           returnBaseParamList[i]->get_name());
 
@@ -71,19 +70,16 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
       write_callback(const cci::cnf::cci_base_param& _base_param_1,
                      const cci::cnf::callback_type& cb_reason,
                      cci::cnf::cci_base_param * _base_param_2,
-                     float conv_fact) {
+                     double conv_fact) {
     // Decision on Pre-Write & Post-Write callbacks
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
             << _base_param_1.get_name() << "\tValue : "
             << _base_param_1.json_serialize());
 
-    float freq = atof((_base_param_1.json_serialize()).c_str());
-    float operand1 = freq * conv_fact;
-    std::stringstream ss;
-    ss.clear();
-    ss.str("");
-    ss << operand1;
-    _base_param_2->json_deserialize(ss.str());
+    cci::cnf::cci_value freq = _base_param_1.get_value();
+    sc_assert( freq.is_number() );
+    freq.set_double( freq.get_number() * conv_fact );
+    _base_param_2->set_value( freq );
 
     return cci::cnf::return_nothing;
   }
@@ -91,9 +87,9 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
   /// function to calculate the conversion factor to be multiplied with the
   /// 'main_clk_Hz' parameter of the PARAM_VALUE_SYNC while assigning the same
   /// value to the owner parameters consitsent with their units
-  float multiplyWithConversionFactor(std::string parent_str,
-                                     std::string child_str) {
-    float returnValue = 0.0;
+  double multiplyWithConversionFactor(std::string parent_str,
+                                      std::string child_str) {
+    double returnValue = 0.0;
 
     char* str1 = &parent_str[0];
     char* str2 = &child_str[0];
@@ -133,20 +129,16 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
   /// modules via the PARAM_VALUE_SYNC
   void synchValuesWithCF(cci::cnf::cci_base_param * _base_param_1,
                          cci::cnf::cci_base_param * _base_param_2,
-                         float conv_fact) {
+                         double conv_fact) {
     /// In order to synchronize even the default values of the owner modules,
     /// use cci_base_param of one parameter as reference, write the same value
-    /// (using CF) to the other pararmeter's cci_base_param using
-    /// JSON serialize/deserialize APIs manually
-    float CF = multiplyWithConversionFactor(_base_param_1->get_name(),
-                                            _base_param_2->get_name());
-    float freq = atof((_base_param_1->json_serialize()).c_str());
-    float operand1 = freq * CF;
-    std::stringstream ss;
-    ss.clear();
-    ss.str("");
-    ss << operand1;
-    _base_param_2->json_deserialize(ss.str());
+    /// (using conv_fact) to the other pararmeter's cci_base_param using
+    /// generic cci_value APIs manually
+
+    cci::cnf::cci_value freq = _base_param_1->get_value();
+    sc_assert( freq.is_number() );
+    freq.set_double( freq.get_number() * conv_fact );
+    _base_param_2->set_value( freq );
 
     post_write_cb_vec.push_back(
         _base_param_1->register_callback(cci::cnf::post_write,

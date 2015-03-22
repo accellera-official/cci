@@ -19,7 +19,7 @@
 #ifndef CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 #define CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 
-#include "cci_function.h"
+#include "cci_cnf/cci_function.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
 

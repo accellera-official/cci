@@ -21,7 +21,7 @@
 
 
 #include <string>
-#include "cci_base_param_impl_if.h"
+#include "cci_cnf/cci_base_param_impl_if.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
 

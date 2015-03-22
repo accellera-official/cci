@@ -43,7 +43,7 @@ GREENSTARCORE_DIR = $(GS_CCI_HOME)
 CCI_DIR = $(GS_CCI_HOME)/api
 GS_CCI_BROKER_DIR = $(GS_CCI_HOME)/gs_broker_implementation
 
-DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
+DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
 ## muldefs should be avoided in the source code, not by the linker
 LDFLAGS =
@@ -55,10 +55,12 @@ INCDIR = -I. -I$(CCI_DIR) -I$(GS_CCI_BROKER_DIR)\
 ## -----------------------------------------------------------------------------
 
 LIB=libccibrokerimpl.a
+LIBDIR=$(GS_CCI_HOME)/lib
 
-all: $(LIB)
+all: $(LIBDIR)/$(LIB)
 
-$(LIB): $(OBJS)
+$(LIBDIR)/$(LIB): $(OBJS)
+	mkdir -p $(LIBDIR)
 	$(AR) rcs $@ $^
 	ranlib $@
 
@@ -71,4 +73,6 @@ $(LIB): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 clean:
-	rm -f  $(OBJS) $(DEPS) $(LIB)
+	rm -f $(OBJS) $(DEPS)
+	rm -f $(LIBDIR)/$(LIB)
+	-rmdir $(LIBDIR) 2>&1 || true

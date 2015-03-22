@@ -22,7 +22,7 @@
  *            P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
  */
 
-#include "ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_parameter_impl_by_abc.h"
+#include "ex19_parameter_impl_by_abc.h"
 
 std::ostream& operator <<(std::ostream& os, const user_data_type& ud) {
   os << "\n\t[PARAM IMPL] : Source Address : " << ud.s_address
@@ -105,7 +105,7 @@ void cci_param_user_data_type::set_value(const cci::cnf::cci_value& val) {
   c_value = val;
 }
 
-cci::cnf::cci_value cci_param_user_data_type::get_value() {
+cci::cnf::cci_value cci_param_user_data_type::get_value() const {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
   return c_value;
 }

@@ -34,19 +34,19 @@ SC_MODULE(ex12_parameter_owner) {
  public:
   SC_HAS_PROCESS(ex12_parameter_owner);
 
-  ex12_parameter_owner(sc_module_name _name,
+  ex12_parameter_owner(sc_core::sc_module_name _name,
                        std::string _param_name = "clock_speed_KHz",
-                       float _freq = 10.0)
+                       double _freq = 10.0)
       : sc_module(_name) {
-    clk = new cci::cnf::cci_param<float>(_param_name.c_str(), _freq);
+    clk = new cci::cnf::cci_param<double>(_param_name.c_str(), _freq);
 
     XREPORT("[OWNER C_TOR] : Parameter Name   : " << clk->get_name()
             << "\tParameter Value : " << clk->get());
   }
 
  private:
-  // Declare an instance of mutable CCI parameter of type 'float'
-  cci::cnf::cci_param<float>* clk;
+  // Declare an instance of mutable CCI parameter of type 'double'
+  cci::cnf::cci_param<double>* clk;
 };
 // ex12_parameter_owner
 

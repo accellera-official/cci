@@ -27,9 +27,9 @@
 #include <cassert>
 #include <string>
 
-#include "ex18_Superset_Parameter_Value_Specification/ex18_cci_configFile_Tool.h"
-#include "ex18_Superset_Parameter_Value_Specification/ex18_parameter_owner.h"
-#include "ex18_Superset_Parameter_Value_Specification/ex18_parameter_configurator.h"
+#include "ex18_cci_configFile_Tool.h"
+#include "ex18_parameter_owner.h"
+#include "ex18_parameter_configurator.h"
 
 /// Here, a reference of the global broker is taken with the help of
 /// the originator information and then initial values are assigned to

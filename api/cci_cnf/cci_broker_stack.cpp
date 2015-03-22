@@ -14,9 +14,9 @@
 // ENDLICENSETEXT
 
 
-#include "cci_debug.h"
-#include "cci_datatypes.h"
-#include "cci_broker_stack.h"
+#include "cci_cnf/cci_debug.h"
+#include "cci_cnf/cci_datatypes.h"
+#include "cci_cnf/cci_broker_stack.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
 

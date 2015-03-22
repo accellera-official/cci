@@ -30,7 +30,7 @@
 #include <string>
 #include <vector>
 
-#include "ex14_Hiding_Parameters/ex14_child.h"
+#include "ex14_child.h"
 #include "xreport.hpp"
 
 /// The parent module derives from the 'cci_broker_manager' class and manages
@@ -111,19 +111,19 @@ SC_MODULE(ex14_parent) {
 
   void run_parent(void) {
     while (1) {
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
       std::vector<std::string> parent_param_list =
           parent_BrokerIF->get_param_list();
 
-      XREPORT("@ " << sc_time_stamp()
+      XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to the 'parent' module");
 
       for (unsigned int i = 0; i < parent_param_list.size(); i++) {
         XREPORT("[PARENT] : Parameter Name : " << parent_param_list[i]);
       }
 
-      wait(30.0, SC_NS);
+      wait(30.0, sc_core::SC_NS);
     }
   }
 

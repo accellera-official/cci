@@ -13,7 +13,7 @@
 // 
 // ENDLICENSETEXT
 
-#include "cci_gen_unique_name.h"
+#include "cci_core/cci_gen_unique_name.h"
 #include <sstream>
 #include <cassert>
 

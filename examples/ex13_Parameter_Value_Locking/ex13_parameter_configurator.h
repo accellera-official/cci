@@ -59,11 +59,11 @@ SC_MODULE(ex13_parameter_configurator) {
   /// 'unlock(&password)' APIs. 'is_locked() is used to query the locking status
   void run_mutable_cfgr(void) {
     while (1) {
-      wait(2.0, SC_NS);
+      wait(2.0, sc_core::SC_NS);
 
       /// Before configurator tries to assign a new value to the parameter, it
       /// is always recommended to check the locking status of the parameter
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
@@ -81,9 +81,9 @@ SC_MODULE(ex13_parameter_configurator) {
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      wait(5.0, SC_NS);
+      wait(5.0, sc_core::SC_NS);
 
-      XREPORT("@ " << sc_time_stamp());
+      XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
@@ -145,7 +145,7 @@ SC_MODULE(ex13_parameter_configurator) {
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      wait(50.0, SC_NS);
+      wait(50.0, sc_core::SC_NS);
     }
   }
 

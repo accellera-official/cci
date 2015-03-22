@@ -483,7 +483,7 @@ namespace cnf {
     }
     
     /// @see gs::cnf::GCnf_Api::getUpdateEvent
-    sc_event& getUpdateEvent(const std::string &parname)  throw (RegisterObserverFailedException) {
+    sc_event& getUpdateEvent(const std::string &parname) {
       if (is_public_param(parname))
         return mApi->getUpdateEvent(parname);
       DEPRECATED_WARNING(name(), "DEPRECATED: getUpdateEvent is deprecated! Use 'my_param.getUpdateEvent()' or use callback 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.");
@@ -503,7 +503,7 @@ namespace cnf {
     }
     
     /// @see gs::cnf::GCnf_Api::getNewParamEvent
-    sc_event& getNewParamEvent() throw (RegisterObserverFailedException) {
+    sc_event& getNewParamEvent() {
       /* 
        * Register this with a NewParamCallback at the parent API
        * and create a local new_param_event which will be notified 
