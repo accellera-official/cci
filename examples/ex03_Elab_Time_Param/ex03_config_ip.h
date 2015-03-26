@@ -27,10 +27,17 @@
 #include <string>
 #include "xreport.hpp"
 
-/// The config_ip configures sim_ip's parameter
+/**
+ *  @class  ex03_config_ip
+ *  @brief  The config_ip class configures sim_ip's parameters
+ */
 SC_MODULE(ex03_config_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     void ex03_config_ip()
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex03_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
@@ -39,7 +46,11 @@ SC_MODULE(ex03_config_ip) {
     SC_THREAD(execute);
   }
 
-  /// Configure the value of "sim_ip.struc_param" parameter
+  /**
+   *  @fn     void execute()
+   *  @brief  Configure the value of "sim_ip.struc_param" parameter
+   *  @return void
+   */
   void execute() {
     std::ostringstream ss;
     const std::string struc_param_name = "sim_ip.struc_param";
@@ -83,8 +94,7 @@ SC_MODULE(ex03_config_ip) {
   }
 
  private:
-  /// CCI configuration handle
-  cci::cnf::cci_cnf_broker_if *m_cci;
+  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex03_config_ip
 

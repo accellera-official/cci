@@ -34,7 +34,13 @@
 #include "ex03_simple_ip.h"
 #include "ex03_config_ip.h"
 
-/// Testbench for the CCI elab_time_param example
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  Testbench for the CCI elab_time_param example
+ *  @param  argc  An integer representing the number of input arguments
+ *  @param  argv  A pointer to a list of the input arguments
+ *  @return An integer representing the status of the execution of the function
+ */
 int sc_main(int argc, char *argv[]) {
   ex03_simple_ip sim_ip("sim_ip");
   ex03_config_ip cfg_ip("cfg_ip");

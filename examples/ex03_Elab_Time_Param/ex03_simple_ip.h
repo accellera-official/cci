@@ -25,10 +25,17 @@
 #include <cci>
 #include "xreport.hpp"
 
-/// The SimpleIP owns a CCI param
+/**
+ *  @class  ex03_simple_ip
+ *  @brief  The simple_ip class owns a CCI param
+ */
 SC_MODULE(ex03_simple_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     void ex03_simple_ip()
+   *  @brief  the class constructor
+   *  @return void
+   */
   SC_CTOR(ex03_simple_ip)
   // Initialize struc_param with 0
       : struc_param("struc_param", 0) {
@@ -37,13 +44,20 @@ SC_MODULE(ex03_simple_ip) {
             << struc_param);
   }
 
-  /// Dtor
+  /**
+   *  @fn     void ~ex03_simple_ip()
+   *  @brief  The destructor for the class
+   */
   ~ex03_simple_ip() {
     XREPORT_PLAIN("Dtor: Current value of " << struc_param.get_name() << " is "
                   << struc_param);
   }
 
-  /// Before End of Elaboration
+  /**
+   *  @fn     void before_end_of_elaboration()
+   *  @brief  Before end of elaboration function to update the param value.
+   *  @return void
+   */
   void before_end_of_elaboration() {
     // Update struc_param value to 1 (valid)
     XREPORT("Before_End_Elab: Set value of struc_param to 1");
@@ -65,7 +79,11 @@ SC_MODULE(ex03_simple_ip) {
   // void start_of_simulation()    {
   //}
 
-  /// Main execution block (no functionality)
+  /**
+   *  @fn     void execute()
+   *  @brief  The main execution block (no real functionality)
+   *  @return void
+   */
   void execute() {
     // Wait for 10ns to allow config_ip to update int_param value FIXME
     wait(10, sc_core::SC_NS);
@@ -111,8 +129,7 @@ SC_MODULE(ex03_simple_ip) {
   }
 
  private:
-  /// CCI param
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> struc_param;
+  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> struc_param; ///< CCI param
 };
 // ex03_simple_ip
 
