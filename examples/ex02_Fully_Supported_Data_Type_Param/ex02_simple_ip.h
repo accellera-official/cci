@@ -30,10 +30,17 @@
 
 #define MK64(a, b) (((boost::int64_t)(a)<< 32) | (b))
 
-/// The SimpleIP owns CCI Params representing basic data types
+/**
+ *  @class  ex02_simple_ip
+ *  @brief  The class for the simple_ip which owns CCI params represetning basic data types
+ */
 SC_MODULE(ex02_simple_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     void ex02_simple_ip()
+   *  @brief  class constructor
+   *  @return void
+   */
   SC_CTOR(ex02_simple_ip)
       : bool_param("bool_param", true),
         char_param("char_param", 'A'),
@@ -70,7 +77,11 @@ SC_MODULE(ex02_simple_ip) {
     SC_THREAD(execute);
   }
 
-  /// Main execution block (no functionality)
+  /**
+   *  @fn     void execute()
+   *  @brief  Main execution block (no real functionality)
+   *  @return void
+   */
   void execute() {
     // Wait for 20 ns
     wait(20, sc_core::SC_NS);
@@ -78,16 +89,16 @@ SC_MODULE(ex02_simple_ip) {
 
  private:
   /// Parameters of basic data types
-  cci::cnf::cci_param<bool> bool_param;
-  cci::cnf::cci_param<char> char_param;
-  cci::cnf::cci_param<unsigned char> uchar_param;
-  cci::cnf::cci_param<int> int_param;
-  cci::cnf::cci_param<unsigned int> uint_param;
-  // cci::cnf::cci_param<short int> int16_param;
-  // cci::cnf::cci_param<boost::int64_t> int64_param;
-  cci::cnf::cci_param<float> float_param;
-  cci::cnf::cci_param<double> double_param;
-  cci::cnf::cci_param<std::string> string_param;
+  cci::cnf::cci_param<bool> bool_param; ///< boolean parameter
+  cci::cnf::cci_param<char> char_param; ///< char parameter
+  cci::cnf::cci_param<unsigned char> uchar_param; ///< unsigned char parameter
+  cci::cnf::cci_param<int> int_param; ///< int parameter
+  cci::cnf::cci_param<unsigned int> uint_param; ///< unsigned int parameter
+  // cci::cnf::cci_param<short int> int16_param;  ///< 16-bit integer parameter
+  // cci::cnf::cci_param<boost::int64_t> int64_param; ///< 64-bit integer parameter
+  cci::cnf::cci_param<float> float_param; ///< float parameter
+  cci::cnf::cci_param<double> double_param; ///< double parameter
+  cci::cnf::cci_param<std::string> string_param;  ///< string parameter
 };
 // ex02_simple_ip
 
