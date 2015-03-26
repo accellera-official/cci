@@ -23,7 +23,13 @@
 #include "ex01_simple_ip.h"
 #include "ex01_config_ip.h"
 
-/// Testbench for the CCI simple_int_param example
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  The testbench for the CCI simple_int_param example
+ *  @param  argc  an integer for the number of arguments
+ *  @param  argv  a pointer to an array with the arguments
+ *  @return and integer of successful execution
+ */
 int sc_main(int argc, char *argv[]) {
   ex01_simple_ip sim_ip("sim_ip");
   ex01_config_ip cfg_ip("cfg_ip");
