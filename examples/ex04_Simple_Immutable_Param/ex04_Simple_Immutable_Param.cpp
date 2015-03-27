@@ -22,6 +22,13 @@
 #include "ex04_simple_ip.h"
 #include "ex04_config_ip.h"
 
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  Testbench for the CCI simple immutable parameters example
+ *  @param  argc  An integer containing the number of input arguments
+ *  @param  argv  A list of the input arguments
+ *  @return An integer representing the status of the function
+ */
 /// Testbench for the CCI simple immutable parameters example
 int sc_main(int argc, char *argv[]) {
   ex04_config_ip cfg_ip("cfg_ip");

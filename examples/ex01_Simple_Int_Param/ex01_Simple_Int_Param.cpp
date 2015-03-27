@@ -26,8 +26,8 @@
 /**
  *  @fn     int sc_main(int argc, char* argv[])
  *  @brief  The testbench for the CCI simple_int_param example
- *  @param  argc  an integer for the number of arguments
- *  @param  argv  a pointer to an array with the arguments
+ *  @param  argc  An integer for the number of arguments
+ *  @param  argv  An array with the input arguments
  *  @return and integer of successful execution
  */
 int sc_main(int argc, char *argv[]) {

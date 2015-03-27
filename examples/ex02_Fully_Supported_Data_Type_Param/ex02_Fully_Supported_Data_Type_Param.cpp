@@ -26,7 +26,7 @@
  *  @fn     int sc_main(int argc, char* argv[])
  *  @brief  Testbench for the CCI ex2_fully_supported_data_type_param example
  *  @param  argc  An integer for the number of input arguments
- *  @param  argv  A pointer to a list of the input arguments
+ *  @param  argv  A a list of the input arguments
  *  @return an integer representing whether the execution was successful
  */
 int sc_main(int argc, char *argv[]) {

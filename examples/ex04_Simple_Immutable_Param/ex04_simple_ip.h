@@ -25,10 +25,17 @@
 #include <cci>
 #include "xreport.hpp"
 
-/// The SimpleIP owns CCI immutable params
+/**
+ *  @class  ex04_simple_ip
+ *  @brief  The simple ip class owns the CCI immutable params
+ */
 SC_MODULE(ex04_simple_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     void ex04_simple_ip()
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex04_simple_ip)
       : param_1("param_1", 1),
         param_2("param_2", 2) {
@@ -42,6 +49,15 @@ SC_MODULE(ex04_simple_ip) {
     expect("Ctor: immutable param:", "param_2", static_cast<int>(param_2), 2);
   }
 
+  /**
+   *  @fn     void expect(const char* phase, const char* key, const int val, const int exp)
+   *  @brief  Compares the expected value with the actual value
+   *  @param  phase Current phase
+   *  @param  key Parameter key used to lookup the parameter
+   *  @param  val The value of the parameter
+   *  @param  exp The expected value of the parameter
+   *  @return void
+   */
   //! @note remove this function after the CCI implementation is in place
   void expect(const char* phase, const char *key, const int val,
               const int exp) {
@@ -53,7 +69,11 @@ SC_MODULE(ex04_simple_ip) {
     }
   }
 
-  /// Main execution block
+  /**
+   *  @fn     void execute()
+   *  @brief  The main execution block
+   *  @return void
+   */
   void execute() {
     wait(20, sc_core::SC_NS);
 
@@ -81,9 +101,8 @@ SC_MODULE(ex04_simple_ip) {
   }
 
  private:
-  /// CCI immutable param to hold buffer size
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_1;
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_2;
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_1;  ///< CCI immutable param
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_2;  ///< CCI immutable param
 };
 // ex04_simple_ip
 

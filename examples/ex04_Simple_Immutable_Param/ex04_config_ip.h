@@ -26,10 +26,17 @@
 #include <cassert>
 #include "xreport.hpp"
 
-/// The config_ip configures sim_ip's parameter
+/**
+ *  @class  ex04_config_ip
+ *  @brief  The config_ip configures the sim_ip's parameter
+ */
 SC_MODULE(ex04_config_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     void ex04_config_ip
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex04_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
@@ -41,6 +48,14 @@ SC_MODULE(ex04_config_ip) {
                  "sim_ip.param_1", "100");
   }
 
+  /**
+   *  @fn     void setup_sim_ip(const char* msg, const char* key, const char* val)
+   *  @brief  Function to setup the simulation
+   *  @param  msg A message to be printed regarding the setup
+   *  @param  key The parameter key to lookup and modify
+   *  @param  val The value to assign to the parameter referenced by key
+   *  @return void
+   */
   void setup_sim_ip(const char *msg, const char *key, const char *val) {
     XREPORT(msg);
 
@@ -53,7 +68,11 @@ SC_MODULE(ex04_config_ip) {
     }
   }
 
-  /// Configure the value of "sim_ip.param_1" parameter
+  /**
+   *  @fn     void execute()
+   *  @brief  Configure the value of "sim_ip.param_1" parameter
+   *  @return void
+   */
   void execute() {
     wait(10, sc_core::SC_NS);
 
@@ -77,8 +96,7 @@ SC_MODULE(ex04_config_ip) {
   }
 
  private:
-  /// CCI configuration handle
-  cci::cnf::cci_cnf_broker_if *m_cci;
+  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex04_config_ip
 
