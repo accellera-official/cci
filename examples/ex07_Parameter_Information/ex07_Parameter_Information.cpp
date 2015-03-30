@@ -18,13 +18,13 @@
   limitations under the License.
  *****************************************************************************/
 
-/*!
- * \file    main.cpp
- * \brief   The main function starts here.
- *          The sc_main function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
- *          modules and 'OBSERVER' class
- * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * \date    12th September, 2011
+/**
+ *  @file    main.cpp
+ *  @brief   The main function starts here.
+ *           The sc_main function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
+ *           modules and 'OBSERVER' class
+ *  @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date    12th September, 2011
  */
 #include <systemc>
 #include <cci>
@@ -35,13 +35,19 @@
 #include "ex07_parameter_configurer.h"
 #include "ex07_observer.h"
 
-/// Testbench for parameter information example
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  The testbench for the parameter information example
+ *  @param  argc  The number of input arguments
+ *  @param  argv  The list of input arguments
+ *  @return An interger for the execution status
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  /// Creating an originator to access the global broker
+  // Creating an originator to access the global broker
   const std::string myOrgStr = "sc_main_originator";
   cci::cnf::cci_originator myOriginator(myOrgStr);
 
-  /// Get handle of the broker using the originator
+  // Get handle of the broker using the originator
   cci::cnf::cci_cnf_broker_if* globalBroker =
       &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
 
@@ -55,9 +61,9 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                  "[MAIN] : Setting 'param_owner.mutable_string_param'"
                  " value to 'Initialized within sc_main()'");
 
-  /// Demonstrating use of 'json_deserialize_initial_value'
-  /// API to assign initial value before the
-  /// construction of the model hierarchy begins.
+  // Demonstrating use of 'json_deserialize_initial_value'
+  // API to assign initial value before the
+  // construction of the model hierarchy begins.
   globalBroker->json_deserialize_initial_value(
       "param_owner.mutable_string_param", "Initialized within sc_main");
 
@@ -65,9 +71,8 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                  "[MAIN] : Demonstrating 'comparison' between the values"
                  " of a data type for different mutability types");
 
-  /// Instantiate cci-parameters of all the three mutability types for a
-  /// particular (say String) data-type
-
+  // Instantiate cci-parameters of all the three mutability types for a
+  // particular (say String) data-type
   cci::cnf::cci_param<std::string, cci::cnf::mutable_param>
       mutab_str_param("string_mutab_param", "String_Value_A");
   cci::cnf::cci_param<std::string, cci::cnf::immutable_param>
@@ -91,7 +96,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                    " String - VALUES DO NOT MATCH");
   }
 
-  /// Infrastructure created within the example for example illustration
+  // Infrastructure created within the example for example illustration
   SC_REPORT_INFO("sc_main", "[MAIN] : parameter_container module declares two"
                  " cci type parameters.");
   SC_REPORT_INFO("sc_main", "One is of 'Integer type' and the other is of"
@@ -99,14 +104,14 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   SC_REPORT_INFO("sc_main", "'Integer type' has 'pre_read', 'pre/post_write'"
                  " callback registered within the OBSERVER");
 
-  /// Instantiation of sc_modules
+  // Instantiation of sc_modules
   ex07_parameter_owner param_owner("param_owner");
   ex07_parameter_configurer param_cfgr("param_cfgr");
 
-  /// Instantiating observer class
+  // Instantiating observer class
   ex07_observer observer_class("observer");
 
-  /// Simulation time
+  // Simulation time
   sc_core::sc_start(30.0, sc_core::SC_NS);
 
   return EXIT_SUCCESS;
