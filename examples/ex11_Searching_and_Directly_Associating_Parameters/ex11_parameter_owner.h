@@ -19,11 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file      parameter_owner.h
- * @brief     This file contains the code which defines the OWNER module and its contents.
- *            The owner module is instantiated by the TOP_MODULE
- * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      9th June, 2011 (Thursday)
+ *  @file      parameter_owner.h
+ *  @brief     This file contains the code which defines the OWNER module and its contents.
+ *             The owner module is instantiated by the TOP_MODULE
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date      9th June, 2011 (Thursday)
  */
 
 #ifndef EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_PARAMETER_OWNER_H_
@@ -33,13 +33,23 @@
 #include <string>
 #include "xreport.hpp"
 
-/// This module creates cci_parameters with the names passed from
-/// ex11_top_module
+/**
+ *  @class  ex11_parameter_owner
+ *  @brief  This module creates cci_parameters with the names passed from
+ *          ex11_top_module
+ */
 SC_MODULE(ex11_parameter_owner) {
  public:
   SC_HAS_PROCESS(ex11_parameter_owner);
 
-  /// Constructor for ex11_parameter_owner that takes in multiple arguments
+  /**
+   *  @fn     ex11_parameter_owner(sc_core::sc_module name _name, std::string _param_name = "clock_speed_Hz", int _param_value = 1000)
+   *  @brief  The class constructor
+   *  @param  _name The name of the class
+   *  @param  _param_name The name of the parameter
+   *  @param  _param_value  The value to be assigned to the parameter
+   *  @return void
+   */
   ex11_parameter_owner(sc_core::sc_module_name _name,
                        std::string _param_name = "clock_speed_Hz",
                        int _param_value = 1000) {
@@ -50,8 +60,7 @@ SC_MODULE(ex11_parameter_owner) {
   }
 
  private :
-  // Declare an instance of mutable CCI parameter of type 'int'
-  cci::cnf::cci_param<int>* clk;
+  cci::cnf::cci_param<int>* clk;  ///< Declare an instance of mutable CCI parameter of type 'int'
 };
 // ex11_parameter_owner
 

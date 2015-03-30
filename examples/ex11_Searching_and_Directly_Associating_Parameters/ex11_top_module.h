@@ -19,10 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file     top_module.h
- * @brief    This header declares and defines the top module which instantiates two owner modules
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     9th June, 2011 (Thursday)
+ *  @file     top_module.h
+ *  @brief    This header declares and defines the top module which instantiates
+ *            two owner modules
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     9th June, 2011 (Thursday)
  */
 
 #ifndef EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_TOP_MODULE_H_
@@ -37,7 +38,10 @@
 #include "ex11_param_value_sync.h"
 #include "xreport.hpp"
 
-/// Instantiates the platform (param_value_sync and param owners)
+/**
+ *  @class ex11_top_module
+ *  @brief Instantiates the platform (param_value_sync and param owners)
+ */
 SC_MODULE(ex11_top_module) {
  public:
   ex11_param_value_sync* param_sync;
@@ -46,8 +50,13 @@ SC_MODULE(ex11_top_module) {
   ex11_parameter_owner* param_owner1;
   ex11_parameter_owner* param_owner2;
 
+  /**
+   *  @fn     ex11_top_module
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex11_top_module) {
-    /// Get handle of the broker responsible for the class/module
+    // Get handle of the broker responsible for the class/module
     myTopModBrokerIF =
         &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 
@@ -66,8 +75,8 @@ SC_MODULE(ex11_top_module) {
     std::string param1_str = "top_mod.param_owner1.clk_freq_Hz";
     std::string param2_str = "top_mod.param_owner2.clock_speed_Hz";
 
-    /// Check for existence of the owner cci_parameter using name-based look up
-    /// access and then assign their reference to respective cci_base_param
+    // Check for existence of the owner cci_parameter using name-based look up
+    // access and then assign their reference to respective cci_base_param
     if (myTopModBrokerIF->param_exists(param1_str)) {
       cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
       selected_base_param_list.push_back(temp);
@@ -79,8 +88,8 @@ SC_MODULE(ex11_top_module) {
               << "\tnot found.");
     }
 
-    /// Check for existence of the owner cci_parameter using name-based look up
-    /// access and then assign their reference to respective cci_base_param
+    // Check for existence of the owner cci_parameter using name-based look up
+    // access and then assign their reference to respective cci_base_param
     if (myTopModBrokerIF->param_exists(param2_str)) {
       cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
       selected_base_param_list.push_back(temp);
@@ -92,19 +101,15 @@ SC_MODULE(ex11_top_module) {
               << "\tnot found.");
     }
 
-    /// Pass on the list of cci_base_parameters to the 'param_value_sync'
-    /// that looks at the synchronization related activity b/w the owner modules
+    // Pass on the list of cci_base_parameters to the 'param_value_sync'
+    // that looks at the synchronization related activity b/w the owner modules
     param_sync = new ex11_param_value_sync("param_value_sync",
                                            selected_base_param_list);
   }
 
  private:
-  // Declare a CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;
-
-  // vector storing the searched owner parameters references to CCI base
-  // parameter pointers
-  std::vector<cci::cnf::cci_base_param*> selected_base_param_list;
+  cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;  ///< Declare a CCI configuration broker interface instance
+  std::vector<cci::cnf::cci_base_param*> selected_base_param_list;  ///< vector storing the searched owner parameters references to CCI base parameter pointers
 };
 // ex11_top_module
 

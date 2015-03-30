@@ -19,13 +19,13 @@
  *****************************************************************************/
 
 /**
- * @file     param_value_sync.h
- * @brief    This file declares and defines the 'param_value_sync' class that
- *           registers callbacks on the cci-parameters of the owner modules.  This
- *           registration of callbacks is in order to establish synchronization between
- *           the respective cci-parameters
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     24th August, 2011 (Wednesday)
+ *  @file     param_value_sync.h
+ *  @brief    This file declares and defines the 'param_value_sync' class that
+ *            registers callbacks on the cci-parameters of the owner modules.  This
+ *            registration of callbacks is in order to establish synchronization between
+ *            the respective cci-parameters
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     24th August, 2011 (Wednesday)
  */
 
 #ifndef EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_PARAM_VALUE_SYNC_H_
@@ -37,23 +37,31 @@
 #include <sstream>
 #include "xreport.hpp"
 
-/// This module registers post write callbacks on the owner's parameters in
-/// order to update an owner cci_parameter directly when another is modified
+/**
+ *  @class  ex11_param_value_sync
+ *  @brief  This module registers post write callbacks on the owner's parameters
+ *          in order to update an owner cci_parameter directly when another is modified
+ */
 SC_MODULE(ex11_param_value_sync) {
  public:
   SC_HAS_PROCESS(ex11_param_value_sync);
 
-  /// Overloaded constructor
-  //// No default constructor
+  /**
+   *  @fn     ex11_param_value_sync(sc_core::sc_module_name _name, std::vector<cci::cnf::cci_base_param *> BaseParamList)
+   *  @brief  The class constructor
+   *  @param  _name The name of the class
+   *  @param  BaseParamList The list of base CCI parameters
+   *  @return void
+   */
   ex11_param_value_sync(sc_core::sc_module_name _name,
                         std::vector<cci::cnf::cci_base_param *> BaseParamList)
-      /// Define an originator in order to get hold of the default broker
+      // Define an originator in order to get hold of the default broker
       : ValueSyncOriginator("ValueSyncOriginator") {
-    /// Get handle of the broker responsible for the class/module
+    // Get handle of the broker responsible for the class/module
     ValueSyncBrokerIF =
         &cci::cnf::cci_broker_manager::get_current_broker(ValueSyncOriginator);
 
-    /// Copy the list of selected base parameters to a local std::vector
+    // Copy the list of selected base parameters to a local std::vector
     returnBaseParamList = BaseParamList;
 
     for (unsigned int i = 1; i < returnBaseParamList.size(); i++) {
@@ -61,7 +69,14 @@ SC_MODULE(ex11_param_value_sync) {
     }
   }
 
-  /// PRE_WRITE and POST_WRITE callback implementation
+  /**
+   *  @fn     cci::cmf::callback_return_type write_callback(const cci::cnf::cci_base_param& _base_param_1, const cci::cnf::callback_type& cb_reason, cci::cnf::cci_base_param* _base_param_2)
+   *  @brief  Pre-write and post-write callback implementation
+   *  @param  _base_param_1 Parameter to sync from
+   *  @param  cb_reason Reason the callback was triggered
+   *  @param  _base_param_2 The parameter to sync to
+   *  @return The result of the callback execution
+   */
   cci::cnf::callback_return_type
       write_callback(const cci::cnf::cci_base_param& _base_param_1,
                      const cci::cnf::callback_type& cb_reason,
@@ -76,13 +91,19 @@ SC_MODULE(ex11_param_value_sync) {
     return cci::cnf::return_nothing;
   }
 
-  /// Function for synchronizing the values of cci_parameter of OWNER modules
-  /// via the PARAM_VALUE_SYNC
+  /**
+   *  @fn     void synchValues(cci::cnf::cci_base_param* _base_param_1, cci::cnf::cci_base_param* _base_param_2)
+   *  @brief  Function for synchronizing the values of cci_parameter of OWNER
+   *          modules via the PARAM_VALUE_SYNC
+   *  @param  _base_param_1 The first parameter to be synced
+   *  @param  _base_param_2 The second parameter to be synced
+   *  @return void
+   */
   void synchValues(cci::cnf::cci_base_param * _base_param_1,
                    cci::cnf::cci_base_param * _base_param_2) {
-    /// In order to synchronize even the default values of the owner modules,
-    /// use cci_base_param of one parameter as reference, write the same value
-    /// to the other pararmeter's cci_base_param using JSON
+    // In order to synchronize even the default values of the owner modules,
+    // use cci_base_param of one parameter as reference, write the same value
+    // to the other pararmeter's cci_base_param using JSON
     _base_param_2->json_deserialize(_base_param_1->json_serialize());
 
     post_write_cb_vec.push_back(
@@ -101,18 +122,10 @@ SC_MODULE(ex11_param_value_sync) {
   }
 
  private:
-  // Declaring a CCI originator
-  cci::cnf::cci_originator ValueSyncOriginator;
-
-  // Declaring a CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* ValueSyncBrokerIF;
-
-  // Callback Adaptor Objects
-  std::vector<cci::shared_ptr<cci::cnf::callb_adapt> > post_write_cb_vec;
-
-  // std::vector storing the searched owner parameters references to
-  // CCI base parameter pointers
-  std::vector<cci::cnf::cci_base_param*> returnBaseParamList;
+  cci::cnf::cci_originator ValueSyncOriginator; ///< Declaring a CCI originator
+  cci::cnf::cci_cnf_broker_if* ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
+  std::vector<cci::shared_ptr<cci::cnf::callb_adapt> > post_write_cb_vec; ///< Callback Adaptor Objects
+  std::vector<cci::cnf::cci_base_param*> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI base parameter pointers
 };
 // ex11_parameter_value_sync
 
