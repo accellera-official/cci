@@ -19,17 +19,23 @@
  *****************************************************************************/
 
 /**
- * @file      main.cpp
- * @brief     This file instantiates the owner and configurator modules and
- *            sets the simulation time
- * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      10th May, 2011
+ *  @file      main.cpp
+ *  @brief     This file instantiates the owner and configurator modules and
+ *             sets the simulation time
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date      10th May, 2011
  */
 
 #include "ex13_parameter_owner.h"
 #include "ex13_parameter_configurator.h"
 
-/// Testbench that instantiates an owner and configurator module
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  Testbench that instantiates an owner and configurator module
+ *  @param  sc_argc The number of input arguments
+ *  @param  sc_argv The list of input arguments
+ *  @return The exit status of the function
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
   ex13_parameter_owner param_owner("param_owner");
   ex13_parameter_configurator param_cfgr("param_cfgr");

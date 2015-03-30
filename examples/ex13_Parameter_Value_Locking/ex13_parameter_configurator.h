@@ -19,11 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file     parameter_configurator.h
- * @brief    This file declares and defines configurator and implements the
- *           locking and unlocking mechnanisms on the owner parameter 
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     10th May, 2011 (Tuesday)
+ *  @file     parameter_configurator.h
+ *  @brief    This file declares and defines configurator and implements the
+ *            locking and unlocking mechnanisms on the owner parameter
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     10th May, 2011 (Tuesday)
  */
 
 #ifndef EXAMPLES_EX13_PARAMETER_VALUE_LOCKING_EX13_PARAMETER_CONFIGURATOR_H_
@@ -33,12 +33,20 @@
 #include <cassert>
 #include "xreport.hpp"
 
-/// This module lists and defines the locking/unlocking mechanism by a
-/// parameter-setter (configurator)
+/**
+ *  @class  ex13_parameter_configurator
+ *  @brief  This module lists and defines the locking/unlocking mechanism by a
+ *          parameter-setter (configurator)
+ */
 SC_MODULE(ex13_parameter_configurator) {
  public:
+  /**
+   *  @fn     ex13_parameter_configurator
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex13_parameter_configurator) {
-    /// Getting handle of the default broker for the class/sc_module
+    // Getting handle of the default broker for the class/sc_module
     myConfigBroker =
         &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
 
@@ -55,26 +63,30 @@ SC_MODULE(ex13_parameter_configurator) {
       XREPORT("[CFGR C_TOR] : int_param not found");
     }
 
-    /// Registering SC_THREAD with the SystemC kernel
+    // Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);
 }
 
-  /// This function illustrates various locking and unlocking mechanisms of a
-  /// parameter using 'lock()', 'lock(&password)', 'unlock()',
-  /// 'unlock(&password)' APIs. 'is_locked() is used to query the locking status
+  /**
+   *  @fn     void run_mutable_cfgr(void)
+   *  @brief  This function illustrates various locking and unlocking mechanisms
+   *          of a parameter using 'lock()', 'lock(&password)', 'unlock()',
+   *          'unlock(&password)' APIs. 'is_locked() is used to query the locking status
+   *  @return void
+   */
   void run_mutable_cfgr(void) {
     while (1) {
       wait(2.0, sc_core::SC_NS);
 
-      /// Before configurator tries to assign a new value to the parameter, it
-      /// is always recommended to check the locking status of the parameter
+      // Before configurator tries to assign a new value to the parameter, it
+      // is always recommended to check the locking status of the parameter
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      /// 'locked' API returns TRUE when a parameter is in LOCKED STATE and
-      /// FALSE when in UNLOCKED STATE
+      // 'locked' API returns TRUE when a parameter is in LOCKED STATE and
+      // FALSE when in UNLOCKED STATE
       if (int_param_ptr->is_locked()) {
         XREPORT("[CFGR] :  Cannot assign new value to the parameter as it"
                 " is already locked!!");
@@ -99,23 +111,23 @@ SC_MODULE(ex13_parameter_configurator) {
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      /// Demonstrating 'lock' API to lock a parameter without a password
+      // Demonstrating 'lock' API to lock a parameter without a password
       XREPORT("[CFGR] : Lock parameter without password");
       int_param_ptr->lock();
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      /// Demonstrating 'unlock' API to lock a parameter without a password
+      // Demonstrating 'unlock' API to lock a parameter without a password
       XREPORT("[CFGR] : Unlock parameter without password");
       int_param_ptr->unlock();
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      /// Demonstrating 'lock' API to lock a parameter with a password
-      /// 'Lock' API returns TRUE if parameter is locked successfully and
-      /// FALSE if it could not be locked
+      // Demonstrating 'lock' API to lock a parameter with a password
+      // 'Lock' API returns TRUE if parameter is locked successfully and
+      // FALSE if it could not be locked
       psswd = NULL;
       XREPORT("[CFGR] : Lock with password");
 
@@ -141,9 +153,9 @@ SC_MODULE(ex13_parameter_configurator) {
               << int_param_ptr->is_locked() << "\tValue : "
               << int_param_ptr->json_serialize());
 
-      /// 'Unlock' API returns TRUE if parameter is unlocked successfully and
-      /// FALSE if it could not be unlocked. Demonstrating unlocking with the
-      /// right password
+      // 'Unlock' API returns TRUE if parameter is unlocked successfully and
+      // FALSE if it could not be unlocked. Demonstrating unlocking with the
+      // right password
       XREPORT("[CFGR] : Now, unlock with the correct password");
       int_param_ptr->unlock(&psswd);
       XREPORT("[CFGR] : Parameter locking status : "
@@ -155,17 +167,14 @@ SC_MODULE(ex13_parameter_configurator) {
   }
 
  private:
-  // CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myConfigBroker;
+  cci::cnf::cci_cnf_broker_if* myConfigBroker;  ///< CCI configuration broker interface instance
+  cci::cnf::cci_base_param* int_param_ptr;  ///< CCI base parameter handle to access the actual owner's parameter
 
-  // CCI base parameter handle to access the actual owner's parameter
-  cci::cnf::cci_base_param* int_param_ptr;
+  char* paramName;  ///< The parameter name
 
-  char* paramName;
-
-  /// Some passwords local to the configurator
-  void* psswd;
-  void* newpsswd;
+  // Some passwords local to the configurator
+  void* psswd;  ///< local password
+  void* newpsswd; ///< local password
 };
 // ex13_parameter_configurator
 
