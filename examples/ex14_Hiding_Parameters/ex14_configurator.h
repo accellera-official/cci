@@ -18,11 +18,11 @@
   limitations under the License.
  *****************************************************************************/
 
-/*!
- * \file     configurator.h
- * \brief    This header declares and defines the 'configurator' module functionality
- * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * \date     5th July, 2011 (Tuesday)
+/**
+ *  @file     configurator.h
+ *  @brief    This header declares and defines the 'configurator' module functionality
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     5th July, 2011 (Tuesday)
  */
 
 #ifndef EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CONFIGURATOR_H_
@@ -35,13 +35,21 @@
 
 #include "xreport.hpp"
 
-/// This module defines the configurator module which will make changes to the
-/// 'priv_int_param' of the child by making changes to the 'parent_inst.
-/// parent_buffer' cci_parameter
+/**
+ *  @class  ex14_configurator
+ *  @brief  This module defines the configurator module which will make changes
+ *          to the 'priv_int_param' of the child by making changes to the
+ *          'parent_inst. parent_buffer' cci_parameter
+ */
 SC_MODULE(ex14_configurator) {
  public:
+  /**
+   *  @fn     ex14_configurator
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex14_configurator) {
-  /// Gets the reference of a DEFAULT GLOBAL BROKER
+  // Gets the reference of a DEFAULT GLOBAL BROKER
     myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(
         cci::cnf::cci_originator(*this));
 
@@ -51,7 +59,7 @@ SC_MODULE(ex14_configurator) {
 
     if (myCfgrBrokerIF != NULL) {
       if (myCfgrBrokerIF->param_exists("Top.parent_inst.parent_int_buffer")) {
-        /// Get handle of the parent_module's cci-parameter
+        // Get handle of the parent_module's cci-parameter
         parent_base_param_ptr = myCfgrBrokerIF->get_param(
             "Top.parent_inst.parent_int_buffer");
 
@@ -68,10 +76,15 @@ SC_MODULE(ex14_configurator) {
       }
     }
 
-    /// Declare SC_THREAD
+    // Declare SC_THREAD
     SC_THREAD(run_cfgr);
   }
 
+  /**
+   *  @fn     void run_cfgr(void)
+   *  @brief  Main function executed to configure the parameters
+   *  @return void
+   */
   void run_cfgr(void) {
     while (1) {
       std::vector<std::string> cfgr_param_list =
@@ -103,11 +116,8 @@ SC_MODULE(ex14_configurator) {
   }
 
  private:
-  // Configuration Broker for TOP_MODULE
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
-
-  // Few directly accessible cci-parameters
-  cci::cnf::cci_base_param* parent_base_param_ptr;
+  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
+  cci::cnf::cci_base_param* parent_base_param_ptr;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator
 

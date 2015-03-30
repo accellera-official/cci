@@ -19,13 +19,13 @@
  *****************************************************************************/
 
 #define SC_INCLUDE_DYNAMIC_PROCESSES
-/*!
- * \file      main.cpp
- * \brief     This file instantiates the TOP module which, in turn, instantiates
- *            the PARENT and the CONFIGURATOR modules.  
- * \author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *            Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
- * \date      3rd September, 2011 (Saturday)
+/**
+ *  @file      main.cpp
+ *  @brief     This file instantiates the TOP module which, in turn, instantiates
+ *             the PARENT and the CONFIGURATOR modules.
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *             Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
+ *  @date      3rd September, 2011 (Saturday)
  */
 
 #include <cci>
@@ -35,19 +35,27 @@
 
 #include "gs_cci_cnf_private_broker_accessor.h"
 
-/// This module creates the parent and configurator modules as well as the
-/// private broker responsible for the parent module and all parameters of the
-/// parent and the child modules.
+/**
+ *  @class  ex14_top
+ *  @brief  This module creates the parent and configurator modules as well as
+ *          the private broker responsible for the parent module and all
+ *          parameters of the parent and the child modules.
+ */
 SC_MODULE(ex14_top) {
  public:
+  /**
+   *  @fn     ex14_top
+   *  @brief The class constructor
+   *  @return void
+   */
   SC_CTOR(ex14_top)
-      /// Register the cci-parameters of the PARENT & CHILD modules to the
-      /// PRIVATE BROKER & GLOBAL BROKER
-      /// 1. Instantiate a broker immediately above the 'desired' module
-      /// cci::cnf::gs_cci_private_broker_accessor(sc_core::sc_module& owner,
-      /// std::vector<std::string> public_parameters)
-      /// 2. Feed this broker's instance to the 'desired' module
-      /// parent_inst(new parent("parent_inst", privBroker))
+      // Register the cci-parameters of the PARENT & CHILD modules to the
+      // PRIVATE BROKER & GLOBAL BROKER
+      // 1. Instantiate a broker immediately above the 'desired' module
+      // cci::cnf::gs_cci_private_broker_accessor(sc_core::sc_module& owner,
+      // std::vector<std::string> public_parameters)
+      // 2. Feed this broker's instance to the 'desired' module
+      // parent_inst(new parent("parent_inst", privBroker))
       : privBroker(
             new cci::cnf::gs_cci_private_broker_accessor(
                 *this,
@@ -57,24 +65,29 @@ SC_MODULE(ex14_top) {
         parent_inst(new ex14_parent("parent_inst", privBroker)),
         param_cfgr("param_cfgr") {}
 
+  /**
+   *  @fn     ~ex14_top()
+   *  @brief  The class destructor
+   *  @return void
+   */
   ~ex14_top() {
     delete parent_inst;
     delete privBroker;
   }
 
  protected:
-  // Broker that hides the parameters not passed to it as argument
-  cci::cnf::cci_cnf_broker_if* privBroker;
-  // Parent module pointer
-  ex14_parent* parent_inst;
-  // Configurator module instance
-  ex14_configurator param_cfgr;
+  cci::cnf::cci_cnf_broker_if* privBroker;  ///< Broker that hides the parameters not passed to it as argument
+  ex14_parent* parent_inst; ///< Parent module pointer
+  ex14_configurator param_cfgr; ///< Configurator module instance
 };
 /// ex14_top
 
-/// Main testbench function that instantiates a top module
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  Main testbench function that instantiates a top module
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  /// Instantiate TOP module
+  // Instantiate TOP module
   ex14_top Top("Top");
 
   // Start and run the simulation
