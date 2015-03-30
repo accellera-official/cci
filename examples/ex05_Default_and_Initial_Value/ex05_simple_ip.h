@@ -26,10 +26,17 @@
 #include <cci>
 #include "xreport.hpp"
 
-/// The SimpleIP owns a CCI param
+/**
+ *  @class  ex05_simple_ip
+ *  @brief  The simple ip owns the CCI param
+ */
 SC_MODULE(ex05_simple_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     ex05_simple_ip
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex05_simple_ip)
   // Initialize param_1 with 1, and param_2 with 2
       : param_1("param_1", 1),
@@ -40,7 +47,11 @@ SC_MODULE(ex05_simple_ip) {
             << " (Default value Specified: 2)");
   }
 
-  /// Dtor
+  /**
+   *  @fn     ~ex05_simple_ip()
+   *  @brief  The class destructor
+   *  @return void
+   */
   ~ex05_simple_ip() {
     XREPORT_PLAIN("@Dtor: Value of " << param_1.get_name() << " is "
                   << param_1);
@@ -49,9 +60,8 @@ SC_MODULE(ex05_simple_ip) {
   }
 
  private:
-  /// CCI params
-  cci::cnf::cci_param<int> param_1;
-  cci::cnf::cci_param<int> param_2;
+  cci::cnf::cci_param<int> param_1; ///< CCI param
+  cci::cnf::cci_param<int> param_2; ///< CCI param
 };
 // ex05_simple_ip
 

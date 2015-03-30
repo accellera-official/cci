@@ -29,10 +29,17 @@
 #include <cassert>
 #include "xreport.hpp"
 
-/// The config_ip configures sim_ip's init-values
+/**
+ *  @class  ex05_config_ip
+ *  @brief  The config_ip configures sim_ip's init-values
+ */
 SC_MODULE(ex05_config_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     ex05_config_ip
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex05_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
@@ -42,6 +49,13 @@ SC_MODULE(ex05_config_ip) {
                  "10");
   }
 
+  /**
+   *  @fn     void setup_sim_ip(const char* msg, const char* val)
+   *  @brief  Function to setup the simulation
+   *  @param  msg Message to print during setup
+   *  @param  val The value to assign to the param
+   *  @return void
+   */
   void setup_sim_ip(const char *msg, const char *val) {
     XREPORT(msg);
 
@@ -56,8 +70,7 @@ SC_MODULE(ex05_config_ip) {
   }
 
  private:
-  /// CCI configuration handle
-  cci::cnf::cci_cnf_broker_if *m_cci;
+  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex05_config_ip
 
