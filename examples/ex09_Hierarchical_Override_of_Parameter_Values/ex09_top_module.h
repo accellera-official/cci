@@ -18,15 +18,15 @@
   limitations under the License.
  *****************************************************************************/
 
-/*!
- * \file     top_module.h
- * \brief    Implementation the TOP_MODULE.
- *           This header contains code related to the top module which decides
- *           the model hierarchy for example#9.  
- * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *           Girish Verma, CircuitSutra Technologies      <girish@circuitsutra.com>
- *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
- * \date     29th April, 2011 (Friday)
+/**
+ *  @file     top_module.h
+ *  @brief    Implementation the TOP_MODULE.
+ *            This header contains code related to the top module which decides
+ *            the model hierarchy for example#9.
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *            Girish Verma, CircuitSutra Technologies      <girish@circuitsutra.com>
+ *            Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
+ *  @date     29th April, 2011 (Friday)
  */
 
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_TOP_MODULE_H_
@@ -43,10 +43,16 @@
 #include "ex09_target.h"
 #include "ex09_router.h"
 
-/// This module instantiates a initiator, target, and router
-/// and binds them correctly for communication
+/**
+ *  @class  ex09_top_module
+ *  @brief  This module instantiated a initiator, target, and router and binds them correctly for communication.
+ */
 SC_MODULE(ex09_top_module) {
  public:
+  /**
+   *  @fn     ex09_top_module
+   *  @brief  The class constructor
+   */
   SC_CTOR(ex09_top_module)
       : n_initiators("number_of_initiators", 0),
         n_targets("number_of_targets", 0) {
@@ -54,11 +60,11 @@ SC_MODULE(ex09_top_module) {
 
     XREPORT("[TOP_MODULE C_TOR] -- [TOP MODULE CONSTRUCTOR BEGINS HERE]");
 
-    /// Get handle of the default broker
+    // Get handle of the default broker
     myDefaultBroker = &cci::cnf::cci_broker_manager::get_current_broker(
         cci::cnf::cci_originator(*this));
 
-    /// Assert if broker handle returned is NULL
+    // Assert if broker handle returned is NULL
     assert(myDefaultBroker != NULL
            && "Default broker accessed by TOP_MODULE is NULL");
 
@@ -67,26 +73,26 @@ SC_MODULE(ex09_top_module) {
     XREPORT("[TOP_MODULE C_TOR] :  Number of targets : "
             << n_targets.get());
 
-    /// Set and lock the number of initiators in Router Table
-    /// to value passed from 'sc_main'
+    // Set and lock the number of initiators in Router Table
+    // to value passed from 'sc_main'
     myDefaultBroker->json_deserialize_initial_value(
         "top_module_inst.RouterInstance.r_initiators", n_initiators.json_serialize());
     myDefaultBroker->lock_initial_value(
         "top_module_inst.RouterInstance.r_initiators");
 
-    /// Set and lock the number of targets in Router Table
-    /// to value passed from 'sc_main'
+    // Set and lock the number of targets in Router Table
+    // to value passed from 'sc_main'
     myDefaultBroker->json_deserialize_initial_value(
         "top_module_inst.RouterInstance.r_targets", n_targets.json_serialize());
     myDefaultBroker->lock_initial_value(
         "top_module_inst.RouterInstance.r_targets");
 
-    /// Declaring and defining router module
+    // Declaring and defining router module
     char routerName[15] = "RouterInstance";
     XREPORT("[TOP_MODULE C_TOR] : Creating Router : " << routerName);
     routerInstance = new ex09_router(routerName);
 
-    /// Top_Module begins construction of the model hierarchy from here
+    // Top_Module begins construction of the model hierarchy from here
     // ----------------------------------------------------------------
 
     if (myDefaultBroker->param_exists(
@@ -110,7 +116,7 @@ SC_MODULE(ex09_top_module) {
       myDefaultBroker->json_deserialize_initial_value(stringMisc, initiatorName);
       initiatorList.push_back(new ex09_initiator(initiatorName));
 
-      ///     Binding of initiator to Router
+      //     Binding of initiator to Router
       XREPORT("[TOP MODULE C_TOR] : Binding Router_Initiator to "
               << initiatorName);
       initiatorList[i]->initiator_socket.bind(routerInstance->Router_target);
@@ -119,7 +125,7 @@ SC_MODULE(ex09_top_module) {
     // Defining target size
     targetSize = 128;
 
-    /// Creating instances of target(s)
+    // Creating instances of target(s)
     for (int i = 0; i < n_targets; i++) {
       snprintf(targetName, sizeof(targetName), "target_%d", i);
       XREPORT("[TOP_MODULE C_TOR] : Creating target : " << targetName);
@@ -138,12 +144,12 @@ SC_MODULE(ex09_top_module) {
       myDefaultBroker->json_deserialize_initial_value(stringMisc, ss.str());
       targetList.push_back(new ex09_target(targetName));
 
-      /// Binding Router to target
+      // Binding Router to target
       XREPORT("[TOP MODULE C_TOR] : Binding Router_Initiator to " << targetName);
       routerInstance->Router_initiator.bind(targetList[i]->target_socket);
     }
 
-    /// Try re-setting locked values for Router Table contents
+    // Try re-setting locked values for Router Table contents
     for (int i = 0; i < n_targets; i++) {
       snprintf(targetName, sizeof(targetName), "%s.RouterInstance.r_index_%d",
                name(), i);
@@ -190,6 +196,11 @@ SC_MODULE(ex09_top_module) {
     }
   }
 
+  /**
+   *  @fn     ~ex09_top_module()
+   *  @brief  The class destructor
+   *  @return void
+   */
   ~ex09_top_module() {
     // @TODO De-allocate all initiator and target properly
     if (!initiatorList.empty())
@@ -201,37 +212,27 @@ SC_MODULE(ex09_top_module) {
 
  private:
   // Immutable type cci-parameters
-  //!< Number of initiators to be instantiated
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_initiators;
-  //!< Number of targets to be instantiated
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_targets;
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_initiators; ///< Number of initiators to be instantiated
+  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_targets;  ///< Number of targets to be instantiated
 
-  //!< Configuration broker instance
-  cci::cnf::cci_cnf_broker_if* myDefaultBroker;
+  cci::cnf::cci_cnf_broker_if* myDefaultBroker; ///< Configuration broker instance
 
-  //!< Declaration of a router pointer
-  ex09_router* routerInstance;
+  ex09_router* routerInstance;  ///< Declaration of a router pointer
 
   // STD::VECTORs for creating instances of initiator and target
-  //!< STD::VECTOR for initiators
-  std::vector<ex09_initiator*> initiatorList;
-  //!< STD::VECTOR for targets
-  std::vector<ex09_target*> targetList;
+  std::vector<ex09_initiator*> initiatorList;   ///< STD::VECTOR for initiators
+  std::vector<ex09_target*> targetList; ///< STD::VECTOR for targets
 
-  //!< initiator_ID
-  char initiatorName[50];
-  //!< target_ID
-  char targetName[50];
-  //!< String to be used for misc things
-  char stringMisc[50];
-  char targetBaseAddr[50];
 
-  //!< Address Value
-  int addrValue;
-  //!< Maximum target Size (initial value)
-  int targetSize;
-  //!< Maximum Router Table's memory range
-  int r_addr_max;
+  char initiatorName[50]; ///< initiator_ID
+  char targetName[50];  ///< target_ID
+  char stringMisc[50];  ///< String to be used for misc things
+  char targetBaseAddr[50];  ///< The base address of the target
+
+
+  int addrValue;  ///< Address Value
+  int targetSize; ///< Maximum target Size (initial value)
+  int r_addr_max; ///< Maximum Router Table's memory range
 };
 // ex09_top_module
 

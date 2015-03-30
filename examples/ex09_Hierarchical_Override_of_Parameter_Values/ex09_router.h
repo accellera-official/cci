@@ -19,13 +19,13 @@
  *****************************************************************************/
 
 /**
- * \file     router.h
- * \brief    Definition of the router module.
- *           This file declares and implements the functionality of the router.
- *           Few of the parameters of the target and initiator sc_module(s) are 
- *           configured by the router sc_module
- * \authors  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * \date     29th April, 2011 (Friday)
+ *  @file     router.h
+ *  @brief    Definition of the router module.
+ *            This file declares and implements the functionality of the router.
+ *            Few of the parameters of the target and initiator sc_module(s) are
+ *            configured by the router sc_module
+ *  @authors  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     29th April, 2011 (Friday)
  */
 
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_ROUTER_H_
@@ -40,13 +40,21 @@
 #include "tlm_utils/multi_passthrough_initiator_socket.h"
 #include "xreport.hpp"
 
-/// This module implements a router functionality
+/**
+ *  @class  ex09_router
+ *  @brief  Thes module implements a router functionality
+ */
 SC_MODULE(ex09_router) {
  public:
   // Declare tlm multi-passthrough sockets for target and initiator modules
   tlm_utils::multi_passthrough_target_socket<ex09_router, 32> Router_target;
   tlm_utils::multi_passthrough_initiator_socket<ex09_router, 32> Router_initiator;
 
+  /**
+   *  @fn     ex09_router
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex09_router)
       : Router_target("Router_target"),
         Router_initiator("Router_initiator"),
@@ -68,8 +76,11 @@ SC_MODULE(ex09_router) {
     Router_target.register_b_transport(this, &ex09_router::b_transport);
   }
 
-  /// Router table information is filled in during this
-  /// before end of elaboration callback
+  /**
+   *  @fn     void before_end_of_elaboration(void)
+   *  @brief  The router table information is filled in during this function
+   *  @return void
+   */
   void before_end_of_elaboration(void) {
     XREPORT("[ROUTER in beoe] : Number of initiator(s) : "
             << r_initiators.json_serialize());
@@ -77,11 +88,10 @@ SC_MODULE(ex09_router) {
     XREPORT("[ROUTER in beoe] : Maximum Addressable Limit of the router : "
             << addr_limit.get());
 
-    //!< Holds router table's fields' names
-    char targetName[10];
+    char targetName[10];      ///< Holds router table's fields' names
     addrSize = (unsigned int) (addr_limit.get() / r_targets);
 
-    /// Printing the Router Table contents
+    // Printing the Router Table contents
     XREPORT("================ ROUTER TABLE INFORMATION ==================");
     XREPORT("-----------------------------------------------"
             "-----------------------------------------------");
@@ -90,8 +100,8 @@ SC_MODULE(ex09_router) {
     XREPORT("-----------------------------------------------"
             "-----------------------------------------------");
 
-    /// Sets the contents of the routing table with (default) values
-    /// calculated within 'beoe' phase
+    // Sets the contents of the routing table with (default) values
+    // calculated within 'beoe' phase
     for (int i = 0; i < r_targets; i++) {
       snprintf(targetName, sizeof(targetName), "r_index_%d", i);
       r_target_index.push_back(
@@ -128,7 +138,7 @@ SC_MODULE(ex09_router) {
     }
   }
 
-  /// Blocking transport implementation of the router
+  // Blocking transport implementation of the router
   void b_transport(int i, tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
     wait(delay);
 
@@ -158,31 +168,20 @@ SC_MODULE(ex09_router) {
  private:
   /// Demonstrates Model-to-Model Configuration (UC12)
   /// Elaboration Time Parameters for setting up the model hierarcy;
-  // initiator ID assigned by the top_module upon instantiation
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_initiators;
-
-  // target ID assigned by the top_module upon instantiation
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_targets;
-
-  //!< Router Addressing Range
-  cci::cnf::cci_param<unsigned int, cci::cnf::mutable_param> addr_limit;
-
-  //!< CCI configuration broker
-  cci::cnf::cci_cnf_broker_if* myBrokerForRouter;
+  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
+  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_targets; ///< target ID assigned by the top_module upon instantiation
+  cci::cnf::cci_param<unsigned int, cci::cnf::mutable_param> addr_limit;  ///< Router Addressing Range
+  cci::cnf::cci_cnf_broker_if* myBrokerForRouter; ///< CCI configuration broker
 
   /// Router Table contents holding targets related information
-  // target index
   std::vector<cci::cnf::cci_param<unsigned int,
-                                  cci::cnf::elaboration_time_param> *> r_target_index;
-  // Address range start
+                                  cci::cnf::elaboration_time_param> *> r_target_index;  ///< Router table target index
   std::vector<cci::cnf::cci_param<unsigned int,
-                                  cci::cnf::elaboration_time_param> *> r_addr_start;
-  // Address range end
+                                  cci::cnf::elaboration_time_param> *> r_addr_start;  ///< Router table start address
   std::vector<cci::cnf::cci_param<unsigned int,
-                                  cci::cnf::elaboration_time_param> *> r_addr_end;
+                                  cci::cnf::elaboration_time_param> *> r_addr_end;  ///< Router table end address
 
-  /*!<CCI base parameter for target base address*/
-  cci::cnf::cci_base_param* base_ptr;
+  cci::cnf::cci_base_param* base_ptr; ///< CCI base parameter for target base address
 
   int addrSize;
   char stringName[50];
