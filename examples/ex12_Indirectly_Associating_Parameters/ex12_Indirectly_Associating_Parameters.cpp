@@ -19,19 +19,25 @@
  *****************************************************************************/
 
 /**
- * @file      main.cpp
- * @brief     This file instantiates the TOP_MODULE and the PARAMETER_CONFIGURATOR 
- * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      9th June, 2011 (Thursday)
+ *  @file      main.cpp
+ *  @brief     This file instantiates the TOP_MODULE and the PARAMETER_CONFIGURATOR
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date      9th June, 2011 (Thursday)
  */
 
 #include "ex12_top_module.h"
 #include "ex12_parameter_configurator.h"
 
-/// Testbench which instantiates a top module and a parameter configurator
-/// the top module will instantiate the rest of the platform
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  Testbench which instantiates a top module and a parameter configurator
+ *          the top module will instantiate the rest of the platform
+ *  @param  sc_argc The number of input arguments
+ *  @param  sc_argv The list of input arguments
+ *  @return The result status of execution
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  /// Instantiation of the owner and configurator sc_modules
+  // Instantiation of the owner and configurator sc_modules
   ex12_top_module top_mod("top_mod");
   ex12_parameter_configurator param_cfgr("param_cfgr");
 
