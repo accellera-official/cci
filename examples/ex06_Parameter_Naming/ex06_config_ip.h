@@ -27,10 +27,17 @@
 #include <string>
 #include "xreport.hpp"
 
-/// The ex06_config_ip configures sim_ip's parameter
+/**
+ *  @class  ex06_config_ip
+ *  @brief  The ex06_config_ip configures sim_ip's parameter
+ */
 SC_MODULE(ex06_config_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     ex06_config_ip
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex06_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
@@ -39,7 +46,11 @@ SC_MODULE(ex06_config_ip) {
     SC_THREAD(execute);
   }
 
-  /// Update the value of params
+  /**
+   *  @fn     void execute()
+   *  @brief  Update the value of params
+   *  @return void
+   */
   void execute() {
     std::ostringstream ss;
     cci::cnf::cci_base_param *int_param_ptr = NULL;
@@ -120,8 +131,7 @@ SC_MODULE(ex06_config_ip) {
   }
 
  private:
-  /// CCI configuration handle
-  cci::cnf::cci_cnf_broker_if *m_cci;
+  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex06_config_ip
 

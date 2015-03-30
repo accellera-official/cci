@@ -23,7 +23,13 @@
 #include "ex06_simple_ip.h"
 #include "ex06_config_ip.h"
 
-/// Testbench for the CCI Parameter Naming example
+/**
+ *  @fn     int sc_main(int argc, char *argv[])
+ *  @brief  The testbench for the CCI parameter naming example
+ *  @param  argc  The number of input arguments
+ *  @param  argv  The list of the input arguments
+ *  @return An integer representing the execution status of the program
+ */
 int sc_main(int argc, char *argv[]) {
   std::ostringstream sout;
   cci::cnf::cci_param<int> int_param("int_param", 10);

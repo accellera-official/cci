@@ -25,10 +25,17 @@
 #include <cci>
 #include "xreport.hpp"
 
-/// The SimpleIP owns a CCI param
+/**
+ *  @class  ex06_simple_ip
+ *  @brief  The simple ip owns a CCI param
+ */
 SC_MODULE(ex06_simple_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     ex06_simple_ip
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex06_simple_ip)
   // Initialize int_param with 0
   // Param name - In line with SystemC Hierarchy
@@ -65,6 +72,11 @@ SC_MODULE(ex06_simple_ip) {
             << int_param_custom);
   }
 
+  /**
+   *  @fn     ~ex06_simple_ip()
+   *  @brief  The class destructor
+   *  @return void
+   */
   ~ex06_simple_ip() {
     XREPORT_PLAIN("Dtor: Current value of " << int_param_ip.get_name()
                   << " is " << int_param_ip);
@@ -76,7 +88,11 @@ SC_MODULE(ex06_simple_ip) {
                   << " is " << int_param_custom);
   }
 
-  /// Main execution block (no functionality)
+  /**
+   *  @fn     void execute()
+   *  @brief  The main execution block (no functionality)
+   *  @return void
+   */
   void execute() {
     // Wait for 10ns to allow config_ip to update int_param value
     wait(10, sc_core::SC_NS);
@@ -110,11 +126,10 @@ SC_MODULE(ex06_simple_ip) {
   }
 
  private:
-  /// CCI param to hold buffer size
-  cci::cnf::cci_param<int> int_param_ip;
-  cci::cnf::cci_param<int> int_param_ip_dup;
-  cci::cnf::cci_param<int> int_param_top;
-  cci::cnf::cci_param<int> int_param_custom;
+  cci::cnf::cci_param<int> int_param_ip;  ///< CCI param to hold buffer size
+  cci::cnf::cci_param<int> int_param_ip_dup;  ///< Duplicate of int_param_ip
+  cci::cnf::cci_param<int> int_param_top; ///< CCI param
+  cci::cnf::cci_param<int> int_param_custom;  ///< CCI param
 };
 // ex06_simple_ip
 
