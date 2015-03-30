@@ -18,11 +18,11 @@
   limitations under the License.
  *****************************************************************************/
 
-/*!
- * \file     parameter_configurator.h
- * \brief    This file declares and defines the configurator module
- * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * \date     16th May, 2011 (Monday)
+/**
+ *  @file     parameter_configurator.h
+ *  @brief    This file declares and defines the configurator module
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     16th May, 2011 (Monday)
  */
 
 #ifndef EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_CONFIGURATOR_H_
@@ -32,11 +32,17 @@
 #include <cassert>
 #include "xreport.hpp"
 
-/// The configurator module illustrates the different ways in which the value
-/// of a CCi parameter of the owner class can be accessed using both a
-/// cci_base_parameter object and cci_param object
+/**
+ *  @class  ex10_parameter_configurator
+ *  @brief  This module demonstrates different ways to access a CCI parameter of the owner class.
+ */
 SC_MODULE(ex10_parameter_configurator) {
  public:
+  /**
+   *  @fn     ex10_parameter_configurator
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex10_parameter_configurator) {
     // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF =
@@ -64,10 +70,15 @@ SC_MODULE(ex10_parameter_configurator) {
             " using cci_base_parameter");
     cfgr_param_ptr->json_deserialize("10");
 
-    /// Registering SC_THREAD with the SystemC kernel
+    // Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);
   }
 
+  /**
+   *  @fn     void run_mutable_cfgr(void)
+   *  @brief  Updates the value of the cci parameter
+   *  @reutrn void
+   */
   void run_mutable_cfgr(void) {
     while (1) {
       wait(10.0, sc_core::SC_NS);
@@ -85,21 +96,21 @@ SC_MODULE(ex10_parameter_configurator) {
     }
   }
 
+  /**
+   *  @fn     void set_cfgr_parameter(ex10_parameter_owner* owner)
+   *  @brief  Set the value of the shared parameter
+   *  @param  owner The owner of the parameter
+   *  @return void
+   */
   void set_cfgr_parameter(ex10_parameter_owner *owner) {
     // Getting reference of the owner parameter
     cfgr_shared_param = &owner->int_param;
   }
 
  private:
-  // cci configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
-
-  // CCI base parameter pointer
-  cci::cnf::cci_base_param* cfgr_param_ptr;
-
-  // Declaring a CCI parameter pointer (which will hold the reference of the
-  // owner CCI parameter 'int_param'
-  cci::cnf::cci_param<int>* cfgr_shared_param;
+  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< cci configuration broker interface instance
+  cci::cnf::cci_base_param* cfgr_param_ptr; ///< CCI base parameter pointer
+  cci::cnf::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
 // ex10_parameter_configurator
 

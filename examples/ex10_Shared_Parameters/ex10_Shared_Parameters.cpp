@@ -18,29 +18,33 @@
   limitations under the License.
  *****************************************************************************/
 
-/*!
- * \file      main.cpp
- * \brief     This file shows the up-front planning needed to be done in order to
- *            access an owner class private memmbers accessible within the 
- *            configurator class by making the configurator a friend class of the owner
- * \author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com> 
- * \date      16th May, 2011 (Monday)
+/**
+ *  @file      main.cpp
+ *  @brief     This file shows the up-front planning needed to be done in order to
+ *             access an owner class private memmbers accessible within the
+ *             configurator class by making the configurator a friend class of the owner
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date      16th May, 2011 (Monday)
  */
 
 #include "ex10_parameter_owner.h"
 #include "ex10_parameter_configurator.h"
 
-/// Testbench instantiates owner and configurator modules and shows up-front
-/// planning required to make the owner's private memvers accessible within
-/// the configurator
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  Testbench instantiates owner and configurator modules
+ *  @param  argc  The number of input arguments
+ *  @param  argv  The list of input arguments
+ *  @return void
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  /// Instantiation of the owner and configurator sc_modules
+  // Instantiation of the owner and configurator sc_modules
   ex10_parameter_owner param_owner("param_owner");
   ex10_parameter_configurator param_cfgr("param_setter");
 
-  /// The instance of the owner class being passed as an argument to an API
-  /// of the configurator class will serve in getting references to the owner
-  /// class protected/private members within the configurator later
+  // The instance of the owner class being passed as an argument to an API
+  // of the configurator class will serve in getting references to the owner
+  // class protected/private members within the configurator later
   param_cfgr.set_cfgr_parameter(&param_owner);
 
   // Start and run the simulation till 50 nanoseconds
