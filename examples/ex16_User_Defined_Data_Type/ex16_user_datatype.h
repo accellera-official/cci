@@ -19,11 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file    parameter_owner.h
- * @brief   This header instantiates various CCI parameters with default values
- * @author  Girish Verma, CircuitSutra Technologies    <girish@circuitsutra.com>
- *          P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
- * @date    31st August, 2011 (Wednesday)
+ *  @file    parameter_owner.h
+ *  @brief   This header instantiates various CCI parameters with default values
+ *  @author  Girish Verma, CircuitSutra Technologies    <girish@circuitsutra.com>
+ *           P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
+ *  @date    31st August, 2011 (Wednesday)
  */
 
 #ifndef   EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_USER_DATATYPE_H_
@@ -38,32 +38,44 @@
 #include <string>
 #include <iostream>
 
-/// Route_table_ut structure defines three fields of a typical router
-/// source_addr, dest_addr, and index
+/**
+ *  @class  route_table_ut
+ *  @brief  Route_table_ut structure defines three fields of a typical router
+ *          source_addr, dest_addr, and index
+ */
 struct route_table_ut {
  public:
+  /**
+   *  @fn     route_table_ut()
+   *  @brief  The class constructor
+   *  @return void
+   */
   route_table_ut()
       : s_address(0x0),  // Source Address
         d_address(0x0),  // Destination Address
         index(0x0) {}    // Index
 
-  /// Overloaded Constructor
+  /**
+   *  @fn     route_table_ut(int saddr, int daddr, int idx)
+   *  @brief  Overloaded class constructor
+   *  @param  saddr The source address
+   *  @param  daddr The destination address
+   *  @param  idx The index
+   *  @return void
+   */
   route_table_ut(int saddr, int daddr, int idx)
       : s_address(saddr),  // Source Address
         d_address(daddr),  // Destination Address
         index(idx) {}      // Index
 
  public:
-  /// Source address field
-  int s_address;
-  /// Destination address field
-  int d_address;
-  /// Index field
-  int index;
+  int s_address;  ///< Source address field
+  int d_address;  ///< Destination address field
+  int index;  ///< Index field
 };
 
 namespace cci { namespace cnf {
-/// add support for cci_value and JSON (de)serialization
+// add support for cci_value and JSON (de)serialization
 template<>
 struct cci_value_traits< route_table_ut >
 {
@@ -95,14 +107,14 @@ struct cci_value_traits< route_table_ut >
 };
 } /* namespace cnf */ } /* namespace cci */
 
-/// Overload stream insertion operator of C++
+// Overload stream insertion operator of C++
 std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
 {
   cci::cnf::cci_value udv(ud);
   return os << udv;
 }
 
-/// Overload stream extraction operator of C++
+// Overload stream extraction operator of C++
 /** @todo This operator is currently required by the "GreenControl tool"
  *        implementation.  Its serialisation is not yet based on JSON but
  *        uses plain stream extraction to convert a value from a string.

@@ -19,11 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file    main.cpp
- * @brief   This function instantiates a parameter OWNER, CONFIGURATOR and an
- *          OBSERVER class
- * @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
- * @date    12th September, 2011 (Monday)
+ *  @file    main.cpp
+ *  @brief   This function instantiates a parameter OWNER, CONFIGURATOR and an
+ *           OBSERVER class
+ *  @author  P V S Phaneendra, CircuitSutra Technologies Pvt. Ltd.
+ *  @date    12th September, 2011 (Monday)
  */
 
 #include <cci>
@@ -35,7 +35,13 @@
 #include "ex16_parameter_configurer.h"
 #include "ex16_observer.h"
 
-/// Main testbanch function, instantiates an observers, owner, and configurer
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  The main testbench function, instantiates an obserers, own, and configurer
+ *  @param  sc_argc The number of input arguments
+ *  @param  sc_argv The list of the input arhuments
+ *  @return An interger representing the exit status of the function.
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
   // Creating an originator to access the global broker
   const std::string myOrgStr = "sc_main_originator";
@@ -54,16 +60,16 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   SC_REPORT_INFO("sc_main", "[MAIN] : Setting initial value"
                  " 's_address:256,d_address:512,index:0' to UDT");
 
-  /// Demonstrating use of 'json_deserialize_initial_value' API to assign
-  /// initial value before the construction of the model hierarchy begins.
+  // Demonstrating use of 'json_deserialize_initial_value' API to assign
+  // initial value before the construction of the model hierarchy begins.
   std::string init_str("{\"s_address\":256,\"d_address\":512,\"index\":0}");
   globalBroker->json_deserialize_initial_value("param_owner.User_data_type_param", init_str);
 
-  /// Instantiation of sc_modules
+  // Instantiation of sc_modules
   ex16_parameter_owner param_owner("param_owner");
   ex16_parameter_configurer param_cfgr("param_cfgr");
 
-  /// Instantiate the observer class
+  // Instantiate the observer class
   ex16_observer observer_obj;
 
   sc_start(12.0, SC_NS);
