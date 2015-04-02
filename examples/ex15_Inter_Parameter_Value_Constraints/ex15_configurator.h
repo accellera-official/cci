@@ -19,10 +19,10 @@
  *****************************************************************************/
 
 /**
- * @file     configurator.h
- * @brief    This header implements the functionality of the configurator
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     12th July, 2011 (Tuesday)
+ *  @file     configurator.h
+ *  @brief    This header implements the functionality of the configurator
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     12th July, 2011 (Tuesday)
  */
 
 #ifndef EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_CONFIGURATOR_H_
@@ -34,10 +34,18 @@
 
 #include "xreport.hpp"
 
-/// This module gets the references to all the cci_parameters iwthin the model
-/// and writes (valid) values to them
+/**
+ *  @class  ex15_configurator
+ *  @brief  This module gets the references to all the cci_parameters iwthin the
+ *          model and writes (valid) values to them
+ */
 SC_MODULE(ex15_configurator) {
  public:
+  /**
+   *  @fn     ex15_configurator
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex15_configurator) {
     // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -45,12 +53,12 @@ SC_MODULE(ex15_configurator) {
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
 
-    /// Hierarchical names for the cci_parameters of the owner modules
+    // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "processor.addr_lines_mod.curr_addr_lines";
     std::string cfgr_param_str2 = "processor.memory_block.mem_size";
 
-    /// Check for the existence of 'curr_addr_lines' cci_parameter
-    /// of ADDRESS_LINES_REGISTER
+    // Check for the existence of 'curr_addr_lines' cci_parameter
+    // of ADDRESS_LINES_REGISTER
     if (myCfgrBrokerIF->param_exists(cfgr_param_str1)) {
       addr_lines_base_ptr = myCfgrBrokerIF->get_param(cfgr_param_str1);
 
@@ -61,7 +69,7 @@ SC_MODULE(ex15_configurator) {
               << "\tdoesn't exists");
     }
 
-    /// Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
+    // Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
     if (myCfgrBrokerIF->param_exists(cfgr_param_str2)) {
       mem_size_base_ptr = myCfgrBrokerIF->get_param(cfgr_param_str2);
 
@@ -72,10 +80,15 @@ SC_MODULE(ex15_configurator) {
               << "\tdoesn't exists");
     }
 
-    /// Registering SC_THREAD with the SystemC kernel
+    // Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_cfgr);
   }
 
+  /**
+   *  @fn     void run_cfgr(void)
+   *  @brief  Function to configure the parameters
+   *  @return void
+   */
   void run_cfgr(void) {
     while (1) {
       XREPORT("@ " << sc_core::sc_time_stamp());
@@ -102,13 +115,12 @@ SC_MODULE(ex15_configurator) {
   }
 
  private:
-  /// Declaring a CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   /// CCI base parameters
-  cci::cnf::cci_base_param* addr_lines_base_ptr;
-  cci::cnf::cci_base_param* mem_size_base_ptr;
+  cci::cnf::cci_base_param* addr_lines_base_ptr;  ///< Pointer to the base of the address lines
+  cci::cnf::cci_base_param* mem_size_base_ptr;  ///< Pointer to the base mem size
 };
-/// ex15_configurator
+// ex15_configurator
 
 #endif  // EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_CONFIGURATOR_H_

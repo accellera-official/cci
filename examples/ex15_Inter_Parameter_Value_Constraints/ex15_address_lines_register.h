@@ -19,11 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file      parameter_owner.h
- * @brief     The file specifies 'number of address lines' parameter that will be
- *            used by the 'processor' module
- * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      4th August, 2011 (Thursday)
+ *  @file      parameter_owner.h
+ *  @brief     The file specifies 'number of address lines' parameter that will be
+ *             used by the 'processor' module
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date      4th August, 2011 (Thursday)
  */
 
 #ifndef EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_ADDRESS_LINES_REGISTER_H_
@@ -33,10 +33,18 @@
 
 #include "xreport.hpp"
 
-/// This module initializes a cci_parameter for maintaining the number
-/// of address lines
+/**
+ *  @class  ex15_address_lines_register
+ *  @brief  This module initializes a cci_parameter for maintaining the number
+ *          of address lines
+ */
 SC_MODULE(ex15_address_lines_register) {
  public:
+  /**
+   *  @fn     ex15_address_lines_register
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex15_address_lines_register)
       : no_of_addr_lines("curr_addr_lines", 9) {
     XREPORT("[ADDR_LINES_REG C_TOR] : Default Address Lines : "
@@ -44,10 +52,8 @@ SC_MODULE(ex15_address_lines_register) {
   }
 
  private:
-  /// Declare a cci-parameter for specifying the number of address lines
-  /// (defines the max' addressable range)
-  cci::cnf::cci_param<int> no_of_addr_lines;
+  cci::cnf::cci_param<int> no_of_addr_lines;  ///< The number of address lines.
 };
-/// ex15_address_lines_register
+// ex15_address_lines_register
 
 #endif  // EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_ADDRESS_LINES_REGISTER_H_

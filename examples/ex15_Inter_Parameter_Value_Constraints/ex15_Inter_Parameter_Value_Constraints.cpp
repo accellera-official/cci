@@ -19,16 +19,22 @@
  *****************************************************************************/
 
 /**
- * @file      main.cpp
- * @brief     This file defines the 'sc_main' function 
- * @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date      10th June, 2011 (Friday)
+ *  @file      main.cpp
+ *  @brief     This file defines the 'sc_main' function
+ *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date      10th June, 2011 (Friday)
  */
 
 #include "ex15_processor.h"
 #include "ex15_configurator.h"
 
-/// Testbench function that instantiates the processor and configurator modules
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  The testbench function that instantiates the processor and configurator modules
+ *  @param  sc_argc The number of input arguments
+ *  @param  sc_argv The list of input arguments
+ *  @return An integer representing the execution status
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
   SC_REPORT_INFO("sc_main", "[MAIN] : In this example, the following is"
                  " condition is verified");
@@ -38,7 +44,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   SC_REPORT_INFO("sc_main", "[MAIN] :        'n' : total number of address"
                  " lines - 'curr_addr_lines'");
 
-  /// Instantiation of the owner and configurator sc_modules
+  // Instantiation of the owner and configurator sc_modules
   ex15_processor processor("processor");
   ex15_configurator param_cfgr("param_cfgr");
 
@@ -47,4 +53,4 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   return EXIT_SUCCESS;
 }
-/// sc_main
+// sc_main

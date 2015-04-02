@@ -19,11 +19,11 @@
  *****************************************************************************/
 
 /**
- * @file      memory_block.h
- * @brief     The file specifies a cci-parameter to list the size of a
- * 						memory block that will later be used by the processor
- * @author    P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
- * @date      4th August, 2011 (Thursday)
+ *  @file      memory_block.h
+ *  @brief     The file specifies a cci-parameter to list the size of a
+ * 	 					memory block that will later be used by the processor
+ *  @author    P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
+ *  @date      4th August, 2011 (Thursday)
  */
 
 #ifndef EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_MEMORY_BLOCK_H_
@@ -33,9 +33,17 @@
 
 #include "xreport.hpp"
 
-/// This module initializes a cci_parameter for defining the memory size
+/**
+ *  @class  ex15_memory_block
+ *  @brief  This module initializes a cci_parameter for defining the memory size
+ */
 SC_MODULE(ex15_memory_block) {
  public:
+  /**
+   *  @fn     ex15_memory_block
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex15_memory_block)
       : mem_size("mem_size", 500) {
     XREPORT("[MEMORY_BLOCK C_TOR] : Default Memory Size : "
@@ -43,9 +51,8 @@ SC_MODULE(ex15_memory_block) {
   }
 
  private:
-  /** Declare a cci-parameter to set memory size*/
-  cci::cnf::cci_param<int> mem_size;
+  cci::cnf::cci_param<int> mem_size;  ///< CCI parameter to set the memory size
 };
-/// ex15_memory_block
+// ex15_memory_block
 
 #endif  // EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_MEMORY_BLOCK_H_
