@@ -77,14 +77,9 @@ Running the examples
 6*) For CCI WG members only, dev_examples can be included in the regression testing by:
 +-----------------------------------------------+
     % unsetenv SYSTEMC_TEST
-    %../scripts/verify.pl -I $CCI_HOME/examples/common/inc dev_examples examples
+    %../scripts/verify.pl dev_examples examples
 +-----------------------------------------------+
 
-
-TODO
-----
-1) The flow has been tested only on Linux. Needs to be tested on other hosts like 
-PC, MacOSX etc.
 
 ISSUES
 -------
