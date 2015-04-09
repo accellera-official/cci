@@ -119,5 +119,6 @@ class ex17_ConfigSet {
 
 }  // end namespace cnf
 }  // end namespace gs
+// ex17_ConfigSet
 
 #endif  // EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CONFIGSET_H_

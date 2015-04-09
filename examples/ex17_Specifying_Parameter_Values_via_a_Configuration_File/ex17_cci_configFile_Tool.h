@@ -345,5 +345,6 @@ class ex17_cci_configFile_Tool {
 
 }  // end namespace cnf
 }  // end namespace cci
+// ex17_cci_configFile_Tool
 
 #endif  // EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CCI_CONFIGFILE_TOOL_H_

@@ -32,21 +32,28 @@
 
 #include <cci>
 
-/// This SC_MODULE class instantiates two 'integer' type cci-parameters along
-/// with default values.  In this case, both the parameters have been provided
-/// with initial values from the testbench file
-/// @see example#17 : Specifying Parameter Values via a Configuration File for
+/**
+ *  @class  ex18_parameter_owner
+ *  @brief  This SC_MODULE class instantiates two 'integer' type cci-parameters along
+ *          with default values.  In this case, both the parameters have been provided
+ *          with initial values from the testbench file
+ */
 SC_MODULE(ex18_parameter_owner) {
  public:
+  /**
+   *  @fn     ex18_parameter_owner()
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex18_parameter_owner)
      : int_param_1("int_param_1", 10),
        int_param_2("int_param_2", 20) {}
 
  private:
-  /// Declare the cci-parameters of type 'int' and 'std::string'
-  cci::cnf::cci_param<int> int_param_1;
-  cci::cnf::cci_param<int> int_param_2;
+  // Declare the cci-parameters of type 'int' and 'std::string'
+  cci::cnf::cci_param<int> int_param_1; ///< An int CCI parameter
+  cci::cnf::cci_param<int> int_param_2; ///< An int CCI parameter
 };
-/// ex18_parameter_owner
+// ex18_parameter_owner
 
 #endif  // EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_OWNER_H_

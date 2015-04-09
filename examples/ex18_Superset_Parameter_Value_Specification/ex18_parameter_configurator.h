@@ -19,13 +19,12 @@
  *****************************************************************************/
 
 /**
- * @file     parameter_configurator.h
- * @brief    This header declares and defines configurator class.  The configurator
- *           class tries to find the list of unconsumed parameters with the model
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     21st July, 2011 (Thursday)
+ *  @file     parameter_configurator.h
+ *  @brief    This header declares and defines configurator class.  The configurator
+ *            class tries to find the list of unconsumed parameters with the model
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     21st July, 2011 (Thursday)
  */
-
 #ifndef EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_CONFIGURATOR_H_
 
@@ -36,10 +35,18 @@
 
 #include "xreport.hpp"
 
-/// The configurator class illustrates way of retrieving cci-parameters list
-/// within a cci-model by using the 'get_param_list()' API
+/**
+ *  @class  ex18_parameter_configurator
+ *  @brief  The configurator class illustrates way of retrieving cci-parameters
+ *          list within a cci-model by using the 'get_param_list()' API.
+ */
 SC_MODULE(ex18_parameter_configurator) {
  public:
+  /**
+   *  @fn     ex18_parameter_configurator()
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex18_parameter_configurator) {
     // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF =&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
@@ -47,12 +54,16 @@ SC_MODULE(ex18_parameter_configurator) {
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
 
-    /// Retrieve the list of all cci-parameters within a model.
+    // Retrieve the list of all cci-parameters within a model.
     complete_parameter_list = myCfgrBrokerIF->get_param_list();
   }
 
-/// This callback function demonstrates ways for a tool developer to retrieve
-/// the list of unconsumed parameters in a model.
+  /**
+   *  @fn     void end_of_elaboration(void)
+   *  @brief  This callback function demonstrates ways for a tool developer to
+   *          retrieve the list of unconsumed parameters in a model.
+   *  @return void
+   */
   void end_of_elaboration(void) {
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
       if (!myCfgrBrokerIF->is_used(complete_parameter_list[i])) {
@@ -78,16 +89,14 @@ SC_MODULE(ex18_parameter_configurator) {
   }
 
  private:
-  /// Declaring a CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
-  /// CCI base parameter
-  cci::cnf::cci_base_param* cfgr_param_ptr;
+  cci::cnf::cci_base_param* cfgr_param_ptr; ///< CCI base parameter
 
-  /// std::vector to store the list of the unconsumed parameters
-  std::vector<std::string> complete_parameter_list;
-  std::vector<std::string> unconsumed_parameter_list;
+  // std::vector to store the list of the unconsumed parameters
+  std::vector<std::string> complete_parameter_list; ///< List of all parameters
+  std::vector<std::string> unconsumed_parameter_list; ///< List of parameters unconsumed
 };
-/// ex18_parameter_configurator
+// ex18_parameter_configurator
 
 #endif  // EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_CONFIGURATOR_H_
