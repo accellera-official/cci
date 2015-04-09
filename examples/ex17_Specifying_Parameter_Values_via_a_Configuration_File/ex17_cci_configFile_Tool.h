@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2010-2015 GreenSocs Ltd.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -18,20 +21,15 @@
   limitations under the License.
  *****************************************************************************/
 
-//  This config file parser is based on the GreenSocs GreenConfig config file
-//  parser.
-//
-//   GreenSocs Ltd
-//       http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//
-//   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-
+/**
+ *  @file     ex17_cci_configFile_Tool.h
+ *  @brief    This config file parser is based on the GreenSocs GreenConfig config
+ *            file parser.
+ *  @author   Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+ *            Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
+ *            Technical University of Braunschweig, Dept. E.I.S.
+ *            http://www.eis.cs.tu-bs.de
+ */
 #ifndef EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CCI_CONFIGFILE_TOOL_H_
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CCI_CONFIGFILE_TOOL_H_
 
@@ -56,54 +54,69 @@ enum gc_config_parse_result {
   parse_result_param
 };
 
-/// Typedef for use in ConfigFile_Tool
-typedef std::pair<std::vector<std::string>, gc_config_parse_result> parseresult;
+typedef std::pair<std::vector<std::string>, gc_config_parse_result> parseresult;  ///< Typedef for use in ConfigFile_Tool
 
-/// Tool which reads a configuration file and sets parameters and provides
-/// configuration of a string representing one line.
 /**
- * Config File Tool which reads a configuration file and uses the Tool_GCnf_Api
- * to set the parameters.
+ *  @class  ex17_cci_configFile_Tool
+ *  @brief  Tool which reads a configuration file and sets parameters and provides
+ *          configuration of a string representing one line.
  *
- * One instance can be used to read and configure several config files.
+ *  Config File Tool which reads a configuration file and uses the Tool_GCnf_Api
+ *  to set the parameters.
  *
- * Supports Simple Parameter Array setting of members and sizes individually
- * (since there need nothing to be supported explicitely).
- * Does NOT support the setting of all members at once (e.g. '{10 22 33}')!
+ *  One instance can be used to read and configure several config files.
  *
- * The usage of this Tool:
- * - instantiate one object
- * - call <code>config(filename)</code>
+ *  Supports Simple Parameter Array setting of members and sizes individually
+ *  (since there need nothing to be supported explicitely).
+ *  Does NOT support the setting of all members at once (e.g. '{10 22 33}')!
  *
- * Additional functionality: parse one line (or string) using
- * <code>config_line(const char* line)</code>
+ *  The usage of this Tool:
+ *  - instantiate one object
+ *  - call <code>config(filename)</code>
+ *
+ *  Additional functionality: parse one line (or string) using
+ *  <code>config_line(const char* line)</code>
  */
-
 class ex17_cci_configFile_Tool {
  public:
+  /**
+   *  @fn     explicit ex17_cci_configFile_Tool(const chat* name)
+   *  @brief  The class constructor
+   *  @param  name  The name for the tool
+   *  @return void
+   */
   explicit ex17_cci_configFile_Tool(const char* name)
       : mToolOriginator(name) {
     // get responsible broker
     mApi = &cci::cnf::cci_broker_manager::get_current_broker(mToolOriginator);
   }
 
+  /**
+   *  @fn     ~ex17_cci_configFile_Tool()
+   *  @brief  The class destructor
+   *  @return void
+   */
   ~ex17_cci_configFile_Tool() {}
 
-  /// Read a config file and apply configuration immediately
   /**
-   * Configure parameters from a config file and applies the configuration
-   * immediately to the model.
+   *  @fn     inline void config(const char* filename)
+   *  @brief  Read a config file and apply configuration immediately.
    *
-   * May be called several times with several configuration files
+   *  Configure parameters from a config file and applies the configuration
+   *  immediately to the model.
    *
-   * Example usage:
-   * \code
-   *    int sc_main(int argc, char *argv[]) {
-   *      cci_configFile_Tool fileTool;
-   *      fileTool.config("file.cfg");
-   *      fileTool.config("other_file.cfg");
-   *    }
-   * \endcode
+   *  May be called several times with several configuration files
+   *
+   *  Example usage:
+   *  \code
+   *      int sc_main(int argc, char *argv[]) {
+   *        cci_configFile_Tool fileTool;
+   *        fileTool.config("file.cfg");
+   *        fileTool.config("other_file.cfg");
+   *      }
+   *  \endcode
+   *  @param  filename  The name of the file to read from
+   *  @return void
    */
   inline void config(const char *filename) {
     gs::cnf::ex17_ConfigSet cnf_set;
@@ -119,24 +132,28 @@ class ex17_cci_configFile_Tool {
     }
   }
 
-  /// Read a config file and return configuration without applying it
   /**
-   * Creates a ConfigSet from a config file WITHOUT applying the 
-   * configuration to the model!
+   *  @fn     gs::cnf::ex17_ConfigSet create_config_set_from_file(const char* filename)
+   *  @brief  Read a config file and return configuration without applying it.
    *
-   * May be called several times with several configuration files
+   *  Creates a ConfigSet from a config file WITHOUT applying the
+   *  configuration to the model!
    *
-   * Example usage:
-   * \code
-   *    int sc_main(int argc, char *argv[]) {
-   *      ConfigFile_Api fileApi;
-   *      ConfigSet cnfset  =
-   *          ConfigFile_Api.create_config_set_from_file("file.cfg");
-   *      ConfigSet cnfset2 =
-   *          ConfigFile_Api.create_config_set_from_file("other_file.cfg");
-   *      TODO
-   *    }
-   * \endcode
+   *  May be called several times with several configuration files
+   *
+   *  Example usage:
+   *  \code
+   *     int sc_main(int argc, char *argv[]) {
+   *       ConfigFile_Api fileApi;
+   *       ConfigSet cnfset  =
+   *           ConfigFile_Api.create_config_set_from_file("file.cfg");
+   *       ConfigSet cnfset2 =
+   *           ConfigFile_Api.create_config_set_from_file("other_file.cfg");
+   *       TODO
+   *     }
+   *  \endcode
+   *  @param  filename  The name of the file to open.
+   *  @return The configuration.
    */
   gs::cnf::ex17_ConfigSet create_config_set_from_file(const char *filename) {
     gs::cnf::ex17_ConfigSet config_set;
@@ -199,11 +216,11 @@ class ex17_cci_configFile_Tool {
   }
 
  protected:
-  /// parse function to be used by ConfigFile_Tool
   /**
-   * Classify a token.
-   * @param token_ A token.
-   * @return A classification of the given token.
+   *  @fn     static parseresult parse(const std::string& token_)
+   *  @brief  Parse function to be used by ConfigFile_Tool
+   *  @param  token_  A token.
+   *  @return A classification of the given token.
    */
   static parseresult parse(const std::string &token_) {
     std::string::size_type idx;
@@ -246,15 +263,17 @@ class ex17_cci_configFile_Tool {
     return make_pair(tokenlist, parse_result_ignore);
   }
 
-  /// Interprets one input line (string) and returns the pair< param_name,value>
   /**
-   * The return pair has a special code for success/error submission:<br>
-   *  if (param_name == "" AND value == ""): empty line,<br>
-   *  if (param_name == "" AND value != ""): parsing failed!
+   *  @fn     inline std::pair<std::string, std::string> interpret_config_line(const char* line)
+   *  @brief  Interprest one input line (string) and returns the pair<param_name, value>
    *
-   * @param line  Line to parse
-   * @return pair< param_name, value >,<br> if param_name == "" AND value == "":
-   *    empty line,<br> if param_name == "" AND value != "": parsing failed!
+   *  The return pair has a special code for success/error submission:<br>
+   *   if (param_name == "" AND value == ""): empty line,<br>
+   *   if (param_name == "" AND value != ""): parsing failed!
+   *
+   *  @param  line  Line to parse
+   *  @return pair< param_name, value >,<br> if param_name == "" AND value == "":
+   *     empty line,<br> if param_name == "" AND value != "": parsing failed!
    */
   inline std::pair<std::string, std::string>
       interpret_config_line(const char *line) {
@@ -315,14 +334,11 @@ class ex17_cci_configFile_Tool {
   }
 
  protected:
-  /// This tool's originator information
-  cci::cnf::cci_originator mToolOriginator;
+  cci::cnf::cci_originator mToolOriginator; ///< This tool's originator information
 
-  /// Config API which is used by this tool
-  cci::cnf::cci_cnf_broker_if* mApi;
+  cci::cnf::cci_cnf_broker_if* mApi;  ///< Config API which is used by this tool
 
-  /// Name of this object, given by constructor
-  std::string m_name;
+  std::string m_name; ///< Name of this object, given by constructor
 
   char line[CONFIG_FILE_TOOL_BUFSIZE];
 };

@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2010-2015 GreenSocs Ltd.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -18,18 +21,13 @@
   limitations under the License.
  *****************************************************************************/
 
-// This file is based on the GreenSocs GreenConfig config file parser.
-//
-//   GreenSocs Ltd
-//       http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by :
-//
-//   Christian Schroeder
-//     Technical University of Braunschweig, Dept. E.I.S.
-//     http://www.eis.cs.tu-bs.de
-//
-
+/**
+ *  @file     ex17_configset.h
+ *  @brief    This file is based on the GreenSocs GreenConfig config file parser.
+ *  @author   Christian Schroeder
+ *            Technical University of Braunschweig, Dept. E.I.S.
+ *            http://www.eis.cs.tu-bs.de
+ */
 #ifndef EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CONFIGSET_H_
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CONFIGSET_H_
 
@@ -40,26 +38,28 @@
 namespace gs {
 namespace cnf {
 
-/// Data structure carrying a set of configuration data that can be applied
-/// to the model or a module
 /**
- * Parsers can create and return such a ConfigSet read from a configuration
- * file.
- * The GCnf_Api can apply the object to the model (top-level) or a specific
- * module.
+ *  @class  ex17_ConfigSet
+ *  @brief  Data structure carrying a set of configuration date that can be
+ *          applied to the model or a module.
+ *
+ *  Parsers can create and return such a ConfigSet read from a configuration
+ *  file. The GCnf_Api can apply the object to the model (top-level) or a specific
+ *  module.
  */
 class ex17_ConfigSet {
  public:
-  /// Type of the internal data. Should be used by user when iterating
-  typedef std::map<std::string, std::string> cnf_data_map_type;
+  typedef std::map<std::string, std::string> cnf_data_map_type; ///< Type of the internal data. Should be used by user when iterating
 
-  /// Adds a new param - value pair to the config set
   /**
-   * Overwrites existing values
+   *  @fn     bool add(const std::string& param_name, const std::string& value)
+   *  @brief  Adds a new param - value pair to the config set.
    *
-   * @param param_name  Name of the param
-   * @param value       Value (string representation) of the param
-   * @return        If the the added value was a new one. (false if value has been overwritten)
+   *  Overwrites existing values
+   *
+   *  @param  param_name  Name of the param
+   *  @param  value Value (string representation) of the param
+   *  @return If the the added value was a new one. (false if value has been overwritten)
    */
   bool add(const std::string& param_name, const std::string& value) {
     std::pair<cnf_data_map_type::iterator, bool> ret;
@@ -74,7 +74,12 @@ class ex17_ConfigSet {
     return ret.second;
   }
 
-  /// Returns the value of the given parameter stored in this ConfigSet
+  /**
+   *  @fn     std::string get(const std::string& param_name)
+   *  @brief  Returns the value of the given parameter stored in this ConfigSet
+   *  @param  param_name  The name of the parameter to look up the value for.
+   *  @return A string form of the parameters value.
+   */
   std::string get(const std::string& param_name) const {
     cnf_data_map_type::const_iterator iter = m_cnf_data.find(param_name);
     if (iter != m_cnf_data.end()) {
@@ -85,7 +90,12 @@ class ex17_ConfigSet {
     return std::string("");
   }
 
-  /// Returns IF the value of the given parameter stored in this ConfigSet
+  /**
+   *  @fn     bool has(const std::string& param_name)
+   *  @brief  Returns true is the value of the given parameter is stored in this ConfigSet.
+   *  @param  param_name  The name of the parameter to lookup
+   *  @return True or false depending on whether the parameter value is stored here or not.
+   */
   bool has(const std::string& param_name) const {
     cnf_data_map_type::const_iterator iter = m_cnf_data.find(param_name);
     if (iter != m_cnf_data.end()) {
@@ -94,14 +104,17 @@ class ex17_ConfigSet {
     return false;
   }
 
-  /// Returns the ConfigSet map, e.g. to iterate over
+  /**
+   *  @fn     const cnf_data_map_type& get_config_map()
+   *  @brief  Returns the ConfigSet map, e.g. to iterate over
+   *  @return The ConfigSet map data.
+   */
   const cnf_data_map_type& get_config_map() const {
     return m_cnf_data;
   }
 
  protected:
-  /// actual config data map
-  cnf_data_map_type m_cnf_data;
+  cnf_data_map_type m_cnf_data; ///< actual config data map
 };
 
 }  // end namespace cnf
