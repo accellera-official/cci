@@ -19,12 +19,12 @@
  *****************************************************************************/
 
 /**
- * @file     parameter_configurator.h
- * @brief    This header declares and defines configurator 
- * @author   Girish Verma, CircuitSutra Technologies     <girish@circuitsutra.com>
- *           P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
- * @date     14th December, 2011
- *           16th May, 2011 (Monday)
+ *  @file     parameter_configurator.h
+ *  @brief    This header declares and defines configurator
+ *  @author   Girish Verma, CircuitSutra Technologies     <girish@circuitsutra.com>
+ *            P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
+ *  @date     14th December, 2011
+ *            16th May, 2011 (Monday)
  */
 
 #ifndef EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_CONFIGURATOR_H_
@@ -35,12 +35,20 @@
 
 #include "xreport.hpp"
 
-/// The configurator class illustrates the different ways in which the value
-/// of a cci-parameter of the owner class can be accessed using both a
-/// cci_base_parameter object and a cci_param object (by making the
-/// configurator a friend class to the owner)
+/**
+ *  @class  ex19_parameter_configurator
+ *  @brief  The configurator class illustrates the different ways in which the value
+ *          of a cci-parameter of the owner class can be accessed using both a
+ *          cci_base_parameter object and a cci_param object (by making the
+ *          configurator a friend class to the owner)
+ */
 SC_MODULE(ex19_parameter_configurator) {
  public:
+  /**
+   *  @fn     ex19_parameter_configurator()
+   *  @brief  The class cosntructor.
+   *  @return void
+   */
   SC_CTOR(ex19_parameter_configurator)
       : cfgr_param_ptr(0),
         cfgr_user_param_ptr(0),
@@ -114,9 +122,13 @@ SC_MODULE(ex19_parameter_configurator) {
     SC_THREAD(run_mutable_cfgr);
   }
 
-/// This process illustrates use of the cci_param (shared parameter) that
-/// stores the reference of the owner cci-parameter to make changes
-/// to the parameter's value
+  /**
+   *  @fn     void run_mutable_cfgr(void)
+   *  @brief  This process illustrates use of the cci_param (shared parameter) that
+   *          stores the reference of the owner cci-parameter to make changes
+   *          to the parameter's value
+   *  @return void
+   */
   void run_mutable_cfgr(void) {
     while (1) {
       wait(10.0, sc_core::SC_NS);
@@ -143,25 +155,27 @@ SC_MODULE(ex19_parameter_configurator) {
     }
   }
 
-/// This parameter gets the reference of the 'int_param', a private-type
-/// cci-parameter member of the owner class
+  /**
+   *  @fn     void set_cfgr_parameter(ex19_parameter_owner *owner)
+   *  @brief  This parameter gets the reference of the 'int_param', a private-type
+   *          cci-parameter member of the owner class
+   *  @param  owner The parameter owner.
+   *  @return void
+   */
   void set_cfgr_parameter(ex19_parameter_owner *owner) {
     // Getting reference of the owner parameter
     cfgr_shared_param = &owner->int_param;
   }
 
  private:
-  /// Declaring a CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
+  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
-  /// Declaring a CCI base parameter pointer
-  cci::cnf::cci_base_param* cfgr_param_ptr;
-  cci::cnf::cci_base_param* cfgr_user_param_ptr;
+  // Declaring a CCI base parameter pointer
+  cci::cnf::cci_base_param* cfgr_param_ptr; ///< pointer to a cci parameter
+  cci::cnf::cci_base_param* cfgr_user_param_ptr;  ///< pointer to a cci parameter that is accessible by the user
 
-  /// Declaring a CCI parameter pointer (which will hold the reference of the
-  /// owner CCI parameter 'int_param'
-  cci::cnf::cci_param<int>* cfgr_shared_param;
+  cci::cnf::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
-/// ex19_parameter_configurator
+// ex19_parameter_configurator
 
 #endif  // EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_CONFIGURATOR_H_

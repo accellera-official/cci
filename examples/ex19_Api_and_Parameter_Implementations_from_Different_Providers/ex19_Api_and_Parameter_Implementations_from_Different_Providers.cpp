@@ -19,15 +19,15 @@
  *****************************************************************************/
 
 /**
- * @file      main.cpp
- * @brief     This is the main testbench file.  This file shows the up-front
- *            planning required to be done in order to access an owner class
- *            private memmbers accessible within the configurator class by
- *            making the configurator a friend class of the owner
- * @author    Girish Verma, CircuitSutra Technologies     <girish@circuitsutra.com>
- *            P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
- * @date      14th December, 2011 (Wednesday).
- *            (Modified On) 16th May, 2011 (Monday)
+ *  @file      main.cpp
+ *  @brief     This is the main testbench file.  This file shows the up-front
+ *             planning required to be done in order to access an owner class
+ *             private memmbers accessible within the configurator class by
+ *             making the configurator a friend class of the owner
+ *  @author    Girish Verma, CircuitSutra Technologies     <girish@circuitsutra.com>
+ *             P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
+ *  @date      14th December, 2011 (Wednesday).
+ *             (Modified On) 16th May, 2011 (Monday)
  */
 
 #include <systemc.h>
@@ -35,17 +35,23 @@
 #include "ex19_parameter_owner.h"
 #include "ex19_parameter_configurator.h"
 
-/// This function instantiates owner and configurator class objects and shows
-/// details of the up-front planning required to make the owner class private
-/// members accesible within the configurator
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  This function instantiates owner and configurator class objects and shows
+ *          details of the up-front planning required to make the owner class private
+ *          members accesible within the configurator
+ *  @param  sc_argc The number of input arguments
+ *  @param  sc_argv The list of input arguments
+ *  @return An integer representing the exit status of the function.
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  /// Instantiation of the owner and configurator sc_modules
+  // Instantiation of the owner and configurator sc_modules
   ex19_parameter_owner param_owner("param_owner");
   ex19_parameter_configurator param_cfgr("param_setter");
 
-  /// The instance of the owner class being passed as an argument to an API of
-  /// the configurator class will serve in getting references to the owner class
-  /// protected/private members within the configurator later
+  // The instance of the owner class being passed as an argument to an API of
+  // the configurator class will serve in getting references to the owner class
+  // protected/private members within the configurator later
   param_cfgr.set_cfgr_parameter(&param_owner);
 
   // Start and run the simulation till 50 nanoseconds
@@ -53,4 +59,4 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   return EXIT_SUCCESS;
 }
-/// sc_main
+// sc_main
