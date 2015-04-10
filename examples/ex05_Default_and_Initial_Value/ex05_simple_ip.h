@@ -1,17 +1,22 @@
-/*******************************************************************************
- The following code is derived, directly or indirectly, from the SystemC
- source code Copyright (c) 1996-2010 by all Contributors.
- All Rights reserved.
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
- The contents of this file are subject to the restrictions and limitations
- set forth in the SystemC Open Source License Version 3.0 (the "License");
- You may not use this file except in compliance with such restrictions and
- limitations. You may obtain instructions on how to receive a copy of the
- License at http://www.systemc.org/. Software distributed by Contributors
- under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- ANY KIND, either express or implied. See the License for the specific
- language governing rights and limitations under the License.
- ******************************************************************************/
+  Copyright 2010-2015 Texas Instruments Inc.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
  *  @file   simple_ip.h
