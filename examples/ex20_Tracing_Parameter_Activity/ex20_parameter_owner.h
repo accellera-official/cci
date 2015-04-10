@@ -26,9 +26,17 @@
 
 #include "xreport.hpp"
 
-/// This class declares and defines 'int' and 'float' type cci-parameters
+/**
+ *  @class  ex20_parameter_owner
+ *  @brief  The class declares and defines 'int' and 'float' type cci parameters
+ */
 SC_MODULE(ex20_parameter_owner) {
  public:
+  /**
+   *  @fn     ex20_parameter_owner()
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex20_parameter_owner) {
     XREPORT("Prior to " << sc_time_stamp());
 
@@ -39,8 +47,12 @@ SC_MODULE(ex20_parameter_owner) {
     SC_THREAD(run_owner);
   }
 
-/// Implementation of SC_THREAD. Sets new value to the int type cci-parameter
-/// and sets a default value to the float type cci-parameter
+  /**
+   *  @fn     void run_owner(void)
+   *  @brief  Implementation of SC_THREAD. Sets new value to the int type cci-parameter
+   *          and sets a default value to the float type cci-parameter
+   *  @return void
+   */
   void run_owner(void) {
     while (1) {
       XREPORT("@ " << sc_time_stamp());
@@ -59,11 +71,11 @@ SC_MODULE(ex20_parameter_owner) {
   }
 
  private:
-  /// Integer-type cci-parameter
-  cci::cnf::cci_param<int>* int_param;
-  /// Float-type cci-parameter
-  cci::cnf::cci_param<double>* dbl_param;
+  // Integer-type cci-parameter
+  cci::cnf::cci_param<int>* int_param;  ///< An integer cci parameter
+  // Float-type cci-parameter
+  cci::cnf::cci_param<double>* dbl_param; ///< A double cci parameter
 };
-/// ex20_parameter_owner
+// ex20_parameter_owner
 
 #endif  // EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_PARAMETER_OWNER_H_

@@ -18,27 +18,33 @@
   limitations under the License.
  *****************************************************************************/
 
-/*!
- * \file    main.cpp
- * \brief   The observer class and the parameter_owner module are instantiated here
- * \author  P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
- * \date    11th October, 2011
+/**
+ *  @file    main.cpp
+ *  @brief   The observer class and the parameter_owner module are instantiated here
+ *  @author  P V S Phaneendra, CircuitSutra Technologies <pvs@circuitsutra.com>
+ *  @date    11th October, 2011
  */
 
 #include "ex20_observer.h"
 #include "ex20_parameter_owner.h"
 
-/// Main testbench function which instantiates an observer and parameter owner
+/**
+ *  @fn     int sc_main(int sc_argc, char* sc_argv[])
+ *  @brief  Main testbench function which instantiates an observer and parameter owner.
+ *  @param  sc_argc The number of input arguments
+ *  @param  sc_argv The list of input arguments
+ *  @return void
+ */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  /// Instantiate the observer class
+  // Instantiate the observer class
   ex20_observer observer_inst;
 
-  /// Instantiate the parameter_owner module
+  // Instantiate the parameter_owner module
   ex20_parameter_owner param_owner("param_owner");
 
-  /// Simulation starts
+  // Simulation starts
   sc_core::sc_start(15.0, sc_core::SC_NS);
 
   return EXIT_SUCCESS;
 }
-/// sc_main
+// sc_main
