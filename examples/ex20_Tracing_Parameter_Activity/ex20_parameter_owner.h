@@ -1,17 +1,22 @@
-/*********************************************************************************
- *   The following code is derived, directly or indirectly, from the SystemC
- *   source code Copyright (c) 1996-2010 by all Contributors.
- *   All Rights reserved.
- *
- *   The contents of this file are subject to the restrictions and limitations
- *   set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- *   One may not use this file except in compliance with such restrictions and
- *   limitations.  One may obtain instructions on how to receive a copy of the
- *   License at http://www.systemc.org/.  Software distributed by Contributors
- *   under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- *   ANY KIND, either express or implied. See the License for the specific
- *   language governing rights and limitations under the License.
- *******************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 #ifndef EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_PARAMETER_OWNER_H_
 #define EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_PARAMETER_OWNER_H_
@@ -21,9 +26,17 @@
 
 #include "xreport.hpp"
 
-/// This class declares and defines 'int' and 'float' type cci-parameters
+/**
+ *  @class  ex20_parameter_owner
+ *  @brief  The class declares and defines 'int' and 'float' type cci parameters
+ */
 SC_MODULE(ex20_parameter_owner) {
  public:
+  /**
+   *  @fn     ex20_parameter_owner()
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex20_parameter_owner) {
     XREPORT("Prior to " << sc_time_stamp());
 
@@ -34,8 +47,12 @@ SC_MODULE(ex20_parameter_owner) {
     SC_THREAD(run_owner);
   }
 
-/// Implementation of SC_THREAD. Sets new value to the int type cci-parameter
-/// and sets a default value to the float type cci-parameter
+  /**
+   *  @fn     void run_owner(void)
+   *  @brief  Implementation of SC_THREAD. Sets new value to the int type cci-parameter
+   *          and sets a default value to the float type cci-parameter
+   *  @return void
+   */
   void run_owner(void) {
     while (1) {
       XREPORT("@ " << sc_time_stamp());
@@ -54,11 +71,11 @@ SC_MODULE(ex20_parameter_owner) {
   }
 
  private:
-  /// Integer-type cci-parameter
-  cci::cnf::cci_param<int>* int_param;
-  /// Float-type cci-parameter
-  cci::cnf::cci_param<double>* dbl_param;
+  // Integer-type cci-parameter
+  cci::cnf::cci_param<int>* int_param;  ///< An integer cci parameter
+  // Float-type cci-parameter
+  cci::cnf::cci_param<double>* dbl_param; ///< A double cci parameter
 };
-/// ex20_parameter_owner
+// ex20_parameter_owner
 
 #endif  // EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_PARAMETER_OWNER_H_

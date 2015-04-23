@@ -1,24 +1,29 @@
-/*******************************************************************************
- *   The following code is derived, directly or indirectly, from the SystemC
- *   source code Copyright (c) 1996-2010 by all Contributors.
- *   All Rights reserved.
- *
- *   The contents of this file are subject to the restrictions and limitations
- *   set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- *   One may not use this file except in compliance with such restrictions and
- *   limitations.  One may obtain instructions on how to receive a copy of the
- *   License at http://www.systemc.org/.  Software distributed by Contributors
- *   under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- *   ANY KIND, either express or implied. See the License for the specific
- *   language governing rights and limitations under the License.
- *******************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
- * @file    observer.h
- * @brief   This file defines an observer class demonstrates
- * @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *          Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
- * @date    12th September, 2011 (Monday)
+ *  @file    observer.h
+ *  @brief   This file defines an observer class demonstrates
+ *  @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *           Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
+ *  @date    12th September, 2011 (Monday)
  */
 
 #ifndef EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_OBSERVER_H_
@@ -28,18 +33,26 @@
 #include <cassert>
 #include <vector>
 
-/// This observer class registers callbacks on the cci_parameter values of
-/// interest in order to find originator for the appropriate actions on the
-/// respective cci_parameters
+/**
+ *  @class  ex16_observer
+ *  @brief  This observer class registers callbacks on the cci_parameter values
+ *          of interest in order to find originator for the appropriate actions
+ *          on the respective cci_parameters
+ */
 class ex16_observer {
  public:
+  /**
+   *  @fn     ex16_observer
+   *  @brief  The class constructor
+   *  @return void
+   */
   ex16_observer() {
-    /// Instantiate a cci_originator in order to get hold of the
-    /// configuration broker interface
+    // Instantiate a cci_originator in order to get hold of the
+    // configuration broker interface
     cci::cnf::cci_originator observerOriginator("observerOriginator");
 
-    /// Get the broker responsible for this module using
-    /// 'get_current_broker' API
+    // Get the broker responsible for this module using
+    // 'get_current_broker' API
     observerBrokerIF =
         &cci::cnf::cci_broker_manager::get_current_broker(observerOriginator);
 
@@ -47,10 +60,10 @@ class ex16_observer {
     assert(observerBrokerIF != NULL
            && "Observer Broker Handle Returned is NULL");
 
-    /// Check for the broker type (default or private) using
-    /// 'is_private_broker()' API
+    // Check for the broker type (default or private) using
+    // 'is_private_broker()' API
     if (observerBrokerIF->is_private_broker()) {
-      /// Access broker's name using 'name()'
+      // Access broker's name using 'name()'
       std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : "
                 << observerBrokerIF->name() << endl;
     } else {
@@ -59,15 +72,15 @@ class ex16_observer {
                 << endl;
     }
 
-    /// Gets the reference to the 'udt' type cci-parameter of OWNER module
+    // Gets the reference to the 'udt' type cci-parameter of OWNER module
     obsv_udt_base_ptr =
         observerBrokerIF->get_param("param_owner.User_data_type_param");
 
     assert(obsv_udt_base_ptr != NULL
            && "Returned Handle of 'integer type' cci-parameter is NULL");
 
-    /// Observer registering 'PRE_READ', 'PRE_WRITE' & 'POST_WRITE' callbacks
-    /// on the UDT parameter to monitor all actions on it
+    // Observer registering 'PRE_READ', 'PRE_WRITE' & 'POST_WRITE' callbacks
+    // on the UDT parameter to monitor all actions on it
     udt_pre_read_cb = obsv_udt_base_ptr->register_callback(cci::cnf::pre_read,
                                                            this,
                                                            cci::bind(&ex16_observer::read_callback,
@@ -85,7 +98,13 @@ class ex16_observer {
                                                                        _1, _2));
   }
 
-  /// 'PRE_READ' Callbacks Implementations
+  /**
+   *  @fn     cci::cnf::callback_return_type read_callback(const cci::cnf::cci_base_param& _selected_base_param, const cci::cnf::callback_type& cb_reason)
+   *  @brief  Implementation of the pre-read callback
+   *  @param  _selected_base_param  The parameter for the callback
+   *  @param  cb_reason The reason for the callback
+   *  @return The exit status of the function
+   */
   cci::cnf::callback_return_type read_callback(const cci::cnf::cci_base_param& _selected_base_param,
                                                const cci::cnf::callback_type& cb_reason) {
     switch (cb_reason) {
@@ -108,7 +127,13 @@ class ex16_observer {
     return cci::cnf::return_nothing;
   }
 
-  /// 'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
+  /**
+   *  @fn     cci::cnf::callback_return_type write_callback(const cci::cnf::cci_base_param& _seleceted_param, const cci::cnf::callback_return_type& cb_reason)
+   *  @brief  The implementation of the pre-write and post-write callbacks
+   *  @param  _seleceted_base_param The cci parameter for the callback
+   *  @param  cb_reason The reason for the callback being called
+   *  @return The exit status for the callback function
+   */
   cci::cnf::callback_return_type write_callbacks(const cci::cnf::cci_base_param& _selected_base_param,
                                                  const cci::cnf::callback_type& cb_reason) {
     const cci::cnf::cci_originator* myOriginator =
@@ -138,17 +163,15 @@ class ex16_observer {
   }
 
  private:
-  /// CCI configuration broker instance
-  cci::cnf::cci_cnf_broker_if* observerBrokerIF;
+  cci::cnf::cci_cnf_broker_if* observerBrokerIF;  ///< CCI configuration broker instance
 
-  /// Declare cci_base_param for int type cci-parameter
-  cci::cnf::cci_base_param* obsv_udt_base_ptr;
+  cci::cnf::cci_base_param* obsv_udt_base_ptr;  ///< Declare cci_base_param for int type cci-parameter
 
-  /// Callback Adaptor Objects for 'int' type parameter
-  cci::shared_ptr<cci::cnf::callb_adapt> udt_pre_read_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt> udt_pre_write_cb;
-  cci::shared_ptr<cci::cnf::callb_adapt> udt_post_write_cb;
+  // Callback Adaptor Objects for 'int' type parameter
+  cci::shared_ptr<cci::cnf::callb_adapt> udt_pre_read_cb; ///< Callback adapter object for pre-read
+  cci::shared_ptr<cci::cnf::callb_adapt> udt_pre_write_cb;  ///< Callback adapter object for pre-write
+  cci::shared_ptr<cci::cnf::callb_adapt> udt_post_write_cb; ///< Callback adapter object for post-write
 };
-/// ex16_observer.h
+// ex16_observer.h
 
 #endif  // EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_OBSERVER_H_

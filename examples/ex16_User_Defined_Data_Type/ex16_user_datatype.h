@@ -1,23 +1,29 @@
-/* The following code is derived, directly or indirectly, from the SystemC
- * source code Copyright (c) 1996-2010 by all Contributors.
- * All Rights reserved.
- *
- * The contents of this file are subject to the restrictions and limitations
- * set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- * One may not use this file except in compliance with such restrictions and
- * limitations.  One may obtain instructions on how to receive a copy of the
- * License at http://www.systemc.org/.  Software distributed by Contributors
- * under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- * ANY KIND, either express or implied. See the License for the specific
- * language governing rights and limitations under the License.
- ********************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
- * @file    parameter_owner.h
- * @brief   This header instantiates various CCI parameters with default values
- * @author  Girish Verma, CircuitSutra Technologies    <girish@circuitsutra.com>
- *          P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
- * @date    31st August, 2011 (Wednesday)
+ *  @file    parameter_owner.h
+ *  @brief   This header instantiates various CCI parameters with default values
+ *  @author  Girish Verma, CircuitSutra Technologies    <girish@circuitsutra.com>
+ *           P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
+ *  @date    31st August, 2011 (Wednesday)
  */
 
 #ifndef   EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_USER_DATATYPE_H_
@@ -32,32 +38,44 @@
 #include <string>
 #include <iostream>
 
-/// Route_table_ut structure defines three fields of a typical router
-/// source_addr, dest_addr, and index
+/**
+ *  @class  route_table_ut
+ *  @brief  Route_table_ut structure defines three fields of a typical router
+ *          source_addr, dest_addr, and index
+ */
 struct route_table_ut {
  public:
+  /**
+   *  @fn     route_table_ut()
+   *  @brief  The class constructor
+   *  @return void
+   */
   route_table_ut()
       : s_address(0x0),  // Source Address
         d_address(0x0),  // Destination Address
         index(0x0) {}    // Index
 
-  /// Overloaded Constructor
+  /**
+   *  @fn     route_table_ut(int saddr, int daddr, int idx)
+   *  @brief  Overloaded class constructor
+   *  @param  saddr The source address
+   *  @param  daddr The destination address
+   *  @param  idx The index
+   *  @return void
+   */
   route_table_ut(int saddr, int daddr, int idx)
       : s_address(saddr),  // Source Address
         d_address(daddr),  // Destination Address
         index(idx) {}      // Index
 
  public:
-  /// Source address field
-  int s_address;
-  /// Destination address field
-  int d_address;
-  /// Index field
-  int index;
+  int s_address;  ///< Source address field
+  int d_address;  ///< Destination address field
+  int index;  ///< Index field
 };
 
 namespace cci { namespace cnf {
-/// add support for cci_value and JSON (de)serialization
+// add support for cci_value and JSON (de)serialization
 template<>
 struct cci_value_traits< route_table_ut >
 {
@@ -89,14 +107,14 @@ struct cci_value_traits< route_table_ut >
 };
 } /* namespace cnf */ } /* namespace cci */
 
-/// Overload stream insertion operator of C++
+// Overload stream insertion operator of C++
 std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
 {
   cci::cnf::cci_value udv(ud);
   return os << udv;
 }
 
-/// Overload stream extraction operator of C++
+// Overload stream extraction operator of C++
 /** @todo This operator is currently required by the "GreenControl tool"
  *        implementation.  Its serialisation is not yet based on JSON but
  *        uses plain stream extraction to convert a value from a string.

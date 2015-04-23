@@ -1,17 +1,22 @@
-/*******************************************************************************
- The following code is derived, directly or indirectly, from the SystemC
- source code Copyright (c) 1996-2010 by all Contributors.
- All Rights reserved.
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
- The contents of this file are subject to the restrictions and limitations
- set forth in the SystemC Open Source License Version 3.0 (the "License");
- You may not use this file except in compliance with such restrictions and
- limitations. You may obtain instructions on how to receive a copy of the
- License at http://www.systemc.org/. Software distributed by Contributors
- under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- ANY KIND, either express or implied. See the License for the specific
- language governing rights and limitations under the License.
- ******************************************************************************/
+  Copyright 2010-2015 Texas Instruments Inc.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
  *  @file   simple_ip.h
@@ -30,10 +35,17 @@
 
 #define MK64(a, b) (((boost::int64_t)(a)<< 32) | (b))
 
-/// The SimpleIP owns CCI Params representing basic data types
+/**
+ *  @class  ex02_simple_ip
+ *  @brief  The class for the simple_ip which owns CCI params represetning basic data types
+ */
 SC_MODULE(ex02_simple_ip) {
  public:
-  /// Ctor
+  /**
+   *  @fn     void ex02_simple_ip()
+   *  @brief  class constructor
+   *  @return void
+   */
   SC_CTOR(ex02_simple_ip)
       : bool_param("bool_param", true),
         char_param("char_param", 'A'),
@@ -70,7 +82,11 @@ SC_MODULE(ex02_simple_ip) {
     SC_THREAD(execute);
   }
 
-  /// Main execution block (no functionality)
+  /**
+   *  @fn     void execute()
+   *  @brief  Main execution block (no real functionality)
+   *  @return void
+   */
   void execute() {
     // Wait for 20 ns
     wait(20, sc_core::SC_NS);
@@ -78,16 +94,16 @@ SC_MODULE(ex02_simple_ip) {
 
  private:
   /// Parameters of basic data types
-  cci::cnf::cci_param<bool> bool_param;
-  cci::cnf::cci_param<char> char_param;
-  cci::cnf::cci_param<unsigned char> uchar_param;
-  cci::cnf::cci_param<int> int_param;
-  cci::cnf::cci_param<unsigned int> uint_param;
-  // cci::cnf::cci_param<short int> int16_param;
-  // cci::cnf::cci_param<boost::int64_t> int64_param;
-  cci::cnf::cci_param<float> float_param;
-  cci::cnf::cci_param<double> double_param;
-  cci::cnf::cci_param<std::string> string_param;
+  cci::cnf::cci_param<bool> bool_param; ///< boolean parameter
+  cci::cnf::cci_param<char> char_param; ///< char parameter
+  cci::cnf::cci_param<unsigned char> uchar_param; ///< unsigned char parameter
+  cci::cnf::cci_param<int> int_param; ///< int parameter
+  cci::cnf::cci_param<unsigned int> uint_param; ///< unsigned int parameter
+  // cci::cnf::cci_param<short int> int16_param;  ///< 16-bit integer parameter
+  // cci::cnf::cci_param<boost::int64_t> int64_param; ///< 64-bit integer parameter
+  cci::cnf::cci_param<float> float_param; ///< float parameter
+  cci::cnf::cci_param<double> double_param; ///< double parameter
+  cci::cnf::cci_param<std::string> string_param;  ///< string parameter
 };
 // ex02_simple_ip
 

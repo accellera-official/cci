@@ -1,25 +1,30 @@
-/*******************************************************************************
- * The following code is derived, directly or indirectly, from the SystemC
- * source code Copyright (c) 1996-2010 by all Contributors.
- * All Rights reserved.
- * 
- * The contents of this file are subject to the restrictions and limitations
- * set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- * One may not use this file except in compliance with such restrictions and
- * limitations.  One may obtain instructions on how to receive a copy of the
- * License at http://www.systemc.org/.  Software distributed by Contributors
- * under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- * ANY KIND, either express or implied. See the License for the specific
- * language governing rights and limitations under the License.
- * *******************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
- * @file     parameter_configurator.h
- * @brief    This file takes the references of the owner's parameters using 
- *           cci_base_param and sets values to the owner's parameters at various
- *           timing points 
- * @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * @date     9th June, 2011 (Thursday)
+ *  @file     parameter_configurator.h
+ *  @brief    This file takes the references of the owner's parameters using
+ *            cci_base_param and sets values to the owner's parameters at various
+ *            timing points
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date     9th June, 2011 (Thursday)
  */
 
 #ifndef EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAMETER_CONFIGURATOR_H_
@@ -31,23 +36,30 @@
 #include <string>
 #include "xreport.hpp"
 
-/// the configurator module searches for owner parameters using the 'get_param'
-/// API. The 'get_param_list' API is resulting in warnings.
+/**
+ *  @class  ex12_parameter_configurator
+ *  @brief  The configurator module searches for owner parameters using the
+ *          'get_param' API. The 'get_param_list' API is resulting in warnings.
+ */
 SC_MODULE(ex12_parameter_configurator) {
  public:
+  /**
+   *  @fn     ex12_parameter_configurator
+   *  @brief  The class constructor
+   */
   SC_CTOR(ex12_parameter_configurator) {
-    /// Get handle of the broker responsible for the class/module
+    // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(
         cci::cnf::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
 
-    /// Hierarchical names for the cci_parameters of the owner modules
+    // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "top_mod.param_owner1.clk_freq_Hz";
     std::string cfgr_param_str2 = "top_mod.param_owner2.clock_speed_KHz";
 
-    /// Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
+    // Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
     if (myCfgrBrokerIF->param_exists(cfgr_param_str1)) {
       cfgr_param_ptr1 = myCfgrBrokerIF->get_param(cfgr_param_str1);
 
@@ -62,7 +74,7 @@ SC_MODULE(ex12_parameter_configurator) {
               << "\tdoesn't exists in top_module");
     }
 
-    /// Check for 'clock_speed_Hz' cci_parameter of owner module 2
+    // Check for 'clock_speed_Hz' cci_parameter of owner module 2
     if (myCfgrBrokerIF->param_exists(cfgr_param_str2)) {
       cfgr_param_ptr2 = myCfgrBrokerIF->get_param(cfgr_param_str2);
 
@@ -77,15 +89,19 @@ SC_MODULE(ex12_parameter_configurator) {
               << "\tdoesn't exists in top_module");
     }
 
-    /// Register SC_THREAD with the SystemC kernel
+    // Register SC_THREAD with the SystemC kernel
     SC_THREAD(run_cfgr);
   }
 
-  /// before_end_of_elaboration function that changes the value of
-  /// cci_parameter of owner(1) and the updated values of both are read
+  /**
+   *  @fn     void before_end_of_elaboration(void)
+   *  @brief  before_end_of_elaboration function that changes the value of
+   *          cci_parameter of owner(1) and the updated values of both are read
+   *  @return void
+   */
   void before_end_of_elaboration(void) {
-    /// Change the value of the cci_parameter 'clk_freq_Hz' of OWNER (1)
-    /// to '5000' (Hz)
+    // Change the value of the cci_parameter 'clk_freq_Hz' of OWNER (1)
+    // to '5000' (Hz)
     if (cfgr_param_ptr1 != NULL) {
       XREPORT("[CFGR within beoe] Within the BEOE phase");
       XREPORT("[CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1)"
@@ -102,12 +118,16 @@ SC_MODULE(ex12_parameter_configurator) {
             << cfgr_param_ptr2->json_serialize());
   }
 
-  /// This function updates the value of cci_parameter of owner(2) and the
-  /// values of both owners are read
+  /**
+   *  @fn     void run_cfgr(void)
+   *  @brief  This function updates the value of cci_parameter of owner(2) and
+   *          the values of both owners are read
+   *  @return void
+   */
   void run_cfgr(void) {
     while (1) {
-      /// Change the value of the cci_parameter 'clock_speed_KHz' of OWNER (2)
-      /// to '12' (KHz)
+      // Change the value of the cci_parameter 'clock_speed_KHz' of OWNER (2)
+      // to '12' (KHz)
       if (cfgr_param_ptr2 != NULL) {
         XREPORT("@ " << sc_core::sc_time_stamp());
         XREPORT("[CFGR] : Changing the 'clock_speed_KHz' of OWNER (2)"
@@ -127,12 +147,9 @@ SC_MODULE(ex12_parameter_configurator) {
   }
 
  private:
-  // Declaring a CCI configuration broker interface instance
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;
-
-  // CCI base parameters
-  cci::cnf::cci_base_param* cfgr_param_ptr1;
-  cci::cnf::cci_base_param* cfgr_param_ptr2;
+  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cnf::cci_base_param* cfgr_param_ptr1;  ///< CCI base parameter
+  cci::cnf::cci_base_param* cfgr_param_ptr2;  ///< CCI base parameter
 };
 // ex12_parameter_configurator
 

@@ -1,26 +1,31 @@
-/*******************************************************************************
- *   The following code is derived, directly or indirectly, from the SystemC
- *   source code Copyright (c) 1996-2010 by all Contributors.
- *   All Rights reserved.
- *
- *   The contents of this file are subject to the restrictions and limitations
- *   set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- *   One may not use this file except in compliance with such restrictions and
- *   limitations.  One may obtain instructions on how to receive a copy of the
- *   License at http://www.systemc.org/.  Software distributed by Contributors
- *   under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- *   ANY KIND, either express or implied. See the License for the specific
- *   language governing rights and limitations under the License.
- *******************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
-/*!
- * \file    parameter_configurer.h
- * \brief   This file defines a CONFIGURATOR.
- *          This file declares and defines a sc_module which demonstrates the 
- *          means to access the cci-parameters using name-based look up access
- *          approach and set their various attributes
- * \author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- * \date    12th September, 2011 (Monday)
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
+
+/**
+ *  @file    parameter_configurer.h
+ *  @brief   This file defines a CONFIGURATOR.
+ *           This file declares and defines a sc_module which demonstrates the
+ *           means to access the cci-parameters using name-based look up access
+ *           approach and set their various attributes
+ *  @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *  @date    12th September, 2011 (Monday)
  */
 #ifndef EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_CONFIGURER_H_
 #define EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_CONFIGURER_H_
@@ -30,24 +35,31 @@
 #include <string>
 #include "xreport.hpp"
 
-/// This SCMODULE instantiates a CCI configuration broker to access
-/// and modify CCI parameter values
+/**
+ *  @class  ex07_parameter_configurer
+ *  @brief  This SCMODULE instantiates a CCI configuration broker to access and modify CCI parameter values.
+ */
 SC_MODULE(ex07_parameter_configurer) {
  public:
+  /**
+   *  @fn     ex07_parameter_configurer
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex07_parameter_configurer)
       : check(0) {
-    /// Get the broker responsible for this module
-    /// using 'get_current_broker' API
+    // Get the broker responsible for this module
+    // using 'get_current_broker' API
     myBrokerInterface = &cci::cnf::cci_broker_manager::get_current_broker(
         cci::cnf::cci_originator(*this));
 
     // Assert if broker handle returned is NULL
     assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");
 
-    /// Check for the broker type (default or private)
-    /// using 'is_private_broker()' API
+    // Check for the broker type (default or private)
+    // using 'is_private_broker()' API
     if (myBrokerInterface->is_private_broker())
-      /// Access broker's name using 'name()'
+      // Access broker's name using 'name()'
       XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name());
     else
       XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name()
@@ -73,11 +85,11 @@ SC_MODULE(ex07_parameter_configurer) {
       intParamExists = false;
     }
 
-    /// Broker interface checks for existance of a (std::string type)
-    /// parameter using 'param_exists' API
+    // Broker interface checks for existance of a (std::string type)
+    // parameter using 'param_exists' API
     if (myBrokerInterface->param_exists(string_param_str)) {
-      /// If parameter exists, get handle of the parameter using
-      /// 'get_param' API
+      // If parameter exists, get handle of the parameter using
+      // 'get_param' API
       str_param_ptr = myBrokerInterface->get_param(string_param_str);
 
       // Report if parameter handle is returned NULL
@@ -94,8 +106,8 @@ SC_MODULE(ex07_parameter_configurer) {
     XREPORT("Prior to " << sc_core::sc_time_stamp()
             << "\tdemonstrating 'is_initial_value' API");
 
-    /// Check if string type cci-parameter has any initial value using
-    /// 'is_initial_value' API
+    // Check if string type cci-parameter has any initial value using
+    // 'is_initial_value' API
     if (str_param_ptr->is_initial_value()) {
       XREPORT("[CFGR C_TOR] : " << str_param_ptr->get_name()
               << "\tInitial Value : " << str_param_ptr->get_value().get_string());
@@ -107,7 +119,7 @@ SC_MODULE(ex07_parameter_configurer) {
     XREPORT("[CFGR C_TOR] : Is initial value ?\t" << std::boolalpha
             << str_param_ptr->is_initial_value());
 
-    /// Set documentation to the string type cci-parameter
+    // Set documentation to the string type cci-parameter
     XREPORT("[CFGR C_TOR] : Set documentation to the string-type"
             " cci-parameter");
     std::string str_doc = "This is a mutable type string parameter";
@@ -116,14 +128,19 @@ SC_MODULE(ex07_parameter_configurer) {
     SC_THREAD(run_accessor);
   }
 
+  /**
+   *  @fn     void run_accessor()
+   *  @brief  Main function to access the parameter's value(s)
+   *  @return void
+   */
   void run_accessor() {
     while (1) {
       if (strParamExists && intParamExists) {
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << "\tdemonstrating 'is_default_value()'");
 
-        /// Access parameter's default value status using
-        /// 'is_default_value()' API
+        // Access parameter's default value status using
+        // 'is_default_value()' API
         if (int_param_ptr->is_default_value()) {
           XREPORT("[CFGR] : " << int_param_ptr->get_name()
                   << " default value hasn't been modified.");
@@ -142,7 +159,7 @@ SC_MODULE(ex07_parameter_configurer) {
                 << "\tdemonstrating 'is_default_value()'");
 
         // Access parameter's default value status using
-        /// 'is_default_value()' API
+        // 'is_default_value()' API
         if (!int_param_ptr->is_default_value()) {
           XREPORT("[CFGR] : " << int_param_ptr->get_name()
                   << " value has been modified.");
@@ -167,7 +184,7 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << "\tdemonstrating 'is_invalid_value()'");
 
-        /// Check validity of parameter using 'is_invalid_value()' API
+        // Check validity of parameter using 'is_invalid_value()' API
         if (int_param_ptr->is_invalid_value()) {
           XREPORT("[CFGR] : Is Invalid Value ? " << "\tReturned status : "
                   << std::boolalpha << int_param_ptr->is_invalid_value());
@@ -186,7 +203,7 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve] Parameter's value : "
                 << int_param_ptr->json_serialize());
 
-        /// Access parameter's documentation using 'get_documentation()'
+        // Access parameter's documentation using 'get_documentation()'
         XREPORT("[CFGR -> Retreive] Parameter's doc : "
                 << int_param_ptr->get_documentation());
 
@@ -196,28 +213,28 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Set] :  " << int_param_ptr->get_name()
                 << " value to 10");
 
-        /// Set parameter's value using 'json_deserialize' API
+        // Set parameter's value using 'json_deserialize' API
         int_param_ptr->json_deserialize("10");
 
         wait(4.0, sc_core::SC_NS);
 
         XREPORT("@ " << sc_core::sc_time_stamp());
 
-        /// Access parameter's name using 'get_name()' API
+        // Access parameter's name using 'get_name()' API
         XREPORT("[CFGR -> Retrieve] : Parameter name : "
                 << int_param_ptr->get_name());
 
-        /// Access parameter's value using 'json_serialize' API
+        // Access parameter's value using 'json_serialize' API
         XREPORT("[CFGR -> Retrieve] : Parameter value: "
                 << int_param_ptr->json_serialize());
 
-        /// Access parameter's documentation using 'get_documentation()'
+        // Access parameter's documentation using 'get_documentation()'
         XREPORT("[CFGR -> Retrieve] : Parameter doc : "
                 << int_param_ptr->get_documentation());
 
         wait(2.0, sc_core::SC_NS);
 
-        /// Access locking status of a parameter using 'is_locked()' API
+        // Access locking status of a parameter using 'is_locked()' API
         //
         // Set password to lock/unlock parameter
 
@@ -258,8 +275,8 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << "\tdemonstrating 'is_invalid_value()'");
 
-        /// Access invalid state of a cci parameter
-        /// using 'is_invalid_value()' API
+        // Access invalid state of a cci parameter
+        // using 'is_invalid_value()' API
         if (int_param_ptr->is_invalid_value()) {
           XREPORT("[CFGR] : " << int_param_ptr->get_name()
                   << " value is set to invalid.");
@@ -282,12 +299,12 @@ SC_MODULE(ex07_parameter_configurer) {
 
         cci::cnf::cci_value str_value("Hello_New_String");
 
-        /// Query basic type of a parameter using 'get_basic_type()' API
+        // Query basic type of a parameter using 'get_basic_type()' API
         XREPORT("[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : "
                 << str_param_ptr->get_basic_type());
 
-        /// Set a (std::string) parameter's value using
-        /// 'set_value' API with cci_value
+        // Set a (std::string) parameter's value using
+        // 'set_value' API with cci_value
         str_param_ptr->set_value(str_value);
 
         wait(2.0, sc_core::SC_NS);
@@ -295,8 +312,8 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << " demonstrating 'get_latest_write_originator' API");
 
-        /// Get the latest write originator for the write value to
-        /// the string type cci-parameter
+        // Get the latest write originator for the write value to
+        // the string type cci-parameter
         const cci::cnf::cci_originator* str_originator = str_param_ptr
             ->get_latest_write_originator();
         XREPORT("[CFGR] : Originator for the latest write on string"
@@ -310,15 +327,15 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve1] : " << str_param_ptr->get_name()
                 << " value is " << str_param_ptr->json_serialize());
 
-        /// Query a (std::string) parameter's value by using
-        /// 'get_value()'API with cci_value
+        // Query a (std::string) parameter's value by using
+        // 'get_value()'API with cci_value
         cci::cnf::cci_value rx_value = str_param_ptr->get_value();
 
-        /*!
-         *  \par Based on the type returned by 'get_basic_type()', query value of cci_value.
-         *  \par
+        /**
+         *  @par Based on the type returned by 'get_basic_type()', query value of cci_value.
+         *  @par
          *  If basic parameter type is 'std::string', use 'get_string()' API with cci_value
-         *  \par
+         *  @par
          *  If basic parameter type is 'int', use 'get_int()' API with cci_value, etc.
          */
         XREPORT("[CFGR -> Retrieve2] : " << rx_value.get_string());
@@ -333,24 +350,20 @@ SC_MODULE(ex07_parameter_configurer) {
   }
 
  private:
-  //!< CCI configuration broker instance
-  cci::cnf::cci_cnf_broker_if* myBrokerInterface;
+  cci::cnf::cci_cnf_broker_if* myBrokerInterface; //!< CCI configuration broker instance
 
-  //!< For storing hierarchical path of std::string type cci-parameter
-  std::string int_param_str;
-  //!< For storing hierarchical path of integer type cci-parameter
-  std::string string_param_str;
+  std::string int_param_str;  //!< For storing hierarchical path of std::string type cci-parameter
+  std::string string_param_str; //!< For storing hierarchical path of integer type cci-parameter
 
-  // Declaring cci_base_parameters
-  cci::cnf::cci_base_param* int_param_ptr;
-  cci::cnf::cci_base_param* str_param_ptr;
+  cci::cnf::cci_base_param* int_param_ptr;  ///< cci_base parameter
+  cci::cnf::cci_base_param* str_param_ptr;  ///< cci_base parameter
 
   // Few Local parameters
-  bool intParamExists;
-  bool strParamExists;
-  int check;
-  bool lock_status;
-  void* lock_passwd;
+  bool intParamExists;  ///< variable for whether parameter exists
+  bool strParamExists;  ///< variable for whether a parameter exists
+  int check;  ///< flag to check
+  bool lock_status; ///< status of any locks on a parameter
+  void* lock_passwd;  ///< password for the parameter lock
 };
 // ex07_parameter_configurer
 

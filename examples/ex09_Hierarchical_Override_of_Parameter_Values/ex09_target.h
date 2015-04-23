@@ -1,27 +1,32 @@
-/******************************************************************************** 
- * The following code is derived, directly or indirectly, from the SystemC
- * source code Copyright (c) 1996-2010 by all Contributors.
- * All Rights reserved.
- *
- * The contents of this file are subject to the restrictions and limitations
- * set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- * One may not use this file except in compliance with such restrictions and
- * limitations.  One may obtain instructions on how to receive a copy of the
- * License at http://www.systemc.org/.  Software distributed by Contributors
- * under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- * ANY KIND, either express or implied. See the License for the specific
- * language governing rights and limitations under the License.
- ********************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
-/*!
- * \file     ex09_target.h
- * \brief    target module implementation.
- *           This file declares and implements the functionality of the target.
- *           Few of the parameters of the target sc_module are configured by the 
- *           router sc_module
- * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
- * \date     5th May, 2011 (Thursday)
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
+
+/**
+ *  @file     ex09_target.h
+ *  @brief    target module implementation.
+ *            This file declares and implements the functionality of the target.
+ *            Few of the parameters of the target sc_module are configured by the
+ *            router sc_module
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *            Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
+ *  @date     5th May, 2011 (Thursday)
  */
 
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_TARGET_H_
@@ -33,11 +38,13 @@
 #include "tlm_utils/simple_target_socket.h"
 #include "xreport.hpp"
 
-/// This module implements the functionality of a target IP
+/**
+ *  @class  ex09_target
+ *  @brief  This module implementas the functionality of a target IP
+ */
 SC_MODULE(ex09_target) {
  public:
   tlm_utils::simple_target_socket<ex09_target, 32> target_socket;
-  //!< latency
   sc_core::sc_time read_latency, write_latency;
 
   SC_CTOR(ex09_target)
@@ -50,7 +57,7 @@ SC_MODULE(ex09_target) {
     XREPORT("[" << target_ID.get() << " C_TOR] : Base Address : "
             << s_base_addr.get());
 
-    /// Register b_transport
+    // Register b_transport
     target_socket.register_b_transport(this, &ex09_target::b_transport);
 
     write_latency = sc_core::sc_time(3, sc_core::SC_NS);
@@ -61,14 +68,25 @@ SC_MODULE(ex09_target) {
     for (unsigned int i = 0; i < s_size.get(); i++)
       mem[i] = 0xAABBCCDD | i;
 
-    /// target's SC_THREAD declaration
+    // target's SC_THREAD declaration
     SC_THREAD(run_target);
   }
 
+  /**
+   *  @fn     void run_target(void)
+   *  @brief  The run thread of the modeul (does nothing)
+   *  @return void
+   */
   void run_target(void) {
   }
 
-  /// Implementation of the blocking transport in the target
+  /**
+   *  @fn     void b_transport(tlm::tlm_generic_payload& trans, sc_core::sc_time& delay)
+   *  @brief  Implementation of the blocking transport in the target
+   *  @param  trans The transaction being sent
+   *  @param  delay The annotated delay associated with the transaction
+   *  @return void
+   */
   void b_transport(tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
     tlm::tlm_command cmd = trans.get_command();
     sc_dt::uint64 adr = trans.get_address() - s_base_addr.get();
@@ -110,14 +128,11 @@ SC_MODULE(ex09_target) {
   }
 
  private:
-  // Elaboration Time Param for assigning target ID (initialized by top_module)
-  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> target_ID;
+  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
 
-  // Mutable time param for setting target's base addr (initialized by router)
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> s_base_addr;
+  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
 
-  // Mutable time parameter for setting target's size (initialized by router);
-  cci::cnf::cci_param<unsigned int> s_size;
+  cci::cnf::cci_param<unsigned int> s_size; ///< Mutable time parameter for setting target's size (initialized by router);
 
   int* mem;
 };

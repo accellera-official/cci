@@ -1,27 +1,32 @@
-/******************************************************************************** 
- * The following code is derived, directly or indirectly, from the SystemC
- * source code Copyright (c) 1996-2010 by all Contributors.
- * All Rights reserved.
- *
- * The contents of this file are subject to the restrictions and limitations
- * set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- * One may not use this file except in compliance with such restrictions and
- * limitations.  One may obtain instructions on how to receive a copy of the
- * License at http://www.systemc.org/.  Software distributed by Contributors
- * under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- * ANY KIND, either express or implied. See the License for the specific
- * language governing rights and limitations under the License.
- ********************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
-/*!
- * \file     initiator.h
- * \brief    initiator module implementation.
- *           This file declares and implements the functionality of the initiator.
- *           Few of the parameters of the initiator sc_module are configured by the
- *           router sc_module
- * \author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *           Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
- * \date     29th April, 2011 (Friday)
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
+
+/**
+ *  @file     initiator.h
+ *  @brief    initiator module implementation.
+ *            This file declares and implements the functionality of the initiator.
+ *            Few of the parameters of the initiator sc_module are configured by the
+ *            router sc_module
+ *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
+ *            Parvinder Pal Singh, CircuitSutra Technologies   <parvinder@circuitsutra.com>
+ *  @date     29th April, 2011 (Friday)
  */
 
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_INITIATOR_H_
@@ -33,14 +38,22 @@
 #include "tlm_utils/simple_initiator_socket.h"
 #include "xreport.hpp"
 
-// Implemenation of the initiator module with tlm2 socket for communication
+/**
+ *  @class  ex09_initiator
+ *  @brief  The implementation of the initiator module with tlm2 socket for communication
+ *  @return void
+ */
 SC_MODULE(ex09_initiator) {
  public:
   int data;
 
-  //!< Instance of TLM2 simple initiator socket
-  tlm_utils::simple_initiator_socket<ex09_initiator, 32> initiator_socket;
+  tlm_utils::simple_initiator_socket<ex09_initiator, 32> initiator_socket;  ///< Instance of TLM2 simple initiator socket
 
+  /**
+   *  @fn     ex09_initiator
+   *  @brief  The class constructor
+   *  @return void
+   */
   SC_CTOR(ex09_initiator)
       : data(0),
         initiator_socket("initiator_socket"),
@@ -48,10 +61,15 @@ SC_MODULE(ex09_initiator) {
     XREPORT("[" << initiator_ID.get()
             << " C_TOR] ------- [INITIATOR CONSTRUCTOR BEGINS HERE] --------");
 
-    /// initiator's SC_THREAD declaration
+    // initiator's SC_THREAD declaration
     SC_THREAD(run_initiator);
   }
 
+  /**
+   *  @fn     void run_initiator(void)
+   *  @brief  Main function to send transactions
+   *  @return void
+   */
   void run_initiator(void) {
     tlm::tlm_generic_payload *trans = new tlm::tlm_generic_payload;
 
@@ -110,8 +128,7 @@ SC_MODULE(ex09_initiator) {
   }
 
  private:
-  // Elab Time Param for assigning initiator ID (initialized by top_module)
-  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> initiator_ID;
+  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
 };
 // ex09_initiator
 

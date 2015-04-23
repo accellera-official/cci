@@ -1,24 +1,29 @@
-/*******************************************************************************
- * The following code is derived, directly or indirectly, from the SystemC
- * source code Copyright (c) 1996-2010 by all Contributors.
- * All Rights reserved.
- * 
- * The contents of this file are subject to the restrictions and limitations
- * set forth in the SystemC Open Source License Version 2.2.0 (the "License");
- * One may not use this file except in compliance with such restrictions and
- * limitations.  One may obtain instructions on how to receive a copy of the
- * License at http://www.systemc.org/.  Software distributed by Contributors
- * under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- * ANY KIND, either express or implied. See the License for the specific
- * language governing rights and limitations under the License.
- * *******************************************************************************/
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
- * @file      parameter_owner.h
- * @brief     This sc_module is the owner class of cci-parameters
- * @author    P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
- *            Girish Verman, CircuitSutra Technologies   <girish@circuitsutra.com>
- * @date      18th May, 2011 (Monday)
+ *  @file      parameter_owner.h
+ *  @brief     This sc_module is the owner class of cci-parameters
+ *  @author    P V S Phaneendra, CircuitSutra Technologies    <pvs@circuitsutra.com>
+ *             Girish Verman, CircuitSutra Technologies   <girish@circuitsutra.com>
+ *  @date      18th May, 2011 (Monday)
  */
 
 #ifndef EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_OWNER_H_
@@ -31,13 +36,21 @@
 
 class ex17_parameter_configurator;
 
-/// This sc_module gives default values to all its cci-parameters.
-/// The parameters that are overridden with their initial values
-/// appear with their initial values rather than default values.
+/**
+ *  @class  ex17_parameter_owner
+ *  @brief  This sc_module gives default values to all its cci-parameters.
+ *          The parameters that are overridden with their initial values
+ *          appear with their initial values rather than default values.
+ */
 SC_MODULE(ex17_parameter_owner) {
  public:
   friend class ex17_parameter_configurator;
 
+  /**
+   *  @fn     ex17_parameter_owner()
+   *  @brief  The class constructor.
+   *  @return void
+   */
   SC_CTOR(ex17_parameter_owner)
       : int_param("mutable_int_param", 5),
         float_param("mutable_float_param", 123.45),
@@ -46,11 +59,15 @@ SC_MODULE(ex17_parameter_owner) {
     XREPORT("[OWNER C_TOR] : Float Parameter Value : " << float_param.get());
     XREPORT("[OWNER C_TOR] : String Parameter Value : " << string_param.get());
 
-    /// SC_THREAD declaration
+    // SC_THREAD declaration
     SC_THREAD(run_owner);
   }
 
-  // SC_THREAD Implementation
+  /**
+   *  @fn     void run_owner(void)
+   *  @brief  Reads and prints the value of the cci parameters.
+   *  @return void
+   */
   void run_owner(void) {
     while (1) {
       wait(5.0, sc_core::SC_NS);
@@ -65,11 +82,10 @@ SC_MODULE(ex17_parameter_owner) {
   }
 
  private:
-  /// CCI parameters
-  cci::cnf::cci_param<int> int_param;
-  cci::cnf::cci_param<float> float_param;
-  cci::cnf::cci_param<std::string> string_param;
+  cci::cnf::cci_param<int> int_param; ///< CCI int parameter
+  cci::cnf::cci_param<float> float_param; ///< CCI float parameter
+  cci::cnf::cci_param<std::string> string_param;  ///< CCI string parameter
 };
-/// ex17_parameter_owner
+// ex17_parameter_owner
 
 #endif  // EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_OWNER_H_

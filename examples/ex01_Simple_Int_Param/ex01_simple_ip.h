@@ -1,17 +1,22 @@
-/*******************************************************************************
- The following code is derived, directly or indirectly, from the SystemC
- source code Copyright (c) 1996-2010 by all Contributors.
- All Rights reserved.
+/*****************************************************************************
+  Copyright 2006-2014 Accellera Systems Initiative Inc.
+  All rights reserved.
 
- The contents of this file are subject to the restrictions and limitations
- set forth in the SystemC Open Source License Version 3.0 (the "License");
- You may not use this file except in compliance with such restrictions and
- limitations. You may obtain instructions on how to receive a copy of the
- License at http://www.systemc.org/. Software distributed by Contributors
- under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF
- ANY KIND, either express or implied. See the License for the specific
- language governing rights and limitations under the License.
- ******************************************************************************/
+  Copyright 2010-2015 Texas Instruments Inc.
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 /**
  *  @file   simple_ip.h
@@ -25,10 +30,18 @@
 #include <cci>
 #include "xreport.hpp"
 
-/// The SimpleIP owns a CCI param
+/**
+ *  @class  ex01_simple_ip
+ *  @brief  A simple IP which owns a CCI param.
+ */
 SC_MODULE(ex01_simple_ip) {
  public:
-  /// Ctor
+
+  /**
+   *  @fn     void ex01_simple_ip()
+   *  @brief  The constructor for the class.
+   *  @return void
+   */
   SC_CTOR(ex01_simple_ip)
   // Initialize int_param with 0
       : int_param("int_param", 0) {
@@ -37,13 +50,21 @@ SC_MODULE(ex01_simple_ip) {
             << int_param);
   }
 
-  /// Dtor
+  /**
+   *  @fn     void ~ex01_simple_ip()
+   *  @brief  The destructor for the class.
+   *  @return void
+   */
   ~ex01_simple_ip() {
     XREPORT_PLAIN("Dtor: Current value of " << int_param.get_name() << " is "
                   << int_param);
   }
 
-  /// Main execution block (no functionality)
+  /**
+   *  @fn     void execute()
+   *  @brief  The main execution block (no real functionality)
+   *  @return void
+   */
   void execute() {
     // Wait for 10ns to allow config_ip to update int_param value
     wait(10, sc_core::SC_NS);
@@ -55,8 +76,7 @@ SC_MODULE(ex01_simple_ip) {
   }
 
  private:
-  /// CCI param to hold buffer size
-  cci::cnf::cci_param<int> int_param;
+  cci::cnf::cci_param<int> int_param; ///< CCI param to hold buffer size
 };
 // ex01_simple_ip
 
