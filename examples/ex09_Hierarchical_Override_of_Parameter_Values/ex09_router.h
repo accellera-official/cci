@@ -31,6 +31,10 @@
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_ROUTER_H_
 #define EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_ROUTER_H_
 
+#ifdef _MSC_VER
+#define snprintf _snprintf
+#endif
+
 #include <cci>
 #include <tlm>
 #include <cassert>

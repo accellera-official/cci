@@ -30,7 +30,7 @@ void ParameterOwnerModule::main_action() {
   
   // create and access a local parameter
   cout << name() << ": create parameter " << endl;
-  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param");
+  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param", 0);
   cout << "  created " << uchar_param.get_name() << endl;
   cout << endl;
 

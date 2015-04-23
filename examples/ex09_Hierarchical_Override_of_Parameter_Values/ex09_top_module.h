@@ -113,7 +113,9 @@ SC_MODULE(ex09_top_module) {
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.initiator_ID", name(),
                initiatorName);
 
+	  snprintf(initiatorName, sizeof(initiatorName), "\"initiator_%d\"", i);
       myDefaultBroker->json_deserialize_initial_value(stringMisc, initiatorName);
+	  snprintf(initiatorName, sizeof(initiatorName), "initiator_%d", i);
       initiatorList.push_back(new ex09_initiator(initiatorName));
 
       //     Binding of initiator to Router
@@ -132,7 +134,9 @@ SC_MODULE(ex09_top_module) {
 
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.target_ID", name(),
                targetName);
+	  snprintf(targetName, sizeof(targetName), "\"target_%d\"", i);
       myDefaultBroker->json_deserialize_initial_value(stringMisc, targetName);
+	  snprintf(targetName, sizeof(targetName), "target_%d", i);
 
       // Set initial value for maximum target size(memory)
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.s_size", name(),

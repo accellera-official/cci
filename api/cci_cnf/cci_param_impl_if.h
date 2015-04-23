@@ -1,173 +1,211 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2009-2010 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//    Mark Burton, mark@greensocs.com
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+  Copyright 2006-2015 Accellera Systems Initiative Inc.
+  All rights reserved.
 
+  Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
+
+  Copyright 2006-2015 Intel Corporation
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 
 #ifndef CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
 #define CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
 
+#include "cci_cnf/cci_shared_ptr.h"
+#include "cci_cnf/cci_callbacks.h"
+#include "cci_cnf/cci_value.h"
 
-#include <string>
-#include "cci_cnf/cci_base_param_impl_if.h"
+/**
+ * @author Enrico Galli, Intel
+ */
 
 CCI_OPEN_CONFIG_NAMESPACE_
 
 
-  
-  /// Compiler Check Interface for the parameters class
-  template<typename T, param_mutable_type TM>
-  class cci_param_impl_if 
-  : virtual public cci_base_param_impl_if
-  {
-  /*protected:
-    /// Typedef for the value.
-    typedef T value_type;
-    /// Typedef for the param itself.
-    typedef cci_param<T, TM> my_type;*/
+class cci_base_param;
+class cci_originator;
 
-  public:
+/// Interfaces for cci_param implementation
+/**
+* Features:
+* - Name of the parameter,
+* - stores value untyped as string representation
+* - allows generic typed and list access
+* - JSON (de)serialize functions
+* - Callback handling
+*/
+class cci_param_impl_if
+{
+public:
 
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Construction / Destruction   ///////////////////// //
+	/// Destructor.
+	/**
+	*
+	*/
+	virtual ~cci_param_impl_if() { }
 
-    // Constructors shall be provided by the derived class:
-    // TODO: Copy as comment from cci_param.h
-    
-    /// Destructor
-    virtual ~cci_param_impl_if() { };
-    
 
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Set and Get Operators   ////////////////////////// //
+	///@name Set and Get with JSON String Representation
+	///@{
 
-    
-    /// Set the value of this parameter to the value of another cci_param.
-    /**
-     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
-     * @param v  Parameter where the value should be read from.
-     * @return   Pointer to this.
-     */
-    //virtual cci_param<T, TM>& operator = (const cci_param<T, TM>& v) = 0; // this convenience function is not needed for internal implementation
-    
-    /// Set the value of this parameter.
-    /**
-     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
-     * @param v  Value which has to be set.
-     * @return   Pointer to this.
-     */
-    //virtual cci_param<T, TM>& operator = (const T& v) = 0; // this convenience function is not needed for internal implementation
-    
-    /// Get the value of this parameter.
-    /**
-     * @exception cci::cnf::cci_report::get_param_failed Getting value failed
-     * @return Value of the parameter.
-     */
-    //virtual operator const T& () const = 0; // this convenience function is not needed for internal implementation
-    
-    
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Set and Get with Value   ///////////////////////// //
+	/// @copydoc cci_base_param::json_deserialize
+	virtual void json_deserialize(const std::string& json_string) = 0;
 
-    
-    /// Set the value of this parameter.
-    /**
-     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
-     * @param val  The new value for this parameter.
-     */
-    virtual void set(const T& val) = 0;
+	/// @copydoc cci_base_param::json_serialize
+	virtual std::string json_serialize() const = 0;
 
-    /// Returns the value of this parameter.
-    /**
-     * @exception cci::cnf::cci_report::get_param_failed Getting value failed
-     * @return Value
-     */
-    virtual const T& get() const = 0;
-    
-    /// Set the value of this parameter overriding a lock.
-    /**
-     * @exception cci::cnf::cci_report::set_param_failed Setting value failed
-     * @param val  The new value for this parameter.
-     * @param lock_pwd  Password needed for the lock (if needed, else NULL)
-     */
-    virtual void set(const T& val, void* lock_pwd) = 0;
-    
-    
-    // //////////////////////////////////////////////////////////////////// //
-    // //////////   Conversion Methods JSON string <-> Value   //////////// //
+	///@}
 
-    // These functions allow access to the conversion even without changing
-    // the parameter.
-    
-    
-    /// Conversion value type --> JSON string. (Not using the parameter value as source)
-    /**
-     * Should not make use of m_par_name because it is possibly called inside constructor!
-     *
-     * Direct parameter access @see cci_base_param::json_serialize
-     *
-     * @exception cci::cnf::cci_report::get_param_failed Converting value failed
-     * @param val  Value that should be converted.
-     * @return JSON string representation of the value.
-     */
-    virtual std::string json_serialize(const T& val) const = 0;
+	///@name JSON Data Type and access
+	///@{
 
-    /// Convertion JSON string --> value type (without affecting the parameter value directly)
-    /**
-     * Direct parameter access @see cci_base_param::json_deserialize
-     *
-     * Guidelines:
-     * - Do not write to target_val if deserialization fails!
-     * - Set target_val to the default value if str is empty (=="").
-     *
-     * @exception cci::cnf::cci_report::set_param_failed Converting value failed
-     * @param  target_val  Reference to the value that should be set.
-     * @param  str         JSON string that should be converted to a value.
-     */
-    virtual void json_deserialize(T& target_val, const std::string& str) = 0;
-    
+	/// @copydoc cci_base_param::set_value
+	virtual void set_value(const cci_value& val) = 0;
 
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////   Get default Value   ////////////////////////////// //
+	/// @copydoc cci_base_param::get_value
+	virtual cci_value get_value() const = 0;
 
-    
-    /// Get the parameter's original default value
-    /**
-     * @exception cci_exception_get_param Getting default value failed (if this parameter does not have a default value)
-     * @return This value is the default value being set in the constructor
-     */
-    virtual const T& get_default_value() = 0;
-    
-  };
-    
-  //template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, cci_param<T, TM>& p2);
-  /* {
-    return p1.get() == p2.getValue();
-  }*/
+	///@}
 
-  //template<class T, param_mutable_type TM> bool operator == (cci_param<T, TM>& p1, T& p2);
-  /* {
-    return p1.get() == p2;
-  }*/
+	///@name Documentation
+	///@{
 
-  //template<class T, param_mutable_type TM> bool operator == (T& p1, cci_param<T, TM>& p2);
-  /* {
-    return p1 == p2.get();
-  }*/
-  
-  
+	/// @copydoc cci_base_param::set_documentation
+	virtual void set_documentation(const std::string& doc) = 0;
+
+	/// @copydoc cci_base_param::get_documentation
+	virtual std::string get_documentation() const = 0;
+
+
+	///@}
+
+	///@name Parameter Value Status
+	///@{
+
+
+	/// @copydoc cci_base_param::is_default_value
+	virtual bool is_default_value() = 0;
+
+	/// @copydoc cci_base_param::is_invalid_value
+	virtual bool is_invalid_value() = 0;
+
+	/// @copydoc cci_base_param::set_invalid_value
+	virtual void set_invalid_value() = 0;
+
+	/// @copydoc cci_base_param::is_initial_value
+	virtual bool is_initial_value() const = 0;
+
+
+	///@}
+
+	///@name Miscellaneous
+	///@{
+
+	/// @copydoc cci_base_param::get_latest_write_originator
+	virtual const cci_originator* get_latest_write_originator() const = 0;
+
+	///@}
+
+	///@name Callback Handling
+	///@{
+
+	/// @copydoc cci_base_param::register_callback(const callback_type, void*, param_callb_func_ptr)
+	virtual shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function) = 0;
+
+	/// @copydoc cci_base_param::register_callback(const callback_type, cci::shared_ptr<callb_adapt>)
+	virtual shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb) = 0;
+
+	/// @copydoc cci_base_param::unregister_all_callbacks
+	virtual void unregister_all_callbacks(void* observer) = 0;
+
+	/// @copydoc cci_base_param::unregister_callback(cci::shared_ptr<callb_adapt>)
+	virtual bool unregister_callback(shared_ptr<callb_adapt> callb) = 0;
+	
+	/// @copydoc cci_base_param::unregister_callback(callb_adapt*)
+	virtual bool unregister_callback(callb_adapt* callb) = 0;
+
+	/// @copydoc cci_base_param::json_deserialize
+	virtual bool has_callbacks() = 0;
+
+	///@}
+
+	///@name Write-access control
+	///@{
+
+	/// @copydoc cci_base_param::lock
+	virtual bool lock(void* pwd = NULL) = 0;
+
+	/// @copydoc cci_base_param::unlock
+	virtual bool unlock(void* pwd = NULL) = 0;
+
+	/// @copydoc cci_base_param::is_locked
+	virtual bool is_locked() const = 0;
+
+	///@}
+
+	///@name Query parameter type and name
+	///@{
+
+	/// @copydoc cci_base_param::get_basic_type
+	virtual basic_param_type get_basic_type() const = 0;
+
+	/// @copydoc cci_base_param::get_name
+	virtual const std::string& get_name() const = 0;
+
+	///@}
+
+	///@name Type-punned value operations
+	///@{
+
+	/// @copydoc cci_base_param::get
+	virtual const void* get() const = 0;
+
+	/// @copydoc cci_base_param::get_default_value
+	virtual const void* get_default_value() const = 0;
+
+	/// @copydoc cci_base_param::set(const void*)
+	virtual void set(const void* vp) = 0;
+
+	/// @copydoc cci_base_param::set(const void*, const void*)
+	virtual void set(const void* vp, const void* pwd) = 0;
+
+	/// Computer if the stored values are equal
+	/**
+	* @param rhs reference to another cci_param implementation
+	* @return True if both values are equal
+	*/
+	virtual bool equals(const cci_param_impl_if& rhs) const = 0;
+
+	///@}
+
+
+	///@name Initialization and Destructions methods
+	///@{
+
+	/// @copydoc cci_base_param::init
+	virtual void init() = 0;
+
+	/// @copydoc cci_base_param::destroy
+	virtual void destroy() = 0;
+
+	///@}
+
+};
+
 CCI_CLOSE_CONFIG_NAMESPACE_
 
 #endif

@@ -301,16 +301,6 @@ class ex17_cci_configFile_Tool {
           std::string val = tok.substr(pos, tok.length() - pos);
           val = val.substr(val.find_first_of(separators) + 1);
           boost::algorithm::trim(val);
-          if (val.find_first_of('"') != std::string::npos
-              && val.find_first_of('"') != val.find_last_of('"')) {
-            val = val.substr(val.find_first_of('"') + 1,
-                             val.find_last_of('"')
-                             - val.find_first_of('"') - 1);
-          }
-          std::string::size_type loc = 0;
-          while ((loc = val.find("\\\"", loc)) != std::string::npos) {
-            val.replace(loc, 2, "\"");
-          }
           std::string parname = p.first[0];
 
           // package the configuration

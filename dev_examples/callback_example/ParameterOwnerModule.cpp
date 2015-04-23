@@ -39,23 +39,9 @@ void ParameterOwnerModule::main_action() {
 
   // demonstrate has_default_value
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
-  // Need to catch the error here
-  cout << name() << ": bool_param get_default_value()=";
-  try {
-    cout << bool_param.get_default_value()<<endl;
-  } catch(sc_core::sc_report e) {
-    // If get_param_failed error, catch it
-    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
-	    case cci::cnf::CCI_GET_PARAM_FAILURE: 
-        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
-        break;
-      default:
-        // If other error, throw it again
-        throw e;
-    }
-  }
 
   // demonstrate is_invalid_value
+  bool_param.set_invalid_value();
   cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
   bool_param = true;
   cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
@@ -85,7 +71,7 @@ void ParameterOwnerModule::main_action() {
 
   // create and access a local parameter
   cout << name() << ": create parameter " << endl;
-  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param");
+  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param", 0);
   cout << "  created " << uchar_param.get_name() << endl;
   cout << name() << ": Set the new parameter uchar_param" << endl;
   uchar_param = 'u';

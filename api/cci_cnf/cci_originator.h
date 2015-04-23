@@ -21,6 +21,8 @@
 
 CCI_OPEN_CONFIG_NAMESPACE_
 
+/// Originator information when functions being called by the main object (which only the owner shall use)
+extern const std::string PARAM_ORIGINATOR;
 
 /// Originator class which is used to handle the originator information independently from its data type (object pointer or string)
 /**
@@ -179,6 +181,32 @@ protected:
 
 };
 
+/// Global originator RAII helper class
+/**
+* Helper class to handle setting the global originator
+* 
+*/
+class cci_originator_lock
+{
+public:
+	///Sets global originator to originator parameter
+	explicit cci_originator_lock(const cci_originator& originator) :
+		originator_backup(cci_originator::set_global_originator(&originator))
+	{}
+
+	///Reverts global originator back to original version
+	~cci_originator_lock()
+	{
+		cci_originator::set_global_originator(originator_backup);
+	}
+
+private:
+
+	///Disable coping of lock
+	cci_originator_lock( const cci_originator_lock& );
+
+	const cci_originator * originator_backup;
+};
 
 CCI_CLOSE_CONFIG_NAMESPACE_
 

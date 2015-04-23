@@ -36,7 +36,7 @@ public:
   OwnerModuleA(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
   , int_param ("int_param", 50 )
-  , bool_param("bool_param")
+  , bool_param("bool_param", false)
   , string_param("string_param", "This is from std library A")
   { 
     SC_THREAD(main_action);

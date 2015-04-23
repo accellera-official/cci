@@ -17,6 +17,9 @@
 #ifndef CCI_CNF_CCI_FACTORY_H_INCLUDED_
 #define CCI_CNF_CCI_FACTORY_H_INCLUDED_
 
+#include <string>
+#include "cci_datatypes.h"
+
 /**
  * @file
  * @author Christian Schroeder, GreenSocs Ltd.
@@ -26,20 +29,11 @@
  */
 
 CCI_OPEN_CONFIG_NAMESPACE_
-  
-/// Parameter factory function being called from the cci param constructor to construct the underlying parameter
-/**
- * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
- *
- * The implementation shall return a new parameter object.
- *
- * @param owner_par CCI Parameter which will store the returned param
- * @param nam The (local or top-level) name the parameter shall get
- * @param is_top_level_name If the given name shall be a top-level name
- * @param broker_accessor The broker accessor responsible for this parameter
- */
-template<typename T, cci::cnf::param_mutable_type TM>
-cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+
+template<class T, param_mutable_type TM>
+class cci_param;
+
+class cci_cnf_broker_if;
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -48,13 +42,13 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
  * The implementation shall return a new parameter object.
  *
  * @param owner_par CCI Parameter which will store the returned param
- * @param nam       The (local or top-level) name the parameter shall get
- * @param val       Default value for this parameter
+ * @param name      The (local or top-level) name the parameter shall get
+ * @param value     Default value for this parameter
  * @param is_top_level_name If the given name shall be a top-level name
  * @param broker_accessor The broker accessor responsible for this parameter
  */
-template<typename T, cci::cnf::param_mutable_type TM>
-cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const T& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+template<typename T, param_mutable_type TM>
+cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const T& value, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -63,39 +57,13 @@ cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> 
  * The implementation shall return a new parameter object.
  *
  * @param owner_par CCI Parameter which will store the returned param
- * @param nam       The (local or top-level) name the parameter shall get
- * @param val       Default value (as JSON string) for this parameter
+ * @param name      The (local or top-level) name the parameter shall get
+ * @param value     Default value (as JSON string) for this parameter
  * @param is_top_level_name If the given name shall be a top-level name
  * @param broker_accessor The broker accessor responsible for this parameter
  */
-template<typename T, cci::cnf::param_mutable_type TM>
-cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const char* val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
-
-/// Parameter factory function that is called after construction and after adding to the broker from within the cci param constructor
-/**
- * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
- *
- * The implementation is free to use this function for initialization.
- * Note that the registration with the broker had already been done.
- *
- * @param owner_par CCI Parameter which shall be initialized
- */
-template<typename T, cci::cnf::param_mutable_type TM>
-void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par);
-
-/// Parameter factory function that is called by the cci_param wrapper
-/**
- * Forward declaration, to be implemented by the parameter vendor(s) for all supported data types.
- *
- * This shall never be called anywhere else that the cci_param destructor. 
- * The implementation shall delete (or free) the underlying parameter.
- *
- * @param param CCI Parameter which is destructed, whose underlying parameter can be deleted.
- */
-template<class T, cci::cnf::param_mutable_type TM>
-void destroy_cci_param(cci::cnf::cci_param<T, TM>* param);
-
-
+template<typename T, param_mutable_type TM>
+cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const cci_value& value, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 CCI_CLOSE_CONFIG_NAMESPACE_
 

@@ -40,8 +40,8 @@ public:
   , uint_param("uint_param", 12000)
   , uint_param2("uint_param2", 12)
   , str_param ("str_param", "This is a test string.")
-  , bool_param("bool_param") // no default value
-  , top_param("top.arbitrary.param", "This is a param with top-level-name", cci::cnf::CCI_TOP_LEVEL_NAME)
+  , bool_param("bool_param", false)
+  , top_param("top.arbitrary.param", 0, cci::cnf::CCI_TOP_LEVEL_NAME) //This is a param with top-level-name
   { 
     SC_THREAD(main_action);
   }

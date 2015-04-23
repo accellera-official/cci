@@ -45,6 +45,8 @@
  */
 struct route_table_ut {
  public:
+	 friend bool operator== (const route_table_ut&, const route_table_ut&);
+
   /**
    *  @fn     route_table_ut()
    *  @brief  The class constructor
@@ -133,6 +135,13 @@ std::istream& operator >>(std::istream& is, route_table_ut& ud)
 typedef gs::cnf::gs_param<route_table_ut> user_data_type;
 
 
+inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
+{
+	return lhs.d_address == rhs.d_address &&
+		lhs.index == lhs.index &&
+		lhs.s_address == lhs.s_address;
+}
+
 // ----------------------------------------------------------------------------
 // copied from gs_cci_symbols.cpp
 
@@ -140,11 +149,8 @@ typedef gs::cnf::gs_param<route_table_ut> user_data_type;
 
 namespace cci { namespace cnf {
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam,                   const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci::cnf::cci_param_impl_if<PTYPE, MUTABILITY_TYPE>*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const char* val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template                                                  void  init_cci_param   (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par); \
-  template                                                  void  destroy_cci_param(cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE>* param    );
+  template  cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
+  template  cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::mutable_param) \

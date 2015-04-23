@@ -4,10 +4,10 @@ In file: <removed by verify.pl>
 Owner.int_param exists (implicit or explicit)
 @0 s /0 (Manipulator): Write originator for IMPLICIT param Owner.int_param (from broker): Manipulator
 
-Warning: deserialize: Conversion error: 'This is a param with top-level-name'
+Warning: deserialize: Conversion error: '"This is a param with top-level-name"'
 In file: <removed by verify.pl>
 
-Warning: deserialize: Conversion error: 'This is a param with top-level-name'
+Warning: deserialize: Conversion error: '"This is a param with top-level-name"'
 In file: <removed by verify.pl>
 
 ------ sc_start() ----------------
@@ -44,10 +44,7 @@ Owner: set uint_param=10
 Owner: uint_param is_default_value()=0
 
 Owner: uint_param get_default_value()=12000
-Owner: bool_param get_default_value()=
-Owner: Caught Error: /ASI/CCI/GET_PARAM_FAILED: Param has no default value.
-In file: <removed by verify.pl>
-In process: Owner.main_action @ 0 s
+Owner: bool_param get_default_value()=0
 Owner: bool_param is_invalid_value()=1
 Owner: bool_param is_invalid_value()=0
 Owner: bool_param is_invalid_value()=1

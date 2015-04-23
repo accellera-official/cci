@@ -65,7 +65,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // API to assign initial value before the
   // construction of the model hierarchy begins.
   globalBroker->json_deserialize_initial_value(
-      "param_owner.mutable_string_param", "Initialized within sc_main");
+      "param_owner.mutable_string_param", "\"Initialized within sc_main\"");
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Demonstrating 'comparison' between the values"

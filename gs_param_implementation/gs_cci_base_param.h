@@ -28,12 +28,12 @@
 #include <iostream>
 #include <map>
 #include <set>
-
+#include "cci_cnf/cci_param_impl_if.h"
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   
   class gs_cci_base_param
-  : virtual public cci::cnf::cci_base_param_impl_if
+  : public cci::cnf::cci_param_impl_if
   {
   protected:
     /// Typedef for the param itself.
@@ -150,7 +150,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       // This has already been done in the cci_param constructor!
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(get_cci_base_param());
       //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(this);
-      m_post_write_callback = register_callback(cci::cnf::post_write, &m_status_guard, cci::bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      m_post_write_callback = register_callback(cci::cnf::post_write, &m_status_guard, bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
@@ -169,19 +169,13 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     cci::cnf::cci_base_param* get_cci_base_param() { return &m_owner_par; }
     operator cci::cnf::cci_base_param& () { return m_owner_par; }
     
-    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::param_type_not_available; }
+    virtual cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::param_type_not_available; }
 
     virtual const std::string& get_name() const {
       assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
       return m_gs_param_base->getName();
     }
-    
-    // ///////   Set and Get with JSON String Representation   //////////// //
-
-    virtual void json_deserialize(const std::string& json_string) = 0;
-    
-    virtual std::string json_serialize() const = 0;
-    
+        
     // //////////////// stuff /////////////////////////// //
     
     virtual bool lock(void* pwd = NULL)   { assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
@@ -224,7 +218,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     virtual cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(type, cci::shared_ptr<cci::cnf::callb_adapt>(new cci::cnf::callb_adapt(observer, function, get_cci_base_param())));
+      return register_callback(type, cci::make_shared<cci::cnf::callb_adapt>(observer, function, get_cci_base_param()));
     }
     
     virtual cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
@@ -315,7 +309,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     /**
      * This is called by function that writes successfully to the value of this parameter
      */
-    void update_latest_write_originator() {
+    void update_latest_write_originator() const {
       const cci::cnf::cci_originator* orig = cci::cnf::cci_originator::get_global_originator();
       if (orig) {
         m_latest_write_access_originator_valid = true;
@@ -327,9 +321,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     }
     
   protected:
-    
-    /// String whose reference can be returned as string value
-    mutable std::string return_string;
     
     std::vector<internal_callback_forwarder*> fw_vec;
     
@@ -351,12 +342,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     cci::cnf::cci_cnf_broker_if* m_broker_accessor;
     
     /// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
-    cci::cnf::cci_originator m_latest_write_access_originator_cp;
+	mutable cci::cnf::cci_originator m_latest_write_access_originator_cp;
     /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
-    bool m_latest_write_access_originator_valid;
+    mutable bool m_latest_write_access_originator_valid;
     
   };
-
 
 __CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 

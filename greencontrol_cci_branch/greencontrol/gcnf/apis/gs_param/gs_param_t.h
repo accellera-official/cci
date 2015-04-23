@@ -247,7 +247,7 @@ public:
   }
   
   // Set function overriding the lock
-  bool setValue(const val_type& val, void* lock_pwd) {                                 
+  bool setValue(const val_type& val, const void* lock_pwd) {                                 
     if (gs_param_base::m_locked && gs_param_base::m_lock_pwd != lock_pwd) {
       SC_REPORT_INFO(GCNF_SC_REPORTER(this->getName()), "parameter is locked with different password than given one!");
       return false;                                                                     

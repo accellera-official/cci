@@ -35,6 +35,7 @@
 #include <systemc.h>
 #include <iostream>
 #include <string>
+#include <cci_cnf/cci_param_impl_if.h>
 
 /**
  *  @struct user_data_type
@@ -42,12 +43,15 @@
  */
 struct user_data_type {
   friend std::ostream& operator <<(std::ostream& os, const user_data_type& ud);
+  friend bool operator==(const user_data_type&, const user_data_type&);
 
   user_data_type(sc_dt::uint64 saddr, sc_dt::uint64 daddr, unsigned idx)
       : s_address(saddr),
         d_address(daddr),
         index(idx) {
   }
+
+
 
   sc_dt::uint64 s_address;
   sc_dt::uint64 d_address;
@@ -60,9 +64,9 @@ struct user_data_type {
  *  @brief  User defined type cci parameter struct.
  */
 struct cci_param_user_data_type
-    : public cci::cnf::cci_param_impl_if<user_data_type,
-                                         cci::cnf::mutable_param> {
-  // Virtual function in cci_param_impl_if
+    : public cci::cnf::cci_param_impl_if {
+
+	// Virtual function in cci_param_impl_if
   /**
    *  @fn     void set(const user_data_type& val)
    *  @brief  Function to set the value of the parameter
@@ -76,8 +80,16 @@ struct cci_param_user_data_type
    *  @brief  Function to get the user defined type for the parameter
    *  @return The user_data_type of the parameter.
    */
-  const user_data_type& get() const;
+  const void * get() const;
 
+   /**
+   *  @fn     void set(const user_data_type& val, void* lock_pwd)
+   *  @brief  Function to set the value of the parameter along with the lock password.
+   *  @param  val The value to assign
+   *  @return void
+   */
+  void set(const void* val);
+  
   /**
    *  @fn     void set(const user_data_type& val, void* lock_pwd)
    *  @brief  Function to set the value of the parameter along with the lock password.
@@ -85,7 +97,7 @@ struct cci_param_user_data_type
    *  @param  lock_pwd  The password for the parameter
    *  @return void
    */
-  void set(const user_data_type& val, void* lock_pwd);
+  void set(const void* val, const void* lock_pwd);
 
   /**
    *  @fn     std::string json_serialize(const user_data_type& val) const
@@ -109,7 +121,7 @@ struct cci_param_user_data_type
    *  @brief  Retrieve the default value of the parameter
    *  @return The user data type for the value of the parameter
    */
-  const user_data_type& get_default_value();
+  const void* get_default_value() const;
 
   // Virtual function in cci_base_param_impl_if
 
@@ -133,7 +145,7 @@ struct cci_param_user_data_type
    *  @brief  Function to retrive the basic type of the parameter
    *  @return The basic type.
    */
-  const cci::cnf::basic_param_type get_basic_type() const;
+  cci::cnf::basic_param_type get_basic_type() const;
 
   /**
    *  @fn     void set_value(const cci::cnf::cci_value& val)
@@ -276,7 +288,20 @@ struct cci_param_user_data_type
    *  @return True or false depending on whether or not the parameter is locked
    */
   bool is_locked() const;
+  
+  /**
+  *  @fn     bool equals(const cci_param_impl_if& rhs) const;
+  *  @param  rhs reference to another cci_param implementation
+  *  @return True if both values are equal
+  */
+  virtual bool equals(const cci_param_impl_if& rhs) const;
 
+  /// Initialize 
+  virtual void init();
+  
+  /// Destroy
+  virtual void destroy();
+  
   /**
    *  @fn     cci::cnf::cci_originator* get_latest_write_originator() const
    *  @brief  Retrieve the last person to write to the parameter

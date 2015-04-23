@@ -35,13 +35,13 @@ public:
 	
   /// Constructor
   ParameterOwnerModule(sc_core::sc_module_name name)
-  : sc_core::sc_module(name)
+  : sc_module(name)
   , int_param ("int_param", 50 )
   , uint_param("uint_param", 12000)
   , uint_param2("uint_param2", 12)
-  , str_param ("str_param", "This is a test string.")
-  , bool_param("bool_param") // no default value
-  , top_param("top.arbitrary.param", "This is a param with top-level-name", cci::cnf::CCI_TOP_LEVEL_NAME)
+  , str_param("str_param", cci::cnf::cci_value("This is a test string."))
+  , bool_param("bool_param", false)
+  , top_param("top.arbitrary.param", cci::cnf::cci_value("This is a param with top-level-name") , cci::cnf::CCI_TOP_LEVEL_NAME)
   { 
     SC_THREAD(main_action);
   }

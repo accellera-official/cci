@@ -36,8 +36,8 @@ public:
   OwnerModuleB(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
   , int_param ("int_param", 150 )
-  , bool_param("bool_param")
-  , test_datatype_param("test_datatype_param")
+  , bool_param("bool_param", false)
+  , test_datatype_param("test_datatype_param", test_datatype())
   { 
     SC_THREAD(main_action);
   }

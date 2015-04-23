@@ -41,8 +41,8 @@ int sc_main(int argc, char *argv[]) {
   ValueModule           valueMod   ("ValueMod");
   
   cci::cnf::cci_param<std::string> top_param1("top.param1", "This is a param with top-level-name", cci::cnf::CCI_TOP_LEVEL_NAME);
-  cci::cnf::cci_param<bool>        top_param2("param2", "This is a param with top-level-name");
-  cci::cnf::cci_param<int>         top_param3("top.arbitrary.param3", "This is a param with top-level-name", cci::cnf::CCI_TOP_LEVEL_NAME);
+  cci::cnf::cci_param<bool>        top_param2("param2", cci::cnf::cci_value("This is a param with top-level-name"));
+  cci::cnf::cci_param<int>         top_param3("top.arbitrary.param3", cci::cnf::cci_value("This is a param with top-level-name"), cci::cnf::CCI_TOP_LEVEL_NAME);
 
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
   sc_core::sc_start(); 
