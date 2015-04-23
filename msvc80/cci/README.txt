@@ -39,6 +39,8 @@ You shall have the following software/libraries before you start:
   1. SystemC installation       (mandatory for all operations in this guide)
   2. Cygwin/MSYS installation   (mandatory for regression tests in this guide)
   3. Boost library installation (mandatory for all operations in this guide)
+  4. Microsoft Visual Studio
+  5. rapidjson git submodule	(`git submodule update -i` from CCI root dir)
 
 And they are verified with following versions:
 
@@ -83,6 +85,9 @@ How to build the three PoC libraries
        - 10.0/2010 - "msvc10"
        - 11.0/2012 - "msvc11"
        - 12.0/2013 - "msvc12"
+
+       IMPORTANT NOTE: you will need to manually sync future git updates to
+       msvc80 once you've made a copy of this directory!
 
      - Open the solution file `cci.sln' with your version of MSVC and
        follow the upgrade instructions.
@@ -245,7 +250,8 @@ has the correct name for the version of Visual C++ you are using
 
      Note: In order to perform source-level debugging of an example, you can
            keep the results of a previous debug run (with `-g -no-cleanup')
-           and open the executable from the Visual Studio GUI afterwards.
+           and open the executable (as a project) from the Visual Studio GUI 
+	   afterwards.
 
 
 How to build MSVC projects for CCI examples
