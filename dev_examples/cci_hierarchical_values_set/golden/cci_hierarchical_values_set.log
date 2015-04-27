@@ -1,0 +1,28 @@
+
+------ sc_start() ----------------
+
+
+**** Parameter list and values: @ 0 s
+
+Warning: GreenSocs/cci/not_implemented: pattern limited to GreenConfig capabilities
+In file: <removed by verify.pl>
+In process: cfg_ip.execute @ 0 s
+sim_ip.ChildModule.log_level = 0
+sim_ip.ChildModule.mParam1 = 0
+sim_ip.ChildModule.mParam2 = 0
+sim_ip.log_level = 0
+sim_ip.mParam1 = 0
+sim_ip.mParam2 = 0
+
+**** Set log_Leve to 500: @ 10 ns
+
+**** Parameter list and values: @ 30 ns
+sim_ip.ChildModule.log_level = 500
+sim_ip.ChildModule.mParam1 = 0
+sim_ip.ChildModule.mParam2 = 0
+sim_ip.log_level = 500
+sim_ip.mParam1 = 0
+sim_ip.mParam2 = 0
+
+------ sc_start() returned -------
+
