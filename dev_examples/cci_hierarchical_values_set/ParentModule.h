@@ -22,10 +22,10 @@
  *****************************************************************************/
 
 /**
- * @file   cci_value_simple/main.cpp
- * @author Philipp A. Hartmann, OFFIS/Intel
- * @brief  Simple example of the new cci_value interface
+ * @file   cci_hierarchical_values_set/ParentModule.h
+ * @author Lei Liang, Ericsson
  */
+
 #ifndef __PARENTMODULE_H__
 #define __PARENTMODULE_H__
 

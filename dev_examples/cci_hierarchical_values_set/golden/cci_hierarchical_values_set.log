@@ -14,7 +14,7 @@ sim_ip.log_level = 0
 sim_ip.mParam1 = 0
 sim_ip.mParam2 = 0
 
-**** Set log_Leve to 500: @ 10 ns
+**** Set all log_level to 500: @ 10 ns
 
 **** Parameter list and values: @ 30 ns
 sim_ip.ChildModule.log_level = 500

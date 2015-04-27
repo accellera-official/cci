@@ -22,9 +22,8 @@
  *****************************************************************************/
 
 /**
- * @file   cci_hierarchical_values_set/ChildModule.h
+ * @file   cci_hierarchical_values_set/ConfigModule.h
  * @author Lei Liang, Ericsson
- * @brief  Simple example of the new cci_value interface
  */
 #ifndef __CONFIGMODULE_H__
 #define __CONFIGMODULE_H__
@@ -74,7 +73,7 @@ public:
 
     wait(10,sc_core::SC_NS);
 
-    std::cout << std::endl << "**** Set log_Leve to 500: @ "<<sc_core::sc_time_stamp() << std::endl;
+    std::cout << std::endl << "**** Set all log_level to 500: @ "<<sc_core::sc_time_stamp() << std::endl;
 
 
     for (it = vec_ll.begin() ; it < vec_ll.end(); it++) {
