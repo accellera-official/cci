@@ -274,6 +274,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\..\api\cci_cnf\cci_base_param.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\api\cci_cnf\cci_broker_manager.cpp"
 				>
 			</File>
@@ -301,10 +305,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\api\cci_cnf\cci_base_param.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_base_param_impl_if.h"
 				>
 			</File>
 			<File
