@@ -48,14 +48,11 @@ class cci_param
 {
 
 public:
-
+	/// The parameter's value type.
 	typedef T value_type;
 
 	using cci_param_b<T>::operator =;
   
-	// //////////////////////////////////////////////////////////////////// //
-	// ///////////////   Construction / Destruction   ///////////////////// //
-
 	/// Constructor with (local/hierarchical) name and initial value.
 	cci_param(const std::string& name, const value_type& value);
 	
@@ -80,7 +77,7 @@ public:
 	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
 	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, cci_cnf_broker_if& private_broker);
 
-	/// Copy myself; The copy is a parameter accessor object holding the originator information and pointing to the same parameter
+	///Creates a parameter accessor object holding the originator information and pointing to the same parameter
 	/**
 	* This shall be used by the broker when returning a not yet created parameter accessor.
 	*
@@ -91,6 +88,7 @@ public:
 	virtual cci_param<value_type, TM>* create_accessor(const cci_originator& originator);
 
 private:
+	/// Constructor to create accessors with a giver originator
 	cci_param(cci_param<value_type, TM> & copy, const cci_originator& originator);
 };
 
@@ -102,7 +100,7 @@ private:
 #define CCI_PARAM_CONSTRUCTOR_IMPL_A(signature, top, broker)  \
 template <typename T, param_mutable_type TM>                  \
 cci_param<T, TM>::cci_param signature :                       \
-	cci_param_b<T>(                                              \
+	cci_param_b<T>(                                           \
 				*create_cci_param(this, name, value,          \
 					                  top, & broker),         \
 				PARAM_ORIGINATOR)                             \

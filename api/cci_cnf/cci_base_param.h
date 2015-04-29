@@ -41,15 +41,17 @@ CCI_OPEN_CONFIG_NAMESPACE_
 //Forward declaration of implementation
 class cci_param_impl_if;
 
+// CCI Configuration parameter base class
+/**
+* Type independent base class all cci parameters derive from.
+* This class gives some easier access to type independent functions.
+*/
 class cci_base_param
 {
 
 public:
 
 	/// Destructor.
-	/**
-	*
-	*/
 	virtual ~cci_base_param();
 
 	///@name Set and Get with JSON String Representation
@@ -269,17 +271,33 @@ public:
 	///@name Accessor methods
 	///@{
 
+	///Checks if the current functions 
+	/**
+	* @return   True if the current parameter is an accessor
+	*/
 	bool is_accessor() const;
 	
+	///Gets cci_originator of parameter
 	cci_originator get_originator() const;
 
+	///Creates a parameter accessor object holding the originator information and pointing to the same parameter
+	/**
+	* This shall be used by the broker when returning a not yet created parameter accessor.
+	*
+	* @param originator  Originator object the returned parameter accessor shall represent
+	* @return  A newed copy pointing to the same implementation parameter.
+	*          Memory management has to be done by the caller!
+	*/
 	virtual cci_base_param* create_accessor(const cci_originator& originator) = 0;
 	
 	///@}
 
 
 protected:
+	///Constructor to create accessor with given originator
 	cci_base_param(cci_base_param & copy, const cci_originator& originator);
+
+	///Constructor to create new parameter with given originator
 	cci_base_param(cci_param_impl_if& impl, const cci_originator& originator);
 
 

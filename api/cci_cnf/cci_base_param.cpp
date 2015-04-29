@@ -31,7 +31,6 @@
 
 CCI_OPEN_CONFIG_NAMESPACE_
 
-	// Constructor and Destructor
 	const std::string PARAM_ORIGINATOR = "owning_param";
 
 	cci_base_param::cci_base_param(cci_base_param & copy, const cci_originator & originator) : m_originator(originator), m_impl(copy.m_impl)
@@ -47,7 +46,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
 			m_impl.destroy();
 		}
 	}
-
 
 	void cci_base_param::json_deserialize(const std::string& json_string)
 	{
@@ -74,7 +72,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
 		return m_impl.get_value();
 	}
 
-	
 	void cci_base_param::set_documentation(const std::string& doc)
 	{
 		cci_originator_lock lock(m_originator);
@@ -86,7 +83,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
 		cci_originator_lock lock(m_originator);
 		return m_impl.get_documentation();
 	}
-
 
 	bool cci_base_param::is_default_value()
 	{
@@ -119,13 +115,13 @@ CCI_OPEN_CONFIG_NAMESPACE_
 	}
 
 
-	cci::shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
+	shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
 	{
 		cci_originator_lock lock(m_originator);
 		return m_impl.register_callback(type, observer, function);
 	}
 
-	cci::shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, cci::shared_ptr<callb_adapt> callb)
+	shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, shared_ptr<callb_adapt> callb)
 	{
 		cci_originator_lock lock(m_originator);
 		return m_impl.register_callback(type, callb);
@@ -155,8 +151,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
 		return m_impl.has_callbacks();
 	}
 
-
-
 	bool cci_base_param::lock(void* pwd)
 	{
 		cci_originator_lock lock(m_originator);
@@ -174,7 +168,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
 		cci_originator_lock lock(m_originator);
 		return m_impl.is_locked();
 	}
-
 
 	basic_param_type cci_base_param::get_basic_type() const
 	{

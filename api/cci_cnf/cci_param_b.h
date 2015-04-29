@@ -31,10 +31,16 @@ limitations under the License.
  */
 CCI_OPEN_CONFIG_NAMESPACE_
 
+// CCI Configuration parameter base class
+/**
+* Typed base class all cci parameters derive from.
+* This class provided helpers for casting in and out of the base typeless functions
+*/
 template<class T>
 class cci_param_b : public cci_base_param
 {
 public:
+	/// The parameter's value type.
 	typedef T value_type;
 
 	///Assigns parameter a new value from another parameter
@@ -72,7 +78,7 @@ public:
 	///Get the value passed in via constructor
 	const value_type & get_default_value();
 
-	/// Copy myself; The copy is a parameter accessor object holding the originator information and pointing to the same parameter
+	///Creates a parameter accessor object holding the originator information and pointing to the same parameter
 	/**
 	* This shall be used by the broker when returning a not yet created parameter accessor.
 	*
@@ -83,8 +89,11 @@ public:
 	virtual cci_param_b<value_type>* create_accessor(const cci_originator& originator) = 0;
 
 protected:
-	cci_param_b(cci_param_b<value_type> & copy, const cci_originator & originator);
-	cci_param_b(cci_param_impl_if &impl, const cci_originator & originator);
+
+	///Constructor to create accessor with given originator
+	cci_param_b(cci_param_b<value_type>& copy, const cci_originator& originator);
+	///Constructor to create new parameter with given originator
+	cci_param_b(cci_param_impl_if& impl, const cci_originator& originator);
 };
 
 template <class T>
