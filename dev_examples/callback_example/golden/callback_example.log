@@ -1,19 +1,19 @@
 @0 s /0 (Observer): register for new parameter callbacks
 @0 s /0 (Observer): ***** New parameter callback: 'Owner.int_param'
-@0 s /0 (Observer):    value '50'
+@0 s /0 (Observer):    value=50
 @0 s /0 (Observer): ***** New parameter callback: 'Owner.uint_param'
-@0 s /0 (Observer):    value '12000'
+@0 s /0 (Observer):    value=12000
 @0 s /0 (Observer): ***** New parameter callback: 'Owner.uint_param2'
-@0 s /0 (Observer):    value '12'
+@0 s /0 (Observer):    value=12
 @0 s /0 (Observer): ***** New parameter callback: 'Owner.str_param'
-@0 s /0 (Observer):    value 'This is a test string.'
+@0 s /0 (Observer):    value="This is a test string."
 @0 s /0 (Observer): ***** New parameter callback: 'Owner.bool_param'
-@0 s /0 (Observer):    value '0'
+@0 s /0 (Observer):    value=false
 
 Warning: deserialize: Conversion error: 'This is a param with top-level-name'
 In file: <removed by verify.pl>
 @0 s /0 (Observer): ***** New parameter callback: 'top.arbitrary.param'
-@0 s /0 (Observer):    value '0'
+@0 s /0 (Observer):    value=0
 
 ------ sc_start() ----------------
 
@@ -22,13 +22,13 @@ Owner: uint_param get_default_value()=12000
 Owner: uint_param=12000
 Owner: uint_param is_default_value()=1
 @0 s /0 (Observer): **** Object callback for parameter 'Owner.uint_param' will change value
-@0 s /0 (Observer): **** Object callback for parameter 'Owner.uint_param' changed to value '12000'
-@0 s /0 (Observer): **** String callback for parameter 'Owner.uint_param' changed to value '12000'
+@0 s /0 (Observer): **** Object callback for parameter 'Owner.uint_param' changed to value=12000
+@0 s /0 (Observer): **** String callback for parameter 'Owner.uint_param' changed to value=12000
 Owner: set uint_param=12000
 Owner: uint_param is_default_value()=0
 @0 s /0 (Observer): **** Object callback for parameter 'Owner.uint_param' will change value
-@0 s /0 (Observer): **** Object callback for parameter 'Owner.uint_param' changed to value '10'
-@0 s /0 (Observer): **** String callback for parameter 'Owner.uint_param' changed to value '10'
+@0 s /0 (Observer): **** Object callback for parameter 'Owner.uint_param' changed to value=10
+@0 s /0 (Observer): **** String callback for parameter 'Owner.uint_param' changed to value=10
 Owner: set uint_param=10
 Owner: uint_param is_default_value()=0
 
@@ -39,37 +39,37 @@ In file: <removed by verify.pl>
 In process: Owner.main_action @ 0 s
 Owner: bool_param is_invalid_value()=1
 @0 s /0 (Observer): **** Object callback for parameter 'Owner.bool_param' will change value
-@0 s /0 (Observer): **** Object callback for parameter 'Owner.bool_param' changed to value '1'
-@0 s /0 (Observer): **** String callback for parameter 'Owner.bool_param' changed to value '1'
+@0 s /0 (Observer): **** Object callback for parameter 'Owner.bool_param' changed to value=true
+@0 s /0 (Observer): **** String callback for parameter 'Owner.bool_param' changed to value=1
 Owner: bool_param is_invalid_value()=0
 Owner: bool_param is_invalid_value()=1
 
 ----------------------------
 Owner: Owner.int_param.json_serialize() = 50
 @1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' will change value
-@1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' changed to value '555000'
-@1 ns /1 (Observer): **** String callback for parameter 'Owner.int_param' changed to value '555000'
+@1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' changed to value=555000
+@1 ns /1 (Observer): **** String callback for parameter 'Owner.int_param' changed to value=555000
 Owner: Owner.int_param.json_deserialize(555000) results in 555000
 Owner: set int_param = 100
 @1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' will change value
-@1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' changed to value '100'
-@1 ns /1 (Observer): **** String callback for parameter 'Owner.int_param' changed to value '100'
+@1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' changed to value=100
+@1 ns /1 (Observer): **** String callback for parameter 'Owner.int_param' changed to value=100
 Owner: set int_param.set(200)
 @1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' will change value
-@1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' changed to value '200'
-@1 ns /1 (Observer): **** String callback for parameter 'Owner.int_param' changed to value '200'
+@1 ns /1 (Observer): **** Object callback for parameter 'Owner.int_param' changed to value=200
+@1 ns /1 (Observer): **** String callback for parameter 'Owner.int_param' changed to value=200
 Owner: create parameter 
 @1 ns /1 (Observer): ***** New parameter callback: 'Owner.uchar_param'
-@1 ns /1 (Observer):    value '0'
+@1 ns /1 (Observer):    value=0
   created Owner.uchar_param
 Owner: Set the new parameter uchar_param
 @1 ns /1 (Observer): **** Object callback for parameter 'Owner.uchar_param' will change value
-@1 ns /1 (Observer): **** Object callback for parameter 'Owner.uchar_param' changed to value '117'
-@1 ns /1 (Observer): **** String callback for parameter 'Owner.uchar_param' changed to value '117'
+@1 ns /1 (Observer): **** Object callback for parameter 'Owner.uchar_param' changed to value=117
+@1 ns /1 (Observer): **** String callback for parameter 'Owner.uchar_param' changed to value=117
 
 Owner: copy @1 ns /1 (Observer): **** Object callback for parameter 'Owner.uint_param' will change value
-@1 ns /1 (Observer): **** Object callback for parameter 'Owner.uint_param' changed to value '12'
-@1 ns /1 (Observer): **** String callback for parameter 'Owner.uint_param' changed to value '12'
+@1 ns /1 (Observer): **** Object callback for parameter 'Owner.uint_param' changed to value=12
+@1 ns /1 (Observer): **** String callback for parameter 'Owner.uint_param' changed to value=12
 ----------------------------
 
 **** Parameter list: 

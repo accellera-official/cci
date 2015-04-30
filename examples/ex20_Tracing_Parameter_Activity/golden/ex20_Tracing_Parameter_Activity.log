@@ -1,7 +1,7 @@
 
-Prior to 0 s
+Info: param_owner: @0 s, Prior to 0 s
 
-	[OWNER C_TOR] : Creating new integer type cci-parameter with default value 10
+Info: param_owner: @0 s, [OWNER C_TOR] : Creating new integer type cci-parameter with default value 10
 
 	[OBSERVER - create_param_cb] : Retrieving reference of newly created cci_parameter
 
@@ -11,8 +11,9 @@ Prior to 0 s
 
 	[OBSERVER - create_param_cb] : Registering other callbacks on the newly created cci-parameters
 
-@ 0 s
-	[OWNER] : Setting new value to the 'int' type param to '15'
+Info: param_owner: @0 s, @ 0 s
+
+Info: param_owner: @0 s, [OWNER] : Setting new value to the 'int' type param to '15'
 
 	[OBSERVER - pre_write_cb] : Retrieving details of new cci-parameter
 	[OBSERVER - pre_read_cb] : Parammeter Name : param_owner.int_param	value will be read.
@@ -21,13 +22,14 @@ Prior to 0 s
 	[OBSERVER - post_write_cb] : Retrieving details of new cci-parameter
 	[OBSERVER - pre_read_cb] : Parammeter Name : param_owner.int_param	value will be read.
 	[OBSERVER - post_write_cb] : Parameter Name : param_owner.int_param	Parameter Value : 15
-@ 5 ns
 
-	[OWNER] : Creating new float type cci-parameter with default value : 12.345
+Info: param_owner: @5 ns, @ 5 ns
+
+Info: param_owner: @5 ns, [OWNER] : Creating new 'double' type cci-parameter with default value : 12.345
 
 	[OBSERVER - create_param_cb] : Retrieving reference of newly created cci_parameter
 
-	[OBSERVER - create_param_cb] : Parameter Name : param_owner.float_param	has been created.
+	[OBSERVER - create_param_cb] : Parameter Name : param_owner.double_param	has been created.
 
 	[OBSERVER - create_param_cb] : Parameter Value : 12.345
 

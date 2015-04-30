@@ -1,0 +1,15 @@
+We are following Philipp's recommendations (from 
+https://github.com/OSCI-WG/cci/pull/17) to achieve consistency with other 
+SystemC standards:
+
+- Generally follow Google C++ style guide
+  (Over time we will note critical exceptions in this document.)
+- naming all lower-case, separated by underscores
+- nested typedefs with `_type`
+- base classes ending with `_base` (or `_b`)
+
+We also agreed (in 3/16/2015 WG meeting) to use:
+- 'get_' prefix for all getters
+- 'set_' prefix for all setters
+This varies slightly from the SystemC norm but we felt strict uniformity was
+more important.

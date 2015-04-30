@@ -19,10 +19,7 @@
 using namespace std;
 
 void show_cci_value_vector(const cci::cnf::cci_value_list& vec) {
-  for (std::vector<cci::cnf::cci_value>::const_iterator iter = vec.begin(); iter != vec.end(); iter++) {
-    std::cout << iter->get_string() << ", ";
-  }
-  std::cout << std::endl;
+  std::cout << vec << std::endl;
 }
 
 
@@ -62,15 +59,15 @@ void ParameterOwnerModule::main_action() {
   DEMO_DUMP(name(), "  got " << boole << endl);
 
   cci::cnf::cci_value dbl_v(10.123);
-  DEMO_DUMP(name(), "Set and get parameter Owner.double_param - value = " << dbl_v.get_real());
+  DEMO_DUMP(name(), "Set and get parameter Owner.double_param - value = " << dbl_v.get_double());
   double_param.set_value(dbl_v);
-  double dbl = double_param.get_value().get_real();
+  double dbl = double_param.get_value().get_double();
   DEMO_DUMP(name(), "  got " << dbl << endl);
   
   cci::cnf::cci_value flt_v(98.765);
-  DEMO_DUMP(name(), "Set and get parameter Owner.float_param - value = " << flt_v.get_real());
+  DEMO_DUMP(name(), "Set and get parameter Owner.float_param - value = " << flt_v.get_double());
   float_param.set_value(flt_v);
-  float flt = float_param.get_value().get_real();
+  float flt = float_param.get_value().get_double();
   DEMO_DUMP(name(), "  got " << flt << endl);
   
   cci::cnf::cci_value str_v("This is a string");
@@ -102,8 +99,8 @@ void ParameterOwnerModule::main_action() {
   char_param.set_value(c_v);
   char c = char_param.get_value().get_int();
   DEMO_DUMP(name(), "  got " << c << endl);
-  cci::cnf::cci_value c_vs("A");
-  DEMO_DUMP(name(), "Set and get parameter Owner.char_param - value = " << c_vs.get_string());
+  cci::cnf::cci_value c_vs('A');
+  DEMO_DUMP(name(), "Set and get parameter Owner.char_param - value = " << (char)c_vs.get_int());
   char_param.set_value(c_vs);
   c = char_param.get_value().get_int();
   DEMO_DUMP(name(), "  got " << c << endl);
@@ -144,48 +141,40 @@ void ParameterOwnerModule::main_action() {
   */
   
   cci::cnf::cci_value scintbv_v(-1000);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scintbase_param - value = " << scintbv_v.get_int64());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scintbase_param - value = " << scintbv_v);
   scintb_param.set_value(scintbv_v);
-  sc_dt::int64 scintb(scintb_param.get_value().get_int64());
-  DEMO_DUMP(name(), "  got " << scintb << endl);
+  DEMO_DUMP(name(), "  got " << scintb_param.get_value() << endl);
   cci::cnf::cci_value scintbv_vs("-111000");
-  DEMO_DUMP(name(), "Set and get parameter Owner.scintbase_param - value = " << scintbv_vs.get_string());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scintbase_param - value = " << scintbv_vs);
   scintb_param.set_value(scintbv_vs);
-  scintb = scintb_param.get_value().get_int64();
-  DEMO_DUMP(name(), "  got " << scintb << endl);
+  DEMO_DUMP(name(), "  got " << scintb_param.get_value() << endl);
   
   cci::cnf::cci_value scuintbv_v(1000);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scuintbase_param - value = " << (sc_dt::uint64) scuintbv_v.get_int64());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scuintbase_param - value = " << scuintbv_v);
   scuintb_param.set_value(scuintbv_v);
-  sc_dt::uint64 scuintb(scuintb_param.get_value().get_int64());
-  DEMO_DUMP(name(), "  got " << scuintb << endl);
+  DEMO_DUMP(name(), "  got " << scuintb_param.get_value() << endl);
   cci::cnf::cci_value scuintbv_vs("111000");
-  DEMO_DUMP(name(), "Set and get parameter Owner.scuintbase_param - value = " << scuintbv_vs.get_string());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scuintbase_param - value = " << scuintbv_vs);
   scuintb_param.set_value(scuintbv_vs);
-  scuintb = scuintb_param.get_value().get_int64();
-  DEMO_DUMP(name(), "  got " << scuintb << endl);
+  DEMO_DUMP(name(), "  got " << scuintb_param.get_value() << endl);
   
   cci::cnf::cci_value scsigned_v(-3000);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scsigned_param - value = " << scsigned_v.get_int64());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scsigned_param - value = " << scsigned_v);
   scsigned_param.set_value(scsigned_v);
-  std::string scsigned(scsigned_param.get_value().get_string());
-  DEMO_DUMP(name(), "  got " << scsigned << endl);
+  DEMO_DUMP(name(), "  got " << scsigned_param.get_value() << endl);
   cci::cnf::cci_value scsigned_vs("-2000");
-  DEMO_DUMP(name(), "Set and get parameter Owner.scsigned_param - value = " << scsigned_vs.get_string());
   scsigned_param.set_value(scsigned_vs);
-  scsigned = scsigned_param.get_value().get_string();
-  DEMO_DUMP(name(), "  got " << scsigned << endl);
+  DEMO_DUMP(name(), "Set and get parameter Owner.scsigned_param - value = " << scsigned_vs);
+  DEMO_DUMP(name(), "  got " << scsigned_param.get_value() << endl);
   
   cci::cnf::cci_value scunsigned_v(3000);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scunsigned_param - value = " << scunsigned_v.get_int64());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scunsigned_param - value = " << scunsigned_v);
   scunsigned_param.set_value(scunsigned_v);
-  std::string scunsigned(scunsigned_param.get_value().get_string());
-  DEMO_DUMP(name(), "  got " << scunsigned << endl);
+  DEMO_DUMP(name(), "  got " << scunsigned_param.get_value() << endl);
   cci::cnf::cci_value scunsigned_vs("2000");
   DEMO_DUMP(name(), "Set and get parameter Owner.scunsigned_param - value = " << scunsigned_vs.get_string());
   scunsigned_param.set_value(scunsigned_vs);
-  scunsigned = scunsigned_param.get_value().get_string();
-  DEMO_DUMP(name(), "  got " << scunsigned << endl);
+  DEMO_DUMP(name(), "  got " << scunsigned_param.get_value() << endl);
   
   // deprecated data type not implemented in prototype
   //cci::cnf::cci_value scbit_v(1);
@@ -197,26 +186,13 @@ void ParameterOwnerModule::main_action() {
   cci::cnf::cci_value sclogic_v(1);
   DEMO_DUMP(name(), "Set and get parameter Owner.sclogic_param - value = " << sclogic_v.get_int());
   sclogic_param.set_value(sclogic_v);
-  sc_dt::sc_logic sclogic;
-  std::stringstream error;
-  //try {
-  //  sclogic = sclogic_param.get_value().get_int();
-  //} catch(sc_core::sc_report e) {
-  //  error << std::endl << name() << ": Caught " << e.what() << std::endl;
-  //  try {
-      sclogic = sclogic_param.get_value().get_string().at(0);
-  //  } catch(sc_core::sc_report e) {
-  //    error << std::endl << name() << ": Caught " << e.what();
-  //    std::cout << error << std::endl;
-  //  }
-  //}
-  DEMO_DUMP(name(), "  got " << sclogic << endl);
+  DEMO_DUMP(name(), "  got " << sclogic_param.get_value() << endl);
   sclogic_param = sc_dt::Log_X;
-  std::cout << "get cci_value X: " << sclogic_param.get_value().get_string() << std::endl;
+  std::cout << "get cci_value X: " << sclogic_param.get_value() << std::endl;
   cci::cnf::cci_value sclogic_v1("Z");
   std::cout << "set cci_value  Z " << std::endl;
   sclogic_param.set_value(sclogic_v1);
-  std::cout << "get cci_value: " << sclogic_param.get_value().get_string() << std::endl << std::endl;
+  std::cout << "get cci_value: " << sclogic_param.get_value() << std::endl << std::endl;
   
   // checks:
   sc_core::sc_time ti1(1, sc_core::SC_FS); std::cout << ti1 << " ";
@@ -226,41 +202,37 @@ void ParameterOwnerModule::main_action() {
   sc_core::sc_time ti5(1, sc_core::SC_MS); std::cout << ti5 << " ";
   sc_core::sc_time ti6(1, sc_core::SC_SEC); std::cout << ti6 << std::endl;
   // recommended style double (value) + string (unit)
-  cci::cnf::cci_value_list sctime_v_lst;
-  sctime_v_lst.push_back(cci::cnf::cci_value(10.123));
-  sctime_v_lst.push_back(cci::cnf::cci_value("SC_NS"));
-  cci::cnf::cci_value sctime_v(sctime_v_lst);
+  cci::cnf::cci_value sctime_v;
+    sctime_v.set_list()
+      .push_back(10.123)
+      .push_back("SC_NS");
   // alternative style string ???
   //cci::cnf::cci_value sctime_v2("10.123 SC_PS");
-  DEMO_DUMP(name(), "Set and get parameter Owner.sctime_param - value = " << sctime_v.get_list().at(0).get_real() << " " << sctime_v.get_list().at(1).get_string() );
+  DEMO_DUMP(name(), "Set and get parameter Owner.sctime_param - value = " << sctime_v );
   sctime_param.set_value(sctime_v);
-  std::cout << "raw from cci_value (real, string): "<< sctime_param.get_value().get_list().at(0).get_real() << " " << sctime_param.get_value().get_list().at(1).get_string() << std::endl;
-  sc_core::sc_time sctime(sctime_param.get_value().get_list().at(0).get_real(), string_to_sc_time_unit(sctime_param.get_value().get_list().at(1).get_string()));
+  std::cout << "raw from cci_value (real, string): "<< sctime_param.get_value() << std::endl;
+  sc_core::sc_time sctime( sctime_param.get_value().get<sc_core::sc_time>() );
   DEMO_DUMP(name(), "  got " << sctime.to_string() << endl);
     
   cci::cnf::cci_value scint_v(-9223372036854775807ll);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scint64_param - value = " << scint_v.get_int64());
+  DEMO_DUMP(name(), "Set and get parameter Owner.scint64_param - value = " << scint_v);
   scint64_param.set_value(scint_v);
-  sc_dt::sc_int<64> scint(scint64_param.get_value().get_int64());
-  DEMO_DUMP(name(), "  got " << scint << endl);
+  DEMO_DUMP(name(), "  got " << scint64_param.get_value() << endl);
   
-  cci::cnf::cci_value scuint_v((sc_dt::int64)18446744073709551615ull);
-  DEMO_DUMP(name(), "Set and get parameter Owner.scuint64_param - value = " << (sc_dt::uint64) scuint_v.get_int64());
+  cci::cnf::cci_value scuint_v(18446744073709551615ull);
+  DEMO_DUMP(name(), "Set and get parameter Owner.scuint64_param - value = " << scuint_v.get_uint64());
   scuint64_param.set_value(scuint_v);
-  sc_dt::sc_uint<64> scuint(scuint64_param.get_value().get_int64());
-  DEMO_DUMP(name(), "  got " << scuint << endl);
+  DEMO_DUMP(name(), "  got " << scuint64_param.get_value() << endl);
   
   cci::cnf::cci_value scbigint_v("-170141183460469200000000000000000000000");
   DEMO_DUMP(name(), "Set and get parameter Owner.scbigint128_param - value = " << scbigint_v.get_string());
   scbigint128_param.set_value(scbigint_v);
-  sc_dt::sc_bigint<128> scbigint(scbigint128_param.get_value().get_string().c_str());
-  DEMO_DUMP(name(), "  got " << scbigint << endl);
+  DEMO_DUMP(name(), "  got " << scbigint128_param.get_value() << endl);
   
   cci::cnf::cci_value scbiguint_v("340282366920938463463374607431760000000");
   DEMO_DUMP(name(), "Set and get parameter Owner.scbiguint128_param - value = " << scbiguint_v.get_string());
   scbiguint128_param.set_value(scbiguint_v);
-  sc_dt::sc_biguint<128> scbiguint(scbiguint128_param.get_value().get_string().c_str());
-  DEMO_DUMP(name(), "  got " << scbiguint << endl);
+  DEMO_DUMP(name(), "  got " << scbiguint128_param.get_value() << endl);
   
   
   
@@ -272,7 +244,7 @@ void ParameterOwnerModule::main_action() {
   cci::cnf::cci_value valStr("Hello");
   try {
     uint_param.set_value(valStr);
-  } catch(sc_core::sc_report e) {
+  } catch(sc_core::sc_report const & e) {
     switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
       case cci::cnf::CCI_VALUE_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
@@ -292,7 +264,7 @@ void ParameterOwnerModule::main_action() {
 #endif
   try {
     some_param.set_value(valStr);
-  } catch(sc_core::sc_report e) {
+  } catch(sc_core::sc_report const & e) {
     switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
       case cci::cnf::CCI_VALUE_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;

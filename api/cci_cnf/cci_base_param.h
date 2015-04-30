@@ -18,7 +18,7 @@
 #ifndef CCI_CNF_BASE_PARAM_H_INCLUDED_
 #define CCI_CNF_BASE_PARAM_H_INCLUDED_
 
-#include "cci_base_param_impl_if.h"
+#include "cci_cnf/cci_base_param_impl_if.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
 
@@ -39,7 +39,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
     virtual std::string json_serialize() const = 0;
     virtual const basic_param_type get_basic_type() const = 0;
     virtual void set_value(const cci_value& val) = 0;
-    virtual cci_value get_value() = 0;
+    virtual cci_value get_value() const = 0;
     virtual void set_documentation(const std::string& doc) = 0;
     virtual std::string get_documentation() const = 0;
     virtual bool is_default_value() = 0;

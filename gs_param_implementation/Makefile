@@ -21,9 +21,7 @@ OPT    = -g -Wall
 OTHER  = -pedantic -Wno-long-long -Wno-unused-local-typedefs
 CXXFLAGS = $(OPT) $(OTHER)
 
-OBJS = json_spirit/json_spirit_reader.o \
-       json_spirit/json_spirit_writer.o \
-       gs_cci_symbols_templ_small_int.o \
+OBJS = gs_cci_symbols_templ_small_int.o \
        gs_cci_symbols.o
  
 DEPS = $(OBJS:.o=.d)
@@ -49,7 +47,7 @@ GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
 CCI_DIR = $(GS_CCI_HOME)/api
 
-DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES
+DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
 INCDIR = -I$(CCI_DIR) -I$(GS_CONTROL_DIR)\
          -I$(SYSTEMC)/include -I$(BOOST) 
@@ -57,10 +55,12 @@ INCDIR = -I$(CCI_DIR) -I$(GS_CONTROL_DIR)\
 ## -----------------------------------------------------------------------------
 
 LIB=libcciparamimpl.a
+LIBDIR=$(GS_CCI_HOME)/lib
 
-all: $(LIB)
+all: $(LIBDIR)/$(LIB)
 
-$(LIB): $(OBJS)
+$(LIBDIR)/$(LIB): $(OBJS)
+	mkdir -p $(LIBDIR)
 	$(AR) rcs $@ $^
 	ranlib $@
 
@@ -73,7 +73,9 @@ $(LIB): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -MMD -c $< -o $@
 
 clean:
-	rm -f  $(OBJS) $(DEPS) $(LIB)
+	rm -f $(OBJS) $(DEPS)
+	rm -f $(LIBDIR)/$(LIB)
+	-rmdir $(LIBDIR) 2>&1 || true
 
 bigsymbols:
 	$(CXX) $(CXXFLAGS) $(DEFFLAGS) \
@@ -83,5 +85,5 @@ bigsymbols:
 		-c gs_cci_symbols_templ_big_int.cpp -o $(OBJNAME).o $<
 
 full_library: $(OBJS) $(OBJNAME).o
-	$(AR) rcs $(LIB) $^
-	ranlib $(LIB)
+	$(AR) rcs $(LIBDIR)/$(LIB) $^
+	ranlib $(LIBDIR)/$(LIB)

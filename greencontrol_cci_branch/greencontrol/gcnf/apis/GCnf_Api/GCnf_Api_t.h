@@ -841,7 +841,7 @@ public:
    * @param parname   Name of the observed parameter
    * @return          Event which is notified at parameter change.
    */
-  sc_event& getUpdateEvent(const std::string &parname)  throw (RegisterObserverFailedException) {
+  sc_event& getUpdateEvent(const std::string &parname) {
     DEPRECATED_WARNING(name(), "DEPRECATED: getUpdateEvent is deprecated! Use 'my_param.getUpdateEvent()' or use callback 'REGISTER_PARAM_CALLBACK(&my_param, class, method)' instead.");
     GCNF_DUMP_N(name(), "getUpdateEvent("<<parname.c_str()<<")");      
     gs_param_base_T* p = getPar(parname);
@@ -962,7 +962,7 @@ public:
    *
    * @return          Event which is notified when new parameter is added.
    */
-  sc_event& getNewParamEvent() throw (RegisterObserverFailedException) {
+  sc_event& getNewParamEvent() {
     DEPRECATED_WARNING("GCnf_Api", "DEPRECATED: The getNewParamEvent function is deprecated due to performance reasons! Register a callback instead using mApi.REGISTER_NEW_PARAM_CALLBACK(class_name, callback_function);");
     register_as_new_param_observer(); // automatically checks if already done
     if (m_new_param_event == NULL) {

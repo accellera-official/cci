@@ -1,369 +1,570 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2009 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//    Mark Burton, mark@greensocs.com
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-//
-// ENDLICENSETEXT
+/*****************************************************************************
+  Copyright 2006-2015 Accellera Systems Initiative Inc.
+  All rights reserved.
 
+  Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
 
-#include "cci_debug.h"
-#include "cci_datatypes.h"
-#include "cci_value.h"
-#include "cci_report_handler.h"
+  Copyright 2006-2015 Intel Corporation
+  All rights reserved.
 
-cci::cnf::cci_value::cci_value()
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
+
+/**
+ * @file   cci_value.cpp
+ * @author Philipp A. Hartmann, OFFIS/Intel
+ */
+
+#include "cci_cnf/cci_value.h"
+#include "cci_cnf/cci_report_handler.h"
+#include "cci_cnf/rapidjson.h"
+
+#include <algorithm> // std::swap
+
+CCI_OPEN_CONFIG_NAMESPACE_
+
+typedef rapidjson::CrtAllocator allocator_type;
+typedef rapidjson::UTF8<>       encoding_type;
+typedef rapidjson::GenericValue<encoding_type, allocator_type>    json_value;
+typedef rapidjson::GenericDocument<encoding_type, allocator_type> json_document;
+
+static allocator_type json_allocator;
+
+// wrapper implementation is simply a RapidJSON value
+typedef json_value impl_type;
+// helper to convert to wrapper implementation
+static inline impl_type* impl_cast(void* p)
+  { return static_cast<impl_type*>(p); }
+
+#define PIMPL( x ) \
+  (impl_cast((x).pimpl_))
+
+#define DEREF( x ) \
+  (*PIMPL(x))
+
+#define THIS \
+  (PIMPL(*this))
+
+#define VALUE_ASSERT( Cond, Msg ) \
+  do { if( !(Cond) ) \
+    cci_report_handler::cci_value_failure \
+      ( Msg "\n Condition: " #Cond, __FILE__, __LINE__ ); \
+  } while( false )
+
+// ----------------------------------------------------------------------------
+// cci_value_cref
+
+void
+cci_value_cref::report_error( const char* msg, const char* file, int line ) const
 {
-	initialize_values();
-	m_type = param_type_not_available;
+    cci_report_handler::cci_value_failure( msg, file, line );
 }
 
-cci::cnf::cci_value::cci_value(const char* value)
+bool
+operator == ( cci_value_cref const & left, cci_value_cref const & right )
 {
-	initialize_values();
-	m_type = param_type_string;
-    m_value_string = value;
+  if( PIMPL(left) == PIMPL(right) )
+    return true;
 
+  if( !PIMPL(left) || !PIMPL(right) )
+    return false;
+
+  return DEREF(left) == DEREF(right);
 }
 
-cci::cnf::cci_value::cci_value(const std::string& value)
+basic_param_type
+cci_value_cref::basic_type() const
 {
-	initialize_values();
-	m_type = param_type_string;
-    m_value_string = value;
+  if( !THIS )
+    return param_type_not_available;
 
-}
+  switch(THIS->GetType())
+  {
+  case rapidjson::kFalseType:
+  case rapidjson::kTrueType:
+    return param_type_bool;
 
-cci::cnf::cci_value::cci_value(bool value)
-{
-	initialize_values();
-	m_type = param_type_bool;
-    m_value_bool = value;
-}
+  case rapidjson::kNumberType:
+    return THIS->IsDouble() ? param_type_real : param_type_number;
 
-cci::cnf::cci_value::cci_value(int value)
-{
-	initialize_values();
-	m_type = param_type_number;
-    m_value_number = value;
-}
+  case rapidjson::kStringType:
+    return param_type_string;
 
-cci::cnf::cci_value::cci_value(sc_dt::int64 value)
-{
-	initialize_values();
-	m_type = param_type_number;
-    m_value_number = value;
+  case rapidjson::kArrayType:
+    return param_type_list;
 
-}
+  case rapidjson::kObjectType:
+    return param_type_other;
 
-cci::cnf::cci_value::cci_value(double value)
-{
-	initialize_values();
-	m_type = param_type_real;
-    m_value_real = value;
-}
-
-cci::cnf::cci_value::cci_value(const cci_value_list& value)
-{
-	initialize_values();
-	m_type = param_type_list;
-    m_value_list = value;
-}
-
-cci::cnf::cci_value::cci_value(const cci::cnf::cci_value& other) {
-  operator=(other);
-}
-
-bool cci::cnf::cci_value::operator==(const cci::cnf::cci_value& lhs) const {
-  if (lhs.type() != type()) return false;
-  switch(lhs.type()) {
-    case cci::cnf::param_type_not_available:
-      return true;
-      break;
-    case cci::cnf::param_type_number:
-      return (lhs.get_int64() == get_int64());
-      break;
-    case cci::cnf::param_type_real:
-      return (lhs.get_real() == get_real());
-      break;
-    case cci::cnf::param_type_bool:
-      return (lhs.get_bool() == get_bool());
-      break;
-    case cci::cnf::param_type_string:
-      return (lhs.get_string() == get_string());
-      break;
-    case cci::cnf::param_type_list:
-      return (lhs.get_list() == get_list());
-      break;
-    case cci::cnf::param_type_other:
-      cci_report_handler::cci_value_failure("not implemented");
-      break;
-    default:
-      cci_report_handler::cci_value_failure("not implemented");
-      assert(false && "This should never happen!");
+  case rapidjson::kNullType:
+  default:
+    return param_type_not_available;
   }
-  return false;
 }
 
-cci::cnf::cci_value& cci::cnf::cci_value::operator=(const cci::cnf::cci_value& lhs) {
-  m_type = lhs.type();
-  switch(lhs.type()) {
-    case cci::cnf::param_type_not_available:
-      break;
-    case cci::cnf::param_type_number:
-      m_value_number = lhs.get_int64();
-      break;
-    case cci::cnf::param_type_real:
-      m_value_real = lhs.get_real();
-      break;
-    case cci::cnf::param_type_bool:
-      m_value_bool = lhs.get_bool();
-      break;
-    case cci::cnf::param_type_string:
-      m_value_string = lhs.get_string();
-      break;
-    case cci::cnf::param_type_list:
-      m_value_list = lhs.get_list();
-      break;
-    case cci::cnf::param_type_other:
-      cci_report_handler::cci_value_failure("Not implemented.");
-      break;
-    default:
-      cci_report_handler::cci_value_failure("Not implemented.");
-      assert(false && "This should never happen!");
+bool cci_value_cref::is_null() const
+  { return !THIS || THIS->IsNull(); }
+
+bool cci_value_cref::is_bool() const
+  { return THIS && THIS->IsBool(); }
+
+bool cci_value_cref::is_int() const
+  { return THIS && THIS->IsInt(); }
+
+bool cci_value_cref::is_int64() const
+  { return THIS && THIS->IsInt64(); }
+
+bool cci_value_cref::is_uint() const
+  { return THIS && THIS->IsUint(); }
+
+bool cci_value_cref::is_uint64() const
+  { return THIS && THIS->IsUint64(); }
+
+bool cci_value_cref::is_double() const
+  { return THIS && THIS->IsDouble(); }
+
+bool cci_value_cref::is_string() const
+  { return THIS && THIS->IsString(); }
+
+bool cci_value_cref::is_list() const
+  { return THIS && THIS->IsArray(); }
+
+bool cci_value_cref::is_map() const
+  { return THIS && THIS->IsObject(); }
+
+#define ASSERT_TYPE( Cond ) \
+  VALUE_ASSERT( Cond, "invalid type access" )
+
+bool cci_value_cref::get_bool() const
+{
+  ASSERT_TYPE(is_bool());
+  return THIS->GetBool();
+}
+
+int cci_value_cref::get_int() const
+{
+  ASSERT_TYPE(is_int());
+  return THIS->GetInt();
+}
+
+unsigned cci_value_cref::get_uint() const
+{
+  ASSERT_TYPE(is_uint());
+  return THIS->GetUint();
+}
+
+int64 cci_value_cref::get_int64() const
+{
+  ASSERT_TYPE(is_int64());
+  return THIS->GetInt64();
+}
+
+uint64 cci_value_cref::get_uint64() const
+{
+  ASSERT_TYPE(is_uint64());
+  return THIS->GetUint64();
+}
+
+double cci_value_cref::get_double() const
+{
+  ASSERT_TYPE(is_number());
+  return THIS->GetDouble();
+}
+
+cci_value_string_cref cci_value_cref::get_string() const
+{
+  ASSERT_TYPE(is_string());
+  return cci_value_string_cref(pimpl_);
+}
+
+cci_value_list_cref cci_value_cref::get_list() const
+{
+  ASSERT_TYPE(is_list());
+  return cci_value_list_cref(pimpl_);
+}
+
+cci_value_map_cref cci_value_cref::get_map() const
+{
+  ASSERT_TYPE(is_map());
+  return cci_value_map_cref(pimpl_);
+}
+
+std::ostream& operator<<( std::ostream& os, cci_value_cref const& v )
+{
+  if( v.is_null() ) {
+    os << "null";
+  } else {
+    rapidjson::StdOutputStream wos(os);
+    rapidjson::Writer<rapidjson::StdOutputStream> writer(wos);
+    DEREF(v).Accept( writer );
+  }
+  return os;
+}
+
+// ----------------------------------------------------------------------------
+// cci_value_ref
+
+void
+cci_value_ref::swap( cci_value_ref& that )
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
+}
+
+cci_value_ref
+cci_value_ref::operator=( cci_value_cref const& that )
+{
+  if( that.is_null() )
+    set_null();
+  else {
+    sc_assert( THIS );
+    THIS->CopyFrom( DEREF(that), json_allocator );
   }
   return *this;
 }
 
-cci::cnf::basic_param_type cci::cnf::cci_value::type() const { return m_type; }
-
-const std::string&      cci::cnf::cci_value::get_string()   const {
-  if (m_type != cci::cnf::param_type_string)
-    cci_report_handler::cci_value_failure("Wrong cci value type (no string).");
-  return m_value_string;
-}
-
-const cci::cnf::cci_value_list&   cci::cnf::cci_value::get_list() const {
-  if (m_type != cci::cnf::param_type_list)
-    cci_report_handler::cci_value_failure("Wrong cci value type (no list).");
-  return m_value_list;
-}
-
-bool cci::cnf::cci_value::get_bool()  const {
-  if (m_type != cci::cnf::param_type_bool)
-    cci_report_handler::cci_value_failure("Wrong cci value type (no bool).");
-  return m_value_bool;
-}
-
-int cci::cnf::cci_value::get_int()   const {
-  if (m_type != cci::cnf::param_type_number)
-    cci_report_handler::cci_value_failure("Wrong cci value type (no number).");
-  if (m_value_number > INT_MAX || m_value_number < INT_MIN) {
-    //CCI_THROW_WARNING(cci::cnf::cci_report::cci_value_failure().get_type(), "Overflow cci value (number is larger than int can hold).");
-    cci_report_handler::report(sc_core::SC_WARNING,"CCI_VALUE_FAILURE","Overflow cci value (number is larger than int can hold).",__FILE__,__LINE__);
-  }
-  return static_cast<int>(m_value_number);
-}
-
-sc_dt::int64 cci::cnf::cci_value::get_int64() const {
-  if (m_type != cci::cnf::param_type_number)
-    cci_report_handler::cci_value_failure("Wrong cci value type (no number).");
-  return m_value_number;
-}
-
-double cci::cnf::cci_value::get_real()  const {
-  if (m_type != cci::cnf::param_type_real)
-    cci_report_handler::cci_value_failure("Wrong cci value type (no real).");
-  return m_value_real;
-}
-
-void cci::cnf::cci_value::initialize_values()
+cci_value_ref
+cci_value_ref::set_null()
 {
-    m_value_bool    = false;;
-    m_value_number  = 0;
-    m_value_real = 0;
+  if( THIS ) THIS->SetNull();
+  return this_type( THIS );
 }
 
-namespace cci {
+cci_value_ref
+cci_value_ref::set_bool(bool v)
+{
+  sc_assert( THIS );
+  THIS->SetBool(v);
+  return this_type( THIS );
+}
 
-  /// Value class for objects representing arbitrary types of cci parameters
-  /**
-   *
-   */
-  /*
-   class gs_cci_value
-  : public cci_value {
-  public:
-    gs_cci_value()
-    : my_type(param_type_not_available) {
-    }
+cci_value_ref
+cci_value_ref::set_int(int v)
+{
+  sc_assert( THIS );
+  THIS->SetInt(v);
+  return this_type( THIS );
+}
 
-    gs_cci_value(const char*           value)
-    : my_type(param_type_string)
-    , m_value_string(value) {
-    }
+cci_value_ref
+cci_value_ref::set_uint(unsigned v)
+{
+  sc_assert( THIS );
+  THIS->SetUint(v);
+  return this_type( THIS );
+}
 
-    gs_cci_value(const std::string&    value)
-    : my_type(param_type_string)
-    , m_value_string(value) {
-    }
+cci_value_ref
+cci_value_ref::set_int64(int64 v)
+{
+  sc_assert( THIS );
+  THIS->SetInt64(v);
+  return this_type( THIS );
+}
 
-    gs_cci_value(bool                  value)
-    : my_type(param_type_bool)
-    , m_value_bool(value) {
-    }
+cci_value_ref
+cci_value_ref::set_uint64(uint64 v)
+{
+  sc_assert( THIS );
+  THIS->SetUint64(v);
+  return this_type( THIS );
+}
 
-    gs_cci_value(int                   value)
-    : my_type(param_type_number)
-    , m_value_number(value) {
-    }
+cci_value_ref
+cci_value_ref::set_double(double d)
+{
+  sc_assert( THIS );
+  THIS->SetDouble(d);
+  return this_type( THIS );
+}
 
-    gs_cci_value(sc_dt::int64          value)
-    : my_type(param_type_number)
-    , m_value_number(value) {
-    }
+cci_value_string_ref
+cci_value_ref::set_string( const char* s, size_t len )
+{
+  sc_assert( THIS );
+  THIS->SetString(s, static_cast<rapidjson::SizeType>(len), json_allocator);
+  return cci_value_string_ref(THIS);
+}
 
-    gs_cci_value(double                value)
-    : my_type(param_type_real)
-    , m_value_real(value) {
-    }
+cci_value_list_ref
+cci_value_ref::set_list()
+{
+  sc_assert( THIS );
+  THIS->SetArray();
+  return cci_value_list_ref( THIS );
+}
 
-    gs_cci_value(const cci_value_list& value)
-    : my_type(param_type_list)
-    , m_value_list(value) {
-    }
+cci_value_map_ref
+cci_value_ref::set_map()
+{
+  sc_assert( THIS );
+  THIS->SetObject();
+  return cci_value_map_ref( THIS );
+}
 
-    gs_cci_value(const cci_value& other) {
-      operator=(other);
-    }
+std::istream& operator>>( std::istream& is, cci_value_ref v )
+{
+  sc_assert( PIMPL(v) );
+  json_document d;
+  rapidjson::StdInputStream wis(is);
 
-    gs_cci_value(const gs_cci_value& other) {
-      operator=(other);
-    }
+  d.ParseStream< rapidjson::kParseStopWhenDoneFlag >( wis );
+  // VALUE_ASSERT( !d.HasParseError(), "cci_value stream extraction failed" );
+  if( !d.HasParseError() )
+    DEREF(v).Swap( d );
+  else
+    is.setstate( std::istream::failbit );
 
-    bool operator==(const cci_value& lhs) const {
-      if (lhs.type() != type()) return false;
-      switch(lhs.type()) {
-        case param_type_not_available:
-          return true;
-          break;
-        case param_type_number:
-          return (lhs.get_int64() == get_int64());
-          break;
-        case param_type_real:
-          return (lhs.get_real() == get_real());
-          break;
-        case param_type_bool:
-          return (lhs.get_bool() == get_bool());
-          break;
-        case param_type_string:
-          return (lhs.get_string() == get_string());
-          break;
-        case param_type_list:
-          return (lhs.get_list() == get_list());
-          break;
-        case param_type_other:
-          throw_error(cci_report::cci_value_failure().get_type(), "not implemented");
-          break;
-        default:
-          assert(false && "This should never happen!");
-          throw_error(cci_report:: cci_value_failure().get_type(), "not implemented");
-      }
-    }
+  return is;
+}
 
-    cci_value& operator=(const cci_value& lhs) {
-      my_type = lhs.type();
-      switch(lhs.type()) {
-        case param_type_not_available:
-          break;
-        case param_type_number:
-          m_value_number = lhs.get_int64();
-          break;
-        case param_type_real:
-          m_value_real = lhs.get_real();
-          break;
-        case param_type_bool:
-          m_value_bool = lhs.get_bool();
-          break;
-        case param_type_string:
-          m_value_string = lhs.get_string();
-          break;
-        case param_type_list:
-          m_value_list = lhs.get_list();
-          break;
-        case param_type_other:
-          throw_error(cci_report::cci_value_failure().get_type(), "Not implemented.");
-          break;
-        default:
-          assert(false && "This should never happen!");
-          throw_error(cci_report::cci_value_failure().get_type(), "Not implemented.");
-      }
-    }
+// ----------------------------------------------------------------------------
+// cci_value_string_cref
 
-    basic_param_type type() const { return my_type; }
+cci_value_string_cref::size_type
+cci_value_string_cref::size() const
+  { return THIS->GetStringLength(); }
 
-    const std::string&      get_string()   const {
-      if (my_type != param_type_string)
-        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no string).");
-      return m_value_string;
-    }
+const char*
+cci_value_string_cref::c_str() const
+  { return THIS->GetString(); }
 
-    const cci_value_list&   get_list() const {
-      if (my_type != param_type_list)
-        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no list).");
-      return m_value_list;
-    }
+bool operator==( cci_value_string_cref const & left, const char * right )
+  { return !right ? false : DEREF(left) == right; }
+bool operator==( cci_value_string_cref const & left, std::string const & right )
+  { return DEREF(left) == rapidjson::StringRef( right.c_str(), right.size() ); }
+bool operator==( const char * left, cci_value_string_cref const & right )
+  { return !left ? false : DEREF(right) == left; }
+bool operator==( std::string const & left, cci_value_string_cref const & right )
+  { return DEREF(right) == rapidjson::StringRef( left.c_str(), left.size() ); }
 
-    bool get_bool()  const {
-      if (my_type != param_type_bool)
-        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no bool).");
-      return m_value_bool;
-    }
+// ----------------------------------------------------------------------------
+// cci_value_string_ref
 
-    int get_int()   const {
-      if (my_type != param_type_number)
-        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
-      if (m_value_number > INT_MAX || m_value_number < INT_MIN)
-        throw_warning(cci_report::cci_value_failure().get_type(), "Overflow cci value (number is larger than int can hold).");
-      return static_cast<int>(m_value_number);
-    }
+void
+cci_value_string_ref::swap(this_type & that)
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
+}
 
-    sc_dt::int64 get_int64() const {
-      if (my_type != param_type_number)
-        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no number).");
-      return m_value_number;
-    }
+// ----------------------------------------------------------------------------
+// cci_value_list_cref
 
-    double get_real()  const {
-      if (my_type != param_type_real)
-        throw_error(cci_report::cci_value_failure().get_type(), "Wrong cci value type (no real).");
-      return m_value_real;
-    }
+cci_value_list_cref::size_type
+cci_value_list_cref::size() const
+  { return THIS->Size(); }
 
-  protected:
-    basic_param_type my_type;
+cci_value_cref
+cci_value_list_cref::operator[]( size_type index ) const
+  { return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] ); }
 
-    std::string m_value_string;
-    bool m_value_bool;
-    sc_dt::int64 m_value_number;
-    double m_value_real;
-    cci_value_list m_value_list;
+// ----------------------------------------------------------------------------
+// cci_value_list_ref
 
-  };
-   */
+void
+cci_value_list_ref::swap(this_type & that)
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
+}
 
-} // end namespace cci
+cci_value_list_ref
+cci_value_list_ref::clear()
+{
+  THIS->Clear();
+  return *this;
+}
 
+cci_value_list_ref::size_type
+cci_value_list_ref::capacity() const
+{
+  return THIS->Capacity();
+}
 
+cci_value_list_ref
+cci_value_list_ref::reserve( size_type new_capacity )
+{
+  THIS->Reserve( static_cast<rapidjson::SizeType>(new_capacity)
+               , json_allocator );
+  return *this;
+}
+
+cci_value_list_ref
+cci_value_list_ref::push_back( const_reference value )
+{
+  json_value v;
+  if( PIMPL(value) )
+    v.CopyFrom( DEREF(value), json_allocator );
+  THIS->PushBack( v, json_allocator );
+  return *this;
+}
+
+// ----------------------------------------------------------------------------
+// cci_value_map_cref
+
+cci_value_map_cref::size_type
+cci_value_map_cref::size() const
+  { return THIS->MemberCount(); }
+
+cci_value_cref::impl*
+cci_value_map_cref::do_lookup( const char* key, size_type keylen
+                             , bool allow_fail /* = false */     ) const
+{
+  json_value kv( rapidjson::StringRef(key, keylen) );
+  json_value::ConstMemberIterator it = THIS->FindMember(kv);
+  if( it == THIS->MemberEnd() )
+  {
+    if( allow_fail ) return NULL;
+
+    std::stringstream ss;
+    ss << "cci_value map has no element with key '" << key << "'";
+    report_error( ss.str().c_str(), __FILE__, __LINE__ );
+    return NULL;
+  }
+  return const_cast<json_value*>(&it->value);
+}
+
+// ----------------------------------------------------------------------------
+// cci_value_map_ref
+
+void
+cci_value_map_ref::swap(this_type & that)
+{
+  VALUE_ASSERT( pimpl_ && that.pimpl_, "swap with invalid value failed" );
+  THIS->Swap( DEREF(that) );
+}
+
+cci_value_map_ref
+cci_value_map_ref::clear()
+{
+  THIS->RemoveAllMembers();
+  return *this;
+}
+
+cci_value_map_ref
+cci_value_map_ref::push_entry( const char * key
+                             , cci_value::const_reference const & value )
+{
+  json_value k( key, json_allocator );
+  json_value v;
+  if( PIMPL(value) )
+    v.CopyFrom( DEREF(value), json_allocator );
+  THIS->AddMember( k, v, json_allocator );
+  return *this;
+}
+
+// ----------------------------------------------------------------------------
+// cci_value(, _list, _map ) -- owning wrapper implementations
+
+#define WRAPPER_ASSIGN_PRECOND_(Kind) \
+  WRAPPER_ASSIGN_PRECOND_FOR_ ## Kind
+#define WRAPPER_ASSIGN_PRECOND_FOR_cci_value \
+    if( that.is_null() ) { set_null(); return *this; } \
+    init()
+#define WRAPPER_ASSIGN_PRECOND_FOR_cci_value_list \
+  sc_assert( is_list() && that.is_list() )
+#define WRAPPER_ASSIGN_PRECOND_FOR_cci_value_map \
+  sc_assert( is_map() && that.is_map() )
+
+#define WRAPPER_DO_INIT_(Kind) \
+  WRAPPER_DO_INIT_ ## Kind
+#define WRAPPER_DO_INIT_cci_value \
+  ((void)0)
+#define WRAPPER_DO_INIT_cci_value_list \
+  (THIS)->SetArray()
+#define WRAPPER_DO_INIT_cci_value_map \
+  (THIS)->SetObject()
+
+#define DEFINE_WRAPPER_(Kind)                          \
+  Kind::this_type &                                    \
+  Kind::operator=( const_reference that )              \
+  {                                                    \
+    WRAPPER_ASSIGN_PRECOND_( Kind );                   \
+    reference::operator=( that );                      \
+    return *this;                                      \
+  }                                                    \
+                                                       \
+  void                                                 \
+  Kind::swap( this_type & that )                       \
+  {                                                    \
+    using std::swap;                                   \
+    swap( pimpl_    , that.pimpl_ );                   \
+    swap( own_pimpl_, that.own_pimpl_ );               \
+  }                                                    \
+                                                       \
+  Kind::impl*                                          \
+  Kind::do_init()                                      \
+  {                                                    \
+    sc_assert( !own_pimpl_ );                          \
+    pimpl_ = own_pimpl_ = new impl_type();             \
+    WRAPPER_DO_INIT_( Kind );                          \
+    return THIS;                                       \
+  }                                                    \
+                                                       \
+  Kind::~Kind()                                        \
+  {                                                    \
+    delete impl_cast(own_pimpl_);                      \
+  }
+
+DEFINE_WRAPPER_(cci_value)
+DEFINE_WRAPPER_(cci_value_list)
+DEFINE_WRAPPER_(cci_value_map)
+
+// ----------------------------------------------------------------------------
+// JSON (de)serialize
+
+bool
+cci_value_cref::json_serialize( std::string & dst ) const
+{
+  rapidjson::StringBuffer buf;
+  rapidjson::Writer<rapidjson::StringBuffer> writer( buf );
+  if( !THIS ) {
+    writer.Null();
+  } else {
+    THIS->Accept( writer );
+  }
+  VALUE_ASSERT( writer.IsComplete(), "incomplete JSON sequence" );
+  dst.assign( buf.GetString(), buf.GetSize() );
+  return true;
+}
+
+bool
+cci_value_ref::json_deserialize( std::string const & src )
+{
+  json_document doc;
+  try {
+    doc.Parse( src.c_str() );
+  }
+  catch ( rapidjson::ParseException const & e )
+  {
+    std::stringstream str;
+    str << "JSON error: " << GetParseError_En(e.Code()) << "\n"
+            "\t'" << src << "' "
+            "(offset: " << e.Offset() << ")";
+    cci_report_handler::report( sc_core::SC_WARNING
+                              , "CCI_VALUE_FAILURE"
+                              , str.str().c_str(), __FILE__, __LINE__ );
+    return false;
+  }
+  THIS->Swap( doc );
+  return true;
+}
+
+// ----------------------------------------------------------------------------
 // Borrowing this .cpp to provide a home for this value (creating cci_param.cpp
 // solely for that purpose is overkill. @TODO - review home later in rework
-const char* cci::cnf::PARAM_ORIGINATOR = "owning_param";
+const char* PARAM_ORIGINATOR = "owning_param";
 
+CCI_CLOSE_CONFIG_NAMESPACE_

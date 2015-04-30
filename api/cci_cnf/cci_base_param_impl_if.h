@@ -19,9 +19,9 @@
 #ifndef CCI_BASE_PARAM_IMPL_IF_H_INCLUDED_
 #define CCI_BASE_PARAM_IMPL_IF_H_INCLUDED_
 
-#include "cci_shared_ptr.h"
-#include "cci_callbacks.h"
-#include "cci_value.h"
+#include "cci_cnf/cci_shared_ptr.h"
+#include "cci_cnf/cci_callbacks.h"
+#include "cci_cnf/cci_value.h"
 #include <string>
 
 
@@ -183,7 +183,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * @exception cci_exception_get_param Getting value failed
      * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
-    virtual cci_value get_value() = 0;
+    virtual cci_value get_value() const = 0;
 
     
     // //////////////////////////////////////////////////////////////////// //

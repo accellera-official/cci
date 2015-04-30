@@ -15,7 +15,7 @@
 // ENDLICENSETEXT
 
 
-#include "cci_report_handler.h"   //@TODO - better if use of this could be corralled into a CPP; now it leaks a private class to all users
+#include "cci_cnf/cci_report_handler.h"   //@TODO - better if use of this could be corralled into a CPP; now it leaks a private class to all users
 
 CCI_OPEN_CONFIG_NAMESPACE_
 

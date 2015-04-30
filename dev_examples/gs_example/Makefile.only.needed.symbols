@@ -41,9 +41,7 @@ CCI_PARAM_IMPLEMENTATION_INC_DIR = /Users/schroede/mydev/greensocs_greencontrol/
 
 
 ## standard parameter library files (not parameter factory symbols)
-PARAM_LIB_OBJS_STD = $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/json_spirit/json_spirit_reader.o \
-       $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/json_spirit/json_spirit_writer.o \
-       $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/gs_cci_value.o
+PARAM_LIB_OBJS_STD = $(CCI_PARAM_IMPLEMENTATION_INC_DIR)/gs_cci_value.o
 
 EXEC = testbench.x
 

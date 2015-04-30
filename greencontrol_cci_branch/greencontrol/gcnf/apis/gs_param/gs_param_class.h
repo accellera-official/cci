@@ -234,6 +234,8 @@ public:
       return true;
     }
     ss >> tmp;
+    // skip trailing whitespace
+    while ( ss.good() && !ss.eof() && std::isspace(ss.peek()) ) ss.ignore(1);
     // no conversion error
     if (ss.eof() && !ss.fail() && !ss.bad()) {
       target_val = tmp;

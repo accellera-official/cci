@@ -18,7 +18,7 @@
 #ifndef CCI_CNF_CCI_BROKER_MANAGER_H_INCLUDED_
 #define CCI_CNF_CCI_BROKER_MANAGER_H_INCLUDED_
 
-#include "cci_broker_if.h"
+#include "cci_cnf/cci_broker_if.h"
 
 CCI_OPEN_CONFIG_NAMESPACE_
 
