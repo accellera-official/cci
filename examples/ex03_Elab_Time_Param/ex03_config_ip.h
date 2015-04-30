@@ -22,6 +22,7 @@
  *  @file   config_ip.h
  *  @brief  Configure simple_ip's structure_param (simple integer) parameter
  *  @author Udaya Ranga, TI
+ *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_CONFIG_IP_H_
@@ -69,7 +70,6 @@ SC_MODULE(ex03_config_ip) {
       cci::cnf::cci_base_param *struc_param_ptr = m_cci->get_param(
           struc_param_name);
       assert(struc_param_ptr != NULL);
-
 
       // Update the structure_param value to 3 (invalid)
       try {

@@ -22,6 +22,7 @@
  *  @file   config_ip.h
  *  @brief  Configuration IP block that tries to update immutable parameters
  *  @author Vishal Goel, TI
+ *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_CONFIG_IP_H_

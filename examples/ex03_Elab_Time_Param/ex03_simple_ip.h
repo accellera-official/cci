@@ -22,6 +22,7 @@
  *  @file   simple_ip.h
  *  @brief  A simple IP that demonstartes the use of elaboration_time_param
  *  @author Udaya Ranga, TI
+ *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_SIMPLE_IP_H_
