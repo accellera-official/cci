@@ -132,16 +132,16 @@ SC_MODULE(ex03_simple_ip) {
     {
       XREPORT_WARNING(x.what());
     }
-
-    if( 0 == struc_param_post_eoe )  {
-        XREPORT("execute: Value of struc_param_post_eoe remains unchanged "<< struc_param_post_eoe);
-    }
-    else if( 1 == struc_param_post_eoe ) {
-        XREPORT_WARNING("execute: Value of struc_param_post_eoe changed to: "<< struc_param_post_eoe);
-    }
-    else    {
-        XREPORT_ERROR("execute: Invalid update to struc_param_post_eoe, value changed to: "<< struc_param_post_eoe);
-        assert( 0 );
+    if (0 == struc_param_post_eoe) {
+      XREPORT("execute: Value of struc_param_post_eoe remains unchanged "
+              << struc_param_post_eoe);
+    } else if (1 == struc_param_post_eoe) {
+      XREPORT_WARNING("execute: Value of struc_param_post_eoe changed to: "
+                      << struc_param_post_eoe);
+    } else {
+      XREPORT_ERROR("execute: Invalid update to struc_param_post_eoe,"
+                    " value changed to: " << struc_param_post_eoe);
+      assert(0);
     }
   }
 

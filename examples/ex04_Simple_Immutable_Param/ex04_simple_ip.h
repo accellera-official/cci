@@ -22,7 +22,6 @@
  *  @file   simple_ip.h
  *  @brief  A Simple IP that holds 2 immutable params
  *  @author Vishal Goel, TI
- *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_SIMPLE_IP_H_
