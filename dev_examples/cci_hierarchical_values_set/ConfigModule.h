@@ -51,18 +51,17 @@ public:
   };
 
   void execute() {
-    const std::string tar_param = "log_level";
+    const std::string tar_param = "*.log_level";
 
     // Target value for all log_level
-    cci::cnf::cci_value tar_value;
-    tar_value.set<int>(500);
+    cci::cnf::cci_value tar_value(500);;
 
     std::cout << std::endl << "**** Parameter list and values: @ "<<sc_core::sc_time_stamp() << std::endl;
 
     // To get the all parameters
     std::vector<std::string> vec_all = m_cci->get_param_list();
     // To get parameter with patter (*.log_level)
-    std::vector<std::string> vec_ll = m_cci->get_param_list("*.log_level");
+    std::vector<std::string> vec_ll = m_cci->get_param_list(tar_param);
     std::vector<std::string>::iterator it;
 
     for (it = vec_all.begin() ; it < vec_all.end(); it++) {
