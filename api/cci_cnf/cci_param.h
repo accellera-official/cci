@@ -2,6 +2,9 @@
 Copyright 2006-2015 Accellera Systems Initiative Inc.
 All rights reserved.
 
+Copyright 2009-2011 GreenSocs Ltd
+All rights reserved.
+
 Copyright 2006-2014 OFFIS Institute for Information Technology
 All rights reserved.
 
