@@ -95,12 +95,7 @@ private:
 	cci_param(cci_param<value_type, TM> & copy, const cci_originator& originator);
 };
 
-#define SIGNATURE_HELPER3(a, b, c) a, b, c
-#define SIGNATURE_HELPER2(a, b) a, b
-#define SIGNATURE_HELPER1(a) a
-#define SIGNATURE_APPEND(signature, count, value) (SIGNATURE_HELPER##count signature, value)
-
-#define CCI_PARAM_CONSTRUCTOR_IMPL_A(signature, top, broker)  \
+#define CCI_PARAM_CONSTRUCTOR_IMPL(signature, top, broker)    \
 template <typename T, param_mutable_type TM>                  \
 cci_param<T, TM>::cci_param signature :                       \
 	cci_param_b<T>(                                           \
@@ -112,27 +107,33 @@ cci_param<T, TM>::cci_param signature :                       \
 	this->init();                                             \
 }
 
-#define CCI_PARAM_CONSTRUCTOR_IMPL_B(signature, count, top) \
-	CCI_PARAM_CONSTRUCTOR_IMPL_A(signature, top, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR)) \
-	CCI_PARAM_CONSTRUCTOR_IMPL_A(SIGNATURE_APPEND(signature, count, cci_cnf_broker_if& private_broker), top, private_broker)
 
-#define CCI_PARAM_CONSTRUCTOR_IMPL_C(signature) \
-	CCI_PARAM_CONSTRUCTOR_IMPL_B(signature, 2, false) \
-	CCI_PARAM_CONSTRUCTOR_IMPL_B(SIGNATURE_APPEND(signature, 2, cci_top_level_name), 3, true)
+/// Constructor with (local/hierarchical) name and initial value.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value), false, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
 
-#define CCI_PARAM_CONSTRUCTOR_IMPL(signature) \
-	CCI_PARAM_CONSTRUCTOR_IMPL_C(SIGNATURE_APPEND(signature, 1, const value_type& value)) \
-	CCI_PARAM_CONSTRUCTOR_IMPL_C(SIGNATURE_APPEND(signature, 1, const cci_value& value))
+/// Constructor with (local/hierarchical) name and initial value.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value), false, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
 
-	CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name))
+/// Constructor with (local/hierarchical) name and initial value and top-level name.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
+
+/// Constructor with (local/hierarchical) name and initial value and top-level name.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
+
+/// Constructor with (local/hierarchical) name and initial value and private broker.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_cnf_broker_if& private_broker), false, private_broker)
+
+/// Constructor with (local/hierarchical) name and initial value and private broker.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_cnf_broker_if& private_broker), false, private_broker)
+
+/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name, cci_cnf_broker_if& private_broker), true, private_broker)
+
+/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name, cci_cnf_broker_if& private_broker), true, private_broker)
+
 
 #undef CCI_PARAM_CONSTRUCTOR_IMPL
-#undef CCI_PARAM_CONSTRUCTOR_IMPL_B
-#undef CCI_PARAM_CONSTRUCTOR_IMPL_A
-#undef SIGNATURE_APPEND
-#undef SIGNATURE_HELPER1
-#undef SIGNATURE_HELPER2
-#undef SIGNATURE_HELPER3
 
 	template <typename T, param_mutable_type TM>
 	cci_param<T, TM>::cci_param(cci_param<value_type, TM>& copy, const cci_originator& originator) : cci_param_b<T>(copy, originator)
