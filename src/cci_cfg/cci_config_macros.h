@@ -55,4 +55,18 @@
 #define __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__ __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "CNF"
 #endif
 
+//RVALUE_REFERENCES_SUPPORTED
+
+//Macros to check if r-value references are supported
+#ifndef __has_feature         // Optional of course.
+#define __has_feature(x) 0  // Compatibility with non-clang compilers.
+#endif
+#ifndef __has_extension
+#define __has_extension __has_feature // Compatibility with pre-3.0 compilers.
+#endif
+
+#if _MSC_VER >= 1600 || defined(__GXX_EXPERIMENTAL_CXX0X__) || __has_feature(cxx_rvalue_references)
+#define CCI_RVALUE_REFERENCES_SUPPORTED
+#endif
+
 #endif
