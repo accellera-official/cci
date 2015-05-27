@@ -141,6 +141,76 @@ struct cci_callback;
 		return new callback_impl(m_callback);                 \
 	}
 
+
+/**
+ Wrapper class for callback take 1 argument
+ @tparam TRet Type of callback return value
+ @tparam TFirst Type of first callback argument
+ */
+template<class TRet, class TFirst>
+class cci_callback < TRet(TFirst) >
+{
+public:
+	CCI_CALLBACK_BLOCK
+	CCI_CALLBACK_MOVE_BLOCK
+
+	/**
+	 Operator() - Invokes wrapped callback 
+	 @param first_value First argument to pass to wrapped callback
+	 @param second_value Second argument to pass to wrapped callback
+	 @return Value returned by wrapped callback
+	 */
+	TRet operator()(TFirst first_value)
+	{
+		return (*m_impl)(first_value);
+	}
+
+private:
+
+	/**
+	 *	Base class of all wrapper implementation for a given function prototype
+	 */
+	struct callback_impl_if
+	{
+		CCI_CALLBACK_IMPL_IF_BLOCK
+
+		/**
+		Operator() - Invokes wrapped callback
+		@param first_value First argument to pass to wrapped callback
+		@return Value returned by wrapped callback
+		*/
+		virtual TRet operator()(TFirst first_value) = 0;
+	};
+
+	/**
+	 Implementation of callback wrapper
+	 @tparam C Type of callback
+	 */
+	template<class C>
+	struct callback_impl : callback_impl_if
+	{
+		CCI_CALLBACK_IMPL_BLOCK
+
+		/**
+		Operator() - Invokes wrapped callback
+		@param first_value First argument to pass to wrapped callback
+		@param second_value Second argument to pass to wrapped callback
+		@return Value returned by wrapped callback
+		*/
+		virtual TRet operator()(TFirst first_value)
+		{
+			return m_callback(first_value);
+		}
+
+		///Stored callback
+		C m_callback;
+	};
+
+	///Pointer to callback wrapper implementation
+	callback_impl_if * m_impl;
+};
+
+
 /**
  Wrapper class for callback take 2 arguments
  @tparam TRet Type of callback return value
@@ -160,7 +230,7 @@ public:
 	 @param second_value Second argument to pass to wrapped callback
 	 @return Value returned by wrapped callback
 	 */
-	TRet operator()(const TFirst& first_value, const TSecond& second_value)
+	TRet operator()(TFirst first_value,TSecond second_value)
 	{
 		return (*m_impl)(first_value, second_value);
 	}
@@ -180,7 +250,7 @@ private:
 		@param second_value Second argument to pass to wrapped callback
 		@return Value returned by wrapped callback
 		*/
-		virtual TRet operator()(const TFirst& first_value, const TSecond& second_value) = 0;
+		virtual TRet operator()(TFirst first_value,TSecond second_value) = 0;
 	};
 
 	/**
@@ -198,7 +268,7 @@ private:
 		@param second_value Second argument to pass to wrapped callback
 		@return Value returned by wrapped callback
 		*/
-		virtual TRet operator()(const TFirst& first_value, const TSecond& second_value)
+		virtual TRet operator()(TFirst first_value,TSecond second_value)
 		{
 			return m_callback(first_value, second_value);
 		}
@@ -233,7 +303,7 @@ public:
 	@param third_value Third argument to pass to wrapped callback
 	@return Value returned by wrapped callback
 	*/
-	TRet operator()(const TFirst& first_value, const TSecond& second_value, const TThird& third_value)
+	TRet operator()(TFirst first_value,TSecond second_value, TThird third_value)
 	{
 		return (*m_impl)(first_value, second_value, third_value);
 	}
@@ -254,7 +324,7 @@ private:
 		@param third_value Third argument to pass to wrapped callback
 		@return Value returned by wrapped callback
 		*/
-		virtual TRet operator()(const TFirst& first_value, const TSecond& second_value, const TThird& third_value) = 0;
+		virtual TRet operator()(TFirst first_value,TSecond second_value, TThird third_value) = 0;
 	};
 
 	/**
@@ -273,7 +343,7 @@ private:
 		@param third_value Third argument to pass to wrapped callback
 		@return Value returned by wrapped callback
 		*/
-		virtual TRet operator()(const TFirst& first_value, const TSecond& second_value, const TThird& third_value)
+		virtual TRet operator()(TFirst first_value,TSecond second_value, TThird third_value)
 		{
 			return m_callback(first_value, second_value, third_value);
 		}
