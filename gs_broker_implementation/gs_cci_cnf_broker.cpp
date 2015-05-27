@@ -327,7 +327,7 @@ bool cci::cnf::gs_cci_cnf_broker::has_callbacks(const std::string& parname) {
 void cci::cnf::gs_cci_cnf_broker::add_param(cci_base_param* par) {
   bool new_element = m_mirrored_registry.insert(std::pair<std::string, cci_base_param*>(par->get_name(), par)).second;
   //std::cout << name() << " (gs_cci_cnf_broker) add param " << par->get_name() << std::endl;
-  assert(new_element && "The same parameter had been added twice!!");
+  //assert(new_element && "The same parameter had been added twice!!");
   /*gs::gs_param_base* p = dynamic_cast<gs::gs_param_base*> (par);
    assert(p != NULL && "This demo example implementation only works with the gs parameter implementation (TODO: internally to be changed!)");
    gs::cnf::GCnf_Api::addPar(p);*/

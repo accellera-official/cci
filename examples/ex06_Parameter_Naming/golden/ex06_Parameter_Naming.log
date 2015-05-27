@@ -1,15 +1,15 @@
 
 Warning: ConfigDatabase: addParam: Parameter 'sim_ip.int_param_ip' is already existing (explicit)!
-In file: /vobs/ti_systemc/tools/cci/greenstarcore_rev613/greencontrol_cci_branch/greencontrol/gcnf/plugin/configdatabase.h:135
+In file: <removed by verify.pl>
 
 Warning: DEFAULT_BROKER_0: addParam failed!
-In file: /vobs/ti_systemc/tools/cci/greenstarcore_rev613/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:419
+In file: <removed by verify.pl>
 
 Warning: ConfigDatabase: addParam: Parameter 'int_param_top' is already existing (explicit)!
-In file: /vobs/ti_systemc/tools/cci/greenstarcore_rev613/greencontrol_cci_branch/greencontrol/gcnf/plugin/configdatabase.h:135
+In file: <removed by verify.pl>
 
 Warning: DEFAULT_BROKER_0: addParam failed!
-In file: /vobs/ti_systemc/tools/cci/greenstarcore_rev613/greencontrol_cci_branch/greencontrol/gcnf/apis/GCnf_Api/GCnf_Api_t.h:419
+In file: <removed by verify.pl>
 
 Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param_ip is 1
 
