@@ -66,7 +66,11 @@
 #endif
 
 #if _MSC_VER >= 1600 || defined(__GXX_EXPERIMENTAL_CXX0X__) || __has_feature(cxx_rvalue_references)
-#define CCI_RVALUE_REFERENCES_SUPPORTED
+#	define CCI_RVALUE_REFERENCES_SUPPORTED
+#	include <utility>
+#	define CCI_MOVE(obj) std::move(obj)
+#else
+#	define CCI_MOVE(obj) obj
 #endif
 
 #endif
