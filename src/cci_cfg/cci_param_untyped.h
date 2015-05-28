@@ -31,13 +31,15 @@
 #define CCI_CCI_PARAM_UNTYPED_H_INCLUDED_
 
 #include <string>
+#include <vector>
+
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_shared_ptr.h"
-#include "cci_cfg/cci_callbacks.h"
+#include "cci_cfg/cci_callback.h"
 #include <greencontrol/config.h>
 
 /**
@@ -158,47 +160,15 @@ public:
 	///@name Callback Handling
 	///@{
 
-	/// Registers functions as a callback (from handle).
-	shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function, cci_param_untyped_handle& param);
-	
-	/// Function registering a callback object (should not be called by user) (from handle).
-	shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb, cci_param_untyped_handle& param);
+	cci_callback_handle validate_write(cci_callback<bool(const cci_value&, const cci_value&, const cci_originator&)> callback);
 
-	/// Registers functions as a callback.
-	shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
+	cci_callback_handle on_write(cci_callback<void(const cci_value&, const cci_value&, const cci_originator&)> callback);
 
-	/// Function registering a callback object (should not be called by user).
-	shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb);
-	
-	/// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
-	/**
-	 * observer = NULL should be an error (and not mean unregister all callbacks)
-	 *                 to avoid accidental unregistration of e.g. callbacks initiated
-	 *                 by a tool.
-	 * @param observer Pointer to the observer module that registered parameter callbacks.
-	 */
-	void unregister_all_callbacks(void* observer);
-	
-	/// Unregisters the callback and (default) deletes the callback adapter.
-	/**
-	 * Unregisters (only) the given callback.
-	 *
-	 * The callback adapter is NOT deleted explicitly because this
-	 * should be done by the surrounding shared pointer!
-	 *
-	 * This may be used by a user module which stored the shared pointer to a
-	 * specific callback or by the destructor of the param callback adapter.
-	 *
-	 * @param callb  Parameter callback adapter
-	 * @return       If the callback adapter existed in this parameter.
-	 */
-	bool unregister_callback(shared_ptr<callb_adapt> callb); 
-	
-	/// @see unregister_callback(shared_ptr<>).
-	bool unregister_callback(callb_adapt* callb);
-	
-	/// Returns if the parameter has registered callbacks.
-	bool has_callbacks();
+	cci_callback_handle validate_read(cci_callback<bool(const cci_originator&)> callback);
+
+	cci_callback_handle validate_write(cci_callback<bool(const void*, const void*, const cci_originator&)> callback);
+
+	cci_callback_handle on_write(cci_callback<void(const void*, const void*, const cci_originator&)> callback);
 
 	///@}
 
@@ -414,6 +384,7 @@ private:
 	/// Originator of the parameter
 	const cci_originator m_originator;
 
+	std::vector<cci_callback_handle> m_callback_handles;
 };
 
 CCI_CLOSE_NAMESPACE_

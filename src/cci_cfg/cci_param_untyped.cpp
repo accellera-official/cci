@@ -55,6 +55,11 @@ CCI_OPEN_NAMESPACE_
 			fw_vec[i]->adapt->caller_param = NULL;
 		}
 		sc_core::sc_unregister_hierarchical_name(get_name().c_str());
+		for (std::vector<cci_callback_handle>::reverse_iterator ii = m_callback_handles.rbegin();
+			 ii != m_callback_handles.rend(); ++ii)
+		{
+			ii->unregister();
+		}
 	}
 
 	void cci_param_untyped::set_description(const std::string& desc)
@@ -104,118 +109,29 @@ CCI_OPEN_NAMESPACE_
 		m_latest_write_access_originator_cp = originator;
 	}
 
-	shared_ptr<callb_adapt> cci_param_untyped::register_callback(const callback_type type,
-															  	 void* observer,
-															  	 param_callb_func_ptr function,
-																 cci_param_untyped_handle& param)
+	cci_callback_handle cci_param_untyped::validate_write(cci_callback<bool(const cci_value&, const cci_value&, const cci_originator&)> callback)
 	{
-		return register_callback(type,
-		    cci::make_shared<cci::callb_adapt>(observer,
-											   function,
-											   &param),
-								 param);
+		// TODO
 	}
 
-	shared_ptr<callb_adapt> cci_param_untyped::register_callback(const callback_type type,
-															  	 shared_ptr<callb_adapt> callb,
-																 cci_param_untyped_handle& param)
+	cci_callback_handle cci_param_untyped::validate_write(cci_callback<bool(const void*, const void*, const cci_originator&)> callback)
 	{
-		gs::cnf::callback_type cb = gs::cnf::no_callback;
-		switch(type) {
-			case cci::pre_read:
-				cb = gs::cnf::pre_read;
-				break;
-			case cci::reject_write:
-				cb = gs::cnf::reject_write;
-				break;
-			case cci::pre_write:
-				cb = gs::cnf::pre_write;
-				break;
-			case cci::create_param:
-				cb = gs::cnf::create_param;
-				break;
-			case cci::post_write:
-				cb = gs::cnf::post_write;
-				break;
-			case cci::destroy_param:
-				cb = gs::cnf::destroy_param;
-				break;
-		}
-		if (cb != gs::cnf::no_callback) {
-			internal_callback_forwarder *fw =
-					new internal_callback_forwarder(callb, cb, param);
-			fw_vec.push_back(fw);
-			assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-			fw->calling_gs_adapter =
-					m_gs_param_base->registerParamCallback(
-							cci::shared_ptr< ::gs::cnf::ParamCallbAdapt_b>(
-									new ::gs::cnf::ParamTypedCallbAdapt<internal_callback_forwarder>
-											(fw,
-											 &internal_callback_forwarder::call,
-											 callb->get_observer(),
-											 const_cast<gs::gs_param_base*>(static_cast<gs::gs_param_base*>(m_gs_param_base)))
-							), fw->get_type() );
-		}
-		return callb;
+		// TODO
 	}
 
-	shared_ptr<callb_adapt> cci_param_untyped::register_callback(const callback_type type,
-																 void* observer,
-																 param_callb_func_ptr function)
+	cci_callback_handle cci_param_untyped::on_write(cci_callback<void(const cci_value&, const cci_value&, const cci_originator&)> callback)
 	{
-		return register_callback(type,
-								 cci::make_shared<cci::callb_adapt>(observer,
-																	function,
-																	m_param_untyped_handle),
-								 *m_param_untyped_handle);
+		// TODO
 	}
 
-	shared_ptr<callb_adapt> cci_param_untyped::register_callback(const callback_type type,
-																 shared_ptr<callb_adapt> callb)
+	cci_callback_handle cci_param_untyped::on_write(cci_callback<void(const void*, const void*, const cci_originator&)> callback)
 	{
-		return register_callback(type, callb, *m_param_untyped_handle);
+		// TODO
 	}
 
-	void cci_param_untyped::unregister_all_callbacks(void* observer)
+	cci_callback_handle cci_param_untyped::validate_read(cci_callback<bool(const cci_originator&)> callback)
 	{
-		bool succ = true;
-		internal_callback_forwarder* fw;
-		while (succ) {
-			succ = false;
-			for (unsigned int i = 0; i < fw_vec.size(); ++i) {
-				if (fw_vec[i]->adapt->get_observer() == observer) {
-					fw = fw_vec[i];
-					fw_vec.erase(fw_vec.begin()+i);
-					delete fw;
-					succ = true;
-					break;
-				}
-			}
-		}
-	}
-
-	bool cci_param_untyped::unregister_callback(cci::shared_ptr<callb_adapt> callb)
-	{
-		return unregister_callback(callb.get());
-	}
-
-	bool cci_param_untyped::unregister_callback(callb_adapt* callb)
-	{
-		internal_callback_forwarder* fw;
-		for (unsigned int i = 0; i < fw_vec.size(); ++i) {
-			if (fw_vec[i]->adapt == callb) {
-				fw = fw_vec[i];
-				fw_vec.erase(fw_vec.begin()+i);
-				delete fw;
-				return true;
-			}
-		}
-		return false;
-	}
-
-	bool cci_param_untyped::has_callbacks()
-	{
-		return (fw_vec.size() > 0);
+		// TODO
 	}
 
 	bool cci_param_untyped::lock(void* pwd)
@@ -252,12 +168,12 @@ CCI_OPEN_NAMESPACE_
 		assert(m_init_called == false && "init() function called more than once!");
 		m_init_called = true;
 		m_param_untyped_handle = this->create_param_handle(cci_originator());
-		m_post_write_callback = register_callback(cci::post_write,
+		/*m_post_write_callback = register_callback(cci::post_write,
 												  &m_status_guard,
 												  bind(&status_guard::call,
 													   &m_status_guard, _1,
 													   _2),
-												  *m_param_untyped_handle); // internal callback for status variables
+												  *m_param_untyped_handle); // internal callback for status variables */
 	}
 
 CCI_CLOSE_NAMESPACE_

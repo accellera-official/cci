@@ -34,6 +34,8 @@
 
 #include "cci_cfg/cci_shared_ptr.h"
 #include "cci_cfg/cci_callbacks.h"
+#include "cci_cfg/cci_callback.h"
+#include "cci_cfg/cci_callback_handle.h"
 #include "cci_cfg/cci_value.h"
 
 /**
@@ -124,26 +126,15 @@ public:
     ///@name Callback Handling
     ///@{
 
-    /// @copydoc cci_param_untyped::register_callback(const callback_type, void*, param_callb_func_ptr)
-    virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
-                                                       void *observer,
-                                                       param_callb_func_ptr function) = 0;
+    virtual cci_callback_handle validate_write(cci_callback<bool(const cci_value&, const cci_value&, const cci_originator&)> callback) = 0;
 
-    /// @copydoc cci_param_untyped::register_callback(const callback_type, cci::shared_ptr<callb_adapt>)
-    virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
-                                                       shared_ptr <callb_adapt> callb) = 0;
+    virtual cci_callback_handle validate_write(cci_callback<bool(const void*, const void*, const cci_originator&)> callback) = 0;
 
-    /// @copydoc cci_param_untyped::unregister_all_callbacks
-    virtual void unregister_all_callbacks(void *observer) = 0;
+    virtual cci_callback_handle on_write(cci_callback<void(const cci_value&, const cci_value&, const cci_originator&)> callback) = 0;
 
-    /// @copydoc cci_param_untyped::unregister_callback(cci::shared_ptr<callb_adapt>)
-    virtual bool unregister_callback(shared_ptr <callb_adapt> callb) = 0;
+    virtual cci_callback_handle on_write(cci_callback<void(const void*, const void*, const cci_originator&)> callback) = 0;
 
-    /// @copydoc cci_param_untyped::unregister_callback(callb_adapt*)
-    virtual bool unregister_callback(callb_adapt *callb) = 0;
-
-    /// @copydoc cci_param_untyped::has_callbacks
-    virtual bool has_callbacks() = 0;
+    virtual cci_callback_handle validate_read(cci_callback<bool(const cci_originator&)> callback) = 0;
 
     ///@}
 
