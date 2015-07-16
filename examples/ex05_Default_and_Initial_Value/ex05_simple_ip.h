@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_SIMPLE_IP_H_
 #define EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_SIMPLE_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -65,8 +65,8 @@ SC_MODULE(ex05_simple_ip) {
   }
 
  private:
-  cci::cnf::cci_param<int> param_1; ///< CCI param
-  cci::cnf::cci_param<int> param_2; ///< CCI param
+  cci::cci_param<int> param_1; ///< CCI param
+  cci::cci_param<int> param_2; ///< CCI param
 };
 // ex05_simple_ip
 

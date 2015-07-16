@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX06_PARAMETER_NAMING_EX06_CONFIG_IP_H_
 #define EXAMPLES_EX06_PARAMETER_NAMING_EX06_CONFIG_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 #include "xreport.hpp"
@@ -45,8 +45,8 @@ SC_MODULE(ex06_config_ip) {
    */
   SC_CTOR(ex06_config_ip) {
     // Get CCI configuration handle specific for this module
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
     assert(m_cci != NULL);
     SC_THREAD(execute);
   }
@@ -58,7 +58,7 @@ SC_MODULE(ex06_config_ip) {
    */
   void execute() {
     std::ostringstream ss;
-    cci::cnf::cci_base_param *int_param_ptr = NULL;
+    cci::cci_base_param *int_param_ptr = NULL;
     const std::string sim_ip_int_param_ip_name = "sim_ip.int_param_ip";
     const std::string sc_main_int_param_top_name = "int_param_top";
     const std::string int_param_custom_name = "top.sub.int_param_custom";
@@ -136,7 +136,7 @@ SC_MODULE(ex06_config_ip) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex06_config_ip
 

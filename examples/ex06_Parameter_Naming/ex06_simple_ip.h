@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX06_PARAMETER_NAMING_EX06_SIMPLE_IP_H_
 #define EXAMPLES_EX06_PARAMETER_NAMING_EX06_SIMPLE_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -49,23 +49,23 @@ SC_MODULE(ex06_simple_ip) {
         int_param_ip_dup(
             "sim_ip.int_param_ip",
             2,
-            cci::cnf::CCI_TOP_LEVEL_NAME,
-            cci::cnf::cci_broker_manager::get_current_broker(
-                cci::cnf::cci_originator(*this))),
+            cci::CCI_TOP_LEVEL_NAME,
+            cci::cci_broker_manager::get_current_broker(
+                cci::cci_originator(*this))),
         // Param name - Absolute
         int_param_top(
             "int_param_top",
             3,
-            cci::cnf::CCI_TOP_LEVEL_NAME,
-            cci::cnf::cci_broker_manager::get_current_broker(
-                cci::cnf::cci_originator(*this))),
+            cci::CCI_TOP_LEVEL_NAME,
+            cci::cci_broker_manager::get_current_broker(
+                cci::cci_originator(*this))),
         // Param name - Custom
         int_param_custom(
             "top.sub.int_param_custom",
             4,
-            cci::cnf::CCI_TOP_LEVEL_NAME,
-            cci::cnf::cci_broker_manager::get_current_broker(
-                cci::cnf::cci_originator(*this))) {
+            cci::CCI_TOP_LEVEL_NAME,
+            cci::cci_broker_manager::get_current_broker(
+                cci::cci_originator(*this))) {
     SC_THREAD(execute);
     XREPORT("Ctor: Default value of " << int_param_ip.get_name() << " is "
             << int_param_ip);
@@ -131,10 +131,10 @@ SC_MODULE(ex06_simple_ip) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param_ip;  ///< CCI param to hold buffer size
-  cci::cnf::cci_param<int> int_param_ip_dup;  ///< Duplicate of int_param_ip
-  cci::cnf::cci_param<int> int_param_top; ///< CCI param
-  cci::cnf::cci_param<int> int_param_custom;  ///< CCI param
+  cci::cci_param<int> int_param_ip;  ///< CCI param to hold buffer size
+  cci::cci_param<int> int_param_ip_dup;  ///< Duplicate of int_param_ip
+  cci::cci_param<int> int_param_top; ///< CCI param
+  cci::cci_param<int> int_param_custom;  ///< CCI param
 };
 // ex06_simple_ip
 

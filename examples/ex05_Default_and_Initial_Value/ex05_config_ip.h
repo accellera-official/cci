@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_CONFIG_IP_H_
 #define EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_CONFIG_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include "xreport.hpp"
 
@@ -47,8 +47,8 @@ SC_MODULE(ex05_config_ip) {
    */
   SC_CTOR(ex05_config_ip) {
     // Get CCI configuration handle specific for this module
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
     assert(m_cci != NULL);
     setup_sim_ip("Attempting to setup config_ip to 10 before IP construction",
                  "10");
@@ -75,7 +75,7 @@ SC_MODULE(ex05_config_ip) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex05_config_ip
 

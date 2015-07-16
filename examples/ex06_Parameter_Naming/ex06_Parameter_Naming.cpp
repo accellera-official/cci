@@ -37,8 +37,8 @@
  */
 int sc_main(int argc, char *argv[]) {
   std::ostringstream sout;
-  cci::cnf::cci_param<int> int_param("int_param", 10);
-  cci::cnf::cci_param<int> int_param_top("int_param_top", 10);
+  cci::cci_param<int> int_param("int_param", 10);
+  cci::cci_param<int> int_param_top("int_param_top", 10);
   ex06_simple_ip sim_ip("sim_ip");
   ex06_config_ip cfg_ip("cfg_ip");
 
