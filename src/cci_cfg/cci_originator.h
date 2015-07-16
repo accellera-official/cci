@@ -26,7 +26,7 @@ limitations under the License.
 
 #include "cci_core/systemc.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 /// Originator information when functions being called by the main object (which only the owner shall use)
 extern const std::string PARAM_ORIGINATOR;
@@ -215,7 +215,7 @@ private:
 	const cci_originator * originator_backup;
 };
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 
 #endif

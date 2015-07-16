@@ -27,7 +27,7 @@
 # define CCI_CNF_IMPL_DUMP(msg) {  } 
 #endif
 
-#include <cci>
+#include <cci_configuration>
 #include "gs_cci_cnf_broker.h"
 #include "gs_cci_cnf_broker_accessor.h"
 #include "gs_cci_cnf_private_broker.h"

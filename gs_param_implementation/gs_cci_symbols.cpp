@@ -26,17 +26,17 @@
 //       parameter vendor libraries.
 //
 
-namespace cci { namespace cnf {
+namespace cci {
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+  template  cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
+  template  cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::mutable_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::immutable_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_param)
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::mutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::immutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::elaboration_time_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::other_param)
 
   // TODO: add (ONLY!) standard parameter types here!!
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(int)
@@ -63,7 +63,7 @@ namespace cci { namespace cnf {
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_bigint<128>)  // as an example
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(sc_dt::sc_biguint<128>) // as an example
 
-} } // end namespace
+} // end namespace
 
 
   

@@ -27,21 +27,21 @@
 //
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+  template cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
+  template cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::mutable_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::immutable_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_param)
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::mutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::immutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::elaboration_time_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::other_param)
 
 
 
 #ifdef CCI_USE_HORIZONTAL_REPITION
   
 
-namespace cci { namespace cnf {
+namespace cci {
 
   // *************************************************************
   // ** Create template types using BOOST Horizontal Repetition **
@@ -62,12 +62,12 @@ BOOST_PP_REPEAT(SC_INT_CREATOR_MAX_SIZE,    CREATOR_width, sc_dt::sc_uint)
 #undef CREATOR_width
 
 
-} } // end namespace
+} // end namespace
 
 #endif
 #ifdef CCI_USE_VERTICAL_REPITION
   
-namespace cci { namespace cnf {
+namespace cci {
 
   // ***********************************************************
   // ** Create template types using BOOST Vertical Repetition **
@@ -96,7 +96,7 @@ CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE< BOOST_PP_INC(n) >)
 #undef CREATOR_width
   
   
-} } // end namespace
+} // end namespace
 
   
 #endif
@@ -108,7 +108,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   // ** Create template types using template meta programming **
   // ***********************************************************
 
-using namespace cci::cnf;
+using namespace cci;
 using namespace sc_dt;
   
 #define PLACE_FUNCTION_POINTERS_T_TM(T,TM) \

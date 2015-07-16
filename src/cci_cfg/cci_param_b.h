@@ -24,12 +24,12 @@ limitations under the License.
 #ifndef CCI_CNF_CCI_PARAM_B_H_INCLUDED_
 #define CCI_CNF_CCI_PARAM_B_H_INCLUDED_
 
-#include "cci_cnf/cci_base_param.h"
+#include "cci_cfg/cci_base_param.h"
 
 /**
  * @author Enrico Galli, Intel
  */
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 // CCI Configuration parameter base class
 /**
@@ -148,6 +148,6 @@ template <class T>
 cci_param_b<T>::cci_param_b(cci_param_impl_if& impl, const cci_originator& originator) : cci_base_param(impl, originator)
 { }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif //CCI_CNF_CCI_PARAM_B_H_INCLUDED_

@@ -15,15 +15,15 @@
 // ENDLICENSETEXT
 
 
-#include "cci_cnf/cci_debug.h"
-#include "cci_cnf/cci_datatypes.h"
-#include "cci_cnf/cci_originator.h"
-#include "cci_cnf/cci_param.h"
-#include "cci_cnf/cci_broker_manager.h"
-#include "cci_cnf/cci_broker_stack.h"
-#include "cci_cnf/cci_report_handler.h"
+#include "cci_cfg/cci_debug.h"
+#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_param.h"
+#include "cci_cfg/cci_broker_manager.h"
+#include "cci_cfg/cci_broker_stack.h"
+#include "cci_cfg/cci_report_handler.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 
 // Implementation cci_broker_manager
@@ -40,7 +40,7 @@ cci_cnf_broker_if& cci_broker_manager::get_current_broker(const cci_originator& 
   }
   // else return global broker
   else {
-    return cci::cnf::create_global_cnf_broker().get_accessor(originator);
+    return cci::create_global_cnf_broker().get_accessor(originator);
   }
 }
 
@@ -56,7 +56,7 @@ cci_cnf_broker_if& cci_broker_manager::get_current_parent_broker(const cci_origi
   }
   // else return global broker
   else {
-    return cci::cnf::create_global_cnf_broker().get_accessor(originator);
+    return cci::create_global_cnf_broker().get_accessor(originator);
   }
 }
 
@@ -90,12 +90,12 @@ cci_broker_manager::~cci_broker_manager() {
   cci_broker_stack::stack().pop();
 }
 
-cci_broker_manager::operator cci::cnf::cci_cnf_broker_if&() {
+cci_broker_manager::operator cci::cci_cnf_broker_if&() {
   return *m_broker;
 }
 
-cci_broker_manager::operator cci::cnf::cci_cnf_broker_if*() {
+cci_broker_manager::operator cci::cci_cnf_broker_if*() {
   return m_broker;
 }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_

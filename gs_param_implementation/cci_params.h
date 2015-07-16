@@ -35,7 +35,7 @@
 /// close namespace macro
 #define __CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__ }
 
-#include "cci"
+#include "cci_configuration"
 #include "greencontrol/config.h"
 
 #ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
@@ -52,7 +52,7 @@
 #include "gs_cci_param.h"
 #undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 
-namespace cci { namespace cnf {
+namespace cci {
 
   /// Implementation of parameter factory create function function declared in cci_config.h
   template<typename T, param_mutable_type TM>
@@ -71,7 +71,7 @@ namespace cci { namespace cnf {
     return impl_par;
   }
 
-} } // end namespace
+} // end namespace
 
 
 #endif

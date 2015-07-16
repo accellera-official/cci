@@ -14,11 +14,11 @@
 // ENDLICENSETEXT
 
 
-#include "cci_cnf/cci_debug.h"
-#include "cci_cnf/cci_datatypes.h"
-#include "cci_cnf/cci_broker_stack.h"
+#include "cci_cfg/cci_debug.h"
+#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_broker_stack.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 #ifdef CCI_CNF_VERBOSE
   static void cci_debug_show_broker_stack(cci_broker_stack* stack, const char* action) {
@@ -31,7 +31,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
       std::cout << std::endl;
     }
   }
-  #define CCI_SHOW_BROKER_STACK(stack, action) cci::cnf::cci_debug_show_broker_stack(stack, action);
+  #define CCI_SHOW_BROKER_STACK(stack, action) cci::cci_debug_show_broker_stack(stack, action);
 #else
   #define CCI_SHOW_BROKER_STACK(stack, action)
 #endif
@@ -73,5 +73,5 @@ cci_broker_stack& cci_broker_stack::operator=(const cci_broker_stack &originator
 	 return (*this);
 }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 

@@ -26,13 +26,13 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-#include "cci_cnf/cci_value.h"
-#include "cci_cnf/cci_report_handler.h"
-#include "cci_cnf/rapidjson.h"
+#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_report_handler.h"
+#include "cci_cfg/rapidjson.h"
 
 #include <algorithm> // std::swap
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 typedef rapidjson::CrtAllocator allocator_type;
 typedef rapidjson::UTF8<>       encoding_type;
@@ -555,4 +555,4 @@ cci_value_ref::json_deserialize( std::string const & src )
   return true;
 }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_

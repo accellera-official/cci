@@ -610,13 +610,13 @@ public:
 	  return static_serialize(val);;
   }
   inline static std::string static_serialize(const val_type &val) {
-	  return cci::cnf::cci_value::to_json(cci::cnf::cci_value(val));
+	  return cci::cci_value::to_json(cci::cci_value(val));
   }
   
   /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
   inline static bool static_deserialize(val_type &target_val, const std::string& str) {
 
-	  cci::cnf::cci_value value;
+	  cci::cci_value value;
 	  if (!value.json_deserialize(str) || !value.is_string())
 	  {
 		  std::stringstream ess;

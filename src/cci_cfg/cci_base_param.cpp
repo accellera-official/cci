@@ -29,7 +29,7 @@
 #include "cci_param_impl_if.h"
 
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 	const std::string PARAM_ORIGINATOR = "owning_param";
 
@@ -231,5 +231,5 @@ CCI_OPEN_CONFIG_NAMESPACE_
 		m_impl.destroy();
 	}
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 

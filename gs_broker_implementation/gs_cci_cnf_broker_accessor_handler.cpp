@@ -20,10 +20,10 @@
 /**
  * Organizes the broker accessors for this broker instance
  * Note: private brokers and their accessors are not handled here!
- * @see cci::cnf::gs_cci_private_broker::get_accessor
+ * @see cci::gs_cci_private_broker::get_accessor
  * @param orig_broker The original broker this accessor shall be created for.
  */
-cci::cnf::cci_cnf_broker_if& cci::cnf::gs_cci_cnf_broker_accessor_handler::get_accessor(const cci_originator& originator, cci::cnf::cci_cnf_broker_if& orig_broker) {
+cci::cci_cnf_broker_if& cci::gs_cci_cnf_broker_accessor_handler::get_accessor(const cci_originator& originator, cci::cci_cnf_broker_if& orig_broker) {
   std::string originator_name = originator.name();
   if (originator_name.empty()) {
     originator_name = __CCI_UNKNOWN_ORIGINATOR_STRING__;

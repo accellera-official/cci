@@ -46,7 +46,7 @@
 #define DUMMY_NAME "**dummy.NewParamObservers**"
 
 // TODO: CCI modification
-#include <cci>
+#include <cci_configuration>
 
 namespace gs {
 namespace cnf {
@@ -149,9 +149,9 @@ public:
 
     // TODO: CCI modifications:
 
-    cci::cnf::cci_cnf_broker_if* a = NULL;
-    if (mod) a = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(cci::cnf::cci_originator(*mod)));
-    else a = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator("UNKNOWN_ORIGINATOR"));
+    cci::cci_cnf_broker_if* a = NULL;
+    if (mod) a = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(cci::cci_originator(*mod)));
+    else a = &cci::cci_broker_manager::get_current_broker(cci::cci_originator("UNKNOWN_ORIGINATOR"));
     gs::cnf::gs_cnf_api_accessor* b = dynamic_cast<gs::cnf::gs_cnf_api_accessor*>(a);
     gs::cnf::cnf_api_if* gs_br = b->get_gs_cnf_api();
     assert (gs_br && "All APIs in this System are gs_cci_cnf_broker_accessor this gs_cnf_api_accessor! What happened here?");

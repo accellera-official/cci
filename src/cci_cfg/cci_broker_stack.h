@@ -18,7 +18,7 @@
 
 #include <vector>
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 class cci_cnf_broker_if;
 
@@ -26,7 +26,7 @@ class cci_cnf_broker_if;
 /**
  * Used by cci_broker_manager.
  * Stack for system instantiation, similar to sc_module_stack
- * Note there is a broker registry as well. @see cci::cnf::cci_broker_registry
+ * Note there is a broker registry as well. @see cci::cci_broker_registry
  */
 class cci_broker_stack
 : public std::vector<cci_cnf_broker_if*> {
@@ -77,6 +77,6 @@ protected:
 };
 
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif

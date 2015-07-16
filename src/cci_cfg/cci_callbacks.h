@@ -19,9 +19,9 @@
 #ifndef CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 #define CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
 
-#include "cci_cnf/cci_function.h"
+#include "cci_cfg/cci_function.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
   class cci_cnf_broker_if;
   
@@ -49,9 +49,9 @@ CCI_OPEN_CONFIG_NAMESPACE_
   enum callback_return_type {
     /// No special return status
     return_nothing,
-    /// The callback function rejects a value change; may only be used in cci::cnf::reject_write callbacks
+    /// The callback function rejects a value change; may only be used in cci::reject_write callbacks
     /**
-     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::cnf::reject_write.
+     * The calling parameter code must not apply the write. It should be an error if callback type is different from cci::reject_write.
      */
     return_value_change_rejected,
     /// Some other error @todo specify reaction to be performed in calling parameter code
@@ -94,7 +94,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
   {
   protected:
 
-    /// Allows cci::cnf::cci_base_param to access the caller_param to set to NULL.
+    /// Allows cci::cci_base_param to access the caller_param to set to NULL.
     //friend class cci_base_param; 
         
   public:
@@ -102,7 +102,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
     /// Constructor to be used for registering functions of type param_callb_func_ptr.
     /**
      * @param _observer_ptr  Pointer to the object where the callback method should be called.
-     * @param _func          Member function pointer to the callback method (must match signature cci::cnf::param_callb_func_ptr).
+     * @param _func          Member function pointer to the callback method (must match signature cci::param_callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
     callb_adapt_T(void* _observer_ptr, param_callb_func_ptr _func, cci_base_param_T* _caller_param);
@@ -110,7 +110,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
     /// Constructor to be used for registering functions of type broker_callb_func_ptr.
     /**
      * @param _observer_ptr   Pointer to the object where the callback method should be called.
-     * @param _func           Member function pointer to the callback method (must match signature cci::cnf::broker_callb_func_ptr).
+     * @param _func           Member function pointer to the callback method (must match signature cci::broker_callb_func_ptr).
      * @param _caller_broker  Pointer to the broker that calls this adapter.
      */
     callb_adapt_T(void* _observer_ptr, broker_callb_func_ptr _func, cci_cnf_broker_if_T* _caller_object);
@@ -149,7 +149,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
     cci_base_param_T *caller_param;
     cci_cnf_broker_if_T *caller_broker;
   protected:
-    /// Function pointer to the callback method (must match signature cci::cnf::callb_func_ptr).
+    /// Function pointer to the callback method (must match signature cci::callb_func_ptr).
     param_callb_func_ptr  par_func;
     broker_callb_func_ptr bro_func;
     
@@ -158,7 +158,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
   typedef callb_adapt_T<cci_base_param, cci_cnf_broker_if> callb_adapt;
   
       
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #include "cci_callbacks.hpp"
 

@@ -27,15 +27,15 @@ limitations under the License.
 #ifndef CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
 #define CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
 
-#include "cci_cnf/cci_shared_ptr.h"
-#include "cci_cnf/cci_callbacks.h"
-#include "cci_cnf/cci_value.h"
+#include "cci_cfg/cci_shared_ptr.h"
+#include "cci_cfg/cci_callbacks.h"
+#include "cci_cfg/cci_value.h"
 
 /**
  * @author Enrico Galli, Intel
  */
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 
 class cci_base_param;
@@ -208,6 +208,6 @@ public:
 
 };
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif

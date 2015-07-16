@@ -28,18 +28,18 @@ limitations under the License.
 #define CCI_CNF_BASE_PARAM_H_INCLUDED_
 
 #include <string>
-#include "cci_cnf/cci_config_macros.h"
-#include "cci_cnf/cci_datatypes.h"
-#include "cci_cnf/cci_value.h"
-#include "cci_cnf/cci_originator.h"
-#include "cci_cnf/cci_shared_ptr.h"
-#include "cci_cnf/cci_callbacks.h"
+#include "cci_cfg/cci_config_macros.h"
+#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_shared_ptr.h"
+#include "cci_cfg/cci_callbacks.h"
 
 /**
  * @author Enrico Galli, Intel
  */
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 //Forward declaration of implementation
 class cci_param_impl_if;
@@ -365,6 +365,6 @@ private:
 
 };
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
   
 #endif //CCI_CNF_BASE_PARAM_H_INCLUDED_

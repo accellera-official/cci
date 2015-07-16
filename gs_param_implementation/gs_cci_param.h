@@ -25,8 +25,8 @@
   #undef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
 #endif
 
-#include "cci_cnf/cci_value.h"
-#include "cci_cnf/cci_value_traits.h"
+#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_value_traits.h"
 
 #include <string>
 #include <iostream>
@@ -35,7 +35,7 @@
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
   /// Prototype parameter implementation
-  template<typename T, cci::cnf::param_mutable_type TM = cci::cnf::mutable_param>
+  template<typename T, cci::param_mutable_type TM = cci::mutable_param>
   class gs_cci_param 
   : public gs_cci_param_t <T>
   {
@@ -54,11 +54,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
 
-    gs_cci_param(cci::cnf::cci_param<value_type, TM>& owner_par, const std::string &nam, const cci::cnf::cci_value& val    , const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) :
+    gs_cci_param(cci::cci_param<value_type, TM>& owner_par, const std::string &nam, const cci::cci_value& val    , const bool is_top_level_name, cci::cci_cnf_broker_if* broker_accessor) :
 				base_type(owner_par, nam, val, is_top_level_name, true, broker_accessor)
     {}
 
-    gs_cci_param(cci::cnf::cci_param<value_type, TM>& owner_par, const std::string &nam, const value_type& val, const bool is_top_level_name, cci::cnf::cci_cnf_broker_if* broker_accessor) :
+    gs_cci_param(cci::cci_param<value_type, TM>& owner_par, const std::string &nam, const value_type& val, const bool is_top_level_name, cci::cci_cnf_broker_if* broker_accessor) :
 		base_type(owner_par, nam, val,              is_top_level_name, /*register_at_db=*/true, /*(dummy)*/true, broker_accessor)   { }
   
     ~gs_cci_param() {
@@ -100,11 +100,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     }
 
     std::string json_serialize(const value_type& val) const {
-      return cci::cnf::cci_value::to_json( cci::cnf::cci_value(val) );
+      return cci::cci_value::to_json( cci::cci_value(val) );
     }
 
     void json_deserialize(value_type& target_val, const std::string& str) {
-      cci::cnf::cci_value v = cci::cnf::cci_value::from_json( str );
+      cci::cci_value v = cci::cci_value::from_json( str );
       target_val = v.get<value_type>();
     }
 
@@ -112,19 +112,19 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     virtual const void * get_default_value() const {
       if (!this->m_gs_param.has_default_value())
-        cci::cnf::cci_report_handler::get_param_failed("Param has no default value.");
+        cci::cci_report_handler::get_param_failed("Param has no default value.");
       return &this->m_gs_param.get_default_value();
     }
 
     // //////////////// CCI VALUE HANDLING /////////////////////////// //
     
-	virtual void set_value(const cci::cnf::cci_value& val) {
+	virtual void set_value(const cci::cci_value& val) {
       value_type v = val.get<value_type>();
       this->set( &v );
     }
 
-	virtual cci::cnf::cci_value get_value() const {
-	   return cci::cnf::cci_value(this->m_gs_param.getValue());
+	virtual cci::cci_value get_value() const {
+	   return cci::cci_value(this->m_gs_param.getValue());
     }
 
 	virtual void destroy()

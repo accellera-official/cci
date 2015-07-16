@@ -28,12 +28,12 @@
 #include <iostream>
 #include <map>
 #include <set>
-#include "cci_cnf/cci_param_impl_if.h"
+#include "cci_cfg/cci_param_impl_if.h"
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   
   class gs_cci_base_param
-  : public cci::cnf::cci_param_impl_if
+  : public cci::cci_param_impl_if
   {
   protected:
     /// Typedef for the param itself.
@@ -47,7 +47,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
      */
     class internal_callback_forwarder {
     public:
-      internal_callback_forwarder(cci::shared_ptr<cci::cnf::callb_adapt> _adapt, const gs::cnf::callback_type _type, my_type& _par)
+      internal_callback_forwarder(cci::shared_ptr<cci::callb_adapt> _adapt, const gs::cnf::callback_type _type, my_type& _par)
       : adapt(_adapt.get())
       , type(_type)
       , param(&_par)
@@ -62,34 +62,34 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       // This gets called by the base gs_param
       gs::cnf::callback_return_type call(gs::gs_param_base& par, gs::cnf::callback_type cbtype) {
         gs::cnf::callback_return_type returned_gs_message = gs::cnf::return_nothing;
-        cci::cnf::callback_return_type returned_cci_message = cci::cnf::return_nothing;
+        cci::callback_return_type returned_cci_message = cci::return_nothing;
         switch(cbtype) {
           case gs::cnf::destroy_param:
             assert(par.is_destructing());
             // TODO This cannot work because the cast the the already destructed cci_base_param fails.
             // TODO adapt->call(*cci_p, cci::destroy_param);
             break;
-          case gs::cnf::pre_read: // = cci::cnf::pre_read
-            returned_cci_message = adapt->call(*param, cci::cnf::pre_read);
+          case gs::cnf::pre_read: // = cci::pre_read
+            returned_cci_message = adapt->call(*param, cci::pre_read);
             break;
-          case gs::cnf::reject_write: // = cci::cnf::reject_write
-            returned_cci_message = adapt->call(*param, cci::cnf::reject_write);
+          case gs::cnf::reject_write: // = cci::reject_write
+            returned_cci_message = adapt->call(*param, cci::reject_write);
             break;
-          case gs::cnf::pre_write: // = cci::cnf::pre_write
-            returned_cci_message = adapt->call(*param, cci::cnf::pre_write);
+          case gs::cnf::pre_write: // = cci::pre_write
+            returned_cci_message = adapt->call(*param, cci::pre_write);
             break;
-          case gs::cnf::post_write: // = cci::cnf::post_write
-            returned_cci_message = adapt->call(*param, cci::cnf::post_write);
+          case gs::cnf::post_write: // = cci::post_write
+            returned_cci_message = adapt->call(*param, cci::post_write);
             break;
           default:
-            returned_cci_message = cci::cnf::return_other_error;
+            returned_cci_message = cci::return_other_error;
             assert(false);
         }
         switch (returned_cci_message) {
-          case cci::cnf::return_value_change_rejected:
+          case cci::return_value_change_rejected:
             returned_gs_message = gs::cnf::return_value_change_rejected;
             break;
-          case cci::cnf::return_other_error:
+          case cci::return_other_error:
             returned_gs_message = gs::cnf::return_other_error;
             break;
           default:
@@ -101,7 +101,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
         return type;
       }
 
-      cci::cnf::callb_adapt* adapt;
+      cci::callb_adapt* adapt;
       gs::cnf::callback_type type;
       my_type *param;
       cci::shared_ptr< gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
@@ -113,10 +113,10 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       : owner(&_owner) {
       }
       // This gets called by the base gs_param
-      cci::cnf::callback_return_type call(cci::cnf::cci_base_param& changed_param, const cci::cnf::callback_type& cb_reason) {
+      cci::callback_return_type call(cci::cci_base_param& changed_param, const cci::callback_type& cb_reason) {
         owner->m_is_default_value = false;
         owner->m_is_invalid_value = false;
-        return cci::cnf::return_nothing;
+        return cci::return_nothing;
       }
       my_type* owner;
     };
@@ -125,12 +125,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
   public:
 
-    gs_cci_base_param(cci::cnf::cci_base_param& owner_par
+    gs_cci_base_param(cci::cci_base_param& owner_par
                       //, gs::gs_param_base& gs_param_base // must be set manually immediately after construction
                       , bool is_top_level_name /*= false*/
                       , bool register_at_db /*= true*/
                       , bool has_default_value // if there is a default value
-                      , cci::cnf::cci_cnf_broker_if* broker_accessor)
+                      , cci::cci_cnf_broker_if* broker_accessor)
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
@@ -148,15 +148,15 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       assert(m_init_called == false && "init() function called more than once!");
       m_init_called = true;
       // This has already been done in the cci_param constructor!
-      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(get_cci_base_param());
-      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(this);
-      m_post_write_callback = register_callback(cci::cnf::post_write, &m_status_guard, bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
+      //cci::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(get_cci_base_param());
+      //cci::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->add_param(this);
+      m_post_write_callback = register_callback(cci::post_write, &m_status_guard, bind(&status_guard::call, &m_status_guard, _1, _2)); // internal callback for status variables
     }
 
   public:
     virtual ~gs_cci_base_param() {
       m_broker_accessor->remove_param(get_cci_base_param()); // TODO!!!
-      //cci::cnf::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(this);
+      //cci::get_cnf_broker_instance(gs::cnf::get_parent_sc_module(m_gs_param_base))->remove_param(this);
       assert(m_init_called && "If this happens, the construction did not call the base param init function!");
       
       // remove this from all callbacks being called by this parameter (to prevent them to remove themselves from this on their destruction)
@@ -165,11 +165,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     }
     
     /// Implicit cast operator
-    operator cci::cnf::cci_base_param* () { return &m_owner_par; }
-    cci::cnf::cci_base_param* get_cci_base_param() { return &m_owner_par; }
-    operator cci::cnf::cci_base_param& () { return m_owner_par; }
+    operator cci::cci_base_param* () { return &m_owner_par; }
+    cci::cci_base_param* get_cci_base_param() { return &m_owner_par; }
+    operator cci::cci_base_param& () { return m_owner_par; }
     
-    virtual cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::param_type_not_available; }
+    virtual cci::basic_param_type get_basic_type() const { return cci::param_type_not_available; }
 
     virtual const std::string& get_name() const {
       assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
@@ -216,30 +216,30 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     
     // /////////////////// CALLBACKS ///////////////////// //
 
-    virtual cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function) {
+    virtual cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function) {
       // call the pure virtual function performing the registration
-      return register_callback(type, cci::make_shared<cci::cnf::callb_adapt>(observer, function, get_cci_base_param()));
+      return register_callback(type, cci::make_shared<cci::callb_adapt>(observer, function, get_cci_base_param()));
     }
     
-    virtual cci::shared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb) {
+    virtual cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, cci::shared_ptr<cci::callb_adapt> callb) {
       gs::cnf::callback_type cb = gs::cnf::no_callback;
       switch(type) {
-        case cci::cnf::pre_read:
+        case cci::pre_read:
           cb = gs::cnf::pre_read;
           break;
-        case cci::cnf::reject_write:
+        case cci::reject_write:
           cb = gs::cnf::reject_write;
           break;
-        case cci::cnf::pre_write:
+        case cci::pre_write:
           cb = gs::cnf::pre_write;
           break;
-        case cci::cnf::create_param:
+        case cci::create_param:
           cb = gs::cnf::create_param;
           break;
-        case cci::cnf::post_write:
+        case cci::post_write:
           cb = gs::cnf::post_write;
           break;
-        case cci::cnf::destroy_param:
+        case cci::destroy_param:
           cb = gs::cnf::destroy_param;
           break;
       }
@@ -277,11 +277,11 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       }
     }
     
-    virtual bool unregister_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb)  {
+    virtual bool unregister_callback(cci::shared_ptr<cci::callb_adapt> callb)  {
       return unregister_callback(callb.get());
     }
     
-    virtual bool unregister_callback(cci::cnf::callb_adapt* callb)  {
+    virtual bool unregister_callback(cci::callb_adapt* callb)  {
       internal_callback_forwarder* fw;
       for (unsigned int i = 0; i < fw_vec.size(); ++i) {
         if (fw_vec[i]->adapt == callb) {
@@ -298,7 +298,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return (fw_vec.size() > 0);
     }
     
-    virtual const cci::cnf::cci_originator* get_latest_write_originator() const {
+    virtual const cci::cci_originator* get_latest_write_originator() const {
       if (!m_latest_write_access_originator_valid) return NULL;
       return &m_latest_write_access_originator_cp;
     }
@@ -310,7 +310,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
      * This is called by function that writes successfully to the value of this parameter
      */
     void update_latest_write_originator() const {
-      const cci::cnf::cci_originator* orig = cci::cnf::cci_originator::get_global_originator();
+      const cci::cci_originator* orig = cci::cci_originator::get_global_originator();
       if (orig) {
         m_latest_write_access_originator_valid = true;
         m_latest_write_access_originator_cp = *orig;
@@ -325,7 +325,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     std::vector<internal_callback_forwarder*> fw_vec;
     
     /// Owning parameter, to allow implicit casting to the parent
-    cci::cnf::cci_base_param &m_owner_par;
+    cci::cci_base_param &m_owner_par;
     
     gs::gs_param_base *m_gs_param_base;
     
@@ -337,12 +337,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     bool m_init_called;
 
-    cci::shared_ptr<cci::cnf::callb_adapt> m_post_write_callback;
+    cci::shared_ptr<cci::callb_adapt> m_post_write_callback;
     
-    cci::cnf::cci_cnf_broker_if* m_broker_accessor;
+    cci::cci_cnf_broker_if* m_broker_accessor;
     
     /// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
-	mutable cci::cnf::cci_originator m_latest_write_access_originator_cp;
+	mutable cci::cci_originator m_latest_write_access_originator_cp;
     /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
     mutable bool m_latest_write_access_originator_valid;
     

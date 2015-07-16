@@ -27,15 +27,15 @@ limitations under the License.
 #ifndef CCI_CNF_CCI_PARAM_H_INCLUDED_
 #define CCI_CNF_CCI_PARAM_H_INCLUDED_
 
-#include "cci_cnf/cci_param_b.h"
-#include "cci_cnf/cci_factory.h"
-#include "cci_cnf/cci_broker_manager.h"
+#include "cci_cfg/cci_param_b.h"
+#include "cci_cfg/cci_factory.h"
+#include "cci_cfg/cci_broker_manager.h"
 
 /**
  * @author Enrico Galli, Intel
  */
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 /// Parameter class, internally forwarding calls to the implementation
 /**
@@ -147,6 +147,6 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci
 		return new cci_param(*this, originator);
 	}
 
-	CCI_CLOSE_CONFIG_NAMESPACE_
+	CCI_CLOSE_NAMESPACE_
 
 #endif

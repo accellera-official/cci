@@ -28,7 +28,7 @@
  * @brief Declarations of parameter factory functions
  */
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 template<class T, param_mutable_type TM>
 class cci_param;
@@ -65,6 +65,6 @@ cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::stri
 template<typename T, param_mutable_type TM>
 cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const cci_value& value, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif

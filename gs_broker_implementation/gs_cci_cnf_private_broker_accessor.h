@@ -19,13 +19,12 @@
 #define __GS_CCI_CNF_PRIVATE_BROKER_ACCESSOR_H__
 
 
-#include <cci>
+#include <cci_configuration>
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_private_broker.h"
 
 
 namespace cci {
-  namespace cnf {
         
     
     /// To be instantiated by the user to create a private broker.
@@ -35,7 +34,7 @@ namespace cci {
      * gs_cci_cnf_broker_accessor for the private broker as well.
      */
     class gs_cci_private_broker_accessor
-    : public cci::cnf::cci_cnf_broker_if // end user interface
+    : public cci::cci_cnf_broker_if // end user interface
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
     public:
@@ -64,7 +63,7 @@ namespace cci {
       
       const std::string json_serialize_keep_unused(const std::string &parname);
       
-      cci::cnf::cci_base_param* get_param(const std::string &parname);
+      cci::cci_base_param* get_param(const std::string &parname);
       
       bool param_exists(const std::string &parname);
       
@@ -74,19 +73,19 @@ namespace cci {
       
       const std::vector<std::string> get_param_list(const std::string& pattern);
       
-      const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern = "");
+      const std::vector<cci::cci_base_param*> get_params(const std::string& pattern = "");
       
-      shared_ptr< cci::cnf::callb_adapt> register_callback(const std::string& parname, const cci::cnf::callback_type type, shared_ptr< cci::cnf::callb_adapt> callb);
+      shared_ptr< cci::callb_adapt> register_callback(const std::string& parname, const cci::callback_type type, shared_ptr< cci::callb_adapt> callb);
       
       void unregister_all_callbacks(void* observer);
       
-      bool unregister_callback(cci::cnf::callb_adapt* callb);
+      bool unregister_callback(cci::callb_adapt* callb);
       
       bool has_callbacks(const std::string& parname);
       
-      void add_param(cci::cnf::cci_base_param* par);
+      void add_param(cci::cci_base_param* par);
       
-      void remove_param(cci::cnf::cci_base_param* par);
+      void remove_param(cci::cci_base_param* par);
       
       //void set_alias(std::string& orig_parname, std::string& alias_parname);
       
@@ -125,7 +124,6 @@ namespace cci {
     
 
   
-  } // end namespace cnf
 } // end namespace cci
 
 #endif
