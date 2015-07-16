@@ -149,7 +149,7 @@ public:
 
     // TODO: CCI modifications:
 
-    cci::cci_cnf_broker_if* a = NULL;
+    cci::cci_broker_if* a = NULL;
     if (mod) a = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(cci::cci_originator(*mod)));
     else a = &cci::cci_broker_manager::get_current_broker(cci::cci_originator("UNKNOWN_ORIGINATOR"));
     gs::cnf::gs_cnf_api_accessor* b = dynamic_cast<gs::cnf::gs_cnf_api_accessor*>(a);

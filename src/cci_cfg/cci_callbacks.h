@@ -16,14 +16,14 @@
 
 
 
-#ifndef CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
-#define CCI_CNF_CCI_CALLBACKS_H_INCLUDED_
+#ifndef CCI_CCI_CALLBACKS_H_INCLUDED_
+#define CCI_CCI_CALLBACKS_H_INCLUDED_
 
 #include "cci_cfg/cci_function.h"
 
 CCI_OPEN_NAMESPACE_
 
-  class cci_cnf_broker_if;
+  class cci_broker_if;
   
   /// Callback type
   /**
@@ -89,7 +89,7 @@ CCI_OPEN_NAMESPACE_
    * cyclic includes with cci_base_param and broker), 
    * Use the typedef callb_adapt to use this class.
    */
-  template<class cci_base_param_T, class cci_cnf_broker_if_T>
+  template<class cci_base_param_T, class cci_broker_if_T>
   class callb_adapt_T
   {
   protected:
@@ -113,7 +113,7 @@ CCI_OPEN_NAMESPACE_
      * @param _func           Member function pointer to the callback method (must match signature cci::broker_callb_func_ptr).
      * @param _caller_broker  Pointer to the broker that calls this adapter.
      */
-    callb_adapt_T(void* _observer_ptr, broker_callb_func_ptr _func, cci_cnf_broker_if_T* _caller_object);
+    callb_adapt_T(void* _observer_ptr, broker_callb_func_ptr _func, cci_broker_if_T* _caller_object);
     
     ~callb_adapt_T();
     
@@ -147,7 +147,7 @@ CCI_OPEN_NAMESPACE_
   public:   // TODO: more elegant; needs to be set to NULL when calling parameter is deleted
     /// Caller parameter
     cci_base_param_T *caller_param;
-    cci_cnf_broker_if_T *caller_broker;
+    cci_broker_if_T *caller_broker;
   protected:
     /// Function pointer to the callback method (must match signature cci::callb_func_ptr).
     param_callb_func_ptr  par_func;
@@ -155,7 +155,7 @@ CCI_OPEN_NAMESPACE_
     
   };
 
-  typedef callb_adapt_T<cci_base_param, cci_cnf_broker_if> callb_adapt;
+  typedef callb_adapt_T<cci_base_param, cci_broker_if> callb_adapt;
   
       
 CCI_CLOSE_NAMESPACE_

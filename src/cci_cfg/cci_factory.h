@@ -14,8 +14,8 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef CCI_CNF_CCI_FACTORY_H_INCLUDED_
-#define CCI_CNF_CCI_FACTORY_H_INCLUDED_
+#ifndef CCI_CCI_FACTORY_H_INCLUDED_
+#define CCI_CCI_FACTORY_H_INCLUDED_
 
 #include <string>
 #include "cci_datatypes.h"
@@ -33,7 +33,7 @@ CCI_OPEN_NAMESPACE_
 template<class T, param_mutable_type TM>
 class cci_param;
 
-class cci_cnf_broker_if;
+class cci_broker_if;
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -48,7 +48,7 @@ class cci_cnf_broker_if;
  * @param broker_accessor The broker accessor responsible for this parameter
  */
 template<typename T, param_mutable_type TM>
-cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const T& value, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const T& value, const bool is_top_level_name, cci_broker_if* broker_accessor);
 
 /// Parameter factory function being called from the cci param constructor to construct the underlying parameter
 /**
@@ -63,7 +63,7 @@ cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::stri
  * @param broker_accessor The broker accessor responsible for this parameter
  */
 template<typename T, param_mutable_type TM>
-cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const cci_value& value, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+cci_param_impl_if* create_cci_param(cci_param<T, TM>* owner_par, const std::string& name, const cci_value& value, const bool is_top_level_name, cci_broker_if* broker_accessor);
 
 CCI_CLOSE_NAMESPACE_
 

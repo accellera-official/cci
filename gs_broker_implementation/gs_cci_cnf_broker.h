@@ -36,7 +36,7 @@ namespace cci {
    * Guarded by gs_cci_cnf_broker_accessor
    */
   class gs_cci_cnf_broker
-  : public cci::cci_cnf_broker_if
+  : public cci::cci_broker_if
   , public gs_cci_cnf_broker_if
   , public gs::cnf::GCnf_Api
   , public gs::cnf::gs_cnf_api_accessor
@@ -77,7 +77,7 @@ namespace cci {
 
   public:
 
-    cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
+    cci_broker_if& get_accessor(const cci_originator& originator) { return cci::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
 
     const cci_originator* get_originator() const { return NULL; }
 

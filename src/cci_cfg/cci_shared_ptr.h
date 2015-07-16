@@ -14,8 +14,8 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef CCI_CNF_CCI_SHARED_PTR_H_INCLUDED_
-#define CCI_CNF_CCI_SHARED_PTR_H_INCLUDED_
+#ifndef CCI_CCI_SHARED_PTR_H_INCLUDED_
+#define CCI_CCI_SHARED_PTR_H_INCLUDED_
 
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>

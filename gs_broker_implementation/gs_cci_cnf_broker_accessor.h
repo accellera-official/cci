@@ -42,7 +42,7 @@ namespace cci {
      * to the users.
      */
     class gs_cci_cnf_broker_accessor
-    : public cci::cci_cnf_broker_if // end user interface
+    : public cci::cci_broker_if // end user interface
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
     protected:
@@ -52,17 +52,17 @@ namespace cci {
 
     public:
       
-      cci_cnf_broker_if& get_accessor(const cci_originator& originator);
+      cci_broker_if& get_accessor(const cci_originator& originator);
       
       /// Used by global get_cnf_broker_instance function
-      gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cci_cnf_broker_if& orig_broker);
+      gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cci_broker_if& orig_broker);
       
       ~gs_cci_cnf_broker_accessor();
       
       const std::string &name() const;
 
       // ////////////////////////////////////////////////////////////// //
-      // /////////////// cci_cnf_broker_if functions ////////////////// //
+      // /////////////// cci_broker_if functions ////////////////// //
       // ////////////////////////////////////////////////////////////// //
 
       void json_deserialize_initial_value(const std::string &parname, const std::string &value);

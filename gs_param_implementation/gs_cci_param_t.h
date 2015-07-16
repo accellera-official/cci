@@ -61,7 +61,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                    , const cci::cci_value& val
                    , bool is_top_level_name /*= false*/
                    , bool register_at_db /*= true*/
-                   , cci::cci_cnf_broker_if* broker_accessor)
+                   , cci::cci_broker_if* broker_accessor)
     : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, /*has_default_value=*/true, broker_accessor)
     , m_gs_param(n, "", NULL, is_top_level_name, register_at_db)
     , m_owner_par(owner_par)
@@ -76,7 +76,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                    , bool is_top_level_name /*= false*/
                    , bool register_at_db /*= true*/
                    , bool this_is_with_a_value // Just to make a difference (allow overloading) the constructor taking a string value 
-                   , cci::cci_cnf_broker_if* broker_accessor )
+                   , cci::cci_broker_if* broker_accessor )
     : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, true, broker_accessor)
     , m_gs_param(n, val, is_top_level_name) 
     , m_owner_par(owner_par)

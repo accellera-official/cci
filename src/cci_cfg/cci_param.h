@@ -24,8 +24,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *****************************************************************************/
 
-#ifndef CCI_CNF_CCI_PARAM_H_INCLUDED_
-#define CCI_CNF_CCI_PARAM_H_INCLUDED_
+#ifndef CCI_CCI_PARAM_H_INCLUDED_
+#define CCI_CCI_PARAM_H_INCLUDED_
 
 #include "cci_cfg/cci_param_b.h"
 #include "cci_cfg/cci_factory.h"
@@ -69,16 +69,16 @@ public:
 	cci_param(const std::string& name, const cci_value& value, cci_top_level_name);
 
 	/// Constructor with (local/hierarchical) name and initial value and private broker.
-	cci_param(const std::string& name, const value_type& value, cci_cnf_broker_if& private_broker);
+	cci_param(const std::string& name, const value_type& value, cci_broker_if& private_broker);
 
 	/// Constructor with (local/hierarchical) name and initial value and private broker.
-	cci_param(const std::string& name, const cci_value& value, cci_cnf_broker_if& private_broker);
+	cci_param(const std::string& name, const cci_value& value, cci_broker_if& private_broker);
 
 	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-	cci_param(const std::string& name, const value_type& value, cci_top_level_name, cci_cnf_broker_if& private_broker);
+	cci_param(const std::string& name, const value_type& value, cci_top_level_name, cci_broker_if& private_broker);
 
 	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, cci_cnf_broker_if& private_broker);
+	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker);
 
 	///Creates a parameter accessor object holding the originator information and pointing to the same parameter
 	/**
@@ -121,16 +121,16 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cc
 CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
 
 /// Constructor with (local/hierarchical) name and initial value and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_cnf_broker_if& private_broker), false, private_broker)
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_broker_if& private_broker), false, private_broker)
 
 /// Constructor with (local/hierarchical) name and initial value and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_cnf_broker_if& private_broker), false, private_broker)
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_broker_if& private_broker), false, private_broker)
 
 /// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name, cci_cnf_broker_if& private_broker), true, private_broker)
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name, cci_broker_if& private_broker), true, private_broker)
 
 /// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name, cci_cnf_broker_if& private_broker), true, private_broker)
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker), true, private_broker)
 
 
 #undef CCI_PARAM_CONSTRUCTOR_IMPL

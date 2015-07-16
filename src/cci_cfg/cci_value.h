@@ -21,8 +21,8 @@
   limitations under the License.
  *****************************************************************************/
 
-#ifndef CCI_CNF_CCI_VALUE_H_INCLUDED_
-#define CCI_CNF_CCI_VALUE_H_INCLUDED_
+#ifndef CCI_CCI_VALUE_H_INCLUDED_
+#define CCI_CCI_VALUE_H_INCLUDED_
 
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
@@ -1038,4 +1038,4 @@ CCI_CLOSE_NAMESPACE_
 #undef CCI_VALUE_TRAITS_ENABLED_
 #undef CCI_VALUE_ENABLE_IF_TRAITS_
 
-#endif // CCI_CNF_CCI_VALUE_H_INCLUDED_
+#endif // CCI_CCI_VALUE_H_INCLUDED_

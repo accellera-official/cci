@@ -24,8 +24,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *****************************************************************************/
 
-#ifndef CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
-#define CCI_CNF_CCI_PARAM_IMPL_IF_H_INCLUDED_
+#ifndef CCI_CCI_PARAM_IMPL_IF_H_INCLUDED_
+#define CCI_CCI_PARAM_IMPL_IF_H_INCLUDED_
 
 #include "cci_cfg/cci_shared_ptr.h"
 #include "cci_cfg/cci_callbacks.h"

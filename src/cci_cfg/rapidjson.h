@@ -33,8 +33,8 @@
  * @note This file is @b not part of the public API!
  */
 
-#ifndef CCI_CNF_RAPIDJSON_H_INCLUDED_
-#define CCI_CNF_RAPIDJSON_H_INCLUDED_
+#ifndef CCI_RAPIDJSON_H_INCLUDED_
+#define CCI_RAPIDJSON_H_INCLUDED_
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 
@@ -199,4 +199,4 @@ RAPIDJSON_DIAG_POP
 
 ///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
-#endif // CCI_CNF_RAPIDJSON_H_INCLUDED_
+#endif // CCI_RAPIDJSON_H_INCLUDED_

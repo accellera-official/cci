@@ -31,8 +31,8 @@
 #endif
 #endif // CCI_EXTERN_
 
-#ifndef CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
-#define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
+#ifndef CCI_CCI_VALUE_TRAITS_H_INCLUDED_
+#define CCI_CCI_VALUE_TRAITS_H_INCLUDED_
 
 #include "cci_core/systemc.h"
 #include "cci_cfg/cci_value.h"
@@ -353,7 +353,7 @@ struct cci_value_traits< sc_dt::sc_lv<N> >
 
 CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
+#endif // CCI_CCI_VALUE_TRAITS_H_INCLUDED_
 
 ///@todo add support for SystemC fixpoint types
 #if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_)

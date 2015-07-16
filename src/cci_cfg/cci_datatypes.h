@@ -14,8 +14,8 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef CCI_CNF_CCI_DATATYPES_H_INCLUDED_
-#define CCI_CNF_CCI_DATATYPES_H_INCLUDED_
+#ifndef CCI_CCI_DATATYPES_H_INCLUDED_
+#define CCI_CCI_DATATYPES_H_INCLUDED_
 
 #include "cci_cfg/cci_config_macros.h"
 

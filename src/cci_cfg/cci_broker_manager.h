@@ -15,8 +15,8 @@
 // ENDLICENSETEXT
 
 
-#ifndef CCI_CNF_CCI_BROKER_MANAGER_H_INCLUDED_
-#define CCI_CNF_CCI_BROKER_MANAGER_H_INCLUDED_
+#ifndef CCI_CCI_BROKER_MANAGER_H_INCLUDED_
+#define CCI_CCI_BROKER_MANAGER_H_INCLUDED_
 
 #include "cci_cfg/cci_broker_if.h"
 
@@ -52,7 +52,7 @@ public:
    * @return Broker (private or global) accessor
    */
   // old name: "search_for_broker"
-  static cci_cnf_broker_if& get_current_broker(const cci_originator& originator);
+  static cci_broker_if& get_current_broker(const cci_originator& originator);
 
   /// Returns an accessor to the broker currently on second top of broker stack
   /**
@@ -65,7 +65,7 @@ public:
    * @param originator Originator the accessor shall point to
    * @return Broker (private or global) accessor
    */
-  static cci_cnf_broker_if& get_current_parent_broker(const cci_originator& originator);
+  static cci_broker_if& get_current_parent_broker(const cci_originator& originator);
   
 private:
   //TODO
@@ -84,7 +84,7 @@ public:
    *
    * @param broker Broker that should use forwarded to user module and placed on stack
    */
-  cci_broker_manager(cci_cnf_broker_if* broker);
+  cci_broker_manager(cci_broker_if* broker);
   
   /// Destructor
   /**
@@ -98,13 +98,13 @@ public:
   /**
    * Can be used by user module to access the broker
    */
-  operator cci_cnf_broker_if&();
+  operator cci_broker_if&();
 
   /// Conversion operator
   /**
    * Can be used by user module to access the broker
    */
-  operator cci_cnf_broker_if*();
+  operator cci_broker_if*();
   
 // Private to prevent from modification
 private:
@@ -115,7 +115,7 @@ private:
    * This is either an accessor to the own private broker
    * or an accessor to another (private or not private) broker from upwards the hierarchy.
    */
-  cci_cnf_broker_if* m_broker;
+  cci_broker_if* m_broker;
 
 };
 

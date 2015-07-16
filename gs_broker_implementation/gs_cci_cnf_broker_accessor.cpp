@@ -19,14 +19,14 @@
 #include "gs_cci_broker.h"
 
 
-cci::cci_cnf_broker_if& cci::gs_cci_cnf_broker_accessor::get_accessor(const cci_originator& originator) {
+cci::cci_broker_if& cci::gs_cci_cnf_broker_accessor::get_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  cci::cci_cnf_broker_if &broker = m_broker->get_accessor(originator);
+  cci::cci_broker_if &broker = m_broker->get_accessor(originator);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return broker;
 }
 
-cci::gs_cci_cnf_broker_accessor::gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cci_cnf_broker_if& orig_broker) 
+cci::gs_cci_cnf_broker_accessor::gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cci_broker_if& orig_broker) 
 : m_broker(NULL)
 , m_originator(originator) 
 { 

@@ -21,8 +21,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *****************************************************************************/
 
-#ifndef CCI_CNF_CCI_ORIGINATOR_H_INCLUDED_
-#define CCI_CNF_CCI_ORIGINATOR_H_INCLUDED_
+#ifndef CCI_CCI_ORIGINATOR_H_INCLUDED_
+#define CCI_CCI_ORIGINATOR_H_INCLUDED_
 
 #include "cci_core/systemc.h"
 

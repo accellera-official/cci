@@ -130,7 +130,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                       , bool is_top_level_name /*= false*/
                       , bool register_at_db /*= true*/
                       , bool has_default_value // if there is a default value
-                      , cci::cci_cnf_broker_if* broker_accessor)
+                      , cci::cci_broker_if* broker_accessor)
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
@@ -339,7 +339,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     cci::shared_ptr<cci::callb_adapt> m_post_write_callback;
     
-    cci::cci_cnf_broker_if* m_broker_accessor;
+    cci::cci_broker_if* m_broker_accessor;
     
     /// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
 	mutable cci::cci_originator m_latest_write_access_originator_cp;

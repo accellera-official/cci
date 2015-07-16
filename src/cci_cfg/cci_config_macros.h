@@ -16,8 +16,8 @@
 
 
 
-#ifndef CCI_CNF_CCI_CONFIG_MACROS_H_INCLUDED_
-#define CCI_CNF_CCI_CONFIG_MACROS_H_INCLUDED_
+#ifndef CCI_CCI_CONFIG_MACROS_H_INCLUDED_
+#define CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 
 /// Namespace for ASI Configuration, Control & Inspection (CCI) standard, Config part
 #define CCI_OPEN_NAMESPACE_  namespace cci {

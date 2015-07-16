@@ -24,8 +24,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *****************************************************************************/
 
-#ifndef CCI_CNF_BASE_PARAM_H_INCLUDED_
-#define CCI_CNF_BASE_PARAM_H_INCLUDED_
+#ifndef CCI_BASE_PARAM_H_INCLUDED_
+#define CCI_BASE_PARAM_H_INCLUDED_
 
 #include <string>
 #include "cci_cfg/cci_config_macros.h"
@@ -367,4 +367,4 @@ private:
 
 CCI_CLOSE_NAMESPACE_
   
-#endif //CCI_CNF_BASE_PARAM_H_INCLUDED_
+#endif //CCI_BASE_PARAM_H_INCLUDED_

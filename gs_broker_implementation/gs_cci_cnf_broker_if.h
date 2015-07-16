@@ -31,7 +31,7 @@ CCI_OPEN_NAMESPACE_
 
   public:
 
-    virtual cci_cnf_broker_if& get_accessor(const cci_originator& originator) = 0;
+    virtual cci_broker_if& get_accessor(const cci_originator& originator) = 0;
 
     // Destructor
     virtual ~gs_cci_cnf_broker_if() { };

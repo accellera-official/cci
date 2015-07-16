@@ -34,11 +34,11 @@ namespace cci {
      * gs_cci_cnf_broker_accessor for the private broker as well.
      */
     class gs_cci_private_broker_accessor
-    : public cci::cci_cnf_broker_if // end user interface
+    : public cci::cci_broker_if // end user interface
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
     public:
-      cci_cnf_broker_if& get_accessor(const cci_originator& originator);
+      cci_broker_if& get_accessor(const cci_originator& originator);
 
       //gs_cci_private_broker_accessor(sc_core::sc_module& owner, std::vector<const char*> pub_params, const cci_originator& originator);
 
@@ -52,7 +52,7 @@ namespace cci {
       const std::string &name() const;
 
       // ////////////////////////////////////////////////////////////// //
-      // /////////////// cci_cnf_broker_if functions ////////////////// //
+      // /////////////// cci__broker_if functions ////////////////// //
       // ////////////////////////////////////////////////////////////// //
       
       void json_deserialize_initial_value(const std::string &parname, const std::string &value);

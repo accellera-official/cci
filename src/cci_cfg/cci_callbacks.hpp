@@ -20,8 +20,8 @@
 CCI_OPEN_NAMESPACE_
 
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::callb_adapt_T(void* _observer_ptr, param_callb_func_ptr _func, cci_base_param_T* _caller_param)
+template<class cci_base_param_T, class cci_broker_if_T>
+callb_adapt_T<cci_base_param_T, cci_broker_if_T>::callb_adapt_T(void* _observer_ptr, param_callb_func_ptr _func, cci_base_param_T* _caller_param)
 : observer_ptr(_observer_ptr)
 , caller_param(_caller_param)
 , caller_broker(NULL)
@@ -34,8 +34,8 @@ callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::callb_adapt_T(void* _obser
 #endif
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::callb_adapt_T(void* _observer_ptr, broker_callb_func_ptr _func, cci_cnf_broker_if_T* _caller_broker)
+template<class cci_base_param_T, class cci_broker_if_T>
+callb_adapt_T<cci_base_param_T, cci_broker_if_T>::callb_adapt_T(void* _observer_ptr, broker_callb_func_ptr _func, cci_broker_if_T* _caller_broker)
 : observer_ptr(_observer_ptr)
 , caller_param(NULL)
 , caller_broker(_caller_broker)
@@ -48,16 +48,16 @@ callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::callb_adapt_T(void* _obser
 #endif
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::~callb_adapt_T() {
+template<class cci_base_param_T, class cci_broker_if_T>
+callb_adapt_T<cci_base_param_T, cci_broker_if_T>::~callb_adapt_T() {
   unregister_at_parameter();
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
   printf("callb_adapt: Deleting parameter callback adapter %p (shared pointer deleted)\n", (void*)this);
 #endif
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-void callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::unregister_at_parameter() {
+template<class cci_base_param_T, class cci_broker_if_T>
+void callb_adapt_T<cci_base_param_T, cci_broker_if_T>::unregister_at_parameter() {
   if (caller_param != NULL) {
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
     printf("callb_adapt: Unregister parameter callback adapter %p at caller parameter '%s'.\n", (void*)this, caller_param->get_name().c_str());
@@ -78,8 +78,8 @@ void callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::unregister_at_paramet
   
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-callback_return_type callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::call(cci_base_param_T& changed_param, const callback_type& cb_reason) {
+template<class cci_base_param_T, class cci_broker_if_T>
+callback_return_type callb_adapt_T<cci_base_param_T, cci_broker_if_T>::call(cci_base_param_T& changed_param, const callback_type& cb_reason) {
   if (par_func) {
     return par_func(changed_param, cb_reason);
   } else if (bro_func) {
@@ -90,8 +90,8 @@ callback_return_type callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::call(
   return return_nothing;
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-callback_return_type callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::call(const std::string& changed_param_name, const callback_type& cb_reason) {
+template<class cci_base_param_T, class cci_broker_if_T>
+callback_return_type callb_adapt_T<cci_base_param_T, cci_broker_if_T>::call(const std::string& changed_param_name, const callback_type& cb_reason) {
   if (par_func) {
     assert(caller_broker && "Caller broker must have been set in constructor when using this call function");
     cci_base_param_T* p = caller_broker->get_param(changed_param_name);
@@ -107,18 +107,18 @@ callback_return_type callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::call(
   return return_nothing;
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-void* callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::get_observer() {
+template<class cci_base_param_T, class cci_broker_if_T>
+void* callb_adapt_T<cci_base_param_T, cci_broker_if_T>::get_observer() {
   return (void*) observer_ptr;
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-cci_base_param_T* callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::get_caller_param() {
+template<class cci_base_param_T, class cci_broker_if_T>
+cci_base_param_T* callb_adapt_T<cci_base_param_T, cci_broker_if_T>::get_caller_param() {
   return caller_param;
 }
 
-template<class cci_base_param_T, class cci_cnf_broker_if_T>
-cci_base_param_T* callb_adapt_T<cci_base_param_T, cci_cnf_broker_if_T>::get_caller_broker() {
+template<class cci_base_param_T, class cci_broker_if_T>
+cci_base_param_T* callb_adapt_T<cci_base_param_T, cci_broker_if_T>::get_caller_broker() {
   return caller_broker;
 }
 

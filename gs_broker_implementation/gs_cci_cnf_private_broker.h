@@ -30,7 +30,7 @@
 namespace cci {
   
   class gs_cci_private_broker
-  : public cci::cci_cnf_broker_if
+  : public cci::cci_broker_if
   , public gs_cci_cnf_broker_if // used internally by broker accessors
   , public gs::cnf::GCnf_private_Api
   , public gs::cnf::gs_cnf_api_accessor
@@ -43,7 +43,7 @@ namespace cci {
 
   public:
 
-    cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
+    cci_broker_if& get_accessor(const cci_originator& originator) { return cci::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
     
     const cci_originator* get_originator() const { return NULL; }
 
@@ -117,7 +117,7 @@ namespace cci {
     std::map<std::string, cci_base_param*> m_mirrored_registry;
     
     /// The next broker upwards the hierarchy
-    cci_cnf_broker_if* m_upper_broker;
+    cci_broker_if* m_upper_broker;
   
     /// This broker's name
     std::string m_name;

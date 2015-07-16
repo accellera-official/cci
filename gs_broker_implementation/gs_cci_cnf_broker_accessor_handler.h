@@ -37,8 +37,8 @@ namespace cci {
   {
   public:
     
-    /// @see cci::cci_cnf_broker_if::get_accessor
-    cci_cnf_broker_if& get_accessor(const cci_originator& originator, cci::cci_cnf_broker_if& orig_broker);
+    /// @see cci::cci_broker_if::get_accessor
+    cci_broker_if& get_accessor(const cci_originator& originator, cci::cci_broker_if& orig_broker);
 
   protected:
 

@@ -13,14 +13,14 @@
 //
 // ENDLICENSETEXT
 
-#ifndef CCI_CNF_CCI_BROKER_STACK_H_INCLUDED_
-#define CCI_CNF_CCI_BROKER_STACK_H_INCLUDED_
+#ifndef CCI_CCI_BROKER_STACK_H_INCLUDED_
+#define CCI_CCI_BROKER_STACK_H_INCLUDED_
 
 #include <vector>
 
 CCI_OPEN_NAMESPACE_
 
-class cci_cnf_broker_if;
+class cci_broker_if;
 
 /// Broker stack, for internal use only
 /**
@@ -29,10 +29,10 @@ class cci_cnf_broker_if;
  * Note there is a broker registry as well. @see cci::cci_broker_registry
  */
 class cci_broker_stack
-: public std::vector<cci_cnf_broker_if*> {
+: public std::vector<cci_broker_if*> {
 
 protected:
-  typedef std::vector<cci_cnf_broker_if*> base;
+  typedef std::vector<cci_broker_if*> base;
 
   /// Friend class, this shall only be used by the broker manager
   friend class cci_broker_manager;
@@ -46,16 +46,16 @@ private:
 
 public:
 
-  cci_cnf_broker_if* top();
-  const cci_cnf_broker_if* top() const;
+  cci_broker_if* top();
+  const cci_broker_if* top() const;
 
-  cci_cnf_broker_if* second_top();
-  const cci_cnf_broker_if* second_top() const;
+  cci_broker_if* second_top();
+  const cci_broker_if* second_top() const;
 
 protected:
 
   /// Push a broker, protected to be called only by broker manager
-  void push(cci_cnf_broker_if* broker);
+  void push(cci_broker_if* broker);
   /// Pop the top broker, protected to be called only by broker manager
   void pop();
 

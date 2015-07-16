@@ -23,8 +23,8 @@
  */
 
 
-#ifndef CCI_CNF_CCI_DEBUG_H_INCLUDED_
-#define CCI_CNF_CCI_DEBUG_H_INCLUDED_
+#ifndef CCI_CCI_DEBUG_H_INCLUDED_
+#define CCI_CCI_DEBUG_H_INCLUDED_
 
 
 #include <cassert>
