@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX13_PARAMETER_VALUE_LOCKING_EX13_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX13_PARAMETER_VALUE_LOCKING_EX13_PARAMETER_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include "xreport.hpp"
 
@@ -48,7 +48,7 @@ SC_MODULE(ex13_parameter_configurator) {
   SC_CTOR(ex13_parameter_configurator) {
     // Getting handle of the default broker for the class/sc_module
     myConfigBroker =
-        &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL
     assert(myConfigBroker != NULL && "Broker handle returned is NULL");
@@ -167,8 +167,8 @@ SC_MODULE(ex13_parameter_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myConfigBroker;  ///< CCI configuration broker interface instance
-  cci::cnf::cci_base_param* int_param_ptr;  ///< CCI base parameter handle to access the actual owner's parameter
+  cci::cci_broker_if* myConfigBroker;  ///< CCI configuration broker interface instance
+  cci::cci_base_param* int_param_ptr;  ///< CCI base parameter handle to access the actual owner's parameter
 
   char* paramName;  ///< The parameter name
 

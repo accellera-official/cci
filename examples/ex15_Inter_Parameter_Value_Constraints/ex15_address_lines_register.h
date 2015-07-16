@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_ADDRESS_LINES_REGISTER_H_
 #define EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_ADDRESS_LINES_REGISTER_H_
 
-#include <cci>
+#include <cci_configuration>
 
 #include "xreport.hpp"
 
@@ -52,7 +52,7 @@ SC_MODULE(ex15_address_lines_register) {
   }
 
  private:
-  cci::cnf::cci_param<int> no_of_addr_lines;  ///< The number of address lines.
+  cci::cci_param<int> no_of_addr_lines;  ///< The number of address lines.
 };
 // ex15_address_lines_register
 

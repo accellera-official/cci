@@ -31,7 +31,7 @@
 #ifndef EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CHILD_H_
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CHILD_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include <string>
@@ -53,17 +53,17 @@ SC_MODULE(ex14_child) {
   SC_CTOR(ex14_child)
       : priv_int_param("priv_int_param",
                        100,
-                       cci::cnf::cci_broker_manager::get_current_broker(
-                           cci::cnf::cci_originator(*this))),
+                       cci::cci_broker_manager::get_current_broker(
+                           cci::cci_originator(*this))),
         pub_int_param("pub_int_param",
                       150,
-                      cci::cnf::cci_broker_manager::get_current_broker(
-                          cci::cnf::cci_originator(*this))) {
+                      cci::cci_broker_manager::get_current_broker(
+                          cci::cci_originator(*this))) {
     // Get the reference to the broker responsible for this module
-    // child_BrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(
-    // cci::cnf::cci_originator(*this));
+    // child_BrokerIF = &cci::cci_broker_manager::get_current_broker(
+    // cci::cci_originator(*this));
     child_BrokerIF =
-        &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     assert(child_BrokerIF != NULL
            && "Returned broker handle of 'child' module is NULL");
@@ -113,11 +113,11 @@ SC_MODULE(ex14_child) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* child_BrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_if* child_BrokerIF;  ///< Declare a configuration broker
 
   // Declare instances of mutable CCI parameters of type 'int'
-  cci::cnf::cci_param<int> priv_int_param;  ///< private int CCI parameter
-  cci::cnf::cci_param<int> pub_int_param; ///< public int CCI parameter
+  cci::cci_param<int> priv_int_param;  ///< private int CCI parameter
+  cci::cci_param<int> pub_int_param; ///< public int CCI parameter
 };
 /// ex14_child
 

@@ -28,7 +28,7 @@
  *  @date      3rd September, 2011 (Saturday)
  */
 
-#include <cci>
+#include <cci_configuration>
 
 #include "ex14_parent.h"
 #include "ex14_configurator.h"
@@ -52,12 +52,12 @@ SC_MODULE(ex14_top) {
       // Register the cci-parameters of the PARENT & CHILD modules to the
       // PRIVATE BROKER & GLOBAL BROKER
       // 1. Instantiate a broker immediately above the 'desired' module
-      // cci::cnf::gs_cci_private_broker_accessor(sc_core::sc_module& owner,
+      // cci::gs_cci_private_broker_accessor(sc_core::sc_module& owner,
       // std::vector<std::string> public_parameters)
       // 2. Feed this broker's instance to the 'desired' module
       // parent_inst(new parent("parent_inst", privBroker))
       : privBroker(
-            new cci::cnf::gs_cci_private_broker_accessor(
+            new cci::gs_cci_private_broker_accessor(
                 *this,
                 boost::assign::list_of("parent_inst.parent_int_buffer")(
                     "parent_inst.child_inst.pub_int_param"))),
@@ -76,7 +76,7 @@ SC_MODULE(ex14_top) {
   }
 
  protected:
-  cci::cnf::cci_cnf_broker_if* privBroker;  ///< Broker that hides the parameters not passed to it as argument
+  cci::cci_broker_if* privBroker;  ///< Broker that hides the parameters not passed to it as argument
   ex14_parent* parent_inst; ///< Parent module pointer
   ex14_configurator param_cfgr; ///< Configurator module instance
 };
