@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\api&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -106,7 +106,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\api&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -167,7 +167,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\api&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -231,7 +231,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\api&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"

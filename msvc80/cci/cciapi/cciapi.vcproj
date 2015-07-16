@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -105,7 +105,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -166,7 +166,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -228,7 +228,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\api;$(ProjectDir)\..\..\..\packages\rapidjson\include"
+				AdditionalIncludeDirectories="$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -274,23 +274,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_base_param.cpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_base_param.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_broker_manager.cpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_broker_manager.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_broker_stack.cpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_broker_stack.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_value.cpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_value.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_value_traits.cpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_value_traits.cpp"
 				>
 			</File>
 		</Filter>
@@ -300,103 +300,103 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\api\cci"
+				RelativePath="..\..\..\src\cci_configuration"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_base_param.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_base_param.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_broker_if.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_broker_if.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_broker_manager.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_broker_manager.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_broker_stack.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_broker_stack.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_callbacks.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_callbacks.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_callbacks.hpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_callbacks.hpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_config_macros.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_config_macros.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_datatypes.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_datatypes.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_debug.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_debug.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_factory.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_factory.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_function.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_function.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_core\cci_gen_unique_name.h"
+				RelativePath="..\..\..\src\cci_core\cci_gen_unique_name.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_macros_undef.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_macros_undef.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_originator.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_originator.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_param.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_param.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_param.hpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_param.hpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_param_impl_if.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_param_impl_if.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_report_handler.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_report_handler.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_shared_ptr.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_shared_ptr.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_value.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_value.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\cci_value_traits.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_value_traits.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_core\cci_version.h"
+				RelativePath="..\..\..\src\cci_core\cci_version.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_core\systemc.h"
+				RelativePath="..\..\..\src\cci_core\systemc.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\api\cci_cnf\rapidjson.h"
+				RelativePath="..\..\..\src\cci_cfg\rapidjson.h"
 				>
 			</File>
 		</Filter>
