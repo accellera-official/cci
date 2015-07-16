@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_TOP_MODULE_H_
 #define EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_TOP_MODULE_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include <sstream>
@@ -60,7 +60,7 @@ SC_MODULE(ex12_top_module) {
   SC_CTOR(ex12_top_module) {
     // Get handle of the broker responsible for the class/module
     myTopModBrokerIF =
-        &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
@@ -80,7 +80,7 @@ SC_MODULE(ex12_top_module) {
     std::string param2_str = "top_mod.param_owner2.clock_speed_KHz";
 
     if (myTopModBrokerIF->param_exists(param1_str)) {
-      cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
+      cci::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -94,7 +94,7 @@ SC_MODULE(ex12_top_module) {
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
     if (myTopModBrokerIF->param_exists(param2_str)) {
-      cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
+      cci::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -112,8 +112,8 @@ SC_MODULE(ex12_top_module) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
-  std::vector<cci::cnf::cci_base_param*> selectedBaseParamList; ///< Selected cci_base_parameter list (selection done by top_module)
+  cci::cci_broker_if* myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  std::vector<cci::cci_base_param*> selectedBaseParamList; ///< Selected cci_base_parameter list (selection done by top_module)
 };
 // ex12_top_module
 

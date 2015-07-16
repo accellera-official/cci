@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_OWNER_H_
 #define EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 class parameter_configurator;
@@ -80,7 +80,7 @@ SC_MODULE(ex10_parameter_owner) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param; ///< Integer type mutable cci-parameter of type
+  cci::cci_param<int> int_param; ///< Integer type mutable cci-parameter of type
 };
 // ex10_parameter_owner
 

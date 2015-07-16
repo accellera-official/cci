@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAMETER_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include <string>
@@ -49,8 +49,8 @@ SC_MODULE(ex12_parameter_configurator) {
    */
   SC_CTOR(ex12_parameter_configurator) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
@@ -147,9 +147,9 @@ SC_MODULE(ex12_parameter_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
-  cci::cnf::cci_base_param* cfgr_param_ptr1;  ///< CCI base parameter
-  cci::cnf::cci_base_param* cfgr_param_ptr2;  ///< CCI base parameter
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_base_param* cfgr_param_ptr1;  ///< CCI base parameter
+  cci::cci_base_param* cfgr_param_ptr2;  ///< CCI base parameter
 };
 // ex12_parameter_configurator
 

@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAMETER_OWNER_H_
 #define EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
 
@@ -54,14 +54,14 @@ SC_MODULE(ex12_parameter_owner) {
                        std::string _param_name = "clock_speed_KHz",
                        double _freq = 10.0)
       : sc_module(_name) {
-    clk = new cci::cnf::cci_param<double>(_param_name.c_str(), _freq);
+    clk = new cci::cci_param<double>(_param_name.c_str(), _freq);
 
     XREPORT("[OWNER C_TOR] : Parameter Name   : " << clk->get_name()
             << "\tParameter Value : " << clk->get());
   }
 
  private:
-  cci::cnf::cci_param<double>* clk; ///< Declare an instance of mutable CCI parameter of type 'double'
+  cci::cci_param<double>* clk; ///< Declare an instance of mutable CCI parameter of type 'double'
 };
 // ex12_parameter_owner
 
