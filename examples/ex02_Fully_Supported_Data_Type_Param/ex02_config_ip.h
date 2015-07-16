@@ -126,7 +126,7 @@ SC_MODULE(ex02_config_ip) {
   }
 
  private:
-  cci::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex02_config_ip
 
