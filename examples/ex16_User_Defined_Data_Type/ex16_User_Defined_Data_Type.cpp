@@ -26,7 +26,7 @@
  *  @date    12th September, 2011 (Monday)
  */
 
-#include <cci>
+#include <cci_configuration>
 #include <systemc.h>
 #include <cassert>
 #include <string>
@@ -45,11 +45,11 @@
 int sc_main(int sc_argc, char* sc_argv[]) {
   // Creating an originator to access the global broker
   const std::string myOrgStr = "sc_main_originator";
-  cci::cnf::cci_originator myOriginator(myOrgStr);
+  cci::cci_originator myOriginator(myOrgStr);
 
   // Get handle of the broker using the originator
-  cci::cnf::cci_cnf_broker_if* globalBroker =
-      &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
+  cci::cci_broker_if* globalBroker =
+      &cci::cci_broker_manager::get_current_broker(myOriginator);
 
   // Assert if broker handle returned is NULL
   assert(globalBroker != NULL

@@ -31,11 +31,11 @@
 #ifndef EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_IMPL_BY_ABC_H_
 #define EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_IMPL_BY_ABC_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <systemc.h>
 #include <iostream>
 #include <string>
-#include <cci_cnf/cci_param_impl_if.h>
+#include <cci_cfg/cci_param_impl_if.h>
 
 /**
  *  @struct user_data_type
@@ -64,7 +64,7 @@ struct user_data_type {
  *  @brief  User defined type cci parameter struct.
  */
 struct cci_param_user_data_type
-    : public cci::cnf::cci_param_impl_if {
+    : public cci::cci_param_impl_if {
 
 	// Virtual function in cci_param_impl_if
   /**
@@ -141,26 +141,26 @@ struct cci_param_user_data_type
   std::string json_serialize() const;
 
   /**
-   *  @fn     const cci::cnf::basic_param_type get_basic_type() const
+   *  @fn     const cci::basic_param_type get_basic_type() const
    *  @brief  Function to retrive the basic type of the parameter
    *  @return The basic type.
    */
-  cci::cnf::basic_param_type get_basic_type() const;
+  cci::basic_param_type get_basic_type() const;
 
   /**
-   *  @fn     void set_value(const cci::cnf::cci_value& val)
+   *  @fn     void set_value(const cci::cci_value& val)
    *  @brief  Function to set the value of the parameter
    *  @param  val The val to assign to the parameter
    *  @return void
    */
-  void set_value(const cci::cnf::cci_value& val);
+  void set_value(const cci::cci_value& val);
 
   /**
-   *  @fn     cci::cnf::cci_value get_value() const
+   *  @fn     cci::cci_value get_value() const
    *  @brief  Function to retrieve the value of the parameter
    *  @return The cci_value of the parameter
    */
-  cci::cnf::cci_value get_value() const;
+  cci::cci_value get_value() const;
 
   /**
    *  @fn     void set_documentation(const std::string& doc)
@@ -213,27 +213,27 @@ struct cci_param_user_data_type
   const std::string& get_name() const;
 
   /**
-   *  @fn     cci::chared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function)
+   *  @fn     cci::chared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function)
    *  @brief  Function to register callbacks
    *  @param  type  The type of callback to register
    *  @param  observer  Observer for the callback
    *  @param  function  Callback function to be called
    *  @return Pointer to the callback function
    */
-  cci::shared_ptr<cci::cnf::callb_adapt>
-      register_callback(const cci::cnf::callback_type type, void* observer,
-                        cci::cnf::param_callb_func_ptr function);
+  cci::shared_ptr<cci::callb_adapt>
+      register_callback(const cci::callback_type type, void* observer,
+                        cci::param_callb_func_ptr function);
 
   /**
-   *  @fn     cci::chared_ptr<cci::cnf::callb_adapt> register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb)
+   *  @fn     cci::chared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, cci::shared_ptr<cci::callb_adapt> callb)
    *  @brief  Function to register callbacks
    *  @param  type  The type of callback to register
    *  @param  callb Pointer to the callback function
    *  @return Pointer to the callback function
    */
-  cci::shared_ptr<cci::cnf::callb_adapt>
-      register_callback(const cci::cnf::callback_type type,
-                        cci::shared_ptr<cci::cnf::callb_adapt> callb);
+  cci::shared_ptr<cci::callb_adapt>
+      register_callback(const cci::callback_type type,
+                        cci::shared_ptr<cci::callb_adapt> callb);
 
   /**
    *  @fn     void unregister_all_callbacks(void* observer)
@@ -244,20 +244,20 @@ struct cci_param_user_data_type
   void unregister_all_callbacks(void* observer);
 
   /**
-   *  @fn     bool unregister_callback(cci::shared_ptr<cci::cnf::callb_adpt> callb)
+   *  @fn     bool unregister_callback(cci::shared_ptr<cci::callb_adpt> callb)
    *  @brief  Function to unregister a particular callback function
    *  @param  callb The function to be unregistered
    *  @return True or false depending on whether it was successfully unregistered
    */
-  bool unregister_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb);
+  bool unregister_callback(cci::shared_ptr<cci::callb_adapt> callb);
 
   /**
-   *  @fn     bool unregister_callback(cci::cnf::callb_adapt* callb)
+   *  @fn     bool unregister_callback(cci::callb_adapt* callb)
    *  @brief  Function to unregister a particular callback function
    *  @param  callb The function to be unregistered
    *  @return A true or false depending on whether the function was unregistered or not
    */
-  bool unregister_callback(cci::cnf::callb_adapt * callb);
+  bool unregister_callback(cci::callb_adapt * callb);
 
   /**
    *  @fn     bool has_callback()
@@ -303,11 +303,11 @@ struct cci_param_user_data_type
   virtual void destroy();
   
   /**
-   *  @fn     cci::cnf::cci_originator* get_latest_write_originator() const
+   *  @fn     cci::cci_originator* get_latest_write_originator() const
    *  @brief  Retrieve the last person to write to the parameter
    *  @return The last person to write to the parameter
    */
-  cci::cnf::cci_originator* get_latest_write_originator() const {
+  cci::cci_originator* get_latest_write_originator() const {
     return NULL; /* TODO */
   }
 
@@ -329,7 +329,7 @@ struct cci_param_user_data_type
   bool initial_flag;  ///< flag to show value is the initial value
   bool lock_flag; ///< flag to indicate the value is the initial value
   bool callback_flag; ///< flag to indicate callbacks are registered
-  cci::cnf::cci_value c_value;  ///< cci_value of the parameter
+  cci::cci_value c_value;  ///< cci_value of the parameter
   void * l_password;  ///< lock password
   std::string documentation;  ///< parametere documentation
   std::string nam;  ///< the name of the parameter

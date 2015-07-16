@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_OWNER_H_
 #define EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 
 #include "ex19_parameter_impl_by_abc.h"
 #include "xreport.hpp"
@@ -90,8 +90,8 @@ SC_MODULE(ex19_parameter_owner) {
 
  private:
   // Declare an instance of mutable CCI parameter of type 'int'
-  cci::cnf::cci_param<int> int_param; ///< An int cci parameter
-  cci::cnf::cci_param<user_data_type> udtype_param; ///< An user defined type cci parameter
+  cci::cci_param<int> int_param; ///< An int cci parameter
+  cci::cci_param<user_data_type> udtype_param; ///< An user defined type cci parameter
 };
 // ex19_parameter_owner
 

@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_OWNER_H_
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 
 #include "xreport.hpp"
@@ -82,9 +82,9 @@ SC_MODULE(ex17_parameter_owner) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param; ///< CCI int parameter
-  cci::cnf::cci_param<float> float_param; ///< CCI float parameter
-  cci::cnf::cci_param<std::string> string_param;  ///< CCI string parameter
+  cci::cci_param<int> int_param; ///< CCI int parameter
+  cci::cci_param<float> float_param; ///< CCI float parameter
+  cci::cci_param<std::string> string_param;  ///< CCI string parameter
 };
 // ex17_parameter_owner
 

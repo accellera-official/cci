@@ -190,33 +190,33 @@ std::string cci_param_user_data_type::json_serialize() const {
 }
 
 /**
- *  @fn     const cci::cnf::basic_param_type cci_param_user_data_type::get_basic_type() const
+ *  @fn     const cci::basic_param_type cci_param_user_data_type::get_basic_type() const
  *  @brief  Function to retrive the basic type of the parameter
  *  @return The basic type.
  */
-cci::cnf::basic_param_type cci_param_user_data_type::get_basic_type() const {
+cci::basic_param_type cci_param_user_data_type::get_basic_type() const {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
 
-  return cci::cnf::param_type_list;
+  return cci::param_type_list;
 }
 
 /**
- *  @fn     void cci_param_user_data_type::set_value(const cci::cnf::cci_value& val)
+ *  @fn     void cci_param_user_data_type::set_value(const cci::cci_value& val)
  *  @brief  Function to set the value of the parameter
  *  @param  val The val to assign to the parameter
  *  @return void
  */
-void cci_param_user_data_type::set_value(const cci::cnf::cci_value& val) {
+void cci_param_user_data_type::set_value(const cci::cci_value& val) {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
   c_value = val;
 }
 
 /**
- *  @fn     cci::cnf::cci_value cci_param_user_data_type::get_value() const
+ *  @fn     cci::cci_value cci_param_user_data_type::get_value() const
  *  @brief  Function to retrieve the value of the parameter
  *  @return The cci_value of the parameter
  */
-cci::cnf::cci_value cci_param_user_data_type::get_value() const {
+cci::cci_value cci_param_user_data_type::get_value() const {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
   return c_value;
 }
@@ -298,34 +298,34 @@ const std::string& cci_param_user_data_type::get_name() const {
 }
 
 /**
- *  @fn     cci::chared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, void* observer, cci::cnf::param_callb_func_ptr function)
+ *  @fn     cci::chared_ptr<cci::callb_adapt> cci_param_user_data_type::register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function)
  *  @brief  Function to register callbacks
  *  @param  type  The type of callback to register
  *  @param  observer  Observer for the callback
  *  @param  function  Callback function to be called
  *  @return Pointer to the callback function
  */
-cci::shared_ptr<cci::cnf::callb_adapt>
-    cci_param_user_data_type::register_callback(const cci::cnf::callback_type type,
+cci::shared_ptr<cci::callb_adapt>
+    cci_param_user_data_type::register_callback(const cci::callback_type type,
                                                 void* observer,
-                                                cci::cnf::param_callb_func_ptr function) {
+                                                cci::param_callb_func_ptr function) {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
   /* Complex Later */
 
-  static cci::shared_ptr<cci::cnf::callb_adapt> dummy;
+  static cci::shared_ptr<cci::callb_adapt> dummy;
   return dummy;  // dummy return value for now
 }
 
 /**
- *  @fn     cci::chared_ptr<cci::cnf::callb_adapt> cci_param_user_data_type::register_callback(const cci::cnf::callback_type type, cci::shared_ptr<cci::cnf::callb_adapt> callb)
+ *  @fn     cci::chared_ptr<cci::callb_adapt> cci_param_user_data_type::register_callback(const cci::callback_type type, cci::shared_ptr<cci::callb_adapt> callb)
  *  @brief  Function to register callbacks
  *  @param  type  The type of callback to register
  *  @param  callb Pointer to the callback function
  *  @return Pointer to the callback function
  */
-cci::shared_ptr<cci::cnf::callb_adapt>
-    cci_param_user_data_type::register_callback(const cci::cnf::callback_type type,
-                                                cci::shared_ptr<cci::cnf::callb_adapt> callb) {
+cci::shared_ptr<cci::callb_adapt>
+    cci_param_user_data_type::register_callback(const cci::callback_type type,
+                                                cci::shared_ptr<cci::callb_adapt> callb) {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
   /* Complex Later */
   return callb;  // dummy return value for now
@@ -344,12 +344,12 @@ void cci_param_user_data_type::unregister_all_callbacks(void* observer) {
 }
 
 /**
- *  @fn     bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::cnf::callb_adpt> callb)
+ *  @fn     bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::callb_adpt> callb)
  *  @brief  Function to unregister a particular callback function
  *  @param  callb The function to be unregistered
  *  @return True or false depending on whether it was successfully unregistered
  */
-bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::cnf::callb_adapt> callb) {
+bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::callb_adapt> callb) {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
 
   /* Complex Later */
@@ -357,12 +357,12 @@ bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::cnf::cal
 }
 
 /**
- *  @fn     bool cci_param_user_data_type::unregister_callback(cci::cnf::callb_adapt* callb)
+ *  @fn     bool cci_param_user_data_type::unregister_callback(cci::callb_adapt* callb)
  *  @brief  Function to unregister a particular callback function
  *  @param  callb The function to be unregistered
  *  @return A true or false depending on whether the function was unregistered or not
  */
-bool cci_param_user_data_type::unregister_callback(cci::cnf::callb_adapt* callb) {
+bool cci_param_user_data_type::unregister_callback(cci::callb_adapt* callb) {
   std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
 
   /* Complex Later */
@@ -432,21 +432,20 @@ bool cci_param_user_data_type::equals(const cci_param_impl_if& rhs) const
 void cci_param_user_data_type::init()
 {
 	cout
-		<< "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::cnf::mutable_param"
+		<< "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::mutable_param"
 		<< endl;
 }
 
 void cci_param_user_data_type::destroy()
 {
 	cout
-		<< "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::cnf::mutable_param"
+		<< "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::mutable_param"
 		<< endl;
 	delete this;
 }
 
 /// Creating CCI-parmeter with some default value
 namespace cci {
-namespace cnf {
 
 /**
  *  @fn     template<>
@@ -456,7 +455,7 @@ namespace cnf {
  *                const std::string &nam,
  *                const user_data_type & val,
  *                bool is_top_level_name,
- *                cci_cnf_broker_if* broker_accessor)
+ *                cci_broker_if* broker_accessor)
  *  @brief  Function to create a cci parameter.
  *  @param  owner_par The mutable owner parameter
  *  @param  nam Name for the parameter
@@ -472,9 +471,9 @@ cci_param_impl_if
         const std::string &nam,
         const user_data_type & val,
         bool is_top_level_name,
-        cci_cnf_broker_if* broker_accessor) {
+        cci_broker_if* broker_accessor) {
   std::cout
-      << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::cnf::mutable_param"
+      << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::mutable_param"
       << std::endl;
 
   std::cout << "\t[PARAM_IMPL] : Called with Default Value as reference object"
@@ -493,7 +492,7 @@ cci_param_impl_if
  *                const std::string &nam,
  *                const char* pval,
  *                bool is_top_level_name,
- *                cci_cnf_broker_if* broker_accessor)
+ *                cci_broker_if* broker_accessor)
  *  @brief  Function to create a cci parameter using a char* initial value.
  *  @param  owner_par The mutable owner parameter
  *  @param  nam Name for the parameter
@@ -509,9 +508,9 @@ cci_param_impl_if
         const std::string &nam,
         const cci_value& pval,
         const bool is_top_level_name,
-        cci_cnf_broker_if* broker_accessor) {
+        cci_broker_if* broker_accessor) {
   std::cout
-      << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::cnf::mutable_param "
+      << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::mutable_param "
       << std::endl;
 
   // Get Value from pval string
@@ -521,5 +520,4 @@ cci_param_impl_if
   return param_impl;
 }
 
-}  // End of CNF namespace
 }  // End of CCI namespace

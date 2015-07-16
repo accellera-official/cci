@@ -31,9 +31,9 @@
 
 #define SC_INCLUDE_DYNAMIC_PROCESSES
 
-#include <cci>
+#include <cci_configuration>
 #include <systemc.h>
-#include <cci_cnf/cci_shared_ptr.h>  // HACK; a proper publicly shareable CCI wrapper needed
+#include <cci_cfg/cci_shared_ptr.h>  // HACK; a proper publicly shareable CCI wrapper needed
 #include <greencontrol/config.h>
 #include <string>
 #include <iostream>
@@ -76,7 +76,7 @@ struct route_table_ut {
   int index;  ///< Index field
 };
 
-namespace cci { namespace cnf {
+namespace cci {
 // add support for cci_value and JSON (de)serialization
 template<>
 struct cci_value_traits< route_table_ut >
@@ -107,12 +107,12 @@ struct cci_value_traits< route_table_ut >
     return false;
   }
 };
-} /* namespace cnf */ } /* namespace cci */
+} /* namespace cci */
 
 // Overload stream insertion operator of C++
 std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
 {
-  cci::cnf::cci_value udv(ud);
+  cci::cci_value udv(ud);
   return os << udv;
 }
 
@@ -123,7 +123,7 @@ std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
  */
 std::istream& operator >>(std::istream& is, route_table_ut& ud)
 {
-  cci::cnf::cci_value udv;
+  cci::cci_value udv;
   is >> udv;
   sc_assert( is && "stream extraction of cci_value failed");
   bool check = udv.try_get(ud);
@@ -147,16 +147,16 @@ inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
 
 #include "cci_params.h"
 
-namespace cci { namespace cnf {
+namespace cci {
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci::cnf::cci_param_impl_if*  create_cci_param (cci::cnf::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+  template  cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_broker_if* broker_accessor); \
+  template  cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_broker_if* broker_accessor);
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::mutable_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::immutable_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::elaboration_time_param) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::cnf::other_param)
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::mutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::immutable_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::elaboration_time_param) \
+  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::other_param)
 
 
 CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(route_table_ut);
@@ -164,7 +164,7 @@ CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(route_table_ut);
 #undef CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS
 #undef CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM
 
-} /* namespace cnf */ } /* namespace cci */
+} /* namespace cci */
 
 // ----------------------------------------------------------------------------
 

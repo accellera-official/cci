@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 
 #include "xreport.hpp"
@@ -47,7 +47,7 @@ SC_MODULE(ex17_parameter_configurator) {
    */
   SC_CTOR(ex17_parameter_configurator) {
     // Get reference of the responsible broker for the module
-    myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
 
@@ -111,12 +111,12 @@ SC_MODULE(ex17_parameter_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declare a configuration broker
 
   // Declare cci_base_param for each of the owner's cci-parameters
-  cci::cnf::cci_base_param* int_param_ptr;  ///< Base pointer to an int parameter
-  cci::cnf::cci_base_param* float_param_ptr;  ///< Base pointer to a float parameter
-  cci::cnf::cci_base_param* str_param_ptr;  ///< Base pointer to a string parameter
+  cci::cci_base_param* int_param_ptr;  ///< Base pointer to an int parameter
+  cci::cci_base_param* float_param_ptr;  ///< Base pointer to a float parameter
+  cci::cci_base_param* str_param_ptr;  ///< Base pointer to a string parameter
 };
 // ex17_parameter_configurator
 

@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_OBSERVER_H_
 #define EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_OBSERVER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 
@@ -49,18 +49,18 @@ class ex20_observer {
    */
   ex20_observer() {
     // Create an instance of the cci_originator
-    cci::cnf::cci_originator observer_originator("observer");
+    cci::cci_originator observer_originator("observer");
 
     // Get handle of the broker responsible for the class/module
     Observer_BrokerIF =
-        &cci::cnf::cci_broker_manager::get_current_broker(observer_originator);
+        &cci::cci_broker_manager::get_current_broker(observer_originator);
 
     // Report if handle returned is NULL
     assert(Observer_BrokerIF != NULL && "Configuration Broker handle is NULL");
 
     // Registering callback for the creation of the pointer to the
     // cci_parameter of the owner module
-    observer_cb.push_back(Observer_BrokerIF->register_str_callback(cci::cnf::create_param, "*",
+    observer_cb.push_back(Observer_BrokerIF->register_str_callback(cci::create_param, "*",
                                                                    this,
                                                                    cci::bind(&ex20_observer::config_new_param_callback,
                                                                              this, _1, _2)));
@@ -76,17 +76,17 @@ class ex20_observer {
   }
 
   /**
-   *  @fn     cci::cnf::callback_return_type config_new_param_callback(const std::string& _base_param_str, const cci::cnf::callback_type& cb_reason)
+   *  @fn     cci::callback_return_type config_new_param_callback(const std::string& _base_param_str, const cci::callback_type& cb_reason)
    *  @brief  Callback implementation for scanning/detecting creation of new cci parameters.
    *  @param  _base_param_str Newly created cci parameter reference
    *  @param  cb_reason The reason for the callback being called
    *  @return The exit status of the callback function.
    */
-  cci::cnf::callback_return_type
+  cci::callback_return_type
       config_new_param_callback(const std::string & _base_param_str,
-                                const cci::cnf::callback_type & cb_reason) {
+                                const cci::callback_type & cb_reason) {
     switch (cb_reason) {
-      case cci::cnf::create_param: {
+      case cci::create_param: {
         std::cout << "\n\t[OBSERVER - create_param_cb] : Retrieving reference"
                      " of newly created cci_parameter" << std::endl;
 
@@ -110,19 +110,19 @@ class ex20_observer {
 
         // Recommended way of registering a callback (directly using base
         // parameter references)
-        observer_cb.push_back(observer_base_ptr->register_callback(cci::cnf::pre_read,
+        observer_cb.push_back(observer_base_ptr->register_callback(cci::pre_read,
                                                                    this,
                                                                    cci::bind(&ex20_observer::read_callback,
                                                                              this, _1, _2)));
         // Possible but not the recommended way of registering a callback
-        observer_cb.push_back(Observer_BrokerIF->register_callback(cci::cnf::pre_write,
+        observer_cb.push_back(Observer_BrokerIF->register_callback(cci::pre_write,
                                                                    _base_param_str.c_str(),
                                                                    this,
                                                                    cci::bind(&ex20_observer::write_callback,
                                                                              this, _1, _2)));
         // Possible (again) but not the recommended style of registering of
         // a callback
-        observer_cb.push_back(Observer_BrokerIF->register_callback(cci::cnf::post_write,
+        observer_cb.push_back(Observer_BrokerIF->register_callback(cci::post_write,
                                                                    _base_param_str.c_str(),
                                                                    this,
                                                                    cci::bind(&ex20_observer::write_callback,
@@ -136,21 +136,21 @@ class ex20_observer {
                      " Invalid callback reason" << std::endl;
     }
 
-    return cci::cnf::return_nothing;
+    return cci::return_nothing;
   }
 
   /**
-   *  @fn     cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param& _base_param, const cci::cnf::callback_type& cb_reason)
+   *  @fn     cci::callback_return_type read_callback(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason)
    *  @brief  Callback implementation for read activities on the cci parameters
    *  @param  _base_param Reference to the cci parameter associated with the callback
    *  @param  cb_reason The reason for the callback being called.
    *  @return The exit status of the callback function.
    */
-  cci::cnf::callback_return_type
-      read_callback(cci::cnf::cci_base_param & _base_param,
-                    const cci::cnf::callback_type & cb_reason) {
+  cci::callback_return_type
+      read_callback(cci::cci_base_param & _base_param,
+                    const cci::callback_type & cb_reason) {
     switch (cb_reason) {
-      case cci::cnf::pre_read: {
+      case cci::pre_read: {
         std::cout << "\t[OBSERVER - pre_read_cb] : Parammeter Name : "
                   << _base_param.get_name() << "\tvalue will be read."
                   << std::endl;
@@ -161,21 +161,21 @@ class ex20_observer {
         std::cout << "\n\t[OBSERVER - read_param_cb] : Invalid callback reason"
                   << std::endl;
     }
-    return cci::cnf::return_nothing;
+    return cci::return_nothing;
   }
 
   /**
-   *  @fn     cci::cnf::callback_return_type write_callback(cci::cnf::cci_base_param& _base_param, const cci::cnf::callback_type& cb_reason)
+   *  @fn     cci::callback_return_type write_callback(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason)
    *  @brief  Callback implementation for write activities on the cci parameters
    *  @param  _base_param Reference to the cci parameter associated with the callback
    *  @param  cb_reason The reason for the callback being called.
    *  @return The exit status of the callback function.
    */
-  cci::cnf::callback_return_type
-      write_callback(cci::cnf::cci_base_param & _base_param,
-                     const cci::cnf::callback_type & cb_reason) {
+  cci::callback_return_type
+      write_callback(cci::cci_base_param & _base_param,
+                     const cci::callback_type & cb_reason) {
     switch (cb_reason) {
-      case cci::cnf::pre_write: {
+      case cci::pre_write: {
         std::cout << "\n\t[OBSERVER - pre_write_cb] : Retrieving details of"
                      " new cci-parameter" << std::endl;
         std::cout << "\t[OBSERVER - pre_write_cb] : Parameter Name : "
@@ -184,7 +184,7 @@ class ex20_observer {
         break;
       }
 
-      case cci::cnf::post_write: {
+      case cci::post_write: {
         std::cout << "\n\t[OBSERVER - post_write_cb] : Retrieving details of"
                      " new cci-parameter" << std::endl;
         std::cout << "\t[OBSERVER - post_write_cb] : Parameter Name : "
@@ -197,15 +197,15 @@ class ex20_observer {
         std::cout << "\n\t[OBSERVER - write_param_cb] : Invalid callback reason"
                   << std::endl;
     }
-    return cci::cnf::return_nothing;
+    return cci::return_nothing;
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if* Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
 
-  cci::cnf::cci_base_param* observer_base_ptr;  ///< Reference of Owner's CCI Parameter (integer type)
+  cci::cci_base_param* observer_base_ptr;  ///< Reference of Owner's CCI Parameter (integer type)
 
-  std::vector<cci::shared_ptr<cci::cnf::callb_adapt> > observer_cb; ///< Registering all the various callbacks of the owner module cci_parameters
+  std::vector<cci::shared_ptr<cci::callb_adapt> > observer_cb; ///< Registering all the various callbacks of the owner module cci_parameters
 };
 // ex20_observer
 

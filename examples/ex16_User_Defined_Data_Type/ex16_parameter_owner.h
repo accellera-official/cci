@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_OWNER_H_
 #define EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 
 #include "ex16_user_datatype.h"
@@ -118,7 +118,7 @@ SC_MODULE(ex16_parameter_owner) {
   }
 
  private:
-  cci::cnf::cci_param<route_table_ut, cci::cnf::mutable_param> udt_param; ///< CCI mutable parameter
+  cci::cci_param<route_table_ut, cci::mutable_param> udt_param; ///< CCI mutable parameter
 };
 // ex16_parameter_owner
 

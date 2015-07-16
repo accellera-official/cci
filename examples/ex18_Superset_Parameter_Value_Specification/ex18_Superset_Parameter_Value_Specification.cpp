@@ -27,7 +27,7 @@
  *  @date     21st July, 2011 (Thursday)
  */
 
-#include <cci>
+#include <cci_configuration>
 #include <systemc.h>
 #include <cassert>
 #include <string>
@@ -46,7 +46,7 @@
  *  @return An integer denoting the return status of execution.
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  cci::cnf::ex18_cci_configFile_Tool configTool("configFileTool");
+  cci::ex18_cci_configFile_Tool configTool("configFileTool");
   configTool.config("./ex18_Superset_Parameter_Value_Specification/Configuration_File.txt");
 
 #if 0
@@ -56,11 +56,11 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Declare cci-originator instance in order to retrieve a reference of the
   // global broker
-  cci::cnf::cci_originator sc_main_originator("sc_main_originator");
+  cci::cci_originator sc_main_originator("sc_main_originator");
 
   // Get reference/handle of the default global broker
-  cci::cnf::cci_cnf_broker_if* myMainBrokerIF =
-      &cci::cnf::cci_broker_manager::get_current_broker(sc_main_originator);
+  cci::cci_broker_if* myMainBrokerIF =
+      &cci::cci_broker_manager::get_current_broker(sc_main_originator);
 
   // Assert if the returned broker handle is NULL
   assert(myMainBrokerIF != NULL && "SC_MAIN_BROKER_IF handle is returned NULL");

@@ -21,7 +21,7 @@
 #ifndef EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_PARAMETER_OWNER_H_
 #define EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <systemc.h>
 
 #include "xreport.hpp"
@@ -42,7 +42,7 @@ SC_MODULE(ex20_parameter_owner) {
 
     XREPORT("[OWNER C_TOR] : Creating new integer type cci-parameter with"
             " default value 10");
-    int_param = new cci::cnf::cci_param<int>("int_param", 10);
+    int_param = new cci::cci_param<int>("int_param", 10);
 
     SC_THREAD(run_owner);
   }
@@ -64,7 +64,7 @@ SC_MODULE(ex20_parameter_owner) {
 
       XREPORT("[OWNER] : Creating new 'double' type cci-parameter with default"
               " value : 12.345");
-      dbl_param = new cci::cnf::cci_param<double>("double_param", 12.345);
+      dbl_param = new cci::cci_param<double>("double_param", 12.345);
 
       wait(15.0, SC_NS);
     }
@@ -72,9 +72,9 @@ SC_MODULE(ex20_parameter_owner) {
 
  private:
   // Integer-type cci-parameter
-  cci::cnf::cci_param<int>* int_param;  ///< An integer cci parameter
+  cci::cci_param<int>* int_param;  ///< An integer cci parameter
   // Float-type cci-parameter
-  cci::cnf::cci_param<double>* dbl_param; ///< A double cci parameter
+  cci::cci_param<double>* dbl_param; ///< A double cci parameter
 };
 // ex20_parameter_owner
 
