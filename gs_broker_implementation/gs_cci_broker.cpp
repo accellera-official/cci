@@ -20,7 +20,6 @@
 #include "gs_cci_broker.h" // Broker vendor dependent
 
 namespace cci {
-namespace cnf {
 
   /// Internal pointer to the one global default fallback broker instance 
   /// used in the case the appropriate broker is not known (or is this one)
@@ -110,5 +109,4 @@ namespace cnf {
     return *singleton_broker;
   }
   
-} // end namespace
 } // end namespace
