@@ -32,7 +32,7 @@
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_INITIATOR_H_
 #define EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_INITIATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <tlm>
 #include <string>
 #include "tlm_utils/simple_initiator_socket.h"
@@ -128,7 +128,7 @@ SC_MODULE(ex09_initiator) {
   }
 
  private:
-  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
+  cci::cci_param<std::string, cci::elaboration_time_param> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
 };
 // ex09_initiator
 

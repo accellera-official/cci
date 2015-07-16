@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_OWNER_H_
 #define EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
 
@@ -125,7 +125,7 @@ SC_MODULE(ex07_parameter_owner) {
               << "\tdemonstrating setting values by OWNER using cci_value");
       XREPORT("[OWNER -> Set] : New String Value : 'String_Value_Set_by_OWNER");
 
-      cci::cnf::cci_value str_value("String_Value_Set_by_OWNER");
+      cci::cci_value str_value("String_Value_Set_by_OWNER");
       string_param.set_value(str_value);
 
       wait(2.0, sc_core::SC_NS);
@@ -133,7 +133,7 @@ SC_MODULE(ex07_parameter_owner) {
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tdemonstrating retrieving values by OWNER using cci_value");
 
-      cci::cnf::cci_value rec_str_value = string_param.get_value();
+      cci::cci_value rec_str_value = string_param.get_value();
       std::string recv_str = rec_str_value.get_string();
 
       XREPORT("[OWNER -> Retrieve] : Receive str_value using 'cci_value' : "
@@ -144,8 +144,8 @@ SC_MODULE(ex07_parameter_owner) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param; ///< integer CCI parameter
-  cci::cnf::cci_param<std::string> string_param;  ///< string CCI parameter
+  cci::cci_param<int> int_param; ///< integer CCI parameter
+  cci::cci_param<std::string> string_param;  ///< string CCI parameter
 };
 // ex07_parameter_owner
 

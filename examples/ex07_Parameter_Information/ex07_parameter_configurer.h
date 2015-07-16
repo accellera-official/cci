@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_CONFIGURER_H_
 #define EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_CONFIGURER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 #include "xreport.hpp"
@@ -50,8 +50,8 @@ SC_MODULE(ex07_parameter_configurer) {
       : check(0) {
     // Get the broker responsible for this module
     // using 'get_current_broker' API
-    myBrokerInterface = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    myBrokerInterface = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL
     assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");
@@ -297,7 +297,7 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR] : Parameter Documentation : "
                 << str_param_ptr->get_documentation());
 
-        cci::cnf::cci_value str_value("Hello_New_String");
+        cci::cci_value str_value("Hello_New_String");
 
         // Query basic type of a parameter using 'get_basic_type()' API
         XREPORT("[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : "
@@ -314,7 +314,7 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Get the latest write originator for the write value to
         // the string type cci-parameter
-        const cci::cnf::cci_originator* str_originator = str_param_ptr
+        const cci::cci_originator* str_originator = str_param_ptr
             ->get_latest_write_originator();
         XREPORT("[CFGR] : Originator for the latest write on string"
                 " type cci-parameter : " << str_originator->name());
@@ -329,7 +329,7 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Query a (std::string) parameter's value by using
         // 'get_value()'API with cci_value
-        cci::cnf::cci_value rx_value = str_param_ptr->get_value();
+        cci::cci_value rx_value = str_param_ptr->get_value();
 
         /**
          *  @par Based on the type returned by 'get_basic_type()', query value of cci_value.
@@ -350,13 +350,13 @@ SC_MODULE(ex07_parameter_configurer) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myBrokerInterface; //!< CCI configuration broker instance
+  cci::cci_broker_if* myBrokerInterface; //!< CCI configuration broker instance
 
   std::string int_param_str;  //!< For storing hierarchical path of std::string type cci-parameter
   std::string string_param_str; //!< For storing hierarchical path of integer type cci-parameter
 
-  cci::cnf::cci_base_param* int_param_ptr;  ///< cci_base parameter
-  cci::cnf::cci_base_param* str_param_ptr;  ///< cci_base parameter
+  cci::cci_base_param* int_param_ptr;  ///< cci_base parameter
+  cci::cci_base_param* str_param_ptr;  ///< cci_base parameter
 
   // Few Local parameters
   bool intParamExists;  ///< variable for whether parameter exists

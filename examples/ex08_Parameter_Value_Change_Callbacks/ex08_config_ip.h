@@ -30,7 +30,7 @@
 #include <sstream>
 #include <cassert>
 #include <string>
-#include "cci"
+#include "cci_configuration"
 #include "xreport.hpp"
 
 /**
@@ -46,8 +46,8 @@ SC_MODULE(ex08_config_ip) {
    */
   SC_CTOR(ex08_config_ip) {
     // Get CCI configuration handle specific for this module
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
     assert(m_cci != NULL);
   }
 
@@ -64,7 +64,7 @@ SC_MODULE(ex08_config_ip) {
     // Check for existance of the param_1
     if (m_cci->param_exists(param_1_name)) {
       // Get handle to the param
-      cci::cnf::cci_base_param *param_1_ptr = m_cci->get_param(param_1_name);
+      cci::cci_base_param *param_1_ptr = m_cci->get_param(param_1_name);
       assert(param_1_ptr != NULL);
 
       // Update the param's value
@@ -84,7 +84,7 @@ SC_MODULE(ex08_config_ip) {
     // Check for existence of param_2
     if (m_cci->param_exists(param_2_name)) {
       // Get handle to the param
-      cci::cnf::cci_base_param *param_2_ptr = m_cci->get_param(param_2_name);
+      cci::cci_base_param *param_2_ptr = m_cci->get_param(param_2_name);
       assert(param_2_ptr != NULL);
 
       // Update the param's value
@@ -95,8 +95,8 @@ SC_MODULE(ex08_config_ip) {
         param_2_ptr->json_deserialize("20");
       } catch (sc_core::sc_report const &e) {
         // Catch exception, if value-change is rejected and handle it
-        if (cci::cnf::CCI_SET_PARAM_FAILURE
-            == cci::cnf::cci_report_handler::get_param_failure(e)) {
+        if (cci::CCI_SET_PARAM_FAILURE
+            == cci::cci_report_handler::get_param_failure(e)) {
           XREPORT_WARNING("Caught exception: " << e.what());
         } else {
           // Unidentified exeption. Rethrow
@@ -115,7 +115,7 @@ SC_MODULE(ex08_config_ip) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex08_config_ip
 

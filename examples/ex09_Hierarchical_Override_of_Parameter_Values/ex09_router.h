@@ -35,7 +35,7 @@
 #define snprintf _snprintf
 #endif
 
-#include <cci>
+#include <cci_configuration>
 #include <tlm>
 #include <cassert>
 #include <vector>
@@ -69,8 +69,8 @@ SC_MODULE(ex09_router) {
     XREPORT("[ROUTER C_TOR] ----- [ROUTER CONSTRUCTOR BEGINS HERE] ------");
 
     // Get handle of the broker
-    myBrokerForRouter = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    myBrokerForRouter = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
 
     // Assert if NULL
     assert(myBrokerForRouter != NULL
@@ -109,17 +109,17 @@ SC_MODULE(ex09_router) {
     for (int i = 0; i < r_targets; i++) {
       snprintf(targetName, sizeof(targetName), "r_index_%d", i);
       r_target_index.push_back(
-          new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param>(
+          new cci::cci_param<unsigned int, cci::elaboration_time_param>(
               targetName, i));
 
       snprintf(targetName, sizeof(targetName), "r_sa_%d", i);
       r_addr_start.push_back(
-          new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param>(
+          new cci::cci_param<unsigned int, cci::elaboration_time_param>(
               targetName, (i * addrSize)));
 
       snprintf(targetName, sizeof(targetName), "r_ea_%d", i);
       r_addr_end.push_back(
-          new cci::cnf::cci_param<unsigned int, cci::cnf::elaboration_time_param>(
+          new cci::cci_param<unsigned int, cci::elaboration_time_param>(
               targetName, ((i + 1) * addrSize - 1)));
     }
 
@@ -172,20 +172,20 @@ SC_MODULE(ex09_router) {
  private:
   /// Demonstrates Model-to-Model Configuration (UC12)
   /// Elaboration Time Parameters for setting up the model hierarcy;
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> r_targets; ///< target ID assigned by the top_module upon instantiation
-  cci::cnf::cci_param<unsigned int, cci::cnf::mutable_param> addr_limit;  ///< Router Addressing Range
-  cci::cnf::cci_cnf_broker_if* myBrokerForRouter; ///< CCI configuration broker
+  cci::cci_param<int, cci::elaboration_time_param> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
+  cci::cci_param<int, cci::elaboration_time_param> r_targets; ///< target ID assigned by the top_module upon instantiation
+  cci::cci_param<unsigned int, cci::mutable_param> addr_limit;  ///< Router Addressing Range
+  cci::cci_broker_if* myBrokerForRouter; ///< CCI configuration broker
 
   /// Router Table contents holding targets related information
-  std::vector<cci::cnf::cci_param<unsigned int,
-                                  cci::cnf::elaboration_time_param> *> r_target_index;  ///< Router table target index
-  std::vector<cci::cnf::cci_param<unsigned int,
-                                  cci::cnf::elaboration_time_param> *> r_addr_start;  ///< Router table start address
-  std::vector<cci::cnf::cci_param<unsigned int,
-                                  cci::cnf::elaboration_time_param> *> r_addr_end;  ///< Router table end address
+  std::vector<cci::cci_param<unsigned int,
+                                  cci::elaboration_time_param> *> r_target_index;  ///< Router table target index
+  std::vector<cci::cci_param<unsigned int,
+                                  cci::elaboration_time_param> *> r_addr_start;  ///< Router table start address
+  std::vector<cci::cci_param<unsigned int,
+                                  cci::elaboration_time_param> *> r_addr_end;  ///< Router table end address
 
-  cci::cnf::cci_base_param* base_ptr; ///< CCI base parameter for target base address
+  cci::cci_base_param* base_ptr; ///< CCI base parameter for target base address
 
   int addrSize;
   char stringName[50];
