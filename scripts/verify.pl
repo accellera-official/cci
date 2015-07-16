@@ -855,7 +855,7 @@ sub prepare_environment
     $rt_boost_home   = &get_boost_home;
     $rt_cci_home     = &get_cci_home;
 
-    my @cci_path = ( "$rt_cci_home/api",
+    my @cci_path = ( "$rt_cci_home/src",
                      "$rt_cci_home/gs_param_implementation",
                      "$rt_cci_home/gs_broker_implementation" );
 
