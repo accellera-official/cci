@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_CONFIG_IP_H_
 #define EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_CONFIG_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 #include "xreport.hpp"
@@ -45,8 +45,8 @@ SC_MODULE(ex03_config_ip) {
    */
   SC_CTOR(ex03_config_ip) {
     // Get CCI configuration handle specific for this module
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
     assert(m_cci != NULL);
     SC_THREAD(execute);
   }
@@ -66,7 +66,7 @@ SC_MODULE(ex03_config_ip) {
     // Check for existance of the structure_param
     if (m_cci->param_exists(struc_param_name)) {
       // Get handle to the param
-      cci::cnf::cci_base_param *struc_param_ptr = m_cci->get_param(
+      cci::cci_base_param *struc_param_ptr = m_cci->get_param(
           struc_param_name);
       assert(struc_param_ptr != NULL);
 
@@ -99,7 +99,7 @@ SC_MODULE(ex03_config_ip) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex03_config_ip
 
