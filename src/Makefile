@@ -40,7 +40,7 @@ endif
 GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 
 ## set some directories 
-CCI_DIR ?= $(GS_CCI_HOME)/api
+CCI_DIR ?= $(GS_CCI_HOME)/src
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
