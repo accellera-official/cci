@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 #include "test_datatype_without_parameter_implementation.h"
 #include <boost/algorithm/string.hpp>
 
@@ -97,31 +97,31 @@ public:
   void main_action();
   
   /// Example parameters
-  cci::cnf::cci_param<int>             int_param;
-  cci::cnf::cci_param<unsigned int>    uint_param;
-  cci::cnf::cci_param<bool>            bool_param;
-  cci::cnf::cci_param<double>          double_param;
-  cci::cnf::cci_param<float>           float_param;
-  cci::cnf::cci_param<std::string>     str_param;
-  cci::cnf::cci_param<std::vector<std::string> > strvec_param;
-  cci::cnf::cci_param<long long>       ll_param;
-  cci::cnf::cci_param<unsigned char>   uchar_param;
-  cci::cnf::cci_param<signed char>     schar_param;
-  cci::cnf::cci_param<char>            char_param;
-  cci::cnf::cci_param<unsigned short>  ushort_param;
-  cci::cnf::cci_param<test_datatype_without_parameter_implementation> some_param;
+  cci::cci_param<int>             int_param;
+  cci::cci_param<unsigned int>    uint_param;
+  cci::cci_param<bool>            bool_param;
+  cci::cci_param<double>          double_param;
+  cci::cci_param<float>           float_param;
+  cci::cci_param<std::string>     str_param;
+  cci::cci_param<std::vector<std::string> > strvec_param;
+  cci::cci_param<long long>       ll_param;
+  cci::cci_param<unsigned char>   uchar_param;
+  cci::cci_param<signed char>     schar_param;
+  cci::cci_param<char>            char_param;
+  cci::cci_param<unsigned short>  ushort_param;
+  cci::cci_param<test_datatype_without_parameter_implementation> some_param;
 
-  cci::cnf::cci_param<sc_dt::sc_int_base>  scintb_param;
-  cci::cnf::cci_param<sc_dt::sc_uint_base> scuintb_param;
-  cci::cnf::cci_param<sc_dt::sc_signed>    scsigned_param;
-  cci::cnf::cci_param<sc_dt::sc_unsigned>  scunsigned_param;
-  cci::cnf::cci_param<sc_dt::sc_bit>       scbit_param;
-  cci::cnf::cci_param<sc_dt::sc_logic>     sclogic_param;
-  cci::cnf::cci_param<sc_core::sc_time>    sctime_param;
-  cci::cnf::cci_param<sc_dt::sc_int<64> >  scint64_param;
-  cci::cnf::cci_param<sc_dt::sc_uint<64> > scuint64_param;
-  cci::cnf::cci_param<sc_dt::sc_bigint<128> >  scbigint128_param;
-  cci::cnf::cci_param<sc_dt::sc_biguint<128> > scbiguint128_param;
+  cci::cci_param<sc_dt::sc_int_base>  scintb_param;
+  cci::cci_param<sc_dt::sc_uint_base> scuintb_param;
+  cci::cci_param<sc_dt::sc_signed>    scsigned_param;
+  cci::cci_param<sc_dt::sc_unsigned>  scunsigned_param;
+  cci::cci_param<sc_dt::sc_bit>       scbit_param;
+  cci::cci_param<sc_dt::sc_logic>     sclogic_param;
+  cci::cci_param<sc_core::sc_time>    sctime_param;
+  cci::cci_param<sc_dt::sc_int<64> >  scint64_param;
+  cci::cci_param<sc_dt::sc_uint<64> > scuint64_param;
+  cci::cci_param<sc_dt::sc_bigint<128> >  scbigint128_param;
+  cci::cci_param<sc_dt::sc_biguint<128> > scbiguint128_param;
 
 };
 

@@ -23,14 +23,14 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config broker which is responsible for this module
-  mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+  mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   SC_THREAD(main_action);
 }
 
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector< cci::shared_ptr<cci::cnf::callb_adapt> >::iterator iter;
+  std::vector< cci::shared_ptr<cci::callb_adapt> >::iterator iter;
   for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
     (*iter)->unregister_at_parameter();
   }
@@ -58,19 +58,19 @@ void ObserverModule::main_action() {
 
 
 /// Callback function with default signature showing changes.
-cci::cnf::callback_return_type ObserverModule::config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
-  assert(cb_reason == cci::cnf::post_write);
+cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+  assert(cb_reason == cci::post_write);
   std::string str = par.json_serialize();
   DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
-  return cci::cnf::return_nothing;
+  return cci::return_nothing;
 }
 
 /// Callback function with default signature rejecting all changes.
-cci::cnf::callback_return_type ObserverModule::config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason) {
-  assert(cb_reason == cci::cnf::reject_write);
+cci::callback_return_type ObserverModule::config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+  assert(cb_reason == cci::reject_write);
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
   cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;
   cout << endl;
-  return cci::cnf::return_value_change_rejected;
+  return cci::return_value_change_rejected;
 }

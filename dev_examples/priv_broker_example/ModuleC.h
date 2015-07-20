@@ -20,10 +20,10 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 #define SC_INCLUDE_DYNAMIC_PROCESSES
-#include "gs_cci_cnf_private_broker_accessor.h"
+#include "gs_cci_private_broker_accessor.h"
 
 
 /// Module which owns some very private cci parameters.
@@ -32,14 +32,14 @@ class ModuleC
 {
 protected:
   /// for secure access by parameters
-  cci::cnf::cci_cnf_broker_if* m_broker;
+  cci::cci_broker_if* m_broker;
   
 public:
   
   SC_HAS_PROCESS(ModuleC);
 	
   /// Constructor
-  ModuleC(sc_core::sc_module_name name, cci::cnf::cci_broker_manager priv_broker);
+  ModuleC(sc_core::sc_module_name name, cci::cci_broker_manager priv_broker);
   
   /// Destructor
   ~ModuleC();
@@ -48,7 +48,7 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<std::string>    priv_param;
+  cci::cci_param<std::string>    priv_param;
   
 };
 

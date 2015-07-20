@@ -16,7 +16,7 @@
 
 
 #include <systemc>
-#include <cci>
+#include <cci_configuration>
 
 #include "OwnerModuleA.h"
 #include "OwnerModuleB.h"

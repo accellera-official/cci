@@ -23,7 +23,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+  cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   // demonstrate is_default_value
@@ -73,7 +73,7 @@ void ParameterOwnerModule::main_action() {
 
   // create and access a local parameter
   cout << name() << ": create parameter " << endl;
-  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param", 0);
+  cci::cci_param<unsigned char> uchar_param("uchar_param", 0);
   cout << "  created " << uchar_param.get_name() << endl;
   cout << name() << ": Set the new parameter uchar_param" << endl;
   uchar_param = 'u';

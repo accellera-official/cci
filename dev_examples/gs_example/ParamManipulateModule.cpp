@@ -23,7 +23,7 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config broker which is responsible for this module
-  mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+  mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value
@@ -35,7 +35,7 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
     cout << "Owner.int_param exists (implicit or explicit)" << endl;
   else
     SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT exists!");
-  const cci::cnf::cci_originator* orig = mBroker->get_latest_write_originator("Owner.int_param");
+  const cci::cci_originator* orig = mBroker->get_latest_write_originator("Owner.int_param");
   assert (orig && "Originator must not be NULL here!");
   if (mBroker->get_param("Owner.int_param")) {
     DEMO_DUMP(this->name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
@@ -51,16 +51,16 @@ void ParamManipulateModule::main_action() {
   
   cout << "----------------------------" << endl;
   // get a parameter using the local config API
-  cci::cnf::cci_base_param *int_param_ptr = mBroker->get_param("Owner.int_param");
+  cci::cci_base_param *int_param_ptr = mBroker->get_param("Owner.int_param");
   if (int_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::cnf::cci_param<int> &int_param_p = *static_cast<cci::cnf::cci_param<int>* >(int_param_ptr);
+  cci::cci_param<int> &int_param_p = *static_cast<cci::cci_param<int>* >(int_param_ptr);
 
   // get a parameter using the local config API
-  cci::cnf::cci_base_param *uint_param_ptr = mBroker->get_param("Owner.uint_param");
+  cci::cci_base_param *uint_param_ptr = mBroker->get_param("Owner.uint_param");
   if (uint_param_ptr == NULL) return;
   // make it a reference for convenience
-  cci::cnf::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cnf::cci_param<unsigned int>* >(uint_param_ptr);
+  cci::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cci_param<unsigned int>* >(uint_param_ptr);
   
   // demonstrate json setting
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");

@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 
 /// Module which owns some cci parameters.
@@ -41,7 +41,7 @@ public:
   , uint_param2("uint_param2", 12)
   , str_param ("str_param", "This is a test string.")
   , bool_param("bool_param", false)
-  , top_param("top.arbitrary.param", 0, cci::cnf::CCI_TOP_LEVEL_NAME) //This is a param with top-level-name
+  , top_param("top.arbitrary.param", 0, cci::CCI_TOP_LEVEL_NAME) //This is a param with top-level-name
   { 
     SC_THREAD(main_action);
   }
@@ -50,17 +50,17 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<int>             int_param;
+  cci::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param;
+  cci::cci_param<unsigned int>    uint_param;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param2;
+  cci::cci_param<unsigned int>    uint_param2;
   /// Example parameter.
-  cci::cnf::cci_param<std::string>     str_param;
+  cci::cci_param<std::string>     str_param;
   /// Example parameter.
-  cci::cnf::cci_param<bool>            bool_param;
+  cci::cci_param<bool>            bool_param;
   /// Example parameter for top-level-name
-  cci::cnf::cci_param<int>             top_param;
+  cci::cci_param<int>             top_param;
 
 };
 

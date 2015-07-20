@@ -20,7 +20,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 
 /// Module which owns some cci parameters of different mutybility.
@@ -46,11 +46,11 @@ public:
   void main_action();
   
   /// Example mutable parameter.
-  cci::cnf::cci_param<int, cci::cnf::mutable_param>    mutable_int_param;
+  cci::cci_param<int, cci::mutable_param>    mutable_int_param;
   /// Example immutable parameter.
-  cci::cnf::cci_param<int, cci::cnf::immutable_param>  immutable_int_param;
+  cci::cci_param<int, cci::immutable_param>  immutable_int_param;
   /// Example elaboration_time_parameter parameter.
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param>  elab_time_int_param;
+  cci::cci_param<int, cci::elaboration_time_param>  elab_time_int_param;
   
 };
 

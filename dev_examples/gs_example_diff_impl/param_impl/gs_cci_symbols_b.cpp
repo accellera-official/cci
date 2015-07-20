@@ -21,11 +21,11 @@
 // This makes sure the symbols for supported parameter types are available in the library!
 //
 
-namespace cci { namespace cnf {
+namespace cci {
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor); \
-  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_cnf_broker_if* broker_accessor);
+  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_broker_if* broker_accessor); \
+  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_broker_if* broker_accessor);
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, mutable_param) \
@@ -35,7 +35,7 @@ namespace cci { namespace cnf {
 
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(test_datatype)
 
-} } // end namespace
+} // end namespace
 
 
 std::istream& operator >>(std::istream &is,test_datatype &obj)
@@ -53,7 +53,7 @@ bool operator==(test_datatype const& lhs, test_datatype const& rhs) {
 }
 
 // add support for cci_value and JSON (de)serialization
-namespace cci { namespace cnf {
+namespace cci {
 template<>
 struct cci_value_traits< test_datatype >
 {
@@ -72,4 +72,4 @@ struct cci_value_traits< test_datatype >
     return true;
   }
 };
-} /* namespace cnf */ } /* namespace cci */
+} /* namespace cci */

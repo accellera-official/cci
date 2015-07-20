@@ -21,7 +21,7 @@
 #include <systemc>
 
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 
 /// Module which registers for parameter changes
@@ -39,17 +39,17 @@ public:
   void main_action();
 
   /// Callback function with default signature showing changes.
-  cci::cnf::callback_return_type config_callback(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
+  cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
   /// Callback function with default signature rejecting all changes.
-  cci::cnf::callback_return_type config_callback_reject_changes(cci::cnf::cci_base_param& par, const cci::cnf::callback_type& cb_reason);
+  cci::callback_return_type config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
 protected:
   /// Pointer the the module's configuration broker
-  cci::cnf::cci_cnf_broker_if* mBroker;
+  cci::cci_broker_if* mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
-  std::vector< cci::shared_ptr<cci::cnf::callb_adapt> > mCallbacks;
+  std::vector< cci::shared_ptr<cci::callb_adapt> > mCallbacks;
   
 };
 

@@ -20,7 +20,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 
 /// Module which owns some std cci parameters.
@@ -46,11 +46,11 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<int>             int_param;
+  cci::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cnf::cci_param<bool>            bool_param;
+  cci::cci_param<bool>            bool_param;
   /// Example parameter.
-  cci::cnf::cci_param<std::string>     string_param;
+  cci::cci_param<std::string>     string_param;
   
 };
 
