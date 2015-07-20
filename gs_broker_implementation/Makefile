@@ -40,7 +40,7 @@ GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 ## set some directories 
 GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
 GREENSTARCORE_DIR = $(GS_CCI_HOME)
-CCI_DIR = $(GS_CCI_HOME)/api
+CCI_DIR = $(GS_CCI_HOME)/src
 GS_CCI_BROKER_DIR = $(GS_CCI_HOME)/gs_broker_implementation
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
