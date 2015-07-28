@@ -131,18 +131,6 @@ public:
 	* @return If the parameter's current value is the default one
 	*/
 	bool is_default_value();
-	
-	/// Returns if the current value is invalid
-	/**
-	* Returns true if
-	*  - the value has manually been set to be invalid (using function set_invalid_value() ) @see set_invalid_value()
-	*
-	* @return  If the parameter's current value is invalid
-	*/
-	bool is_invalid_value(); 
-
-	/// Marks the value to be invalid. (Does not impact the actual value.)
-	void set_invalid_value();
 
 
 	/// Returns if the current value is an initial value being set by the database and not been modified

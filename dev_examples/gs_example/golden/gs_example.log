@@ -45,10 +45,6 @@ Owner: uint_param is_default_value()=0
 
 Owner: uint_param get_default_value()=12000
 Owner: bool_param get_default_value()=0
-Owner: bool_param is_invalid_value()=1
-Owner: bool_param is_invalid_value()=0
-Owner: bool_param is_invalid_value()=1
-
 ----------------------------
 MutabilityOwner: demonstrate mutable parameter being made temporarily immutable
 MutabilityOwner:  mutable_int_param=50

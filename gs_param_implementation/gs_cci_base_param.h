@@ -203,17 +203,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return m_gs_param_base->is_initial_value();
     }
     
-    virtual bool is_invalid_value() {
-      assert(m_init_called && "init must have been called on construction");
-      return m_is_invalid_value;
-    }
-    
-    virtual void set_invalid_value() {
-      assert(m_init_called && "init must have been called on construction");
-      update_latest_write_originator();
-      m_is_invalid_value = true;
-    }
-    
     // /////////////////// CALLBACKS ///////////////////// //
 
     virtual cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function) {

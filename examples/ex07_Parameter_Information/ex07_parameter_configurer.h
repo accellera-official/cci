@@ -181,20 +181,6 @@ SC_MODULE(ex07_parameter_configurer) {
 
         wait(2.0, sc_core::SC_NS);
 
-        XREPORT("@ " << sc_core::sc_time_stamp()
-                << "\tdemonstrating 'is_invalid_value()'");
-
-        // Check validity of parameter using 'is_invalid_value()' API
-        if (int_param_ptr->is_invalid_value()) {
-          XREPORT("[CFGR] : Is Invalid Value ? " << "\tReturned status : "
-                  << std::boolalpha << int_param_ptr->is_invalid_value());
-          XREPORT("[CFGR] : Parameter value is invalid");
-        } else {
-          XREPORT("[CFGR] : Is Invalid Value ? " << "\tReturned status : "
-                  << std::boolalpha << int_param_ptr->is_invalid_value());
-          XREPORT("[CFGR] : Valid parameter value");
-        }
-
         // Access parameter's name using 'get_name()' API
         XREPORT("[CFGR -> Retrieve] Parameter's name : "
                 << int_param_ptr->get_name());
@@ -270,26 +256,7 @@ SC_MODULE(ex07_parameter_configurer) {
           wait(2.0, sc_core::SC_NS);
         }
 
-        wait(2.0, sc_core::SC_NS);
-
-        XREPORT("@ " << sc_core::sc_time_stamp()
-                << "\tdemonstrating 'is_invalid_value()'");
-
-        // Access invalid state of a cci parameter
-        // using 'is_invalid_value()' API
-        if (int_param_ptr->is_invalid_value()) {
-          XREPORT("[CFGR] : " << int_param_ptr->get_name()
-                  << " value is set to invalid.");
-          XREPORT("[CFGR] : Is Invalid Value ? " << std::boolalpha
-                  << int_param_ptr->is_invalid_value());
-        } else {
-          XREPORT("[CFGR] : " << int_param_ptr->get_name()
-                  << " value not set to invalid.");
-          XREPORT("[CFGR] : Is Invalid Value ? " << "\tReturned status : "
-                  << std::boolalpha << int_param_ptr->is_invalid_value());
-        }
-
-        wait(2.0, sc_core::SC_NS);
+        wait(4.0, sc_core::SC_NS);
 
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << "\tdemonstrating 'set_value()' for string-type param using"

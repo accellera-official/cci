@@ -41,14 +41,6 @@ void ParameterOwnerModule::main_action() {
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
 
   cout << name() << ": bool_param get_default_value()=" << bool_param.get_default_value()<<endl;
-
-  // demonstrate is_invalid_value
-  bool_param.set_invalid_value();
-  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
-  bool_param = true;
-  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
-  bool_param.set_invalid_value(); 
-  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl<<endl;
   
   wait(1, SC_NS);
 

@@ -173,29 +173,6 @@ bool cci_param<T,TM>::is_default_value() {
 }
 
 template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::is_invalid_value() {
-  const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->is_invalid_value();
-  cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
-  return ret;
-}
-
-template<typename T, param_mutable_type TM>
-void cci_param<T,TM>::set_invalid_value() {
-  const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  get_pImpl()->set_invalid_value();
-  cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
-}
-
-template<typename T, param_mutable_type TM>
-bool cci_param<T,TM>::is_initial_value() const {
-  const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->is_initial_value();
-  cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
-  return ret;
-}
-
-template<typename T, param_mutable_type TM>
 const std::string& cci_param<T,TM>::get_name() const {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   const std::string& ret = get_pImpl()->get_name();
@@ -495,29 +472,6 @@ template<param_mutable_type TM>
 bool cci_param<std::string,TM>::is_default_value() {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   bool ret = get_pImpl()->is_default_value();
-  cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
-  return ret;
-}
-
-template<param_mutable_type TM>
-bool cci_param<std::string,TM>::is_invalid_value() {
-  const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->is_invalid_value();
-  cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
-  return ret;
-}
-
-template<param_mutable_type TM>
-void cci_param<std::string,TM>::set_invalid_value() {
-  const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  get_pImpl()->set_invalid_value();
-  cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
-}
-
-template<param_mutable_type TM>
-bool cci_param<std::string,TM>::is_initial_value() const {
-  const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  bool ret = get_pImpl()->is_initial_value();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }

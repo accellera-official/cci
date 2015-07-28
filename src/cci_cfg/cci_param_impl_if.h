@@ -102,12 +102,6 @@ public:
 	/// @copydoc cci_base_param::is_default_value
 	virtual bool is_default_value() = 0;
 
-	/// @copydoc cci_base_param::is_invalid_value
-	virtual bool is_invalid_value() = 0;
-
-	/// @copydoc cci_base_param::set_invalid_value
-	virtual void set_invalid_value() = 0;
-
 	/// @copydoc cci_base_param::is_initial_value
 	virtual bool is_initial_value() const = 0;
 

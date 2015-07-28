@@ -95,31 +95,7 @@ SC_MODULE(ex07_parameter_owner) {
       // Setting value to the integer type parameter
       int_param = 1;
 
-      wait(17.0, sc_core::SC_NS);
-
-      XREPORT("@ " << sc_core::sc_time_stamp()
-              << " demonstrating 'set_value_invalid()'");
-      XREPORT("[OWNER -> Set] : " << int_param.get_name() << " value invalid.");
-
-      // Set the cci parameter to invalid state using
-      // 'set_invalid_state()' API
-      int_param.set_invalid_value();
-
-      // Query a cci parameter value validity using
-      // 'is_invalid_value()' API
-      if (int_param.is_invalid_value()) {
-        XREPORT("[OWNER] : Is Invalid Value ? " << "\tReturned Status : "
-                << std::boolalpha << int_param.is_invalid_value());
-        XREPORT("[OWNER -> Retrieve] : " << int_param.get_name() << "\tValue : "
-                << int_param.get());
-      } else {
-        XREPORT("[OWNER] : Is Invalid Value ? " << "\tReturned Status : "
-                << std::boolalpha << int_param.is_invalid_value());
-        XREPORT("[OWNER -> Retrieve] : " << int_param.get_name() << "\tValue : "
-                << int_param.get());
-      }
-
-      wait(8.0, sc_core::SC_NS);
+      wait(25.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tdemonstrating setting values by OWNER using cci_value");

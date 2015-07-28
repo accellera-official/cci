@@ -90,18 +90,6 @@ CCI_OPEN_NAMESPACE_
 		return m_impl.is_default_value();
 	}
 
-	bool cci_base_param::is_invalid_value()
-	{
-		cci_originator_lock lock(m_originator);
-		return m_impl.is_invalid_value();
-	}
-
-	void cci_base_param::set_invalid_value()
-	{
-		cci_originator_lock lock(m_originator);
-		m_impl.set_invalid_value();
-	}
-
 	bool cci_base_param::is_initial_value() const
 	{
 		cci_originator_lock lock(m_originator);
