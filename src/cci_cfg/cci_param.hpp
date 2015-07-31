@@ -27,72 +27,72 @@ CCI_OPEN_NAMESPACE_
 
 // private contructor
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const cci_param<value_type, TM>& param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { assert(false && "Not allowed to copy parameter objects!"); }
+cci_param<T,TM>::cci_param(const cci_param<value_type, TM>& param)            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { assert(false && "Not allowed to copy parameter objects!"); }
 
 // Constructors without options
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(cci_param_impl_if<value_type, TM>* param)            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = param;                                                         m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(cci_param_impl_if<value_type, TM>* param)            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = param;                                                         m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam)                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam)                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and initial value.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const T& val          )    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const T& val          )    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and NO initial value and top-level name.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, cci_top_level_name                                   )                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, cci_top_level_name                                   )                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 /// Constructor with (local/hierarchical) name and NO initial value and private broker.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam,                     cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam,                     cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 /// Constructor with (local/hierarchical) name and NO initial value and top-level name and private broker.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, cci_top_level_name, cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, cci_top_level_name, cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value and top-level name.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name)                                       : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val.c_str(), true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name)                                       : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val.c_str(), true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value and private broker.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val,                     cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, val.c_str(), false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val,                     cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, val.c_str(), false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value and top-level name and private broker.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, val.c_str(), true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, val.c_str(), true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and initial value and top-level name.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const T& val          , cci_top_level_name                                   )    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const T& val          , cci_top_level_name                                   )    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and initial value and private broker.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const T& val          ,                     cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const T& val          ,                     cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<T, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
 
 template<typename T, param_mutable_type TM>
-cci_param<T,TM>::cci_param(const std::string& nam, const T& val          , cci_top_level_name, cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<T,TM>::cci_param(const std::string& nam, const T& val          , cci_top_level_name, cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<T, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 /// Constructor for a parameter accessor object
 template<typename T, param_mutable_type TM>
@@ -357,47 +357,47 @@ cci_base_param* cci_param<T,TM>::create_accessor(const cci_originator& originato
 // Constructors without options
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(cci_param_impl_if<std::string, TM>* param)         : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = param;                                                                  m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(cci_param_impl_if<std::string, TM>* param)         : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = param;                                                                  m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam)                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam)                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and NO initial value and top-level name.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, cci_top_level_name                                   )                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, cci_top_level_name                                   )                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and NO initial value and private broker.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam,                     cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam,                     cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and NO initial value and top-level name and private broker.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, cci_top_level_name, cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, cci_top_level_name, cci_broker_if& private_broker)                            : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value and top-level name.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name                                   )    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name                                   )    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&cci::cci_broker_manager::get_current_broker(m_originator)) { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 /// Constructor with (local/hierarchical) name and string representation of default value and private broker.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val,                     cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val,                     cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, false, m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 // Constructor with (local/hierarchical) name and string representation of default value and top-level name and private broker.
 
 template<param_mutable_type TM>
-cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_originator(cci::PARAM_ORIGINATOR), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
+cci_param<std::string,TM>::cci_param(const std::string& nam, const std::string& val, cci_top_level_name, cci_broker_if& private_broker)    : m_pImpl(NULL), m_is_accessor(false), m_broker_accessor(&private_broker)                                                { m_pImpl = create_cci_param<std::string, TM>(this, nam, val, true , m_broker_accessor); m_broker_accessor->add_param(this); init_cci_param(this); }
 
 /// Constructor for a parameter accessor object
 template<param_mutable_type TM>

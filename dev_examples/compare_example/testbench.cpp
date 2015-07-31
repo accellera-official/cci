@@ -21,10 +21,10 @@
 /// Testbench for the CCI development example testing the compare functionality of parameters of different mutability
 int sc_main(int argc, char *argv[]) {
 
-  cci::cci_param<int, cci::mutable_param>          int_param_mutable("int_param_mutable", cci::cci_value(10));
-  cci::cci_param<int, cci::mutable_param>          int_param_mutable2 ("int_param_mutable2",  100);
-  cci::cci_param<int, cci::immutable_param>        int_param_immutable("int_param_immutable", cci::cci_value(11));
-  cci::cci_param<int, cci::elaboration_time_param> int_param_elab     ("int_param_elab",      11);
+  cci::cci_param<int, cci::mutable_param>          int_param_mutable  ("int_param_mutable", cci::cci_value(10),   cci::CCI_TOP_LEVEL_NAME);
+  cci::cci_param<int, cci::mutable_param>          int_param_mutable2 ("int_param_mutable2",  100,                cci::CCI_TOP_LEVEL_NAME);
+  cci::cci_param<int, cci::immutable_param>        int_param_immutable("int_param_immutable", cci::cci_value(11), cci::CCI_TOP_LEVEL_NAME);
+  cci::cci_param<int, cci::elaboration_time_param> int_param_elab     ("int_param_elab",      11,                 cci::CCI_TOP_LEVEL_NAME);
 
   cci::cci_param<std::string> str_param("str_param", cci::cci_value("This is a \nstring"));
 

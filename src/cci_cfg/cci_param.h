@@ -101,7 +101,7 @@ cci_param<T, TM>::cci_param signature :                       \
 	cci_param_b<T>(                                           \
 				*create_cci_param(this, name, value,          \
 					                  top, & broker),         \
-				PARAM_ORIGINATOR)                             \
+				cci_originator())                             \
 {                                                             \
 	broker.add_param(this);                                   \
 	this->init();                                             \
@@ -109,16 +109,16 @@ cci_param<T, TM>::cci_param signature :                       \
 
 
 /// Constructor with (local/hierarchical) name and initial value.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value), false, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value), false, cci_broker_manager::get_current_broker(cci_originator()))
 
 /// Constructor with (local/hierarchical) name and initial value.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value), false, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value), false, cci_broker_manager::get_current_broker(cci_originator()))
 
 /// Constructor with (local/hierarchical) name and initial value and top-level name.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(cci_originator()))
 
 /// Constructor with (local/hierarchical) name and initial value and top-level name.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(PARAM_ORIGINATOR))
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(cci_originator()))
 
 /// Constructor with (local/hierarchical) name and initial value and private broker.
 CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_broker_if& private_broker), false, private_broker)
@@ -143,7 +143,6 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci
 	template <typename T, param_mutable_type TM>
 	cci_param<typename cci_param<T, TM>::value_type, TM>* cci_param<T, TM>::create_accessor(const cci_originator& originator)
 	{
-		cci_originator_lock lock(this->get_originator());
 		return new cci_param(*this, originator);
 	}
 

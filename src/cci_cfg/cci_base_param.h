@@ -348,8 +348,14 @@ protected:
 
 private:
 
+	/// Originator of the parameter proxy
 	const cci_originator m_originator;
+
+	/// Actual implementation of the param
 	cci_param_impl_if& m_impl;
+
+	/// Indicates whether this proxy is creator of the impl or an accessor to it
+	const bool m_owns_impl;
 
 };
 

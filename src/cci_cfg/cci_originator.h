@@ -28,9 +28,6 @@ limitations under the License.
 
 CCI_OPEN_NAMESPACE_
 
-/// Originator information when functions being called by the main object (which only the owner shall use)
-extern const std::string PARAM_ORIGINATOR;
-
 /// Originator class which is used to handle the originator information independently from its data type (object pointer or string)
 /**
  * Can be used to set and handle originator information in a uniform way
@@ -89,6 +86,38 @@ protected:
   }
 
 public:
+
+  /// Default Constructor assumes current module is the originator
+  cci_originator() 
+  : m_originator_obj(sc_core::sc_get_curr_simcontext()->hierarchy_curr()) {
+    // TODO: Need standard way to get current module; 
+	//       hierarchy_curr() is not public.
+	// TODO: check boundary conditions
+	// - prior to initialization of hierarchy_curr
+	if (!m_originator_obj) {
+	  // If unable to determine current module from module stack, try via current process
+	  sc_core::sc_process_handle h = sc_core::sc_get_current_process_handle();
+	  while (true) { // loop walking up the process chain
+		  sc_core::sc_object *p_parent = h.get_parent_object();
+		  if (!p_parent) // process is invalid
+			  break;
+		  if (sc_core::sc_module *p_parent_module = dynamic_cast<sc_core::sc_module *>(p_parent)) {
+			  m_originator_obj = p_parent_module;
+			  break;
+		  }
+		  if (sc_core::sc_process_b *p_parent_process = dynamic_cast<sc_core::sc_process_b *>(p_parent))
+			  // Parent is a process, evaluate its parent.
+			  h = sc_core::sc_process_handle(p_parent_process);
+	  }
+	}
+	if (m_originator_obj) {
+		m_originator_str = m_originator_obj->name();
+	}
+	else {
+		// TODO: Need to catch & re-throw this to include parameter's name
+		SC_REPORT_FATAL(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Unable to determine parameter's owner.");
+	}
+  }
 
   /// Constructor with another originator whose content will be copied
   cci_originator(const cci_originator& originator)
