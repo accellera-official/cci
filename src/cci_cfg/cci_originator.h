@@ -28,35 +28,24 @@ limitations under the License.
 
 CCI_OPEN_NAMESPACE_
 
-/// Originator class which is used to handle the originator information independently from its data type (object pointer or string)
+/// Originator class which is used to track owners, accessors and value providers of parameters.
 /**
- * Can be used to set and handle originator information in a uniform way
- * independently from its data type.
  *
- * Use the appropriate setter (setting the object is preferred!).
- * Use the appropriate getter:
- * - Use get object to make use of value the sc_object brings but check for NULL needs to be done
- * - Use get string to get the originator name, in the case an object had been set, its name will be returned.
- *   No need to differentiate the between the underlying data type.
+ * Static setter function is used by the parameter (proxy) to identify originator
+ * changing parameter's value.
  *
- * Static setter function shall be used by the CCI implementation to update the originator.
- *
- * Static getter function can be used by the end user to get the current originator.
- *
- * Guidelines for CCI implementations:
- * - Use the call stack for stacking originator information.
- *   Use the returned old originator to back it up and re-apply afterwards.
- * - It shall be unique/unambiguously to identify an originator using its name!
- *
+ * Static getter function is used by the parameter implementation to record
+ * originator's identity.
  */
 class cci_originator {
 
 public:
 
-  /// (Static) global setter function for updating the current Golbal Originator Pointer
+  /// (Static) global setter function for updating the current Global Originator Pointer.
   /**
-   * @param current_originator  Pointer to the current Golbal Originator Pointer, might be NULL if there is no originator information
-   * @return The old originator (NULL if there was none before)
+   * @todo remove returned value; it is not useful.
+   * @param current_originator Pointer to originator of a forthcoming value change
+   * @return The old originator
    */
   static const cci_originator* set_global_originator(const cci_originator* current_originator) {
     const cci_originator* old_originator = handle_current_originator();
@@ -64,9 +53,9 @@ public:
     return old_originator;
   }
 
-  /// (Static) global getter function for getting the current Golbal Originator Pointer
+  /// (Static) global getter function for getting the current Global Originator Pointer.
   /**
-   * @param The current Global Originator Pointer (might be NULL if there is none)
+   * @param The current Global Originator Pointer
    */
   static const cci_originator* get_global_originator() {
     return handle_current_originator();
@@ -76,6 +65,7 @@ protected:
   /// Internal function storing the originator
   /**
    * Can be used to get and set the originator:
+   * @todo Make a proper static member (vs. file static).
    * @param new_originator Pointer to the new originator (optional), only applied if param set_new_originator is true.
    * @param set_new_originator If the param new_originator shall be stored as new originator (guarded by this bool to allow setting of NULL)
    */
@@ -153,28 +143,6 @@ public:
   : m_originator_obj(NULL)
   , m_originator_str(originator_name) {
   }
-
-  /// Set the originator using its object (preferred!)
-  /**
-   * @param originator  Originator object
-   */
-  //void set_originator_obj(sc_core::sc_object& originator) {
-  //  m_originator_obj = &originator;
-  //}
-
-  /// Set the originator using its name (only use if no sc_object available!)
-  /**
-   * @param originator  Originator name
-   */
-  //void set_originator_name(const std::string& originator) {
-  //  m_originator_obj = NULL;
-  //  m_originator_str = originator;
-  //}
-
-  //void delete_originator() {
-  //  m_originator_obj = NULL;
-  //  m_originator_str = "";
-  //}
 
   /// Returns a pointer to the current originator
   /**

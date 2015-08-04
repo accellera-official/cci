@@ -80,14 +80,7 @@ public:
 	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
 	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker);
 
-	///Creates a parameter accessor object holding the originator information and pointing to the same parameter
-	/**
-	* This shall be used by the broker when returning a not yet created parameter accessor.
-	*
-	* @param originator  Originator object the returned parameter accessor shall represent
-	* @return  A newed copy pointing to the same implementation parameter.
-	*          Memory management has to be done by the caller!
-	*/
+	/// @copydoc cci_base_param::create_accessor
 	virtual cci_param<value_type, TM>* create_accessor(const cci_originator& originator);
 
 private:

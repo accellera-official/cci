@@ -41,7 +41,7 @@ limitations under the License.
 
 CCI_OPEN_NAMESPACE_
 
-//Forward declaration of implementation
+// Forward declaration of implementation
 class cci_param_impl_if;
 
 // CCI Configuration parameter base class
@@ -80,14 +80,14 @@ public:
 	///@name JSON Data Type and access
 	///@{
 
-	/// Set the parameter's value to the given one
+	/// Set the parameter's value to the given one.
 	/**
 	* @exception cci_exception_set_param Setting value failed
 	* @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
 	*/
 	void set_value(const cci_value& val);
 	
-	/// Get the parameter's value
+	/// Get the parameter's value.
 	/**
 	* @exception cci_exception_get_param Getting value failed
 	* @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
@@ -100,16 +100,16 @@ public:
 	///@name Documentation
 	///@{
 
-	/// Set parameter meta data/documentation
+	/// Set parameter documentation.
 	/**
-	* Adds parameter meta data which should describe the
+	* Set the parameter's documentation describing purpose and 
 	* intended use, allowed value range etc. in a human readable way.
 	*
 	* @param doc Human readable documentation
 	*/
 	void set_documentation(const std::string& doc);
 	
-	/// Get the parameter's meta data/documentation
+	/// Get the parameter's documentation.
 	/**
 	* return Documentation
 	*/
@@ -120,29 +120,30 @@ public:
 	///@name Parameter Value Status
 	///@{
 
-	/// Returns if the current value is the default one being set by the constructor and never been modified
+	/// Indicates whether the value provided at parameter construction persists.
 	/**
-	* True if the value had never been set but only by the constructor.
+	* True if the value was supplied as a constructor argument and not
+	* subsequently changed.
 	*
-	* Note that this returns false even if the current value is
-	* actually the same as the default one. This returns also false
-	* if there had not been set a constructor default value.
+	* Note: false is returned even if the current value matches the constructor
+	* supplied default but has undergone intermediate changes.
 	*
-	* @return If the parameter's current value is the default one
+	* @return false if the parameter received an initial value or its value has
+	*         changed; otherwise, true
 	*/
 	bool is_default_value();
 
 
-	/// Returns if the current value is an initial value being set by the database and not been modified
+	/// Indicates that the parameter received an initial value that has not since been modified.
 	/**
-	* True if the value has been set using the cnf_broker's
-	* json_deserialize_initial_value function and not been modified since then.
+	* True if the value was supplied using the broker's
+	* json_deserialize_initial_value function and not subsequently changed.
 	*
-	* Note: this will return false if a value that has been set as non-initial
-	*       value but is equals the initial value.
+	* Note: false is returned even if the current value matches the initial 
+	* value but has undergone intermediate changes.
 	*
-	* @return If the parameter's current value is an initial value being set
-	*         using the broker function json_deserialize_initial_value
+	* @return fase if no initial value was supplied or the parameter's value has
+	*         changed; otherwise, true
 	*/
 	bool is_initial_value() const;
 
@@ -152,14 +153,14 @@ public:
 	///@name Miscellaneous
 	///@{
 
-	/// Returns the originator of the latest successful write access 
+	/// Returns the originator of the parameter's current value. 
 	/**
-	* This is an alternative to get originator information within the callback(s). <br>
-	* This returns the originator of the latest post_write. <br>
-	* This returns NULL as long as no write had been made.
+	* This initially reflects originator of the parameter's starting value,
+	* e.g. the owning module or startup configuration file.  It is 
+	* subsequently updated to reflect the originator of any value changes.
 	*
-	* The originator is updated on the calls of the following functions:
-	* json_deserialize(), set_value(), set_invalid_value(), cci_param::set(), cci_param::operator=()
+	* The originator is updated on successful calls to the following functions:
+	* json_deserialize(), set_value(), cci_param::set(), cci_param::operator=()
 	*/
 	const cci_originator* get_latest_write_originator() const;
 
@@ -169,18 +170,18 @@ public:
 	///@name Callback Handling
 	///@{
 
-	/// Registers functions as a callback
+	/// Registers functions as a callback.
 	shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
 	
-	/// Function registering a callback object (should not be called by user)
+	/// Function registering a callback object (should not be called by user).
 	shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb);
 	
 	/// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
 	/**
 	* observer = NULL should be an error (and not mean unregister all callbacks)
 	*                 to avoid accidental unregistration of e.g. callbacks initiated
-	*                 by the/a tool.
-	* @param observer   Pointer to the observer module who did register parameter callbacks.
+	*                 by a tool.
+	* @param observer Pointer to the observer module that registered parameter callbacks.
 	*/
 	void unregister_all_callbacks(void* observer);
 	
@@ -199,10 +200,10 @@ public:
 	*/
 	bool unregister_callback(shared_ptr<callb_adapt> callb); 
 	
-	/// @see unregister_callback(shared_ptr<>) 
+	/// @see unregister_callback(shared_ptr<>).
 	bool unregister_callback(callb_adapt* callb);
 	
-	/// Returns if the parameter has registered callbacks
+	/// Returns if the parameter has registered callbacks.
 	bool has_callbacks();
 
 	///@}
@@ -210,12 +211,12 @@ public:
 	///@name Write-access control
 	///@{
 
-	/// Locking this parameter, optionally with a password
+	/// Locking this parameter, optionally with a password.
 	/**
 	* Makes a parameter read-only.
 	*
 	* Returns false
-	* - if this parameter was already locked with a different password than pwd. Then it is still locked but not with this given/without password.
+	* - if this parameter was already locked with a different password (this call has no effect)
 	*
 	* Returns true
 	* - if the parameter was not locked (and is locked now) or
@@ -227,14 +228,14 @@ public:
 	*/
 	bool lock(void* pwd = NULL);
 
-	/// Unlocking this parameter, optionally with a password if needed
+	/// Unlocking this parameter, optionally with a password if needed.
 	/**
 	* @param pwd Password to unlock the param (if needed), default = NULL.
 	* @return If the parameter is unlocked now.
 	*/
 	bool unlock(void* pwd = NULL);
 	
-	/// If this parameter is locked
+	/// If this parameter is locked.
 	/**
 	* @return If this parameter is locked
 	*/
@@ -245,7 +246,7 @@ public:
 	///@name Query parameter type and name
 	///@{
 
-	/// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type)
+	/// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type).
 	/**
 	* @return Type
 	*/
@@ -262,22 +263,27 @@ public:
 	///@name Accessor methods
 	///@{
 
-	///Checks if the current functions 
+	/// Indicates that this parameter is an accessor to a parameter implementation.
 	/**
-	* @return   True if the current parameter is an accessor
+	* @return   True if the current parameter is an accessor (vs. parameter creator)
 	*/
 	bool is_accessor() const;
 	
-	///Gets cci_originator of parameter
+	/// Gets cci_originator of the parameter.
+	/**
+	* The originator reflects ownership of the parameter proxy, which points
+	* to an implementation.  For an accessor, the originator identifies the 
+	* entity accessing the parameter.  Otherwise, the originator reflects
+	* the parameter's creator.
+	*/
 	cci_originator get_originator() const;
 
-	///Creates a parameter accessor object holding the originator information and pointing to the same parameter
+	/// Creates a parameter accessor holding originator information and pointing to this parameter's implementation.
 	/**
-	* This shall be used by the broker when returning a not yet created parameter accessor.
+	* This shall be used by the broker when granting access to an (existing) parameter.
 	*
-	* @param originator  Originator object the returned parameter accessor shall represent
-	* @return  A newed copy pointing to the same implementation parameter.
-	*          Memory management has to be done by the caller!
+	* @param  originator the entity requesting access to the parameter
+	* @return an accessor to this parameter
 	*/
 	virtual cci_base_param* create_accessor(const cci_originator& originator) = 0;
 	
@@ -285,37 +291,37 @@ public:
 
 
 protected:
-	///Constructor to create accessor with given originator
+	/// Constructor to create accessor with given originator.
 	cci_base_param(cci_base_param & copy, const cci_originator& originator);
 
-	///Constructor to create new parameter with given originator
+	/// Constructor to create new parameter with given originator.
 	cci_base_param(cci_param_impl_if& impl, const cci_originator& originator);
 
 
 	///@name Type-punned value operations
 	///@{
 
-	/// Get a pointer to the stored value
+	/// Get a pointer to the stored value.
 	/**
-	* @return Pointer to type-punned value stored
+	* @return Pointer to type-punned value
 	*/
 	const void* get() const;
 
 
-	/// Get a pointer to the default value (passed in via constructor)
+	/// Get a pointer to the default value (passed in via constructor).
 	/**
 	* @return Pointer to type-punned default value
 	*/
 	const void* get_default_value() const;
 	
-	/// Sets the stored value to the value passed in via vp
+	/// Sets the value via type-punned argument.
 	/**
 	* @param vp pointer to type-punned value
 	* @pre Type of vp must be equal to the internal type
 	*/
 	void set(const void* vp);
 
-	/// Sets the stored value to the value passed in via vp
+	/// Sets the value via type-punned argument.
 	/**
 	* @param vp pointer to type-punned value
 	* @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL
@@ -326,10 +332,10 @@ protected:
 	///@name Type-punned value operations
 	///@{
 
-	/// Computer if the stored values are equal
+	/// Compare parameter values.
 	/**
 	* @param rhs reference to another cci_param implementation
-	* @return True if both values are equal and of the same type
+	* @return True if both values are equal and of the same data type
 	*/
 	bool equals(const cci_param_impl_if& rhs) const;
 
@@ -338,23 +344,23 @@ protected:
 	///@name Initialization and Destructions methods
 	///@{
 
-	/// Initialize 
+	/// Initialize.
 	void init();
 
-	/// Free resources attached to parameter
+	/// Free resources attached to parameter.
 	void destroy();
 
 	///@}
 
 private:
 
-	/// Originator of the parameter proxy
+	/// Originator of the parameter proxy.
 	const cci_originator m_originator;
 
-	/// Actual implementation of the param
+	/// Actual implementation of the param.
 	cci_param_impl_if& m_impl;
 
-	/// Indicates whether this proxy is creator of the impl or an accessor to it
+	/// Indicates whether this proxy is creator of the impl or an accessor to it.
 	const bool m_owns_impl;
 
 };
