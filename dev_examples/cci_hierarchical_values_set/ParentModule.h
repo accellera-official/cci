@@ -2,7 +2,7 @@
   Copyright 2006-2015 Accellera Systems Initiative Inc.
   All rights reserved.
 
-  Copyright 2006-2014 OFFIS Institute for Information Technology
+  Copyright 2015 Ericsson
   All rights reserved.
 
   Copyright 2006-2015 Intel Corporation
@@ -31,10 +31,12 @@
 
 
 #include <systemc>
-#include "cci"
+#include <cci_configuration>
 #include "ChildModule.h"
 
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
 #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
 
 class ParentModule
 : public sc_core::sc_module
@@ -55,9 +57,9 @@ public:
 
   ~ParentModule(){};
 
-  cci::cnf::cci_param<int> log_level;
-  cci::cnf::cci_param<int> mParam1;
-  cci::cnf::cci_param<int> mParam2;
+  cci::cci_param<int> log_level;
+  cci::cci_param<int> mParam1;
+  cci::cci_param<int> mParam2;
 
 private:
 

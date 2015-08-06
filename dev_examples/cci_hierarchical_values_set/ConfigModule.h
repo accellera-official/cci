@@ -2,7 +2,7 @@
   Copyright 2006-2015 Accellera Systems Initiative Inc.
   All rights reserved.
 
-  Copyright 2006-2014 OFFIS Institute for Information Technology
+  Copyright 2015 Ericsson
   All rights reserved.
 
   Copyright 2006-2015 Intel Corporation
@@ -30,9 +30,11 @@
 
 
 #include <systemc>
-#include "cci"
+#include <cci_configuration>
 
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
 #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
 
 class ConfigModule
 : public sc_core::sc_module
@@ -44,8 +46,8 @@ public:
 
   ConfigModule(sc_core::sc_module_name name)
   {
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-            cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+            cci::cci_originator(*this));
     assert(m_cci != NULL);
     SC_THREAD(execute);
   };
@@ -54,13 +56,14 @@ public:
     const std::string tar_param = "*.log_level";
 
     // Target value for all log_level
-    cci::cnf::cci_value tar_value(500);;
+    cci::cci_value tar_value(500);;
 
     std::cout << std::endl << "**** Parameter list and values: @ "<<sc_core::sc_time_stamp() << std::endl;
 
     // To get the all parameters
     std::vector<std::string> vec_all = m_cci->get_param_list();
-    // To get parameter with patter (*.log_level)
+    // To get parameter with pattern (*.log_level)
+	/// @todo replace pattern based search (not part of standard) with predicate once available.
     std::vector<std::string> vec_ll = m_cci->get_param_list(tar_param);
     std::vector<std::string>::iterator it;
 
@@ -94,7 +97,7 @@ public:
   ~ConfigModule(){};
 
 private:
-  cci::cnf::cci_cnf_broker_if *m_cci;
+  cci::cci_broker_if *m_cci;
 
 };
 
