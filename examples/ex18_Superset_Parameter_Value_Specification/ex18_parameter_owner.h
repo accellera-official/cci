@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_OWNER_H_
 #define EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 
 /**
  *  @class  ex18_parameter_owner
@@ -51,8 +51,8 @@ SC_MODULE(ex18_parameter_owner) {
 
  private:
   // Declare the cci-parameters of type 'int' and 'std::string'
-  cci::cnf::cci_param<int> int_param_1; ///< An int CCI parameter
-  cci::cnf::cci_param<int> int_param_2; ///< An int CCI parameter
+  cci::cci_param<int> int_param_1; ///< An int CCI parameter
+  cci::cci_param<int> int_param_2; ///< An int CCI parameter
 };
 // ex18_parameter_owner
 

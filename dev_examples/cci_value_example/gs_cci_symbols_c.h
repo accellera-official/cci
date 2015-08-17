@@ -21,12 +21,12 @@
 // This extra library ONLY provides the one addtional data type and NOT the cci_value
 //
 
-//#define GS_CCI_CNF_VERBOSE
+//#define GS_cci_VERBOSE
 
-#ifdef GS_CCI_CNF_VERBOSE
-  #define GS_CCI_CNF_DUMP(msg) { std::cout<<msg<<std::endl; } 
+#ifdef GS_cci_VERBOSE
+  #define GS_cci_DUMP(msg) { std::cout<<msg<<std::endl; } 
 #else
-  #define GS_CCI_CNF_DUMP(msg) {  } 
+  #define GS_cci_DUMP(msg) {  } 
 #endif
 
 
@@ -37,7 +37,7 @@
 /// close namespace macro
 #define __CLOSE_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__ }
 
-#include "cci"
+#include "cci_configuration"
 #include "greencontrol/config.h"
 
 #ifndef __INCLUDE_ONLY_FROM_MAIN_INCLUDE_CHECK__
@@ -53,52 +53,24 @@
 #endif
 #include "gs_cci_param.h"
 
-namespace cci { namespace cnf {
+namespace cci {
   
   /// Implementation of parameter factory create function function declared in cci_config.h
-  template<typename T, cci::cnf::param_mutable_type TM>
-  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
-    cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, is_top_level_name, broker_accessor);
-    return impl_par;
-  }
-
-  
-  /// Implementation of parameter factory create function function declared in cci_config.h
-  template<typename T, cci::cnf::param_mutable_type TM>
-  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const T& val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
-    cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor);
+  template<typename T, param_mutable_type TM>
+  cci_param_impl_if* create_cci_param(cci_param<T, TM> *owner_par, const std::string &nam, const T& val, const bool is_top_level_name, cci_broker_if* broker_accessor) {
+    cci_param_impl_if* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor);
     return impl_par;
   }
 
 
   /// Implementation of parameter factory create function function declared in cci_config.h
-  template<typename T, cci::cnf::param_mutable_type TM>
-  cci::cnf::cci_param_impl_if<T, TM>* create_cci_param(cci::cnf::cci_param<T, TM> *owner_par, const std::string &nam, const char* val, const bool is_top_level_name, cci_cnf_broker_if* broker_accessor) {
-    cci::cnf::cci_param_impl_if<T, TM>* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor);
+  template<typename T, param_mutable_type TM>
+  cci_param_impl_if* create_cci_param(cci_param<T, TM> *owner_par, const std::string &nam, const cci_value& val, const bool is_top_level_name, cci_broker_if* broker_accessor) {
+    cci_param_impl_if* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor);
     return impl_par;
   }
 
-  /// Implementation of parameter factory init function function declared in cci_config.h
-  template<typename T, cci::cnf::param_mutable_type TM>
-  void init_cci_param(cci::cnf::cci_param<T, TM> *owner_par) {
-    assert(owner_par != NULL && "The given parameter must not be NULL.");
-    __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>* p = dynamic_cast<__NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>*> (owner_par->get_pImpl());
-    assert(p != NULL && "The given parameter should be created by the create_cci_param function thus being of the implementation type.");
-    p->init();
-  }
-  
-
-  /// Implementation of parameter factory destroy function function declared in cci_config.h
-  template<class T, cci::cnf::param_mutable_type TM>
-  void destroy_cci_param(cci::cnf::cci_param<T, TM>* param) {
-    assert(param != NULL && "The given parameter must not be NULL.");
-    __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>* p = dynamic_cast<__NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>*> (param->get_pImpl());
-    assert(p != NULL && "The given parameter should be created by the create_cci_param function thus being of the implementation type.");
-    delete p; p = NULL;
-  }
-  
-
-} } // end namespace
+} // end namespace
 
 
 #endif

@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 
 /// Module which sets/accesses parameter values using cci_values
@@ -38,7 +38,7 @@ public:
 
 protected:
   /// Pointer the the module's configuration broker
-  cci::cnf::cci_cnf_broker_if* mBroker;
+  cci::cci_broker_if* mBroker;
 
 };
 

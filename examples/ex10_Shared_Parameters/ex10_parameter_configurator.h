@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include "xreport.hpp"
 
@@ -46,7 +46,7 @@ SC_MODULE(ex10_parameter_configurator) {
   SC_CTOR(ex10_parameter_configurator) {
     // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF =
-        &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
@@ -108,9 +108,9 @@ SC_MODULE(ex10_parameter_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< cci configuration broker interface instance
-  cci::cnf::cci_base_param* cfgr_param_ptr; ///< CCI base parameter pointer
-  cci::cnf::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< cci configuration broker interface instance
+  cci::cci_base_param* cfgr_param_ptr; ///< CCI base parameter pointer
+  cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
 // ex10_parameter_configurator
 

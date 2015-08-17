@@ -15,16 +15,18 @@
 
 
 #include <systemc>
-#include "cci"
+#include "cci_configuration"
 
 
 /// Testbench for the CCI development example testing the compare functionality of parameters of different mutability
 int sc_main(int argc, char *argv[]) {
 
-  cci::cnf::cci_param<int, cci::cnf::mutable_param>          int_param_mutable  ("int_param_mutable",   10);
-  cci::cnf::cci_param<int, cci::cnf::mutable_param>          int_param_mutable2 ("int_param_mutable2",  100);
-  cci::cnf::cci_param<int, cci::cnf::immutable_param>        int_param_immutable("int_param_immutable", 11);
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> int_param_elab     ("int_param_elab",      11);
+  cci::cci_param<int, cci::mutable_param>          int_param_mutable  ("int_param_mutable", cci::cci_value(10),   cci::CCI_TOP_LEVEL_NAME);
+  cci::cci_param<int, cci::mutable_param>          int_param_mutable2 ("int_param_mutable2",  100,                cci::CCI_TOP_LEVEL_NAME);
+  cci::cci_param<int, cci::immutable_param>        int_param_immutable("int_param_immutable", cci::cci_value(11), cci::CCI_TOP_LEVEL_NAME);
+  cci::cci_param<int, cci::elaboration_time_param> int_param_elab     ("int_param_elab",      11,                 cci::CCI_TOP_LEVEL_NAME);
+
+  cci::cci_param<std::string> str_param("str_param", cci::cci_value("This is a \nstring"));
 
   std::cout << "int_param_mutable2 == int_param_mutable: " << 
   ((int_param_mutable2 == int_param_mutable) ? "true" : "false") << std::endl;

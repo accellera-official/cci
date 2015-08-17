@@ -26,13 +26,13 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-#include "cci_cnf/cci_value.h"
-#include "cci_cnf/cci_report_handler.h"
-#include "cci_cnf/rapidjson.h"
+#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_report_handler.h"
+#include "cci_cfg/rapidjson.h"
 
 #include <algorithm> // std::swap
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 typedef rapidjson::CrtAllocator allocator_type;
 typedef rapidjson::UTF8<>       encoding_type;
@@ -549,22 +549,10 @@ cci_value_ref::json_deserialize( std::string const & src )
   }
   catch ( rapidjson::ParseException const & e )
   {
-    std::stringstream str;
-    str << "JSON error: " << GetParseError_En(e.Code()) << "\n"
-            "\t'" << src << "' "
-            "(offset: " << e.Offset() << ")";
-    cci_report_handler::report( sc_core::SC_WARNING
-                              , "CCI_VALUE_FAILURE"
-                              , str.str().c_str(), __FILE__, __LINE__ );
     return false;
   }
   THIS->Swap( doc );
   return true;
 }
 
-// ----------------------------------------------------------------------------
-// Borrowing this .cpp to provide a home for this value (creating cci_param.cpp
-// solely for that purpose is overkill. @TODO - review home later in rework
-const char* PARAM_ORIGINATOR = "owning_param";
-
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_

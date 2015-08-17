@@ -31,11 +31,11 @@
 #endif
 #endif // CCI_EXTERN_
 
-#ifndef CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
-#define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
+#ifndef CCI_CCI_VALUE_TRAITS_H_INCLUDED_
+#define CCI_CCI_VALUE_TRAITS_H_INCLUDED_
 
 #include "cci_core/systemc.h"
-#include "cci_cnf/cci_value.h"
+#include "cci_cfg/cci_value.h"
 
 #include <cstring> // std::strncpy
 
@@ -45,7 +45,7 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 /**
  * @class cci_value_traits
@@ -351,14 +351,14 @@ struct cci_value_traits< sc_dt::sc_lv<N> >
   /// @todo add bounds checks
 };
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_
+#endif // CCI_CCI_VALUE_TRAITS_H_INCLUDED_
 
 ///@todo add support for SystemC fixpoint types
 #if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_)
 #define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fxval>;
 CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fxval_fast>;
@@ -399,7 +399,7 @@ struct cci_value_traits< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
   /// @todo add bounds checks
 };
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 #endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
 
 #ifdef CCI_VALUE_TRAITS_DERIVED_

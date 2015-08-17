@@ -36,18 +36,17 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   using std::cout;
   using std::endl;
   
-  template <typename T, cci::cnf::param_mutable_type TM>
+  template <typename T>
   class gs_cci_param_t
-  : public gs_cci_base_param,
-    public cci::cnf::cci_param_impl_if<T, TM>
+  : public gs_cci_base_param
   {
   protected:
     /// Typedef for the param itself.
-    typedef gs_cci_param_t<T, TM> my_type;
+    typedef gs_cci_param_t<T> my_type;
     /// Typedef for base type
     typedef gs_cci_base_param base_type;
     /// Typedef for the param itself.
-    typedef cci::cnf::cci_param<T, TM> my_return_type;
+    typedef cci::cci_param_b<T> my_return_type;
     /// Typedef for the owned gs_param
     typedef gs::gs_param<T> gs_param_type;
 
@@ -59,26 +58,15 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
     gs_cci_param_t(my_return_type& owner_par
                    , const std::string& n
-                   , const std::string &val
+                   , const cci::cci_value& val
                    , bool is_top_level_name /*= false*/
                    , bool register_at_db /*= true*/
-                   , cci::cnf::cci_cnf_broker_if* broker_accessor)
+                   , cci::cci_broker_if* broker_accessor)
     : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, /*has_default_value=*/true, broker_accessor)
-    , m_gs_param(n, val, NULL, is_top_level_name, register_at_db)
+    , m_gs_param(n, "", NULL, is_top_level_name, register_at_db)
     , m_owner_par(owner_par)
     {
-      gs_cci_base_param::m_gs_param_base = &m_gs_param;
-    }
-    
-    gs_cci_param_t(my_return_type& owner_par
-                   , const std::string& n
-                   , bool is_top_level_name /*= false*/
-                   , bool register_at_db /*= true*/
-                   , cci::cnf::cci_cnf_broker_if* broker_accessor)
-    : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, /*has_default_value=*/false, broker_accessor)
-    , m_gs_param(n, std::string(""), NULL, is_top_level_name, register_at_db, false) // default value disabled
-    , m_owner_par(owner_par)
-    {
+	  this->m_gs_param.setString(cci::cci_value::to_json(val));
       gs_cci_base_param::m_gs_param_base = &m_gs_param;
     }
     
@@ -88,9 +76,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                    , bool is_top_level_name /*= false*/
                    , bool register_at_db /*= true*/
                    , bool this_is_with_a_value // Just to make a difference (allow overloading) the constructor taking a string value 
-                   , cci::cnf::cci_cnf_broker_if* broker_accessor )
+                   , cci::cci_broker_if* broker_accessor )
     : gs_cci_base_param(owner_par, is_top_level_name, register_at_db, true, broker_accessor)
-    , m_gs_param((const std::string&)n, val, is_top_level_name) 
+    , m_gs_param(n, val, is_top_level_name) 
     , m_owner_par(owner_par)
     {
       assert(register_at_db && "Not supported with gs_param?");
@@ -105,54 +93,50 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     my_return_type* get_cci_param() { return &m_owner_par; }
     operator my_return_type& () { return m_owner_par; }
     
-    virtual const cci::cnf::basic_param_type get_basic_type() const { return cci::cnf::param_type_not_available; }
-   
-    /*virtual my_return_type& operator = (const my_return_type& v) { 
-      set(v.get());
-      //return *this;
-      return m_owner_par;
-    }
+	virtual cci::basic_param_type get_basic_type() const { return get_value().basic_type(); }
 
-    virtual my_return_type& operator = (const value_type& v) { 
-      set(v);
-      //return *this;
-      return m_owner_par;
-    }*/
+	virtual void set(const void* value)
+	{
+		value_type val = *static_cast<const value_type*>(value);
+		if (m_gs_param.locked())
+		{
+			cci::cci_report_handler::set_param_failed("Parameter locked.");
+			return;
+		}
+		if (!m_gs_param.setValue(val))
+			cci::cci_report_handler::set_param_failed("Value rejected by callback.");
+		else
+			update_latest_write_originator();
+	}
     
-
-    virtual operator const value_type& () const {
-      return get(); 
+    virtual const void * get() const {
+      return &m_gs_param.getValue();
     }
     
-    virtual void set(const value_type& val) {
-      if (m_gs_param.locked()) {
-        cci::cnf::cci_report_handler::set_param_failed("Parameter locked.");
-        return;
-      }
-      if (!m_gs_param.setValue(val))
-        cci::cnf::cci_report_handler::set_param_failed("Value rejected by callback.");
-      else
-        update_latest_write_originator();
-    }
-    
-    virtual const value_type& get() const {
-      return m_gs_param.getValue();
-    }
-    
-    virtual void set(const value_type& val, void* lock_pwd) {
+    virtual void set(const void* val, const void* lock_pwd) {
       if (!m_gs_param.check_pwd(lock_pwd)) {
-        cci::cnf::cci_report_handler::set_param_failed("Wrong key.");
+        cci::cci_report_handler::set_param_failed("Wrong key.");
         return;
       }
-      if (!m_gs_param.setValue(val, lock_pwd))
-        cci::cnf::cci_report_handler::set_param_failed("Bad value.");
+      if (!m_gs_param.setValue(*static_cast<const value_type *>(val), lock_pwd))
+        cci::cci_report_handler::set_param_failed("Bad value.");
       else
         update_latest_write_originator();
     }
-    
+
+	virtual bool equals(const cci::cci_param_impl_if& rhs) const
+	{
+		const my_type* other = dynamic_cast<const my_type*>(&rhs);
+		if (other)
+		{
+			return other->m_gs_param.getValue() == this->m_gs_param.getValue();
+		}
+		return false;
+	}
+
   protected:
 
-    gs_param_type m_gs_param;
+    mutable gs_param_type m_gs_param;
     
     /// Owning parameter, to allow implicit casting to the parent
     my_return_type &m_owner_par;

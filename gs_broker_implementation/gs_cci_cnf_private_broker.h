@@ -19,7 +19,7 @@
 #define __GS_CCI_CNF_PRIVATE_BROKER_H__
 
 #define CCI_CNF_SHARE_LIBRARY_MACROS
-#include <cci>
+#include <cci_configuration>
 #include "greencontrol/config.h"
 #include "gs_cci_broker.h"
 #include "gs_cci_cnf_broker_accessor.h"
@@ -28,23 +28,22 @@
 
 
 namespace cci {
-namespace cnf {
   
   class gs_cci_private_broker
-  : public cci::cnf::cci_cnf_broker_if
+  : public cci::cci_broker_if
   , public gs_cci_cnf_broker_if // used internally by broker accessors
   , public gs::cnf::GCnf_private_Api
   , public gs::cnf::gs_cnf_api_accessor
-  , public cci::cnf::gs_cci_cnf_broker_accessor_handler
+  , public cci::gs_cci_cnf_broker_accessor_handler
   {
   protected:
     
     /// Typedef for internal implicit param originator map
-    typedef std::multimap<std::string, cci::cnf::cci_originator> implicitOriginatorMap;
+    typedef std::multimap<std::string, cci::cci_originator> implicitOriginatorMap;
 
   public:
 
-    cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::cnf::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
+    cci_broker_if& get_accessor(const cci_originator& originator) { return cci::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
     
     const cci_originator* get_originator() const { return NULL; }
 
@@ -81,7 +80,7 @@ namespace cnf {
     
     const std::vector<std::string> get_param_list(const std::string& pattern);
     
-    const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern);
+    const std::vector<cci::cci_base_param*> get_params(const std::string& pattern);
     
     bool param_exists(const std::string &parname);
     
@@ -109,7 +108,7 @@ namespace cnf {
   protected:
 
     /// Internal const function to be used by get_param and get_latest_write_originator
-    cci::cnf::cci_base_param* get_param_const(const std::string &parname) const;
+    cci::cci_base_param* get_param_const(const std::string &parname) const;
 
   protected:
     
@@ -118,7 +117,7 @@ namespace cnf {
     std::map<std::string, cci_base_param*> m_mirrored_registry;
     
     /// The next broker upwards the hierarchy
-    cci_cnf_broker_if* m_upper_broker;
+    cci_broker_if* m_upper_broker;
   
     /// This broker's name
     std::string m_name;
@@ -130,7 +129,6 @@ namespace cnf {
   };
   
   
-} // end namespace
 } // end namespace
 
 #endif

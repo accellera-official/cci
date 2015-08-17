@@ -23,7 +23,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+  cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   // demonstrate is_default_value
@@ -39,28 +39,8 @@ void ParameterOwnerModule::main_action() {
 
   // demonstrate has_default_value
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
-  // Need to catch the error here
-  cout << name() << ": bool_param get_default_value()=";
-  try {
-    cout << bool_param.get_default_value()<<endl;
-  } catch(sc_core::sc_report e) {
-    // If get_param_failed error, catch it
-    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
-	    case cci::cnf::CCI_GET_PARAM_FAILURE: 
-        std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
-        break;
-      default:
-        // If other error, throw it again
-        throw e;
-    }
-  }
 
-  // demonstrate is_invalid_value
-  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
-  bool_param = true;
-  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl;
-  bool_param.set_invalid_value(); 
-  cout << name() << ": bool_param is_invalid_value()=" << bool_param.is_invalid_value()<<endl<<endl;
+  cout << name() << ": bool_param get_default_value()=" << bool_param.get_default_value()<<endl;
   
   wait(1, SC_NS);
 
@@ -85,7 +65,7 @@ void ParameterOwnerModule::main_action() {
 
   // create and access a local parameter
   cout << name() << ": create parameter " << endl;
-  cci::cnf::cci_param<unsigned char> uchar_param("uchar_param");
+  cci::cci_param<unsigned char> uchar_param("uchar_param", 0);
   cout << "  created " << uchar_param.get_name() << endl;
   cout << name() << ": Set the new parameter uchar_param" << endl;
   uchar_param = 'u';

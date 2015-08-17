@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_CONFIGURER_H_
 #define EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_CONFIGURER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 
@@ -52,7 +52,7 @@ SC_MODULE(ex16_parameter_configurer) {
     // Get the broker responsible for this module using
     // 'get_current_broker' API
     myBrokerInterface =
-        &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL
     assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");
@@ -133,12 +133,12 @@ SC_MODULE(ex16_parameter_configurer) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myBrokerInterface; ///< CCI configuration broker instance
+  cci::cci_broker_if* myBrokerInterface; ///< CCI configuration broker instance
 
   std::string udt_param_str;  ///< std::string types for storing parameters hierarchical paths
 
   // Declaring cci_base_parameters
-  cci::cnf::cci_base_param* udt_param_ptr;  ///< CCI base parameter pointer
+  cci::cci_base_param* udt_param_ptr;  ///< CCI base parameter pointer
 };
 // ex16_parameter_configurer
 

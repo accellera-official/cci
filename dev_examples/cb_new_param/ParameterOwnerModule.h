@@ -21,7 +21,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 
 /// Module which owns some cci parameters.
@@ -40,7 +40,7 @@ public:
   , uint_param("uint_param", 12000)
   , uint_param2("uint_param2", 12)
   , str_param ("str_param", "This is a test string.")
-  , bool_param("bool_param") // no default value
+  , bool_param("bool_param", false)
   { 
     SC_THREAD(main_action);
   }
@@ -49,15 +49,15 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<int>             int_param;
+  cci::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param;
+  cci::cci_param<unsigned int>    uint_param;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param2;
+  cci::cci_param<unsigned int>    uint_param2;
   /// Example parameter.
-  cci::cnf::cci_param<std::string>     str_param;
+  cci::cci_param<std::string>     str_param;
   /// Example parameter.
-  cci::cnf::cci_param<bool>            bool_param;
+  cci::cci_param<bool>            bool_param;
   
 };
 

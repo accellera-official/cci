@@ -33,7 +33,7 @@
 #ifndef EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_CCI_CONFIGFILE_TOOL_H_
 #define EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_CCI_CONFIGFILE_TOOL_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <boost/algorithm/string.hpp>
 #include <boost/tokenizer.hpp>
 #include <sstream>
@@ -44,7 +44,6 @@
 #include "ex18_configset.h"
 
 namespace cci {
-namespace cnf {
 
 #define CONFIG_FILE_TOOL_BUFSIZE 1024
 #define TRACENAME "/ASI/CCI/CONFIG_FILE_TOOL"
@@ -88,7 +87,7 @@ class ex18_cci_configFile_Tool {
   explicit ex18_cci_configFile_Tool(const char* name)
       : mToolOriginator(name) {
     // get responsible broker
-    mApi = &cci::cnf::cci_broker_manager::get_current_broker(mToolOriginator);
+    mApi = &cci::cci_broker_manager::get_current_broker(mToolOriginator);
   }
 
   /**
@@ -331,15 +330,14 @@ class ex18_cci_configFile_Tool {
   }
 
  protected:
-  cci::cnf::cci_originator mToolOriginator; ///< This tool's originator information
+  cci::cci_originator mToolOriginator; ///< This tool's originator information
 
-  cci::cnf::cci_cnf_broker_if* mApi;  ///< Config API which is used by this tool
+  cci::cci_broker_if* mApi;  ///< Config API which is used by this tool
 
   std::string m_name; ///< Name of this object, given by constructor
 
   char line[CONFIG_FILE_TOOL_BUFSIZE];
 };
-}  // end namespace cnf
 }  // end namespace cci
 // ex18_cci_configFile_Tool
 

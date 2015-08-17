@@ -32,7 +32,7 @@
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_TARGET_H_
 #define EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_TARGET_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <tlm>
 #include <string>
 #include "tlm_utils/simple_target_socket.h"
@@ -128,11 +128,11 @@ SC_MODULE(ex09_target) {
   }
 
  private:
-  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
+  cci::cci_param<std::string, cci::elaboration_time_param> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
 
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
+  cci::cci_param<int, cci::elaboration_time_param> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
 
-  cci::cnf::cci_param<unsigned int> s_size; ///< Mutable time parameter for setting target's size (initialized by router);
+  cci::cci_param<unsigned int> s_size; ///< Mutable time parameter for setting target's size (initialized by router);
 
   int* mem;
 };

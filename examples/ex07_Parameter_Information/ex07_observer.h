@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_OBSERVER_H_
 #define EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_OBSERVER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include "xreport.hpp"
@@ -46,11 +46,11 @@ SC_MODULE(ex07_observer) {
   SC_CTOR(ex07_observer) {
     // Instantiate a cci_originator in order to get hold
     // of the configuration broker interface
-    cci::cnf::cci_originator observerOriginator("observerOriginator");
+    cci::cci_originator observerOriginator("observerOriginator");
 
     // Get the broker responsible for this module using
     // 'get_current_broker' API
-    observerBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(
+    observerBrokerIF = &cci::cci_broker_manager::get_current_broker(
         observerOriginator);
 
     // Assert if broker handle returned is NULL
@@ -77,30 +77,30 @@ SC_MODULE(ex07_observer) {
     // Observer registering PRE_READ, PRE_WRITE & POST_WRITE callbacks
     // on the integer parameter to monitor all actions on it
     int_pre_read_cb = obsv_int_base_ptr->register_callback(
-        cci::cnf::pre_read, this,
+        cci::pre_read, this,
         cci::bind(&ex07_observer::read_callback, this, _1, _2));
     int_pre_write_cb = obsv_int_base_ptr->register_callback(
-        cci::cnf::pre_write, this,
+        cci::pre_write, this,
         cci::bind(&ex07_observer::write_callbacks, this, _1, _2));
     int_post_write_cb = obsv_int_base_ptr->register_callback(
-        cci::cnf::post_write, this,
+        cci::post_write, this,
         cci::bind(&ex07_observer::write_callbacks, this, _1, _2));
   }
 
   /**
-   *  @fn      cci::cnf::callback_return_type read_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+   *  @fn      cci::callback_return_type read_callback(cci::cci_base_param &, const cci::callback_type &)
    *  @brief   'PRE_READ' Callbacks Implementations
-   *  @param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre-read) callback is registered
-   *  @param   cci::cnf::callback_type&  Callback type
-   *  @return  cci::cnf::callback_return_type  Callback return type
+   *  @param   cci::cci_base_param&   Reference of cci_base_param on which the (pre-read) callback is registered
+   *  @param   cci::callback_type&  Callback type
+   *  @return  cci::callback_return_type  Callback return type
    */
-  cci::cnf::callback_return_type read_callback(
-      cci::cnf::cci_base_param & _selected_base_param,
-      const cci::cnf::callback_type & cb_reason) {
+  cci::callback_return_type read_callback(
+      cci::cci_base_param & _selected_base_param,
+      const cci::callback_type & cb_reason) {
     switch (cb_reason) {
-      case cci::cnf::pre_read: {
-        const cci::cnf::cci_originator* myOriginator =
-            cci::cnf::cci_originator::get_global_originator();
+      case cci::pre_read: {
+        const cci::cci_originator* myOriginator =
+            cci::cci_originator::get_global_originator();
 
         XREPORT("[OBSERVER pre_read_cb] :  Parameter Name : "
                 << _selected_base_param.get_name() << "\tOriginator info : "
@@ -113,31 +113,31 @@ SC_MODULE(ex07_observer) {
         XREPORT("[OBSERVER pre_read_cb] - Unknown Callback Type");
     }
 
-    return cci::cnf::return_nothing;
+    return cci::return_nothing;
   }
 
   /**
-   *  @fn      cci::cnf::callback_return_type write_callback(cci::cnf::cci_base_param &, const cci::cnf::callback_type &)
+   *  @fn      cci::callback_return_type write_callback(cci::cci_base_param &, const cci::callback_type &)
    *  @brief   'PRE_WRITE' & 'POST_WRITE' Callbacks Implementations
-   *  @param   cci::cnf::cci_base_param&   Reference of cci_base_param on which the (pre/post-write) callback is registered
-   *  @param   cci::cnf::callback_type&  Callback type (pre-read or post-read)
-   *  @return  cci::cnf::callback_return_type  Callback return type
+   *  @param   cci::cci_base_param&   Reference of cci_base_param on which the (pre/post-write) callback is registered
+   *  @param   cci::callback_type&  Callback type (pre-read or post-read)
+   *  @return  cci::callback_return_type  Callback return type
    */
-  cci::cnf::callback_return_type write_callbacks(
-      cci::cnf::cci_base_param & _selected_base_param,
-      const cci::cnf::callback_type & cb_reason) {
-    const cci::cnf::cci_originator* myOriginator =
-        cci::cnf::cci_originator::get_global_originator();
+  cci::callback_return_type write_callbacks(
+      cci::cci_base_param & _selected_base_param,
+      const cci::callback_type & cb_reason) {
+    const cci::cci_originator* myOriginator =
+        cci::cci_originator::get_global_originator();
 
     switch (cb_reason) {
-      case cci::cnf::pre_write: {
+      case cci::pre_write: {
         XREPORT("[OBSERVER pre_write_cb] :  Parameter Name : "
                 << _selected_base_param.get_name() << "\tOriginator info : "
                 << myOriginator->name());
         break;
       }
 
-      case cci::cnf::post_write: {
+      case cci::post_write: {
         XREPORT("[OBSERVER post_write_cb] :  Parameter Name : "
                 << _selected_base_param.get_name() << "\tOriginator info : "
                 << myOriginator->name());
@@ -148,17 +148,17 @@ SC_MODULE(ex07_observer) {
         XREPORT("[OBSERVER write_cb] - Unknown Callback Type");
     }
 
-    return cci::cnf::return_nothing;
+    return cci::return_nothing;
   }
 
  private:
 
-  cci::cnf::cci_cnf_broker_if* observerBrokerIF;  //!< Configuration broker instance
-  cci::cnf::cci_base_param* obsv_int_base_ptr;  //!< cci_base_param for integer type cci-param
+  cci::cci_broker_if* observerBrokerIF;  //!< Configuration broker instance
+  cci::cci_base_param* obsv_int_base_ptr;  //!< cci_base_param for integer type cci-param
 
-  cci::shared_ptr<cci::cnf::callb_adapt> int_pre_read_cb; //!< 'pre_read' callback adaptor obj for int type cci-param
-  cci::shared_ptr<cci::cnf::callb_adapt> int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param
-  cci::shared_ptr<cci::cnf::callb_adapt> int_post_write_cb; //!< 'post_write' callback adaptor obj for int type cci-param
+  cci::shared_ptr<cci::callb_adapt> int_pre_read_cb; //!< 'pre_read' callback adaptor obj for int type cci-param
+  cci::shared_ptr<cci::callb_adapt> int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param
+  cci::shared_ptr<cci::callb_adapt> int_post_write_cb; //!< 'post_write' callback adaptor obj for int type cci-param
 };
 // ex07_observer
 

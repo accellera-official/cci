@@ -20,16 +20,14 @@
 
 #include <boost/assign/list_of.hpp> 
 
-#include <cci>
+#include <cci_configuration>
 #include "greencontrol/config.h"
 
 namespace cci {
-  namespace cnf {
 
     // replaced by boost::assign::list_of
     //std::vector<std::string> vector_factory(const char* pub_par ...);
 
-  }
 }
 
 #endif

@@ -17,7 +17,7 @@
 
 // NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
-#include <cci>
+#include <cci_configuration>
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_broker_if.h"
 
@@ -26,7 +26,6 @@
 
 
 namespace cci {
-  namespace cnf {
     
    
     class cci_base_param;
@@ -43,27 +42,27 @@ namespace cci {
      * to the users.
      */
     class gs_cci_cnf_broker_accessor
-    : public cci::cnf::cci_cnf_broker_if // end user interface
+    : public cci::cci_broker_if // end user interface
     , public gs::cnf::gs_cnf_api_accessor // internal accessor
     {
     protected:
       
       /// Typedef for parameter accessor map
-      typedef std::map<std::string, cci::cnf::cci_base_param*> param_accessor_map;
+      typedef std::map<std::string, cci::cci_base_param*> param_accessor_map;
 
     public:
       
-      cci_cnf_broker_if& get_accessor(const cci_originator& originator);
+      cci_broker_if& get_accessor(const cci_originator& originator);
       
       /// Used by global get_cnf_broker_instance function
-      gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cnf::cci_cnf_broker_if& orig_broker);
+      gs_cci_cnf_broker_accessor(const cci_originator& originator, cci::cci_broker_if& orig_broker);
       
       ~gs_cci_cnf_broker_accessor();
       
       const std::string &name() const;
 
       // ////////////////////////////////////////////////////////////// //
-      // /////////////// cci_cnf_broker_if functions ////////////////// //
+      // /////////////// cci_broker_if functions ////////////////// //
       // ////////////////////////////////////////////////////////////// //
 
       void json_deserialize_initial_value(const std::string &parname, const std::string &value);
@@ -82,23 +81,23 @@ namespace cci {
       
       const std::vector<std::string> get_param_list();
       
-      shared_ptr< cci::cnf::callb_adapt> register_callback(const std::string& parname, const cci::cnf::callback_type type, shared_ptr< cci::cnf::callb_adapt> callb);
+      shared_ptr< cci::callb_adapt> register_callback(const std::string& parname, const cci::callback_type type, shared_ptr< cci::callb_adapt> callb);
       
       void unregister_all_callbacks(void* observer);
       
-      bool unregister_callback(cci::cnf::callb_adapt* callb);
+      bool unregister_callback(cci::callb_adapt* callb);
       
       bool has_callbacks(const std::string& parname);
       
-      void add_param(cci::cnf::cci_base_param* par);
+      void add_param(cci::cci_base_param* par);
       
-      void remove_param(cci::cnf::cci_base_param* par);
+      void remove_param(cci::cci_base_param* par);
       
       //void set_alias(std::string& orig_parname, std::string& alias_parname);
       
       const std::vector<std::string> get_param_list(const std::string& pattern);
       
-      const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern = "");
+      const std::vector<cci::cci_base_param*> get_params(const std::string& pattern = "");
 
       bool is_private_broker() const;
 
@@ -131,7 +130,7 @@ namespace cci {
        * @param orig_param  Original (not-accessor) parameter
        * @return parameter accessor
        */
-      cci::cnf::cci_base_param* get_param_accessor(cci::cnf::cci_base_param& orig_param);
+      cci::cci_base_param* get_param_accessor(cci::cci_base_param& orig_param);
       
     protected:
       
@@ -147,7 +146,6 @@ namespace cci {
     };
     
     
-  } // end namespace cci
 } // end namespace cci
 
 #endif

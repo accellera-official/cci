@@ -16,18 +16,18 @@
 
 
 #include <systemc>
-#include "cci"
+#include "cci_configuration"
 
 
 /// Shows a parameter list with information about value, explicit/implicit status and is_initial_value status
 void show_param_list() {
-  static cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator("PARAM_LIST"));
+  static cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator("PARAM_LIST"));
 
   std::cout << std::endl << "**** Parameter list: ";
   std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
-  cci::cnf::cci_base_param* p;
+  cci::cci_base_param* p;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
     ss_show << std::endl;
     ss_show << *iter << " : ";
@@ -47,14 +47,14 @@ void show_param_list() {
 /// Testbench for the CCI development example testing the is_initial_value functionality
 int sc_main(int argc, char *argv[]) {
   
-  cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator("SCMAIN"));
+  cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator("SCMAIN"));
   
   mBroker->json_deserialize_initial_value("int_param_with_initial_value", "100");
   mBroker->json_deserialize_initial_value("int_param_only_implicit", "130");
   
-  cci::cnf::cci_param<int> int_param_with_initial_value     ("int_param_with_initial_value",      10);
-  cci::cnf::cci_param<int> int_param_without_initial_value  ("int_param_without_initial_value",   11);
-  cci::cnf::cci_param<int> int_param_with_late_initial_value("int_param_with_late_initial_value", 12);
+  cci::cci_param<int> int_param_with_initial_value     ("int_param_with_initial_value",      10);
+  cci::cci_param<int> int_param_without_initial_value  ("int_param_without_initial_value",   11);
+  cci::cci_param<int> int_param_with_late_initial_value("int_param_with_late_initial_value", 12);
   
   show_param_list();  
 

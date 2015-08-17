@@ -21,10 +21,10 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 
 #define SC_INCLUDE_DYNAMIC_PROCESSES
-#include "gs_cci_cnf_private_broker_accessor.h"
+#include "gs_cci_private_broker_accessor.h"
 
 #include "ModuleB.h"
 
@@ -34,14 +34,14 @@ class ModuleA
 {
 protected:
   /// for secure access by parameters
-  cci::cnf::cci_cnf_broker_if* m_broker;
+  cci::cci_broker_if* m_broker;
 
 public:
   
   SC_HAS_PROCESS(ModuleA);
 	
   /// Constructor
-  ModuleA(sc_core::sc_module_name name, cci::cnf::cci_broker_manager); 
+  ModuleA(sc_core::sc_module_name name, cci::cci_broker_manager); 
   // Important: never use a private_broker_manager anywhere else than as constructor argument!!!
   
   /// Destructor
@@ -51,15 +51,15 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<int>             int_param;
+  cci::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param;
+  cci::cci_param<unsigned int>    uint_param;
   /// Example parameter.
-  cci::cnf::cci_param<unsigned int>    uint_param2;
+  cci::cci_param<unsigned int>    uint_param2;
   /// Example parameter.
-  cci::cnf::cci_param<std::string>     str_param;
+  cci::cci_param<std::string>     str_param;
   /// Example parameter.
-  cci::cnf::cci_param<bool>            bool_param;
+  cci::cci_param<bool>            bool_param;
   
 protected:
   ModuleB m_modB;

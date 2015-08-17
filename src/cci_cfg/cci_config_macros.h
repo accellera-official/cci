@@ -16,12 +16,12 @@
 
 
 
-#ifndef CCI_CNF_CCI_CONFIG_MACROS_H_INCLUDED_
-#define CCI_CNF_CCI_CONFIG_MACROS_H_INCLUDED_
+#ifndef CCI_CCI_CONFIG_MACROS_H_INCLUDED_
+#define CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 
 /// Namespace for ASI Configuration, Control & Inspection (CCI) standard, Config part
-#define CCI_OPEN_CONFIG_NAMESPACE_  namespace cci { namespace cnf {
-#define CCI_CLOSE_CONFIG_NAMESPACE_ } }
+#define CCI_OPEN_NAMESPACE_  namespace cci {
+#define CCI_CLOSE_NAMESPACE_ }
 
 // Some default strings - user should define custom ones before including CCI
 // (and before building parameter or broker code since they are used beyond

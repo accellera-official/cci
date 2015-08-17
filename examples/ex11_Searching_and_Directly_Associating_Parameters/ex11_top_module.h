@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_TOP_MODULE_H_
 #define EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_TOP_MODULE_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include <string>
@@ -58,7 +58,7 @@ SC_MODULE(ex11_top_module) {
   SC_CTOR(ex11_top_module) {
     // Get handle of the broker responsible for the class/module
     myTopModBrokerIF =
-        &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
@@ -78,7 +78,7 @@ SC_MODULE(ex11_top_module) {
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
     if (myTopModBrokerIF->param_exists(param1_str)) {
-      cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
+      cci::cci_base_param *temp = myTopModBrokerIF->get_param(param1_str);
       selected_base_param_list.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp->get_name()
@@ -91,7 +91,7 @@ SC_MODULE(ex11_top_module) {
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
     if (myTopModBrokerIF->param_exists(param2_str)) {
-      cci::cnf::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
+      cci::cci_base_param *temp = myTopModBrokerIF->get_param(param2_str);
       selected_base_param_list.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp->get_name()
@@ -108,8 +108,8 @@ SC_MODULE(ex11_top_module) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myTopModBrokerIF;  ///< Declare a CCI configuration broker interface instance
-  std::vector<cci::cnf::cci_base_param*> selected_base_param_list;  ///< vector storing the searched owner parameters references to CCI base parameter pointers
+  cci::cci_broker_if* myTopModBrokerIF;  ///< Declare a CCI configuration broker interface instance
+  std::vector<cci::cci_base_param*> selected_base_param_list;  ///< vector storing the searched owner parameters references to CCI base parameter pointers
 };
 // ex11_top_module
 

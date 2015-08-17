@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CONFIGURATOR_H_
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include <string>
@@ -50,8 +50,8 @@ SC_MODULE(ex14_configurator) {
    */
   SC_CTOR(ex14_configurator) {
   // Gets the reference of a DEFAULT GLOBAL BROKER
-    myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
 
     // Asserts if the returned broker handle is NULL
     assert(myCfgrBrokerIF != NULL
@@ -116,8 +116,8 @@ SC_MODULE(ex14_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
-  cci::cnf::cci_base_param* parent_base_param_ptr;  ///< Few directly accessible cci-parameters
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
+  cci::cci_base_param* parent_base_param_ptr;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator
 

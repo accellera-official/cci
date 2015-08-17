@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_PARAMETER_OWNER_H_
 #define EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
 
@@ -53,14 +53,14 @@ SC_MODULE(ex11_parameter_owner) {
   ex11_parameter_owner(sc_core::sc_module_name _name,
                        std::string _param_name = "clock_speed_Hz",
                        int _param_value = 1000) {
-    clk = new cci::cnf::cci_param<int>(_param_name.c_str(), _param_value);
+    clk = new cci::cci_param<int>(_param_name.c_str(), _param_value);
 
     XREPORT("[OWNER C_TOR] : Parameter Name   : " << clk->get_name()
             << "\tParameter Value : " << clk->get());
   }
 
  private :
-  cci::cnf::cci_param<int>* clk;  ///< Declare an instance of mutable CCI parameter of type 'int'
+  cci::cci_param<int>* clk;  ///< Declare an instance of mutable CCI parameter of type 'int'
 };
 // ex11_parameter_owner
 

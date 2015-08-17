@@ -16,15 +16,15 @@
 
 
 
-#ifndef CCI_CNF_CCI_BROKER_IF_H_INCLUDED_
-#define CCI_CNF_CCI_BROKER_IF_H_INCLUDED_
+#ifndef CCI_BROKER_IF_H_INCLUDED_
+#define CCI_BROKER_IF_H_INCLUDED_
 
 
-#include "cci_cnf/cci_shared_ptr.h"
-#include "cci_cnf/cci_callbacks.h"
+#include "cci_cfg/cci_shared_ptr.h"
+#include "cci_cfg/cci_callbacks.h"
 
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 
   // forward declaration 
@@ -44,7 +44,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
    *
    * This always returns not the owner's parameter objects but parameter accessor wrappers.
    */
-  class cci_cnf_broker_if
+  class cci_broker_if
   {
   protected:
     friend class cci_broker_manager;
@@ -60,7 +60,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * @param originator   Originator for which the broker accessor shall be returned
      * @return Broker accessor
      */
-    virtual cci_cnf_broker_if& get_accessor(const cci_originator& originator) = 0;
+    virtual cci_broker_if& get_accessor(const cci_originator& originator) = 0;
 
     /// If this is an accessor, returns the originator this broker accessor is responsible for, otherwise returns NULL
     /**
@@ -71,7 +71,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
   public:
 
     /// Destructor
-    virtual ~cci_cnf_broker_if() { };
+    virtual ~cci_broker_if() { };
 
     /// Name of this broker
     /**
@@ -93,7 +93,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * If called for an explicit parameter this is a usual set, including not
      * setting the is_initial_value state to true!
      *
-     * @exception        cci::cnf::cci_report::set_param_failed Setting parameter object failed
+     * @exception        cci::cci_report::set_param_failed Setting parameter object failed
      * @param parname    Full hierarchical parameter name.
      * @param json_value JSON string representation of the init value the parameter has to be set to.
      */
@@ -123,7 +123,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * that can be locked or if an initial value is already locked or if the
      * parameter is already existing as object (explicit parameter).
      *
-     * @exception     cci::cnf::cci_report::set_param_failed Locking parameter object failed
+     * @exception     cci::cci_report::set_param_failed Locking parameter object failed
      * @param parname Hierarchical parameter name.
      */
     virtual void lock_initial_value(const std::string &parname) = 0;
@@ -133,14 +133,14 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * This accesses the parameter's NVP and works
      * for implicit and explicit parameters.
      *
-     * See cci_cnf_broker_if::json_serialize_keep_unused to do the same without impacting the used status.
+     * See cci_broker_if::json_serialize_keep_unused to do the same without impacting the used status.
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  JSON string of the parameter's value
      */
     virtual const std::string json_serialize(const std::string &parname) = 0;
 
-    /// Get a parameter's value (like cci_cnf_broker_if::json_serialize), but not impacting the used status
+    /// Get a parameter's value (like cci_broker_if::json_serialize), but not impacting the used status
     /**
      * This is to be used only by tools, e.g. functional coverage tools.
      *
@@ -212,7 +212,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
     /**
      * @TODO This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
      *
-     * Forwards callbacks to @see cci::cnf::cci_base_param::register_callback
+     * Forwards callbacks to @see cci::cci_base_param::register_callback
      *
      * \code
      *   // Callback function with default signature.
@@ -224,7 +224,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * @param type        Type of the callback.
      * @param parname     Parameter name
      * @param observer    Pointer to the observing object (the one being called).
-     * @param function    Function pointer to the function being called. Signature param_callb_func_ptr. For broker_callb_func_ptr @see cci_cnf_broker_if::register_str_callback
+     * @param function    Function pointer to the function being called. Signature param_callb_func_ptr. For broker_callb_func_ptr @see cci_broker_if::register_str_callback
      * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
     shared_ptr<callb_adapt> register_callback(const callback_type type, const std::string& parname, void* observer, param_callb_func_ptr function) {
@@ -236,7 +236,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
     /**
      * @TODO This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
      *
-     * Similar as @see cci_cnf_broker_if::register_callback but parameter string name in cb signature and additional
+     * Similar as @see cci_broker_if::register_callback but parameter string name in cb signature and additional
      * - create param callbacks allowed
      * - post_write-callbacks for implicit params possible (caused on json and init value access as 
      *   long as they are implicit, when the param becomes explicit the callbacks are called 
@@ -253,30 +253,30 @@ CCI_OPEN_CONFIG_NAMESPACE_
      public:
        
        Observer(const char* name)
-       : mBroker(&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator("OBSERVER")))
+       : mBroker(&cci::cci_broker_manager::get_current_broker(cci::cci_originator("OBSERVER")))
        { 
          // Register callback for new created parameters
-         mCallbacks.push_back( mBroker->register_str_callback(cci::cnf::create_param, "*", this, 
+         mCallbacks.push_back( mBroker->register_str_callback(cci::create_param, "*", this, 
                                                               cci::bind(&Observer::config_new_param_callback, this, _1, _2)) );
        }
        
        ~Observer();
        
        /// Callback function with default signature announcing new parameters.
-       cci::cnf::callback_return_type config_new_param_callback(const std::string& par_name, const cci::cnf::callback_type& cb_reason) {
+       cci::callback_return_type config_new_param_callback(const std::string& par_name, const cci::callback_type& cb_reason) {
          // It is recommended to register with the parameter object directly:
-         mCallbacks.push_back(p->register_callback(cci::cnf::pre_write, this, 
+         mCallbacks.push_back(p->register_callback(cci::pre_write, this, 
          cci::bind(&Observer::config_callback, this, _1, _2)));
          // It is possible (but not recommended) to let the broker forward the callback registration to the parameter
-         mCallbacks.push_back( mBroker->register_callback(cci::cnf::post_write, par_name.c_str(), this, 
+         mCallbacks.push_back( mBroker->register_callback(cci::post_write, par_name.c_str(), this, 
          cci::bind(&Observer::config_callback, this, _1, _2)));
          // it is still possible to register a string callback function
-         mCallbacks.push_back( mBroker->register_str_callback(cci::cnf::post_write, par_name.c_str(), this, 
+         mCallbacks.push_back( mBroker->register_str_callback(cci::post_write, par_name.c_str(), this, 
          cci::bind(&Observer::config_str_callback, this, _1, _2)));
        }
        
        /// Callback function with string signature showing changes for implicit and explicit parameters.
-       cci::cnf::callback_return_type config_str_callback(const std::string& par_name, const cci::cnf::callback_type& cb_reason) {
+       cci::callback_return_type config_str_callback(const std::string& par_name, const cci::callback_type& cb_reason) {
          [...]
        }
        
@@ -289,7 +289,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * @param type        Type of the callback.
      * @param parname     Parameter name or pattern the callback should be applied to.
      * @param observer    Pointer to the observing object (the one being called).
-     * @param function    Function pointer to the function being called. Signature broker_callb_func_ptr. For param_callb_func_ptr @see cci_cnf_broker_if::register_callback
+     * @param function    Function pointer to the function being called. Signature broker_callb_func_ptr. For param_callb_func_ptr @see cci_broker_if::register_callback
      * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
      */
     shared_ptr<callb_adapt> register_str_callback(const callback_type type, const std::string& parname, void* observer, broker_callb_func_ptr function) {
@@ -349,7 +349,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * Note: This function shall never been called for any parameter accessor
      *       objects but only for "real" parameter objects.
      *
-     * @exception cci::cnf::cci_report::add_param_failed Adding parameter object failed
+     * @exception cci::cci_report::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
     virtual void add_param(cci_base_param* par) = 0;
@@ -361,7 +361,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
      * Note: This function shall never been called for any parameter accessor
      *       objects but only for "real" parameter objects.
      *
-     * @exception cci::cnf::cci_report::remove_param_failed Remove parameter object failed
+     * @exception cci::cci_report::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
      */
     virtual void remove_param(cci_base_param* par) = 0;
@@ -428,8 +428,8 @@ CCI_OPEN_CONFIG_NAMESPACE_
   *
   * @return The one non-private global config broker (not wrapped with an accessor)
   */
- cci_cnf_broker_if& create_global_cnf_broker();
+ cci_broker_if& create_global_cnf_broker();
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif

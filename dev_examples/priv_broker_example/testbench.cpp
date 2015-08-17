@@ -16,7 +16,7 @@
 
 
 #include <systemc>
-#include <cci>
+#include <cci_configuration>
 
 #include "ModuleA.h"
 #include "ObserverModule.h"
@@ -33,16 +33,16 @@ public:
     // Note: This would also be possible:
     // Private broker for Modules A and A2
     //   Parameters "ModuleA.int_param" and "ModuleA2.int_param" are public
-    //top_privBroker = new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA.int_param")("ModuleA2.int_param"), cci::cnf::cci_originator(*this));
+    //top_privBroker = new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA.int_param")("ModuleA2.int_param"), cci::cci_originator(*this));
     
     // Private broker for Module A
     //   Parameter "ModuleA.int_param" is public
-    moduleA_privBroker = new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA.int_param"));
+    moduleA_privBroker = new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA.int_param"));
     a = new ModuleA("ModuleA", moduleA_privBroker);
     
     // Private broker for Module A2
     //   Parameter "ModuleA2.int_param" is public
-    moduleA2_privBroker = new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA2.int_param"));
+    moduleA2_privBroker = new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA2.int_param"));
     a2 = new ModuleA("ModuleA2", moduleA2_privBroker);
     
     observer = new ObserverModule("Observer");    
@@ -62,8 +62,8 @@ protected:
   ModuleA* a2;
   ObserverModule* observer;
   
-  cci::cnf::cci_cnf_broker_if* moduleA_privBroker;
-  cci::cnf::cci_cnf_broker_if* moduleA2_privBroker;
+  cci::cci_broker_if* moduleA_privBroker;
+  cci::cci_broker_if* moduleA2_privBroker;
   
 };
 

@@ -13,15 +13,15 @@
 //
 // ENDLICENSETEXT
 
-#ifndef CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
-#define CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
+#ifndef CCI_CCI_REPORT_HANDLER_H_INCLUDED_
+#define CCI_CCI_REPORT_HANDLER_H_INCLUDED_
 
-#include "cci_cnf/cci_config_macros.h"
+#include "cci_cfg/cci_config_macros.h"
 
 #include "cci_core/systemc.h"
 #include <string>
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 enum cci_param_failure {
   CCI_NOT_FAILURE = 0,
@@ -97,6 +97,6 @@ cci_report_handler::report(SC_ERROR,_id,_message,__FILE__,__LINE__);
 cci_report_handler::report(SC_FATAL,_id,_message,__FILE__,__LINE__);
 
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CNF_CCI_REPORT_HANDLER_H_INCLUDED_
+#endif // CCI_CCI_REPORT_HANDLER_H_INCLUDED_

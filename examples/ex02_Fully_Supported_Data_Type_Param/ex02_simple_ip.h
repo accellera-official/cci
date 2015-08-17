@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX02_FULLY_SUPPORTED_DATA_TYPE_PARAM_EX02_SIMPLE_IP_H_
 #define EXAMPLES_EX02_FULLY_SUPPORTED_DATA_TYPE_PARAM_EX02_SIMPLE_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
 // #include "boost/cstdint.hpp"
@@ -94,16 +94,16 @@ SC_MODULE(ex02_simple_ip) {
 
  private:
   /// Parameters of basic data types
-  cci::cnf::cci_param<bool> bool_param; ///< boolean parameter
-  cci::cnf::cci_param<char> char_param; ///< char parameter
-  cci::cnf::cci_param<unsigned char> uchar_param; ///< unsigned char parameter
-  cci::cnf::cci_param<int> int_param; ///< int parameter
-  cci::cnf::cci_param<unsigned int> uint_param; ///< unsigned int parameter
-  // cci::cnf::cci_param<short int> int16_param;  ///< 16-bit integer parameter
-  // cci::cnf::cci_param<boost::int64_t> int64_param; ///< 64-bit integer parameter
-  cci::cnf::cci_param<float> float_param; ///< float parameter
-  cci::cnf::cci_param<double> double_param; ///< double parameter
-  cci::cnf::cci_param<std::string> string_param;  ///< string parameter
+  cci::cci_param<bool> bool_param; ///< boolean parameter
+  cci::cci_param<char> char_param; ///< char parameter
+  cci::cci_param<unsigned char> uchar_param; ///< unsigned char parameter
+  cci::cci_param<int> int_param; ///< int parameter
+  cci::cci_param<unsigned int> uint_param; ///< unsigned int parameter
+  // cci::cci_param<short int> int16_param;  ///< 16-bit integer parameter
+  // cci::cci_param<boost::int64_t> int64_param; ///< 64-bit integer parameter
+  cci::cci_param<float> float_param; ///< float parameter
+  cci::cci_param<double> double_param; ///< double parameter
+  cci::cci_param<std::string> string_param;  ///< string parameter
 };
 // ex02_simple_ip
 

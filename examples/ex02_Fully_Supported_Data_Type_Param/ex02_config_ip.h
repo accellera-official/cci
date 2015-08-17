@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX02_FULLY_SUPPORTED_DATA_TYPE_PARAM_EX02_CONFIG_IP_H_
 #define EXAMPLES_EX02_FULLY_SUPPORTED_DATA_TYPE_PARAM_EX02_CONFIG_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 #include "xreport.hpp"
@@ -46,8 +46,8 @@ SC_MODULE(ex02_config_ip) {
    */
   SC_CTOR(ex02_config_ip) {
     // Get CCI configuration handle
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
     assert(m_cci != NULL);
     SC_THREAD(execute);
   }
@@ -64,7 +64,7 @@ SC_MODULE(ex02_config_ip) {
     // Wait for 10 ns to update the values of the param
     wait(10, sc_core::SC_NS);
 
-    cci::cnf::cci_base_param *base_int_param_ptr = NULL;
+    cci::cci_base_param *base_int_param_ptr = NULL;
     // Check for existance of int_param
     if (m_cci->param_exists(param_name)) {
       // Get handle to the param
@@ -72,30 +72,30 @@ SC_MODULE(ex02_config_ip) {
       assert(base_int_param_ptr != NULL);
 
       /* @todo get_basic_type() needs to be implemented
-       cci::cnf::basic_param_type partype = cci::cnf::partype_not_available;
+       cci::basic_param_type partype = cci::partype_not_available;
        partype = base_int_param_ptr->get_basic_type();
-       if(partype == cci::cnf::partype_number) {
+       if(partype == cci::partype_number) {
        */
       // Typecast the param to an 'int' type
-      cci::cnf::cci_param<int> *int_param_ptr =
-          dynamic_cast<cci::cnf::cci_param<int>*>(base_int_param_ptr);
+      cci::cci_param<int> *int_param_ptr =
+          dynamic_cast<cci::cci_param<int>*>(base_int_param_ptr);
       if (int_param_ptr == NULL) {
         XREPORT_WARNING("@execute: Typecast of " << int_param_ptr->get_name()
-                        << " to 'cci::cnf::cci_param<int> *' type failed.");
+                        << " to 'cci::cci_param<int> *' type failed.");
       } else {
-        cci::cnf::cci_param<int> &int_param_ref = *int_param_ptr;
+        cci::cci_param<int> &int_param_ref = *int_param_ptr;
         XREPORT("@execute: Typecast of " << param_name
-                << " to 'cci::cnf::cci_param<int> *' succeeded");
+                << " to 'cci::cci_param<int> *' succeeded");
         XREPORT("@execute: Current value of " << int_param_ref.get_name()
                 << " is " << int_param_ref.get());
       }
 
       // Typecast the param to 'unsigned int' type
-      cci::cnf::cci_param<unsigned int> *uint_param_ptr =
-          dynamic_cast<cci::cnf::cci_param<unsigned int>*>(base_int_param_ptr);
+      cci::cci_param<unsigned int> *uint_param_ptr =
+          dynamic_cast<cci::cci_param<unsigned int>*>(base_int_param_ptr);
       if (uint_param_ptr == NULL) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
-                        << " to 'cci::cnf::cci_param<unsigned int> *'"
+                        << " to 'cci::cci_param<unsigned int> *'"
                         " type failed.");
       } else {
         XREPORT("@execute: Current value of " << uint_param_ptr->get_name()
@@ -103,11 +103,11 @@ SC_MODULE(ex02_config_ip) {
       }
 
       // Typecast the param to 'std::string' type
-      cci::cnf::cci_param<std::string> *string_param_ptr =
-          dynamic_cast<cci::cnf::cci_param<std::string>*>(base_int_param_ptr);
+      cci::cci_param<std::string> *string_param_ptr =
+          dynamic_cast<cci::cci_param<std::string>*>(base_int_param_ptr);
       if (string_param_ptr == NULL) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
-                        << " to 'cci::cnf::cci_param<std::string> *'"
+                        << " to 'cci::cci_param<std::string> *'"
                         " type failed.");
       } else {
         XREPORT("@execute: Current value of " << string_param_ptr->get_name()
@@ -126,7 +126,7 @@ SC_MODULE(ex02_config_ip) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex02_config_ip
 

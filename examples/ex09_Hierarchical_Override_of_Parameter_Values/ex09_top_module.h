@@ -32,7 +32,7 @@
 #ifndef EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_TOP_MODULE_H_
 #define EXAMPLES_EX09_HIERARCHICAL_OVERRIDE_OF_PARAMETER_VALUES_EX09_TOP_MODULE_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <tlm>
 #include <cassert>
 #include <vector>
@@ -61,8 +61,8 @@ SC_MODULE(ex09_top_module) {
     XREPORT("[TOP_MODULE C_TOR] -- [TOP MODULE CONSTRUCTOR BEGINS HERE]");
 
     // Get handle of the default broker
-    myDefaultBroker = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    myDefaultBroker = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL
     assert(myDefaultBroker != NULL
@@ -97,7 +97,7 @@ SC_MODULE(ex09_top_module) {
 
     if (myDefaultBroker->param_exists(
         "top_module_inst.RouterInstance.addr_limit")) {
-      cci::cnf::cci_base_param* r_addr_limit_ptr = myDefaultBroker->get_param(
+      cci::cci_base_param* r_addr_limit_ptr = myDefaultBroker->get_param(
           "top_module_inst.RouterInstance.addr_limit");
       r_addr_max = atoi((r_addr_limit_ptr->json_serialize()).c_str());
 
@@ -113,7 +113,9 @@ SC_MODULE(ex09_top_module) {
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.initiator_ID", name(),
                initiatorName);
 
+	  snprintf(initiatorName, sizeof(initiatorName), "\"initiator_%d\"", i);
       myDefaultBroker->json_deserialize_initial_value(stringMisc, initiatorName);
+	  snprintf(initiatorName, sizeof(initiatorName), "initiator_%d", i);
       initiatorList.push_back(new ex09_initiator(initiatorName));
 
       //     Binding of initiator to Router
@@ -132,7 +134,9 @@ SC_MODULE(ex09_top_module) {
 
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.target_ID", name(),
                targetName);
+	  snprintf(targetName, sizeof(targetName), "\"target_%d\"", i);
       myDefaultBroker->json_deserialize_initial_value(stringMisc, targetName);
+	  snprintf(targetName, sizeof(targetName), "target_%d", i);
 
       // Set initial value for maximum target size(memory)
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.s_size", name(),
@@ -212,10 +216,10 @@ SC_MODULE(ex09_top_module) {
 
  private:
   // Immutable type cci-parameters
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_initiators; ///< Number of initiators to be instantiated
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> n_targets;  ///< Number of targets to be instantiated
+  cci::cci_param<int, cci::immutable_param> n_initiators; ///< Number of initiators to be instantiated
+  cci::cci_param<int, cci::immutable_param> n_targets;  ///< Number of targets to be instantiated
 
-  cci::cnf::cci_cnf_broker_if* myDefaultBroker; ///< Configuration broker instance
+  cci::cci_broker_if* myDefaultBroker; ///< Configuration broker instance
 
   ex09_router* routerInstance;  ///< Declaration of a router pointer
 

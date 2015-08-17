@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_SIMPLE_IP_H_
 #define EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_SIMPLE_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -106,8 +106,8 @@ SC_MODULE(ex04_simple_ip) {
   }
 
  private:
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_1;  ///< CCI immutable param
-  cci::cnf::cci_param<int, cci::cnf::immutable_param> param_2;  ///< CCI immutable param
+  cci::cci_param<int, cci::immutable_param> param_1;  ///< CCI immutable param
+  cci::cci_param<int, cci::immutable_param> param_2;  ///< CCI immutable param
 };
 // ex04_simple_ip
 

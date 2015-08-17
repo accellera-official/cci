@@ -27,12 +27,12 @@
  * @brief  Simple example of the new cci_value interface
  */
 
-#include "cci_cnf/cci_value.h"
-#include "cci_cnf/cci_value_traits.h"
+#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_value_traits.h"
 
-using cci::cnf::cci_value;
-using cci::cnf::cci_value_list;
-using cci::cnf::cci_value_map;
+using cci::cci_value;
+using cci::cci_value_list;
+using cci::cci_value_map;
 
 int sc_main( int, char*[] )
 {

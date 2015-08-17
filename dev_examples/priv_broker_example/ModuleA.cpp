@@ -20,15 +20,15 @@
 
 
 // within this contructor the private broker stack is valid containing the priv_broker broker as top
-ModuleA::ModuleA(sc_core::sc_module_name name, cci::cnf::cci_broker_manager priv_broker)
+ModuleA::ModuleA(sc_core::sc_module_name name, cci::cci_broker_manager priv_broker)
 : sc_core::sc_module(name)
-//, cci::cnf::cci_broker_manager(new cci::cnf::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cnf::cci_originator(*this)))
+//, cci::cci_broker_manager(new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cci_originator(*this)))
 , m_broker(priv_broker)
 , int_param ("int_param", 50, *m_broker )
 , uint_param("uint_param", 12000, *m_broker )
 , uint_param2("uint_param2", 12, *m_broker )
 , str_param ("str_param", "This is a test string.", *m_broker)
-, bool_param("bool_param", *m_broker) // no default value
+, bool_param("bool_param", false, *m_broker)
 , m_modB("ModuleB")
 { 
   SC_THREAD(main_action);

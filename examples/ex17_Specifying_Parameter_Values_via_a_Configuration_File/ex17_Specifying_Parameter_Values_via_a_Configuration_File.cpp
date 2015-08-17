@@ -28,7 +28,7 @@
  *  @date      12th July, 2011 (Tuesday)
  */
 
-#include <cci>
+#include <cci_configuration>
 #include <systemc.h>
 #include <string>
 
@@ -49,7 +49,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // Declare an instance of the cci_configFile_Tool that reads in the initial
   // values to be set to a cci-parameter via a configuration file, parses them
   // and sets them to the appropriate parameters
-  cci::cnf::ex17_cci_configFile_Tool configTool("configFileTool");
+  cci::ex17_cci_configFile_Tool configTool("configFileTool");
   configTool.config("./ex17_Specifying_Parameter_Values_via_a_Configuration_File/Configuration_File.txt");
 
   // Declare instances of the owner and configurator classes

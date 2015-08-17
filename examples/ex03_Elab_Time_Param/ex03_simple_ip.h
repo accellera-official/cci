@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_SIMPLE_IP_H_
 #define EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_SIMPLE_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -108,7 +108,7 @@ SC_MODULE(ex03_simple_ip) {
     }
 
     /// Create an elab-time param after end_of elaboration()
-    cci::cnf::cci_param<int, cci::cnf::elaboration_time_param>
+    cci::cci_param<int, cci::elaboration_time_param>
       struc_param_post_eoe("struc_param_post_eoe", 0);
     XREPORT("execute: Creating a struc_param_post_eoe after"
             " end_of elaboration(), with a default value:"
@@ -134,7 +134,7 @@ SC_MODULE(ex03_simple_ip) {
   }
 
  private:
-  cci::cnf::cci_param<int, cci::cnf::elaboration_time_param> struc_param; ///< CCI param
+  cci::cci_param<int, cci::elaboration_time_param> struc_param; ///< CCI param
 };
 // ex03_simple_ip
 

@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_CONFIG_IP_H_
 #define EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_CONFIG_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include "xreport.hpp"
 
@@ -44,8 +44,8 @@ SC_MODULE(ex04_config_ip) {
    */
   SC_CTOR(ex04_config_ip) {
     // Get CCI configuration handle specific for this module
-    m_cci = &cci::cnf::cci_broker_manager::get_current_broker(
-        cci::cnf::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_current_broker(
+        cci::cci_originator(*this));
     assert(m_cci != NULL);
     SC_THREAD(execute);
 
@@ -82,7 +82,7 @@ SC_MODULE(ex04_config_ip) {
     wait(10, sc_core::SC_NS);
 
     if (m_cci->param_exists("sim_ip.param_2")) {
-      cci::cnf::cci_base_param *param_2_ptr = m_cci->get_param(
+      cci::cci_base_param *param_2_ptr = m_cci->get_param(
           "sim_ip.param_2");
       if (param_2_ptr == NULL) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2_ptr'!");
@@ -101,7 +101,7 @@ SC_MODULE(ex04_config_ip) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if *m_cci; ///< CCI configuration handle
 };
 // ex04_config_ip
 

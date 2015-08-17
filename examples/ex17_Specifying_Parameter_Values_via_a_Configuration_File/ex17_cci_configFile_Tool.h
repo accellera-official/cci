@@ -33,7 +33,7 @@
 #ifndef EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CCI_CONFIGFILE_TOOL_H_
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CCI_CONFIGFILE_TOOL_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <boost/algorithm/string.hpp>
 #include <boost/tokenizer.hpp>
 #include <sstream>
@@ -44,7 +44,6 @@
 #include "ex17_configset.h"
 
 namespace cci {
-namespace cnf {
 
 #define CONFIG_FILE_TOOL_BUFSIZE 1024
 #define TRACENAME "/ASI/CCI/CONFIG_FILE_TOOL"
@@ -88,7 +87,7 @@ class ex17_cci_configFile_Tool {
   explicit ex17_cci_configFile_Tool(const char* name)
       : mToolOriginator(name) {
     // get responsible broker
-    mApi = &cci::cnf::cci_broker_manager::get_current_broker(mToolOriginator);
+    mApi = &cci::cci_broker_manager::get_current_broker(mToolOriginator);
   }
 
   /**
@@ -301,16 +300,6 @@ class ex17_cci_configFile_Tool {
           std::string val = tok.substr(pos, tok.length() - pos);
           val = val.substr(val.find_first_of(separators) + 1);
           boost::algorithm::trim(val);
-          if (val.find_first_of('"') != std::string::npos
-              && val.find_first_of('"') != val.find_last_of('"')) {
-            val = val.substr(val.find_first_of('"') + 1,
-                             val.find_last_of('"')
-                             - val.find_first_of('"') - 1);
-          }
-          std::string::size_type loc = 0;
-          while ((loc = val.find("\\\"", loc)) != std::string::npos) {
-            val.replace(loc, 2, "\"");
-          }
           std::string parname = p.first[0];
 
           // package the configuration
@@ -334,16 +323,15 @@ class ex17_cci_configFile_Tool {
   }
 
  protected:
-  cci::cnf::cci_originator mToolOriginator; ///< This tool's originator information
+  cci::cci_originator mToolOriginator; ///< This tool's originator information
 
-  cci::cnf::cci_cnf_broker_if* mApi;  ///< Config API which is used by this tool
+  cci::cci_broker_if* mApi;  ///< Config API which is used by this tool
 
   std::string m_name; ///< Name of this object, given by constructor
 
   char line[CONFIG_FILE_TOOL_BUFSIZE];
 };
 
-}  // end namespace cnf
 }  // end namespace cci
 // ex17_cci_configFile_Tool
 

@@ -15,21 +15,21 @@
 // ENDLICENSETEXT
 
 
-#include "cci_cnf/cci_debug.h"
-#include "cci_cnf/cci_datatypes.h"
-#include "cci_cnf/cci_originator.h"
-#include "cci_cnf/cci_param.h"
-#include "cci_cnf/cci_broker_manager.h"
-#include "cci_cnf/cci_broker_stack.h"
-#include "cci_cnf/cci_report_handler.h"
+#include "cci_cfg/cci_debug.h"
+#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_param.h"
+#include "cci_cfg/cci_broker_manager.h"
+#include "cci_cfg/cci_broker_stack.h"
+#include "cci_cfg/cci_report_handler.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 
 // Implementation cci_broker_manager
 
 // static get function
-cci_cnf_broker_if& cci_broker_manager::get_current_broker(const cci_originator& originator) {
+cci_broker_if& cci_broker_manager::get_current_broker(const cci_originator& originator) {
   if (std::string(originator.name()).empty()) {
 #ifdef CCI_CNF_VERBOSE
     SC_REPORT_INFO("CCI/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
@@ -40,12 +40,12 @@ cci_cnf_broker_if& cci_broker_manager::get_current_broker(const cci_originator& 
   }
   // else return global broker
   else {
-    return cci::cnf::create_global_cnf_broker().get_accessor(originator);
+    return cci::create_global_cnf_broker().get_accessor(originator);
   }
 }
 
 // static get function
-cci_cnf_broker_if& cci_broker_manager::get_current_parent_broker(const cci_originator& originator) {
+cci_broker_if& cci_broker_manager::get_current_parent_broker(const cci_originator& originator) {
   if (std::string(originator.name()).empty()) {
 #ifdef CCI_CNF_VERBOSE
     SC_REPORT_INFO("CCI/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
@@ -56,7 +56,7 @@ cci_cnf_broker_if& cci_broker_manager::get_current_parent_broker(const cci_origi
   }
   // else return global broker
   else {
-    return cci::cnf::create_global_cnf_broker().get_accessor(originator);
+    return cci::create_global_cnf_broker().get_accessor(originator);
   }
 }
 
@@ -64,7 +64,7 @@ cci_cnf_broker_if& cci_broker_manager::get_current_parent_broker(const cci_origi
   assert(false && "Not allowed to copy manager!");
 }*/
 
-cci_broker_manager::cci_broker_manager(cci_cnf_broker_if* broker)
+cci_broker_manager::cci_broker_manager(cci_broker_if* broker)
 {
   // Set m_broker either to own private broker or the one responsible upwards the hierarchy
   if (broker) {
@@ -90,12 +90,12 @@ cci_broker_manager::~cci_broker_manager() {
   cci_broker_stack::stack().pop();
 }
 
-cci_broker_manager::operator cci::cnf::cci_cnf_broker_if&() {
+cci_broker_manager::operator cci::cci_broker_if&() {
   return *m_broker;
 }
 
-cci_broker_manager::operator cci::cnf::cci_cnf_broker_if*() {
+cci_broker_manager::operator cci::cci_broker_if*() {
   return m_broker;
 }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_

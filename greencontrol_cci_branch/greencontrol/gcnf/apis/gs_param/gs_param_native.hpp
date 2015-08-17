@@ -548,7 +548,7 @@ public:
   explicit gs_param(const std::string &nam, const std::string &val, gs_param_array* parent_array, const bool force_top_level_name, const bool register_at_db) : gs_param_t<val_type>(nam, force_top_level_name,  parent_array, register_at_db) { gs_param_t<val_type>::init(convertStringToValue(val));         } 
   explicit gs_param(const std::string &nam, const std::string &val, gs_param_array& parent_array, const bool force_top_level_name, const bool register_at_db) : gs_param_t<val_type>(nam, force_top_level_name, &parent_array, register_at_db) { gs_param_t<val_type>::init(convertStringToValue(val));         } 
 
-  const val_type convertStringToValue(const std::string& str) {    
+  const val_type convertStringToValue(const std::string& str) {
     return str; 
   }                                                                 
   void serialize(const val_type &val) {                             
@@ -607,15 +607,24 @@ public:
   
   /// Overloads gs_param_t<T>::serialize
   std::string serialize(const val_type &val) const {
-    return val;
-  }  
+	  return static_serialize(val);;
+  }
   inline static std::string static_serialize(const val_type &val) {
-    return val;//m_api->setParam(m_par_name, val);
+	  return cci::cci_value::to_json(cci::cci_value(val));
   }
   
   /// Static convertion function called by virtual deserialize and others (e.g. GCnf_API)
-  inline static bool static_deserialize(val_type &target_val, const std::string& str) { 
-    target_val = str;
+  inline static bool static_deserialize(val_type &target_val, const std::string& str) {
+
+	  cci::cci_value value;
+	  if (!value.json_deserialize(str) || !value.is_string())
+	  {
+		  std::stringstream ess;
+		  ess << "Conversion error: '" << str << "'";
+		  SC_REPORT_WARNING("deserialize", ess.str().c_str());
+		  return false;
+	  }
+	  target_val = value.get_string();
     return true;
   }
 

@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_MEMORY_BLOCK_H_
 #define EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_MEMORY_BLOCK_H_
 
-#include <cci>
+#include <cci_configuration>
 
 #include "xreport.hpp"
 
@@ -51,7 +51,7 @@ SC_MODULE(ex15_memory_block) {
   }
 
  private:
-  cci::cnf::cci_param<int> mem_size;  ///< CCI parameter to set the memory size
+  cci::cci_param<int> mem_size;  ///< CCI parameter to set the memory size
 };
 // ex15_memory_block
 

@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <vector>
 #include <string>
@@ -49,7 +49,7 @@ SC_MODULE(ex18_parameter_configurator) {
    */
   SC_CTOR(ex18_parameter_configurator) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF =&cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+    myCfgrBrokerIF =&cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
@@ -89,9 +89,9 @@ SC_MODULE(ex18_parameter_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
-  cci::cnf::cci_base_param* cfgr_param_ptr; ///< CCI base parameter
+  cci::cci_base_param* cfgr_param_ptr; ///< CCI base parameter
 
   // std::vector to store the list of the unconsumed parameters
   std::vector<std::string> complete_parameter_list; ///< List of all parameters

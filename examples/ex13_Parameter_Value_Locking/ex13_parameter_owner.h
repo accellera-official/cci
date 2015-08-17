@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX13_PARAMETER_VALUE_LOCKING_EX13_PARAMETER_OWNER_H_
 #define EXAMPLES_EX13_PARAMETER_VALUE_LOCKING_EX13_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -115,7 +115,7 @@ SC_MODULE(ex13_parameter_owner) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param; ///< an int CCI parameter
+  cci::cci_param<int> int_param; ///< an int CCI parameter
   void* key;  ///< Arbitrary password to lock the parameter with
 };
 // ex13_parameter_owner

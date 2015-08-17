@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_CONFIGURATOR_H_
 #define EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 
 #include "xreport.hpp"
@@ -54,7 +54,7 @@ SC_MODULE(ex19_parameter_configurator) {
         cfgr_user_param_ptr(0),
         cfgr_shared_param(0) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(*this);
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(*this);
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
@@ -168,13 +168,13 @@ SC_MODULE(ex19_parameter_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   // Declaring a CCI base parameter pointer
-  cci::cnf::cci_base_param* cfgr_param_ptr; ///< pointer to a cci parameter
-  cci::cnf::cci_base_param* cfgr_user_param_ptr;  ///< pointer to a cci parameter that is accessible by the user
+  cci::cci_base_param* cfgr_param_ptr; ///< pointer to a cci parameter
+  cci::cci_base_param* cfgr_user_param_ptr;  ///< pointer to a cci parameter that is accessible by the user
 
-  cci::cnf::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
+  cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
 // ex19_parameter_configurator
 

@@ -22,7 +22,7 @@ void ParameterOwnerMutabilityModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cnf::cci_cnf_broker_if* mBroker = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+  cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
 
   // ************************************************************************
@@ -42,8 +42,8 @@ void ParameterOwnerMutabilityModule::main_action() {
     mutable_int_param = 55555; // should fail!
   } catch(sc_core::sc_report e) {
     // If set_param_failed error, catch it
-    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
-	    case cci::cnf::CCI_SET_PARAM_FAILURE: 
+    switch ( cci::cci_report_handler::get_param_failure(e) ) {
+	    case cci::CCI_SET_PARAM_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
         break;
       default:
@@ -58,8 +58,8 @@ void ParameterOwnerMutabilityModule::main_action() {
     mutable_int_param.set(4444, &mBroker); // should fail!
   } catch(sc_core::sc_report e) {
     // If set_param_failed error, catch it
-    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
-	    case cci::cnf::CCI_SET_PARAM_FAILURE: 
+    switch ( cci::cci_report_handler::get_param_failure(e) ) {
+	    case cci::CCI_SET_PARAM_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
         break;
       default:
@@ -71,8 +71,8 @@ void ParameterOwnerMutabilityModule::main_action() {
     mutable_int_param.set(4444, NULL); // should fail!
   } catch(sc_core::sc_report e) {
     // If set_param_failed error, catch it
-    switch ( cci::cnf::cci_report_handler::get_param_failure(e) ) {
-	    case cci::cnf::CCI_SET_PARAM_FAILURE: 
+    switch ( cci::cci_report_handler::get_param_failure(e) ) {
+	    case cci::CCI_SET_PARAM_FAILURE: 
         std::cout << std::endl << name() << ": Caught " << e.what() << std::endl;
         break;
       default:

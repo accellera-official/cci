@@ -65,12 +65,6 @@ Info: param_cfgr: @2 ns, [CFGR -> Retrieve] : Parameter name  : param_owner.muta
 
 Info: param_cfgr: @2 ns, [CFGR -> Retrieve] : Parameter value : Initialized within sc_main
 
-Info: param_cfgr: @4 ns, @ 4 ns	demonstrating 'is_invalid_value()'
-
-Info: param_cfgr: @4 ns, [CFGR] : Is Invalid Value ? 	Returned status : false
-
-Info: param_cfgr: @4 ns, [CFGR] : Valid parameter value
-
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
 
 Info: observer: @4 ns, [OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
@@ -118,22 +112,6 @@ Info: param_cfgr: @16 ns, @ 16 ns
 Info: param_cfgr: @16 ns, [CFGR] : Checking locked status of parameter
 
 Info: param_cfgr: @16 ns, [CFGR] : param_owner.mutable_int_param is in unlocked state!!
-
-Info: param_owner: @18 ns, @ 18 ns demonstrating 'set_value_invalid()'
-
-Info: param_owner: @18 ns, [OWNER -> Set] : param_owner.mutable_int_param value invalid.
-
-Info: param_owner: @18 ns, [OWNER] : Is Invalid Value ? 	Returned Status : true
-
-Info: observer: @18 ns, [OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
-
-Info: param_owner: @18 ns, [OWNER -> Retrieve] : param_owner.mutable_int_param	Value : 10
-
-Info: param_cfgr: @20 ns, @ 20 ns	demonstrating 'is_invalid_value()'
-
-Info: param_cfgr: @20 ns, [CFGR] : param_owner.mutable_int_param value is set to invalid.
-
-Info: param_cfgr: @20 ns, [CFGR] : Is Invalid Value ? true
 
 Info: param_cfgr: @22 ns, @ 22 ns	demonstrating 'set_value()' for string-type param using cci_value
 

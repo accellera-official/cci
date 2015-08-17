@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_OWNER_H_
 #define EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 
 #include "ex16_user_datatype.h"
@@ -91,34 +91,12 @@ SC_MODULE(ex16_parameter_owner) {
       // Access parameter's value
       XREPORT("[OWNER -> Retrieve] : UDT Value : " << udt_param.get());
 
-      wait(8.0, SC_NS);
-
-      XREPORT("@ " << sc_time_stamp()
-              << " demonstrating 'set_value_invalid()'");
-      XREPORT("[OWNER -> Set] : " << udt_param.get_name() << " value invalid.");
-
-      // Set the cci parameter to invalid state using 'set_invalid_state()' API
-      udt_param.set_invalid_value();
-
-      // Query a cci parameter value validity using 'is_invalid_value()' API
-      if (udt_param.is_invalid_value()) {
-        XREPORT("OWNER] : " << udt_param.get_name()
-                << " value is invalid : " << udt_param.get());
-        XREPORT("[OWNER] : Is Invalid Value ? " << "\tReturned status : "
-                << std::boolalpha << udt_param.is_invalid_value());
-      } else {
-        XREPORT("[OWNER] : " << udt_param.get_name()
-                << " value is not invalid.");
-        XREPORT("[OWNER] : Is Invalid Value ? " << "\tReturned status : "
-                << std::boolalpha << udt_param.is_invalid_value());
-      }
-
-      wait(20.0, SC_NS);
+      wait(28.0, SC_NS);
     }
   }
 
  private:
-  cci::cnf::cci_param<route_table_ut, cci::cnf::mutable_param> udt_param; ///< CCI mutable parameter
+  cci::cci_param<route_table_ut, cci::mutable_param> udt_param; ///< CCI mutable parameter
 };
 // ex16_parameter_owner
 

@@ -14,15 +14,12 @@
 // 
 // ENDLICENSETEXT
 
-#ifndef CCI_CNF_CCI_DATATYPES_H_INCLUDED_
-#define CCI_CNF_CCI_DATATYPES_H_INCLUDED_
+#ifndef CCI_CCI_DATATYPES_H_INCLUDED_
+#define CCI_CCI_DATATYPES_H_INCLUDED_
 
-#include "cci_cnf/cci_config_macros.h"
+#include "cci_cfg/cci_config_macros.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
-
-  /// Originator information when functions being called by the main object (which only the owner shall use)
-  extern const char* PARAM_ORIGINATOR;
+CCI_OPEN_NAMESPACE_
 
   /// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
   enum basic_param_type {
@@ -59,6 +56,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
   enum cci_top_level_name { CCI_TOP_LEVEL_NAME=0 };
   
   
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif

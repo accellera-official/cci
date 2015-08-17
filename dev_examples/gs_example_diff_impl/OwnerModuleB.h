@@ -20,7 +20,7 @@
 
 #include <systemc>
 #include "ex_globals.h"
-#include "cci"
+#include "cci_configuration"
 #include "param_impl/test_datatype.h"
 
 /// Module which owns some std cci parameters (provided by lib A) and one additional one of lib implementation B.
@@ -36,8 +36,8 @@ public:
   OwnerModuleB(sc_core::sc_module_name name)
   : sc_core::sc_module(name)
   , int_param ("int_param", 150 )
-  , bool_param("bool_param")
-  , test_datatype_param("test_datatype_param")
+  , bool_param("bool_param", false)
+  , test_datatype_param("test_datatype_param", test_datatype())
   { 
     SC_THREAD(main_action);
   }
@@ -46,11 +46,11 @@ public:
   void main_action();
   
   /// Example parameter.
-  cci::cnf::cci_param<int>             int_param;
+  cci::cci_param<int>             int_param;
   /// Example parameter.
-  cci::cnf::cci_param<bool>            bool_param;
+  cci::cci_param<bool>            bool_param;
   /// Example parameter. which exists in the parameter implementation B
-  cci::cnf::cci_param<test_datatype> test_datatype_param;
+  cci::cci_param<test_datatype> test_datatype_param;
   
 };
 

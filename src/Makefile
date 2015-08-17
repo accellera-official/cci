@@ -5,10 +5,11 @@ OPT    = -g -Wall -Werror -Wno-unused-local-typedefs
 OTHER  = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER)
 
-SRCS = cci_cnf/cci_broker_manager.cpp \
-       cci_cnf/cci_broker_stack.cpp \
-       cci_cnf/cci_value.cpp \
-       cci_cnf/cci_value_traits.cpp
+SRCS = cci_cfg/cci_broker_manager.cpp \
+       cci_cfg/cci_broker_stack.cpp \
+       cci_cfg/cci_value.cpp \
+       cci_cfg/cci_value_traits.cpp \
+	   cci_cfg/cci_base_param.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -39,7 +40,7 @@ endif
 GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 
 ## set some directories 
-CCI_DIR ?= $(GS_CCI_HOME)/api
+CCI_DIR ?= $(GS_CCI_HOME)/src
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 

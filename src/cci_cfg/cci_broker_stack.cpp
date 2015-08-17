@@ -14,45 +14,45 @@
 // ENDLICENSETEXT
 
 
-#include "cci_cnf/cci_debug.h"
-#include "cci_cnf/cci_datatypes.h"
-#include "cci_cnf/cci_broker_stack.h"
+#include "cci_cfg/cci_debug.h"
+#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_broker_stack.h"
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 #ifdef CCI_CNF_VERBOSE
   static void cci_debug_show_broker_stack(cci_broker_stack* stack, const char* action) {
     std::cout << " | cci_broker_stack result (after action "<< action << "):" << std::endl;
     if (stack->empty()) std::cout << " |   <empty>" << std::endl;
-    std::vector<cci_cnf_broker_if*>::reverse_iterator rit;
+    std::vector<cci_broker_if*>::reverse_iterator rit;
     for ( rit=stack->rbegin() ; rit < stack->rend(); ++rit ) {
       std::cout << " |   " << (*rit)->name();
       if ((*rit)->is_private_broker()) std::cout << " (priv)";
       std::cout << std::endl;
     }
   }
-  #define CCI_SHOW_BROKER_STACK(stack, action) cci::cnf::cci_debug_show_broker_stack(stack, action);
+  #define CCI_SHOW_BROKER_STACK(stack, action) cci::cci_debug_show_broker_stack(stack, action);
 #else
   #define CCI_SHOW_BROKER_STACK(stack, action)
 #endif
 
-cci_cnf_broker_if* cci_broker_stack::top() {
+cci_broker_if* cci_broker_stack::top() {
   return base::back();
 }
 
-const cci_cnf_broker_if* cci_broker_stack::top() const  {
+const cci_broker_if* cci_broker_stack::top() const  {
   return base::back();
 }
 
-cci_cnf_broker_if* cci_broker_stack::second_top() {
+cci_broker_if* cci_broker_stack::second_top() {
   return base::operator[](base::size()-2);
 }
 
-const cci_cnf_broker_if* cci_broker_stack::second_top() const {
+const cci_broker_if* cci_broker_stack::second_top() const {
   return base::operator[](base::size()-2);
 }
 
-void cci_broker_stack::push(cci_cnf_broker_if* broker) {
+void cci_broker_stack::push(cci_broker_if* broker) {
   base::push_back(broker);
   CCI_SHOW_BROKER_STACK(this, "push")
 }
@@ -73,5 +73,5 @@ cci_broker_stack& cci_broker_stack::operator=(const cci_broker_stack &originator
 	 return (*this);
 }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 

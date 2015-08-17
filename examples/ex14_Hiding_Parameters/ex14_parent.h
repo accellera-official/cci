@@ -30,7 +30,7 @@
 #ifndef EXAMPLES_EX14_HIDING_PARAMETERS_EX14_PARENT_H_
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_PARENT_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 #include <vector>
@@ -48,14 +48,14 @@ SC_MODULE(ex14_parent) {
   SC_HAS_PROCESS(ex14_parent);
 
   /**
-   *  @fn     ex14_parent(sc_core::sc_module _name, cci::cnf::cci_broker_manager priv_broker)
+   *  @fn     ex14_parent(sc_core::sc_module _name, cci::cci_broker_manager priv_broker)
    *  @brief  The class constructor
    *  @param  _name The name of the class
    *  @param  priv_broker An instance of a private broker
    *  @return void
    */
   ex14_parent(sc_core::sc_module_name _name,
-              cci::cnf::cci_broker_manager priv_broker)
+              cci::cci_broker_manager priv_broker)
       : sc_core::sc_module(_name),
         parent_BrokerIF(priv_broker),
         child_inst("child_inst"),
@@ -89,7 +89,7 @@ SC_MODULE(ex14_parent) {
         // to the default global broker). Changes to the 'parent_buffer' will
         // be reflected on to the 'priv_int_param' of child as well
         parent_post_write_cb =
-            parent_buffer.register_callback(cci::cnf::post_write,
+            parent_buffer.register_callback(cci::post_write,
                                             this,
                                             cci::bind(&ex14_parent::write_callback,
                                                       this, _1, _2,
@@ -110,17 +110,17 @@ SC_MODULE(ex14_parent) {
   }
 
   /**
-   *  @fn     cci::cnf::callback_return_type write_callback(cci::cnf::cci_base_param& _base_param, const cci::cnf::callback_type& cb_reason, cci::cnf::cci_base_param* _child_base_param_ptr)
+   *  @fn     cci::callback_return_type write_callback(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason, cci::cci_base_param* _child_base_param_ptr)
    *  @brief  Post write parameter callback implementation
    *  @param  _base_param Parameter with the callback
    *  @param  cb_reason The reason for the callback
    *  @param  _child_base_param_ptr A pointer to a child parameter to be updated
    *  @return The exit status of the callback function
    */
-  cci::cnf::callback_return_type write_callback(
-      cci::cnf::cci_base_param & _base_param,
-      const cci::cnf::callback_type & cb_reason,
-      cci::cnf::cci_base_param * _child_base_param_ptr) {
+  cci::callback_return_type write_callback(
+      cci::cci_base_param & _base_param,
+      const cci::callback_type & cb_reason,
+      cci::cci_base_param * _child_base_param_ptr) {
     _child_base_param_ptr->json_deserialize(_base_param.json_serialize());
 
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
@@ -128,7 +128,7 @@ SC_MODULE(ex14_parent) {
             << "\tParameter Value : "
             << _base_param.json_serialize());
 
-    return cci::cnf::return_nothing;
+    return cci::return_nothing;
   }
 
   /**
@@ -155,19 +155,19 @@ SC_MODULE(ex14_parent) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* parent_BrokerIF; ///< Configuration Broker for TOP_MODULE
+  cci::cci_broker_if* parent_BrokerIF; ///< Configuration Broker for TOP_MODULE
 
   ex14_child child_inst;  ///< Owner Module instantiation
 
   // Declare cci-parameters (registered with the private broker)
-  cci::cnf::cci_param<int> parent_int_param;  ///< CCI int parameter
-  cci::cnf::cci_param<int> parent_buffer; ///< CCI int parameter for a buffer
+  cci::cci_param<int> parent_int_param;  ///< CCI int parameter
+  cci::cci_param<int> parent_buffer; ///< CCI int parameter for a buffer
 
   /// Declare cci_base_param pointers
-  cci::cnf::cci_base_param* child_base_param_ptr; ///< Pointer to the child
+  cci::cci_base_param* child_base_param_ptr; ///< Pointer to the child
 
   // Callback Adaptor Object
-  cci::shared_ptr<cci::cnf::callb_adapt> parent_post_write_cb;  ///< callback adapter object
+  cci::shared_ptr<cci::callb_adapt> parent_post_write_cb;  ///< callback adapter object
 };
 /// ex14_parent
 

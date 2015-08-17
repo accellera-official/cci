@@ -21,13 +21,12 @@
 // NOTE: The broker implementation must not include any parameter vendor dependentent headers!
 
 #define CCI_CNF_SHARE_LIBRARY_MACROS
-#include <cci>
+#include <cci_configuration>
 #include "greencontrol/config.h"
 #include "gs_cci_cnf_broker_if.h"
 #include "gs_cci_cnf_broker_accessor_handler.h"
 
 namespace cci {
-namespace cnf {
   
   class cci_base_param;
   
@@ -37,11 +36,11 @@ namespace cnf {
    * Guarded by gs_cci_cnf_broker_accessor
    */
   class gs_cci_cnf_broker
-  : public cci::cnf::cci_cnf_broker_if
+  : public cci::cci_broker_if
   , public gs_cci_cnf_broker_if
   , public gs::cnf::GCnf_Api
   , public gs::cnf::gs_cnf_api_accessor
-  , public cci::cnf::gs_cci_cnf_broker_accessor_handler
+  , public cci::gs_cci_cnf_broker_accessor_handler
   {
   protected:
     
@@ -56,7 +55,7 @@ namespace cnf {
      */
     class internal_callback_forwarder {
     public:
-      internal_callback_forwarder(cci::shared_ptr<cci::cnf::callb_adapt> _adapt, const gs::cnf::callback_type _type, my_type& _par);
+      internal_callback_forwarder(cci::shared_ptr<cci::callb_adapt> _adapt, const gs::cnf::callback_type _type, my_type& _par);
       ~internal_callback_forwarder();
       
       // This gets called by the base gs_param
@@ -64,7 +63,7 @@ namespace cnf {
       void call_create_param(const std::string parname, const std::string value);
       const gs::cnf::callback_type get_type();
       
-      cci::cnf::callb_adapt* adapt;
+      cci::callb_adapt* adapt;
       gs::cnf::callback_type type;
       my_type *param;
       cci::shared_ptr< gs::cnf::CallbAdapt_b> calling_gs_adapter;
@@ -74,11 +73,11 @@ namespace cnf {
     typedef std::multimap<std::string, internal_callback_forwarder*> observerCallbackMap;
 
     /// Typedef for internal implicit param originator map
-    typedef std::multimap<std::string, cci::cnf::cci_originator> implicitOriginatorMap;
+    typedef std::multimap<std::string, cci::cci_originator> implicitOriginatorMap;
 
   public:
 
-    cci_cnf_broker_if& get_accessor(const cci_originator& originator) { return cci::cnf::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
+    cci_broker_if& get_accessor(const cci_originator& originator) { return cci::gs_cci_cnf_broker_accessor_handler::get_accessor(originator, *this); }
 
     const cci_originator* get_originator() const { return NULL; }
 
@@ -107,7 +106,7 @@ namespace cnf {
 
     const std::vector<std::string> get_param_list(const std::string& pattern);
 
-    const std::vector<cci::cnf::cci_base_param*> get_params(const std::string& pattern);
+    const std::vector<cci::cci_base_param*> get_params(const std::string& pattern);
     
     bool param_exists(const std::string &parname);
     
@@ -142,11 +141,11 @@ namespace cnf {
     void make_create_callbacks(const std::string &search, const std::string &par_name, const std::string &value);
 
     /// Internal const function to be used by get_param and get_latest_write_originator
-    cci::cnf::cci_base_param* get_param_const(const std::string &parname) const;
+    cci::cci_base_param* get_param_const(const std::string &parname) const;
 
   protected:
       
-    std::map<std::string, cci::cnf::cci_base_param*> m_mirrored_registry;
+    std::map<std::string, cci::cci_base_param*> m_mirrored_registry;
     
     std::string m_name;
     
@@ -160,7 +159,6 @@ namespace cnf {
   };
   
   
-} // end namespace
 } // end namespace
 
 #endif

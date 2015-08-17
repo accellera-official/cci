@@ -27,7 +27,7 @@
  *  @date    12th September, 2011
  */
 #include <systemc>
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 
@@ -45,11 +45,11 @@
 int sc_main(int sc_argc, char* sc_argv[]) {
   // Creating an originator to access the global broker
   const std::string myOrgStr = "sc_main_originator";
-  cci::cnf::cci_originator myOriginator(myOrgStr);
+  cci::cci_originator myOriginator(myOrgStr);
 
   // Get handle of the broker using the originator
-  cci::cnf::cci_cnf_broker_if* globalBroker =
-      &cci::cnf::cci_broker_manager::get_current_broker(myOriginator);
+  cci::cci_broker_if* globalBroker =
+      &cci::cci_broker_manager::get_current_broker(myOriginator);
 
   // Assert if broker handle returned is NULL
   assert(globalBroker != NULL
@@ -65,7 +65,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // API to assign initial value before the
   // construction of the model hierarchy begins.
   globalBroker->json_deserialize_initial_value(
-      "param_owner.mutable_string_param", "Initialized within sc_main");
+      "param_owner.mutable_string_param", "\"Initialized within sc_main\"");
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Demonstrating 'comparison' between the values"
@@ -73,11 +73,11 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Instantiate cci-parameters of all the three mutability types for a
   // particular (say String) data-type
-  cci::cnf::cci_param<std::string, cci::cnf::mutable_param>
+  cci::cci_param<std::string, cci::mutable_param>
       mutab_str_param("string_mutab_param", "String_Value_A");
-  cci::cnf::cci_param<std::string, cci::cnf::immutable_param>
+  cci::cci_param<std::string, cci::immutable_param>
       immutab_str_param("string_immutab_param", "String_Value_A");
-  cci::cnf::cci_param<std::string, cci::cnf::elaboration_time_param>
+  cci::cci_param<std::string, cci::elaboration_time_param>
       elab_str_param("string_elab_param", "String_Value_B");
 
   if (mutab_str_param.get() == immutab_str_param.get()) {

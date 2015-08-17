@@ -21,7 +21,7 @@
   limitations under the License.
  *****************************************************************************/
 
-#include "cci_cnf/cci_value_traits.h"
+#include "cci_cfg/cci_value_traits.h"
 
 /**
  * @file   cci_value_traits.cpp
@@ -29,7 +29,7 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 #define DEFINE_PACK_( Type )                                                  \
   template<> bool                                                             \
@@ -309,4 +309,4 @@ DEFINE_UNPACK_( sc_dt::sc_lv_base )
   return true;
 }
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_

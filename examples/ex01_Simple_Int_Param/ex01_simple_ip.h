@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX01_SIMPLE_INT_PARAM_EX01_SIMPLE_IP_H_
 #define EXAMPLES_EX01_SIMPLE_INT_PARAM_EX01_SIMPLE_IP_H_
 
-#include <cci>
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -76,7 +76,7 @@ SC_MODULE(ex01_simple_ip) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param; ///< CCI param to hold buffer size
+  cci::cci_param<int> int_param; ///< CCI param to hold buffer size
 };
 // ex01_simple_ip
 

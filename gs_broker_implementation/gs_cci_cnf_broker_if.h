@@ -19,10 +19,10 @@
 #ifndef __GS_CCI_CNF_BROKER_IF_H__
 #define __GS_CCI_CNF_BROKER_IF_H__
 
-#include <cci>
+#include <cci_configuration>
 
 
-CCI_OPEN_CONFIG_NAMESPACE_
+CCI_OPEN_NAMESPACE_
 
 
   /// Configuration broker interface with originator information.
@@ -31,7 +31,7 @@ CCI_OPEN_CONFIG_NAMESPACE_
 
   public:
 
-    virtual cci_cnf_broker_if& get_accessor(const cci_originator& originator) = 0;
+    virtual cci_broker_if& get_accessor(const cci_originator& originator) = 0;
 
     // Destructor
     virtual ~gs_cci_cnf_broker_if() { };
@@ -79,6 +79,6 @@ CCI_OPEN_CONFIG_NAMESPACE_
   };
 
 
-CCI_CLOSE_CONFIG_NAMESPACE_
+CCI_CLOSE_NAMESPACE_
 
 #endif

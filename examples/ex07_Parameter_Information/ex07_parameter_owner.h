@@ -29,7 +29,7 @@
 #ifndef EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_OWNER_H_
 #define EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_PARAMETER_OWNER_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
 
@@ -95,37 +95,13 @@ SC_MODULE(ex07_parameter_owner) {
       // Setting value to the integer type parameter
       int_param = 1;
 
-      wait(17.0, sc_core::SC_NS);
-
-      XREPORT("@ " << sc_core::sc_time_stamp()
-              << " demonstrating 'set_value_invalid()'");
-      XREPORT("[OWNER -> Set] : " << int_param.get_name() << " value invalid.");
-
-      // Set the cci parameter to invalid state using
-      // 'set_invalid_state()' API
-      int_param.set_invalid_value();
-
-      // Query a cci parameter value validity using
-      // 'is_invalid_value()' API
-      if (int_param.is_invalid_value()) {
-        XREPORT("[OWNER] : Is Invalid Value ? " << "\tReturned Status : "
-                << std::boolalpha << int_param.is_invalid_value());
-        XREPORT("[OWNER -> Retrieve] : " << int_param.get_name() << "\tValue : "
-                << int_param.get());
-      } else {
-        XREPORT("[OWNER] : Is Invalid Value ? " << "\tReturned Status : "
-                << std::boolalpha << int_param.is_invalid_value());
-        XREPORT("[OWNER -> Retrieve] : " << int_param.get_name() << "\tValue : "
-                << int_param.get());
-      }
-
-      wait(8.0, sc_core::SC_NS);
+      wait(25.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tdemonstrating setting values by OWNER using cci_value");
       XREPORT("[OWNER -> Set] : New String Value : 'String_Value_Set_by_OWNER");
 
-      cci::cnf::cci_value str_value("String_Value_Set_by_OWNER");
+      cci::cci_value str_value("String_Value_Set_by_OWNER");
       string_param.set_value(str_value);
 
       wait(2.0, sc_core::SC_NS);
@@ -133,7 +109,7 @@ SC_MODULE(ex07_parameter_owner) {
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tdemonstrating retrieving values by OWNER using cci_value");
 
-      cci::cnf::cci_value rec_str_value = string_param.get_value();
+      cci::cci_value rec_str_value = string_param.get_value();
       std::string recv_str = rec_str_value.get_string();
 
       XREPORT("[OWNER -> Retrieve] : Receive str_value using 'cci_value' : "
@@ -144,8 +120,8 @@ SC_MODULE(ex07_parameter_owner) {
   }
 
  private:
-  cci::cnf::cci_param<int> int_param; ///< integer CCI parameter
-  cci::cnf::cci_param<std::string> string_param;  ///< string CCI parameter
+  cci::cci_param<int> int_param; ///< integer CCI parameter
+  cci::cci_param<std::string> string_param;  ///< string CCI parameter
 };
 // ex07_parameter_owner
 

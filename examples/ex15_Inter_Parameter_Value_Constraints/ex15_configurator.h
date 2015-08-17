@@ -28,7 +28,7 @@
 #ifndef EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_CONFIGURATOR_H_
 #define EXAMPLES_EX15_INTER_PARAMETER_VALUE_CONSTRAINTS_EX15_CONFIGURATOR_H_
 
-#include <cci>
+#include <cci_configuration>
 #include <cassert>
 #include <string>
 
@@ -48,7 +48,7 @@ SC_MODULE(ex15_configurator) {
    */
   SC_CTOR(ex15_configurator) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cnf::cci_broker_manager::get_current_broker(cci::cnf::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
@@ -115,11 +115,11 @@ SC_MODULE(ex15_configurator) {
   }
 
  private:
-  cci::cnf::cci_cnf_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   /// CCI base parameters
-  cci::cnf::cci_base_param* addr_lines_base_ptr;  ///< Pointer to the base of the address lines
-  cci::cnf::cci_base_param* mem_size_base_ptr;  ///< Pointer to the base mem size
+  cci::cci_base_param* addr_lines_base_ptr;  ///< Pointer to the base of the address lines
+  cci::cci_base_param* mem_size_base_ptr;  ///< Pointer to the base mem size
 };
 // ex15_configurator
 

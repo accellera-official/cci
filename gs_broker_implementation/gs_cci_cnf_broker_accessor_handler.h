@@ -15,7 +15,7 @@
 
 
 #define CCI_CNF_SHARE_LIBRARY_MACROS
-#include <cci>
+#include <cci_configuration>
 #include "gs_cci_cnf_broker_accessor.h"
 #include "gs_cci_broker.h"
 
@@ -24,7 +24,6 @@
 
 
 namespace cci {
-namespace cnf {
 
   // forward declaration
   class gs_cci_cnf_broker_accessor;
@@ -38,8 +37,8 @@ namespace cnf {
   {
   public:
     
-    /// @see cci::cnf::cci_cnf_broker_if::get_accessor
-    cci_cnf_broker_if& get_accessor(const cci_originator& originator, cci::cnf::cci_cnf_broker_if& orig_broker);
+    /// @see cci::cci_broker_if::get_accessor
+    cci_broker_if& get_accessor(const cci_originator& originator, cci::cci_broker_if& orig_broker);
 
   protected:
 
@@ -49,7 +48,6 @@ namespace cnf {
   };
   
 
-} // end namespace
 } // end namespace
 
 #endif
