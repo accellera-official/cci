@@ -4,6 +4,7 @@
  Tests that passed :
 -------------------------------------------------------------------------------
 dev_examples/callback_example/callback_example.f
+dev_examples/cci_hierarchical_values_set/cci_hierarchical_values_set.f
 dev_examples/cci_value_example/cci_value_example.f
 dev_examples/cci_value_simple/cci_value_simple.cpp
 dev_examples/gs_example_diff_impl/gs_example_diff_impl.f
@@ -37,8 +38,8 @@ examples/ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
                 diff                : examples/ex09_Hierarchical_Override_of_Parameter_Values/ex09_Hierarchical_Override_of_Parameter_Values.cpp
                 diff                : examples/ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_Api_and_Parameter_Implementations_from_Different_Providers.f
 
-Total passed : 19
+Total passed : 20
 Total failed : 10
 
-   GUT METER : 65 %
+   GUT METER : 66 %
 

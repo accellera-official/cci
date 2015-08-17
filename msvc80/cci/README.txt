@@ -258,7 +258,7 @@ How to build MSVC projects for CCI examples
 -------------------------------------------
 
 There is no MSVC projects provided for each example by default. Instead, a
-property sheet `cci_example.vsprops' is provided for convenience. By importing
+`cci_example' property sheet is provided for convenience. By importing
 the given property sheet and updating the User Macros stated below,
 you shall be able to compile and run the examples.
 
@@ -268,16 +268,17 @@ you shall be able to compile and run the examples.
      - File -> New -> Project -> Win32 Console Application
 
   2. Import property sheet (`msvc80/cci/cci_example.vsprops')
+     Note: use cci_example.props for msvc10 and newer.
 
   3. Update the "User Macros" according to your environment
-     - CCI (location of the main CCI MSVC directory)
-       default: "$(CCI_HOME)\$(MSVC)"
 
      The following macros should have been updated correctly during the PoC
      library build (see above):
      - MSVC
      - SYSTEMC
      - BOOST
+
+	Additionally, the $CCI_HOME environment variable (configured above) is used.
 
   4. Import the header and source files from a given example.
 
