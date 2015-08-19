@@ -4,6 +4,9 @@
 
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
+  
+  Copyright 2015 Ericsson
+  All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,6 +25,7 @@
  *  @file   simple_ip.h
  *  @brief  A simple IP that demonstartes the use of elaboration_time_param
  *  @author Udaya Ranga, TI
+ *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_SIMPLE_IP_H_
@@ -94,8 +98,14 @@ SC_MODULE(ex03_simple_ip) {
     wait(10, sc_core::SC_NS);
 
     // Update struc_param value to 2 (invalid)
-    XREPORT("execute: Set value of struc_param to 2");
-    struc_param = 2;
+    try {
+      XREPORT("execute: Set value of struc_param to 2");
+      struc_param = 2;
+    }catch(std::exception &x)
+    {
+      XREPORT_WARNING(x.what());
+    }
+
     if (1 == struc_param) {
       XREPORT("execute: Value of struc_param unchanged: " << struc_param);
     } else if (2 == struc_param) {
@@ -118,8 +128,13 @@ SC_MODULE(ex03_simple_ip) {
     wait(10, sc_core::SC_NS);
 
     // Update struc_param_post_eoe value to 1 (invalid)
-    XREPORT("execute: Set value of struc_param_post_eoe to 1");
-    struc_param_post_eoe = 1;
+    try {
+      XREPORT("execute: Set value of struc_param_post_eoe to 1");
+      struc_param_post_eoe = 1;
+    }catch(std::exception &x)
+    {
+      XREPORT_WARNING(x.what());
+    }
     if (0 == struc_param_post_eoe) {
       XREPORT("execute: Value of struc_param_post_eoe remains unchanged "
               << struc_param_post_eoe);
