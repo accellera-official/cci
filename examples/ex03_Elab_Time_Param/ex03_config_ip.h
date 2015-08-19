@@ -4,6 +4,9 @@
 
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
+  
+  Copyright 2015 Ericsson
+  All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,6 +25,7 @@
  *  @file   config_ip.h
  *  @brief  Configure simple_ip's structure_param (simple integer) parameter
  *  @author Udaya Ranga, TI
+ *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_CONFIG_IP_H_
@@ -71,9 +75,12 @@ SC_MODULE(ex03_config_ip) {
       assert(struc_param_ptr != NULL);
 
       // Update the structure_param value to 3 (invalid)
-      XREPORT("execute: [EXTERNAL] Set value of " << struc_param_name
-              << " to 3");
-      struc_param_ptr->json_deserialize("3");
+      try {
+        XREPORT("execute: [EXTERNAL] Set value of "<< struc_param_name<< " to 3");
+        struc_param_ptr->json_deserialize("3");
+      }catch(std::exception &x) {
+        XREPORT_WARNING(x.what());
+      }
 
       // Display new value
       std::string new_value = struc_param_ptr->json_serialize();

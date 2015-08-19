@@ -116,8 +116,36 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       return &this->m_gs_param.get_default_value();
     }
 
-    // //////////////// CCI VALUE HANDLING /////////////////////////// //
+	virtual void set(const void* value)
+	{
+		if (m_gs_param.locked())
+		{
+			cci::cci_report_handler::set_param_failed("Parameter locked.");
+			return;
+		}
+		if (set_value_allowed())
+		{
+			if (!m_gs_param.setValue(*static_cast<const value_type*>(value)))
+				cci::cci_report_handler::set_param_failed("Value not allowed.");
+			else
+				update_latest_write_originator();
+		}
+	}
     
+    virtual void set(const void* value, const void* lock_pwd) {
+      if (!m_gs_param.check_pwd(lock_pwd)) {
+        cci::cci_report_handler::set_param_failed("Wrong key.");
+        return;
+      }
+	  if (set_value_allowed())
+	  {
+		  if (!m_gs_param.setValue(*static_cast<const value_type *>(value), lock_pwd))
+			cci::cci_report_handler::set_param_failed("Value not allowed.");
+		  else
+			update_latest_write_originator();
+	  }
+    }
+	
 	virtual void set_value(const cci::cci_value& val) {
       value_type v = val.get<value_type>();
       this->set( &v );
@@ -130,6 +158,39 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 	virtual void destroy()
 	{
 		delete this;
+	}
+
+protected:
+	
+	//Used verify kernel phase for elaboration time parameters  
+	/**  
+	 * Before setValue is called for elaboration parameter updates,  
+	 * this function is called to determine whether the value updates  
+	 * shall be rejected or not  
+	 */  
+	bool isScElabPhase() {  
+		if ( sc_get_status() &  (SC_BEFORE_END_OF_ELABORATION |  
+								 SC_ELABORATION |  
+								 SC_END_OF_ELABORATION)) 
+			return true;  
+		return false;  
+	}  
+
+	/// Check whether value update is allowed
+	//@todo Should these checks be moved into the parameter proxy (cci_param)?
+	bool set_value_allowed()
+	{
+      if (TM==cci::elaboration_time_param) {
+        if(!isScElabPhase()){
+          cci::cci_report_handler::set_param_failed("Attempt to set elaboration parameter during simulation.");
+          return false;
+        }
+      }
+      else if (TM==cci::immutable_param) {
+        cci::cci_report_handler::set_param_failed("Parameter is immutable.");
+        return false;
+      }
+      return true;
 	}
 
   };  
