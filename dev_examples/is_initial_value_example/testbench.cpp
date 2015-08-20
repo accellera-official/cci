@@ -18,6 +18,21 @@
 #include <systemc>
 #include "cci_configuration"
 
+class ParamContainer : public sc_core::sc_module
+{
+public:
+	ParamContainer(sc_core::sc_module_name name) : sc_module(name)
+    , int_param_with_initial_value     ("int_param_with_initial_value",      10)
+    , int_param_without_initial_value  ("int_param_without_initial_value",   11)
+    , int_param_with_late_initial_value("int_param_with_late_initial_value", 12)
+	{}
+protected:
+
+  cci::cci_param<int> int_param_with_initial_value;
+  cci::cci_param<int> int_param_without_initial_value;
+  cci::cci_param<int> int_param_with_late_initial_value;
+};
+
 
 /// Shows a parameter list with information about value, explicit/implicit status and is_initial_value status
 void show_param_list() {
@@ -49,18 +64,16 @@ int sc_main(int argc, char *argv[]) {
   
   cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator("SCMAIN"));
   
-  mBroker->json_deserialize_initial_value("int_param_with_initial_value", "100");
-  mBroker->json_deserialize_initial_value("int_param_only_implicit", "130");
+  mBroker->json_deserialize_initial_value("params.int_param_with_initial_value", "100");
+  mBroker->json_deserialize_initial_value("params.int_param_only_implicit", "130");
   
-  cci::cci_param<int> int_param_with_initial_value     ("int_param_with_initial_value",      10);
-  cci::cci_param<int> int_param_without_initial_value  ("int_param_without_initial_value",   11);
-  cci::cci_param<int> int_param_with_late_initial_value("int_param_with_late_initial_value", 12);
+  ParamContainer params("params");
   
   show_param_list();  
 
   // This does NOT change the status to initial because this write to an explicit parameter is translated 
   // 'just' into a usual write
-  mBroker->json_deserialize_initial_value("int_param_with_late_initial_value", "120");
+  mBroker->json_deserialize_initial_value("params.int_param_with_late_initial_value", "120");
   
   show_param_list();
 
