@@ -16,9 +16,10 @@
 #include <systemc>
 #include "cci_configuration"
 
-SC_HAS_PROCESS(test_module);
+
 class test_module : public sc_core::sc_module
 {
+SC_HAS_PROCESS(test_module);
 public:
 	test_module(sc_core::sc_module_name name) : sc_core::sc_module(name)
 		, int_param_mutable  ("int_param_mutable", cci::cci_value(10),   cci::CCI_TOP_LEVEL_NAME)
