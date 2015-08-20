@@ -24,6 +24,20 @@
 #include "ParamManipulateModule.h"
 #include "ValueModule.h"
 
+class ParamContainer : public sc_core::sc_module
+{
+public:
+	ParamContainer(sc_core::sc_module_name name) : sc_module(name)
+	, top_param1("top.param1", "This is a param with top-level-name", cci::CCI_TOP_LEVEL_NAME)
+	, top_param2("param2", cci::cci_value("This is a param with top-level-name"), cci::CCI_TOP_LEVEL_NAME)
+	, top_param3("top.arbitrary.param3", cci::cci_value("This is a param with top-level-name"), cci::CCI_TOP_LEVEL_NAME)
+	{}
+protected:
+  cci::cci_param<std::string> top_param1;
+  cci::cci_param<bool>        top_param2;
+  cci::cci_param<int>         top_param3;
+};
+
 /// Testbench for the CCI example application which uses the GreenSocs demo implemenation
 int sc_main(int argc, char *argv[]) {
   //sc_core::sc_report_handler::set_actions(sc_core::SC_ERROR, sc_core::SC_ABORT);
@@ -39,10 +53,7 @@ int sc_main(int argc, char *argv[]) {
   ParameterOwnerModule  owner      ("Owner");
   ParameterOwnerMutabilityModule  mutability_owner      ("MutabilityOwner");
   ValueModule           valueMod   ("ValueMod");
-  
-  cci::cci_param<std::string> top_param1("top.param1", "This is a param with top-level-name", cci::CCI_TOP_LEVEL_NAME);
-  cci::cci_param<bool>        top_param2("param2", cci::cci_value("This is a param with top-level-name"));
-  cci::cci_param<int>         top_param3("top.arbitrary.param3", cci::cci_value("This is a param with top-level-name"), cci::CCI_TOP_LEVEL_NAME);
+  ParamContainer		params	   ("top");
 
   std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
   sc_core::sc_start(); 
