@@ -16,7 +16,6 @@
 #include <systemc>
 #include "cci_configuration"
 
-
 class test_module : public sc_core::sc_module
 {
 SC_HAS_PROCESS(test_module);
