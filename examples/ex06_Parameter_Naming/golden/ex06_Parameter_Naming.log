@@ -5,12 +5,6 @@ In file: <removed by verify.pl>
 Warning: DEFAULT_BROKER_0: addParam failed!
 In file: <removed by verify.pl>
 
-Warning: ConfigDatabase: addParam: Parameter 'int_param_top' is already existing (explicit)!
-In file: <removed by verify.pl>
-
-Warning: DEFAULT_BROKER_0: addParam failed!
-In file: <removed by verify.pl>
-
 Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param_ip is 1
 
 Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param_ip is 2
@@ -18,18 +12,6 @@ Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param_ip is 2
 Info: sim_ip: @0 s, Ctor: Default value of int_param_top is 3
 
 Info: sim_ip: @0 s, Ctor: Default value of top.sub.int_param_custom is 4
-
-Info: sc_main: sc_main: Default value of int_param is 10
-
-Info: sc_main: sc_main: Default value of int_param_top is 10
-
-Info: sc_main: sc_main: int_param = 100
-
-Info: sc_main: sc_main: Current value of int_param is 100
-
-Info: sc_main: sc_main: int_param_top = 100
-
-Info: sc_main: sc_main: Current value of int_param_top is 100
 
 Info: sc_main: Begin Simulation.
 
@@ -63,7 +45,7 @@ Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.int_param_ip to 50
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip is 50
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 100
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 30
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of int_param_top to 50
 
@@ -75,16 +57,12 @@ Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of top.sub.int_param_custom 
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_custom is 50
 
-Info: sc_main: sc_main: Current value of int_param is 100
-
-Info: sc_main: sc_main: Current value of int_param_top is 50
-
 Info: sc_main: End Simulation.
 
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 50
 
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 20
 
-Info: sim_ip: Dtor: Current value of int_param_top is 30
+Info: sim_ip: Dtor: Current value of int_param_top is 50
 
 Info: sim_ip: Dtor: Current value of top.sub.int_param_custom is 50
