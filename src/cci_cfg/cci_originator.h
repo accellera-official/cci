@@ -80,10 +80,13 @@ public:
   /// Default Constructor assumes current module is the originator
   cci_originator() 
   : m_originator_obj(sc_core::sc_get_curr_simcontext()->hierarchy_curr()) {
-    // TODO: Need standard way to get current module; 
-	//       hierarchy_curr() is not public.
-	// TODO: check boundary conditions
-	// - prior to initialization of hierarchy_curr
+	/**
+     * @todo Scrutinize how much of this code belongs in the standard (vs. implementation)
+	 * @todo Need standard way to get current module; 
+	 *       hierarchy_curr() is not standard.
+	 * @todo Check boundary conditions:
+	 *       - prior to initialization of hierarchy_curr
+	 */
 	if (!m_originator_obj) {
 	  // If unable to determine current module from module stack, try via current process
 	  sc_core::sc_process_handle h = sc_core::sc_get_current_process_handle();
@@ -104,8 +107,8 @@ public:
 		m_originator_str = m_originator_obj->name();
 	}
 	else {
-		// TODO: Need to catch & re-throw this to include parameter's name
-		SC_REPORT_FATAL(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Unable to determine parameter's owner.");
+		// Caller needs to catch this exception & add identifying parameter info.
+		SC_REPORT_ERROR(__CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__, "Unable to determine parameter's owner.");
 	}
   }
 
