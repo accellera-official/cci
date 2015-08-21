@@ -49,9 +49,9 @@ Info: param_owner: @1 ns, @ 1 ns
 
 Info: param_owner: @1 ns, [OWNER -> Set] : Overriding default value of param_owner.mutable_int_param to 1
 
-Info: observer: @1 ns, [OBSERVER pre_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
+Info: observer: @1 ns, [OBSERVER pre_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_owner
 
-Info: observer: @1 ns, [OBSERVER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : owning_param
+Info: observer: @1 ns, [OBSERVER post_write_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_owner
 
 Info: param_cfgr: @2 ns, @ 2 ns	demonstrating 'is_default_value()'
 
@@ -67,7 +67,7 @@ Info: param_cfgr: @2 ns, [CFGR -> Retrieve] : Parameter value : Initialized with
 
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
 
-Info: observer: @4 ns, [OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
+Info: observer: @4 ns, [OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_owner
 
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's value : 1
 
