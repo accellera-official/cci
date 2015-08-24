@@ -118,31 +118,31 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 
 	virtual void set(const void* value)
 	{
-		if (m_gs_param.locked())
+		if (this->m_gs_param.locked())
 		{
 			cci::cci_report_handler::set_param_failed("Parameter locked.");
 			return;
 		}
 		if (set_value_allowed())
 		{
-			if (!m_gs_param.setValue(*static_cast<const value_type*>(value)))
+			if (!this->m_gs_param.setValue(*static_cast<const value_type*>(value)))
 				cci::cci_report_handler::set_param_failed("Value not allowed.");
 			else
-				update_latest_write_originator();
+				this->update_latest_write_originator();
 		}
 	}
     
     virtual void set(const void* value, const void* lock_pwd) {
-      if (!m_gs_param.check_pwd(lock_pwd)) {
+      if (!this->m_gs_param.check_pwd(lock_pwd)) {
         cci::cci_report_handler::set_param_failed("Wrong key.");
         return;
       }
 	  if (set_value_allowed())
 	  {
-		  if (!m_gs_param.setValue(*static_cast<const value_type *>(value), lock_pwd))
+		  if (!this->m_gs_param.setValue(*static_cast<const value_type *>(value), lock_pwd))
 			cci::cci_report_handler::set_param_failed("Value not allowed.");
 		  else
-			update_latest_write_originator();
+			this->update_latest_write_originator();
 	  }
     }
 	
@@ -169,9 +169,9 @@ protected:
 	 * shall be rejected or not  
 	 */  
 	bool isScElabPhase() {  
-		if ( sc_get_status() &  (SC_BEFORE_END_OF_ELABORATION |  
-								 SC_ELABORATION |  
-								 SC_END_OF_ELABORATION)) 
+		if ( sc_core::sc_get_status() &  (sc_core::SC_BEFORE_END_OF_ELABORATION |  
+						  sc_core::SC_ELABORATION |  
+						  sc_core::SC_END_OF_ELABORATION)) 
 			return true;  
 		return false;  
 	}  
