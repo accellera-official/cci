@@ -1,20 +1,30 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2011 : GreenSocs Ltd
-//    http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-//
-// ENDLICENSETEXT
+/*****************************************************************************
+Copyright 2006-2015 Accellera Systems Initiative Inc.
+All rights reserved.
+
+Copyright 2009-2011 GreenSocs Ltd
+All rights reserved.
+
+Copyright 2006-2014 OFFIS Institute for Information Technology
+All rights reserved.
+
+Copyright 2006-2015 Intel Corporation
+All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*****************************************************************************/
 
 /**
- * @file
  * @author Christian Schroeder, GreenSocs Ltd.
  * @author Mark Burton, GreenSocs Ltd.
  * @author Thomas Goodfellow, OFFIS
@@ -39,6 +49,7 @@
 #undef __CCI_DEFAULT_BROKER_STRING__
 #undef __CCI_UNKNOWN_ORIGINATOR_STRING__
 #undef __CCI_SC_REPORT_MSG_TYPE_PREFIX__
+#undef __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__
 
 // May need these debugging macros split out to a separate undef header, so
 // that the client can remove all macros except the debugging ones

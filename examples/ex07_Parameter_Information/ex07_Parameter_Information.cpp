@@ -4,6 +4,9 @@
 
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
+  
+  Copyright 2006-2015 Intel Corporation
+  All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -19,12 +22,10 @@
  *****************************************************************************/
 
 /**
- *  @file    main.cpp
  *  @brief   The main function starts here.
  *           The sc_main function instantiates 'PARAMETER_OWNER', 'PARAMETER_CONFIGURATOR'
  *           modules and 'OBSERVER' class
  *  @author  P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
- *  @date    12th September, 2011
  */
 #include <systemc>
 #include <cci_configuration>
@@ -34,6 +35,21 @@
 #include "ex07_parameter_owner.h"
 #include "ex07_parameter_configurer.h"
 #include "ex07_observer.h"
+
+/// Container (module) of some test parameters.
+class ex07_parameter_container : public sc_core::sc_module
+{
+public:
+	ex07_parameter_container(sc_core::sc_module_name name) : sc_module(name)
+	, mutab_str_param("string_mutab_param", "String_Value_A")
+	, immutab_str_param("string_immutab_param", "String_Value_A")
+	, elab_str_param("string_elab_param", "String_Value_B")
+	{}
+
+	cci::cci_param<std::string, cci::mutable_param> mutab_str_param;
+	cci::cci_param<std::string, cci::immutable_param> immutab_str_param;
+	cci::cci_param<std::string, cci::elaboration_time_param> elab_str_param;
+};
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -71,16 +87,12 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                  "[MAIN] : Demonstrating 'comparison' between the values"
                  " of a data type for different mutability types");
 
-  // Instantiate cci-parameters of all the three mutability types for a
-  // particular (say String) data-type
-  cci::cci_param<std::string, cci::mutable_param>
-      mutab_str_param("string_mutab_param", "String_Value_A");
-  cci::cci_param<std::string, cci::immutable_param>
-      immutab_str_param("string_immutab_param", "String_Value_A");
-  cci::cci_param<std::string, cci::elaboration_time_param>
-      elab_str_param("string_elab_param", "String_Value_B");
+  // Instantiate parameter container of string parameters
+  ex07_parameter_container pc("params");
 
-  if (mutab_str_param.get() == immutab_str_param.get()) {
+  // Perform comparisons across mutability classes.  Access params directly
+  // for convenience (generally we would look them up via broker).
+  if (pc.mutab_str_param.get() == pc.immutab_str_param.get()) {
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'immutable' type String"
                    " parameters - VALUES MATCH");
   } else {
@@ -88,7 +100,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                    " parameters - VALUES DO NOT MATCH");
   }
 
-  if (mutab_str_param.get() == elab_str_param.get()) {
+  if (pc.mutab_str_param.get() == pc.elab_str_param.get()) {
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
                    " String - VALUES MATCH");
   } else {
