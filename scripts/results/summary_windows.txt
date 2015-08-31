@@ -4,6 +4,7 @@
  Tests that passed :
 -------------------------------------------------------------------------------
 dev_examples/callback_example/callback_example.f
+dev_examples/cb_new_param/cb_new_param.f
 dev_examples/cci_hierarchical_values_set/cci_hierarchical_values_set.f
 dev_examples/cci_value_example/cci_value_example.f
 dev_examples/cci_value_simple/cci_value_simple.cpp
@@ -32,7 +33,6 @@ examples/ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
 -------------------------------------------------------------------------------
  Tests that failed :
 -------------------------------------------------------------------------------
-         missing golden             : dev_examples/cb_new_param/cb_new_param.f
              compiling              : dev_examples/priv_broker_example/priv_broker_example.f
                 diff                : examples/ex06_Parameter_Naming/ex06_Parameter_Naming.cpp
                 diff                : examples/ex09_Hierarchical_Override_of_Parameter_Values/ex09_Hierarchical_Override_of_Parameter_Values.cpp

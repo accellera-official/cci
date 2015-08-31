@@ -43,6 +43,9 @@ public:
   , bool_param("bool_param", false)
   { 
     SC_THREAD(main_action);
+	std::cout << std::endl;
+    DEMO_DUMP(this->name(),
+		"Constructor initialization of int_param, uint_param, uint_param2, str_param, bool_param");
   }
   
   /// Main action to make tests with parameters.

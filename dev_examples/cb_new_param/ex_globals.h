@@ -17,8 +17,8 @@
 #define __callb_globals_h__
 
 // Some debug output for GrenConfig wrapped to CCI
-#define GS_PARAM_CALLBACK_VERBOSE
-#define CCI_PARAM_CALLBACK_VERBOSE
+// #define GS_PARAM_CALLBACK_VERBOSE
+// #define CCI_PARAM_CALLBACK_VERBOSE
 
 #define DEMO_VERBOSE
 

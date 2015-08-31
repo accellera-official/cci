@@ -22,27 +22,34 @@ void ParameterOwnerModule::main_action() {
 
   wait(1, SC_NS);
 
-  std::cout << "----------------------------" << std::endl;
+  cout << endl;
+  DEMO_DUMP(name(), "Executing main_action");
 
   // get the config API which is responsible for this module
   cci::cci_broker_if* mApi = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
   
-  // create and access a local parameter
-  cout << name() << ": create parameter " << endl;
+  // create a local parameter
+  DEMO_DUMP(name(), "- Creating uchar_param parameter");
   cci::cci_param<unsigned char> uchar_param("uchar_param", 0);
-  cout << "  created " << uchar_param.get_name() << endl;
+
+  // update parameter values, activating registered callbacks
   cout << endl;
+  DEMO_DUMP(name(), "- Changing uint_param value to 1");
+  uint_param = 1;
+
+  cout << endl;
+  DEMO_DUMP(name(), "- Changing uint_param2 value to 2");
+  uint_param2 = 2;
 
   // show a parameter list
-  cout << endl << "**** Parameter list: " << endl;
   std::vector<std::string> vec = mApi->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
+  ss_show << "- List of all parameters:" << endl;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
-    if (iter != vec.begin()) ss_show << ", ";
-    ss_show << *iter;
+    ss_show << "\t" << *iter << endl;
   }
-  std::cout << "   " << ss_show.str() << std::endl<<std::endl;
-
+  cout << endl;
+  DEMO_DUMP(name(), ss_show.str());
 }
