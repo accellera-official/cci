@@ -39,6 +39,8 @@
 #include <tlm>
 #include <cassert>
 #include <vector>
+#include <sstream>
+#include <iomanip>
 
 #include "tlm_utils/multi_passthrough_target_socket.h"
 #include "tlm_utils/multi_passthrough_initiator_socket.h"
@@ -96,13 +98,10 @@ SC_MODULE(ex09_router) {
     addrSize = (unsigned int) (addr_limit.get() / r_targets);
 
     // Printing the Router Table contents
-    XREPORT("================ ROUTER TABLE INFORMATION ==================");
-    XREPORT("-----------------------------------------------"
-            "-----------------------------------------------");
-    XREPORT("|\ttarget_ID\t|\tStart Address\t|\tEnd Address\t|"
-            "\tBase Address\t|");
-    XREPORT("-----------------------------------------------"
-            "-----------------------------------------------");
+    XREPORT("============= ROUTER TABLE INFORMATION ==============");
+    XREPORT("-----------------------------------------------------");
+    XREPORT("| Target ID  | Start Addr |  End Addr  | Base Addr  |");
+    XREPORT("-----------------------------------------------------");
 
     // Sets the contents of the routing table with (default) values
     // calculated within 'beoe' phase
@@ -132,13 +131,13 @@ SC_MODULE(ex09_router) {
         assert(base_ptr != NULL
                && "target Base Address Handle returned is NULL");
       }
-
-      XREPORT("|\t" << r_target_index[i]->get() << "\t\t|\t" << std::hex
-              << r_addr_start[i]->get() << "\t\t|\t" << std::hex
-              << r_addr_end[i]->get() << "\t\t|\t"
-              << base_ptr->json_serialize() << "\t\t|");
-      XREPORT("-----------------------------------------------"
-              "-----------------------------------------------");
+	  std::stringstream row_ss;
+	  row_ss << "| " << std::setw(10) << r_target_index[i]->get()
+		     << " | " << std::setw(10) << std::hex << std::showbase << r_addr_start[i]->get()
+		     << " | " << std::setw(10) << r_addr_end[i]->get() 
+		     << " | " << std::setw(10) << base_ptr->json_serialize() << " |";
+	XREPORT(row_ss.str().c_str());
+    XREPORT("-----------------------------------------------------");
     }
   }
 
