@@ -37,6 +37,8 @@
 #include <string>
 #include "tlm_utils/simple_initiator_socket.h"
 #include "xreport.hpp"
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
 
 /**
  *  @class  ex09_initiator
@@ -64,8 +66,6 @@ SC_MODULE(ex09_initiator) {
     // initiator's SC_THREAD declaration
     SC_THREAD(run_initiator);
 
-	// Arbitrary seed for RNG, ensuring consistent results across platforms
-	srand(1);
   }
 
   /**
@@ -77,9 +77,12 @@ SC_MODULE(ex09_initiator) {
     tlm::tlm_generic_payload *trans = new tlm::tlm_generic_payload;
 
     int i = 0;
+	
+	boost::random::mt19937 rng;
+	boost::random::uniform_int_distribution<> cmd_dist(0,1);
 
     while (1) {
-      tlm::tlm_command cmd = static_cast<tlm::tlm_command>(rand() % 2);
+      tlm::tlm_command cmd = static_cast<tlm::tlm_command>(cmd_dist(rng));
 
       if (cmd == tlm::TLM_WRITE_COMMAND)
         data = 0xFF000000 | i;
