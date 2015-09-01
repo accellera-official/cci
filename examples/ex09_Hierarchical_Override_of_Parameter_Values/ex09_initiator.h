@@ -63,6 +63,9 @@ SC_MODULE(ex09_initiator) {
 
     // initiator's SC_THREAD declaration
     SC_THREAD(run_initiator);
+
+	// Arbitrary seed for RNG, ensuring consistent results across platforms
+	srand(1);
   }
 
   /**
