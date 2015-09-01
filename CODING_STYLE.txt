@@ -1,15 +1,46 @@
-We are following Philipp's recommendations (from 
-https://github.com/OSCI-WG/cci/pull/17) to achieve consistency with other 
-SystemC standards:
+We aim for consistency with other SystemC Standards. We follow Philipp's 
+recommendations (from https://github.com/OSCI-WG/cci/pull/17) as a foundation:
 
-- Generally follow Google C++ style guide
-  (Over time we will note critical exceptions in this document.)
-- naming all lower-case, separated by underscores
+- generally follow Google C++ style guide
+- naming all lower-case, separated by underscores (i.e. no CamelCase)
 - nested typedefs with `_type`
 - base classes ending with `_base` (or `_b`)
 
-We also agreed (in 3/16/2015 WG meeting) to use:
-- 'get_' prefix for all getters
-- 'set_' prefix for all setters
-This varies slightly from the SystemC norm but we felt strict uniformity was
-more important.
+And we add the following incremental guidance:
+- "cfg" is our abbreviation for configuration
+- single namespace (cci::)
+- "cci_" prefix for all class names
+  Extend prefix (e.g. "cci_cfg") as needed to avoid conflict
+  (refer to: https://github.com/OSCI-WG/cci/issues/44)
+- comply with relevant precedent for getters/setters, for examples:
+    STL: size()/resize() for containers,
+    SystemC/TLM: name()
+  where no precedent, prefer explicit get_ and set_ prefixes.
+  (refer to: https://github.com/OSCI-WG/cci/issues/42)
+- use doxygen source code comments
+  References come from:
+    http://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#docstructure
+  where more detailed information can be found.
+
+  Use the JavaDoc style:
+  /**
+   * ... text ...
+   */
+
+  Use the following format for single line briefs:
+  /// Brief description.
+
+  Use the following format for documentation after members:
+  int var; ///< Brief description after the member
+
+  Use '@' command tags vs. '\'
+
+  General guideline: avoid styles that use '!'.
+
+  Provide at least the following commands:
+    file: @brief, @author
+    class: @class, @brief 
+    class methods: @brief, @param, @return, @exception
+    sc_main function: @fn, @brief, @param, @return
+
+  Detailed descriptions are encouraged when warranted.
