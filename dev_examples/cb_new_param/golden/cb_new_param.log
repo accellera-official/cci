@@ -1,0 +1,29 @@
+
+@0 s /0 (Owner): Constructor initialization of int_param, uint_param, uint_param2, str_param, bool_param
+
+------ sc_start() ----------------
+
+@0 s /0 (Observer): Executing main_action
+@0 s /0 (Observer): Registering for new parameter callbacks
+@0 s /0 (Observer): Registering for Owner.int_param post_write callbacks
+@0 s /0 (Observer): Registering for Owner.uint_param post_write callbacks
+
+@1 ns /1 (Owner): Executing main_action
+@1 ns /1 (Owner): - Creating uchar_param parameter
+@1 ns /1 (Observer): New parameter callback 'Owner.uchar_param', value '0'
+
+@1 ns /1 (Owner): - Changing uint_param value to 1
+@1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' changed to value '1'
+
+@1 ns /1 (Owner): - Changing uint_param2 value to 2
+
+@1 ns /1 (Owner): - List of all parameters:
+	Owner.bool_param
+	Owner.int_param
+	Owner.str_param
+	Owner.uchar_param
+	Owner.uint_param
+	Owner.uint_param2
+
+
+------ sc_start() returned -------

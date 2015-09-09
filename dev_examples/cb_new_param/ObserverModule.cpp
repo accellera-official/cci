@@ -38,29 +38,31 @@ ObserverModule::~ObserverModule() {
 
 
 void ObserverModule::main_action() {
-  cout << "----------------------------" << endl;
+  cout << endl;
+  DEMO_DUMP(name(), "Executing main_action");
 
   // ******** register for new parameter callbacks ***************
-  DEMO_DUMP(name(), "register for new parameter callbacks");
+  DEMO_DUMP(name(), "Registering for new parameter callbacks");
   cci::shared_ptr<cci::callb_adapt> cb_new_pa;
-  cb_new_pa = mApi->register_callback(cci::create_param, "*", this, 
+  cb_new_pa = mApi->register_str_callback(cci::create_param, "*", this, 
                                    cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
 
   // ******** register for parameter change callbacks ***************
-  DEMO_DUMP(name(), "register for post_write callbacks");
+  DEMO_DUMP(name(), "Registering for Owner.int_param post_write callbacks");
   cci::cci_base_param* p = mApi->get_param("Owner.int_param");
   assert(p != NULL);
   cci::shared_ptr<cci::callb_adapt> cb1, cb3;
   cb1 = p->register_callback(cci::post_write, this, 
                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
+ 
+  DEMO_DUMP(name(), "Registering for Owner.uint_param post_write callbacks");
   cci::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
   assert(p2 != NULL);
   cb3 = p2->register_callback(cci::post_write, this, 
                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  
   mCallbacks.push_back(cb3);// This will not be deleted after end of main_action()
-
-  std::cout << std::endl;
 }
 
 /// Callback function with default signature showing changes.
@@ -72,9 +74,10 @@ cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& p
 }
 
 /// Callback function with default signature announcing new parameters.
-cci::callback_return_type ObserverModule::config_new_param_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+cci::callback_return_type ObserverModule::config_new_param_callback(const std::string& parname, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::create_param);
-  std::string str = par.json_serialize();
-  DEMO_DUMP(name(), "New parameter callback '" << par.get_name() << "', value '"<<str<<"'");
+  cci::cci_base_param *p_param = mApi->get_param(parname);
+  std::string str_val = p_param->json_serialize();
+  DEMO_DUMP(name(), "New parameter callback '" << parname << "', value '" << str_val << "'");
   return cci::return_nothing;
 }

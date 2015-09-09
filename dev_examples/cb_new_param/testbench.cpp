@@ -34,9 +34,9 @@ int sc_main(int argc, char *argv[]) {
   ObserverModule        observer   ("Observer");
   ParameterOwnerModule  owner      ("Owner");
 
-  std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
+  std::cout << std::endl << "------ sc_start() ----------------" << std::endl;
   sc_core::sc_start(); 
-  std::cout << std::endl << "------ sc_start() returned -------" << std::endl << std::endl;
+  std::cout << std::endl << "------ sc_start() returned -------" << std::endl;
   
   return EXIT_SUCCESS; 
   

@@ -88,7 +88,7 @@ cci_param_user_data_type::cci_param_user_data_type(
  *  @return void
  */
 void cci_param_user_data_type::set(const user_data_type& val) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
   value = val;
 }
 
@@ -98,7 +98,7 @@ void cci_param_user_data_type::set(const user_data_type& val) {
  *  @return The user_data_type of the parameter.
  */
 const void* cci_param_user_data_type::get() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get Called " << std::endl;
   return &value;
 }
 
@@ -109,7 +109,7 @@ const void* cci_param_user_data_type::get() const {
 *  @return void
 */
 void cci_param_user_data_type::set(const void* val) {
-	std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+	std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
 	if (l_password == NULL) {
 		value = *static_cast<const user_data_type*>(val);
 	}
@@ -123,7 +123,7 @@ void cci_param_user_data_type::set(const void* val) {
  *  @return void
  */
 void cci_param_user_data_type::set(const void* val, const void* lock_pwd) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
   if (l_password == lock_pwd) {
     value = *static_cast<const user_data_type*>(val);
   }
@@ -137,7 +137,7 @@ void cci_param_user_data_type::set(const void* val, const void* lock_pwd) {
  */
 std::string cci_param_user_data_type::json_serialize(
     const user_data_type& val) const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::json_serialize Called " << std::endl;
   return std::string("not IMplemented");
 }
 
@@ -150,7 +150,7 @@ std::string cci_param_user_data_type::json_serialize(
  */
 void cci_param_user_data_type::json_deserialize(user_data_type& target_val,
                                                 const std::string& str) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::json_deserialize Called " << std::endl;
   std::cout << "With Json string " << str << std::endl;
 }
 
@@ -160,7 +160,7 @@ void cci_param_user_data_type::json_deserialize(user_data_type& target_val,
  *  @return The user data type for the value of the parameter
  */
 const void* cci_param_user_data_type::get_default_value() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get_default_value Called " << std::endl;
 
   return &default_value;
 }
@@ -175,7 +175,7 @@ const void* cci_param_user_data_type::get_default_value() const {
  */
 void cci_param_user_data_type::json_deserialize(
     const std::string& json_string) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::json_deserialize Called " << std::endl;
   std::cout << "With Json string " << json_string << std::endl;
 }
 
@@ -185,7 +185,7 @@ void cci_param_user_data_type::json_deserialize(
  *  @return A string representing the value of the parameter
  */
 std::string cci_param_user_data_type::json_serialize() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::json_serialize Called " << std::endl;
   return std::string("Not implemented");
 }
 
@@ -195,7 +195,7 @@ std::string cci_param_user_data_type::json_serialize() const {
  *  @return The basic type.
  */
 cci::basic_param_type cci_param_user_data_type::get_basic_type() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get_basic_type Called " << std::endl;
 
   return cci::param_type_list;
 }
@@ -207,7 +207,7 @@ cci::basic_param_type cci_param_user_data_type::get_basic_type() const {
  *  @return void
  */
 void cci_param_user_data_type::set_value(const cci::cci_value& val) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_value Called " << std::endl;
   c_value = val;
 }
 
@@ -217,7 +217,7 @@ void cci_param_user_data_type::set_value(const cci::cci_value& val) {
  *  @return The cci_value of the parameter
  */
 cci::cci_value cci_param_user_data_type::get_value() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get_value Called " << std::endl;
   return c_value;
 }
 
@@ -228,7 +228,7 @@ cci::cci_value cci_param_user_data_type::get_value() const {
  *  @return void
  */
 void cci_param_user_data_type::set_documentation(const std::string& doc) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_documentation Called " << std::endl;
 
   documentation = doc;
 }
@@ -239,7 +239,7 @@ void cci_param_user_data_type::set_documentation(const std::string& doc) {
  *  @return The documentation in a string
  */
 std::string cci_param_user_data_type::get_documentation() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get_documentation Called " << std::endl;
   return documentation;
 }
 
@@ -249,7 +249,7 @@ std::string cci_param_user_data_type::get_documentation() const {
  *  @return True of false depending on whether the value is still the default or not
  */
 bool cci_param_user_data_type::is_default_value() {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::is_default_value Called " << std::endl;
 
   return default_flag;
 }
@@ -260,7 +260,7 @@ bool cci_param_user_data_type::is_default_value() {
  *  @return True or false depending on whether the value is valid or not
  */
 bool cci_param_user_data_type::is_invalid_value() {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::is_invalid_valueCalled " << std::endl;
 
   return invalid_flag;
 }
@@ -271,7 +271,7 @@ bool cci_param_user_data_type::is_invalid_value() {
  *  @return void
  */
 void cci_param_user_data_type::set_invalid_value() {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_invalid_value Called " << std::endl;
   invalid_flag = true;
 }
 
@@ -281,7 +281,7 @@ void cci_param_user_data_type::set_invalid_value() {
  *  @return True or false depending on whether the value is the initial value or not
  */
 bool cci_param_user_data_type::is_initial_value() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::is_initial_value Called " << std::endl;
   return initial_flag;
 }
 
@@ -291,7 +291,7 @@ bool cci_param_user_data_type::is_initial_value() const {
  *  @return The string representation of the name of the parameter
  */
 const std::string& cci_param_user_data_type::get_name() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get_name Called " << std::endl;
   std::cout << "Return Name = " << nam << std::endl;
 
   return nam;
@@ -309,7 +309,7 @@ cci::shared_ptr<cci::callb_adapt>
     cci_param_user_data_type::register_callback(const cci::callback_type type,
                                                 void* observer,
                                                 cci::param_callb_func_ptr function) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::register_callback Called " << std::endl;
   /* Complex Later */
 
   static cci::shared_ptr<cci::callb_adapt> dummy;
@@ -326,7 +326,7 @@ cci::shared_ptr<cci::callb_adapt>
 cci::shared_ptr<cci::callb_adapt>
     cci_param_user_data_type::register_callback(const cci::callback_type type,
                                                 cci::shared_ptr<cci::callb_adapt> callb) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::register_callback Called " << std::endl;
   /* Complex Later */
   return callb;  // dummy return value for now
 }
@@ -338,7 +338,7 @@ cci::shared_ptr<cci::callb_adapt>
  *  @return void
  */
 void cci_param_user_data_type::unregister_all_callbacks(void* observer) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::unregister_all_callbacks Called " << std::endl;
 
   /* Complex Later */
 }
@@ -350,7 +350,7 @@ void cci_param_user_data_type::unregister_all_callbacks(void* observer) {
  *  @return True or false depending on whether it was successfully unregistered
  */
 bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::callb_adapt> callb) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::unregister_callback Called " << std::endl;
 
   /* Complex Later */
   return true;  // dummy return value for now
@@ -363,7 +363,7 @@ bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::callb_ad
  *  @return A true or false depending on whether the function was unregistered or not
  */
 bool cci_param_user_data_type::unregister_callback(cci::callb_adapt* callb) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::unregister_callback Called " << std::endl;
 
   /* Complex Later */
   return true;  // dummy return value for now
@@ -375,7 +375,7 @@ bool cci_param_user_data_type::unregister_callback(cci::callb_adapt* callb) {
  *  @return True or false depending on whether callbacks are registered
  */
 bool cci_param_user_data_type::has_callbacks() {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::has_callbacks Called " << std::endl;
   return callback_flag;
 }
 
@@ -386,7 +386,7 @@ bool cci_param_user_data_type::has_callbacks() {
  *  @return True or false on whether the lock was successful
  */
 bool cci_param_user_data_type::lock(void* pwd) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::lock Called " << std::endl;
   /* Check if already */
   l_password = pwd;
   lock_flag = true;
@@ -400,7 +400,7 @@ bool cci_param_user_data_type::lock(void* pwd) {
  *  @return True or false depending on whether the parameter was unlocked
  */
 bool cci_param_user_data_type::unlock(void* pwd) {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::unlock Called " << std::endl;
 
   if (pwd == l_password) {
     lock_flag = false;
@@ -415,7 +415,7 @@ bool cci_param_user_data_type::unlock(void* pwd) {
  *  @return True or false depending on whether or not the parameter is locked
  */
 bool cci_param_user_data_type::is_locked() const {
-  std::cout << "Function " << __FUNCTION__ << " Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::is_locked Called " << std::endl;
   return lock_flag;
 }
 

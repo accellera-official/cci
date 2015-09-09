@@ -25,7 +25,7 @@ GreenSocs' proof-of-concept implementation.
     - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.0)
     - TARGET_ARCH (e.g. linux64)
   - build libraries by invoking 'gmake' in the following directories:
-    - src
+    - api
     - gs_broker_implementation
     - gs_param_implementation
   - run individual examples or the full suite

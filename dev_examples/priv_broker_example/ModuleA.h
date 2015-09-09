@@ -24,7 +24,7 @@
 #include "cci_configuration"
 
 #define SC_INCLUDE_DYNAMIC_PROCESSES
-#include "gs_cci_private_broker_accessor.h"
+#include "gs_cci_cnf_private_broker_accessor.h"
 
 #include "ModuleB.h"
 
