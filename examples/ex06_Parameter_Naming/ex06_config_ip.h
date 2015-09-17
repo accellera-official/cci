@@ -60,6 +60,7 @@ SC_MODULE(ex06_config_ip) {
     std::ostringstream ss;
     cci::cci_base_param *int_param_ptr = NULL;
     const std::string sim_ip_int_param_ip_name = "sim_ip.int_param_ip";
+    const std::string sim_ip_int_param_ip_name_0 = "sim_ip.int_param_ip_0";
     const std::string sc_main_int_param_top_name = "int_param_top";
     const std::string int_param_custom_name = "top.sub.int_param_custom";
 
@@ -86,6 +87,29 @@ SC_MODULE(ex06_config_ip) {
               << int_param_ptr->get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name
+                    << ") is not found!");
+    }
+
+    // Check the auto generated parameter name due to name collision
+    if (m_cci->param_exists(sim_ip_int_param_ip_name_0)) {
+      // Get handle to the param
+      int_param_ptr = m_cci->get_param(sim_ip_int_param_ip_name_0);
+      assert(int_param_ptr != NULL);
+
+      // Update the param's value
+      XREPORT("execute: [EXTERNAL] Current value of "
+              << sim_ip_int_param_ip_name_0 << " is "
+              << int_param_ptr->json_serialize());
+      XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name_0
+              << " to 50");
+      int_param_ptr->json_deserialize("50");
+
+      // Display new value
+      std::string new_value = int_param_ptr->json_serialize();
+      XREPORT("execute: [EXTERNAL] Current value of "
+              << int_param_ptr->get_name() << " is " << new_value);
+    } else {
+      XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name_0
                     << ") is not found!");
     }
 
