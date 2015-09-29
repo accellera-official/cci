@@ -22,6 +22,7 @@
  *  @file   ex06_config_ip.h
  *  @brief  Get handles to sim_ip/sc_main's params and update them
  *  @author Asif Mondal, TI
+ *          Lei Liang, Ericsson
  */
 
 #ifndef EXAMPLES_EX06_PARAMETER_NAMING_EX06_CONFIG_IP_H_
@@ -101,8 +102,8 @@ SC_MODULE(ex06_config_ip) {
               << sim_ip_int_param_ip_name_0 << " is "
               << int_param_ptr->json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name_0
-              << " to 50");
-      int_param_ptr->json_deserialize("50");
+              << " to 60");
+      int_param_ptr->json_deserialize("60");
 
       // Display new value
       std::string new_value = int_param_ptr->json_serialize();
@@ -124,8 +125,8 @@ SC_MODULE(ex06_config_ip) {
               << sc_main_int_param_top_name << " is "
               << int_param_ptr->json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << sc_main_int_param_top_name
-              << " to 50");
-      int_param_ptr->json_deserialize("50");
+              << " to 70");
+      int_param_ptr->json_deserialize("70");
 
       // Display new value
       std::string new_value = int_param_ptr->json_serialize();
@@ -146,8 +147,8 @@ SC_MODULE(ex06_config_ip) {
       XREPORT("execute: [EXTERNAL] Current value of " << int_param_custom_name
               << " is " << int_param_ptr->json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_custom_name
-              << " to 50");
-      int_param_ptr->json_deserialize("50");
+              << " to 80");
+      int_param_ptr->json_deserialize("80");
 
       // Display new value
       std::string new_value = int_param_ptr->json_serialize();

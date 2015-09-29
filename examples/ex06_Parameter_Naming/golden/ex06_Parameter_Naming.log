@@ -45,28 +45,28 @@ Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip i
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip_0 is 20
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.int_param_ip_0 to 50
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.int_param_ip_0 to 60
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip_0 is 50
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip_0 is 60
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 30
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of int_param_top to 50
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of int_param_top to 70
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 50
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 70
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_custom is 40
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of top.sub.int_param_custom to 50
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of top.sub.int_param_custom to 80
 
-Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_custom is 50
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_custom is 80
 
 Info: sc_main: End Simulation.
 
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 50
 
-Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip_0 is 50
+Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip_0 is 60
 
-Info: sim_ip: Dtor: Current value of int_param_top is 50
+Info: sim_ip: Dtor: Current value of int_param_top is 70
 
-Info: sim_ip: Dtor: Current value of top.sub.int_param_custom is 50
+Info: sim_ip: Dtor: Current value of top.sub.int_param_custom is 80
