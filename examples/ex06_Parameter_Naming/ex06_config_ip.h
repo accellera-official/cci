@@ -4,6 +4,9 @@
 
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
+  
+  Copyright 2015 Ericsson AB.
+  All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,7 +25,7 @@
  *  @file   ex06_config_ip.h
  *  @brief  Get handles to sim_ip/sc_main's params and update them
  *  @author Asif Mondal, TI
- *          Lei Liang, Ericsson
+ *          Lei Liang, Ericsson AB
  */
 
 #ifndef EXAMPLES_EX06_PARAMETER_NAMING_EX06_CONFIG_IP_H_
