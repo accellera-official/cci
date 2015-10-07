@@ -4,6 +4,9 @@
 
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
+  
+  Copyright 2015 Ericsson AB.
+  All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,6 +25,7 @@
  *  @file   ex06_config_ip.h
  *  @brief  Get handles to sim_ip/sc_main's params and update them
  *  @author Asif Mondal, TI
+ *          Lei Liang, Ericsson AB
  */
 
 #ifndef EXAMPLES_EX06_PARAMETER_NAMING_EX06_CONFIG_IP_H_
@@ -60,6 +64,7 @@ SC_MODULE(ex06_config_ip) {
     std::ostringstream ss;
     cci::cci_base_param *int_param_ptr = NULL;
     const std::string sim_ip_int_param_ip_name = "sim_ip.int_param_ip";
+    const std::string sim_ip_int_param_ip_name_0 = "sim_ip.int_param_ip_0";
     const std::string sc_main_int_param_top_name = "int_param_top";
     const std::string int_param_custom_name = "top.sub.int_param_custom";
 
@@ -89,6 +94,29 @@ SC_MODULE(ex06_config_ip) {
                     << ") is not found!");
     }
 
+    // Check the auto generated parameter name due to name collision
+    if (m_cci->param_exists(sim_ip_int_param_ip_name_0)) {
+      // Get handle to the param
+      int_param_ptr = m_cci->get_param(sim_ip_int_param_ip_name_0);
+      assert(int_param_ptr != NULL);
+
+      // Update the param's value
+      XREPORT("execute: [EXTERNAL] Current value of "
+              << sim_ip_int_param_ip_name_0 << " is "
+              << int_param_ptr->json_serialize());
+      XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name_0
+              << " to 60");
+      int_param_ptr->json_deserialize("60");
+
+      // Display new value
+      std::string new_value = int_param_ptr->json_serialize();
+      XREPORT("execute: [EXTERNAL] Current value of "
+              << int_param_ptr->get_name() << " is " << new_value);
+    } else {
+      XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name_0
+                    << ") is not found!");
+    }
+
     // Check for existance of the param
     if (m_cci->param_exists(sc_main_int_param_top_name)) {
       // Get handle to the param
@@ -100,8 +128,8 @@ SC_MODULE(ex06_config_ip) {
               << sc_main_int_param_top_name << " is "
               << int_param_ptr->json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << sc_main_int_param_top_name
-              << " to 50");
-      int_param_ptr->json_deserialize("50");
+              << " to 70");
+      int_param_ptr->json_deserialize("70");
 
       // Display new value
       std::string new_value = int_param_ptr->json_serialize();
@@ -122,8 +150,8 @@ SC_MODULE(ex06_config_ip) {
       XREPORT("execute: [EXTERNAL] Current value of " << int_param_custom_name
               << " is " << int_param_ptr->json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_custom_name
-              << " to 50");
-      int_param_ptr->json_deserialize("50");
+              << " to 80");
+      int_param_ptr->json_deserialize("80");
 
       // Display new value
       std::string new_value = int_param_ptr->json_serialize();

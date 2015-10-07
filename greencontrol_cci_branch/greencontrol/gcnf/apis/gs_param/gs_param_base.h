@@ -149,7 +149,14 @@ public:
       else                       ss << n;
       GS_PARAM_DUMP("Set parameter array member name = '"<< ss.str().c_str()<<"',");
     }
-    m_par_name = ss.str();
+
+    //   handle name collision
+    m_par_name = string(cci::cci_gen_unique_name(ss.str().c_str()));
+    if (m_par_name != ss.str()) {
+      std::stringstream collMsg;
+      collMsg << "the paramater "<< ss.str() << " is already existing, new name "<<m_par_name<<" is assigned"<<std::endl;
+      SC_REPORT_WARNING(name(),collMsg.str().c_str());
+    }
     
     if (parent_array != NULL) {
       GS_PARAM_DUMP("Init this parameter as a member of the Extended Parameter Array '"<< parent_array->getName().c_str()<<"'."); 
