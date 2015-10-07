@@ -37,7 +37,9 @@ const char* cci::cci_gen_unique_name(const char* name) {
     new_name << name << "_" << ret.first->second; // generate new name
     ret.first->second++; // update counter
     // recursive call, to store the new generated name in the map as well!
-    return cci_gen_unique_name(new_name.str().c_str()); 
+    cci_gen_unique_name(new_name.str().c_str());
+    // return pointer to stored new name which is persistent
+    return unique_name_map.find(new_name.str())->first.c_str();
   }
   // insert successful
   return name;
