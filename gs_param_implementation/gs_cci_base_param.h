@@ -29,6 +29,7 @@
 #include <map>
 #include <set>
 #include "cci_cfg/cci_param_impl_if.h"
+#include "gs_spinlock.h"
 
 __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
   
@@ -141,6 +142,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_latest_write_access_originator_cp("NONE")
     , m_latest_write_access_originator_valid(false)
     {
+      m_spinlock = new gs_spinlock_t;
+      gs_spinlock_init(m_spinlock);
     }
 
   //protected:
@@ -161,7 +164,9 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       
       // remove this from all callbacks being called by this parameter (to prevent them to remove themselves from this on their destruction)
       for (unsigned int i = 0; i < fw_vec.size(); ++i)
-        fw_vec[i]->adapt->caller_param = NULL;      
+        fw_vec[i]->adapt->caller_param = NULL;
+
+      gs_spinlock_destroy(m_spinlock);
     }
     
     /// Implicit cast operator
@@ -291,6 +296,14 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
       if (!m_latest_write_access_originator_valid) return NULL;
       return &m_latest_write_access_originator_cp;
     }
+
+    virtual void request_exclusive() const {
+      gs_spinlock_lock(m_spinlock);
+    }
+
+    virtual void release_exclusive() const {
+      gs_spinlock_unlock(m_spinlock);
+    }
     
   protected:
     
@@ -334,6 +347,8 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
 	mutable cci::cci_originator m_latest_write_access_originator_cp;
     /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
     mutable bool m_latest_write_access_originator_valid;
+
+    gs_spinlock_t* m_spinlock;
     
   };
 

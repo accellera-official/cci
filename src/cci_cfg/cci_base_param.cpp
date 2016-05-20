@@ -28,16 +28,17 @@
 #include "cci_base_param.h"
 #include "cci_param_impl_if.h"
 
-
 CCI_OPEN_NAMESPACE_
 
 	cci_base_param::cci_base_param(cci_base_param & copy, const cci_originator & originator) 
 	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false)
-	{}
+	{
+	}
 
 	cci_base_param::cci_base_param(cci_param_impl_if & impl, const cci_originator & originator) 
 	: m_originator(originator), m_impl(impl), m_owns_impl(true)
-	{}
+	{
+	}
 
 	cci_base_param::~cci_base_param()
 	{
@@ -51,33 +52,48 @@ CCI_OPEN_NAMESPACE_
 	{
 		// Make originator available to the implementation.
 		cci_originator::set_global_originator(&m_originator);
+		m_impl.request_exclusive();
 		m_impl.json_deserialize(json_string);
+		m_impl.release_exclusive();
 	}
 
 	std::string cci_base_param::json_serialize() const
 	{
-		return m_impl.json_serialize();
+		m_impl.request_exclusive();
+		std::string json = m_impl.json_serialize();
+		m_impl.release_exclusive();
+		return json;
 	}
 
 
 	void cci_base_param::set_value(const cci_value& val)
 	{
+		m_impl.request_exclusive();
 		m_impl.set_value(val);
+		m_impl.release_exclusive();
 	}
 
 	cci_value cci_base_param::get_value() const
 	{
-		return m_impl.get_value();
+		m_impl.request_exclusive();
+		cci_value value = m_impl.get_value();
+		m_impl.release_exclusive();
+		return value;
 	}
 
 	void cci_base_param::set_documentation(const std::string& doc)
 	{
+		m_impl.request_exclusive();
 		m_impl.set_documentation(doc);
+		m_impl.release_exclusive();
 	}
 
 	std::string cci_base_param::get_documentation() const
 	{
-		return m_impl.get_documentation();
+		m_impl.request_exclusive();
+		std::string documentation = m_impl.get_documentation();
+		m_impl.release_exclusive();
+		return documentation;
 	}
 
 	bool cci_base_param::is_default_value()
@@ -98,47 +114,73 @@ CCI_OPEN_NAMESPACE_
 
 	shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
 	{
-		return m_impl.register_callback(type, observer, function);
+		m_impl.request_exclusive();
+		shared_ptr<callb_adapt> callback = m_impl.register_callback(type, observer, function);
+		m_impl.release_exclusive();
+		return callback;
 	}
 
 	shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, shared_ptr<callb_adapt> callb)
 	{
-		return m_impl.register_callback(type, callb);
+		m_impl.request_exclusive();
+		shared_ptr<callb_adapt> callback = m_impl.register_callback(type, callb);
+		m_impl.release_exclusive();
+		return callback;
 	}
 
 	void cci_base_param::unregister_all_callbacks(void* observer)
 	{
+		m_impl.request_exclusive();
 		m_impl.unregister_all_callbacks(observer);
+		m_impl.release_exclusive();
 	}
 
 	bool cci_base_param::unregister_callback(cci::shared_ptr<callb_adapt> callb)
 	{
-		return m_impl.unregister_callback(callb);
+		m_impl.request_exclusive();
+		bool callback = m_impl.unregister_callback(callb);
+		m_impl.release_exclusive();
+		return callback;
 	}
 
 	bool cci_base_param::unregister_callback(callb_adapt* callb)
 	{
-		return m_impl.unregister_callback(callb);
+		m_impl.request_exclusive();
+		bool callback = m_impl.unregister_callback(callb);
+		m_impl.release_exclusive();
+		return callback;
 	}
 
 	bool cci_base_param::has_callbacks()
 	{
-		return m_impl.has_callbacks();
+		m_impl.request_exclusive();
+		bool callback =  m_impl.has_callbacks();
+		m_impl.release_exclusive();
+		return callback;
 	}
 
 	bool cci_base_param::lock(void* pwd)
 	{
-		return m_impl.lock(pwd);
+		m_impl.request_exclusive();
+		bool lock = m_impl.lock(pwd);
+		m_impl.release_exclusive();
+		return lock;
 	}
 
 	bool cci_base_param::unlock(void* pwd)
 	{
-		return m_impl.unlock(pwd);
+		m_impl.request_exclusive();
+		bool unlock = m_impl.unlock(pwd);
+		m_impl.release_exclusive();
+		return unlock;
 	}
 
 	bool cci_base_param::is_locked() const
 	{
-		return m_impl.is_locked();
+		m_impl.request_exclusive();
+		bool lock = m_impl.is_locked();
+		m_impl.release_exclusive();
+		return lock;
 	}
 
 	basic_param_type cci_base_param::get_basic_type() const
@@ -163,7 +205,10 @@ CCI_OPEN_NAMESPACE_
 
 	const void* cci_base_param::get() const
 	{
-		return m_impl.get();
+		m_impl.request_exclusive();
+		void* value = (void*)m_impl.get();
+		m_impl.release_exclusive();
+		return value;
 	}
 
 	const void* cci_base_param::get_default_value() const
@@ -175,19 +220,28 @@ CCI_OPEN_NAMESPACE_
 	{
 		// Make originator available to the implementation.
 		cci_originator::set_global_originator(&m_originator);
+		m_impl.request_exclusive();
 		m_impl.set(vp);
+		m_impl.release_exclusive();
 	}
 
 	void cci_base_param::set(const void* vp, const void* pwd)
 	{
 		// Make originator available to the implementation.
 		cci_originator::set_global_originator(&m_originator);
+		m_impl.request_exclusive();
 		m_impl.set(vp, pwd);
+		m_impl.release_exclusive();
 	}
 
 	bool cci_base_param::equals(const cci_param_impl_if& rhs) const
 	{
-		return m_impl.equals(rhs);
+		rhs.request_exclusive();
+		m_impl.request_exclusive();
+		bool equals = m_impl.equals(rhs);
+		m_impl.release_exclusive();
+		rhs.release_exclusive();
+		return equals;
 	}
 
 	void cci_base_param::init()

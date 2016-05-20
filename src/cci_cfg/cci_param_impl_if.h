@@ -198,6 +198,24 @@ public:
 	/// @copydoc cci_base_param::destroy
 	virtual void destroy() = 0;
 
+
+	///@name Thread safety access
+	///@{
+
+	/// Request exclusive lock
+	/**
+	 * Request lock on parameter
+	 */
+	virtual void request_exclusive() const = 0;
+
+	/// Release exclusive lock
+	/**
+	 * Release lock on parameter
+	 */
+	virtual void release_exclusive() const = 0;
+
+	///@}
+
 	///@}
 
 };
