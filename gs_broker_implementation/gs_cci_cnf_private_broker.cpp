@@ -114,11 +114,7 @@ cci::cci_base_param* cci::gs_cci_private_broker::get_param_const(const std::stri
     return iter->second;
   else {
     // and get from hierarchically upper broker
-    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
-    cci::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::gs_cci_cnf_broker_accessor*>(m_upper_broker);
-    cci::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
-    assert(gs_br && gs_br != this);
-    return gs_br->get_param(parname);      
+    return m_upper_broker->get_param(parname);
   }
   return NULL;
 }
@@ -167,11 +163,7 @@ void cci::gs_cci_private_broker::add_param(cci_base_param* par) {
     //std::cout << name() << " (gs_cci_cnf_broker) add param to PRIVATE broker " << par->get_name() << std::endl;
   // or add to hierarchically upper broker if public
   } else {
-    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
-    cci::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::gs_cci_cnf_broker_accessor*>(m_upper_broker);
-    cci::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
-    assert(gs_br && gs_br != this);
-    gs_br->add_param(par);
+    m_upper_broker->add_param(par);
   }
 }
 
@@ -180,11 +172,7 @@ void cci::gs_cci_private_broker::remove_param(cci::cci_base_param* par) {
     m_mirrored_registry.erase(par->get_name());
   // or remove from hierarchically upper broker if public
   else {
-    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
-    cci::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::gs_cci_cnf_broker_accessor*>(m_upper_broker);
-    cci::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
-    assert(gs_br && gs_br != this);
-    gs_br->remove_param(par);      
+    m_upper_broker->remove_param(par);
   }
 }
 
