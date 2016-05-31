@@ -524,6 +524,20 @@ public:
     return true;
   }
   
+  const std::string getInitValue(const std::string &parname) {
+    GCNF_DUMP_N(name(), "getInitValue("<<parname.c_str()<<")");
+    {
+      // Create Transaction and send it to config plugin
+      ControlTransactionHandle th = m_gc_port.createTransaction();
+      th->set_mService(CONFIG_SERVICE);
+      th->set_mCmd(CMD_GET_INIT_VAL);
+      th->set_mSpecifier(parname); // e.g. "TestIP1.Param1"
+
+      m_gc_port->transport(th);
+      return th->get_mValue();
+    }
+  }
+
   bool lockInitValue(const std::string &parname, std::string meta_data = "") {
     GCNF_DUMP_N(name(), "lockInitValue("<<parname.c_str()<<")");      
     

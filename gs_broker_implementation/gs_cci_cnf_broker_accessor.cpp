@@ -57,6 +57,10 @@ void cci::gs_cci_cnf_broker_accessor::json_deserialize_initial_value(const std::
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
+const std::string cci::gs_cci_cnf_broker_accessor::json_serialize_initial_value(const std::string &parname) {
+  return m_broker->json_serialize_initial_value(parname);
+}
+
 void cci::gs_cci_cnf_broker_accessor::lock_initial_value(const std::string &parname) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   m_broker->lock_initial_value(parname);

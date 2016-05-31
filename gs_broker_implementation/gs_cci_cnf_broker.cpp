@@ -133,6 +133,10 @@ void cci::gs_cci_cnf_broker::json_deserialize_initial_value(const std::string &p
   // TODO: if <parname> is implicit parameter, cause a post_write-callback here!
 }
 
+const std::string cci::gs_cci_cnf_broker::json_serialize_initial_value(const std::string &parname) {
+  return gs::cnf::GCnf_Api::getInitValue(parname);
+}
+
 const cci::cci_originator* cci::gs_cci_cnf_broker::get_latest_write_originator(const std::string &parname) const {
   cci::cci_base_param* p = get_param_const(parname);
   if (p) {

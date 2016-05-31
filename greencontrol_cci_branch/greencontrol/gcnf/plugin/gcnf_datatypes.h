@@ -40,6 +40,8 @@ enum ConfigCommand {
   CMD_ADD_PARAM,
   /// Command: set the init value of a parameter (API -> plugin).
   CMD_SET_INIT_VAL,
+  /// Command: get the init value of a parameter (API -> plugin).
+  CMD_GET_INIT_VAL,
   /// Command: lock the init value of a parameter (API -> plugin).
   CMD_LOCK_INIT_VAL,
   /// Command: get the value of a parameter (API -> plugin).
