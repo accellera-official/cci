@@ -534,6 +534,14 @@ public:
       th->set_mSpecifier(parname); // e.g. "TestIP1.Param1"
 
       m_gc_port->transport(th);
+
+      if (th->get_mError() == 0) {
+          GCNF_DUMP_N(name(), "getInitValue: ... got value = "<<th->get_mValue().c_str());
+      } else {
+          GCNF_DUMP_N(name(), "getInitValue: ... getting initial value failed (error "<<th->get_mError()<<")!");
+          SC_REPORT_WARNING(name(), "getInitValue: ... getting initial value failed!");
+      }
+
       return th->get_mValue();
     }
   }
