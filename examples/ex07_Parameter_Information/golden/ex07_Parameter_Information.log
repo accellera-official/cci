@@ -135,6 +135,10 @@ Info: param_owner: @26 ns, @ 26 ns	demonstrating setting values by OWNER using c
 
 Info: param_owner: @26 ns, [OWNER -> Set] : New String Value : 'String_Value_Set_by_OWNER
 
+Info: param_cfgr: @26 ns, [CFGR] : The initial value for param_owner.mutable_string_param is "Initialized within sc_main"
+
+Info: param_cfgr: @26 ns, [CFGR] : The initial value for param_owner.mutable_string_param is empty
+
 Info: param_owner: @28 ns, @ 28 ns	demonstrating retrieving values by OWNER using cci_value
 
 Info: param_owner: @28 ns, [OWNER -> Retrieve] : Receive str_value using 'cci_value' : String_Value_Set_by_OWNER
