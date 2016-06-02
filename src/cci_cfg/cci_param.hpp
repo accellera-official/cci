@@ -345,7 +345,8 @@ bool cci_param<T,TM>::is_accessor() const { return m_is_accessor; }
 template<typename T, param_mutable_type TM>
 cci_base_param* cci_param<T,TM>::create_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  cci_base_param* ret = new cci_param<T,TM>(*this, originator); 
+  cci_base_param* ret = new cci_param<T,TM>(*this, originator);
+  add_param_accessor(ret);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -649,7 +650,8 @@ bool cci_param<std::string,TM>::is_accessor() const { return m_is_accessor; }
 template<param_mutable_type TM>
 cci_base_param* cci_param<std::string,TM>::create_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  cci_base_param* ret = new cci_param<std::string,TM>(*this, originator); 
+  cci_base_param* ret = new cci_param<std::string,TM>(*this, originator);
+  add_param_accessor(ret);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }

@@ -144,7 +144,9 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci
 	template <typename T, param_mutable_type TM>
 	cci_param<typename cci_param<T, TM>::value_type, TM>* cci_param<T, TM>::create_accessor(const cci_originator& originator)
 	{
-		return new cci_param(*this, originator);
+		cci_param* ret = new cci_param(*this, originator);
+		cci_base_param::add_param_accessor(ret);
+		return ret;
 	}
 
 	CCI_CLOSE_NAMESPACE_

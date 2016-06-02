@@ -28,6 +28,7 @@ limitations under the License.
 #define CCI_BASE_PARAM_H_INCLUDED_
 
 #include <string>
+#include <map>
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_value.h"
@@ -286,6 +287,23 @@ public:
 	* @return an accessor to this parameter
 	*/
 	virtual cci_base_param* create_accessor(const cci_originator& originator) = 0;
+
+	/// Indicates that the accessed parameter get destroyed or no.
+	/**
+	 *
+	 * Note: Only valid in case of an accessor.
+	 *
+	 * @return false if accessed_param_destroyed no more exist; otherwise, true
+	 */
+	bool is_accessed_param_destroyed() const;
+
+	/// Update status of the accessed parameter.
+	/**
+	 *
+	 * @param  status true if accessed parameter get destroyed; otherwise, false
+	 * @return false if accessed_param_destroyed no more exist; otherwise, true
+	 */
+	void set_accessed_param_destroyed(const bool& status);
 	
 	///@}
 
@@ -352,6 +370,12 @@ protected:
 
 	///@}
 
+	/// Add parameter accessor
+	/**
+	* @param accessor Parameter accessor to associate to accessed parameter
+	*/
+	void add_param_accessor(cci_base_param* accessor);
+
 private:
 
 	/// Originator of the parameter proxy.
@@ -363,6 +387,15 @@ private:
 	/// Indicates whether this proxy is creator of the impl or an accessor to it.
 	const bool m_owns_impl;
 
+	// Accessed parameter status
+	bool m_accessed_param_destroyed;
+
+	// Parameter accessor map
+	typedef std::map<std::string, cci_base_param*> param_accessor_map;
+	param_accessor_map m_param_accessor_map;
+
+	/// Check accessed parameter
+	void check_accessed_param() const;
 };
 
 CCI_CLOSE_NAMESPACE_

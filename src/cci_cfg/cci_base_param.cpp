@@ -32,23 +32,32 @@
 CCI_OPEN_NAMESPACE_
 
 	cci_base_param::cci_base_param(cci_base_param & copy, const cci_originator & originator) 
-	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false)
+	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false),
+	  m_accessed_param_destroyed(false)
 	{}
 
 	cci_base_param::cci_base_param(cci_param_impl_if & impl, const cci_originator & originator) 
-	: m_originator(originator), m_impl(impl), m_owns_impl(true)
+	: m_originator(originator), m_impl(impl), m_owns_impl(true),
+	  m_accessed_param_destroyed(false)
 	{}
 
 	cci_base_param::~cci_base_param()
 	{
 		if (m_owns_impl)
 		{
+			for (param_accessor_map::iterator it = m_param_accessor_map.begin();
+				 it != m_param_accessor_map.end(); it++) {
+				if(it->second) {
+					it->second->set_accessed_param_destroyed(true);
+				}
+			}
 			m_impl.destroy();
 		}
 	}
 
 	void cci_base_param::json_deserialize(const std::string& json_string)
 	{
+		check_accessed_param();
 		// Make originator available to the implementation.
 		cci_originator::set_global_originator(&m_originator);
 		m_impl.json_deserialize(json_string);
@@ -56,104 +65,145 @@ CCI_OPEN_NAMESPACE_
 
 	std::string cci_base_param::json_serialize() const
 	{
+		check_accessed_param();
 		return m_impl.json_serialize();
 	}
 
 
 	void cci_base_param::set_value(const cci_value& val)
 	{
+		check_accessed_param();
 		m_impl.set_value(val);
 	}
 
 	cci_value cci_base_param::get_value() const
 	{
+		check_accessed_param();
 		return m_impl.get_value();
 	}
 
 	void cci_base_param::set_documentation(const std::string& doc)
 	{
+		check_accessed_param();
 		m_impl.set_documentation(doc);
 	}
 
 	std::string cci_base_param::get_documentation() const
 	{
+		check_accessed_param();
 		return m_impl.get_documentation();
 	}
 
 	bool cci_base_param::is_default_value()
 	{
+		check_accessed_param();
 		return m_impl.is_default_value();
 	}
 
 	bool cci_base_param::is_initial_value() const
 	{
+		check_accessed_param();
 		return m_impl.is_initial_value();
 	}
 
 	const cci_originator* cci_base_param::get_latest_write_originator() const
 	{
+		check_accessed_param();
 		return m_impl.get_latest_write_originator();
 	}
 
 
 	shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
 	{
+		check_accessed_param();
 		return m_impl.register_callback(type, observer, function);
 	}
 
 	shared_ptr<callb_adapt> cci_base_param::register_callback(const callback_type type, shared_ptr<callb_adapt> callb)
 	{
+		check_accessed_param();
 		return m_impl.register_callback(type, callb);
 	}
 
 	void cci_base_param::unregister_all_callbacks(void* observer)
 	{
+		check_accessed_param();
 		m_impl.unregister_all_callbacks(observer);
 	}
 
 	bool cci_base_param::unregister_callback(cci::shared_ptr<callb_adapt> callb)
 	{
+		check_accessed_param();
 		return m_impl.unregister_callback(callb);
 	}
 
 	bool cci_base_param::unregister_callback(callb_adapt* callb)
 	{
+		check_accessed_param();
 		return m_impl.unregister_callback(callb);
 	}
 
 	bool cci_base_param::has_callbacks()
 	{
+		check_accessed_param();
 		return m_impl.has_callbacks();
 	}
 
 	bool cci_base_param::lock(void* pwd)
 	{
+		check_accessed_param();
 		return m_impl.lock(pwd);
 	}
 
 	bool cci_base_param::unlock(void* pwd)
 	{
+		check_accessed_param();
 		return m_impl.unlock(pwd);
 	}
 
 	bool cci_base_param::is_locked() const
 	{
+		check_accessed_param();
 		return m_impl.is_locked();
 	}
 
 	basic_param_type cci_base_param::get_basic_type() const
 	{
+		check_accessed_param();
 		return m_impl.get_basic_type();
 	}
 
 	const std::string& cci_base_param::get_name() const
 	{
+		check_accessed_param();
 		return m_impl.get_name();
 	}
 
 	bool cci_base_param::is_accessor() const
 	{
 		return !m_owns_impl;
+	}
+
+	bool cci_base_param::is_accessed_param_destroyed() const
+	{
+		return m_accessed_param_destroyed;
+	}
+
+	void cci_base_param::set_accessed_param_destroyed(const bool& status)
+	{
+		m_accessed_param_destroyed = status;
+	}
+
+	void cci_base_param::add_param_accessor(cci_base_param* accessor)
+	{
+		if (m_owns_impl) {
+			bool new_element = m_param_accessor_map.insert(
+				std::pair<std::string, cci_base_param *>(
+					accessor->get_originator().name(), accessor)).second;
+			assert(new_element &&
+				   "The same accessor parameter had been added twice! "
+				   "Must not happen, to be caught by other if branch.");
+		}
 	}
 
 	cci_originator cci_base_param::get_originator() const
@@ -163,16 +213,19 @@ CCI_OPEN_NAMESPACE_
 
 	const void* cci_base_param::get() const
 	{
+		check_accessed_param();
 		return m_impl.get();
 	}
 
 	const void* cci_base_param::get_default_value() const
 	{
+		check_accessed_param();
 		return m_impl.get_default_value();
 	}
 
 	void cci_base_param::set(const void* vp)
 	{
+		check_accessed_param();
 		// Make originator available to the implementation.
 		cci_originator::set_global_originator(&m_originator);
 		m_impl.set(vp);
@@ -180,6 +233,7 @@ CCI_OPEN_NAMESPACE_
 
 	void cci_base_param::set(const void* vp, const void* pwd)
 	{
+		check_accessed_param();
 		// Make originator available to the implementation.
 		cci_originator::set_global_originator(&m_originator);
 		m_impl.set(vp, pwd);
@@ -187,17 +241,28 @@ CCI_OPEN_NAMESPACE_
 
 	bool cci_base_param::equals(const cci_param_impl_if& rhs) const
 	{
+		check_accessed_param();
 		return m_impl.equals(rhs);
 	}
 
 	void cci_base_param::init()
 	{
+		check_accessed_param();
 		m_impl.init();
 	}
 
 	void cci_base_param::destroy()
 	{
+		check_accessed_param();
 		m_impl.destroy();
+	}
+
+	void cci_base_param::check_accessed_param() const
+	{
+		if(is_accessed_param_destroyed()) {
+			CCI_REPORT_ERROR("CCI_DESTROYED_PARAM",
+							 "The accessed parameter has been destroyed.");
+		}
 	}
 
 CCI_CLOSE_NAMESPACE_

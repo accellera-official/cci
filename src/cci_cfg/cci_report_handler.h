@@ -30,6 +30,7 @@ enum cci_param_failure {
   CCI_ADD_PARAM_FAILURE,
   CCI_REMOVE_PARAM_FAILURE,
   CCI_VALUE_FAILURE,
+  CCI_DESTROYED_PARAM,
   CCI_UNDEFINED_FAILURE
 };
 
@@ -76,6 +77,7 @@ public:
       else if (failure_type_string == "/ASI/CCI/ADD_PARAM_FAILED") return CCI_ADD_PARAM_FAILURE;
       else if (failure_type_string == "/ASI/CCI/REMOVE_PARAM_FAILED") return CCI_REMOVE_PARAM_FAILURE;
       else if (failure_type_string == "/ASI/CCI/CCI_VALUE_FAILURE") return CCI_VALUE_FAILURE;
+      else if (failure_type_string == "/ASI/CCI/CCI_DESTROYED_PARAM") return CCI_DESTROYED_PARAM;
       else return CCI_UNDEFINED_FAILURE;
     }
     else //not a CCI failure report
