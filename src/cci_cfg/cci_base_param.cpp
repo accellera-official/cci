@@ -32,26 +32,26 @@
 CCI_OPEN_NAMESPACE_
 
 	cci_base_param::cci_base_param(cci_base_param & copy, const cci_originator & originator) 
-	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false),
-	  m_accessed_param_destroyed(false)
+	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false), m_accessed_param(&copy)
 	{}
 
 	cci_base_param::cci_base_param(cci_param_impl_if & impl, const cci_originator & originator) 
-	: m_originator(originator), m_impl(impl), m_owns_impl(true),
-	  m_accessed_param_destroyed(false)
+	: m_originator(originator), m_impl(impl), m_owns_impl(true), m_accessed_param(nullptr)
 	{}
 
 	cci_base_param::~cci_base_param()
 	{
 		if (m_owns_impl)
 		{
-			for (param_accessor_map::iterator it = m_param_accessor_map.begin();
-				 it != m_param_accessor_map.end(); it++) {
-				if(it->second) {
-					it->second->set_accessed_param_destroyed(true);
-				}
+			for (param_accessor_vector::iterator it = m_param_accessors.begin();
+				 it != m_param_accessors.end(); it++) {
+					(*it)->set_accessed_param_destroyed();
 			}
 			m_impl.destroy();
+		}
+		else if(m_accessed_param)
+		{
+			m_accessed_param->remove_param_accessor(this);
 		}
 	}
 
@@ -186,23 +186,28 @@ CCI_OPEN_NAMESPACE_
 
 	bool cci_base_param::is_accessed_param_destroyed() const
 	{
-		return m_accessed_param_destroyed;
+		return m_accessed_param ? false : true;
 	}
 
-	void cci_base_param::set_accessed_param_destroyed(const bool& status)
+	void cci_base_param::set_accessed_param_destroyed()
 	{
-		m_accessed_param_destroyed = status;
+		m_accessed_param = nullptr;
 	}
 
 	void cci_base_param::add_param_accessor(cci_base_param* accessor)
 	{
 		if (m_owns_impl) {
-			bool new_element = m_param_accessor_map.insert(
-				std::pair<std::string, cci_base_param *>(
-					accessor->get_originator().name(), accessor)).second;
-			assert(new_element &&
-				   "The same accessor parameter had been added twice! "
-				   "Must not happen, to be caught by other if branch.");
+			m_param_accessors.push_back(accessor);
+		}
+	}
+
+	void cci_base_param::remove_param_accessor(cci_base_param* accessor)
+	{
+		if (m_owns_impl) {
+			m_param_accessors.erase(
+				std::remove(m_param_accessors.begin(),
+						m_param_accessors.end(), accessor),
+				m_param_accessors.end());
 		}
 	}
 
@@ -259,7 +264,7 @@ CCI_OPEN_NAMESPACE_
 
 	void cci_base_param::check_accessed_param() const
 	{
-		if(is_accessed_param_destroyed()) {
+		if(is_accessor() && is_accessed_param_destroyed()) {
 			CCI_REPORT_ERROR("CCI_DESTROYED_PARAM",
 							 "The accessed parameter has been destroyed.");
 		}
