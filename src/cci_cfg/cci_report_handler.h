@@ -85,16 +85,16 @@ public:
 };
 
 #define CCI_REPORT_INFO(_id, _message) \
-cci_report_handler::report(SC_INFO,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_INFO,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_WARNING(_id, _message) \
-cci_report_handler::report(SC_WARNING,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_WARNING,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_ERROR(_id, _message) \
-cci_report_handler::report(SC_ERROR,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_ERROR,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_FATAL(_id, _message) \
-cci_report_handler::report(SC_FATAL,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_FATAL,_id,_message,__FILE__,__LINE__);
 
 
 CCI_CLOSE_NAMESPACE_
