@@ -27,16 +27,19 @@
 
 #include "cci_base_param.h"
 #include "cci_param_impl_if.h"
+#include "cci_broker_manager.h"
 
 
 CCI_OPEN_NAMESPACE_
 
-	cci_base_param::cci_base_param(cci_base_param & copy, const cci_originator & originator) 
-	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false), m_accessed_param(&copy)
+	cci_base_param::cci_base_param(cci_base_param & copy, const cci_originator & originator)
+	: m_originator(originator), m_impl(copy.m_impl), m_owns_impl(false), m_accessed_param(&copy),
+	  m_accessed_param_name(copy.m_impl.get_name())
 	{}
 
-	cci_base_param::cci_base_param(cci_param_impl_if & impl, const cci_originator & originator) 
-	: m_originator(originator), m_impl(impl), m_owns_impl(true), m_accessed_param(nullptr)
+	cci_base_param::cci_base_param(cci_param_impl_if & impl, const cci_originator & originator)
+	: m_originator(originator), m_impl(impl), m_owns_impl(true), m_accessed_param(nullptr),
+	  m_accessed_param_name(m_impl.get_name())
 	{}
 
 	cci_base_param::~cci_base_param()
@@ -191,6 +194,7 @@ CCI_OPEN_NAMESPACE_
 
 	void cci_base_param::set_accessed_param_destroyed()
 	{
+
 		m_accessed_param = nullptr;
 	}
 
@@ -265,9 +269,21 @@ CCI_OPEN_NAMESPACE_
 	void cci_base_param::check_accessed_param() const
 	{
 		if(is_accessor() && is_accessed_param_destroyed()) {
-			CCI_REPORT_ERROR("CCI_DESTROYED_PARAM",
-							 "The accessed parameter has been destroyed.");
+			cci_base_param* param =
+				cci_broker_manager::get_current_broker(m_originator).
+						get_param(m_accessed_param_name);
+			if(!param) {
+				CCI_REPORT_ERROR("CCI_DESTROYED_PARAM",
+								 "The accessed parameter has been destroyed.");
+			} else {
+				m_impl = param->m_impl;
+				m_accessed_param = param->get_accessed_param();
+			}
 		}
+	}
+
+	cci_base_param* cci_base_param::get_accessed_param() {
+		return m_accessed_param;
 	}
 
 CCI_CLOSE_NAMESPACE_

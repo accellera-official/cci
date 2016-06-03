@@ -393,10 +393,15 @@ private:
 	param_accessor_vector m_param_accessors;
 
 	/// Accessed parameter
-	cci_base_param* m_accessed_param;
+	mutable cci_base_param* m_accessed_param;
+
+	/// Accessed parameter name
+	const std::string m_accessed_param_name;
 
 	/// Check accessed parameter
 	void check_accessed_param() const;
+
+	cci_base_param* get_accessed_param();
 };
 
 CCI_CLOSE_NAMESPACE_
