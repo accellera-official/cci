@@ -46,6 +46,9 @@ push( @INC, $1 );
 # flush STDOUT after each print
 $oldfh = select( STDOUT ); $| = 1; select( $oldfh );
 
+# remove CR at end of command line sometimes present on Windows
+$ARGV[-1] =~ s/\r$//;
+
 &main;
 
 
@@ -569,6 +572,9 @@ sub get_systemc_arch
                 }
                 elsif ( $v_string =~ /.+Version 18\.00/) {   # 2013
                     $arch = "msvc12";
+                }
+                elsif ( $v_string =~ /.+Version 19\.00/) {   # 2015
+                    $arch = "msvc14";
                 }
                 else {
                     die "Error: unsupported compiler '$cxx' ($v_string)\n";
