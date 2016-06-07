@@ -166,7 +166,7 @@ public:
 //          GCNF_DUMP_N(name(), "addParam("<<par->getName().c_str()<<") (type: "<<par->getTypeString()<<"): set init value to '"<<p->init_value.c_str()<<"'");
 //          par->m_setting_initial_value_now = true; // mark the following setString as initial value write
 //          p->param->setString(p->init_value);
-            par->m_is_initial_value = true; // mark the parameter's value as initial value
+          par->m_is_initial_value = true; // mark the parameter's value as initial value
         }
         p->is_used = true;
       }
