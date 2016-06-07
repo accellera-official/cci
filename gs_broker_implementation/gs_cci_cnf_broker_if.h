@@ -40,8 +40,6 @@ CCI_OPEN_NAMESPACE_
 
     virtual void json_deserialize_initial_value(const std::string &parname, const std::string &json_value) = 0;
 
-    virtual const std::string json_serialize_initial_value(const std::string &parname) = 0;
-
     virtual const cci_originator* get_latest_write_originator(const std::string &parname) const = 0;
 
     virtual void lock_initial_value(const std::string &parname) = 0;

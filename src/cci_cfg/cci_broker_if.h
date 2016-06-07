@@ -99,14 +99,6 @@ CCI_OPEN_NAMESPACE_
      */
     virtual void json_deserialize_initial_value(const std::string &parname, const std::string &json_value) = 0;
     
-    /// Get a parameter's init value.
-    /**
-     *
-     * @param parname    Full hierarchical parameter name.
-     * @return           JSON string of the parameter's initial value. Empty string is returned when parameter is not existing or its initial value is not existing
-     */
-    virtual const std::string json_serialize_initial_value(const std::string &parname) = 0;
-
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
      * For explicit parameters it is recommended to use the parameter object's get_latest_write_originator() function.

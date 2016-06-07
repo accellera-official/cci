@@ -307,10 +307,6 @@ namespace cnf {
       return true;
     }
 
-    const std::string getInitValue(const std::string &parname) {
-      return mApi->getInitValue(parname);
-    }
-
     /// @see gs::cnf::GCnf_Api::setInitValue
     bool lockInitValue(const std::string &parname, std::string meta_data = "") {
       if (!is_local_param(parname) || is_public_param(parname))

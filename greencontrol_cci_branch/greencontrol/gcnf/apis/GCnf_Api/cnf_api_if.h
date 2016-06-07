@@ -117,16 +117,6 @@ public:
    */
   virtual bool setInitValue(const std::string &parname, const std::string &value, std::string meta_data = "") = 0;
 
-  /// Get a parameter's init value.
-  /**
-   * If the parameter does not yet exist or initial value of the
-   * parameter does not exist, empty string will be returned.
-   *
-   * @param parname    Hierarchical parameter name (Delimiter-separated).
-   * @return           JSON string of the parameter's initial value.
-   */
-  virtual const std::string getInitValue(const std::string &parname) = 0;
-
   /// Lock a parameter's init value. 
   /**
    * Lock so that this parameter's init value cannot be overwritten by

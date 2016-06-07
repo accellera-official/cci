@@ -67,8 +67,6 @@ namespace cci {
 
       void json_deserialize_initial_value(const std::string &parname, const std::string &value);
       
-      const std::string json_serialize_initial_value(const std::string &parname);
-
       void lock_initial_value(const std::string &parname);
       
       const std::string json_serialize(const std::string &parname);

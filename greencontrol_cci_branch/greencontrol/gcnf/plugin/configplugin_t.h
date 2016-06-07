@@ -223,14 +223,7 @@ public:
         }
         break;
       }
-
-      // ////////////   Command CMD_SET_INIT_VAL   ////////////////////////////////// //
-    case CMD_GET_INIT_VAL:
-      {
-        tr->set_mValue(m_param_db->getInitValue(tr->get_mSpecifier()));
-        break;
-      }
-
+        
         // ////////////   Command CMD_LOCK_INIT_VAL   ////////////////////////////////// //
     case CMD_LOCK_INIT_VAL:
       {

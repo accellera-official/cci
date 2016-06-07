@@ -242,25 +242,6 @@ public:
     return false; // parameter not new
   }
 
-  /// @see gs::cnf::param_db_if::getInitValue
-  const std::string getInitValue(const std::string &hier_parname) {
-    GCNF_DUMP_N(name(), "getInitValue("<<hier_parname.c_str()<<")");
-
-    std::string rtIniVal = "";
-    param_iterator pos;
-    pos = m_parameter_database.find(hier_parname);
-    // If parameter exists
-    if (pos != m_parameter_database.end()) {
-      GCNF_DUMP_N(name(), "getInitValue: parameter exists.");
-      //Initial value for parameter exists
-      if(pos->second.had_initial_value) {
-        GCNF_DUMP_N(name(), "getInitValue: Initial value exists.");
-        rtIniVal = pos->second.init_value;
-      }
-    }
-    return rtIniVal;
-  }
-
   /// @see gs::cnf::param_db_if::lockInitValue
   bool lockInitValue(const std::string &hier_parname) {
     GCNF_DUMP_N(name(), "lockInitValue("<<hier_parname.c_str()<<")");      
