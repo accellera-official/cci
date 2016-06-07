@@ -66,7 +66,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_gs_param(n, "", NULL, is_top_level_name, register_at_db)
     , m_owner_par(owner_par)
     {
-	    this->m_gs_param.setString(cci::cci_value::to_json(val));
+      this->m_gs_param.setString(cci::cci_value::to_json(val));
       gs_cci_base_param::m_gs_param_base = &m_gs_param;
     }
     
