@@ -66,7 +66,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_gs_param(n, "", NULL, is_top_level_name, register_at_db)
     , m_owner_par(owner_par)
     {
-	    this->m_gs_param.setString(cci::cci_value::to_json(val));
+	  this->m_gs_param.setString(cci::cci_value::to_json(val));
       gs_cci_base_param::m_gs_param_base = &m_gs_param;
     }
     
@@ -81,8 +81,6 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     , m_gs_param(n, val, is_top_level_name) 
     , m_owner_par(owner_par)
     {
-      std::string init_value = broker_accessor->json_serialize_initial_value(m_gs_param.getName());
-      if(!init_value.empty()) this->m_gs_param.setString(init_value);
       assert(register_at_db && "Not supported with gs_param?");
       gs_cci_base_param::m_gs_param_base = &m_gs_param;
     }
