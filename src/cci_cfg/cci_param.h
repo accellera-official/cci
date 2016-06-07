@@ -39,9 +39,6 @@ CCI_OPEN_NAMESPACE_
 
 /// Parameter class, internally forwarding calls to the implementation
 /**
- * The implementation is in file cci_param.hpp, which has to be included 
- * in the headers as well because the class is a template class.
- *
  * Documentation for the undocumented functions can be found in
  * cci_param_impl_if
  */
