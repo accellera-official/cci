@@ -308,16 +308,6 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve2] : " << rx_value.get_string());
 
         wait(2.0, sc_core::SC_NS);
-
-        XREPORT("[CFGR] : The initial value for "<<str_param_ptr->get_name()<<" is "
-            <<myBrokerInterface->json_serialize_initial_value(string_param_str));
-
-        if(myBrokerInterface->json_serialize_initial_value(int_param_str)=="")
-          XREPORT("[CFGR] : The initial value for "<<str_param_ptr->get_name()<<" is empty");
-        else
-          XREPORT_ERROR("[CFGR] : Unexpected initial value occcured for "<<str_param_ptr->get_name());
-
-        wait(2.0, sc_core::SC_NS);
       } else {
         XREPORT("Parameter by name " << int_param_str << " not found.");
       }
