@@ -186,12 +186,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                                             return m_gs_param_base->locked();     }
     //void set(const value_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
 
-    virtual void set_documentation(const std::string& doc) {
-      my_documentation = doc;
+    virtual void set_description(const std::string& desc) {
+      my_description = desc;
     }
     
-    virtual std::string get_documentation() const {
-      return my_documentation;
+    virtual std::string get_description() const {
+      return my_description;
     }
     
     virtual bool is_default_value() {
@@ -322,7 +322,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     bool m_is_invalid_value;
     status_guard m_status_guard;
     
-    std::string my_documentation;
+    std::string my_description;
 
     bool m_init_called;
 

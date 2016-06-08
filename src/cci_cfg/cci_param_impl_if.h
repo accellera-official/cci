@@ -83,14 +83,14 @@ public:
 
 	///@}
 
-	///@name Documentation
+	///@name Description
 	///@{
 
-	/// @copydoc cci_base_param::set_documentation
-	virtual void set_documentation(const std::string& doc) = 0;
+	/// @copydoc cci_base_param::set_description
+	virtual void set_description(const std::string& desc) = 0;
 
-	/// @copydoc cci_base_param::get_documentation
-	virtual std::string get_documentation() const = 0;
+	/// @copydoc cci_base_param::get_description
+	virtual std::string get_description() const = 0;
 
 
 	///@}

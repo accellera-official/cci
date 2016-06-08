@@ -150,14 +150,14 @@ cci_value cci_param<T,TM>::get_value() const {
 }
 
 template<typename T, param_mutable_type TM>
-void cci_param<T,TM>::set_documentation(const std::string& doc) {
+void cci_param<T,TM>::set_description(const std::string& desc) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  get_pImpl()->set_documentation(doc);
+  get_pImpl()->set_documentation(desc);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 
 template<typename T, param_mutable_type TM>
-std::string cci_param<T,TM>::get_documentation() const {
+std::string cci_param<T,TM>::get_description() const {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
   const std::string& ret = get_pImpl()->get_documentation();
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
@@ -454,9 +454,9 @@ cci_value cci_param<std::string,TM>::get_value() const {
 }
 
 template<param_mutable_type TM>
-void cci_param<std::string,TM>::set_documentation(const std::string& doc) {
+void cci_param<std::string,TM>::set_documentation(const std::string& desc) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  get_pImpl()->set_documentation(doc);
+  get_pImpl()->set_documentation(desc);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
 }
 

@@ -97,23 +97,23 @@ public:
 	///@}
 
 
-	///@name Documentation
+	///@name Description
 	///@{
 
-	/// Set parameter documentation.
+	/// Set parameter description.
 	/**
-	* Set the parameter's documentation describing purpose and 
+	* Set the parameter's description describing purpose and
 	* intended use, allowed value range etc. in a human readable way.
 	*
-	* @param doc Human readable documentation
+	* @param doc Human readable description
 	*/
-	void set_documentation(const std::string& doc);
+	void set_description(const std::string& desc);
 	
-	/// Get the parameter's documentation.
+	/// Get the parameter's description.
 	/**
-	* return Documentation
+	* return Description
 	*/
-	std::string get_documentation() const;
+	std::string get_description() const;
 
 	///@}
 
