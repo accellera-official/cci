@@ -163,19 +163,19 @@ struct cci_param_user_data_type
   cci::cci_value get_value() const;
 
   /**
-   *  @fn     void set_documentation(const std::string& doc)
-   *  @brief  Function to add documentation (descirption) to the parameter
+   *  @fn     void set_description(const std::string& doc)
+   *  @brief  Function to add description (descirption) to the parameter
    *  @param  doc The description to add
    *  @return void
    */
-  void set_documentation(const std::string& doc);
+  void set_description(const std::string& doc);
 
   /**
-   *  @fn     std::string get_documentation() const
-   *  @brief  Function to retrieve the documentation of the parameter
-   *  @return The documentation in a string
+   *  @fn     std::string get_description() const
+   *  @brief  Function to retrieve the description of the parameter
+   *  @return The description in a string
    */
-  std::string get_documentation() const;
+  std::string get_description() const;
 
   /**
    *  @fn     bool is_default_value()
@@ -331,7 +331,7 @@ struct cci_param_user_data_type
   bool callback_flag; ///< flag to indicate callbacks are registered
   cci::cci_value c_value;  ///< cci_value of the parameter
   void * l_password;  ///< lock password
-  std::string documentation;  ///< parametere documentation
+  std::string description;  ///< parameter description
   std::string nam;  ///< the name of the parameter
 };
 // ex19_parameter_impl_by_abc

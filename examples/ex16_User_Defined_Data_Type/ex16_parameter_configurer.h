@@ -104,9 +104,9 @@ SC_MODULE(ex16_parameter_configurer) {
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
               << udt_param_ptr->json_serialize());
 
-      // Access parameter's documentation using 'get_documentation()' API
-      XREPORT("[CFGR -> Retrieve] : Parameter doc: "
-              << udt_param_ptr->get_documentation());
+      // Access parameter's description using 'get_description()' API
+      XREPORT("[CFGR -> Retrieve] : Parameter desc: "
+              << udt_param_ptr->get_description());
 
       wait(2.0, SC_NS);
 

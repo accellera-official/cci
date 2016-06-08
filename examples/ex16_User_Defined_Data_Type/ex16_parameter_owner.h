@@ -62,10 +62,10 @@ SC_MODULE(ex16_parameter_owner) {
             << udt_param.get_default_value());
     XREPORT("[OWNER -> Retrieve] : Parameter Value' : " << udt_param.get());
 
-    // Set documentation for the user-defined data type
-    XREPORT("[OWNER -> Set] : Param doc - 'This is user-defined data type");
-    const std::string init_doc = "This is user-defined data type";
-    udt_param.set_documentation(init_doc);
+    // Set description for the user-defined data type
+    XREPORT("[OWNER -> Set] : Param desc - 'This is user-defined data type");
+    const std::string init_desc = "This is user-defined data type";
+    udt_param.set_description(init_desc);
   }
 
   /**
@@ -76,8 +76,8 @@ SC_MODULE(ex16_parameter_owner) {
   void run_thread(void) {
     while (1) {
       XREPORT("@ " << sc_time_stamp());
-      XREPORT("[OWNER -> Retrieve] : Documentation : "
-              << udt_param.get_documentation());
+      XREPORT("[OWNER -> Retrieve] : Description : "
+              << udt_param.get_description());
 
       // Override the default value
       XREPORT("[OWNER -> Set] : New Value " << udt_param.get_name()
