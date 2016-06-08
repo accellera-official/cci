@@ -130,12 +130,14 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                       , bool is_top_level_name /*= false*/
                       , bool register_at_db /*= true*/
                       , bool has_default_value // if there is a default value
-                      , cci::cci_broker_if* broker_accessor)
+                      , cci::cci_broker_if* broker_accessor
+                      , const std::string& desc)
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
     , m_status_guard(*this)
+    , my_description(desc)
     , m_init_called(false)
     , m_broker_accessor(broker_accessor)
     , m_latest_write_access_originator_cp("NONE")

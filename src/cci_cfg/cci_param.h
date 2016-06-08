@@ -88,25 +88,24 @@ private:
 	cci_param(cci_param<value_type, TM> & copy, const cci_originator& originator);
 };
 
-#define CCI_PARAM_CONSTRUCTOR_IMPL(signature, top, broker)    \
-template <typename T, param_mutable_type TM>                  \
-cci_param<T, TM>::cci_param signature                         \
-try : cci_param_b<T>(                                         \
-        *create_cci_param(this, name, value, top, & broker),  \
-      cci_originator())                                       \
-{                                                             \
-  broker.add_param(this);                                     \
-  this->init();                                               \
-  if(!desc.empty()) this->set_description(desc);              \
-}                                                             \
-catch(const sc_core::sc_report &e)                            \
-{                                                             \
-  /* catch sc_report and add parameter name to message */     \
-  std::stringstream enhanced_msg;                             \
-  enhanced_msg << e.get_msg() << " (" << name << ")";         \
-  ::sc_core::sc_report_handler::report(e.get_severity(),      \
-      e.get_msg_type(), enhanced_msg.str().c_str(),           \
-      e.get_file_name(), e.get_line_number());                \
+#define CCI_PARAM_CONSTRUCTOR_IMPL(signature, top, broker)         \
+template <typename T, param_mutable_type TM>                       \
+cci_param<T, TM>::cci_param signature                              \
+try : cci_param_b<T>(                                              \
+        *create_cci_param(this, name, value, top, & broker, desc), \
+      cci_originator())                                            \
+{                                                                  \
+  broker.add_param(this);                                          \
+  this->init();                                                    \
+}                                                                  \
+catch(const sc_core::sc_report &e)                                 \
+{                                                                  \
+  /* catch sc_report and add parameter name to message */          \
+  std::stringstream enhanced_msg;                                  \
+  enhanced_msg << e.get_msg() << " (" << name << ")";              \
+  ::sc_core::sc_report_handler::report(e.get_severity(),           \
+      e.get_msg_type(), enhanced_msg.str().c_str(),                \
+      e.get_file_name(), e.get_line_number());                     \
 }
 
 

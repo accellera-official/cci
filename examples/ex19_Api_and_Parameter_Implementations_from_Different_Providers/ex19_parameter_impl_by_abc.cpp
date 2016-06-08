@@ -462,6 +462,7 @@ namespace cci {
  *  @param  val The value to assign to the parameter
  *  @param  is_top_level_name Whether the name is the top level or not
  *  @param  broker_accessor A pointer to the broker for the parameter.
+ *  @param  desc The string for parameter description. Default value is empty string.
  *  @return A cci parameter implementation
  */
 template<>
@@ -471,7 +472,8 @@ cci_param_impl_if
         const std::string &nam,
         const user_data_type & val,
         bool is_top_level_name,
-        cci_broker_if* broker_accessor) {
+        cci_broker_if* broker_accessor,
+        const std::string& desc) {
   std::cout
       << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::mutable_param"
       << std::endl;
@@ -499,6 +501,7 @@ cci_param_impl_if
  *  @param  pval Pointer to the value to assign to the parameter.
  *  @param  is_top_level_name Whether the name is the top level or not
  *  @param  broker_accessor A pointer to the broker for the parameter.
+ *  @param  desc The string for parameter description. Default value is empty string.
  *  @return A cci parameter implementation
  */
 template<>
@@ -508,7 +511,8 @@ cci_param_impl_if
         const std::string &nam,
         const cci_value& pval,
         const bool is_top_level_name,
-        cci_broker_if* broker_accessor) {
+        cci_broker_if* broker_accessor,
+        const std::string& desc) {
   std::cout
       << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::mutable_param "
       << std::endl;
