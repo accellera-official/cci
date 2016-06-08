@@ -57,7 +57,7 @@ namespace cci {
   
   /// Implementation of parameter factory create function function declared in cci_config.h
   template<typename T, param_mutable_type TM>
-  cci_param_impl_if* create_cci_param(cci_param<T, TM> *owner_par, const std::string &nam, const T& val, const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc = "") {
+  cci_param_impl_if* create_cci_param(cci_param<T, TM> *owner_par, const std::string &nam, const T& val, const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc) {
     cci_param_impl_if* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor, desc);
     return impl_par;
   }
@@ -65,7 +65,7 @@ namespace cci {
 
   /// Implementation of parameter factory create function function declared in cci_config.h
   template<typename T, param_mutable_type TM>
-  cci_param_impl_if* create_cci_param(cci_param<T, TM> *owner_par, const std::string &nam, const cci_value& val, const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc = "") {
+  cci_param_impl_if* create_cci_param(cci_param<T, TM> *owner_par, const std::string &nam, const cci_value& val, const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc) {
     cci_param_impl_if* impl_par = new __NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__::gs_cci_param<T, TM>(*owner_par, nam, val, is_top_level_name, broker_accessor, desc);
     return impl_par;
   }
