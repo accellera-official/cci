@@ -151,9 +151,9 @@ public:
 
     //   handle name collision
     string unique_name = string(cci::cci_gen_unique_name(ss.str().c_str()));
-    if (!m_api->existsParam(ss.str()) && unique_name != ss.str()) {
+    if (unique_name != ss.str() && m_api->getPar(ss.str())) {
       std::stringstream collMsg;
-      collMsg << "the paramater "<< ss.str() << " is already existing, new name "<<m_par_name<<" is assigned"<<std::endl;
+      collMsg << "the paramater "<< ss.str() << " is already existing, new name "<<unique_name<<" is assigned"<<std::endl;
       SC_REPORT_WARNING(name(),collMsg.str().c_str());
       m_par_name = unique_name;
     } else {
