@@ -4,6 +4,8 @@
 
   Copyright 2010-2011 GreenSocs Ltd
   All rights reserved.
+  Author(s): Mark Burton <mark@greensocs.com>
+             Christian Schroeder <schroeder@eis.cs.tu-bs.de>
 
   Copyright 2016 Ericsson
   All rights reserved.
