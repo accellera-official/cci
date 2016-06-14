@@ -1,4 +1,7 @@
 /*****************************************************************************
+  Copyright 2016 Accellera Systems Initiative Inc.
+  All rights reserved.
+
   Copyright 2011 GreenSocs Ltd
   All rights reserved.
 
