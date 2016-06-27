@@ -363,8 +363,8 @@
 				RelativePath="..\..\..\src\cci_cfg\cci_param.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\src\cci_cfg\cci_param.hpp"
+                        <File
+				RelativePath="..\..\..\src\cci_cfg\cci_param_b.h"
 				>
 			</File>
 			<File

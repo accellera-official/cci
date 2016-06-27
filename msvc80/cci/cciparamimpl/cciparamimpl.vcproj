@@ -309,10 +309,6 @@
 				RelativePath="..\..\..\gs_param_implementation\gs_cci_param_t.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\gs_param_implementation\helpfunctions.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
