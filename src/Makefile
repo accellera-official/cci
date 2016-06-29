@@ -26,11 +26,6 @@ DEPS := $(OBJS:.o=.d)
 
 ## -----------------------------------------------------------------------------
 
-ifdef BOOST_HOME
-BOOST = $(BOOST_HOME)
-endif
-BOOST ?= /cad/tools/boost
-
 ifdef GREENCONTROL_HOME
 GREENCONTROL=$(GREENCONTROL_HOME)
 endif
@@ -56,7 +51,7 @@ CCI_DIR ?= $(GS_CCI_HOME)/src
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
-INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST)  -I$(RAPIDJSON)/include \
+INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(RAPIDJSON)/include \
          -I$(GREENCONTROL)
 
 ## -----------------------------------------------------------------------------

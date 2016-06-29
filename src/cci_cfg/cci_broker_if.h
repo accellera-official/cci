@@ -29,10 +29,7 @@
 #ifndef CCI_CCI_BROKER_IF_H_INCLUDED_
 #define CCI_CCI_BROKER_IF_H_INCLUDED_
 
-
-#include "cci_cfg/cci_shared_ptr.h"
-#include "cci_cfg/cci_callbacks.h"
-
+#include "cci_cfg/cci_callback.h"
 
 CCI_OPEN_NAMESPACE_
 
