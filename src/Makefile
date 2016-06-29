@@ -9,19 +9,10 @@ OPT    = -g -Wall -Werror -Wno-unused-local-typedefs
 OTHER  = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER)
 
-SRCS = cci_cfg/cci_broker_manager.cpp \
-       cci_cfg/cci_broker_stack.cpp \
-       cci_cfg/cci_value.cpp \
-       cci_cfg/cci_value_traits.cpp \
-       cci_cfg/cci_originator.cpp \
-	   cci_cfg/cci_param_untyped.cpp \
-	   cci_cfg/cci_param_untyped_handle.cpp \
-	   cci_core/cci_name_gen.cpp
+SRCS := $(wildcard cci_cfg/*.cpp)
+SRCS += $(wildcard cci_core/*.cpp)
 
-OBJS = $(SRCS:.cpp=.o)
-
-OBJS_W_PATHS = $(SRCS:.cpp=.o)
-
+OBJS := $(SRCS:.cpp=.o)
 DEPS := $(OBJS:.o=.d)
 
 ## -----------------------------------------------------------------------------

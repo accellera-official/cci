@@ -122,7 +122,8 @@ struct cci_callback;
 	Creates a new copy of the wrapper
 	@returns Pointer to clone of this object
 	*/                                       \
-	virtual callback_impl_if* clone() = 0;
+	virtual callback_impl_if* clone() = 0; \
+	virtual ~callback_impl_if(){}
 
 #define  CCI_CALLBACK_IMPL_BLOCK                              \
 	/**
@@ -157,7 +158,6 @@ public:
 	/**
 	 Operator() - Invokes wrapped callback 
 	 @param first_value First argument to pass to wrapped callback
-	 @param second_value Second argument to pass to wrapped callback
 	 @return Value returned by wrapped callback
 	 */
 	TRet operator()(TFirst first_value)

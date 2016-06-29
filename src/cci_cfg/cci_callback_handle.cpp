@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*****************************************************************************
   Copyright 2016 Accellera Systems Initiative Inc.
   All rights reserved.
@@ -32,7 +33,7 @@ cci_callback_handle::cci_callback_handle(const cci_callback_handle& copy) : m_im
 #ifdef CCI_RVALUE_REFERENCES_SUPPORTED
 cci_callback_handle::cci_callback_handle(cci_callback_handle&& other) : m_impl(other.m_impl)
 {
-	other.m_impl = nullptr;
+	other.m_impl = NULL;
 }
 #endif
 
@@ -63,7 +64,7 @@ cci_callback_handle & cci_callback_handle::operator=(cci_callback_handle&& other
 
 	delete m_impl;
 	m_impl = other.m_impl;
-	other.m_impl = nullptr;
+	other.m_impl = NULL;
 
 	return *this;
 }

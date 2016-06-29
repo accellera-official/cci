@@ -223,6 +223,7 @@ CCI_OPEN_NAMESPACE_
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////   Callback Handling   //////////////////////////// //
     
+#if 0
     
     /// Registers an observer callback function (with the signature of param_callb_func_ptr).
     /**
@@ -348,7 +349,8 @@ CCI_OPEN_NAMESPACE_
     /// Returns if the parameter has registered callbacks
     virtual bool has_callbacks(const std::string& parname) = 0;
     
-    
+#endif
+
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
     
