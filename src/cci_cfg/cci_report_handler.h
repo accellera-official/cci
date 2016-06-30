@@ -1,17 +1,26 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2011 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-//
-// ENDLICENSETEXT
+/*****************************************************************************
+  Copyright 2016 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2011 GreenSocs Ltd
+  All rights reserved.
+  Author(s): Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+  Copyright 2016 Ericsson
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 #ifndef CCI_CCI_REPORT_HANDLER_H_INCLUDED_
 #define CCI_CCI_REPORT_HANDLER_H_INCLUDED_
@@ -30,6 +39,7 @@ enum cci_param_failure {
   CCI_ADD_PARAM_FAILURE,
   CCI_REMOVE_PARAM_FAILURE,
   CCI_VALUE_FAILURE,
+  CCI_DESTROYED_PARAM,
   CCI_UNDEFINED_FAILURE
 };
 
@@ -76,6 +86,7 @@ public:
       else if (failure_type_string == "/ASI/CCI/ADD_PARAM_FAILED") return CCI_ADD_PARAM_FAILURE;
       else if (failure_type_string == "/ASI/CCI/REMOVE_PARAM_FAILED") return CCI_REMOVE_PARAM_FAILURE;
       else if (failure_type_string == "/ASI/CCI/CCI_VALUE_FAILURE") return CCI_VALUE_FAILURE;
+      else if (failure_type_string == "/ASI/CCI/CCI_DESTROYED_PARAM") return CCI_DESTROYED_PARAM;
       else return CCI_UNDEFINED_FAILURE;
     }
     else //not a CCI failure report
@@ -85,16 +96,16 @@ public:
 };
 
 #define CCI_REPORT_INFO(_id, _message) \
-cci_report_handler::report(SC_INFO,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_INFO,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_WARNING(_id, _message) \
-cci_report_handler::report(SC_WARNING,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_WARNING,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_ERROR(_id, _message) \
-cci_report_handler::report(SC_ERROR,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_ERROR,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_FATAL(_id, _message) \
-cci_report_handler::report(SC_FATAL,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_FATAL,_id,_message,__FILE__,__LINE__);
 
 
 CCI_CLOSE_NAMESPACE_

@@ -1,18 +1,27 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2010-2011 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//    Mark Burton, mark@greensocs.com
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+  Copyright 2016 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2011 GreenSocs Ltd
+  All rights reserved.
+  Author(s): Mark Burton <mark@greensocs.com>
+             Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+  Copyright 2016 Ericsson
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 
 #include "cci_cnf/cci_factory.h"
@@ -345,7 +354,8 @@ bool cci_param<T,TM>::is_accessor() const { return m_is_accessor; }
 template<typename T, param_mutable_type TM>
 cci_base_param* cci_param<T,TM>::create_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  cci_base_param* ret = new cci_param<T,TM>(*this, originator); 
+  cci_base_param* ret = new cci_param<T,TM>(*this, originator);
+  add_param_accessor(ret);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }
@@ -649,7 +659,8 @@ bool cci_param<std::string,TM>::is_accessor() const { return m_is_accessor; }
 template<param_mutable_type TM>
 cci_base_param* cci_param<std::string,TM>::create_accessor(const cci_originator& originator) {
   const cci_originator* originator_backup = cci_originator::set_global_originator(&m_originator); // backup global originator pointer and set local one
-  cci_base_param* ret = new cci_param<std::string,TM>(*this, originator); 
+  cci_base_param* ret = new cci_param<std::string,TM>(*this, originator);
+  add_param_accessor(ret);
   cci_originator::set_global_originator(originator_backup); // restore original global originator pointer
   return ret;
 }

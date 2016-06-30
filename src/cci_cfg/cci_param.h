@@ -1,28 +1,31 @@
 /*****************************************************************************
-Copyright 2006-2015 Accellera Systems Initiative Inc.
-All rights reserved.
+  Copyright 2006-2015 Accellera Systems Initiative Inc.
+  All rights reserved.
 
-Copyright 2009-2011 GreenSocs Ltd
-All rights reserved.
+  Copyright 2009-2011 GreenSocs Ltd
+  All rights reserved.
 
-Copyright 2006-2014 OFFIS Institute for Information Technology
-All rights reserved.
+  Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
 
-Copyright 2006-2015 Intel Corporation
-All rights reserved.
+  Copyright 2006-2015 Intel Corporation
+  All rights reserved.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Copyright 2016 Ericsson
+  All rights reserved.
 
-http://www.apache.org/licenses/LICENSE-2.0
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*****************************************************************************/
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 #ifndef CCI_CCI_PARAM_H_INCLUDED_
 #define CCI_CCI_PARAM_H_INCLUDED_
@@ -144,7 +147,9 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci
 	template <typename T, param_mutable_type TM>
 	cci_param<typename cci_param<T, TM>::value_type, TM>* cci_param<T, TM>::create_accessor(const cci_originator& originator)
 	{
-		return new cci_param(*this, originator);
+		cci_param* ret = new cci_param(*this, originator);
+		cci_base_param::add_param_accessor(ret);
+		return ret;
 	}
 
 	CCI_CLOSE_NAMESPACE_
