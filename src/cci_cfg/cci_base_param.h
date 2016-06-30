@@ -1,33 +1,37 @@
 /*****************************************************************************
-Copyright 2006-2015 Accellera Systems Initiative Inc.
-All rights reserved.
+  Copyright 2006-2015 Accellera Systems Initiative Inc.
+  All rights reserved.
 
-Copyright 2009-2011 GreenSocs Ltd
-All rights reserved.
+  Copyright 2009-2011 GreenSocs Ltd
+  All rights reserved.
 
-Copyright 2006-2014 OFFIS Institute for Information Technology
-All rights reserved.
+  Copyright 2006-2014 OFFIS Institute for Information Technology
+  All rights reserved.
 
-Copyright 2006-2015 Intel Corporation
-All rights reserved.
+  Copyright 2006-2015 Intel Corporation
+  All rights reserved.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Copyright 2016 Ericsson
+  All rights reserved.
 
-http://www.apache.org/licenses/LICENSE-2.0
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*****************************************************************************/
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 #ifndef CCI_BASE_PARAM_H_INCLUDED_
 #define CCI_BASE_PARAM_H_INCLUDED_
 
 #include <string>
+#include <vector>
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_value.h"
@@ -286,6 +290,18 @@ public:
 	* @return an accessor to this parameter
 	*/
 	virtual cci_base_param* create_accessor(const cci_originator& originator) = 0;
+
+	/// Indicates that the accessed parameter get destroyed or no.
+	/**
+	 *
+	 * Note: Only valid in case of an accessor.
+	 *
+	 * @return false if accessed_param_destroyed no more exist; otherwise, true
+	 */
+	bool is_accessed_param_destroyed() const;
+
+	/// Update status of the accessed parameter as destroyed.
+	void set_accessed_param_destroyed();
 	
 	///@}
 
@@ -352,6 +368,18 @@ protected:
 
 	///@}
 
+	/// Add parameter accessor
+	/**
+	* @param accessor Parameter accessor to associate to accessed parameter
+	*/
+	void add_param_accessor(cci_base_param* accessor);
+
+	/// Remove parameter accessor
+	/**
+	* @param accessor Parameter accessor to remove from accessed parameter
+	*/
+	void remove_param_accessor(cci_base_param* accessor);
+
 private:
 
 	/// Originator of the parameter proxy.
@@ -363,6 +391,20 @@ private:
 	/// Indicates whether this proxy is creator of the impl or an accessor to it.
 	const bool m_owns_impl;
 
+	/// Parameter accessor(s)
+	typedef std::vector<cci_base_param*> param_accessor_vector;
+	param_accessor_vector m_param_accessors;
+
+	/// Accessed parameter
+	mutable cci_base_param* m_accessed_param;
+
+	/// Accessed parameter name
+	const std::string m_accessed_param_name;
+
+	/// Check accessed parameter
+	void check_accessed_param() const;
+
+	cci_base_param* get_accessed_param();
 };
 
 CCI_CLOSE_NAMESPACE_

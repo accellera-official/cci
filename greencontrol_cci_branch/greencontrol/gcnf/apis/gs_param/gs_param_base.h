@@ -6,7 +6,7 @@
 // 	 http://www.greensocs.com/ , email: info@greensocs.com
 //
 //   Developed by :
-//   
+//
 //   Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
 //   Wolfgang Klingauf <klingauf@eis.cs.tu-bs.de>
 //     Technical University of Braunschweig, Dept. E.I.S.
@@ -16,7 +16,7 @@
 // The contents of this file are subject to the licensing terms specified
 // in the file LICENSE. Please consult this file for restrictions and
 // limitations that may apply.
-// 
+//
 // ENDLICENSETEXT
 
 // doxygen comments
@@ -151,13 +151,16 @@ public:
     }
 
     //   handle name collision
-    m_par_name = string(cci::cci_gen_unique_name(ss.str().c_str()));
-    if (m_par_name != ss.str()) {
+    string unique_name = string(cci::cci_gen_unique_name(ss.str().c_str()));
+    if (unique_name != ss.str() && m_api->getPar(ss.str())) {
       std::stringstream collMsg;
-      collMsg << "the paramater "<< ss.str() << " is already existing, new name "<<m_par_name<<" is assigned"<<std::endl;
+      collMsg << "the paramater "<< ss.str() << " is already existing, new name "<<unique_name<<" is assigned"<<std::endl;
       SC_REPORT_WARNING(name(),collMsg.str().c_str());
+      m_par_name = unique_name;
+    } else {
+      m_par_name = ss.str();
     }
-    
+
     if (parent_array != NULL) {
       GS_PARAM_DUMP("Init this parameter as a member of the Extended Parameter Array '"<< parent_array->getName().c_str()<<"'."); 
       if (!parent_array->addMember(*this)) {
