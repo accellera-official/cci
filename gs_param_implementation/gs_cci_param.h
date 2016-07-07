@@ -54,12 +54,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Construction / Destruction   ///////////////////// //
 
-    gs_cci_param(cci::cci_param<value_type, TM>& owner_par, const std::string &nam, const cci::cci_value& val    , const bool is_top_level_name, cci::cci_broker_if* broker_accessor) :
-				base_type(owner_par, nam, val, is_top_level_name, true, broker_accessor)
+    gs_cci_param(cci::cci_param<value_type, TM>& owner_par, const std::string &nam, const cci::cci_value& val    , const bool is_top_level_name, cci::cci_broker_if* broker_accessor, const std::string& desc = "") :
+				base_type(owner_par, nam, val, is_top_level_name, true, broker_accessor, desc)
     {}
 
-    gs_cci_param(cci::cci_param<value_type, TM>& owner_par, const std::string &nam, const value_type& val, const bool is_top_level_name, cci::cci_broker_if* broker_accessor) :
-		base_type(owner_par, nam, val,              is_top_level_name, /*register_at_db=*/true, /*(dummy)*/true, broker_accessor)   { }
+    gs_cci_param(cci::cci_param<value_type, TM>& owner_par, const std::string &nam, const value_type& val, const bool is_top_level_name, cci::cci_broker_if* broker_accessor, const std::string& desc = "") :
+		base_type(owner_par, nam, val,              is_top_level_name, /*register_at_db=*/true, /*(dummy)*/true, broker_accessor, desc)   { }
   
     ~gs_cci_param() {
     }

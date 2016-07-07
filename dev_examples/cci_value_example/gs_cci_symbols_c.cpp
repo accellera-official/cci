@@ -24,8 +24,8 @@
 namespace cci {
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_broker_if* broker_accessor); \
-  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_broker_if* broker_accessor);
+  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc); \
+  template  cci_param_impl_if*  create_cci_param (cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc);
 
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
   CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, mutable_param) \

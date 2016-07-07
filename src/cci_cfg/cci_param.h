@@ -11,6 +11,9 @@ All rights reserved.
 Copyright 2006-2015 Intel Corporation
 All rights reserved.
 
+Copyright 2016 Ericsson AB
+All rights reserved.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -56,29 +59,29 @@ public:
 
 	using cci_param_b<T>::operator =;
   
-	/// Constructor with (local/hierarchical) name and initial value.
-	cci_param(const std::string& name, const value_type& value);
+	/// Constructor with (local/hierarchical) name and initial value and description.
+	cci_param(const std::string& name, const value_type& value, const std::string& desc = "");
 	
-	/// Constructor with (local/hierarchical) name and initial value.
-	cci_param(const std::string& name, const cci_value& value);
+	/// Constructor with (local/hierarchical) name and initial value and description.
+	cci_param(const std::string& name, const cci_value& value, const std::string& desc = "");
 
-	/// Constructor with (local/hierarchical) name and initial value and top-level name.
-	cci_param(const std::string& name, const value_type& value, cci_top_level_name);
+	/// Constructor with (local/hierarchical) name and initial value and top-level name and description.
+	cci_param(const std::string& name, const value_type& value, cci_top_level_name, const std::string& desc = "");
 
-	/// Constructor with (local/hierarchical) name and initial value and top-level name.
-	cci_param(const std::string& name, const cci_value& value, cci_top_level_name);
+	/// Constructor with (local/hierarchical) name and initial value and top-level name and description.
+	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, const std::string& desc = "");
 
-	/// Constructor with (local/hierarchical) name and initial value and private broker.
-	cci_param(const std::string& name, const value_type& value, cci_broker_if& private_broker);
+	/// Constructor with (local/hierarchical) name and initial value and private broker and description.
+	cci_param(const std::string& name, const value_type& value, cci_broker_if& private_broker, const std::string& desc = "");
 
-	/// Constructor with (local/hierarchical) name and initial value and private broker.
-	cci_param(const std::string& name, const cci_value& value, cci_broker_if& private_broker);
+	/// Constructor with (local/hierarchical) name and initial value and private broker and description.
+	cci_param(const std::string& name, const cci_value& value, cci_broker_if& private_broker, const std::string& desc = "");
 
-	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-	cci_param(const std::string& name, const value_type& value, cci_top_level_name, cci_broker_if& private_broker);
+	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker and description.
+	cci_param(const std::string& name, const value_type& value, cci_top_level_name, cci_broker_if& private_broker, const std::string& desc = "");
 
-	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker);
+	/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker and description.
+	cci_param(const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker, const std::string& desc = "");
 
 	/// @copydoc cci_base_param::create_accessor
 	virtual cci_param<value_type, TM>* create_accessor(const cci_originator& originator);
@@ -88,50 +91,50 @@ private:
 	cci_param(cci_param<value_type, TM> & copy, const cci_originator& originator);
 };
 
-#define CCI_PARAM_CONSTRUCTOR_IMPL(signature, top, broker)    \
-template <typename T, param_mutable_type TM>                  \
-cci_param<T, TM>::cci_param signature                         \
-try : cci_param_b<T>(                                         \
-	      *create_cci_param(this, name, value, top, & broker),\
-		  cci_originator())                                   \
-{                                                             \
-	broker.add_param(this);                                   \
-	this->init();                                             \
-}                                                             \
-catch(const sc_core::sc_report &e)                            \
-{                                                             \
-	/* catch sc_report and add parameter name to message */   \
-	std::stringstream enhanced_msg;                           \
-    enhanced_msg << e.get_msg() << " (" << name << ")";       \
-	::sc_core::sc_report_handler::report(e.get_severity(),    \
-		e.get_msg_type(), enhanced_msg.str().c_str(),         \
-		e.get_file_name(), e.get_line_number());              \
+#define CCI_PARAM_CONSTRUCTOR_IMPL(signature, top, broker)         \
+template <typename T, param_mutable_type TM>                       \
+cci_param<T, TM>::cci_param signature                              \
+try : cci_param_b<T>(                                              \
+        *create_cci_param(this, name, value, top, & broker, desc), \
+      cci_originator())                                            \
+{                                                                  \
+  broker.add_param(this);                                          \
+  this->init();                                                    \
+}                                                                  \
+catch(const sc_core::sc_report &e)                                 \
+{                                                                  \
+  /* catch sc_report and add parameter name to message */          \
+  std::stringstream enhanced_msg;                                  \
+  enhanced_msg << e.get_msg() << " (" << name << ")";              \
+  ::sc_core::sc_report_handler::report(e.get_severity(),           \
+      e.get_msg_type(), enhanced_msg.str().c_str(),                \
+      e.get_file_name(), e.get_line_number());                     \
 }
 
 
-/// Constructor with (local/hierarchical) name and initial value.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value), false, cci_broker_manager::get_current_broker(cci_originator()))
+/// Constructor with (local/hierarchical) name and initial value and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, const std::string& desc), false, cci_broker_manager::get_current_broker(cci_originator()))
 
-/// Constructor with (local/hierarchical) name and initial value.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value), false, cci_broker_manager::get_current_broker(cci_originator()))
+/// Constructor with (local/hierarchical) name and initial value and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, const std::string& desc), false, cci_broker_manager::get_current_broker(cci_originator()))
 
-/// Constructor with (local/hierarchical) name and initial value and top-level name.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(cci_originator()))
+/// Constructor with (local/hierarchical) name and initial value and top-level name and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name, const std::string& desc), true, cci_broker_manager::get_current_broker(cci_originator()))
 
-/// Constructor with (local/hierarchical) name and initial value and top-level name.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name), true, cci_broker_manager::get_current_broker(cci_originator()))
+/// Constructor with (local/hierarchical) name and initial value and top-level name and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name, const std::string& desc), true, cci_broker_manager::get_current_broker(cci_originator()))
 
-/// Constructor with (local/hierarchical) name and initial value and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_broker_if& private_broker), false, private_broker)
+/// Constructor with (local/hierarchical) name and initial value and private broker and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_broker_if& private_broker, const std::string& desc), false, private_broker)
 
-/// Constructor with (local/hierarchical) name and initial value and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_broker_if& private_broker), false, private_broker)
+/// Constructor with (local/hierarchical) name and initial value and private broker and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_broker_if& private_broker, const std::string& desc), false, private_broker)
 
-/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name, cci_broker_if& private_broker), true, private_broker)
+/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const value_type& value, cci_top_level_name, cci_broker_if& private_broker, const std::string& desc), true, private_broker)
 
-/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker.
-CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker), true, private_broker)
+/// Constructor with (local/hierarchical) name and initial value and top-level name and private broker and description.
+CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker, const std::string& desc), true, private_broker)
 
 
 #undef CCI_PARAM_CONSTRUCTOR_IMPL

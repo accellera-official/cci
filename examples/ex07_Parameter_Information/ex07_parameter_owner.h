@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson AB.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -71,11 +74,11 @@ SC_MODULE(ex07_parameter_owner) {
     XREPORT("[OWNER -> Retrieve] : Using 'get_default_value()' : "
             << int_param.get_default_value());
 
-    // Set Documentation - This gives the meta-data about the parameter
-    XREPORT("[OWNER -> Set] : Param documentation - 'This is a mutable"
+    // Set Description - This gives the meta-data about the parameter
+    XREPORT("[OWNER -> Set] : Param description - 'This is a mutable"
             " type integer parameter'");
-    const std::string init_doc = "This is a mutable type integer parameter";
-    int_param.set_documentation(init_doc);
+    const std::string init_desc = "This is a mutable type integer parameter";
+    int_param.set_description(init_desc);
   }
 
   /**

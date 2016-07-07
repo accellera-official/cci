@@ -130,12 +130,14 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                       , bool is_top_level_name /*= false*/
                       , bool register_at_db /*= true*/
                       , bool has_default_value // if there is a default value
-                      , cci::cci_broker_if* broker_accessor)
+                      , cci::cci_broker_if* broker_accessor
+                      , const std::string& desc)
     : m_owner_par(owner_par)
     , m_gs_param_base(NULL) 
     , m_is_default_value(has_default_value)
     , m_is_invalid_value(!has_default_value)
     , m_status_guard(*this)
+    , my_description(desc)
     , m_init_called(false)
     , m_broker_accessor(broker_accessor)
     , m_latest_write_access_originator_cp("NONE")
@@ -186,12 +188,12 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
                                             return m_gs_param_base->locked();     }
     //void set(const value_type& val, void* lock_pwd) { gs::gs_param<T>::setValue(val, lock_pwd); }
 
-    virtual void set_documentation(const std::string& doc) {
-      my_documentation = doc;
+    virtual void set_description(const std::string& desc) {
+      my_description = desc;
     }
     
-    virtual std::string get_documentation() const {
-      return my_documentation;
+    virtual std::string get_description() const {
+      return my_description;
     }
     
     virtual bool is_default_value() {
@@ -322,7 +324,7 @@ __OPEN_NAMESPACE_EXAMPLE_PARAM_IMPLEMENTATION__
     bool m_is_invalid_value;
     status_guard m_status_guard;
     
-    std::string my_documentation;
+    std::string my_description;
 
     bool m_init_called;
 

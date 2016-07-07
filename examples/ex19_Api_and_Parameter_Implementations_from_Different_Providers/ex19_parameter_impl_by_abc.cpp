@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson AB.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -74,7 +77,7 @@ cci_param_user_data_type::cci_param_user_data_type(
       lock_flag(false),
       callback_flag(false),
       l_password(NULL),
-      documentation("") {
+      description("") {
   nam = _name;
   /* DO some hack for cci_value */
 }
@@ -222,25 +225,25 @@ cci::cci_value cci_param_user_data_type::get_value() const {
 }
 
 /**
- *  @fn     void cci_param_user_data_type::set_documentation(const std::string& doc)
- *  @brief  Function to add documentation (descirption) to the parameter
+ *  @fn     void cci_param_user_data_type::set_description(const std::string& doc)
+ *  @brief  Function to add description (descirption) to the parameter
  *  @param  doc The description to add
  *  @return void
  */
-void cci_param_user_data_type::set_documentation(const std::string& doc) {
-  std::cout << "Function cci_param_user_data_type::set_documentation Called " << std::endl;
+void cci_param_user_data_type::set_description(const std::string& desc) {
+  std::cout << "Function cci_param_user_data_type::set_description Called " << std::endl;
 
-  documentation = doc;
+  description = desc;
 }
 
 /**
- *  @fn     std::string cci_param_user_data_type::get_documentation() const
- *  @brief  Function to retrieve the documentation of the parameter
- *  @return The documentation in a string
+ *  @fn     std::string cci_param_user_data_type::get_description() const
+ *  @brief  Function to retrieve the description of the parameter
+ *  @return The description in a string
  */
-std::string cci_param_user_data_type::get_documentation() const {
-  std::cout << "Function cci_param_user_data_type::get_documentation Called " << std::endl;
-  return documentation;
+std::string cci_param_user_data_type::get_description() const {
+  std::cout << "Function cci_param_user_data_type::get_description Called " << std::endl;
+  return description;
 }
 
 /**
@@ -462,6 +465,7 @@ namespace cci {
  *  @param  val The value to assign to the parameter
  *  @param  is_top_level_name Whether the name is the top level or not
  *  @param  broker_accessor A pointer to the broker for the parameter.
+ *  @param  desc The string for parameter description. Default value is empty string.
  *  @return A cci parameter implementation
  */
 template<>
@@ -471,7 +475,8 @@ cci_param_impl_if
         const std::string &nam,
         const user_data_type & val,
         bool is_top_level_name,
-        cci_broker_if* broker_accessor) {
+        cci_broker_if* broker_accessor,
+        const std::string& desc) {
   std::cout
       << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::mutable_param"
       << std::endl;
@@ -499,6 +504,7 @@ cci_param_impl_if
  *  @param  pval Pointer to the value to assign to the parameter.
  *  @param  is_top_level_name Whether the name is the top level or not
  *  @param  broker_accessor A pointer to the broker for the parameter.
+ *  @param  desc The string for parameter description. Default value is empty string.
  *  @return A cci parameter implementation
  */
 template<>
@@ -508,7 +514,8 @@ cci_param_impl_if
         const std::string &nam,
         const cci_value& pval,
         const bool is_top_level_name,
-        cci_broker_if* broker_accessor) {
+        cci_broker_if* broker_accessor,
+        const std::string& desc) {
   std::cout
       << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::mutable_param "
       << std::endl;

@@ -426,22 +426,22 @@ public:
     return m_default_value_was_set;
   }
 
-  /// Sets the documentation
+  /// Sets the description
   /**
-   * Sets the documentation. It shall be a human readable.
-   * @param doc Documentation
+   * Sets the description. It shall be a human readable.
+   * @param doc Description
    */
-  void set_documentation(const std::string doc) {
-    m_documentation = doc;
+  void set_description(const std::string desc) {
+    m_description = desc;
   }
   
-  /// Gets the documentation
+  /// Gets the description
   /**
-   * Gets the documentation. It shall be a human readable.
-   * @return Documentation
+   * Gets the description. It shall be a human readable.
+   * @return Description
    */
-  std::string get_documentation() const {
-    return m_documentation;
+  std::string get_description() const {
+    return m_description;
   }
   
 #ifdef GCNF_ENABLE_GS_PARAM_LOCK
@@ -983,8 +983,8 @@ protected:
   /// Name of this parameter.
   std::string m_par_name;
   
-  /// Human readable documentation ()
-  std::string m_documentation;
+  /// Human readable description ()
+  std::string m_description;
 
   /// Pointer to the API which has to be used.
   cnf_api* m_api;

@@ -11,6 +11,9 @@ All rights reserved.
 Copyright 2006-2015 Intel Corporation
 All rights reserved.
 
+Copyright 2016 Ericsson AB
+All rights reserved.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -83,14 +86,14 @@ public:
 
 	///@}
 
-	///@name Documentation
+	///@name Description
 	///@{
 
-	/// @copydoc cci_base_param::set_documentation
-	virtual void set_documentation(const std::string& doc) = 0;
+	/// @copydoc cci_base_param::set_description
+	virtual void set_description(const std::string& desc) = 0;
 
-	/// @copydoc cci_base_param::get_documentation
-	virtual std::string get_documentation() const = 0;
+	/// @copydoc cci_base_param::get_description
+	virtual std::string get_description() const = 0;
 
 
 	///@}

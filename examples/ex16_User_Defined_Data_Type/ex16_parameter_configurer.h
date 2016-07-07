@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson AB.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -104,9 +107,9 @@ SC_MODULE(ex16_parameter_configurer) {
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
               << udt_param_ptr->json_serialize());
 
-      // Access parameter's documentation using 'get_documentation()' API
-      XREPORT("[CFGR -> Retrieve] : Parameter doc: "
-              << udt_param_ptr->get_documentation());
+      // Access parameter's description using 'get_description()' API
+      XREPORT("[CFGR -> Retrieve] : Parameter desc: "
+              << udt_param_ptr->get_description());
 
       wait(2.0, SC_NS);
 

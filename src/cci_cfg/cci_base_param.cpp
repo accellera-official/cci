@@ -8,6 +8,9 @@
   Copyright 2006-2015 Intel Corporation
   All rights reserved.
 
+  Copyright 2016 Ericsson AB
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -70,14 +73,14 @@ CCI_OPEN_NAMESPACE_
 		return m_impl.get_value();
 	}
 
-	void cci_base_param::set_documentation(const std::string& doc)
+	void cci_base_param::set_description(const std::string& desc)
 	{
-		m_impl.set_documentation(doc);
+		m_impl.set_description(desc);
 	}
 
-	std::string cci_base_param::get_documentation() const
+	std::string cci_base_param::get_description() const
 	{
-		return m_impl.get_documentation();
+		return m_impl.get_description();
 	}
 
 	bool cci_base_param::is_default_value()

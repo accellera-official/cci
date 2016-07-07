@@ -9,7 +9,7 @@ Info: param_owner: @0 s, [OWNER -> Retrieve] : Using 'get_default_value()' : {"s
 
 Info: param_owner: @0 s, [OWNER -> Retrieve] : Parameter Value' : {"s_address":256,"d_address":512,"index":0}
 
-Info: param_owner: @0 s, [OWNER -> Set] : Param doc - 'This is user-defined data type
+Info: param_owner: @0 s, [OWNER -> Set] : Param desc - 'This is user-defined data type
 
 Info: param_cfgr: @0 s, [CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
 
@@ -17,7 +17,7 @@ Info: param_cfgr: @0 s, [CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a p
 
 Info: param_owner: @0 s, @ 0 s
 
-Info: param_owner: @0 s, [OWNER -> Retrieve] : Documentation : This is user-defined data type
+Info: param_owner: @0 s, [OWNER -> Retrieve] : Description : This is user-defined data type
 
 Info: param_owner: @0 s, [OWNER -> Set] : New Value param_owner.User_data_type_param	's_address:768,d_address:1024,index:2'
 
@@ -39,7 +39,7 @@ Info: param_cfgr: @4 ns, [CFGR -> Retrieve] : Parameter name : param_owner.User_
 
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] : Parameter value: {"s_address":768,"d_address":1024,"index":2}
 
-Info: param_cfgr: @4 ns, [CFGR -> Retrieve] : Parameter doc: This is user-defined data type
+Info: param_cfgr: @4 ns, [CFGR -> Retrieve] : Parameter desc: This is user-defined data type
 
 Info: param_cfgr: @6 ns, @ 6 ns
 

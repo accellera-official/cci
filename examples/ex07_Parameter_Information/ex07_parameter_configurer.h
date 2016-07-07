@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson AB.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -119,11 +122,11 @@ SC_MODULE(ex07_parameter_configurer) {
     XREPORT("[CFGR C_TOR] : Is initial value ?\t" << std::boolalpha
             << str_param_ptr->is_initial_value());
 
-    // Set documentation to the string type cci-parameter
-    XREPORT("[CFGR C_TOR] : Set documentation to the string-type"
+    // Set description to the string type cci-parameter
+    XREPORT("[CFGR C_TOR] : Set description to the string-type"
             " cci-parameter");
-    std::string str_doc = "This is a mutable type string parameter";
-    str_param_ptr->set_documentation(str_doc);
+    std::string str_desc = "This is a mutable type string parameter";
+    str_param_ptr->set_description(str_desc);
 
     SC_THREAD(run_accessor);
   }
@@ -189,9 +192,9 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve] Parameter's value : "
                 << int_param_ptr->json_serialize());
 
-        // Access parameter's documentation using 'get_documentation()'
-        XREPORT("[CFGR -> Retreive] Parameter's doc : "
-                << int_param_ptr->get_documentation());
+        // Access parameter's description using 'get_description()'
+        XREPORT("[CFGR -> Retreive] Parameter's desc : "
+                << int_param_ptr->get_description());
 
         wait(2.0, sc_core::SC_NS);
 
@@ -214,9 +217,9 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve] : Parameter value: "
                 << int_param_ptr->json_serialize());
 
-        // Access parameter's documentation using 'get_documentation()'
-        XREPORT("[CFGR -> Retrieve] : Parameter doc : "
-                << int_param_ptr->get_documentation());
+        // Access parameter's description using 'get_description()'
+        XREPORT("[CFGR -> Retrieve] : Parameter desc : "
+                << int_param_ptr->get_description());
 
         wait(2.0, sc_core::SC_NS);
 
@@ -261,8 +264,8 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << "\tdemonstrating 'set_value()' for string-type param using"
                 " cci_value");
-        XREPORT("[CFGR] : Parameter Documentation : "
-                << str_param_ptr->get_documentation());
+        XREPORT("[CFGR] : Parameter Description : "
+                << str_param_ptr->get_description());
 
         cci::cci_value str_value("Hello_New_String");
 
