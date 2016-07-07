@@ -1,18 +1,27 @@
-// LICENSETEXT
-//
-//   Copyright (C) 2010-2011 : GreenSocs Ltd
-// 	 http://www.greensocs.com/ , email: info@greensocs.com
-//
-//   Developed by:
-//    Christian Schroeder <schroeder@eis.cs.tu-bs.de>,
-//    Mark Burton, mark@greensocs.com
-//
-//
-// The contents of this file are subject to the licensing terms specified
-// in the file LICENSE. Please consult this file for restrictions and
-// limitations that may apply.
-// 
-// ENDLICENSETEXT
+/*****************************************************************************
+  Copyright 2016 Accellera Systems Initiative Inc.
+  All rights reserved.
+
+  Copyright 2010-2011 GreenSocs Ltd
+  All rights reserved.
+  Author(s): Mark Burton <mark@greensocs.com>
+             Christian Schroeder <schroeder@eis.cs.tu-bs.de>
+
+  Copyright 2016 Ericsson
+  All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ *****************************************************************************/
 
 
 #include "gs_cci_cnf_private_broker.h"
@@ -114,11 +123,7 @@ cci::cci_base_param* cci::gs_cci_private_broker::get_param_const(const std::stri
     return iter->second;
   else {
     // and get from hierarchically upper broker
-    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
-    cci::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::gs_cci_cnf_broker_accessor*>(m_upper_broker);
-    cci::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
-    assert(gs_br && gs_br != this);
-    return gs_br->get_param(parname);      
+    return m_upper_broker->get_param(parname);
   }
   return NULL;
 }
@@ -167,11 +172,7 @@ void cci::gs_cci_private_broker::add_param(cci_base_param* par) {
     //std::cout << name() << " (gs_cci_cnf_broker) add param to PRIVATE broker " << par->get_name() << std::endl;
   // or add to hierarchically upper broker if public
   } else {
-    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
-    cci::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::gs_cci_cnf_broker_accessor*>(m_upper_broker);
-    cci::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
-    assert(gs_br && gs_br != this);
-    gs_br->add_param(par);
+    m_upper_broker->add_param(par);
   }
 }
 
@@ -180,11 +181,7 @@ void cci::gs_cci_private_broker::remove_param(cci::cci_base_param* par) {
     m_mirrored_registry.erase(par->get_name());
   // or remove from hierarchically upper broker if public
   else {
-    //cci_cnf_broker_if* a = cci_broker_manager::get_current_broker(owner_module->get_parent_object());
-    cci::gs_cci_cnf_broker_accessor* b = dynamic_cast<cci::gs_cci_cnf_broker_accessor*>(m_upper_broker);
-    cci::gs_cci_cnf_broker_if* gs_br = b->get_gs_broker();
-    assert(gs_br && gs_br != this);
-    gs_br->remove_param(par);      
+    m_upper_broker->remove_param(par);
   }
 }
 
