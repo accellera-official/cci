@@ -42,10 +42,10 @@ Contained Files:
 ./
 doc/       :  Some further documentation
 src/       :  CCI interface files, only include <cci_configuration> in user code
-greencontrol_cci_branch/  :  GreenSocs configuration implementation
 gs_broker_implementation/ :  GreenSocs broker wrapper
 gs_param_implementation/  :  GreenSocs parameter wrapper
 packages/  :  external packages, namely rapidjson
+    greencontrol/ : GreenSocs configuration implementation
 dev_examples/ :  developer examples (i.e. test cases)
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)

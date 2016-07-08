@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(CCI_HOME)\src\;$(CCI_HOME)\examples\common\inc;$(CCI_HOME)\gs_param_implementation;$(CCI_HOME)\gs_broker_implementation;$(CCI_HOME)\greencontrol_cci_branch;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CCI_HOME)\src\;$(CCI_HOME)\examples\common\inc;$(CCI_HOME)\gs_param_implementation;$(CCI_HOME)\gs_broker_implementation;$(CCI_HOME)\packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SYSTEMC_HOME)\$(MSVC)\SystemC\$(PlatformName)\$(ConfigurationName);$(CCI_HOME)\$(MSVC)\cci\libs\$(PlatformName)\$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

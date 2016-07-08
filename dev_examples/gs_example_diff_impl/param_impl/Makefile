@@ -29,7 +29,7 @@ endif
 GS_CCI_HOME ?= /Users/schroede/mydev/cci_git/cci
 
 ## set some directories 
-GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GS_CONTROL_DIR = $(GS_CCI_HOME)/packages/greencontrol
 CCI_DIR = $(GS_CCI_HOME)/api
 GS_CCI_PARAM_DIR = $(GS_CCI_HOME)/gs_param_implementation
 GS_CCI_API_DIR = $(GS_CCI_HOME)/gs_broker_implementation

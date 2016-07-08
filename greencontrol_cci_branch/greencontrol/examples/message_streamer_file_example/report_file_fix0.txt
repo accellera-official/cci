@@ -1,9 +1,0 @@
-Simulation time: Tue Mar  9 14:29:32 2010
-
-dbg_msg_L2: testbench_msg_str_file.cpp:89: @10 ns /1: (ModuleA): Hallo L2 after 10ns
-dbg_msg_L9: testbench_msg_str_file.cpp:91: @10 ns /1: (ModuleA): Hallo L9 after 10ns
-new line
-dbg_msg_L4: testbench_msg_str_file.cpp:95: @20 ns /2: (ModuleA): Hallo L4 after 20ns
-new line
-dbg_msg_L9: testbench_msg_str_file.cpp:101: @21 ns /3: (ModuleA): Hallo L9 after 21ns
-dbg_msg_L4: testbench_msg_str_file.cpp:105: @30 ns /4: (ModuleA): Hallo L4 after 30ns

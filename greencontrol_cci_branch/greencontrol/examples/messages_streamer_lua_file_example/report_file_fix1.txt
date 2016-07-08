@@ -1,3 +1,0 @@
-Simulation time: Tue Mar  9 14:29:56 2010
-
-@20 ns /2: (ModuleA): This is an sc_info!

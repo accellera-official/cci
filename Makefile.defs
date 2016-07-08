@@ -14,7 +14,7 @@ CCI_API_IMPLEMENTATION_LIB_DIR   ?= $(GS_CCI_HOME)/gs_broker_implementation
 CCI_PARAM_IMPLEMENTATION_INC_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
 CCI_PARAM_IMPLEMENTATION_LIB_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
 
-GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GS_CONTROL_DIR = $(GS_CCI_HOME)/packages
 GREENSTARCORE_DIR = $(GS_CCI_HOME)
 
 ifdef BOOST_HOME

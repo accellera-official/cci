@@ -1,5 +1,0 @@
-Simulation time: Tue Mar  9 14:29:47 2010
-
-testbench_message_streamer_tests.cpp:109: @20 ns /2: (ModuleA): Hallo L4 after 20ns
-new line
-testbench_message_streamer_tests.cpp:117: @21 ns /3: (ModuleA): Hallo L9 after 21ns

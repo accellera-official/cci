@@ -1,8 +1,0 @@
-Source: greencontrol
-Section: electronics
-Maintainer: GreenSocs <greensocs@greensocs.com>
-Standards-Version: 3.6.1
-
-Package: greencontrol
-Architecture: any
-Description: GreenSocs Control Framework

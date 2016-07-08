@@ -44,7 +44,7 @@ endif
 GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 
 ## set some directories 
-GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GS_CONTROL_DIR = $(GS_CCI_HOME)/packages
 CCI_DIR = $(GS_CCI_HOME)/src
 
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
