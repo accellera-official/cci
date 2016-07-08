@@ -70,7 +70,7 @@ SC_MODULE(ex03_config_ip) {
     // Check for existance of the structure_param
     if (m_cci->param_exists(struc_param_name)) {
       // Get handle to the param
-      cci::cci_base_param *struc_param_ptr = m_cci->get_param(
+      cci::cci_param_accessor_if *struc_param_ptr = m_cci->get_param(
           struc_param_name);
       assert(struc_param_ptr != NULL);
 

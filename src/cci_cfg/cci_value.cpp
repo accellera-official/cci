@@ -8,6 +8,9 @@
   Copyright 2006-2015 Intel Corporation
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -223,7 +226,7 @@ cci_value_ref::swap( cci_value_ref& that )
 }
 
 cci_value_ref
-cci_value_ref::operator=( cci_value_cref const& that )
+cci_value_ref::operator=( const cci_value_cref &that )
 {
   if( that.is_null() )
     set_null();

@@ -66,7 +66,7 @@ SC_MODULE(ex01_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(int_param_name)) {
       // Get handle to the param
-      cci::cci_base_param *int_param_ptr = m_cci->get_param(
+      cci::cci_param_handle *int_param_ptr = m_cci->get_param_handle(
           int_param_name);
       assert(int_param_ptr != NULL);
 

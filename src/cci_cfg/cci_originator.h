@@ -31,7 +31,7 @@
 
 CCI_OPEN_NAMESPACE_
 
-/// Originator class which is used to track owners, accessors and value providers of parameters.
+/// Originator class which is used to track owners, handles and value providers of parameters.
 /**
  *
  * Static setter function is used by the parameter (proxy) to identify originator
@@ -40,44 +40,8 @@ CCI_OPEN_NAMESPACE_
  * Static getter function is used by the parameter implementation to record
  * originator's identity.
  */
-class cci_originator {
-
-public:
-
-  /// (Static) global setter function for updating the current Global Originator Pointer.
-  /**
-   * @todo remove returned value; it is not useful.
-   * @param current_originator Pointer to originator of a forthcoming value change
-   * @return The old originator
-   */
-  static const cci_originator* set_global_originator(const cci_originator* current_originator) {
-    const cci_originator* old_originator = handle_current_originator();
-    handle_current_originator(current_originator, true);
-    return old_originator;
-  }
-
-  /// (Static) global getter function for getting the current Global Originator Pointer.
-  /**
-   * @param The current Global Originator Pointer
-   */
-  static const cci_originator* get_global_originator() {
-    return handle_current_originator();
-  }
-
-protected:
-  /// Internal function storing the originator
-  /**
-   * Can be used to get and set the originator:
-   * @todo Make a proper static member (vs. file static).
-   * @param new_originator Pointer to the new originator (optional), only applied if param set_new_originator is true.
-   * @param set_new_originator If the param new_originator shall be stored as new originator (guarded by this bool to allow setting of NULL)
-   */
-  static const cci_originator* handle_current_originator(const cci_originator* new_originator = NULL, bool set_new_originator = false) {
-    static const cci_originator* global_current_originator = NULL;
-    if (set_new_originator) global_current_originator = new_originator;
-    return global_current_originator;
-  }
-
+class cci_originator
+{
 public:
 
   /// Default Constructor assumes current module is the originator
@@ -189,33 +153,6 @@ protected:
   /// Name of the current originator (no relevance if m_originator_obj not NULL)
   std::string m_originator_str;
 
-};
-
-/// Global originator RAII helper class
-/**
-* Helper class to handle setting the global originator
-* 
-*/
-class cci_originator_lock
-{
-public:
-	///Sets global originator to originator parameter
-	explicit cci_originator_lock(const cci_originator& originator) :
-		originator_backup(cci_originator::set_global_originator(&originator))
-	{}
-
-	///Reverts global originator back to original version
-	~cci_originator_lock()
-	{
-		cci_originator::set_global_originator(originator_backup);
-	}
-
-private:
-
-	///Disable coping of lock
-	cci_originator_lock( const cci_originator_lock& );
-
-	const cci_originator * originator_backup;
 };
 
 CCI_CLOSE_NAMESPACE_

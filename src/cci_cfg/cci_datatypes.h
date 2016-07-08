@@ -50,7 +50,7 @@ CCI_OPEN_NAMESPACE_
   };
   
   
-  /// Enumeration for cci_param template specifying the parameter type according the lock behavior
+  /// Enumeration for cci_param_typed template specifying the parameter type according the lock behavior
   enum param_mutable_type {
     /// Mutable Parameter
     mutable_param = 0,
@@ -62,7 +62,7 @@ CCI_OPEN_NAMESPACE_
     other_param
   };
   
-  /// Enumeration for convenient cci_param constructor: for chose if a param gets a top-level-name
+  /// Enumeration for convenient cci_param_typed constructor: for chose if a param gets a top-level-name
   enum cci_top_level_name { CCI_TOP_LEVEL_NAME=0 };
   
   

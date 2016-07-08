@@ -26,8 +26,8 @@
 
 
 
-#ifndef CCI_BROKER_IF_H_INCLUDED_
-#define CCI_BROKER_IF_H_INCLUDED_
+#ifndef CCI_CCI_BROKER_IF_H_INCLUDED_
+#define CCI_CCI_BROKER_IF_H_INCLUDED_
 
 
 #include "cci_cfg/cci_shared_ptr.h"
@@ -37,12 +37,13 @@
 CCI_OPEN_NAMESPACE_
 
 
-  // forward declaration 
-  class cci_base_param;
+  // forward declaration
+  class cci_param_untyped_handle;
+  class cci_param_if;
     
   // forward declaration 
-  template <class T, param_mutable_type TM> 
-  class cci_param_accessor;
+  template <class T>
+  class cci_param_typed_handle;
 
   // forward declaration for friend class
   class cci_broker_manager;
@@ -52,29 +53,29 @@ CCI_OPEN_NAMESPACE_
    * This can be used by a tool to access the database or parameter objects, set initial values etc.
    * or can be used by the model itself to get access to configuration objects etc.
    *
-   * This always returns not the owner's parameter objects but parameter accessor wrappers.
+   * This always returns not the owner's parameter objects but parameter handle wrappers.
    */
   class cci_broker_if
   {
   protected:
     friend class cci_broker_manager;
    
-    /// Creates or returns existing responsible accessor for this broker for the given originator
+    /// Creates or returns existing responsible handle for this broker for the given originator
     /**
-     * This is called by the broker manager when the static search functions shall return a broker accessor.
+     * This is called by the broker manager when the static search functions shall return a broker handle.
      * It is possible (but "senseless") to call this as a user. Returned instances shall be deleted together 
      * with the original broker.
      *
      * It is ok to nest calls with the same originator.
      *
-     * @param originator   Originator for which the broker accessor shall be returned
-     * @return Broker accessor
+     * @param originator   Originator for which the broker handle shall be returned
+     * @return Broker handle
      */
-    virtual cci_broker_if& get_accessor(const cci_originator& originator) = 0;
+    virtual cci_broker_if& create_broker_handle(const cci_originator& originator) = 0;
 
-    /// If this is an accessor, returns the originator this broker accessor is responsible for, otherwise returns NULL
+    /// If this is a handle, returns the originator this broker handle is responsible for, otherwise returns NULL
     /**
-     * @return Originator pointer in the case this is an accessor; NULL if this is a raw broker
+     * @return Originator pointer in the case this is a handle; NULL if this is a raw broker
      */
     virtual const cci_originator* get_originator() const = 0;
 
@@ -86,7 +87,7 @@ CCI_OPEN_NAMESPACE_
     /// Name of this broker
     /**
      * Shall be a system-wide unique broker name.
-     * Broker accessors shall return their underlying broker's name.
+     * Broker handles shall return their underlying broker's name.
      * Accessors can be distinguished using their originator information.
      *
      * @return broker name
@@ -160,15 +161,15 @@ CCI_OPEN_NAMESPACE_
      */
     virtual const std::string json_serialize_keep_unused(const std::string &parname) = 0;
 
-    /// Get a parameter accessor pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
+    /// Get a parameter handle pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
     /**
-     * This returns not the owner's parameter object but an accessor.
+     * This returns not the owner's parameter object but a handle.
      *
      * @param   parname   Full hierarchical parameter name.
-     * @return  Pointer to the parameter accessor object (NULL if not existing). 
+     * @return  Pointer to the parameter handle object (NULL if not existing).
      *          @todo return a vector/iterator over param objects, because there might be more than one
      */ 
-    virtual cci_base_param* get_param(const std::string &parname) = 0;
+    virtual cci_param_untyped_handle* get_param_handle(const std::string &parname) = 0;
     
     /// Return a list of all parameters (implicit and explicit) for the given scope (matching the pattern)
     /**
@@ -220,13 +221,13 @@ CCI_OPEN_NAMESPACE_
     
     /// Registers an observer callback function (with the signature of param_callb_func_ptr).
     /**
-     * @TODO This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
+     * @todo This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
      *
-     * Forwards callbacks to @see cci::cci_base_param::register_callback
+     * Forwards callbacks to @see cci::cci_param_untyped_handle::register_callback
      *
      * \code
      *   // Callback function with default signature.
-     *   void config_callback(cci_base_param& changed_param, const callback_type& cb_reason) {
+     *   void config_callback(cci_param_untyped_handle& changed_param, const callback_type& cb_reason) {
      *     // some action
      *   }
      * \endcode
@@ -244,7 +245,7 @@ CCI_OPEN_NAMESPACE_
     
     /// Registers an observer callback function (with the signature of broker_callb_func_ptr).
     /**
-     * @TODO This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
+     * @todo This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
      *
      * Similar as @see cci_broker_if::register_callback but parameter string name in cb signature and additional
      * - create param callbacks allowed
@@ -322,7 +323,7 @@ CCI_OPEN_NAMESPACE_
     //       being set for not yet existing parameters (implicit parameters),
     //       we will need another register_callback()-function with a different 
     //       callback function signature getting <stringName,stringValue>-pair
-    //       instead of cci_base_param.
+    //       instead of cci_param_untyped_handle.
     
     /// Unregisters the callback and (default) deletes the callback adapter.
     /**
@@ -345,36 +346,32 @@ CCI_OPEN_NAMESPACE_
     
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
-
-    
-  //protected:
-  //  friend class cci_base_param;
     
     /// Adds a parameter to the registry.
     /** 
      * Note: addPar (and all related methods) must not call any of the 
-     *       pure virtual functions in cci_base_param because this method 
-     *       may be called by the cci_base_param constructor.
+     *       pure virtual functions in cci_param_untyped_handle because this method
+     *       may be called by the cci_param_untyped_handle constructor.
      *
-     * Note: This function shall never been called for any parameter accessor
+     * Note: This function shall never been called for any parameter handle
      *       objects but only for "real" parameter objects.
      *
      * @exception cci::cci_report::add_param_failed Adding parameter object failed
      * @param par Parameter (including name and value).
      */
-    virtual void add_param(cci_base_param* par) = 0;
+    virtual void add_param(cci_param_if* par) = 0;
     
     /// Removes a parameter from the registry. May only be called by the parameter destructor, must not be called by anone else.
     /**
      * It should be ensured this is not being called from elsewhere than the parameter destructor (e.g. by user).
      *
-     * Note: This function shall never been called for any parameter accessor
+     * Note: This function shall never been called for any parameter handle
      *       objects but only for "real" parameter objects.
      *
      * @exception cci::cci_report::remove_param_failed Remove parameter object failed
      * @param par Parameter pointer.
      */
-    virtual void remove_param(cci_base_param* par) = 0;
+    virtual void remove_param(cci_param_if* par) = 0;
     
 
   public:
@@ -382,22 +379,23 @@ CCI_OPEN_NAMESPACE_
     // ///////////////    Optional functions   //////////////////////////// //
     // TODO: Optional Config broker functions to be discussed
 
-    /// Return a pointer list of all (explicit) parameters in the given scope (matching the pattern)
+    /// Return a pointer list of all (explicit) parameter handles in the given scope (matching the pattern)
     /**
      * pattern @see get_param_list
      * + (in the case the Many-to-one Mapping should work):
      *   pattern = full_param_name to get all param objects/handles (PH/PO) being mapped to the NVP
      * @todo use iterator instead of vector?
      *
-     * This returns not the owner's parameter objects but accessors.
+     * This returns not the owner's parameter objects but handles.
      *
      * @param pattern Specifies the parameters to be returned.
      * @return Vector with parameter base object pointers.
      */
-    virtual const std::vector<cci_base_param*> get_params(const std::string& pattern = "") = 0;
+    virtual const std::vector<cci_param_untyped_handle*> get_param_handles(const std::string& pattern = "") = 0;
     
     
     // Dropped due to conf call discussion in February
+    //! @cond Doxygen_Suppress
     /// Set an alias to a parameter name
     /**
      * TODO: Guideline for other CCI functions, e.g.:
@@ -407,19 +405,20 @@ CCI_OPEN_NAMESPACE_
      * @param orig_parname    Full hierarchical name of the original parameter (or another alias).
      * @param alias_parname   Full hierarchical (full user chosen) alias name.
      */
+    //! @endcond
     //virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
         
-    /// Convenience function to get a typed parameter accessor pointer.
+    /// Convenience function to get a typed parameter handle pointer.
     /**
      * @param   parname   Full hierarchical parameter name.
      * @return  Pointer to the parameter object (NULL if not existing).
      */ 
-    template<class T, param_mutable_type TM>
-    cci_param_accessor<T, TM>* get_cci_param(const std::string &parname) {
-      return dynamic_cast<cci_param_accessor<T, TM>*>(get_param(parname));
+    template<class T>
+    cci_param_typed_handle<T>* get_cci_param_handle(const std::string &parname) {
+      return dynamic_cast<cci_param_typed_handle<T>*>(get_param_handle(parname));
     }
 
-    ///If this broker is a private broker (or accessor)
+    ///If this broker is a private broker (or handle)
     /**
      * @return If this broker is a private broker
      */
@@ -430,13 +429,13 @@ CCI_OPEN_NAMESPACE_
  /// Creates or returns the one non-private global config broker provided by the broker implementation
  /// Called by the header function get_current_broker, NEVER call this as a user!
  /**
-  * This returns the raw broker, not an accessor, thus this 
+  * This returns the raw broker, not a handle, thus this
   * shall not be returned directy to the user!
   *
   * The implemementation shall register the global broker with the broker registry
   * cci_broker_registry::registry() !
   *
-  * @return The one non-private global config broker (not wrapped with an accessor)
+  * @return The one non-private global config broker (not wrapped with a handle)
   */
  cci_broker_if& create_global_cnf_broker();
 

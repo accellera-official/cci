@@ -28,7 +28,7 @@
 #include "cci_cfg/cci_debug.h"
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_param.h"
+#include "cci_cfg/cci_param_typed.h"
 #include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_broker_stack.h"
 #include "cci_cfg/cci_report_handler.h"
@@ -46,11 +46,11 @@ cci_broker_if& cci_broker_manager::get_current_broker(const cci_originator& orig
 #endif
   }
   if (cci_broker_stack::stack().size() > 0) {
-    return cci_broker_stack::stack().top()->get_accessor(originator);
+    return cci_broker_stack::stack().top()->create_broker_handle(originator);
   }
   // else return global broker
   else {
-    return cci::create_global_cnf_broker().get_accessor(originator);
+    return cci::create_global_cnf_broker().create_broker_handle(originator);
   }
 }
 
@@ -62,11 +62,11 @@ cci_broker_if& cci_broker_manager::get_current_parent_broker(const cci_originato
 #endif
   }
   if (cci_broker_stack::stack().size() > 1) {
-    return cci_broker_stack::stack().second_top()->get_accessor(originator);
+    return cci_broker_stack::stack().second_top()->create_broker_handle(originator);
   }
   // else return global broker
   else {
-    return cci::create_global_cnf_broker().get_accessor(originator);
+    return cci::create_global_cnf_broker().create_broker_handle(originator);
   }
 }
 
@@ -78,15 +78,15 @@ cci_broker_manager::cci_broker_manager(cci_broker_if* broker)
 {
   // Set m_broker either to own private broker or the one responsible upwards the hierarchy
   if (broker) {
-    CCI_CNF_DUMP("Broker manager with private broker (\""<< broker->name() <<"\")");
+    //CCI_CNF_DUMP("Broker manager with private broker (\""<< broker->name() <<"\")");
     // push to broker stack
     cci_broker_stack::stack().push(broker);
     if (broker->get_originator()) {
-      m_broker = &broker->get_accessor(*broker->get_originator());
+      m_broker = &broker->create_broker_handle(*broker->get_originator());
     } else {
-      std::cout << "The private broker (\""<<broker->name()<<"\") given to this broker manager IS NOT an accessor." << std::endl;
-      SC_REPORT_INFO("CCI/cci_broker_manager", "It is recommended to provide a broker accessor to the broker manager!");
-      m_broker = &broker->get_accessor(cci_originator("unknown broker manager")); // TODO: what string is reasonable here?
+      std::cout << "The private broker (\""<<broker->name()<<"\") given to this broker manager IS NOT a handle." << std::endl;
+      SC_REPORT_INFO("CCI/cci_broker_manager", "It is recommended to provide a broker handle to the broker manager!");
+      m_broker = &broker->create_broker_handle(cci_originator("unknown broker manager")); // TODO: what string is reasonable here?
     }
   } else {
 	m_broker = NULL;
@@ -100,11 +100,11 @@ cci_broker_manager::~cci_broker_manager() {
   cci_broker_stack::stack().pop();
 }
 
-cci_broker_manager::operator cci::cci_broker_if&() {
+cci_broker_manager::operator cci_broker_if&() {
   return *m_broker;
 }
 
-cci_broker_manager::operator cci::cci_broker_if*() {
+cci_broker_manager::operator cci_broker_if*() {
   return m_broker;
 }
 
