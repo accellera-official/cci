@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\packages\gs_broker&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -106,7 +106,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\packages\gs_broker&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -167,7 +167,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\packages\gs_broker&quot;;&quot;$(ProjectDir)..\..\..\&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -231,7 +231,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\gs_broker_implementation&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\packages\gs_broker&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;;&quot;$(ProjectDir)..\..\..\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -277,31 +277,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_broker.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_broker.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker_accessor.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker_accessor_handler.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor_handler.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_private_broker.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_private_broker_accessor.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_accessor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\helpers.cpp"
+				RelativePath="..\..\..\packages\gs_broker\helpers.cpp"
 				>
 			</File>
 		</Filter>
@@ -311,35 +311,35 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_broker.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_broker.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker_accessor.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker_accessor_handler.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor_handler.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_broker_if.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_if.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_private_broker.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\gs_cci_cnf_private_broker_accessor.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_accessor.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_broker_implementation\helpers.h"
+				RelativePath="..\..\..\packages\gs_broker\helpers.h"
 				>
 			</File>
 		</Filter>

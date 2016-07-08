@@ -863,7 +863,7 @@ sub prepare_environment
 
     my @cci_path = ( "$rt_cci_home/src",
                      "$rt_cci_home/gs_param_implementation",
-                     "$rt_cci_home/gs_broker_implementation" );
+                     "$rt_cci_home/packages/gs_broker" );
 
     @rt_cci_includes = @cci_path;
     push( @rt_cci_includes, "$rt_cci_home/packages" );

@@ -29,7 +29,7 @@ available from the WG's Accellera workspace, for more detailed instructions.
     - TARGET_ARCH (e.g. linux64)
   - build libraries by invoking 'gmake' in the following directories:
     - src
-    - gs_broker_implementation
+    - packages/gs_broker
     - gs_param_implementation
   - run individual examples or the full suite
     - follow instructions in examples/README.txt
@@ -42,10 +42,10 @@ Contained Files:
 ./
 doc/       :  Some further documentation
 src/       :  CCI interface files, only include <cci_configuration> in user code
-gs_broker_implementation/ :  GreenSocs broker wrapper
 gs_param_implementation/  :  GreenSocs parameter wrapper
 packages/  :  external packages, namely rapidjson
     greencontrol/ : GreenSocs configuration implementation
+    gs_broker/    : GreenSocs broker wrapper
 dev_examples/ :  developer examples (i.e. test cases)
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)

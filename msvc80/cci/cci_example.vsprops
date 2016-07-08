@@ -8,7 +8,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="&quot;$(CCI)\..\examples\common\inc&quot;;&quot;$(CCI)\..\api&quot;;&quot;$(CCI)\..\gs_broker_implementation&quot;;&quot;$(CCI)\..\packages&quot;;&quot;$(CCI)\..\gs_param_implementation&quot;"
+		AdditionalIncludeDirectories="&quot;$(CCI)\..\examples\common\inc&quot;;&quot;$(CCI)\..\api&quot;;&quot;$(CCI)\..\packages\gs_broker&quot;;&quot;$(CCI)\..\packages&quot;;&quot;$(CCI)\..\gs_param_implementation&quot;"
 	/>
 	<Tool
 		Name="VCLinkerTool"
