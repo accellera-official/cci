@@ -10,3 +10,7 @@
 	path = packages/gs_broker
 	url = https://git.greensocs.com/greenlib/gsbroker-cci.git
 	branch = master
+[submodule "gs_param"]
+	path = packages/gs_param
+	url = https://git.greensocs.com/greenlib/gsparam-cci.git
+	branch = master
