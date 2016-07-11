@@ -2,3 +2,15 @@
 	path = packages/rapidjson
 	url = https://github.com/miloyip/rapidjson.git
 	branch = master
+[submodule "greencontrol"]
+	path = packages/greencontrol
+	url = https://git.greensocs.com/greenlib/greencontrol-cci.git
+	branch = master
+[submodule "gs_broker"]
+	path = packages/gs_broker
+	url = https://git.greensocs.com/greenlib/gsbroker-cci.git
+	branch = master
+[submodule "gs_param"]
+	path = packages/gs_param
+	url = https://git.greensocs.com/greenlib/gsparam-cci.git
+	branch = master

@@ -9,12 +9,12 @@ endif
 CCI_INC_DIR = $(GS_CCI_HOME)/api
 CCI_LIB_DIR = $(GS_CCI_HOME)/api
 
-CCI_API_IMPLEMENTATION_INC_DIR   ?= $(GS_CCI_HOME)/gs_broker_implementation
-CCI_API_IMPLEMENTATION_LIB_DIR   ?= $(GS_CCI_HOME)/gs_broker_implementation
-CCI_PARAM_IMPLEMENTATION_INC_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
-CCI_PARAM_IMPLEMENTATION_LIB_DIR ?= $(GS_CCI_HOME)/gs_param_implementation
+CCI_API_IMPLEMENTATION_INC_DIR   ?= $(GS_CCI_HOME)/packages/gs_broker
+CCI_API_IMPLEMENTATION_LIB_DIR   ?= $(GS_CCI_HOME)/packages/gs_broker
+CCI_PARAM_IMPLEMENTATION_INC_DIR ?= $(GS_CCI_HOME)/packages/gs_param
+CCI_PARAM_IMPLEMENTATION_LIB_DIR ?= $(GS_CCI_HOME)/packages/gs_param
 
-GS_CONTROL_DIR = $(GS_CCI_HOME)/greencontrol_cci_branch
+GS_CONTROL_DIR = $(GS_CCI_HOME)/packages
 GREENSTARCORE_DIR = $(GS_CCI_HOME)
 
 ifdef BOOST_HOME

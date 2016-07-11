@@ -1,9 +1,0 @@
-***** THIS TEST IS PASSED IF THERE ARE ERRORS!!! ***** (error depending on #defines)
-
-Warning: (W505) object already exists: ConfigPlugin. Latter declaration will be renamed to ConfigPlugin_0
-In file: ../../../../src/sysc/kernel/sc_object.cpp:196
-
-Info: ControlAddressMap: insert: Service already exists.
-
-Fatal: ConfigPlugin_0: Config Plugin has already been instantiated! Make sure a manual construction is done before a possible automatic construction.
-In file: /Users/schroede/mydev/greensocs_greencontrol/greencontrol/gcnf/plugin/configplugin_t.h:132

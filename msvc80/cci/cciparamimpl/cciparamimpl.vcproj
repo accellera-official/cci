@@ -44,7 +44,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/bigobj"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -107,7 +107,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/bigobj"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
@@ -169,7 +169,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/bigobj"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
@@ -233,7 +233,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/bigobj"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\greencontrol_cci_branch&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\..\..\src&quot;;&quot;$(ProjectDir)..\..\..\packages&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
@@ -280,11 +280,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_symbols.cpp"
+				RelativePath="..\..\..\packages\gs_param\gs_cci_symbols.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_symbols_templ_small_int.cpp"
+				RelativePath="..\..\..\packages\gs_param\gs_cci_symbols_templ_small_int.cpp"
 				>
 			</File>
 		</Filter>
@@ -294,19 +294,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\cci_params.h"
+				RelativePath="..\..\..\packages\gs_param\cci_params.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_base_param.h"
+				RelativePath="..\..\..\packages\gs_param\gs_cci_base_param.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_param.h"
+				RelativePath="..\..\..\packages\gs_param\gs_cci_param.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\gs_param_implementation\gs_cci_param_t.h"
+				RelativePath="..\..\..\packages\gs_param\gs_cci_param_t.h"
 				>
 			</File>
 		</Filter>

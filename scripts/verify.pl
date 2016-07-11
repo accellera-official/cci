@@ -862,11 +862,11 @@ sub prepare_environment
     $rt_cci_home     = &get_cci_home;
 
     my @cci_path = ( "$rt_cci_home/src",
-                     "$rt_cci_home/gs_param_implementation",
-                     "$rt_cci_home/gs_broker_implementation" );
+                     "$rt_cci_home/packages/gs_param",
+                     "$rt_cci_home/packages/gs_broker" );
 
     @rt_cci_includes = @cci_path;
-    push( @rt_cci_includes, "$rt_cci_home/greencontrol_cci_branch" );
+    push( @rt_cci_includes, "$rt_cci_home/packages" );
 
     $rt_cci_ldpath   = $rt_cci_home;
     @rt_cci_ldlibs   = ( 'cciparamimpl', 'cciapi', 'ccibrokerimpl' );

@@ -1,2 +1,0 @@
-See the GreenAV Tutorial for a documentation on this example
-(greencontrol/docs/GreenAV/tutorial)!

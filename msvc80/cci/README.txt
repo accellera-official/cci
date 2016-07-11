@@ -22,8 +22,8 @@ This README gives step-by-step instructions for
 
   1. building all three proof-of-concept (PoC) libraries
     - api
-    - gs_broker_implementation
-    - gs_param_implementation
+    - packages/gs_broker
+    - packages/gs_param
   
   2. running existing regression in a Windows environment
     - Cygwin or MSYS + MSVC
