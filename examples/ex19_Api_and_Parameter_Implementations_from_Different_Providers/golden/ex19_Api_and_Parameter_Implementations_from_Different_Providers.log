@@ -1,3 +1,4 @@
+SystemC Simulation
 
 	[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::mutable_param
 	[PARAM_IMPL] : Called with Default Value as reference object

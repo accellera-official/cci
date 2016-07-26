@@ -1,3 +1,4 @@
+SystemC Simulation
 ConfigFile_Api: Applying initial value of param 'param_owner.mutable_int_param' to '15'
 ConfigFile_Api: Applying initial value of param 'param_owner.mutable_string_param' to '"initial"'
 
