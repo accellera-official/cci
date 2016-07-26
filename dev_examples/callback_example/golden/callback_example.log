@@ -1,3 +1,4 @@
+SystemC Simulation
 @0 s /0 (Observer): register for new parameter callbacks
 @0 s /0 (Observer): ***** New parameter callback: 'Owner.int_param'
 @0 s /0 (Observer):    value=50
