@@ -1,3 +1,4 @@
+SystemC Simulation
 TYPE B new impl_par
 ownerA.int_param == ownerB.int_param: false
 

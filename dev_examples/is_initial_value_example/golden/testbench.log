@@ -1,3 +1,4 @@
+SystemC Simulation
 
 **** Parameter list:    
 params.int_param_only_implicit : impl. (is always initial), val=130

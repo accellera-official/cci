@@ -1,3 +1,4 @@
+SystemC Simulation
 ConfigFile_Api: Applying initial value of param 'param_owner.int_param_1' to '100'
 ConfigFile_Api: Applying initial value of param 'param_owner.int_param_2' to '200'
 ConfigFile_Api: Applying initial value of param 'param_owner.int_param_3' to '300'
