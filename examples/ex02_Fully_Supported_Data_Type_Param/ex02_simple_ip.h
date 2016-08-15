@@ -59,25 +59,25 @@ SC_MODULE(ex02_simple_ip) {
         double_param("double_param", 2.714),
         string_param("string_param", "C++ String") {
     XREPORT("@Ctor: Default value of " << bool_param.get_name() << " is "
-            << bool_param.get());
+            << bool_param.get_value());
     XREPORT("@Ctor: Default value of " << char_param.get_name() << " is "
-            << char_param.get());
+            << char_param.get_value());
     XREPORT("@Ctor: Default value of " << uchar_param.get_name() << " is "
-            << uchar_param.get());
+            << uchar_param.get_value());
     XREPORT("@Ctor: Default value of " << int_param.get_name() << " is "
-            << int_param.get());
+            << int_param.get_value());
     XREPORT("@Ctor: Default value of " << uint_param.get_name() << " is 0x"
-            << std::hex << uint_param.get());
+            << std::hex << uint_param.get_value());
     // XREPORT("@Ctor: Default value of " << int16_param.get_name() <<
-    // " is 0x" << std::hex << int16_param.get());
+    // " is 0x" << std::hex << int16_param.get_value());
     // XREPORT("@Ctor: Default value of " << int64_param.get_name() <<
-    // " is 0x" << std::hex << int64_param.get());
+    // " is 0x" << std::hex << int64_param.get_value());
     XREPORT("@Ctor: Default value of " << float_param.get_name() << " is "
-            << float_param.get());
+            << float_param.get_value());
     XREPORT("@Ctor: Default value of " << double_param.get_name() << " is "
-            << double_param.get());
+            << double_param.get_value());
     XREPORT("@Ctor: Default value of " << string_param.get_name() << " is "
-            << string_param.get());
+            << string_param.get_value());
 
     SC_THREAD(execute);
   }

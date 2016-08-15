@@ -43,7 +43,7 @@ CCI_OPEN_NAMESPACE_
  * If an sc_module shall be owner of a private broker, it must derive from this class.
  * It is highly recommended to use this as a base class for only sc_modules 
  * (and modules derived from sc_modules but not as a base for non-modules). 
- * @TODO: Check if this works as a base of a non-sc_module as well.
+ * @todo: Check if this works as a base of a non-sc_module as well.
  */
 class cci_broker_manager {
 
@@ -53,27 +53,27 @@ public:
   // Functions for static usage:
   //
   
-  /// Returns an accessor to the broker currently on top of broker stack
+  /// Returns a handle to the broker currently on top of broker stack
   /**
-   * Returns an accessor to a private or the global broker.
-   * Returns an accessor to the global broker if no broker on the stack.
+   * Returns a handle to a private or the global broker.
+   * Returns a handle to the global broker if no broker on the stack.
    *
-   * @param originator Originator the accessor shall point to
-   * @return Broker (private or global) accessor
+   * @param originator Originator the handle shall point to
+   * @return Broker (private or global) handle
    */
   // old name: "search_for_broker"
   static cci_broker_if& get_current_broker(const cci_originator& originator);
 
-  /// Returns an accessor to the broker currently on second top of broker stack
+  /// Returns a handle to the broker currently on second top of broker stack
   /**
    * This can be used by a private broker to identify its parent's broker -
    * which is the broker it needs to forward the public actions to.
    *
-   * Returns an accessor to a private or the global broker.
-   * Returns an accessor to the global broker if not two brokers on the stack.
+   * Returns a handle to a private or the global broker.
+   * Returns a handle to the global broker if not two brokers on the stack.
    *
-   * @param originator Originator the accessor shall point to
-   * @return Broker (private or global) accessor
+   * @param originator Originator the handle shall point to
+   * @return Broker (private or global) handle
    */
   static cci_broker_if& get_current_parent_broker(const cci_originator& originator);
   
@@ -84,9 +84,9 @@ private:
   
 public:
   
-  /// Constructor for ONLY temporary object; taking an optional (private) broker instance (recommended to provide an accessor)
+  /// Constructor for ONLY temporary object; taking an optional (private) broker instance (recommended to provide a handle)
   /**
-   * @TODO: Memory management for the private broker given to the broker manager: Is this left for the user to be solved? The broker must not be deleted as long as parameters exist using it.
+   * @todo: Memory management for the private broker given to the broker manager: Is this left for the user to be solved? The broker must not be deleted as long as parameters exist using it.
    *
    * The constructor does a push to the private broker stack, which is poped by 
    * the destructor again. That's the reason why this object is only allowed to 
@@ -119,11 +119,11 @@ public:
 // Private to prevent from modification
 private:
 
-  /// Private broker accessor pointer this manager returns (own or upwards one)
+  /// Private broker handle pointer this manager returns (own or upwards one)
   /**
    * This broker is always valid. 
-   * This is either an accessor to the own private broker
-   * or an accessor to another (private or not private) broker from upwards the hierarchy.
+   * This is either a handle to the own private broker
+   * or a handle to another (private or not private) broker from upwards the hierarchy.
    */
   cci_broker_if* m_broker;
 

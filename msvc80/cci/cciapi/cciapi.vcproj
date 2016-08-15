@@ -274,9 +274,13 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\src\cci_cfg\cci_base_param.cpp"
+				RelativePath="..\..\..\src\cci_cfg\cci_param_untyped.cpp"
 				>
 			</File>
+			<File
+                RelativePath="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp"
+                >
+            </File>
 			<File
 				RelativePath="..\..\..\src\cci_cfg\cci_broker_manager.cpp"
 				>
@@ -304,9 +308,21 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\cci_cfg\cci_base_param.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_param_untyped.h"
 				>
 			</File>
+			<File
+                RelativePath="..\..\..\src\cci_cfg\cci_param_untyped_handle.h"
+                >
+            </File>
+            <File
+                RelativePath="..\..\..\src\cci_cfg\cci_param_typed.h"
+                >
+            </File>
+            <File
+                RelativePath="..\..\..\src\cci_cfg\cci_param_typed_handle.h"
+                >
+            </File>
 			<File
 				RelativePath="..\..\..\src\cci_cfg\cci_broker_if.h"
 				>
@@ -360,15 +376,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\cci_cfg\cci_param.h"
-				>
-			</File>
-                        <File
-				RelativePath="..\..\..\src\cci_cfg\cci_param_b.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_param_typed.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\src\cci_cfg\cci_param_impl_if.h"
+				RelativePath="..\..\..\src\cci_cfg\cci_param_if.h"
 				>
 			</File>
 			<File

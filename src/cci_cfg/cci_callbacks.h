@@ -68,18 +68,18 @@ CCI_OPEN_NAMESPACE_
     return_other_error
   };
 
-  class cci_base_param;
+  class cci_param_untyped_handle;
   
   /// Typedef for the member function pointer for parameter callbacks.
   /**
-   * Callback functions must have the signature: callback_return_type method_name(cci_base_param& changed_param, const callback_type& cb_reason)
+   * Callback functions must have the signature: callback_return_type method_name(cci_param_if& changed_param, const callback_type& cb_reason)
    */
-  typedef function2<callback_return_type, cci_base_param&, const callback_type&> param_callb_func_ptr;  // boost function portable syntax
-  //typedef function<callback_return_type (cci_base_param&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
+  typedef function2<callback_return_type, cci_param_untyped_handle&, const callback_type&> param_callb_func_ptr;  // boost function portable syntax
+  //typedef function<callback_return_type (cci_param_if&, const callback_type&)> callb_func_ptr;  // boost function prefered syntax
   
   /// Typedef for the member function pointer for broker callbacks.
   /**
-   * Callback functions must have the signature: callback_return_type method_name(cci_base_param& changed_param, const callback_type& cb_reason)
+   * Callback functions must have the signature: callback_return_type method_name(cci_param_if& changed_param, const callback_type& cb_reason)
    */
   typedef function2<callback_return_type, const std::string&, const callback_type&> broker_callb_func_ptr;  // boost function portable syntax
   //typedef function<callback_return_type (const std::string&, const callback_type&)> broker_callb_func_ptr;  // boost function prefered syntax
@@ -96,16 +96,16 @@ CCI_OPEN_NAMESPACE_
    * during destruction.
    *
    * Note the templates are only needed for compiling (to break
-   * cyclic includes with cci_base_param and broker), 
+   * cyclic includes with cci_param_if and broker), 
    * Use the typedef callb_adapt to use this class.
    */
-  template<class cci_base_param_T, class cci_broker_if_T>
+  template<class cci_param_untyped_handle_T, class cci_broker_if_T>
   class callb_adapt_T
   {
   protected:
 
-    /// Allows cci::cci_base_param to access the caller_param to set to NULL.
-    //friend class cci_base_param; 
+    /// Allows cci::cci_param_if to access the caller_param to set to NULL.
+    //friend class cci_param_if; 
         
   public:
     
@@ -115,13 +115,13 @@ CCI_OPEN_NAMESPACE_
      * @param _func          Member function pointer to the callback method (must match signature cci::param_callb_func_ptr).
      * @param _caller_param  Pointer to the param that calls this adapter.
      */
-    callb_adapt_T(void* _observer_ptr, param_callb_func_ptr _func, cci_base_param_T* _caller_param);
+    callb_adapt_T(void* _observer_ptr, param_callb_func_ptr _func, cci_param_untyped_handle_T* _caller_param);
 
     /// Constructor to be used for registering functions of type broker_callb_func_ptr.
     /**
      * @param _observer_ptr   Pointer to the object where the callback method should be called.
      * @param _func           Member function pointer to the callback method (must match signature cci::broker_callb_func_ptr).
-     * @param _caller_broker  Pointer to the broker that calls this adapter.
+     * @param _caller_object  Pointer to the broker that calls this adapter.
      */
     callb_adapt_T(void* _observer_ptr, broker_callb_func_ptr _func, cci_broker_if_T* _caller_object);
     
@@ -131,7 +131,7 @@ CCI_OPEN_NAMESPACE_
     void unregister_at_parameter();
     
     /// Makes the callback.
-    callback_return_type call(cci_base_param_T& changed_param, const callback_type& cb_reason);
+    callback_return_type call(cci_param_untyped_handle_T& changed_param, const callback_type& cb_reason);
 
     /// Makes the callback.
     callback_return_type call(const std::string& changed_param_name, const callback_type& cb_reason);
@@ -143,20 +143,20 @@ CCI_OPEN_NAMESPACE_
     /**
      * @return Caller parameter. NULL if not existing.
      */
-    cci_base_param_T* get_caller_param();
+    cci_param_untyped_handle_T* get_caller_param();
 
     /// Returns the caller broker pointer
     /**
      * @return Caller broker. NULL if not existing.
      */
-    cci_base_param_T* get_caller_broker();
+    cci_param_untyped_handle_T* get_caller_broker();
     
   protected:
     /// Pointer to the observer
     void* observer_ptr;
   public:   // TODO: more elegant; needs to be set to NULL when calling parameter is deleted
     /// Caller parameter
-    cci_base_param_T *caller_param;
+    cci_param_untyped_handle_T *caller_param;
     cci_broker_if_T *caller_broker;
   protected:
     /// Function pointer to the callback method (must match signature cci::callb_func_ptr).
@@ -165,7 +165,7 @@ CCI_OPEN_NAMESPACE_
     
   };
 
-  typedef callb_adapt_T<cci_base_param, cci_broker_if> callb_adapt;
+  typedef callb_adapt_T<cci_param_untyped_handle, cci_broker_if> callb_adapt;
   
       
 CCI_CLOSE_NAMESPACE_

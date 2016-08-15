@@ -64,11 +64,11 @@ SC_MODULE(ex02_config_ip) {
     // Wait for 10 ns to update the values of the param
     wait(10, sc_core::SC_NS);
 
-    cci::cci_base_param *base_int_param_ptr = NULL;
+    cci::cci_param_handle *base_int_param_ptr = NULL;
     // Check for existance of int_param
     if (m_cci->param_exists(param_name)) {
       // Get handle to the param
-      base_int_param_ptr = m_cci->get_param(param_name);
+      base_int_param_ptr = m_cci->get_param_handle(param_name);
       assert(base_int_param_ptr != NULL);
 
       /* @todo get_basic_type() needs to be implemented
@@ -77,41 +77,41 @@ SC_MODULE(ex02_config_ip) {
        if(partype == cci::partype_number) {
        */
       // Typecast the param to an 'int' type
-      cci::cci_param<int> *int_param_ptr =
-          dynamic_cast<cci::cci_param<int>*>(base_int_param_ptr);
+      cci::cci_param_typed_handle<int> *int_param_ptr =
+          dynamic_cast<cci::cci_param_typed_handle<int>*>(base_int_param_ptr);
       if (int_param_ptr == NULL) {
         XREPORT_WARNING("@execute: Typecast of " << int_param_ptr->get_name()
                         << " to 'cci::cci_param<int> *' type failed.");
       } else {
-        cci::cci_param<int> &int_param_ref = *int_param_ptr;
+        cci::cci_param_typed_handle<int> &int_param_ref = *int_param_ptr;
         XREPORT("@execute: Typecast of " << param_name
                 << " to 'cci::cci_param<int> *' succeeded");
         XREPORT("@execute: Current value of " << int_param_ref.get_name()
-                << " is " << int_param_ref.get());
+                << " is " << int_param_ref.get_value());
       }
 
       // Typecast the param to 'unsigned int' type
-      cci::cci_param<unsigned int> *uint_param_ptr =
-          dynamic_cast<cci::cci_param<unsigned int>*>(base_int_param_ptr);
+      cci::cci_param_typed_handle<unsigned int> *uint_param_ptr =
+          dynamic_cast<cci::cci_param_typed_handle<unsigned int>*>(base_int_param_ptr);
       if (uint_param_ptr == NULL) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
                         << " to 'cci::cci_param<unsigned int> *'"
                         " type failed.");
       } else {
         XREPORT("@execute: Current value of " << uint_param_ptr->get_name()
-                << " is " << uint_param_ptr->get());
+                << " is " << uint_param_ptr->get_value());
       }
 
       // Typecast the param to 'std::string' type
-      cci::cci_param<std::string> *string_param_ptr =
-          dynamic_cast<cci::cci_param<std::string>*>(base_int_param_ptr);
+      cci::cci_param_typed_handle<std::string> *string_param_ptr =
+          dynamic_cast<cci::cci_param_typed_handle<std::string>*>(base_int_param_ptr);
       if (string_param_ptr == NULL) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
                         << " to 'cci::cci_param<std::string> *'"
                         " type failed.");
       } else {
         XREPORT("@execute: Current value of " << string_param_ptr->get_name()
-                << " is " << string_param_ptr->get());
+                << " is " << string_param_ptr->get_value());
       }
       /*
        }

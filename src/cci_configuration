@@ -40,7 +40,8 @@
 #include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_value_traits.h"
-#include "cci_cfg/cci_param.h"
+#include "cci_cfg/cci_param_typed.h"
+#include "cci_cfg/cci_param_typed_handle.h"
 #include "cci_cfg/cci_macros_undef.h"
 
 #endif // CCI_CCI_HEADER_INCLUDED_
