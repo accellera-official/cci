@@ -60,6 +60,13 @@ public:
 	*/
 	cci_param_typed<value_type>& operator= (const cci_param_typed<T, TM> & rhs);
 
+    ///Assigns parameter a new value from another parameter handle
+    /**
+    * @param rhs New value to assign
+    * @return reference to this object
+    */
+    cci_param_typed<value_type>& operator= (const cci_param_typed_handle<T> & rhs);
+
 	///Assigns parameter a new value
 	/**
 	 * @param rhs New value to assign
@@ -308,6 +315,13 @@ cci_param_typed<typename cci_param_typed<T, TM>::value_type>& cci_param_typed<T,
 {
 	set(rhs.get_value());
 	return *this;
+}
+
+template <typename T, param_mutable_type TM>
+cci_param_typed<typename cci_param_typed<T, TM>::value_type>& cci_param_typed<T, TM>::operator=(const cci_param_typed_handle<T>& rhs)
+{
+    set(rhs.get_value());
+    return *this;
 }
 
 template <typename T, param_mutable_type TM>

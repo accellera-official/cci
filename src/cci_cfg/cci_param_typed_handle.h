@@ -41,12 +41,19 @@ public:
     /// The parameter's value type.
     typedef T value_type;
 
-    ///Assigns parameter a new value from another parameter
+    ///Assigns parameter a new value from another parameter handle
     /**
     * @param rhs New value to assign
     * @return reference to this object
     */
     cci_param_typed_handle<value_type>& operator= (const cci_param_typed_handle<T> & rhs);
+
+    ///Assigns parameter a new value from another parameter
+    /**
+    * @param rhs New value to assign
+    * @return reference to this object
+    */
+    cci_param_typed_handle<value_type>& operator= (const cci_param_typed<T> & rhs);
 
     ///Assigns parameter a new value
     /**
@@ -83,6 +90,13 @@ public:
 
 template <typename T>
 cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_typed_handle<T>& rhs)
+{
+    set(rhs.get_value());
+    return *this;
+}
+
+template <typename T>
+cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_typed<T>& rhs)
 {
     set(rhs.get_value());
     return *this;
