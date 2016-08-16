@@ -46,7 +46,7 @@ SC_MODULE(ex13_parameter_owner) {
   SC_CTOR(ex13_parameter_owner)
      : int_param("mutable_int_param", 0) {
     XREPORT("[OWNER C_TOR] : Parameter locking status : "
-            << int_param.is_locked() << "\tValue : " << int_param.get());
+            << int_param.is_locked() << "\tValue : " << int_param.get_value());
 
     // SC_THREAD declaration
     SC_THREAD(run_owner);
@@ -64,7 +64,7 @@ SC_MODULE(ex13_parameter_owner) {
       XREPORT("[OWNER] : Locking the parameter without password");
       int_param.lock();
       XREPORT("[OWNER] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : " << int_param.get());
+              << int_param.is_locked() << "\tValue : " << int_param.get_value());
 
       // Illustrating usage of try and catch mechanism in order to catch the
       // exception raised when trying to set a value to the parameter if it
@@ -79,7 +79,7 @@ SC_MODULE(ex13_parameter_owner) {
       }
 
       XREPORT("[OWNER] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : " << int_param.get());
+              << int_param.is_locked() << "\tValue : " << int_param.get_value());
 
       wait(5.0, sc_core::SC_NS);
 
@@ -88,19 +88,19 @@ SC_MODULE(ex13_parameter_owner) {
               " password");
       int_param.unlock();
       XREPORT("[OWNER] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : " << int_param.get());
+              << int_param.is_locked() << "\tValue : " << int_param.get_value());
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[OWNER] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : " << int_param.get());
+              << int_param.is_locked() << "\tValue : " << int_param.get_value());
       key = NULL;
       XREPORT("[OWNER] : Directly lock the unlocked parameter with password");
       int_param.lock(&key);
 
       XREPORT("[OWNER] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : " << int_param.get());
+              << int_param.is_locked() << "\tValue : " << int_param.get_value());
 
       // This 'set' API llustrating assigning new value to an already locked
       // parameter without unlocking it
@@ -108,7 +108,7 @@ SC_MODULE(ex13_parameter_owner) {
               " without unlocking");
       int_param.set(4, &key);
       XREPORT("[OWNER] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : " << int_param.get());
+              << int_param.is_locked() << "\tValue : " << int_param.get_value());
 
       wait(30.0, sc_core::SC_NS);
     }

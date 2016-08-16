@@ -68,7 +68,7 @@ void ObserverModule::main_action() {
 
 
 /// Callback function with default signature showing changes.
-cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+cci::callback_return_type ObserverModule::config_callback(cci::cci_param_handle& par, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::post_write);
   std::string str = par.json_serialize();
   DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
@@ -76,7 +76,7 @@ cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& p
 }
 
 /// Callback function with default signature rejecting all changes.
-cci::callback_return_type ObserverModule::config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+cci::callback_return_type ObserverModule::config_callback_reject_changes(cci::cci_param_handle& par, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::reject_write);
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
   cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;

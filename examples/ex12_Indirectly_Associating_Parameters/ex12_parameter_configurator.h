@@ -39,7 +39,7 @@
 /**
  *  @class  ex12_parameter_configurator
  *  @brief  The configurator module searches for owner parameters using the
- *          'get_param' API. The 'get_param_list' API is resulting in warnings.
+ *          'get_param_handle' API. The 'get_param_list' API is resulting in warnings.
  */
 SC_MODULE(ex12_parameter_configurator) {
  public:
@@ -61,7 +61,7 @@ SC_MODULE(ex12_parameter_configurator) {
 
     // Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
     if (myCfgrBrokerIF->param_exists(cfgr_param_str1)) {
-      cfgr_param_ptr1 = myCfgrBrokerIF->get_param(cfgr_param_str1);
+      cfgr_param_ptr1 = myCfgrBrokerIF->get_param_handle(cfgr_param_str1);
 
       assert(cfgr_param_ptr1 != NULL
              && "Configuration parameter returned is NULL");
@@ -76,7 +76,7 @@ SC_MODULE(ex12_parameter_configurator) {
 
     // Check for 'clock_speed_Hz' cci_parameter of owner module 2
     if (myCfgrBrokerIF->param_exists(cfgr_param_str2)) {
-      cfgr_param_ptr2 = myCfgrBrokerIF->get_param(cfgr_param_str2);
+      cfgr_param_ptr2 = myCfgrBrokerIF->get_param_handle(cfgr_param_str2);
 
       assert(cfgr_param_ptr2 != NULL
              && "Configuration parameter returned is NULL");
@@ -148,8 +148,8 @@ SC_MODULE(ex12_parameter_configurator) {
 
  private:
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
-  cci::cci_base_param* cfgr_param_ptr1;  ///< CCI base parameter
-  cci::cci_base_param* cfgr_param_ptr2;  ///< CCI base parameter
+  cci::cci_param_handle* cfgr_param_ptr1;  ///< CCI base parameter handle
+  cci::cci_param_handle* cfgr_param_ptr2;  ///< CCI base parameter handle
 };
 // ex12_parameter_configurator
 

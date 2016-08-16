@@ -31,6 +31,40 @@ struct test_datatype_without_parameter_implementation {
   std::string strVal;
 };
 
-// operators >>, << and == see gs_cci_symbols_c.cpp!
+inline std::istream& operator >>(std::istream &is,test_datatype_without_parameter_implementation &obj)
+{
+  is>>obj.strVal;
+  return is;
+}
+inline std::ostream& operator <<(std::ostream &os,const test_datatype_without_parameter_implementation &obj)
+{
+  os<<obj.strVal;
+  return os;
+}
+inline bool operator==(test_datatype_without_parameter_implementation const& lhs, test_datatype_without_parameter_implementation const& rhs) {
+  return lhs.strVal.compare(rhs.strVal);
+}
+
+namespace cci {
+template<>
+struct cci_value_traits< test_datatype_without_parameter_implementation >
+{
+  typedef test_datatype_without_parameter_implementation type;
+  static bool pack( cci_value::reference dst, type const & src )
+  {
+    dst.set_string( src.strVal );
+    return true;
+  }
+  static bool unpack( type & dst, cci_value::const_reference src )
+  {
+    if( !src.is_string() )
+      return false;
+
+    dst.strVal = src.get_string();
+    return true;
+  }
+
+};
+} /* namespace cci */
 
 #endif

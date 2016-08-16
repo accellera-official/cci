@@ -40,19 +40,38 @@ public:
   std::string strVal;
 };
 
-// implementation see library cpp gs_cci_symbols_b.cpp
-/*std::istream& operator >>(std::istream &is,test_datatype &obj)
+inline std::istream& operator >>(std::istream &is,test_datatype &obj)
 {
   is>>obj.strVal;
   return is;
 }
-std::ostream& operator <<(std::ostream &os,const test_datatype &obj)
+inline std::ostream& operator <<(std::ostream &os,const test_datatype &obj)
 {
   os<<obj.strVal;
   return os;
 }
-bool operator==(test_datatype const& lhs, test_datatype const& rhs) {
+inline bool operator==(test_datatype const& lhs, test_datatype const& rhs) {
   return lhs.strVal.compare(rhs.strVal);
 }
- */
+namespace cci {
+template<>
+struct cci_value_traits< test_datatype >
+{
+  typedef test_datatype type;
+  static bool pack( cci_value::reference dst, type const & src )
+  {
+    dst.set_string( src.strVal );
+    return true;
+  }
+  static bool unpack( type & dst, cci_value::const_reference src )
+  {
+    if( !src.is_string() )
+      return false;
+
+    dst.strVal = src.get_string();
+    return true;
+  }
+};
+} /* namespace cci */
+
 #endif

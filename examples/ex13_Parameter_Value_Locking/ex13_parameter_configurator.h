@@ -56,7 +56,7 @@ SC_MODULE(ex13_parameter_configurator) {
     if (myConfigBroker->param_exists("param_owner.mutable_int_param")) {
       // Getting handle for the integer parameter of onwer module
       // by the configurator
-      int_param_ptr = myConfigBroker->get_param("param_owner.mutable_int_param");
+      int_param_ptr = myConfigBroker->get_param_handle("param_owner.mutable_int_param");
 
       assert(int_param_ptr != NULL && "Base parameter handle returned NULL");
     } else {
@@ -168,7 +168,7 @@ SC_MODULE(ex13_parameter_configurator) {
 
  private:
   cci::cci_broker_if* myConfigBroker;  ///< CCI configuration broker interface instance
-  cci::cci_base_param* int_param_ptr;  ///< CCI base parameter handle to access the actual owner's parameter
+  cci::cci_param_handle* int_param_ptr;  ///< CCI base parameter handle to access the actual owner's parameter
 
   char* paramName;  ///< The parameter name
 

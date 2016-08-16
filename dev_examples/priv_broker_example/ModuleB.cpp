@@ -27,6 +27,7 @@
 
 #include "ModuleB.h"
 #include <systemc.h>
+#include <boost/assign/list_of.hpp>
 
 ModuleB::ModuleB(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
@@ -35,7 +36,7 @@ ModuleB::ModuleB(sc_core::sc_module_name name)
 , uint_param2("uint_param2", 12, cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this)))
 , str_param ("str_param", "This is a test string.", cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this)))
 , bool_param("bool_param", false, cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this))) // no default value
-, mC("ModuleC", new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param")))
+, mC("ModuleC", new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")))
 { 
   SC_THREAD(main_action);
 

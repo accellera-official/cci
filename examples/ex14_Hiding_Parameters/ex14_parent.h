@@ -71,14 +71,14 @@ SC_MODULE(ex14_parent) {
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
             << parent_int_param.get_name() << "\tParameter Value : "
-            << parent_int_param.get());
+            << parent_int_param.get_value());
 
     if (parent_BrokerIF != NULL) {
       std::string child_param_path(name());
       child_param_path.append(".child_inst.priv_int_param");
 
       if (parent_BrokerIF->param_exists(child_param_path)) {
-        child_base_param_ptr = parent_BrokerIF->get_param(child_param_path);
+        child_base_param_ptr = parent_BrokerIF->get_param_handle(child_param_path);
 
         assert(child_base_param_ptr != NULL
                && "Returned broker handle for 'priv_int_param' of 'child'"
@@ -106,7 +106,7 @@ SC_MODULE(ex14_parent) {
     XREPORT("[PARENT C_TOR] : Parameter Name : "
             << parent_buffer.get_name()
             << "\tParameter Value : "
-            << parent_buffer.get());
+            << parent_buffer.get_value());
   }
 
   /**
@@ -118,9 +118,9 @@ SC_MODULE(ex14_parent) {
    *  @return The exit status of the callback function
    */
   cci::callback_return_type write_callback(
-      cci::cci_base_param & _base_param,
+      cci::cci_param_handle & _base_param,
       const cci::callback_type & cb_reason,
-      cci::cci_base_param * _child_base_param_ptr) {
+      cci::cci_param_handle * _child_base_param_ptr) {
     _child_base_param_ptr->json_deserialize(_base_param.json_serialize());
 
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
@@ -164,7 +164,7 @@ SC_MODULE(ex14_parent) {
   cci::cci_param<int> parent_buffer; ///< CCI int parameter for a buffer
 
   /// Declare cci_base_param pointers
-  cci::cci_base_param* child_base_param_ptr; ///< Pointer to the child
+  cci::cci_param_handle* child_base_param_ptr; ///< Pointer to the child
 
   // Callback Adaptor Object
   cci::shared_ptr<cci::callb_adapt> parent_post_write_cb;  ///< callback adapter object

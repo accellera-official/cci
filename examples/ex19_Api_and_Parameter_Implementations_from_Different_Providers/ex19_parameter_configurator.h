@@ -67,7 +67,7 @@ SC_MODULE(ex19_parameter_configurator) {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_int_param exists");
 
       // Get handle of the owner parameter
-      cfgr_param_ptr = myCfgrBrokerIF->get_param("param_owner.mutable_int_param");
+      cfgr_param_ptr = myCfgrBrokerIF->get_param_handle("param_owner.mutable_int_param");
 
       // Assert if the owner parameter handle returned is NULL
       assert(cfgr_param_ptr != NULL
@@ -83,7 +83,7 @@ SC_MODULE(ex19_parameter_configurator) {
 
       // Get handle of the owner parameter
       cfgr_user_param_ptr =
-          myCfgrBrokerIF->get_param("param_owner.mutable_udtype_param");
+          myCfgrBrokerIF->get_param_handle("param_owner.mutable_udtype_param");
 
       // Assert if the owner parameter handle returned is NULL
       assert(cfgr_param_ptr != NULL
@@ -100,14 +100,14 @@ SC_MODULE(ex19_parameter_configurator) {
       } else {
         XREPORT("Try again now directly with param_owner.mutable_udtype_param");
         cfgr_user_param_ptr =
-            myCfgrBrokerIF->get_param("param_owner.mutable_udtype_param");
+            myCfgrBrokerIF->get_param_handle("param_owner.mutable_udtype_param");
 
         if (cfgr_user_param_ptr == NULL) {
           XREPORT("Fail to get directly with param_owner.mutable_udtype_param");
 
           XREPORT("Try again now directly with mutable_udtype_param");
           cfgr_user_param_ptr =
-              myCfgrBrokerIF->get_param("mutable_udtype_param");
+              myCfgrBrokerIF->get_param_handle("mutable_udtype_param");
         }
 
         if (cfgr_user_param_ptr == NULL) {
@@ -137,7 +137,7 @@ SC_MODULE(ex19_parameter_configurator) {
       wait(10.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get());
+      XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get_value());
       if (cfgr_user_param_ptr != NULL) {
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
                 << cfgr_user_param_ptr->json_serialize());
@@ -174,8 +174,8 @@ SC_MODULE(ex19_parameter_configurator) {
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   // Declaring a CCI base parameter pointer
-  cci::cci_base_param* cfgr_param_ptr; ///< pointer to a cci parameter
-  cci::cci_base_param* cfgr_user_param_ptr;  ///< pointer to a cci parameter that is accessible by the user
+  cci::cci_param_handle* cfgr_param_ptr; ///< pointer to a cci parameter
+  cci::cci_param_handle* cfgr_user_param_ptr;  ///< pointer to a cci parameter that is accessible by the user
 
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
