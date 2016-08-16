@@ -158,6 +158,11 @@ void cci_param_untyped_handle::set_raw_value(const void* vp, const void* pwd)
 
 bool cci_param_untyped_handle::equals(const cci_param_untyped_handle& rhs) const
 {
+    return m_orig_param.equals(rhs.m_orig_param);
+}
+
+bool cci_param_untyped_handle::equals(const cci_param_if& rhs) const
+{
     return m_orig_param.equals(rhs);
 }
 

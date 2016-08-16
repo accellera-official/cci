@@ -262,6 +262,24 @@ public:
 
     ///@}
 
+    ///@name Type-punned value operations
+    ///@{
+
+    /// Compare parameter handle values.
+    /**
+    * @param rhs reference to another cci_param_untyped_handle implementation
+    * @return True if both values are equal and of the same data type
+    */
+    bool equals(const cci_param_untyped_handle& rhs) const;
+
+    /// Compare parameter values.
+    /**
+    * @param rhs reference to another cci_param_if implementation
+    * @return True if both values are equal and of the same data type
+    */
+    bool equals(const cci_param_if& rhs) const;
+
+    ///@}
 
 protected:
     /// Constructor to create handle with given originator.
@@ -297,18 +315,6 @@ protected:
     * @pre Type of vp must be equal to the internal type
     */
     void set_raw_value(const void* vp, const void* pwd);
-
-    ///@name Type-punned value operations
-    ///@{
-
-    /// Compare parameter values.
-    /**
-    * @param rhs reference to another cci_param_typed implementation
-    * @return True if both values are equal and of the same data type
-    */
-    bool equals(const cci_param_untyped_handle& rhs) const;
-
-    ///@}
 
     ///@name Accessor methods
     ///@{
