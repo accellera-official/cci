@@ -58,14 +58,14 @@ public:
 	* @param rhs New value to assign
 	* @return reference to this object
 	*/
-	cci_param_typed<value_type>& operator= (const cci_param_typed<T, TM> & rhs);
+	cci_param_typed<value_type, TM>& operator= (const cci_param_typed<T, TM> & rhs);
 
 	///Assigns parameter a new value
 	/**
 	 * @param rhs New value to assign
 	 * @return reference to this object
 	*/
-	cci_param_typed<value_type>& operator= (const value_type & rhs);
+	cci_param_typed<value_type, TM>& operator= (const value_type & rhs);
 
 	///Conversion operator to be able use cci_param_typed as a regular object
 	operator const value_type& () const;
@@ -297,14 +297,14 @@ private:
 };
 
 template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type>& cci_param_typed<T, TM>::operator=(const cci_param_typed<T, TM>& rhs)
+cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const cci_param_typed<T, TM>& rhs)
 {
 	set(rhs.get_value());
 	return *this;
 }
 
 template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type>& cci_param_typed<T, TM>::operator=(const value_type& rhs)
+cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const value_type& rhs)
 {
 	set(rhs);
 	return *this;
@@ -349,7 +349,7 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value, const cci_originat
 template <typename T, param_mutable_type TM>
 void cci_param_typed<T, TM>::set_raw_value(const void* value, const void *pwd)
 {
-    set(value, pwd, get_originator());
+    set_raw_value(value, pwd, get_originator());
 }
 
 template <typename T, param_mutable_type TM>
@@ -487,26 +487,26 @@ void cci_param_typed<T, TM>::destroy()
 /// Constructors
 
 #define CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL(signature, top, broker)           \
-template <typename T, param_mutable_type TM>                        		   \
-cci_param_typed<T, TM>::cci_param_typed signature                              			   \
-: cci_param_untyped(top, &broker, desc, cci_originator()),                        \
-  m_gs_param(name, "", NULL, top, true)			                               \
+template <typename T, param_mutable_type TM>                                   \
+cci_param_typed<T, TM>::cci_param_typed signature                              \
+: cci_param_untyped(top, &broker, desc, cci_originator()),                     \
+  m_gs_param(new gs::gs_param<T>(name, "", NULL, top, true))                   \
 {                                                                              \
     m_gs_param->setString(cci::cci_value::to_json(value));                     \
-    cci_param_untyped::m_gs_param_base = &m_gs_param;                             \
+    cci_param_untyped::m_gs_param_base = m_gs_param;                           \
     broker.add_param(this);                                          		   \
-    this->init();                                                    		   \
+    this->init();                                                              \
 }
 
 #define CCI_PARAM_CONSTRUCTOR_IMPL(signature, top, broker)                     \
-template <typename T, param_mutable_type TM>                        		   \
-cci_param_typed<T, TM>::cci_param_typed signature                              			   \
-: cci_param_untyped(top, &broker, desc, cci_originator()),                        \
+template <typename T, param_mutable_type TM>                                   \
+cci_param_typed<T, TM>::cci_param_typed signature                              \
+: cci_param_untyped(top, &broker, desc, cci_originator()),                     \
   m_gs_param(new gs::gs_param<T>(name, value, top))                            \
 {                                                                              \
-    cci_param_untyped::m_gs_param_base = m_gs_param;                              \
-    broker.add_param(this);                                          		   \
-    this->init();                                                    		   \
+    cci_param_untyped::m_gs_param_base = m_gs_param;                           \
+    broker.add_param(this);                                                    \
+    this->init();                                                              \
 }
 
 /// Constructor with (local/hierarchical) name and initial value and description.
