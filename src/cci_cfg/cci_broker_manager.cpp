@@ -42,7 +42,7 @@ CCI_OPEN_NAMESPACE_
 cci_broker_if& cci_broker_manager::get_current_broker(const cci_originator& originator) {
   if (std::string(originator.name()).empty()) {
 #ifdef CCI_CNF_VERBOSE
-    SC_REPORT_INFO("CCI/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
+    CCI_REPORT_INFO("cci_broker_manager/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
 #endif
   }
   if (cci_broker_stack::stack().size() > 0) {
@@ -58,7 +58,7 @@ cci_broker_if& cci_broker_manager::get_current_broker(const cci_originator& orig
 cci_broker_if& cci_broker_manager::get_current_parent_broker(const cci_originator& originator) {
   if (std::string(originator.name()).empty()) {
 #ifdef CCI_CNF_VERBOSE
-    SC_REPORT_INFO("CCI/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
+    CCI_REPORT_INFO("cci_broker_manager/get_current_parent_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
 #endif
   }
   if (cci_broker_stack::stack().size() > 1) {
@@ -85,7 +85,7 @@ cci_broker_manager::cci_broker_manager(cci_broker_if* broker)
       m_broker = &broker->create_broker_handle(*broker->get_originator());
     } else {
       std::cout << "The private broker (\""<<broker->name()<<"\") given to this broker manager IS NOT a handle." << std::endl;
-      SC_REPORT_INFO("CCI/cci_broker_manager", "It is recommended to provide a broker handle to the broker manager!");
+      CCI_REPORT_INFO("cci_broker_manager/cci_broker_manager", "It is recommended to provide a broker handle to the broker manager!");
       m_broker = &broker->create_broker_handle(cci_originator("unknown broker manager")); // TODO: what string is reasonable here?
     }
   } else {
