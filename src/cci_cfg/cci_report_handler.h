@@ -82,13 +82,26 @@ public:
 
   // function to return cci_param_failure that matches thrown (or cached) report
   static cci_param_failure get_param_failure(const sc_core::sc_report& rpt) {
+    const std::string cci_sc_report_type_prefix =
+            __CCI_SC_REPORT_MSG_TYPE_PREFIX__;
     std::string failure_type_string = rpt.get_msg_type();
-    if ( failure_type_string.compare(0,9,__CCI_SC_REPORT_MSG_TYPE_PREFIX__) == 0) {
-      if (failure_type_string == "/ASI/CCI/SET_PARAM_FAILED") return CCI_SET_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/GET_PARAM_FAILED") return CCI_GET_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/ADD_PARAM_FAILED") return CCI_ADD_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/REMOVE_PARAM_FAILED") return CCI_REMOVE_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/CCI_VALUE_FAILURE") return CCI_VALUE_FAILURE;
+
+    if (failure_type_string.compare(0, cci_sc_report_type_prefix.length(),
+                                    cci_sc_report_type_prefix) == 0) {
+      std::string failure_type_string_wp =
+              failure_type_string.substr(cci_sc_report_type_prefix.length(),
+                                         failure_type_string.length());
+
+      if (failure_type_string_wp == "SET_PARAM_FAILED")
+        return CCI_SET_PARAM_FAILURE;
+      else if (failure_type_string_wp == "GET_PARAM_FAILED")
+        return CCI_GET_PARAM_FAILURE;
+      else if (failure_type_string_wp == "ADD_PARAM_FAILED")
+        return CCI_ADD_PARAM_FAILURE;
+      else if (failure_type_string_wp == "REMOVE_PARAM_FAILED")
+        return CCI_REMOVE_PARAM_FAILURE;
+      else if (failure_type_string_wp == "CCI_VALUE_FAILURE")
+        return CCI_VALUE_FAILURE;
       else return CCI_UNDEFINED_FAILURE;
     }
     else //not a CCI failure report
