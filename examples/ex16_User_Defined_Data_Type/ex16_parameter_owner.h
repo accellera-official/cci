@@ -85,8 +85,8 @@ SC_MODULE(ex16_parameter_owner) {
       // Override the default value
       XREPORT("[OWNER -> Set] : New Value " << udt_param.get_name()
               << "\t's_address:768,d_address:1024,index:2'");
-      udt_param.json_deserialize("{\"s_address\":768,\"d_address\":1024,"
-                                 "\"index\":2}");
+      udt_param.set_cci_value(cci::cci_value::from_json(
+              "{\"s_address\":768,\"d_address\":1024,\"index\":2}"));
 
       wait(2.0, SC_NS);
       XREPORT("@ " << sc_time_stamp());

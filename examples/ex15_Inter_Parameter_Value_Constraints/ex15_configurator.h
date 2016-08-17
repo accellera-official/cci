@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -94,21 +97,21 @@ SC_MODULE(ex15_configurator) {
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Changing the 'mem_size' to 640");
-      mem_size_base_ptr->json_deserialize("640");
+      mem_size_base_ptr->set_cci_value(cci::cci_value::from_json("640"));
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Modify the 'curr_addr_lines' to 10");
-      addr_lines_base_ptr->json_deserialize("10");
+      addr_lines_base_ptr->set_cci_value(cci::cci_value::from_json("10"));
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Changing the 'mem_size' to 800");
-      mem_size_base_ptr->json_deserialize("800");
+      mem_size_base_ptr->set_cci_value(cci::cci_value::from_json("800"));
 
       wait(5.0, sc_core::SC_NS);
     }

@@ -5,6 +5,9 @@
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -70,10 +73,10 @@ SC_MODULE(ex08_config_ip) {
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
               << param_1_name << " to 10");
-      param_1_ptr->json_deserialize("10");
+      param_1_ptr->set_cci_value(cci::cci_value::from_json("10"));
 
       // Display new value
-      std::string new_value = param_1_ptr->json_serialize();
+      std::string new_value = param_1_ptr->get_cci_value().json_serialize();
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Current value of "
               << param_1_ptr->get_name() << " is " << new_value);
     } else {
@@ -92,7 +95,7 @@ SC_MODULE(ex08_config_ip) {
               << param_2_name << " to 20");
       try {
         /// @note This should be rejected
-        param_2_ptr->json_deserialize("20");
+        param_2_ptr->set_cci_value(cci::cci_value::from_json("20"));
       } catch (sc_core::sc_report const &e) {
         // Catch exception, if value-change is rejected and handle it
         if (cci::CCI_SET_PARAM_FAILURE
@@ -105,7 +108,7 @@ SC_MODULE(ex08_config_ip) {
       }
 
       // Display new value
-      std::string new_value = param_2_ptr->json_serialize();
+      std::string new_value = param_2_ptr->get_cci_value().json_serialize();
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Current value of "
               << param_2_ptr->get_name() << " is " << new_value);
     } else {

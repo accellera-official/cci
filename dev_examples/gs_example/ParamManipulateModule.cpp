@@ -74,7 +74,7 @@ void ParamManipulateModule::main_action() {
   
   // demonstrate json setting
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
-  int_param_p.json_deserialize("5000");
+  int_param_p.set_cci_value(cci::cci_value::from_json("5000"));
   cout << endl;
   wait(SC_ZERO_TIME);
   

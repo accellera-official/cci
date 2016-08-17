@@ -60,7 +60,7 @@ void show_param_list() {
     if (p) {
       ss_show << "expl.";
       if (p->is_initial_value())       ss_show << ", initial";
-      ss_show << ", val=" << p->json_serialize();
+      ss_show << ", val=" << p->get_cci_value().json_serialize();
     } else {
       ss_show << "impl. (is always initial)";
       ss_show << ", val=" << mBroker->json_serialize(*iter);

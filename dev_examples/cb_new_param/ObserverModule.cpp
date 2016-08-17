@@ -78,7 +78,7 @@ void ObserverModule::main_action() {
 /// Callback function with default signature showing changes.
 cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::post_write);
-  std::string str = par.json_serialize();
+  std::string str = par.get_cci_value().json_serialize();
   DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
   return cci::return_nothing;
 }
@@ -87,7 +87,7 @@ cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& p
 cci::callback_return_type ObserverModule::config_new_param_callback(const std::string& parname, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::create_param);
   cci::cci_base_param *p_param = mApi->get_param(parname);
-  std::string str_val = p_param->json_serialize();
+  std::string str_val = p_param->get_cci_value().json_serialize();
   DEMO_DUMP(name(), "New parameter callback '" << parname << "', value '" << str_val << "'");
   return cci::return_nothing;
 }

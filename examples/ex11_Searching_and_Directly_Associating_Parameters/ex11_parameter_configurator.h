@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -68,7 +71,8 @@ SC_MODULE(ex11_parameter_configurator) {
              && "Configuration parameter returned is NULL");
 
       XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr1->get_name()
-              << "\tParameter Value : " << cfgr_param_ptr1->json_serialize());
+              << "\tParameter Value : "
+              << cfgr_param_ptr1->get_cci_value().json_serialize());
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
               << "\tdoesn't exists in top_module");
@@ -82,7 +86,8 @@ SC_MODULE(ex11_parameter_configurator) {
              && "Configuration parameter returned is NULL");
 
       XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr2->get_name()
-              << "\tParameter Value : " << cfgr_param_ptr2->json_serialize());
+              << "\tParameter Value : "
+              << cfgr_param_ptr2->get_cci_value().json_serialize());
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
               << "\tdoesn't exists in top_module");
@@ -105,16 +110,16 @@ SC_MODULE(ex11_parameter_configurator) {
       XREPORT("[CFGR within beoe] Within the BEOE phase");
       XREPORT("[CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1)"
               " to 5000 (Hz).");
-      cfgr_param_ptr1->json_deserialize("5000");
+      cfgr_param_ptr1->set_cci_value(cci::cci_value::from_json("5000"));
     }
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
             << cfgr_param_ptr1->get_name() << "\tParameter Value : "
-            << cfgr_param_ptr1->json_serialize());
+            << cfgr_param_ptr1->get_cci_value().json_serialize());
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
             << cfgr_param_ptr2->get_name() << "\tParameter Value : "
-            << cfgr_param_ptr2->json_serialize());
+            << cfgr_param_ptr2->get_cci_value().json_serialize());
   }
 
   /**
@@ -131,14 +136,16 @@ SC_MODULE(ex11_parameter_configurator) {
         XREPORT("@ " << sc_core::sc_time_stamp());
         XREPORT("[CFGR] : Changing the 'clock_speed_Hz' of OWNER (2)"
                 " to 12000 (Hz).");
-        cfgr_param_ptr2->json_deserialize("12000");
+        cfgr_param_ptr2->set_cci_value(cci::cci_value::from_json("12000"));
       }
 
       XREPORT("[CFGR] : Parameter Name : " << cfgr_param_ptr1->get_name()
-              << "\tParameter Value : " << cfgr_param_ptr1->json_serialize());
+              << "\tParameter Value : "
+              << cfgr_param_ptr1->get_cci_value().json_serialize());
 
       XREPORT("[CFGR] : Parameter Name : " << cfgr_param_ptr2->get_name()
-              << "\tParameter Value : " << cfgr_param_ptr2->json_serialize());
+              << "\tParameter Value : "
+              << cfgr_param_ptr2->get_cci_value().json_serialize());
 
       wait(50.0, sc_core::SC_NS);
     }

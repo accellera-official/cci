@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -89,7 +92,7 @@ SC_MODULE(ex09_router) {
    */
   void before_end_of_elaboration(void) {
     XREPORT("[ROUTER in beoe] : Number of initiator(s) : "
-            << r_initiators.json_serialize());
+            << r_initiators.get_cci_value().json_serialize());
     XREPORT("[ROUTER in beoe] : Number of target(s) : " << r_targets.get());
     XREPORT("[ROUTER in beoe] : Maximum Addressable Limit of the router : "
             << addr_limit.get());
@@ -135,7 +138,8 @@ SC_MODULE(ex09_router) {
 	  row_ss << "| " << std::setw(10) << r_target_index[i]->get()
 		     << " | " << std::setw(10) << std::hex << std::showbase << r_addr_start[i]->get()
 		     << " | " << std::setw(10) << r_addr_end[i]->get() 
-		     << " | " << std::setw(10) << base_ptr->json_serialize() << " |";
+		     << " | " << std::setw(10)
+             << base_ptr->get_cci_value().json_serialize() << " |";
 	XREPORT(row_ss.str().c_str());
     XREPORT("-----------------------------------------------------");
     }

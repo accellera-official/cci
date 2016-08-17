@@ -92,11 +92,11 @@ void ObserverModule::main_action() {
   cci::shared_ptr<cci::callb_adapt> cb2;
   cb2 = p->register_callback(cci::reject_write, this,
                              cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));
-  std::string str = p->json_serialize();
+  std::string str = p->get_cci_value().json_serialize();
   cout << "int_param has value = " << str << endl;
   cout << "int_param set value = 99 (shall fail)" << endl;
   try {
-    p->json_deserialize("99"); // this shall fail because rejected!
+    p->set_cci_value(cci::cci_value::from_json("99")); // this shall fail because rejected!
   } catch(sc_core::sc_report e) {
     // If set_param_failed error, catch it
     switch ( cci::cci_report_handler::get_param_failure(e) ) {
@@ -108,7 +108,7 @@ void ObserverModule::main_action() {
         throw e;
     }
   }
-  str = p->json_serialize();
+  str = p->get_cci_value().json_serialize();
   cout << "int_param has value = " << str << endl;
   //p->unregister_all_callbacks(this); // this would unregister all calbacks to this module
   p->unregister_callback(cb2); // unregister a callback
@@ -127,7 +127,7 @@ void ObserverModule::main_action() {
   // (instead of global originator function within callbacks)
   
   DEMO_DUMP(name(), "latest write originator of parameter '"<< p->get_name() << "': " << p->get_latest_write_originator()->name());
-  p->json_deserialize("666666");
+  p->set_cci_value(cci::cci_value::from_json("666666"));
   DEMO_DUMP(name(), "latest write originator of parameter '"<< p->get_name() << "': " << p->get_latest_write_originator()->name());
   
   orig = mBroker->get_latest_write_originator(p->get_name());
@@ -147,11 +147,11 @@ cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& p
   assert(cci::cci_originator::get_global_originator() && "Originator shall not be null!");
   switch (cb_reason) {
   case cci::pre_write:
-    str = par.json_serialize();
+    str = par.get_cci_value().json_serialize();
     DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change value, originator: "<< cci::cci_originator::get_global_originator()->name());
     break;
   case cci::post_write:
-    str = par.json_serialize();
+    str = par.get_cci_value().json_serialize();
     DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"', originator: "<< cci::cci_originator::get_global_originator()->name());
     break;
   default:
@@ -165,7 +165,7 @@ cci::callback_return_type ObserverModule::config_new_param_callback(const std::s
   assert(cb_reason == cci::create_param);
   cci::cci_base_param* p = mBroker->get_param(par_name);
   assert(p && "This new param should already be available!");
-  std::string str = p->json_serialize();
+  std::string str = p->get_cci_value().json_serialize();
   DEMO_DUMP(name(), "New parameter callback '" << par_name << "', value '"<<str<<"', originator: "<< cci::cci_originator::get_global_originator()->name());
   return cci::return_nothing;
 }

@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -68,7 +71,7 @@ SC_MODULE(ex10_parameter_configurator) {
     // Set parameter value using cci_base_parameter object
     XREPORT("[CFGR C_TOR] : Set parameter value to 10"
             " using cci_base_parameter");
-    cfgr_param_ptr->json_deserialize("10");
+    cfgr_param_ptr->set_cci_value(cci::cci_value::from_json("10"));
 
     // Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);

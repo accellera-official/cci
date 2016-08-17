@@ -5,7 +5,7 @@
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
   
-  Copyright 2015 Ericsson AB.
+  Copyright 2015-2016 Ericsson AB.
   All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,13 +80,13 @@ SC_MODULE(ex06_config_ip) {
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
               << sim_ip_int_param_ip_name << " is "
-              << int_param_ptr->json_serialize());
+              << int_param_ptr->get_cci_value().json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name
               << " to 50");
-      int_param_ptr->json_deserialize("50");
+      int_param_ptr->set_cci_value(cci::cci_value::from_json("50"));
 
       // Display new value
-      std::string new_value = int_param_ptr->json_serialize();
+      std::string new_value = int_param_ptr->get_cci_value().json_serialize();
       XREPORT("execute: [EXTERNAL] Current value of "
               << int_param_ptr->get_name() << " is " << new_value);
     } else {
@@ -103,13 +103,13 @@ SC_MODULE(ex06_config_ip) {
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
               << sim_ip_int_param_ip_name_0 << " is "
-              << int_param_ptr->json_serialize());
+              << int_param_ptr->get_cci_value().json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name_0
               << " to 60");
-      int_param_ptr->json_deserialize("60");
+      int_param_ptr->set_cci_value(cci::cci_value::from_json("60"));
 
       // Display new value
-      std::string new_value = int_param_ptr->json_serialize();
+      std::string new_value = int_param_ptr->get_cci_value().json_serialize();
       XREPORT("execute: [EXTERNAL] Current value of "
               << int_param_ptr->get_name() << " is " << new_value);
     } else {
@@ -126,13 +126,13 @@ SC_MODULE(ex06_config_ip) {
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
               << sc_main_int_param_top_name << " is "
-              << int_param_ptr->json_serialize());
+              << int_param_ptr->get_cci_value().json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << sc_main_int_param_top_name
               << " to 70");
-      int_param_ptr->json_deserialize("70");
+      int_param_ptr->set_cci_value(cci::cci_value::from_json("70"));
 
       // Display new value
-      std::string new_value = int_param_ptr->json_serialize();
+      std::string new_value = int_param_ptr->get_cci_value().json_serialize();
       XREPORT("execute: [EXTERNAL] Current value of "
               << int_param_ptr->get_name() << " is " << new_value);
     } else {
@@ -148,13 +148,13 @@ SC_MODULE(ex06_config_ip) {
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of " << int_param_custom_name
-              << " is " << int_param_ptr->json_serialize());
+              << " is " << int_param_ptr->get_cci_value().json_serialize());
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_custom_name
               << " to 80");
-      int_param_ptr->json_deserialize("80");
+      int_param_ptr->set_cci_value(cci::cci_value::from_json("80"));
 
       // Display new value
-      std::string new_value = int_param_ptr->json_serialize();
+      std::string new_value = int_param_ptr->get_cci_value().json_serialize();
       XREPORT("execute: [EXTERNAL] Current value of "
               << int_param_ptr->get_name() << " is " << new_value);
     } else {

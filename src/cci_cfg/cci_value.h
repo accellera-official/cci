@@ -167,6 +167,7 @@ public:
 
   /// convert value to JSON
   bool json_serialize( std::string& ) const;
+  std::string json_serialize() const;
 
 protected:
   void

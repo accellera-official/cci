@@ -5,6 +5,9 @@
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -72,10 +75,10 @@ SC_MODULE(ex01_config_ip) {
 
       // Update the param's value to 2
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 2");
-      int_param_ptr->json_deserialize("2");
+      int_param_ptr->set_cci_value(cci::cci_value::from_json("2"));
 
       // Display new value
-      std::string new_value = int_param_ptr->json_serialize();
+      std::string new_value = int_param_ptr->get_cci_value().json_serialize();
       XREPORT("execute: [EXTERNAL] Current value of "
               << int_param_ptr->get_name() << " is " << new_value);
     } else {

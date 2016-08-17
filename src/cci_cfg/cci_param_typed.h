@@ -203,34 +203,6 @@ public:
 
 	///@}
 
-	///@name Set and Get with JSON String Representation
-	///@{
-
-    /// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
-    /**
-     * @exception cci_exception_set_param Setting value failed
-     * @param json_string the new value, represented as a JSON string.
-     */
-    void json_deserialize(const std::string& json_string);
-
-	/// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
-	/**
-	 * @exception cci_exception_set_param Setting value failed
-	 * @param json_string the new value, represented as a JSON string.
-	 * @param originator reference to the originator
-	 */
-	void json_deserialize(const std::string& json_string,
-                          const cci_originator& originator);
-
-	/// Get the JSON string representation of this parameter's value.
-	/**
-	 * @exception cci_exception_get_param Getting value failed
-	 * @return  The value of this parameter represented as a JSON string.
-	 */
-	std::string json_serialize() const;
-
-	///@}
-
     /// Free resources attached to parameter.
     void destroy();
 
@@ -269,10 +241,6 @@ public:
     cci_param_typed(const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker, const std::string& desc = "");
 
 protected:
-
-	std::string json_serialize(const value_type& val) const;
-	void json_deserialize(value_type& target_val, const std::string& str);
-
 	///Constructor to create new parameter with given originator and cci_value
 	cci_param_typed(const std::string& name, const cci_value &value,
 				bool is_top_level_name, cci::cci_broker_if* broker_handle,
@@ -469,43 +437,6 @@ template <typename T, param_mutable_type TM>
 const typename cci_param_typed<T, TM>::value_type& cci_param_typed<T, TM>::get_default_value()
 {
 	return *static_cast<const value_type *>(get_default_value());
-}
-
-template <typename T, param_mutable_type TM>
-std::string cci_param_typed<T, TM>::json_serialize() const
-{
-	///@todo drop completely from CCI param interface?
-	return json_serialize(this->m_gs_param->getValue());
-}
-
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::json_deserialize(const std::string& str)
-{
-    json_deserialize(str, get_originator());
-}
-
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::json_deserialize(const std::string& str,
-                                      const cci_originator& originator)
-{
-	///@todo drop completely from CCI param interface?
-	value_type t;
-	json_deserialize(t, str);
-	set_raw_value(&t, originator);
-}
-
-template <typename T, param_mutable_type TM>
-std::string cci_param_typed<T, TM>::json_serialize(const value_type& val) const
-{
-	return cci::cci_value::to_json( cci::cci_value(val) );
-}
-
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::json_deserialize(value_type& target_val,
-									  const std::string& str)
-{
-	cci::cci_value v = cci::cci_value::from_json( str );
-	target_val = v.get<value_type>();
 }
 
 template <typename T, param_mutable_type TM>

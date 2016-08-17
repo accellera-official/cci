@@ -5,6 +5,9 @@
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -89,7 +92,7 @@ SC_MODULE(ex04_config_ip) {
       } else {
         try {
           XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
-          param_2_ptr->json_deserialize("200");
+          param_2_ptr->set_cci_value(cci::cci_value::from_json("200"));
         } catch (std::exception &x) {
           XREPORT_WARNING(x.what());
         }

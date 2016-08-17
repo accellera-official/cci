@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -99,12 +102,12 @@ SC_MODULE(ex17_parameter_configurator) {
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Set integer parameter value to '20'"
               " using cci_base_parameter");
-      int_param_ptr->json_deserialize("20");
+      int_param_ptr->set_cci_value(cci::cci_value::from_json("20"));
 
       // Set value to the 'string' parameter of the owner module
       XREPORT("[CFGR] : Set string  parameter value to 'configure'"
               " using cci_base_parameter");
-      str_param_ptr->json_deserialize("\"configure\"");
+      str_param_ptr->set_cci_value(cci::cci_value::from_json("\"configure\""));
 
       wait(50.0, sc_core::SC_NS);
     }

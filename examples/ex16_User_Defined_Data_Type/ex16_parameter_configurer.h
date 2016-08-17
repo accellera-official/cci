@@ -105,7 +105,7 @@ SC_MODULE(ex16_parameter_configurer) {
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
-              << udt_param_ptr->json_serialize());
+              << udt_param_ptr->get_cci_value().json_serialize());
 
       // Access parameter's description using 'get_description()' API
       XREPORT("[CFGR -> Retrieve] : Parameter desc: "
@@ -118,7 +118,7 @@ SC_MODULE(ex16_parameter_configurer) {
 
       std::string set_string("{\"s_address\":1024,\"d_address"
                              "\":1280,\"index\":3}");
-      udt_param_ptr->json_deserialize(set_string);
+      udt_param_ptr->set_cci_value(cci::cci_value::from_json(set_string));
 
       wait(2.0, SC_NS);
       XREPORT("@ " << sc_time_stamp());
@@ -129,7 +129,7 @@ SC_MODULE(ex16_parameter_configurer) {
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
-              << udt_param_ptr->json_serialize());
+              << udt_param_ptr->get_cci_value().json_serialize());
 
       wait(20.0, SC_NS);
     }

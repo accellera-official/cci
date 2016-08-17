@@ -57,13 +57,13 @@ void ParameterOwnerModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get json string from parameter
-  std::string str = int_param.json_serialize();
-  cout << name() << ": "<<int_param.get_name() << ".json_serialize() = "<< int_param.json_serialize()<<endl;
+  std::string str = int_param.get_cci_value().json_serialize();
+  cout << name() << ": "<<int_param.get_name() << ".get_cci_value().json_serialize() = "<< str <<endl;
   
   // set parameter using json string
-  int_param.json_deserialize("555000");
-  str = int_param.json_serialize();
-  cout << name() << ": "<<int_param.get_name() << ".json_deserialize(555000) results in "<< str <<endl;
+  int_param.set_cci_value(cci::cci_value::from_json("555000"));
+  str = int_param.get_cci_value().json_serialize();
+  cout << name() << ": "<<int_param.get_name() << ".set_cci_value(cci::cci_value::from_json(\"555000\")) results in "<< str <<endl;
 
   // set parameter directly using operator=
   cout << name() << ": set int_param = 100" << endl;

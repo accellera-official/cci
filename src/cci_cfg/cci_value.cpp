@@ -558,4 +558,13 @@ cci_value_ref::json_deserialize( std::string const & src )
   return true;
 }
 
+std::string
+cci_value_cref::json_serialize() const
+{
+  std::string json;
+  bool ok = json_serialize(json);
+  sc_assert(ok);
+  return json;
+}
+
 CCI_CLOSE_NAMESPACE_

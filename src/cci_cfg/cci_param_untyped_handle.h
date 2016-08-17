@@ -53,25 +53,6 @@ public:
     /// Destructor.
     virtual ~cci_param_untyped_handle();
 
-    ///@name Set and Get with JSON String Representation
-    ///@{
-
-    /// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
-    /**
-    * @exception cci_exception_set_param Setting value failed
-    * @param json_string the new value, represented as a JSON string.
-    */
-    void json_deserialize(const std::string& json_string);
-
-    /// Get the JSON string representation of this parameter's value.
-    /**
-    * @exception cci_exception_get_param Getting value failed
-    * @return  The value of this parameter represented as a JSON string.
-    */
-    std::string json_serialize() const;
-
-    ///@}
-
     ///@name Description
     ///@{
 
@@ -145,7 +126,7 @@ public:
      * subsequently updated to reflect the originator of any value changes.
      *
      * The originator is updated on successful calls to the following functions:
-     * json_deserialize(), set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
+     * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
      */
     const cci_originator* get_latest_write_originator() const;
 

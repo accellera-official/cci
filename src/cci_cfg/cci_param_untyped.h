@@ -122,7 +122,7 @@ public:
 	 * subsequently updated to reflect the originator of any value changes.
 	 *
 	 * The originator is updated on successful calls to the following functions:
-	 * json_deserialize(), set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
+	 * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
 	 */
 	const cci_originator* get_latest_write_originator() const;
 

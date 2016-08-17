@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -121,12 +124,12 @@ SC_MODULE(ex14_parent) {
       cci::cci_param_handle & _base_param,
       const cci::callback_type & cb_reason,
       cci::cci_param_handle * _child_base_param_ptr) {
-    _child_base_param_ptr->json_deserialize(_base_param.json_serialize());
+     _child_base_param_ptr->set_cci_value(_base_param.get_cci_value());
 
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
             << _base_param.get_name()
             << "\tParameter Value : "
-            << _base_param.json_serialize());
+            << _base_param.get_cci_value().json_serialize());
 
     return cci::return_nothing;
   }

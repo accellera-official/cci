@@ -62,17 +62,6 @@ public:
     /// Destructor.
     virtual ~cci_param_if() {}
 
-    ///@name Set and Get with JSON String Representation
-    ///@{
-
-    /// @copydoc cci_param_untyped_handle::json_deserialize
-    virtual void json_deserialize(const std::string &json_string) = 0;
-
-    /// @copydoc cci_param_untyped_handle::json_serialize
-    virtual std::string json_serialize() const = 0;
-
-    ///@}
-
     ///@name JSON Data Type and access
     ///@{
 
@@ -207,10 +196,6 @@ public:
     create_param_handle(const cci_originator &originator) = 0;
 
 private:
-    /// @copydoc cci_param_typed::json_deserialize(const std::string&, const cci_originator&)
-    virtual void json_deserialize(const std::string &json_string,
-                                  const cci_originator &originator) = 0;
-
     /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const cci_originator&)
     virtual void set_cci_value(const cci_value &val,
                                const cci_originator &originator) = 0;
