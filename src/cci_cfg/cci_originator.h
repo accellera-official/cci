@@ -47,30 +47,7 @@ public:
 
   /// Default Constructor assumes current module is the originator
   cci_originator() 
-  : m_originator_obj(sc_core::sc_get_curr_simcontext()->hierarchy_curr()) {
-	/**
-     * @todo Scrutinize how much of this code belongs in the standard (vs. implementation)
-	 * @todo Need standard way to get current module; 
-	 *       hierarchy_curr() is not standard.
-	 * @todo Check boundary conditions:
-	 *       - prior to initialization of hierarchy_curr
-	 */
-	if (!m_originator_obj) {
-	  // If unable to determine current module from module stack, try via current process
-	  sc_core::sc_process_handle h = sc_core::sc_get_current_process_handle();
-	  while (true) { // loop walking up the process chain
-		  sc_core::sc_object *p_parent = h.get_parent_object();
-		  if (!p_parent) // process is invalid
-			  break;
-		  if (sc_core::sc_module *p_parent_module = dynamic_cast<sc_core::sc_module *>(p_parent)) {
-			  m_originator_obj = p_parent_module;
-			  break;
-		  }
-		  if (sc_core::sc_process_b *p_parent_process = dynamic_cast<sc_core::sc_process_b *>(p_parent))
-			  // Parent is a process, evaluate its parent.
-			  h = sc_core::sc_process_handle(p_parent_process);
-	  }
-	}
+  : m_originator_obj(current_originator_object()) {
 	if (m_originator_obj) {
 		m_originator_str = m_originator_obj->name();
 	}
@@ -99,9 +76,18 @@ public:
   }
 
   /// Constructor with an originator string name
-  cci_originator(const std::string& originator_name)
-  : m_originator_obj(NULL)
-  , m_originator_str(originator_name) {
+  cci_originator(const std::string& originator_name, bool systemc_hierarchy = false) {
+      if(!systemc_hierarchy) {
+          m_originator_obj = NULL;
+          m_originator_str = originator_name;
+      } else {
+          m_originator_obj = current_originator_object();
+          if (m_originator_obj) {
+              m_originator_str = m_originator_obj->name();
+          } else {
+              m_originator_str = originator_name;
+          }
+      }
   }
 
   /// Constructor with an originator (char *) name
@@ -147,6 +133,36 @@ public:
   }
 
 protected:
+
+  sc_core::sc_object* current_originator_object() {
+      /**
+       * @todo Scrutinize how much of this code belongs in the standard (vs. implementation)
+       * @todo Need standard way to get current module;
+       *       hierarchy_curr() is not standard.
+       * @todo Check boundary conditions:
+       *       - prior to initialization of hierarchy_curr
+       */
+      sc_core::sc_object* originator_obj = NULL;
+      originator_obj = sc_core::sc_get_curr_simcontext()->hierarchy_curr();
+      if(originator_obj) {
+          return originator_obj;
+      } else {
+          sc_core::sc_process_handle h = sc_core::sc_get_current_process_handle();
+          while (true) { // loop walking up the process chain
+              sc_core::sc_object *p_parent = h.get_parent_object();
+              if (!p_parent) // process is invalid
+                  break;
+              if (sc_core::sc_module *p_parent_module = dynamic_cast<sc_core::sc_module *>(p_parent)) {
+                  originator_obj = p_parent_module;
+                  break;
+              }
+              if (sc_core::sc_process_b *p_parent_process = dynamic_cast<sc_core::sc_process_b *>(p_parent))
+                  // Parent is a process, evaluate its parent.
+                  h = sc_core::sc_process_handle(p_parent_process);
+          }
+          return originator_obj;
+      }
+  }
 
   /// Pointer to the current originator object (priority compared to name m_originator_str)
   const sc_core::sc_object* m_originator_obj;
