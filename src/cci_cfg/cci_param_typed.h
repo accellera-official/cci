@@ -60,6 +60,13 @@ public:
 	*/
 	cci_param_typed<value_type, TM>& operator= (const cci_param_typed<T, TM> & rhs);
 
+  ///Assigns parameter a new value from another parameter handle
+  /**
+  * @param rhs New value to assign
+  * @return reference to this object
+  */
+  cci_param_typed<value_type, TM>& operator= (const cci_param_typed_handle<T> & rhs);
+
 	///Assigns parameter a new value
 	/**
 	 * @param rhs New value to assign
@@ -135,12 +142,19 @@ public:
 	///@name Type-punned value operations
 	///@{
 
-	/// Compare parameter values.
+	/// Compare parameter handle values.
 	/**
-	 * @param rhs reference to another cci_param_typed implementation
+	 * @param rhs reference to another cci_param_untyped_handle implementation
 	 * @return True if both values are equal and of the same data type
 	 */
 	bool equals(const cci_param_untyped_handle& rhs) const;
+
+	/// Compare parameter values.
+	/**
+	 * @param rhs reference to another cci_param_if implementation
+	 * @return True if both values are equal and of the same data type
+	 */
+	bool equals(const cci_param_if& rhs) const;
 
 	/// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type).
 	/**
@@ -304,6 +318,14 @@ cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_type
 }
 
 template <typename T, param_mutable_type TM>
+
+cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const cci_param_typed_handle<T>& rhs)
+{
+    set(rhs.get_value());
+    return *this;
+}
+
+template <typename T, param_mutable_type TM>
 cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const value_type& rhs)
 {
 	set(rhs);
@@ -388,6 +410,12 @@ const void* cci_param_typed<T, TM>::get_raw_value() const
 
 template <typename T, param_mutable_type TM>
 bool cci_param_typed<T, TM>::equals(const cci::cci_param_untyped_handle& rhs) const
+{
+    return rhs.equals(*this);
+}
+
+template <typename T, param_mutable_type TM>
+bool cci_param_typed<T, TM>::equals(const cci::cci_param_if& rhs) const
 {
 	const cci_param_typed<T, TM>* other = dynamic_cast<const cci_param_typed<T, TM>*>(&rhs);
 	if (other)

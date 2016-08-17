@@ -451,14 +451,19 @@ bool cci_param_user_data_type::is_locked() const {
   return lock_flag;
 }
 
-bool cci_param_user_data_type::equals(const cci::cci_param_untyped_handle& rhs) const
+bool cci_param_user_data_type::equals(const cci::cci_param_if& rhs) const
 {
-	const cci_param_user_data_type * other = dynamic_cast<const cci_param_user_data_type*>(&rhs);
-	if (other)
-	{
-		return other->get_value()==this->get_value();
-	}
-	return false;
+  return rhs.equals(*this);
+}
+
+bool cci_param_user_data_type::equals(const cci::cci_param_untyped_handle &rhs) const
+{
+  const cci_param_user_data_type * other = dynamic_cast<const cci_param_user_data_type*>(&rhs);
+  if (other)
+  {
+    return other->get_value()==this->get_value();
+  }
+  return false;
 }
 
 void cci_param_user_data_type::init()

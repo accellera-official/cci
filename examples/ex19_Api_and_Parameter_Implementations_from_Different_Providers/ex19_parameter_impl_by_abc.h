@@ -318,10 +318,17 @@ struct cci_param_user_data_type
 
   /**
   *  @fn     bool equals(const cci_param_handle& rhs) const;
-  *  @param  rhs reference to another cci_param implementation
+  *  @param  rhs reference to another cci_param_if implementation
   *  @return True if both values are equal
   */
-  bool equals(const cci::cci_param_untyped_handle& rhs) const;
+  bool equals(const cci::cci_param_if& rhs) const;
+
+  /**
+  *  @fn     bool equals(const cci_param_untyped_handle& rhs) const;
+  *  @param  rhs reference to another cci_param_untyped_handle implementation
+  *  @return True if both values are equal
+  */
+  bool equals(const cci::cci_param_untyped_handle &rhs) const ;
 
   /// Initialize 
   void init();

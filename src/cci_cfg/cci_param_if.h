@@ -180,7 +180,14 @@ public:
 
     /// Computer if the stored values are equal
     /**
-    * @param rhs reference to another cci_param_typed implementation
+    * @param rhs reference to another cci_param_if implementation
+    * @return True if both values are equal
+    */
+    virtual bool equals(const cci_param_if &rhs) const = 0;
+
+    /// Computer if the stored values are equal
+    /**
+    * @param rhs reference to another cci_param_untyped_handle implementation
     * @return True if both values are equal
     */
     virtual bool equals(const cci_param_untyped_handle &rhs) const = 0;
