@@ -38,10 +38,6 @@
 // safely (which may even be useful, when hunting a symbol's origin)
 
 #undef CCI_NOT_SUPPORTED_WRN
-#undef CCI_REPORT_INFO
-#undef CCI_REPORT_WARNING
-#undef CCI_REPORT_ERROR
-#undef CCI_REPORT_FATAL
 
 /** Define this before including root "cci" to make use of naming and debugging
   * macros; nobody beyond API implementors should *need* this
