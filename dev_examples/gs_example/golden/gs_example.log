@@ -114,8 +114,8 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 
 ----------------------------
 @20 ns /8 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
-@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: Observer
-@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' changed to value '555', originator: Observer
+@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: ValueMod
+@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' changed to value '555', originator: ValueMod
 uint_param has value = 555
 
 str_param has value = "This is a test string."
