@@ -28,12 +28,6 @@
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_shared_ptr.h"
-//#include "cci_cfg/cci_callbacks.h"
-
-/*class callb_adapt;
-class callback_type;
-class param_callb_func_ptr;
-class cci_param_if;*/
 
 class cci_param_if;
 
