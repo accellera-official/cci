@@ -92,7 +92,7 @@ SC_MODULE(ex09_router) {
    */
   void before_end_of_elaboration(void) {
     XREPORT("[ROUTER in beoe] : Number of initiator(s) : "
-            << r_initiators.get_cci_value().json_serialize());
+            << r_initiators.get_cci_value().to_json());
     XREPORT("[ROUTER in beoe] : Number of target(s) : " << r_targets.get());
     XREPORT("[ROUTER in beoe] : Maximum Addressable Limit of the router : "
             << addr_limit.get());
@@ -139,7 +139,7 @@ SC_MODULE(ex09_router) {
 		     << " | " << std::setw(10) << std::hex << std::showbase << r_addr_start[i]->get()
 		     << " | " << std::setw(10) << r_addr_end[i]->get() 
 		     << " | " << std::setw(10)
-             << base_ptr->get_cci_value().json_serialize() << " |";
+             << base_ptr->get_cci_value().to_json() << " |";
 	XREPORT(row_ss.str().c_str());
     XREPORT("-----------------------------------------------------");
     }

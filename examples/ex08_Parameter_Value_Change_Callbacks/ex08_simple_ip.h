@@ -109,18 +109,18 @@ SC_MODULE(ex08_simple_ip) {
       case cci::pre_write:
         XREPORT("write_config_callback: pre_write: "
                 << selected_param.get_name() << " ("
-                << selected_param.get_cci_value().json_serialize() << ")");
+                << selected_param.get_cci_value().to_json() << ")");
         break;
       case cci::reject_write:
         if (selected_param.get_name() == "sim_ip.param_2") {
           XREPORT("write_config_callback: reject_write: Rejecting Value"
                   " change on " << selected_param.get_name() << " ("
-                  << selected_param.get_cci_value().json_serialize() << ")");
+                  << selected_param.get_cci_value().to_json() << ")");
           return cci::return_value_change_rejected;
         } else {
           XREPORT("write_config_callback: reject_write: "
                   << selected_param.get_name() << " ("
-                  << selected_param.get_cci_value().json_serialize() << ")");
+                  << selected_param.get_cci_value().to_json() << ")");
         }
         break;
       case cci::post_write:
@@ -146,7 +146,7 @@ SC_MODULE(ex08_simple_ip) {
       const cci::callback_type& cb_reason) {
     XREPORT_PLAIN("read_config_callback: pre_read: "
                   << selected_param.get_name() << " ("
-                  << selected_param.get_cci_value().json_serialize() << ")");
+                  << selected_param.get_cci_value().to_json() << ")");
     return cci::return_nothing;
   }
 

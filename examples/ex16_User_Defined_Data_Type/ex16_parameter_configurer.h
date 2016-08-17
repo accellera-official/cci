@@ -105,7 +105,7 @@ SC_MODULE(ex16_parameter_configurer) {
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
-              << udt_param_ptr->get_cci_value().json_serialize());
+              << udt_param_ptr->get_cci_value().to_json());
 
       // Access parameter's description using 'get_description()' API
       XREPORT("[CFGR -> Retrieve] : Parameter desc: "
@@ -129,7 +129,7 @@ SC_MODULE(ex16_parameter_configurer) {
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
-              << udt_param_ptr->get_cci_value().json_serialize());
+              << udt_param_ptr->get_cci_value().to_json());
 
       wait(20.0, SC_NS);
     }

@@ -72,7 +72,7 @@ MutabilityOwner:  mutable_int_param=4444
 MutabilityOwner:  unlock mutable_int_param
 MutabilityOwner:    set mutable_int_param should succeed
 ----------------------------
-Owner: Owner.int_param.get_cci_value().json_serialize() = 11
+Owner: Owner.int_param.get_cci_value().to_json() = 11
 @1 ns /1 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Owner
 @1 ns /1 (Observer): Callback for parameter 'Owner.int_param' changed to value '555000', originator: Owner
 Owner: Owner.int_param.set_cci_value(cci::cci_value::from_json("555000")) results in 555000

@@ -8,6 +8,9 @@
   Copyright 2006-2015 Intel Corporation
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -41,26 +44,26 @@ int sc_main( int, char*[] )
     cci_value v;
 
     sc_assert( v.is_null() );
-    sc_assert( v.json_serialize(json) );
+    json = v.to_json();
     std::cout << "JSON (null)   : " << cci_value::to_json(v) << std::endl;
-    sc_assert( v.json_deserialize(json) );
+    v = cci::cci_value::from_json(json);
 
     v.set_bool( true );
     sc_assert( v.is_bool() );
     sc_assert( v.is_true() );
     sc_assert( !v.is_false() );
-    sc_assert( v.json_serialize(json) );
+    json = v.to_json();
     std::cout << "JSON (bool)   : " << cci_value::to_json(v) << std::endl;
-    sc_assert( v.json_deserialize(json) );
+    v = cci::cci_value::from_json(json);
   }
   {
     cci_value i;
 
     i.set<char>(42);
     sc_assert( i.is_int() );
-    sc_assert( i.json_serialize(json) );
+    json = i.to_json();
     std::cout << "JSON (int)    : " << cci_value::to_json(i) << std::endl;
-    sc_assert( i.json_deserialize(json) );
+    i = cci::cci_value::from_json(json);
 
     sc_assert( i.get_int() == 42 );
     sc_assert( i.get<long>() == 42 );
@@ -74,9 +77,9 @@ int sc_main( int, char*[] )
     v.set( i );
 
     sc_assert( v.is_int() );
-    sc_assert( v.json_serialize(json) );
+    json = v.to_json();
     std::cout << "JSON (sc_int) : " << cci_value::to_json(v) << std::endl;
-    sc_assert( v.json_deserialize(json) );
+    v = cci::cci_value::from_json(json);
 
     sc_dt::sc_int_base ib( i.length() );
     sc_assert( v.try_get(ib) );
@@ -91,9 +94,9 @@ int sc_main( int, char*[] )
     v.set<float>( 42.f );
     sc_assert( v.is_double() );
 
-    sc_assert( v.json_serialize(json) );
+    json = v.to_json();
     std::cout << "JSON (double) : " << cci_value::to_json(v) << std::endl;
-    sc_assert( v.json_deserialize(json) );
+    v = cci::cci_value::from_json(json);
   }
   {
     std::string str("string");
@@ -102,9 +105,9 @@ int sc_main( int, char*[] )
     sc_assert( v.is_string() && w.is_string() );
     sc_assert( str == v.get_string() );
     sc_assert( w == v.get_string() );
-    sc_assert( v.json_serialize(json) );
+    json = v.to_json();
     std::cout << "JSON (string) : " << cci_value::to_json(v) << std::endl;
-    sc_assert( v.json_deserialize(json) );
+    v = cci::cci_value::from_json(json);
   }
   {
     const char json[] = "[12,34]";

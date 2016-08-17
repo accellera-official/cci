@@ -166,8 +166,7 @@ public:
   //@}
 
   /// convert value to JSON
-  bool json_serialize( std::string& ) const;
-  std::string json_serialize() const;
+  std::string to_json() const;
 
 protected:
   void
@@ -289,6 +288,7 @@ public:
   cci_value_map_ref  get_map();
   ///@}
 
+protected:
   /// try to set the value from a JSON-encoded string
   bool json_deserialize( std::string const& );
 };
@@ -815,12 +815,9 @@ public:
 
   /** @name JSON (de)serialization
    */
-  using const_reference::json_serialize;
-  bool json_deserialize( std::string const & src )
-    { init(); return reference::json_deserialize( src ); }
 
+  using const_reference::to_json;
   static cci_value from_json( std::string const & json );
-  static std::string to_json( const_reference v );
 
   friend std::istream& operator>>( std::istream& is, this_type & v )
     { v.init(); return is >> reference(v); }
@@ -829,6 +826,9 @@ public:
 private:
   impl* init();
   impl* do_init();
+
+  bool json_deserialize( std::string const & src )
+    { init(); return reference::json_deserialize( src ); }
 
   impl* own_pimpl_;
 };
@@ -876,15 +876,6 @@ cci_value::from_json( std::string const & json )
   bool ok = v.json_deserialize( json );
   sc_assert( ok );
   return v;
-}
-
-inline std::string
-cci_value::to_json( const_reference v )
-{
-  std::string json;
-  bool ok = v.json_serialize( json );
-  sc_assert( ok );
-  return json;
 }
 
 // --------------------------------------------------------------------------

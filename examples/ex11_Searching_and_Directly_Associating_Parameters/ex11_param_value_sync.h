@@ -87,10 +87,10 @@ SC_MODULE(ex11_param_value_sync) {
     // Post-Write callbacks
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
             << _base_param_1.get_name() << "\tValue : "
-            << _base_param_1.get_cci_value().json_serialize());
+            << _base_param_1.get_cci_value().to_json());
 
     _base_param_2->set_cci_value(cci::cci_value::from_json(
-            _base_param_1.get_value().json_serialize()));
+            _base_param_1.get_value().to_json()));
 
     return cci::return_nothing;
   }
@@ -109,7 +109,7 @@ SC_MODULE(ex11_param_value_sync) {
     // use cci_base_param of one parameter as reference, write the same value
     // to the other pararmeter's cci_base_param using JSON
     _base_param_2->set_cci_value(cci::cci_value::from_json(
-            _base_param_1->get_value().json_serialize()));
+            _base_param_1->get_value().to_json()));
 
     post_write_cb_vec.push_back(
         _base_param_1->register_callback(cci::post_write,

@@ -80,7 +80,7 @@ SC_MODULE(ex09_top_module) {
     // to value passed from 'sc_main'
     myDefaultBroker->json_deserialize_initial_value(
         "top_module_inst.RouterInstance.r_initiators",
-        n_initiators.get_cci_value().json_serialize());
+        n_initiators.get_cci_value().to_json());
     myDefaultBroker->lock_initial_value(
         "top_module_inst.RouterInstance.r_initiators");
 
@@ -88,7 +88,7 @@ SC_MODULE(ex09_top_module) {
     // to value passed from 'sc_main'
     myDefaultBroker->json_deserialize_initial_value(
         "top_module_inst.RouterInstance.r_targets",
-        n_targets.get_cci_value().json_serialize());
+        n_targets.get_cci_value().to_json());
     myDefaultBroker->lock_initial_value(
         "top_module_inst.RouterInstance.r_targets");
 
@@ -105,7 +105,7 @@ SC_MODULE(ex09_top_module) {
       cci::cci_base_param* r_addr_limit_ptr = myDefaultBroker->get_param(
           "top_module_inst.RouterInstance.addr_limit");
       r_addr_max = atoi(
-              (r_addr_limit_ptr->get_cci_value().json_serialize()).c_str());
+              (r_addr_limit_ptr->get_cci_value().to_json()).c_str());
 
       XREPORT("[TOP_MODULE C_TOR] : Router's maximum addressable limit : "
               << r_addr_max);

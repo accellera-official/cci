@@ -140,12 +140,12 @@ SC_MODULE(ex19_parameter_configurator) {
       XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get_value());
       if (cfgr_user_param_ptr != NULL) {
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
-                << cfgr_user_param_ptr->get_cci_value().json_serialize());
+                << cfgr_user_param_ptr->get_cci_value().to_json());
 
         cfgr_user_param_ptr->set_cci_value(cci::cci_value::from_json("EXP"));
 
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
-                << cfgr_user_param_ptr->get_cci_value().json_serialize());
+                << cfgr_user_param_ptr->get_cci_value().to_json());
       }
 
       wait(5.0, sc_core::SC_NS);

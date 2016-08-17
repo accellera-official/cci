@@ -72,7 +72,7 @@ SC_MODULE(ex14_configurator) {
 
         XREPORT("[CFGR] : Parameter Name : "
                 << parent_base_param_ptr->get_name() << "\tParameter Value : "
-                << parent_base_param_ptr->get_cci_value().json_serialize());
+                << parent_base_param_ptr->get_cci_value().to_json());
       } else {
         XREPORT("[CFGR] : Parameter by name"
                 " 'Top.parent_module.parent_int_buffer' doesn't exist");
@@ -112,7 +112,7 @@ SC_MODULE(ex14_configurator) {
 
       XREPORT("[CFGR] : Parameter Name : "
               << parent_base_param_ptr->get_name() << "\tParameter Value : "
-              << parent_base_param_ptr->get_cci_value().json_serialize());
+              << parent_base_param_ptr->get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);
     }

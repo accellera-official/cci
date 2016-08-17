@@ -190,7 +190,7 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Access parameter's value using 'json_serialize' API
         XREPORT("[CFGR -> Retrieve] Parameter's value : "
-                << int_param_ptr->get_cci_value().json_serialize());
+                << int_param_ptr->get_cci_value().to_json());
 
         // Access parameter's description using 'get_description()'
         XREPORT("[CFGR -> Retreive] Parameter's desc : "
@@ -215,7 +215,7 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Access parameter's value using 'json_serialize' API
         XREPORT("[CFGR -> Retrieve] : Parameter value: "
-                << int_param_ptr->get_cci_value().json_serialize());
+                << int_param_ptr->get_cci_value().to_json());
 
         // Access parameter's description using 'get_description()'
         XREPORT("[CFGR -> Retrieve] : Parameter desc : "
@@ -295,7 +295,7 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR] : 'Retrieve1' using 'json_serialize' and"
                 " 'Retrieve2' using 'get_value()'");
         XREPORT("[CFGR -> Retrieve1] : " << str_param_ptr->get_name()
-                << " value is " << str_param_ptr->get_cci_value().json_serialize());
+                << " value is " << str_param_ptr->get_cci_value().to_json());
 
         // Query a (std::string) parameter's value by using
         // 'get_value()'API with cci_value

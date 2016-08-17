@@ -88,7 +88,7 @@ SC_MODULE(ex12_top_module) {
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
               << temp->get_name() << "\tParameter Value : "
-              << temp->get_cci_value().json_serialize());
+              << temp->get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
               << "\tnot found.");
@@ -102,7 +102,7 @@ SC_MODULE(ex12_top_module) {
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
               << temp->get_name() << "\tParameter Value : "
-              << temp->get_cci_value().json_serialize());
+              << temp->get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
               << "\tnot found.");

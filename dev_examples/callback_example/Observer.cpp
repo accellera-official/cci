@@ -68,7 +68,7 @@ cci::callback_return_type Observer::config_new_param_callback(const std::string&
   DEMO_DUMP(name(), "***** New parameter callback: '" << par_name << "'");
   cci::cci_base_param* p = mBroker->get_param(par_name);
   assert(p && "This new param should already be available!");
-  std::string str = p->json_serialize();
+  std::string str = p->to_json();
   DEMO_DUMP(name(), "   value="<<str);
   // Now register for some other callbacks
   // It is recommended to register with the parameter object directly:
@@ -89,11 +89,11 @@ cci::callback_return_type Observer::config_callback(cci::cci_base_param& par, co
   std::string str;
   switch (cb_reason) {
     case cci::pre_write:
-      str = par.get_cci_value().json_serialize();
+      str = par.get_cci_value().to_json();
       DEMO_DUMP(name(), "**** Object callback for parameter '" << par.get_name() << "' will change value");
       break;
     case cci::post_write:
-      str = par.get_cci_value().json_serialize();
+      str = par.get_cci_value().to_json();
       DEMO_DUMP(name(), "**** Object callback for parameter '" << par.get_name() << "' changed to value="<<str);
       break;
     default:

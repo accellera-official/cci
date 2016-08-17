@@ -104,7 +104,7 @@ class ex20_observer {
                   << observer_base_ptr->get_name() << "\thas been created."
                   << std::endl;
         std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Value : "
-                  << observer_base_ptr->get_cci_value().json_serialize()
+                  << observer_base_ptr->get_cci_value().to_json()
                   << std::endl;
 
         /// Registering other (read/write/destroy) callbacks on the newly created cci-parameters
@@ -184,7 +184,7 @@ class ex20_observer {
                      " new cci-parameter" << std::endl;
         std::cout << "\t[OBSERVER - pre_write_cb] : Parameter Name : "
                   << _base_param.get_name() << "\tParameter Value : "
-                  << _base_param.get_cci_value().json_serialize() << std::endl;
+                  << _base_param.get_cci_value().to_json() << std::endl;
         break;
       }
 
@@ -193,7 +193,7 @@ class ex20_observer {
                      " new cci-parameter" << std::endl;
         std::cout << "\t[OBSERVER - post_write_cb] : Parameter Name : "
                   << _base_param.get_name() << "\tParameter Value : "
-                  << _base_param.get_cci_value().json_serialize() << std::endl;
+                  << _base_param.get_cci_value().to_json() << std::endl;
         break;
       }
 

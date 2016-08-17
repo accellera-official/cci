@@ -102,9 +102,9 @@ SC_MODULE(ex15_processor) {
     // Checks for the condition whether the default total number of the
     // address lines can address the default address location
     total_addr_lines =
-            atoi(addr_lines_base_ptr->get_cci_value().json_serialize().c_str());
+            atoi(addr_lines_base_ptr->get_cci_value().to_json().c_str());
     mem_block_size =
-            atoi(mem_size_base_ptr->get_cci_value().json_serialize().c_str());
+            atoi(mem_size_base_ptr->get_cci_value().to_json().c_str());
     TestCondition(total_addr_lines, mem_block_size);
 
     // Registering 'POST_WRITE' callbacks on the cci-parameters of the
@@ -136,16 +136,16 @@ SC_MODULE(ex15_processor) {
                                                             cci::cci_base_param * _mem_size_base_ptr) {
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
             << _base_param.get_name() << "\tParameter Value : "
-            << _base_param.get_cci_value().json_serialize());
+            << _base_param.get_cci_value().to_json());
 
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
             << _mem_size_base_ptr->get_name() << "\tParameter Value : "
-            << _mem_size_base_ptr->get_cci_value().json_serialize());
+            << _mem_size_base_ptr->get_cci_value().to_json());
 
     total_addr_lines =
-            atoi(_base_param.get_cci_value().json_serialize().c_str());
+            atoi(_base_param.get_cci_value().to_json().c_str());
     mem_block_size =
-            atoi(_mem_size_base_ptr->get_cci_value().json_serialize().c_str());
+            atoi(_mem_size_base_ptr->get_cci_value().to_json().c_str());
 
     // Test condition : X < 2^n - 1
     TestCondition(total_addr_lines, mem_block_size);
@@ -166,15 +166,15 @@ SC_MODULE(ex15_processor) {
                                                            cci::cci_base_param * _addr_lines_base_ptr) {
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
             << _base_param.get_name() << "\tParameter Value : "
-            << _base_param.get_cci_value().json_serialize());
+            << _base_param.get_cci_value().to_json());
 
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
             << _addr_lines_base_ptr->get_name() << "\tParameter Value : "
-            << _addr_lines_base_ptr->get_cci_value().json_serialize());
+            << _addr_lines_base_ptr->get_cci_value().to_json());
 
-    mem_block_size = atoi(_base_param.get_cci_value().json_serialize().c_str());
+    mem_block_size = atoi(_base_param.get_cci_value().to_json().c_str());
     total_addr_lines = atoi(
-            _addr_lines_base_ptr->get_cci_value().json_serialize().c_str());
+            _addr_lines_base_ptr->get_cci_value().to_json().c_str());
 
     TestCondition(total_addr_lines, mem_block_size);
 

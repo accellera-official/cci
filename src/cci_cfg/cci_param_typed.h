@@ -478,7 +478,7 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
 : cci_param_untyped(top, &broker, desc, cci_originator()),                     \
   m_gs_param(new gs::gs_param<T>(name, "", NULL, top, true))                   \
 {                                                                              \
-    m_gs_param->setString(cci::cci_value::to_json(value));                     \
+    m_gs_param->setString(value.to_json());                     			   \
     cci_param_untyped::m_gs_param_base = m_gs_param;                           \
     broker.add_param(this);                                          		   \
     this->init();                                                              \

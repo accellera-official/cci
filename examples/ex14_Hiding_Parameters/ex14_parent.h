@@ -129,7 +129,7 @@ SC_MODULE(ex14_parent) {
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
             << _base_param.get_name()
             << "\tParameter Value : "
-            << _base_param.get_cci_value().json_serialize());
+            << _base_param.get_cci_value().to_json());
 
     return cci::return_nothing;
   }

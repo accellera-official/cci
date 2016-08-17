@@ -529,21 +529,6 @@ DEFINE_WRAPPER_(cci_value_map)
 // JSON (de)serialize
 
 bool
-cci_value_cref::json_serialize( std::string & dst ) const
-{
-  rapidjson::StringBuffer buf;
-  rapidjson::Writer<rapidjson::StringBuffer> writer( buf );
-  if( !THIS ) {
-    writer.Null();
-  } else {
-    THIS->Accept( writer );
-  }
-  VALUE_ASSERT( writer.IsComplete(), "incomplete JSON sequence" );
-  dst.assign( buf.GetString(), buf.GetSize() );
-  return true;
-}
-
-bool
 cci_value_ref::json_deserialize( std::string const & src )
 {
   json_document doc;
@@ -559,12 +544,19 @@ cci_value_ref::json_deserialize( std::string const & src )
 }
 
 std::string
-cci_value_cref::json_serialize() const
+cci_value_cref::to_json() const
 {
-  std::string json;
-  bool ok = json_serialize(json);
-  sc_assert(ok);
-  return json;
+  std::string dst;
+  rapidjson::StringBuffer buf;
+  rapidjson::Writer <rapidjson::StringBuffer> writer(buf);
+  if (!THIS) {
+    writer.Null();
+  } else {
+    THIS->Accept(writer);
+  }
+  VALUE_ASSERT(writer.IsComplete(), "incomplete JSON sequence");
+  dst.assign(buf.GetString(), buf.GetSize());
+  return dst;
 }
 
 CCI_CLOSE_NAMESPACE_

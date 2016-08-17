@@ -83,7 +83,7 @@ SC_MODULE(ex03_config_ip) {
       }
 
       // Display new value
-      std::string new_value = struc_param_ptr->get_cci_value().json_serialize();
+      std::string new_value = struc_param_ptr->get_cci_value().to_json();
       // XREPORT("execute: [EXTERNAL] Current value of " <<
       // struc_param_ptr->get_name()<< " is " << new_value);
       if ("1" == new_value) {

@@ -86,7 +86,7 @@ SC_MODULE(ex13_parameter_configurator) {
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       // 'locked' API returns TRUE when a parameter is in LOCKED STATE and
       // FALSE when in UNLOCKED STATE
@@ -99,34 +99,34 @@ SC_MODULE(ex13_parameter_configurator) {
 
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
       XREPORT("[CFGR] : Parameter is not locked!! Assign a new value '3'"
               " to it");
       int_param_ptr->set_cci_value(cci::cci_value::from_json("3"));
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       // Demonstrating 'lock' API to lock a parameter without a password
       XREPORT("[CFGR] : Lock parameter without password");
       int_param_ptr->lock();
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       // Demonstrating 'unlock' API to lock a parameter without a password
       XREPORT("[CFGR] : Unlock parameter without password");
       int_param_ptr->unlock();
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       // Demonstrating 'lock' API to lock a parameter with a password
       // 'Lock' API returns TRUE if parameter is locked successfully and
@@ -143,7 +143,7 @@ SC_MODULE(ex13_parameter_configurator) {
 
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       try {
         XREPORT("[CFGR] : Set parameter value to '4'");
@@ -154,7 +154,7 @@ SC_MODULE(ex13_parameter_configurator) {
 
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       // 'Unlock' API returns TRUE if parameter is unlocked successfully and
       // FALSE if it could not be unlocked. Demonstrating unlocking with the
@@ -163,7 +163,7 @@ SC_MODULE(ex13_parameter_configurator) {
       int_param_ptr->unlock(&psswd);
       XREPORT("[CFGR] : Parameter locking status : "
               << int_param_ptr->is_locked() << "\tValue : "
-              << int_param_ptr->get_cci_value().json_serialize());
+              << int_param_ptr->get_cci_value().to_json());
 
       wait(50.0, sc_core::SC_NS);
     }
