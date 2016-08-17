@@ -172,12 +172,6 @@ public:
     ///@name Type-punned value operations
     ///@{
 
-    /// @copydoc cci_param_typed::get_raw_value
-    virtual const void *get_raw_value() const = 0;
-
-    /// @copydoc cci_param_typed::get_default_value_raw
-    virtual const void *get_default_value_raw() const = 0;
-
     /// Computer if the stored values are equal
     /**
     * @param rhs reference to another cci_param_if implementation
@@ -236,6 +230,12 @@ private:
     virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
                                                        shared_ptr <callb_adapt> callb,
                                                        cci_param_untyped_handle& param) = 0;
+
+    /// @copydoc cci_param_typed::get_raw_value
+    virtual const void *get_raw_value() const = 0;
+
+    /// @copydoc cci_param_typed::get_default_value_raw
+    virtual const void *get_default_value_raw() const = 0;
 
 };
 
