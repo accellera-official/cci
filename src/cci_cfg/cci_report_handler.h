@@ -50,9 +50,12 @@ public:
   static void report(sc_core::sc_severity severity, const char* msg_type, const char* msg, const char* file, int line) {
     std::string cci_msg_type = __CCI_SC_REPORT_MSG_TYPE_PREFIX__;
     cci_msg_type.append(msg_type);
-    // set the actions for this CCI message to SC_THROW
-    // the report should be cached so that it persists until it is caught
-    set_actions(cci_msg_type.c_str(), severity, sc_core::SC_THROW + sc_core::SC_CACHE_REPORT);
+    if(severity >= sc_core::SC_ERROR) {
+      // set the actions for this CCI message to SC_THROW
+      // the report should be cached so that it persists until it is caught
+      set_actions(cci_msg_type.c_str(), severity,
+                  sc_core::SC_THROW + sc_core::SC_CACHE_REPORT);
+    }
     sc_report_handler::report(severity,cci_msg_type.c_str(),msg,file,line);
   }
 
