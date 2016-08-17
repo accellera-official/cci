@@ -74,8 +74,10 @@ int sc_main(int argc, char *argv[]) {
   
   cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator("SCMAIN"));
   
-  mBroker->json_deserialize_initial_value("params.int_param_with_initial_value", "100");
-  mBroker->json_deserialize_initial_value("params.int_param_only_implicit", "130");
+  mBroker->set_initial_cci_value("params.int_param_with_initial_value",
+                                 cci::cci_value::from_json("100"));
+  mBroker->set_initial_cci_value("params.int_param_only_implicit",
+                                 cci::cci_value::from_json("130"));
   
   ParamContainer params("params");
   
@@ -83,7 +85,8 @@ int sc_main(int argc, char *argv[]) {
 
   // This does NOT change the status to initial because this write to an explicit parameter is translated 
   // 'just' into a usual write
-  mBroker->json_deserialize_initial_value("params.int_param_with_late_initial_value", "120");
+  mBroker->set_initial_cci_value("params.int_param_with_late_initial_value",
+                                 cci::cci_value::from_json("120"));
   
   show_param_list();
 

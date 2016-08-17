@@ -78,17 +78,17 @@ SC_MODULE(ex09_top_module) {
 
     // Set and lock the number of initiators in Router Table
     // to value passed from 'sc_main'
-    myDefaultBroker->json_deserialize_initial_value(
+    myDefaultBroker->set_initial_cci_value(
         "top_module_inst.RouterInstance.r_initiators",
-        n_initiators.get_cci_value().to_json());
+        n_initiators.get_cci_value());
     myDefaultBroker->lock_initial_value(
         "top_module_inst.RouterInstance.r_initiators");
 
     // Set and lock the number of targets in Router Table
     // to value passed from 'sc_main'
-    myDefaultBroker->json_deserialize_initial_value(
+    myDefaultBroker->set_initial_cci_value(
         "top_module_inst.RouterInstance.r_targets",
-        n_targets.get_cci_value().to_json());
+        n_targets.get_cci_value());
     myDefaultBroker->lock_initial_value(
         "top_module_inst.RouterInstance.r_targets");
 
@@ -120,7 +120,7 @@ SC_MODULE(ex09_top_module) {
                initiatorName);
 
 	  snprintf(initiatorName, sizeof(initiatorName), "\"initiator_%d\"", i);
-      myDefaultBroker->json_deserialize_initial_value(stringMisc, initiatorName);
+      myDefaultBroker->set_initial_cci_value(stringMisc, cci::cci_value::from_json(initiatorName));
 	  snprintf(initiatorName, sizeof(initiatorName), "initiator_%d", i);
       initiatorList.push_back(new ex09_initiator(initiatorName));
 
@@ -141,7 +141,7 @@ SC_MODULE(ex09_top_module) {
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.target_ID", name(),
                targetName);
 	  snprintf(targetName, sizeof(targetName), "\"target_%d\"", i);
-      myDefaultBroker->json_deserialize_initial_value(stringMisc, targetName);
+      myDefaultBroker->set_initial_cci_value(stringMisc, cci::cci_value::from_json(targetName));
 	  snprintf(targetName, sizeof(targetName), "target_%d", i);
 
       // Set initial value for maximum target size(memory)
@@ -151,7 +151,7 @@ SC_MODULE(ex09_top_module) {
       ss.str("");
       ss << targetSize;
 
-      myDefaultBroker->json_deserialize_initial_value(stringMisc, ss.str());
+      myDefaultBroker->set_initial_cci_value(stringMisc, cci::cci_value::from_json(ss.str()));
       targetList.push_back(new ex09_target(targetName));
 
       // Binding Router to target
@@ -169,7 +169,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting fields of target_" << i);
-        myDefaultBroker->json_deserialize_initial_value(targetName, ss.str());
+        myDefaultBroker->set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -182,11 +182,11 @@ SC_MODULE(ex09_top_module) {
 
       snprintf(targetBaseAddr, sizeof(targetBaseAddr), "%s.target_%d.s_base_addr",
                name(), i);
-      myDefaultBroker->json_deserialize_initial_value(targetBaseAddr, ss.str());
+      myDefaultBroker->set_initial_cci_value(targetBaseAddr, cci::cci_value::from_json(ss.str()));
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of target_" << i);
-        myDefaultBroker->json_deserialize_initial_value(targetName, ss.str());
+        myDefaultBroker->set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -199,7 +199,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting end addr of target_" << i);
-        myDefaultBroker->json_deserialize_initial_value(targetName, ss.str());
+        myDefaultBroker->set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }

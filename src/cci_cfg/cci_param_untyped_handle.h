@@ -103,7 +103,7 @@ public:
     /// Indicates that the parameter received an initial value that has not since been modified.
     /**
      * True if the value was supplied using the broker's
-     * json_deserialize_initial_value function and not subsequently changed.
+     * set_initial_cci_value function and not subsequently changed.
      *
      * Note: false is returned even if the current value matches the initial
      * value but has undergone intermediate changes.

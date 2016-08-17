@@ -77,11 +77,11 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                  "[MAIN] : Setting 'param_owner.mutable_string_param'"
                  " value to 'Initialized within sc_main()'");
 
-  // Demonstrating use of 'json_deserialize_initial_value'
+  // Demonstrating use of 'set_initial_cci_value'
   // API to assign initial value before the
   // construction of the model hierarchy begins.
-  globalBroker->json_deserialize_initial_value(
-      "param_owner.mutable_string_param", "\"Initialized within sc_main\"");
+  globalBroker->set_initial_cci_value("param_owner.mutable_string_param",
+    cci::cci_value::from_json("\"Initialized within sc_main\""));
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Demonstrating 'comparison' between the values"

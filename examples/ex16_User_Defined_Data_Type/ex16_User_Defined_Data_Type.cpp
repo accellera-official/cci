@@ -60,10 +60,10 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   SC_REPORT_INFO("sc_main", "[MAIN] : Setting initial value"
                  " 's_address:256,d_address:512,index:0' to UDT");
 
-  // Demonstrating use of 'json_deserialize_initial_value' API to assign
+  // Demonstrating use of 'set_initial_cci_value' API to assign
   // initial value before the construction of the model hierarchy begins.
   std::string init_str("{\"s_address\":256,\"d_address\":512,\"index\":0}");
-  globalBroker->json_deserialize_initial_value("param_owner.User_data_type_param", init_str);
+  globalBroker->set_initial_cci_value("param_owner.User_data_type_param", cci::cci_value::from_json(init_str));
 
   // Instantiation of sc_modules
   ex16_parameter_owner param_owner("param_owner");

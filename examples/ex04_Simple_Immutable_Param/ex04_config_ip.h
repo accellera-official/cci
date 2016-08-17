@@ -72,7 +72,7 @@ SC_MODULE(ex04_config_ip) {
                     " to demonstrate this example");
     } else {
       XREPORT("Set init-value of " << key << " to " << val);
-      m_cci->json_deserialize_initial_value(key, val);
+      m_cci->set_initial_cci_value(key, cci::cci_value::from_json(val));
     }
   }
 

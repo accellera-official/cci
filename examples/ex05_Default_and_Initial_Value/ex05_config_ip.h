@@ -67,10 +67,11 @@ SC_MODULE(ex05_config_ip) {
     // Check for existance of sim_ip.param_1 param
     if (m_cci->param_exists("sim_ip.param_1")) {
       XREPORT_ERROR("Instantiate config_ip before simple_ip"
-                    " to demonstrate json_deserialize_initial_value");
+                    " to demonstrate set_initial_cci_value");
     } else {
       XREPORT("Setting up sim_ip.param_1's init-value to " << val);
-      m_cci->json_deserialize_initial_value("sim_ip.param_1", val);
+      m_cci->set_initial_cci_value("sim_ip.param_1",
+                                   cci::cci_value::from_json(val));
     }
   }
 
