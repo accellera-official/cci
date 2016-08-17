@@ -109,6 +109,14 @@ CCI_OPEN_NAMESPACE_
      * @param json_value JSON string representation of the init value the parameter has to be set to.
      */
     virtual void json_deserialize_initial_value(const std::string &parname, const std::string &json_value) = 0;
+
+    /// Get a parameter's init value.
+    /**
+     *
+     * @param parname    Full hierarchical parameter name.
+     * @return           CCI value of the parameter's initial value. Empty value is returned when parameter is not existing or its initial value is not existing
+     */
+    virtual const cci::cci_value get_initial_cci_value(const std::string &parname) = 0;
     
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
