@@ -37,8 +37,6 @@
 // Since this is solely for removing symbols it can be included mulitple times
 // safely (which may even be useful, when hunting a symbol's origin)
 
-#undef CCI_NOT_SUPPORTED_WRN
-
 /** Define this before including root "cci" to make use of naming and debugging
   * macros; nobody beyond API implementors should *need* this
   */
