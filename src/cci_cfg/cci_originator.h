@@ -135,15 +135,7 @@ public:
 protected:
 
   sc_core::sc_object* current_originator_object() {
-      /**
-       * @todo Scrutinize how much of this code belongs in the standard (vs. implementation)
-       * @todo Need standard way to get current module;
-       *       hierarchy_curr() is not standard.
-       * @todo Check boundary conditions:
-       *       - prior to initialization of hierarchy_curr
-       */
-      sc_core::sc_object* originator_obj = NULL;
-      originator_obj = sc_core::sc_get_curr_simcontext()->hierarchy_curr();
+      sc_core::sc_object* originator_obj = sc_core::sc_get_current_object();
       if(originator_obj) {
           return originator_obj;
       } else {
