@@ -30,7 +30,11 @@
 CCI_OPEN_NAMESPACE_
 
 cci_param_untyped_handle::cci_param_untyped_handle(cci_param_if & orig_param, const cci_originator & originator)
-        : m_originator(originator), m_orig_param(orig_param)
+        : m_originator(originator), m_orig_param(&orig_param)
+{}
+
+cci_param_untyped_handle::cci_param_untyped_handle(const cci_originator & originator)
+        : m_originator(originator), m_orig_param(NULL)
 {}
 
 cci_param_untyped_handle::~cci_param_untyped_handle()
@@ -38,92 +42,110 @@ cci_param_untyped_handle::~cci_param_untyped_handle()
 
 std::string cci_param_untyped_handle::get_description() const
 {
-    return m_orig_param.get_description();
+    check_is_valid();
+    return m_orig_param->get_description();
 }
 
 cci_value_map cci_param_untyped_handle::get_metadata() const
 {
-    return m_orig_param.get_metadata();
+    check_is_valid();
+    return m_orig_param->get_metadata();
 }
 
 void cci_param_untyped_handle::set_cci_value(const cci_value& val)
 {
-    m_orig_param.set_cci_value(val, m_originator);
+    check_is_valid();
+    m_orig_param->set_cci_value(val, m_originator);
 }
 
 cci_value cci_param_untyped_handle::get_cci_value() const
 {
-    return m_orig_param.get_cci_value();
+    check_is_valid();
+    return m_orig_param->get_cci_value();
 }
 
 bool cci_param_untyped_handle::is_default_value()
 {
-    return m_orig_param.is_default_value();
+    check_is_valid();
+    return m_orig_param->is_default_value();
 }
 
 bool cci_param_untyped_handle::is_initial_value() const
 {
-    return m_orig_param.is_initial_value();
+    check_is_valid();
+    return m_orig_param->is_initial_value();
 }
 
 const cci_originator* cci_param_untyped_handle::get_latest_write_originator() const
 {
-    return m_orig_param.get_latest_write_originator();
+    check_is_valid();
+    return m_orig_param->get_latest_write_originator();
 }
 
 shared_ptr<callb_adapt> cci_param_untyped_handle::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
 {
-    return m_orig_param.register_callback(type, observer, function, *this);
+    check_is_valid();
+    return m_orig_param->register_callback(type, observer, function, *this);
 }
 
 shared_ptr<callb_adapt> cci_param_untyped_handle::register_callback(const callback_type type, shared_ptr<callb_adapt> callb)
 {
-    return m_orig_param.register_callback(type, callb, *this);
+    check_is_valid();
+    return m_orig_param->register_callback(type, callb, *this);
 }
 
 void cci_param_untyped_handle::unregister_all_callbacks(void* observer)
 {
-    m_orig_param.unregister_all_callbacks(observer);
+    check_is_valid();
+    m_orig_param->unregister_all_callbacks(observer);
 }
 
 bool cci_param_untyped_handle::unregister_callback(cci::shared_ptr<callb_adapt> callb)
 {
-    return m_orig_param.unregister_callback(callb);
+    check_is_valid();
+    return m_orig_param->unregister_callback(callb);
 }
 
 bool cci_param_untyped_handle::unregister_callback(callb_adapt* callb)
 {
-    return m_orig_param.unregister_callback(callb);
+    check_is_valid();
+    return m_orig_param->unregister_callback(callb);
 }
 
 bool cci_param_untyped_handle::has_callbacks()
 {
-    return m_orig_param.has_callbacks();
+    check_is_valid();
+    return m_orig_param->has_callbacks();
 }
 
 bool cci_param_untyped_handle::lock(void* pwd)
 {
-    return m_orig_param.lock(pwd);
+    check_is_valid();
+    return m_orig_param->lock(pwd);
 }
 
 bool cci_param_untyped_handle::unlock(void* pwd)
 {
-    return m_orig_param.unlock(pwd);
+    check_is_valid();
+    return m_orig_param->unlock(pwd);
 }
 
 bool cci_param_untyped_handle::is_locked() const
 {
-    return m_orig_param.is_locked();
+    check_is_valid();
+    return m_orig_param->is_locked();
 }
 
 basic_param_type cci_param_untyped_handle::get_basic_type() const
 {
-    return m_orig_param.get_basic_type();
+    check_is_valid();
+    return m_orig_param->get_basic_type();
 }
 
 const std::string& cci_param_untyped_handle::get_name() const
 {
-    return m_orig_param.get_name();
+    check_is_valid();
+    return m_orig_param->get_name();
 }
 
 cci_originator cci_param_untyped_handle::get_originator() const
@@ -133,32 +155,38 @@ cci_originator cci_param_untyped_handle::get_originator() const
 
 const void* cci_param_untyped_handle::get_raw_value() const
 {
-    return m_orig_param.get_raw_value();
+    check_is_valid();
+    return m_orig_param->get_raw_value();
 }
 
 const void* cci_param_untyped_handle::get_default_value_raw() const
 {
-    return m_orig_param.get_default_value_raw();
+    check_is_valid();
+    return m_orig_param->get_default_value_raw();
 }
 
 void cci_param_untyped_handle::set_raw_value(const void* vp)
 {
-    m_orig_param.set_raw_value(vp, m_originator);
+    check_is_valid();
+    m_orig_param->set_raw_value(vp, m_originator);
 }
 
 void cci_param_untyped_handle::set_raw_value(const void* vp, const void* pwd)
 {
-    m_orig_param.set_raw_value(vp, pwd, m_originator);
+    check_is_valid();
+    m_orig_param->set_raw_value(vp, pwd, m_originator);
 }
 
 bool cci_param_untyped_handle::equals(const cci_param_untyped_handle& rhs) const
 {
-    return m_orig_param.equals(rhs.m_orig_param);
+    check_is_valid();
+    return m_orig_param->equals(*rhs.m_orig_param);
 }
 
 bool cci_param_untyped_handle::equals(const cci_param_if& rhs) const
 {
-    return m_orig_param.equals(rhs);
+    check_is_valid();
+    return m_orig_param->equals(rhs);
 }
 
 bool cci_param_untyped_handle::is_handle() const
@@ -166,14 +194,39 @@ bool cci_param_untyped_handle::is_handle() const
     return true;
 }
 
+const std::type_info& cci_param_untyped_handle::get_type_info() const
+{
+    check_is_valid();
+    return m_orig_param->get_type_info();
+}
+
 void cci_param_untyped_handle::init()
 {
-    m_orig_param.init();
+    check_is_valid();
+    m_orig_param->init();
 }
 
 void cci_param_untyped_handle::destroy()
 {
-    m_orig_param.destroy();
+    check_is_valid();
+    m_orig_param->destroy();
+}
+
+bool cci_param_untyped_handle::is_valid() const
+{
+    return m_orig_param ? true : false;
+}
+
+void cci_param_untyped_handle::invalidate() {
+    m_orig_param = NULL;
+}
+
+void cci_param_untyped_handle::check_is_valid() const
+{
+    if(!is_valid()) {
+        CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
+                         "The handled parameter is not valid.");
+    }
 }
 
 CCI_CLOSE_NAMESPACE_

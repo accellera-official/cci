@@ -176,6 +176,14 @@ public:
 	 */
 	basic_param_type get_basic_type() const;
 
+	/// Returns the type information of the parameter
+	/**
+	 * @return Type information
+	 */
+	const std::type_info& get_type_info() const;
+
+	///@}
+
 	///@name CCI value Data Type and access
 	///@{
 
@@ -424,6 +432,12 @@ template <typename T, param_mutable_type TM>
 cci::basic_param_type cci_param_typed<T, TM>::get_basic_type() const
 {
 	return get_cci_value().basic_type();
+}
+
+template <typename T, param_mutable_type TM>
+const std::type_info& cci_param_typed<T, TM>::get_type_info() const
+{
+	return typeid(T);
 }
 
 template <typename T, param_mutable_type TM>

@@ -106,8 +106,8 @@ template<class cci_param_if_T, class cci_broker_if_T>
 callback_return_type callb_adapt_T<cci_param_if_T, cci_broker_if_T>::call(const std::string& changed_param_name, const callback_type& cb_reason) {
   if (par_func) {
     assert(caller_broker && "Caller broker must have been set in constructor when using this call function");
-    cci_param_if_T* p = caller_broker->get_param_handle(changed_param_name);
-    if (p) return par_func(*p, cb_reason);
+    cci_param_if_T p = caller_broker->get_param_handle(changed_param_name);
+    if (p.is_valid()) return par_func(p, cb_reason);
     else {
       CCI_REPORT_ERROR("callb_adapt_T", "Cannot call this callback function with not explicit parameter.");
     }

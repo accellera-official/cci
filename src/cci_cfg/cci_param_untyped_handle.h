@@ -50,6 +50,9 @@ class cci_param_untyped_handle
 
 public:
 
+    /// Constructor to create an invalid param handle with given originator.
+    cci_param_untyped_handle(const cci_originator& originator);
+
     /// Destructor.
     virtual ~cci_param_untyped_handle();
 
@@ -211,8 +214,8 @@ public:
 
     /// If this parameter is locked.
     /**
-    * @return If this parameter is locked
-    */
+     * @return If this parameter is locked
+     */
     bool is_locked() const;
 
     ///@}
@@ -228,8 +231,8 @@ public:
 
     /// Get the name of this parameter.
     /**
-    * @return   Name of the parameter.
-    */
+     * @return   Name of the parameter.
+     */
     const std::string& get_name() const;
 
     ///@}
@@ -263,6 +266,18 @@ public:
     bool equals(const cci_param_if& rhs) const;
 
     ///@}
+
+    /// Indicates if the handled parameter is valid or not
+    /**
+     * @return false if handled parameter is invalid; otherwise, true
+     */
+    bool is_valid() const;
+
+    /// Indicates that this parameter is a handle to a parameter implementation.
+    /**
+     * @return   True (parameter handle)
+     */
+    bool is_handle() const;
 
 protected:
     /// Constructor to create handle with given originator.
@@ -299,14 +314,14 @@ protected:
      */
     void set_raw_value(const void* vp, const void* pwd);
 
-    ///@name Accessor methods
-    ///@{
-
-    /// Indicates that this parameter is a handle to a parameter implementation.
+    /// Returns the type information of the handled parameter
     /**
-     * @return   True (parameter handle)
+     * @return Type information
      */
-    bool is_handle() const;
+    const std::type_info& get_type_info() const;
+
+    /// Invalidate the parameter handle
+    void invalidate();
 
     ///@name Initialization and Destructions methods
     ///@{
@@ -321,10 +336,16 @@ protected:
 
 private:
     /// Originator of the parameter proxy.
-    const cci_originator m_originator;
+    cci_originator m_originator;
 
     /// Original parameter
-    cci_param_if& m_orig_param;
+    cci_param_if* m_orig_param;
+
+    /// Check handled parameter is valid
+    /**
+     * In case the handled parameter is no more valid, it will report an error.
+     */
+    void check_is_valid() const;
 
 };
 
