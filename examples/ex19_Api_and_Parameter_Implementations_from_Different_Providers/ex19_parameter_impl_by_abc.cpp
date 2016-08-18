@@ -127,7 +127,7 @@ const void* cci_param_user_data_type::get_raw_value() const
 *  @return void
 */
 void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_originator &originator) {
-	std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
+	std::cout << "Function cci_param_user_data_type::set_raw_value Called " << std::endl;
 	if (l_password == NULL) {
 		value = *static_cast<const user_data_type*>(vp);
 	}
@@ -143,7 +143,7 @@ void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_orig
  */
 void cci_param_user_data_type::set_raw_value(const void *vp, const void *pwd,
     const cci::cci_originator &originator) {
-  std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_raw_value Called " << std::endl;
   if (l_password == pwd) {
     value = *static_cast<const user_data_type*>(vp);
   }
