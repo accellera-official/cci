@@ -41,28 +41,50 @@ public:
     /// The parameter's value type.
     typedef T value_type;
 
+    ///Assigns parameter a new value from another parameter handle
+    /**
+     * @param rhs New value to assign
+     * @return reference to this object
+     */
+    cci_param_typed_handle<value_type>& operator= (const cci_param_typed_handle<T> & rhs);
+
+    ///Assigns parameter a new value from another untyped parameter handle
+    /**
+     * @param rhs New value to assign
+     * @return reference to this object
+     */
+    cci_param_typed_handle<value_type>& operator= (const cci_param_untyped_handle & rhs);
+
     ///Assigns parameter a new value from another parameter
     /**
-    * @param rhs New value to assign
-    * @return reference to this object
-    */
-    cci_param_typed_handle<value_type>& operator= (const cci_param_typed_handle<T> & rhs);
+     * @param rhs New value to assign
+     * @return reference to this object
+     */
+    cci_param_typed_handle<value_type>& operator= (const cci_param_typed<T> & rhs);
 
     ///Assigns parameter a new value
     /**
      * @param rhs New value to assign
      * @return reference to this object
-    */
+     */
     cci_param_typed_handle<value_type>& operator= (const value_type & rhs);
+
+    ///Assigns parameter a new value from another legacy parameter
+    /**
+     * @param rhs New value to assign
+     * @return reference to this object
+     */
+    cci_param_typed_handle<value_type>& operator= (const cci_param_if & rhs);
 
     ///Conversion operator to be able use cci_param_typed as a regular object
     operator const value_type& () const;
 
     ///Sets the stored value to a new value
     /**
-    * @param value new value to assign
-    */
+     * @param value new value to assign
+     */
     void set(const value_type& value);
+
     ///Sets the stored value to a new value
     /**
      * @param value new value to assign
@@ -85,6 +107,27 @@ template <typename T>
 cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_typed_handle<T>& rhs)
 {
     set(rhs.get_value());
+    return *this;
+}
+
+template <typename T>
+cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_untyped_handle& rhs)
+{
+    set_cci_value(rhs.get_cci_value());
+    return *this;
+}
+
+template <typename T>
+cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_typed<T>& rhs)
+{
+    set(rhs.get_value());
+    return *this;
+}
+
+template <typename T>
+cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_if& rhs)
+{
+    set_cci_value(rhs.get_cci_value());
     return *this;
 }
 
