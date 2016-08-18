@@ -77,8 +77,12 @@ cci_param_user_data_type::cci_param_user_data_type(
       lock_flag(false),
       callback_flag(false),
       l_password(NULL),
-      description("") {
+      description("")
+{
   nam = _name;
+  /*Register created parameter into global broker*/
+  m_broker_handle = &cci::cci_broker_manager::get_current_broker(cci::cci_originator());
+  m_broker_handle->add_param(this);
   /* DO some hack for cci_value */
 }
 
@@ -96,39 +100,52 @@ void cci_param_user_data_type::set(const user_data_type& val) {
 }
 
 /**
- *  @fn     const user_data_type& cci_param_user_data_type::get() const
- *  @brief  Function to get the user defined type for the parameter
- *  @return The user_data_type of the parameter.
+ *  @fn     user_data_type& get_value()
+ *  @brief  Function to get the value of the parameter
+ *  @return user's parameter value
  */
-const void* cci_param_user_data_type::get() const {
-  std::cout << "Function cci_param_user_data_type::get Called " << std::endl;
-  return &value;
+const user_data_type& cci_param_user_data_type::get_value() const
+{
+  return value;
 }
 
 /**
-*  @fn     void cci_param_user_data_type::set(const user_data_type& val, void* lock_pwd)
+ *  @fn     const void* get_raw_value() const
+ *  @brief  Function to get the user defined type for the parameter
+ *  @return The pointer to user_data_type of the parameter.
+ */
+const void* cci_param_user_data_type::get_raw_value() const
+{
+  return NULL;
+}
+
+/**
+*  @fn     void set_raw_value(const void *vp, const cci::cci_originator &originator)
 *  @brief  Function to set the value of the parameter along with the lock password.
 *  @param  val The value to assign
+*  @param  originator reference to the originator
 *  @return void
 */
-void cci_param_user_data_type::set(const void* val) {
+void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_originator &originator) {
 	std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
 	if (l_password == NULL) {
-		value = *static_cast<const user_data_type*>(val);
+		value = *static_cast<const user_data_type*>(vp);
 	}
 }
 
 /**
- *  @fn     void cci_param_user_data_type::set(const user_data_type& val, void* lock_pwd)
+ *  @fn     set_raw_value(const void *vp, const void *pwd,const cci::cci_originator &originator)
  *  @brief  Function to set the value of the parameter along with the lock password.
  *  @param  val The value to assign
- *  @param  lock_pwd  The password for the parameter
+ *  @param  pwd  The password for the parameter
+ *  @param  originator reference to the originator
  *  @return void
  */
-void cci_param_user_data_type::set(const void* val, const void* lock_pwd) {
+void cci_param_user_data_type::set_raw_value(const void *vp, const void *pwd,
+    const cci::cci_originator &originator) {
   std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
-  if (l_password == lock_pwd) {
-    value = *static_cast<const user_data_type*>(val);
+  if (l_password == pwd) {
+    value = *static_cast<const user_data_type*>(vp);
   }
 }
 
@@ -138,8 +155,7 @@ void cci_param_user_data_type::set(const void* val, const void* lock_pwd) {
  *  @param  val The value to serialize
  *  @return A string representation of the value
  */
-std::string cci_param_user_data_type::json_serialize(
-    const user_data_type& val) const {
+std::string cci_param_user_data_type::json_serialize(const user_data_type& val) const {
   std::cout << "Function cci_param_user_data_type::json_serialize Called " << std::endl;
   return std::string("not IMplemented");
 }
@@ -151,10 +167,10 @@ std::string cci_param_user_data_type::json_serialize(
  *  @param  str The string to be deserialized into the value
  *  @return void
  */
-void cci_param_user_data_type::json_deserialize(user_data_type& target_val,
-                                                const std::string& str) {
+void cci_param_user_data_type::json_deserialize(const std::string &json_string,
+    const cci::cci_originator &originator) {
   std::cout << "Function cci_param_user_data_type::json_deserialize Called " << std::endl;
-  std::cout << "With Json string " << str << std::endl;
+  std::cout << "With Json string " << json_string << std::endl;
 }
 
 /**
@@ -162,7 +178,7 @@ void cci_param_user_data_type::json_deserialize(user_data_type& target_val,
  *  @brief  Retrieve the default value of the parameter
  *  @return The user data type for the value of the parameter
  */
-const void* cci_param_user_data_type::get_default_value() const {
+const void* cci_param_user_data_type::get_default_value_raw() const {
   std::cout << "Function cci_param_user_data_type::get_default_value Called " << std::endl;
 
   return &default_value;
@@ -176,8 +192,7 @@ const void* cci_param_user_data_type::get_default_value() const {
  *  @param  json_string The JSON string to be deserialized
  *  @return void
  */
-void cci_param_user_data_type::json_deserialize(
-    const std::string& json_string) {
+void cci_param_user_data_type::json_deserialize(const std::string& json_string) {
   std::cout << "Function cci_param_user_data_type::json_deserialize Called " << std::endl;
   std::cout << "With Json string " << json_string << std::endl;
 }
@@ -209,7 +224,12 @@ cci::basic_param_type cci_param_user_data_type::get_basic_type() const {
  *  @param  val The val to assign to the parameter
  *  @return void
  */
-void cci_param_user_data_type::set_value(const cci::cci_value& val) {
+void cci_param_user_data_type::set_cci_value(const cci::cci_value& val) {
+  std::cout << "Function cci_param_user_data_type::set_value Called " << std::endl;
+  c_value = val;
+}
+
+void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const cci::cci_originator& originator) {
   std::cout << "Function cci_param_user_data_type::set_value Called " << std::endl;
   c_value = val;
 }
@@ -219,7 +239,7 @@ void cci_param_user_data_type::set_value(const cci::cci_value& val) {
  *  @brief  Function to retrieve the value of the parameter
  *  @return The cci_value of the parameter
  */
-cci::cci_value cci_param_user_data_type::get_value() const {
+cci::cci_value cci_param_user_data_type::get_cci_value() const {
   std::cout << "Function cci_param_user_data_type::get_value Called " << std::endl;
   return c_value;
 }
@@ -298,6 +318,15 @@ const std::string& cci_param_user_data_type::get_name() const {
   std::cout << "Return Name = " << nam << std::endl;
 
   return nam;
+}
+
+/**
+ *  @fn     bool is_handle()
+ *  @brief  check if this is an handle
+ *  @return True or false on whether it is an handle
+ */
+bool cci_param_user_data_type::is_handle() const {
+  return false;
 }
 
 /**
@@ -422,14 +451,19 @@ bool cci_param_user_data_type::is_locked() const {
   return lock_flag;
 }
 
-bool cci_param_user_data_type::equals(const cci_param_impl_if& rhs) const
+bool cci_param_user_data_type::equals(const cci::cci_param_if& rhs) const
 {
-	const cci_param_user_data_type * other = dynamic_cast<const cci_param_user_data_type*>(&rhs);
-	if (other)
-	{
-		return other->equals(*this);
-	}
-	return false;
+  return rhs.equals(*this);
+}
+
+bool cci_param_user_data_type::equals(const cci::cci_param_untyped_handle &rhs) const
+{
+  const cci_param_user_data_type * other = dynamic_cast<const cci_param_user_data_type*>(&rhs);
+  if (other)
+  {
+    return other->get_value()==this->get_value();
+  }
+  return false;
 }
 
 void cci_param_user_data_type::init()
@@ -447,84 +481,6 @@ void cci_param_user_data_type::destroy()
 	delete this;
 }
 
-/// Creating CCI-parmeter with some default value
-namespace cci {
 
-/**
- *  @fn     template<>
- *            cci_param_impl_if*
- *              create_cci_param<user_data_type, mutable_param>(
- *                cci_param<user_data_type, mutable_param> *owner_par,
- *                const std::string &nam,
- *                const user_data_type & val,
- *                bool is_top_level_name,
- *                cci_broker_if* broker_accessor)
- *  @brief  Function to create a cci parameter.
- *  @param  owner_par The mutable owner parameter
- *  @param  nam Name for the parameter
- *  @param  val The value to assign to the parameter
- *  @param  is_top_level_name Whether the name is the top level or not
- *  @param  broker_accessor A pointer to the broker for the parameter.
- *  @param  desc The string for parameter description. Default value is empty string.
- *  @return A cci parameter implementation
- */
-template<>
-cci_param_impl_if
-    *create_cci_param<user_data_type, mutable_param>(
-        cci_param<user_data_type, mutable_param> *owner_par,
-        const std::string &nam,
-        const user_data_type & val,
-        bool is_top_level_name,
-        cci_broker_if* broker_accessor,
-        const std::string& desc) {
-  std::cout
-      << "\n\t[PARAM_IMPL] : Creating CCI_PARAM: For user_data_type with cci::mutable_param"
-      << std::endl;
 
-  std::cout << "\t[PARAM_IMPL] : Called with Default Value as reference object"
-            << val << std::endl;
 
-  cci_param_user_data_type *param_impl = new cci_param_user_data_type(nam, val);
-
-  return param_impl;
-}
-
-/**
- *  @fn     template<>
- *            cci_param_impl_if*
- *              create_cci_param<user_data_type, mutable_param>(
- *                cci_param<user_data_type, mutable_param> *owner_par,
- *                const std::string &nam,
- *                const char* pval,
- *                bool is_top_level_name,
- *                cci_broker_if* broker_accessor)
- *  @brief  Function to create a cci parameter using a char* initial value.
- *  @param  owner_par The mutable owner parameter
- *  @param  nam Name for the parameter
- *  @param  pval Pointer to the value to assign to the parameter.
- *  @param  is_top_level_name Whether the name is the top level or not
- *  @param  broker_accessor A pointer to the broker for the parameter.
- *  @param  desc The string for parameter description. Default value is empty string.
- *  @return A cci parameter implementation
- */
-template<>
-cci_param_impl_if
-    *create_cci_param<user_data_type, mutable_param>(
-        cci_param<user_data_type, mutable_param> *owner_par,
-        const std::string &nam,
-        const cci_value& pval,
-        const bool is_top_level_name,
-        cci_broker_if* broker_accessor,
-        const std::string& desc) {
-  std::cout
-      << "\n\t[PARAM IMPL] : Creating CCI_PARAM : For user_data_type With cci::mutable_param "
-      << std::endl;
-
-  // Get Value from pval string
-  cci_param_user_data_type *param_impl = new cci_param_user_data_type(nam,
-                                                                      user_data_type(0, 0, 0));
-
-  return param_impl;
-}
-
-}  // End of CCI namespace

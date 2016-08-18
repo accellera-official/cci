@@ -10,16 +10,14 @@ CFLAGS = $(OPT) $(OTHER)
 MODULE = testbench
 
 SRCS = testbench.cpp \
-       ParameterOwnerModule.cpp \
-       gs_cci_symbols_c.cpp
+       ParameterOwnerModule.cpp 
 
 OBJS = testbench.o \
-       ParameterOwnerModule.o \
-       gs_cci_symbols_c.o
+       ParameterOwnerModule.o 
  
 OBJS_W_PATHS = $(SRCS:.cpp=.o)
 
-EXTRA_LIBS = -lcciparamimpl -lcciapi -lccibrokerimpl
+EXTRA_LIBS = -lcciapi -lccibrokerimpl
 
 include ../../Makefile.defs
 

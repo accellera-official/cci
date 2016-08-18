@@ -28,12 +28,13 @@
  *  @date      3rd September, 2011 (Saturday)
  */
 
+#include <boost/assign/list_of.hpp>
 #include <cci_configuration>
 
 #include "ex14_parent.h"
 #include "ex14_configurator.h"
 
-#include "gs_cci_cnf_private_broker_accessor.h"
+#include "gs_cci_cnf_private_broker_handle.h"
 
 /**
  *  @class  ex14_top
@@ -52,12 +53,12 @@ SC_MODULE(ex14_top) {
       // Register the cci-parameters of the PARENT & CHILD modules to the
       // PRIVATE BROKER & GLOBAL BROKER
       // 1. Instantiate a broker immediately above the 'desired' module
-      // cci::gs_cci_private_broker_accessor(sc_core::sc_module& owner,
+      // cci::gs_cci_private_broker_handle(sc_core::sc_module& owner,
       // std::vector<std::string> public_parameters)
       // 2. Feed this broker's instance to the 'desired' module
       // parent_inst(new parent("parent_inst", privBroker))
       : privBroker(
-            new cci::gs_cci_private_broker_accessor(
+            new cci::gs_cci_private_broker_handle(
                 *this,
                 boost::assign::list_of("parent_inst.parent_int_buffer")(
                     "parent_inst.child_inst.pub_int_param"))),

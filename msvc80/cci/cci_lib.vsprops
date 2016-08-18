@@ -8,7 +8,7 @@
 	<Tool
 		Name="VCCLCompilerTool"
 		AdditionalOptions="/vmg"
-		AdditionalIncludeDirectories="&quot;$(BOOST)&quot;;&quot;$(SYSTEMC)\..\src&quot;"
+		AdditionalIncludeDirectories="&quot;$(BOOST)&quot;;&quot;$(SYSTEMC)\..\src&quot;;&quot;$(CCI_HOME)\packages&quot;"
 		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;SC_INCLUDE_DYNAMIC_PROCESSES;SC_INCLUDE_FX"
 		RuntimeTypeInfo="true"
 		WarningLevel="3"

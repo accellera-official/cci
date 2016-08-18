@@ -82,7 +82,7 @@ SC_MODULE(ex04_config_ip) {
     wait(10, sc_core::SC_NS);
 
     if (m_cci->param_exists("sim_ip.param_2")) {
-      cci::cci_base_param *param_2_ptr = m_cci->get_param(
+      cci::cci_param_handle *param_2_ptr = m_cci->get_param_handle(
           "sim_ip.param_2");
       if (param_2_ptr == NULL) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2_ptr'!");

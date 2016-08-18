@@ -38,8 +38,8 @@
 #include <systemc.h>
 #include <iostream>
 #include <string>
-#include <cci_cfg/cci_param_impl_if.h>
-
+#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_broker_manager.h"
 /**
  *  @struct user_data_type
  *  @brief  User defined data structure
@@ -54,8 +54,6 @@ struct user_data_type {
         index(idx) {
   }
 
-
-
   sc_dt::uint64 s_address;
   sc_dt::uint64 d_address;
   unsigned      index;
@@ -67,7 +65,7 @@ struct user_data_type {
  *  @brief  User defined type cci parameter struct.
  */
 struct cci_param_user_data_type
-    : public cci::cci_param_impl_if {
+    : public cci::cci_param_if {
 
 	// Virtual function in cci_param_impl_if
   /**
@@ -79,28 +77,38 @@ struct cci_param_user_data_type
   void set(const user_data_type& val);
 
   /**
-   *  @fn     const user_data_type& get() const
-   *  @brief  Function to get the user defined type for the parameter
-   *  @return The user_data_type of the parameter.
+   *  @fn     user_data_type& get_value()
+   *  @brief  Function to get the value of the parameter
+   *  @return user's parameter value
    */
-  const void * get() const;
+  const user_data_type& get_value() const;
+
+  /**
+   *  @fn     const void* get_raw_value() const
+   *  @brief  Function to get the user defined type for the parameter
+   *  @return The pointer to user_data_type of the parameter.
+   */
+  const void * get_raw_value() const;
 
    /**
-   *  @fn     void set(const user_data_type& val, void* lock_pwd)
-   *  @brief  Function to set the value of the parameter along with the lock password.
-   *  @param  val The value to assign
+   *  @fn     void set_raw_value(const void *vp, const cci::cci_originator &originator)
+   *  @brief  Function to set the value of the parameter.
+   *  @param  vp The pointer to the value of assignment
+   *  @param  originator reference to the originator
    *  @return void
    */
-  void set(const void* val);
-  
+  void set_raw_value(const void *vp, const cci::cci_originator &originator);
+
   /**
-   *  @fn     void set(const user_data_type& val, void* lock_pwd)
+   *  @fn     void set_raw_value(const void *vp, const void *pwd)
    *  @brief  Function to set the value of the parameter along with the lock password.
-   *  @param  val The value to assign
-   *  @param  lock_pwd  The password for the parameter
+   *  @param  vp The pointer to the value of assignment
+   *  @param  pwd  The password for the parameter
+   *  @param  originator reference to the originator
    *  @return void
    */
-  void set(const void* val, const void* lock_pwd);
+  void set_raw_value(const void *vp, const void *pwd,
+      const cci::cci_originator &originator);
 
   /**
    *  @fn     std::string json_serialize(const user_data_type& val) const
@@ -111,20 +119,20 @@ struct cci_param_user_data_type
   std::string json_serialize(const user_data_type& val) const;
 
   /**
-   *  @fn     void json_deserialize(user_data_type& target_val, const std:string& str)
+   *  @fn     void json_deserialize(const std::string &json_string, const cci::cci_originator &originator)
    *  @brief  Function deserialize the string representation into the target value type.
    *  @param  target_val  The user defined value type to assign the string to
    *  @param  str The string to be deserialized into the value
    *  @return void
    */
-  void json_deserialize(user_data_type& target_val, const std::string& str);
+  void json_deserialize(const std::string &json_string, const cci::cci_originator &originator);
 
   /**
-   *  @fn     const user_data_type& get_default_value()
+   *  @fn     const user_data_type& get_default_value_raw()
    *  @brief  Retrieve the default value of the parameter
    *  @return The user data type for the value of the parameter
    */
-  const void* get_default_value() const;
+  const void* get_default_value_raw() const;
 
   // Virtual function in cci_base_param_impl_if
 
@@ -151,27 +159,36 @@ struct cci_param_user_data_type
   cci::basic_param_type get_basic_type() const;
 
   /**
-   *  @fn     void set_value(const cci::cci_value& val)
-   *  @brief  Function to set the value of the parameter
+   *  @fn     void set_cci_value(const cci::cci_value& val)
+   *  @brief  Function to set the value of the parameter using cci_value
    *  @param  val The val to assign to the parameter
    *  @return void
    */
-  void set_value(const cci::cci_value& val);
+  void set_cci_value(const cci::cci_value& val);
 
   /**
-   *  @fn     cci::cci_value get_value() const
-   *  @brief  Function to retrieve the value of the parameter
-   *  @return The cci_value of the parameter
-   */
-  cci::cci_value get_value() const;
-
-  /**
-   *  @fn     void set_description(const std::string& doc)
-   *  @brief  Function to add description (descirption) to the parameter
-   *  @param  doc The description to add
+   *  @fn     void set_value(const cci::cci_value& val,const cci::cci_originator& originator)
+   *  @brief  Function to set the value of the parameter
+   *  @param  val The val to assign to the parameter
+   *  @param  originator reference to the originator
    *  @return void
    */
-  void set_description(const std::string& doc);
+  void set_cci_value(const cci::cci_value& val, const cci::cci_originator& originator);
+
+  /**
+   *  @fn     cci::cci_value get_cci_value() const
+   *  @brief  Function to retrieve the cci_value of the parameter
+   *  @return The cci_value of the parameter
+   */
+  cci::cci_value get_cci_value() const;
+
+  /**
+   *  @fn     void set_description(const std::string& desc)
+   *  @brief  Function to add description (descirption) to the parameter
+   *  @param  desc The description to add
+   *  @return void
+   */
+  void set_description(const std::string& desc);
 
   /**
    *  @fn     std::string get_description() const
@@ -214,6 +231,13 @@ struct cci_param_user_data_type
    *  @return The string representation of the name of the parameter
    */
   const std::string& get_name() const;
+
+  /**
+   *  @fn     bool is_handle()
+   *  @brief  check if this is an handle
+   *  @return True or false on whether it is an handle
+   */
+  bool is_handle() const;
 
   /**
    *  @fn     cci::chared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function)
@@ -291,19 +315,26 @@ struct cci_param_user_data_type
    *  @return True or false depending on whether or not the parameter is locked
    */
   bool is_locked() const;
-  
+
   /**
-  *  @fn     bool equals(const cci_param_impl_if& rhs) const;
-  *  @param  rhs reference to another cci_param implementation
+  *  @fn     bool equals(const cci_param_handle& rhs) const;
+  *  @param  rhs reference to another cci_param_if implementation
   *  @return True if both values are equal
   */
-  virtual bool equals(const cci_param_impl_if& rhs) const;
+  bool equals(const cci::cci_param_if& rhs) const;
+
+  /**
+  *  @fn     bool equals(const cci_param_untyped_handle& rhs) const;
+  *  @param  rhs reference to another cci_param_untyped_handle implementation
+  *  @return True if both values are equal
+  */
+  bool equals(const cci::cci_param_untyped_handle &rhs) const ;
 
   /// Initialize 
-  virtual void init();
+  void init();
   
   /// Destroy
-  virtual void destroy();
+  void destroy();
   
   /**
    *  @fn     cci::cci_originator* get_latest_write_originator() const
@@ -313,6 +344,19 @@ struct cci_param_user_data_type
   cci::cci_originator* get_latest_write_originator() const {
     return NULL; /* TODO */
   }
+
+  cci::cci_param_handle* create_param_handle(const cci::cci_originator& originator) {
+    return NULL;
+  }
+
+  cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type,
+                                                     void *observer,
+                                                     cci::param_callb_func_ptr function,
+                                                     cci::cci_param_untyped_handle& param) {cci::shared_ptr<cci::callb_adapt> a; return a;}
+
+  cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type,
+                                                     cci::shared_ptr <cci::callb_adapt> callb,
+                                                     cci::cci_param_untyped_handle& param) {return callb;}
 
   /**
    *  @fn     cci_param_user_data_type(const std::string& _name, const user_data_type& _dvalue)
@@ -336,6 +380,7 @@ struct cci_param_user_data_type
   void * l_password;  ///< lock password
   std::string description;  ///< parameter description
   std::string nam;  ///< the name of the parameter
+  cci::cci_broker_if* m_broker_handle; ///broker pointer used to register parameter
 };
 // ex19_parameter_impl_by_abc
 

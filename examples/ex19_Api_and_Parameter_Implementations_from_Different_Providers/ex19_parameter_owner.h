@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2015 Ericsson AB.
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -55,9 +58,9 @@ SC_MODULE(ex19_parameter_owner) {
   SC_CTOR(ex19_parameter_owner)
       : int_param("mutable_int_param", 5),
         udtype_param("mutable_udtype_param", user_data_type(0x100, 0x200, 1)) {
-    XREPORT("[OWNER C_TOR] : Default Value : " << int_param.get());
+    XREPORT("[OWNER C_TOR] : Default Value : " << int_param.get_value());
     XREPORT("[OWNER C_TOR] : Default Value udtype_param : "
-            << udtype_param.get());
+            << udtype_param.get_value());
 
     // SC_THREAD declaration
     SC_THREAD(run_owner);
@@ -71,7 +74,7 @@ SC_MODULE(ex19_parameter_owner) {
   void run_owner(void) {
     while (1) {
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[OWNER] : Parameter Value : " << int_param.get());
+      XREPORT("[OWNER] : Parameter Value : " << int_param.get_value());
 
       wait(5.0, sc_core::SC_NS);
 
@@ -82,7 +85,7 @@ SC_MODULE(ex19_parameter_owner) {
       wait(15.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[OWNER] : Parameter Value   : " << int_param.get());
+      XREPORT("[OWNER] : Parameter Value   : " << int_param.get_value());
 
       wait(50.0, sc_core::SC_NS);
     }
@@ -91,7 +94,7 @@ SC_MODULE(ex19_parameter_owner) {
  private:
   // Declare an instance of mutable CCI parameter of type 'int'
   cci::cci_param<int> int_param; ///< An int cci parameter
-  cci::cci_param<user_data_type> udtype_param; ///< An user defined type cci parameter
+  cci_param_user_data_type udtype_param; ///< An user defined type cci parameter
 };
 // ex19_parameter_owner
 

@@ -62,7 +62,7 @@ SC_MODULE(ex06_config_ip) {
    */
   void execute() {
     std::ostringstream ss;
-    cci::cci_base_param *int_param_ptr = NULL;
+    cci::cci_param_handle *int_param_ptr = NULL;
     const std::string sim_ip_int_param_ip_name = "sim_ip.int_param_ip";
     const std::string sim_ip_int_param_ip_name_0 = "sim_ip.int_param_ip_0";
     const std::string sc_main_int_param_top_name = "int_param_top";
@@ -74,7 +74,7 @@ SC_MODULE(ex06_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(sim_ip_int_param_ip_name)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param(sim_ip_int_param_ip_name);
+      int_param_ptr = m_cci->get_param_handle(sim_ip_int_param_ip_name);
       assert(int_param_ptr != NULL);
 
       // Update the param's value
@@ -97,7 +97,7 @@ SC_MODULE(ex06_config_ip) {
     // Check the auto generated parameter name due to name collision
     if (m_cci->param_exists(sim_ip_int_param_ip_name_0)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param(sim_ip_int_param_ip_name_0);
+      int_param_ptr = m_cci->get_param_handle(sim_ip_int_param_ip_name_0);
       assert(int_param_ptr != NULL);
 
       // Update the param's value
@@ -120,7 +120,7 @@ SC_MODULE(ex06_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(sc_main_int_param_top_name)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param(sc_main_int_param_top_name);
+      int_param_ptr = m_cci->get_param_handle(sc_main_int_param_top_name);
       assert(int_param_ptr != NULL);
 
       // Update the param's value
@@ -143,7 +143,7 @@ SC_MODULE(ex06_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(int_param_custom_name)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param(int_param_custom_name);
+      int_param_ptr = m_cci->get_param_handle(int_param_custom_name);
       assert(int_param_ptr != NULL);
 
       // Update the param's value

@@ -60,7 +60,7 @@ SC_MODULE(ex14_configurator) {
     if (myCfgrBrokerIF != NULL) {
       if (myCfgrBrokerIF->param_exists("Top.parent_inst.parent_int_buffer")) {
         // Get handle of the parent_module's cci-parameter
-        parent_base_param_ptr = myCfgrBrokerIF->get_param(
+        parent_base_param_ptr = myCfgrBrokerIF->get_param_handle(
             "Top.parent_inst.parent_int_buffer");
 
         // Assert if the handle returned is NULL
@@ -117,7 +117,7 @@ SC_MODULE(ex14_configurator) {
 
  private:
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
-  cci::cci_base_param* parent_base_param_ptr;  ///< Few directly accessible cci-parameters
+  cci::cci_param_handle* parent_base_param_ptr;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator
 

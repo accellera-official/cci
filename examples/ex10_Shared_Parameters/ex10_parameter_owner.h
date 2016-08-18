@@ -48,7 +48,7 @@ SC_MODULE(ex10_parameter_owner) {
    */
   SC_CTOR(ex10_parameter_owner)
       : int_param("mutable_int_param", 5) {
-    XREPORT("[OWNER C_TOR] : Default Value : " << int_param.get());
+    XREPORT("[OWNER C_TOR] : Default Value : " << int_param.get_value());
 
     // SC_THREAD declaration
     SC_THREAD(run_owner);
@@ -62,7 +62,7 @@ SC_MODULE(ex10_parameter_owner) {
   void run_owner(void) {
     while (1) {
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[OWNER] : Parameter Value : " << int_param.get());
+      XREPORT("[OWNER] : Parameter Value : " << int_param.get_value());
 
       wait(5.0, sc_core::SC_NS);
 
@@ -73,7 +73,7 @@ SC_MODULE(ex10_parameter_owner) {
       wait(15.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[OWNER] : Parameter Value   : " << int_param.get());
+      XREPORT("[OWNER] : Parameter Value   : " << int_param.get_value());
 
       wait(50.0, sc_core::SC_NS);
     }

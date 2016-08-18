@@ -27,7 +27,7 @@
 
 #include <systemc>
 #include <cci_configuration>
-
+#include <boost/assign/list_of.hpp>
 #include "ModuleA.h"
 #include "ObserverModule.h"
 
@@ -47,12 +47,12 @@ public:
     
     // Private broker for Module A
     //   Parameter "ModuleA.int_param" is public
-    moduleA_privBroker = new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA.int_param"));
+    moduleA_privBroker = new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("ModuleA.int_param"));
     a = new ModuleA("ModuleA", moduleA_privBroker);
     
     // Private broker for Module A2
     //   Parameter "ModuleA2.int_param" is public
-    moduleA2_privBroker = new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA2.int_param"));
+    moduleA2_privBroker = new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("ModuleA2.int_param"));
     a2 = new ModuleA("ModuleA2", moduleA2_privBroker);
     
     observer = new ObserverModule("Observer");    

@@ -73,11 +73,11 @@ SC_MODULE(ex14_child) {
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
             << priv_int_param.get_name() << "\tParameter Value : "
-            << priv_int_param.get());
+            << priv_int_param.get_value());
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
             << pub_int_param.get_name() << "\tParameter Value : "
-            << pub_int_param.get());
+            << pub_int_param.get_value());
 
     // Declare a SC_THREAD
     SC_THREAD(run_child);
@@ -106,7 +106,7 @@ SC_MODULE(ex14_child) {
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CHILD] : Parameter Name : " << priv_int_param.get_name()
-              << "\tParameter Value : " << priv_int_param.get());
+              << "\tParameter Value : " << priv_int_param.get_value());
 
       wait(10.0, sc_core::SC_NS);
     }

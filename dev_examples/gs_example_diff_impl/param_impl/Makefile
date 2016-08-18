@@ -5,7 +5,6 @@ OPT      = -g -Wall
 OTHER    = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER)
 
-SRCS = gs_cci_symbols_b.cpp
 
 OBJS = $(SRCS:.cpp=.o)
  

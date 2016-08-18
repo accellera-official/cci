@@ -57,7 +57,7 @@ SC_MODULE(ex10_parameter_configurator) {
 
       // Get handle of the owner parameter
       cfgr_param_ptr =
-          myCfgrBrokerIF->get_param("param_owner.mutable_int_param");
+          myCfgrBrokerIF->get_param_handle("param_owner.mutable_int_param");
 
       // Assert if the owner parameter handle returned is NULL
       assert(cfgr_param_ptr != NULL && "Parameter Handle is NULL");
@@ -84,7 +84,7 @@ SC_MODULE(ex10_parameter_configurator) {
       wait(10.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get());
+      XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get_value());
 
       wait(5.0, sc_core::SC_NS);
 
@@ -108,8 +108,8 @@ SC_MODULE(ex10_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if* myCfgrBrokerIF;  ///< cci configuration broker interface instance
-  cci::cci_base_param* cfgr_param_ptr; ///< CCI base parameter pointer
+  cci::cci_broker_if* myCfgrBrokerIF;      ///< cci configuration broker interface instance
+  cci::cci_param_handle* cfgr_param_ptr;   ///< CCI base parameter handle pointer
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
 // ex10_parameter_configurator

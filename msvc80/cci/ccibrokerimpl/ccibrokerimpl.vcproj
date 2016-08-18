@@ -285,11 +285,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor_handler.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle_handler.cpp"
 				>
 			</File>
 			<File
@@ -297,11 +297,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_accessor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\packages\gs_broker\helpers.cpp"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_handle.cpp"
 				>
 			</File>
 		</Filter>
@@ -319,11 +315,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_accessor_handler.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle_handler.h"
 				>
 			</File>
 			<File
@@ -335,11 +331,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_accessor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\packages\gs_broker\helpers.h"
+				RelativePath="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_handle.h"
 				>
 			</File>
 		</Filter>
