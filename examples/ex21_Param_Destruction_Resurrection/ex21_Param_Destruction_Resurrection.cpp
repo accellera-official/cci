@@ -1,12 +1,6 @@
 /*****************************************************************************
-  Copyright 2016 Accellera Systems Initiative Inc.
+  Copyright 2006-2016 Accellera Systems Initiative Inc.
   All rights reserved.
-
-  Copyright 2010 GreenSocs
-  All rights reserved.
-  Authors:
-      Christian Schroeder <schroeder@eis.cs.tu-bs.de>
-      Mark Burton <mark@greensocs.com>
 
   Copyright 2016 Ericsson
   All rights reserved.
@@ -24,19 +18,22 @@
   limitations under the License.
  *****************************************************************************/
 
+/**
+ *  @file   ex21_Param_Destruction_Resurrection.cpp
+ *  @brief  An example that demonstrates the usage and effect of parameter
+ *          destruction and resurrection
+ */
 
-#ifndef CCI_CCI_FUNCTION_H_INCLUDED_
-#define CCI_CCI_FUNCTION_H_INCLUDED_
+#include "ex21_simple_ip.h"
+#include "ex21_config_ip.h"
 
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
+int sc_main(int argc, char *argv[]) {
+    ex21_simple_ip sim_ip("sim_ip");
+    ex21_config_ip cfg_ip("cfg_ip");
 
-namespace cci {
+    SC_REPORT_INFO("sc_main", "Begin Simulation.");
+    sc_core::sc_start();
+    SC_REPORT_INFO("sc_main", "End Simulation.");
 
-  using boost::function;
-  using boost::function2;
-  using boost::bind;
-
-} // end namespace cci
-
-#endif
+    return EXIT_SUCCESS;
+}
