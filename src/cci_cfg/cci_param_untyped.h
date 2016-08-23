@@ -79,6 +79,32 @@ public:
 
 	///@}
 
+	///@name Metadata
+	///@{
+
+	/// Add metadata
+	/**
+	 * Add metadata to the parameter identified by its name, value
+	 * and a human readable description.
+	 *
+	 * @param name Name of the metadata
+	 * @param value Value of the metadata
+	 * @param desc Human readable description
+	 */
+	void add_metadata(const std::string &name, const cci::cci_value &value,
+					  const std::string &desc = "");
+
+	/// Return the metadata value
+	/**
+	 * Return value of the metadata by its given name.
+	 *
+	 * @return name Name of the metadata
+	 * @return Metadata value
+	 */
+	cci_value_map get_metadata() const;
+
+	///@}
+
 	///@name Parameter Value Status
 	///@{
 
@@ -369,6 +395,9 @@ protected:
 
 	/// Description
 	std::string m_description;
+
+	/// Metadata
+	cci_value_map metadata;
 
 	/// Initialized
 	bool m_init_called;

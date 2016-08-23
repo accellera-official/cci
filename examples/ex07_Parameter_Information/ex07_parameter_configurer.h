@@ -193,8 +193,12 @@ SC_MODULE(ex07_parameter_configurer) {
                 << int_param_ptr->get_cci_value().to_json());
 
         // Access parameter's description using 'get_description()'
-        XREPORT("[CFGR -> Retreive] Parameter's desc : "
+        XREPORT("[CFGR -> Retrieve] Parameter's desc : "
                 << int_param_ptr->get_description());
+
+        // Access parameter's metadata using 'get_metadata()'
+        XREPORT("[CFGR -> Retrieve] Parameter's metadata : "
+                        << int_param_ptr->get_metadata());
 
         wait(2.0, sc_core::SC_NS);
 
