@@ -65,7 +65,7 @@ And they are verified with following versions:
      - Visual Studio 2013 Express
 
      Note: Please see the next section on upgrading to newer version of MSVC
-           (later than 8.0/2005).
+           (later than 10.0/2010).
 
 
 How to build the three PoC libraries
@@ -74,20 +74,18 @@ How to build the three PoC libraries
   0. Upgrade the MSVC solution/projects, for newer MSVC versions (optional)
 
      The provided MSVC solution/project files are prepared for Microsoft
-     Visual Studio 2005 (8.0).  You need to upgrade these files when using
+     Visual Studio 2010 (10.0).  You need to upgrade these files when using
      more recent versions of MSVC.
 
-     - Copy the 'msvc80' directory to the correct SystemC architecture alias
+     - Copy the 'msvc10' directory to the correct SystemC architecture alias
        for your MSVC version:
 
-       -  8.0/2005 - "msvc80" (default)
-       -  9.0/2008 - "msvc90"
-       - 10.0/2010 - "msvc10"
+       - 10.0/2010 - "msvc10" (default)
        - 11.0/2012 - "msvc11"
        - 12.0/2013 - "msvc12"
 
        IMPORTANT NOTE: you will need to manually sync future git updates to
-       msvc80 once you've made a copy of this directory!
+       msvc10 once you've made a copy of this directory!
 
      - Open the solution file `cci.sln' with your version of MSVC and
        follow the upgrade instructions.
@@ -111,7 +109,7 @@ How to build the three PoC libraries
 
   2. Update property sheet
 
-     All three projects share the same property sheet `cci_lib.vsprops',
+     All three projects share the same property sheet `cci_lib.props',
      carrying the common setup for e.g. the SystemC and Boost dependencies.
 
      - Open the "Property Manager" via View -> Property Manager
@@ -132,7 +130,7 @@ How to build the three PoC libraries
        * `MSVC' - MSVC architecture alias as used by SystemC
 
          This macro shall point to the correct `msvcXX' alias, matching the
-         used MSVC version as described in Step 0 (default "msvc80").
+         used MSVC version as described in Step 0 (default "msvc10").
 
        * `SYSTEMC' - location of MSVC directory of SystemC installation
 
@@ -267,8 +265,7 @@ you shall be able to compile and run the examples.
   1. Create a new MSVC project
      - File -> New -> Project -> Win32 Console Application
 
-  2. Import property sheet (`msvc80/cci/cci_example.vsprops')
-     Note: use cci_example.props for msvc10 and newer.
+  2. Use cci_example.props for msvc10 and newer.
 
   3. Update the "User Macros" according to your environment
 
