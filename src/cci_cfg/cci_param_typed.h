@@ -559,6 +559,11 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
 : cci_param_untyped(top, &broker, desc, cci_originator()),                     \
   m_gs_param(new gs::gs_param<T>(name, value, top))                            \
 {                                                                              \
+    std::string init_value =                                                   \
+        broker.get_initial_cci_value(get_name()).to_json();                    \
+    if(!init_value.empty()) {                                                  \
+        m_gs_param.setString(init_value);                                      \
+    }                                                                          \
     cci_param_untyped::m_gs_param_base = m_gs_param;                           \
     broker.add_param(this);                                                    \
     this->init();                                                              \
