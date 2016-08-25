@@ -50,9 +50,12 @@ public:
   static void report(sc_core::sc_severity severity, const char* msg_type, const char* msg, const char* file, int line) {
     std::string cci_msg_type = __CCI_SC_REPORT_MSG_TYPE_PREFIX__;
     cci_msg_type.append(msg_type);
-    // set the actions for this CCI message to SC_THROW
-    // the report should be cached so that it persists until it is caught
-    set_actions(cci_msg_type.c_str(), severity, sc_core::SC_THROW + sc_core::SC_CACHE_REPORT);
+    if(severity >= sc_core::SC_ERROR) {
+      // set the actions for this CCI message to SC_THROW
+      // the report should be cached so that it persists until it is caught
+      set_actions(cci_msg_type.c_str(), severity,
+                  sc_core::SC_THROW + sc_core::SC_CACHE_REPORT);
+    }
     sc_report_handler::report(severity,cci_msg_type.c_str(),msg,file,line);
   }
 
@@ -79,13 +82,26 @@ public:
 
   // function to return cci_param_failure that matches thrown (or cached) report
   static cci_param_failure get_param_failure(const sc_core::sc_report& rpt) {
+    const std::string cci_sc_report_type_prefix =
+            __CCI_SC_REPORT_MSG_TYPE_PREFIX__;
     std::string failure_type_string = rpt.get_msg_type();
-    if ( failure_type_string.compare(0,9,__CCI_SC_REPORT_MSG_TYPE_PREFIX__) == 0) {
-      if (failure_type_string == "/ASI/CCI/SET_PARAM_FAILED") return CCI_SET_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/GET_PARAM_FAILED") return CCI_GET_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/ADD_PARAM_FAILED") return CCI_ADD_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/REMOVE_PARAM_FAILED") return CCI_REMOVE_PARAM_FAILURE;
-      else if (failure_type_string == "/ASI/CCI/CCI_VALUE_FAILURE") return CCI_VALUE_FAILURE;
+
+    if (failure_type_string.compare(0, cci_sc_report_type_prefix.length(),
+                                    cci_sc_report_type_prefix) == 0) {
+      std::string failure_type_string_wp =
+              failure_type_string.substr(cci_sc_report_type_prefix.length(),
+                                         failure_type_string.length());
+
+      if (failure_type_string_wp == "SET_PARAM_FAILED")
+        return CCI_SET_PARAM_FAILURE;
+      else if (failure_type_string_wp == "GET_PARAM_FAILED")
+        return CCI_GET_PARAM_FAILURE;
+      else if (failure_type_string_wp == "ADD_PARAM_FAILED")
+        return CCI_ADD_PARAM_FAILURE;
+      else if (failure_type_string_wp == "REMOVE_PARAM_FAILED")
+        return CCI_REMOVE_PARAM_FAILURE;
+      else if (failure_type_string_wp == "CCI_VALUE_FAILURE")
+        return CCI_VALUE_FAILURE;
       else return CCI_UNDEFINED_FAILURE;
     }
     else //not a CCI failure report
@@ -95,16 +111,16 @@ public:
 };
 
 #define CCI_REPORT_INFO(_id, _message) \
-cci_report_handler::report(SC_INFO,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_INFO,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_WARNING(_id, _message) \
-cci_report_handler::report(SC_WARNING,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_WARNING,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_ERROR(_id, _message) \
-cci_report_handler::report(SC_ERROR,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_ERROR,_id,_message,__FILE__,__LINE__);
 
 #define CCI_REPORT_FATAL(_id, _message) \
-cci_report_handler::report(SC_FATAL,_id,_message,__FILE__,__LINE__);
+cci_report_handler::report(sc_core::SC_FATAL,_id,_message,__FILE__,__LINE__);
 
 
 CCI_CLOSE_NAMESPACE_

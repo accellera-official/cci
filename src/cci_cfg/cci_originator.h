@@ -28,6 +28,7 @@
 #define CCI_CCI_ORIGINATOR_H_INCLUDED_
 
 #include "cci_core/systemc.h"
+#include "cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -75,7 +76,7 @@ public:
 	}
 	else {
 		// Caller needs to catch this exception & add identifying parameter info.
-		SC_REPORT_ERROR(__CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__, "Unable to determine parameter's owner.");
+        CCI_REPORT_ERROR("cci_originator/cci_originator", "Unable to determine parameter's owner.");
 	}
   }
 

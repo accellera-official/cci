@@ -79,7 +79,7 @@ void callb_adapt_T<cci_param_if_T, cci_broker_if_T>::unregister_at_parameter() {
     //assert (succ && "Unregistering this callback at parameter failed!");
   }
   if (caller_broker != NULL) {
-    SC_REPORT_ERROR(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Not possible - TODO?.");
+    CCI_REPORT_ERROR("callb_adapt_T/unregister_at_parameter", "Not possible - TODO?.");
 #ifdef CCI_PARAM_CALLBACK_VERBOSE
     printf("callb_adapt: Unregister broker callback adapter %p at caller broker '%s'.\n", (void*)this, caller_broker->name().c_str());
 #endif
@@ -97,7 +97,7 @@ callback_return_type callb_adapt_T<cci_param_if_T, cci_broker_if_T>::call(cci_pa
     return bro_func("n", cb_reason);
     //return bro_func(changed_param.get_name(), cb_reason);
   } else {
-    SC_REPORT_ERROR(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "No callback registered yet.");
+    CCI_REPORT_ERROR("callb_adapt_T/call", "No callback registered yet.");
   }      
   return return_nothing;
 }
@@ -109,12 +109,12 @@ callback_return_type callb_adapt_T<cci_param_if_T, cci_broker_if_T>::call(const 
     cci_param_if_T* p = caller_broker->get_param_handle(changed_param_name);
     if (p) return par_func(*p, cb_reason);
     else {
-      SC_REPORT_ERROR(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "Cannot call this callback function with not explicit parameter.");  
+      CCI_REPORT_ERROR("callb_adapt_T", "Cannot call this callback function with not explicit parameter.");
     }
   } else if (bro_func) {
     return bro_func(changed_param_name, cb_reason);    
   } else {
-    SC_REPORT_ERROR(__CCI_SC_REPORT_MSG_TYPE_PREFIX__, "No callback registered yet.");
+    CCI_REPORT_ERROR("callb_adapt_T/call", "No callback registered yet.");
   }      
   return return_nothing;
 }

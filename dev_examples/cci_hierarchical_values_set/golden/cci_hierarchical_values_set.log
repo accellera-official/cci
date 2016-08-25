@@ -5,7 +5,7 @@ SystemC Simulation
 
 **** Parameter list and values: @ 0 s
 
-Warning: GreenSocs/cci/not_implemented: pattern limited to GreenConfig capabilities
+Warning: /ASI/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
 In file: <removed by verify.pl>
 In process: cfg_ip.execute @ 0 s
 sim_ip.ChildModule.log_level = 0
