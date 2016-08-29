@@ -49,7 +49,7 @@ class cci_originator;
 * - Name of the parameter,
 * - stores value untyped as string representation
 * - allows generic typed and list access
-* - JSON (de)serialize functions
+* - CCI value functions
 * - Callback handling
 */
 
@@ -62,7 +62,7 @@ public:
     /// Destructor.
     virtual ~cci_param_if() {}
 
-    ///@name JSON Data Type and access
+    ///@name CCI value Data Type and access
     ///@{
 
     /// @copydoc cci_param_untyped_handle::set_cci_value

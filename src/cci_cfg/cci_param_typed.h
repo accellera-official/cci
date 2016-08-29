@@ -176,7 +176,7 @@ public:
 	 */
 	basic_param_type get_basic_type() const;
 
-	///@name JSON Data Type and access
+	///@name CCI value Data Type and access
 	///@{
 
     /// Set the parameter's value to the given one.

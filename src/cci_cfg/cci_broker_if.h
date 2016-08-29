@@ -155,7 +155,7 @@ CCI_OPEN_NAMESPACE_
      * See cci_broker_if::get_cci_value_keep_unused to do the same without impacting the used status.
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
-     * @return  JSON string of the parameter's value
+     * @return  CCI value of the parameter
      */
     virtual const cci::cci_value get_cci_value(const std::string &parname) = 0;
 
@@ -165,7 +165,7 @@ CCI_OPEN_NAMESPACE_
      *
      * @see get_cci_value
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
-     * @return  JSON string of the parameter's value
+     * @return  CCI value of the parameter
      */
     virtual const cci::cci_value get_cci_value_keep_unused(const std::string &parname) = 0;
 

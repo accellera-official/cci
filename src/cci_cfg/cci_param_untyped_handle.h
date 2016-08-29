@@ -64,17 +64,17 @@ public:
 
     ///@}
 
-    ///@name JSON Data Type and access
+    ///@name CCI value Data Type and access
     ///@{
 
-    /// Set the parameter's value to the given one.
+    /// Set the parameter's CCI value to the given one.
     /**
     * @exception cci_exception_set_param Setting value failed
     * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
     */
     void set_cci_value(const cci_value& val);
 
-    /// Get the parameter's value.
+    /// Get the parameter's CCI value.
     /**
     * @exception cci_exception_get_param Getting value failed
     * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
