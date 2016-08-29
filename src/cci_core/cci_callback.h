@@ -148,7 +148,6 @@ private:
 
 /**
  * \brief Generic callback handle class
- * \tparam ResultType Return type of the wrapped callback (default: \c void)
  *
  * This class provides a generic callback handle to store arbitrary callback
  * instances (returning a the corresponding return type).
@@ -185,6 +184,7 @@ public:
       m_cb->acquire();
   }
 
+  /// Copy constructor - both handles point to the same callback object
   cci_callback_untyped_handle(const cci_callback_untyped_handle& that)
     : m_cb(that.m_cb)
   {
@@ -192,6 +192,7 @@ public:
       m_cb->acquire();
   }
 
+  /// Assignment - both handles point to the same callback object
   cci_callback_untyped_handle& operator=(const cci_callback_untyped_handle& that)
   {
     cci_callback_untyped_handle copy(that);
@@ -216,7 +217,11 @@ public:
   bool valid() const
     { return m_cb != NULL; }
 
-  /// check, if handle currently holds a callback with the given signature
+  /**
+   * \brief check, if handle currently holds a callback with the given signature
+   * \tparam ResultType Return type of the wrapped callback
+   * \tparam ArgType    Argument type of the wrapped callback
+   */
   template<typename ResultType, typename ArgType>
   bool valid() const;
 
@@ -226,8 +231,8 @@ public:
 
   /**
    * \brief invoke callback with given signature
-   * \tparam ResultType Return type of callback
-   * \tparam ArgType    Argument type of callback
+   * \tparam ResultType Return type of the wrapped callback
+   * \tparam ArgType    Argument type of the wrapped callback
    *
    * On valid handles, this function invokes the held callback after
    * checing that the expected signature matches.
@@ -242,7 +247,8 @@ public:
 
   /**
    * \brief invoke callback with given signature
-   * \tparam ArgType Argument type / signature of callback
+   * \tparam ResultType Return type of the wrapped callback
+   * \tparam ArgType    Argument type of the wrapped callback
    *
    * On valid handles, this function invokes the held callback
    * \b without checking that the expected signature matches.
@@ -322,7 +328,16 @@ public:
   cci_callback_typed_handle(const cb_type& cb)
     : base_type(cb) {}
 
-  /// construct from an untyped callback handle, iff signature matches
+  /**
+   * \brief Construct from an untyped callback handle, iff signature matches
+   *
+   * This constructor is used for type recovery from untyped handles.
+   * If the underlying sigature of the source handle matches the
+   * expected signature of the typed handle, the conversion is successful
+   * and the constructed handle is valid.
+   *
+   * Otherwise, an invalid handle is constructed.
+   */
   explicit cci_callback_typed_handle(const base_type& cb);
 
   /**

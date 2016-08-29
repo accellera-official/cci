@@ -30,10 +30,6 @@
 #include "cci_core/cci_config.h"
 #include "cci_core/cci_meta.h"
 
-#ifndef CCI_DBG_PRINT_CALL
-# define CCI_DBG_PRINT_CALL
-#endif
-
 CCI_OPEN_NAMESPACE_
 namespace detail {
 
@@ -122,9 +118,7 @@ struct callback_impl
   typedef typename if_type::result_type    result_type;
 
   explicit callback_impl(const Functor& f)
-    : m_func(f), m_refcnt(1) {
-    CCI_DBG_PRINT_CALL;
-    }
+    : m_func(f), m_refcnt(1) {}
 
 #ifdef CCI_HAS_CXX_RVALUE_REFS
   explicit callback_impl(Functor&& f)
@@ -142,9 +136,6 @@ struct callback_impl
   virtual void acquire() { ++m_refcnt; }
   virtual void release() { if (!--m_refcnt) delete this; }
 
-  ~callback_impl() {
-    CCI_DBG_PRINT_CALL;
-  }
 protected:
   Functor  m_func;
   unsigned m_refcnt;
@@ -210,7 +201,6 @@ struct callback_generic_adapt<Traits,true>
   explicit callback_generic_adapt(if_type* f)
     : m_func(f), m_refcnt(1)
   {
-    CCI_DBG_PRINT_CALL;
     m_func->acquire();
   }
 
@@ -232,7 +222,6 @@ struct callback_generic_adapt<Traits,true>
 protected:
   ~callback_generic_adapt()
   {
-    CCI_DBG_PRINT_CALL;
     m_func->release();
   }
 

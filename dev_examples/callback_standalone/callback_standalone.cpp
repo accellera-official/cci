@@ -191,12 +191,16 @@ public:
 template<typename T>
 void write_callback(const cci_param_write_event<T> & ev)
 {
-    std::cout << ev.old_value << " -> " << ev.new_value << std::endl;
+    std::cout << "write_callback: "
+              << ev.old_value << " -> " << ev.new_value
+              << std::endl;
 }
 
 void untyped_write_callback(const cci_param_write_event<> & ev)
 {
-    std::cout << ev.old_value << " -> " << ev.new_value << std::endl;
+    std::cout << "untyped_write_callback: "
+              << ev.old_value << " -> " << ev.new_value
+              << std::endl;
 }
 
 class MyClass
@@ -205,14 +209,16 @@ public:
   template<typename T>
   void typed_write(const cci_param_write_event<sc_time>& ev)
   {
-    CCI_DBG_PRINT_CALL;
-    std::cout << ev.old_value << " -> " << ev.new_value << std::endl;
+    std::cout << "MyClass::typed_write: "
+              << ev.old_value << " -> " << ev.new_value
+              << std::endl;
   }
 
   void untyped_write(const cci_param_write_event<> & ev)
   {
-      CCI_DBG_PRINT_CALL;
-      std::cout << ev.old_value << " -> " << ev.new_value << std::endl;
+      std::cout << "MyClass::untyped_write: "
+                << ev.old_value << " -> " << ev.new_value
+                << std::endl;
   }
 };
 
