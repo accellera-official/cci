@@ -1,0 +1,197 @@
+/*****************************************************************************
+
+  Licensed to Accellera Systems Initiative Inc. (Accellera) under one or
+  more contributor license agreements.  See the NOTICE file distributed
+  with this work for additional information regarding copyright ownership.
+  Accellera licenses this file to you under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with the
+  License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+  implied.  See the License for the specific language governing
+  permissions and limitations under the License.
+
+ ****************************************************************************/
+#ifndef CCI_CFG_CCI_PARAM_CALLBACKS_H_INCLUDED_
+#define CCI_CFG_CCI_PARAM_CALLBACKS_H_INCLUDED_
+
+#include "cci_core/cci_callback.h"
+#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_value_traits.h"
+
+CCI_OPEN_NAMESPACE_
+
+template<typename T = void>
+struct cci_param_write_event;
+
+/// Payload for type-independent write and validate_write callbacks
+template<>
+struct cci_param_write_event<void>
+{
+  typedef cci_param_write_event type;
+  typedef cci_value value_type;
+
+  cci_param_write_event( const value_type&     old_
+                       , const value_type&     new_
+                       , const cci_originator& orig_ );
+
+  /// Old parameter value
+  const value_type& old_value;
+  /// New parameter value
+  const value_type& new_value;
+  /// Originator of new value
+  const cci_originator& originator;
+};
+
+/// Payload for write and validate_write callbacks
+template<typename T>
+struct cci_param_write_event
+{
+  typedef cci_param_write_event type;
+  typedef T value_type;
+
+  cci_param_write_event( const value_type&     old_
+                       , const value_type&     new_
+                       , const cci_originator& orig_ );
+
+  /// Old parameter value
+  const value_type& old_value;
+  /// New parameter value
+  const value_type& new_value;
+  /// Originator of new value
+  const cci_originator& originator;
+
+  /// Type-punned specialization
+  typedef const cci_param_write_event<>& generic_type;
+
+  /// Conversion to a generic (type independent) event
+  struct generic_wrap
+  {
+    generic_type get() const { return wrapped_value; }
+    explicit generic_wrap(const type& payload);
+
+    cci_value old_value;
+    cci_value new_value;
+    typename detail::remove_reference<generic_type>::type wrapped_value;
+  }; // struct generic_wrap
+
+}; // cci_param_write_event
+
+/* ------------------------------------------------------------------------ */
+
+#if CCI_HAS_CXX_TEMPLATE_ALIAS
+
+/// Parameter write callback
+template <typename T = void>
+using cci_param_write_callback
+  = cci_callback<const cci_param_write_event<T>&>;
+
+/// Parameter write callback handle
+template <typename T = void>
+using cci_param_write_callback_handle
+  = cci_callback_typed_handle<const cci_param_write_event<T>&>;
+
+/// Parameter write validation callback
+template <typename T = void>
+using cci_param_validate_write_callback
+  = cci_callback<const cci_param_write_event<T>&, bool>;
+
+/// Parameter write validation callback handle
+template <typename T = void>
+using cci_param_validate_write_callback_handle
+  = cci_callback_typed_handle<const cci_param_write_event<T>&, bool>;
+
+#else // CCI_HAS_CXX_TEMPLATE_ALIAS
+
+/// Parameter write callback
+template <typename T = void>
+struct cci_param_write_callback
+  : cci_callback<const cci_param_write_event<T>& > {};
+
+/// Parameter write callback handle
+template <typename T = void>
+struct cci_param_write_callback_handle
+  : cci_callback_typed_handle<const cci_param_write_event<T>&> {};
+
+/// Parameter write validation callback
+template <typename T = void>
+struct cci_param_validate_write_callback
+  : cci_callback<const cci_param_write_event<T>&, bool> {};
+
+/// Parameter write validation callback handle
+template <typename T = void>
+struct cci_param_validate_write_callback_handle
+  : cci_callback_typed_handle<const cci_param_write_event<T>&, bool> {};
+
+#endif // CCI_HAS_CXX_TEMPLATE_ALIAS_
+
+/// Untyped parameter write callback
+typedef cci_param_write_callback<>::type
+  cci_param_write_callback_untyped;
+
+/// Untyped parameter write validation callback
+typedef cci_param_validate_write_callback<>::type
+  cci_param_validate_write_callback_untyped;
+
+/* ------------------------------------------------------------------------ */
+
+/// Callback API of CCI parameter implementations
+struct cci_param_callback_if
+{
+  virtual cci_callback_untyped_handle
+  register_write_callback( const cci_callback_untyped_handle& cb
+                         , const cci_originator& orig ) = 0;
+  virtual bool
+  unregister_write_callback( const cci_callback_untyped_handle& cb
+                           , const cci_originator& orig ) = 0;
+
+  virtual cci_callback_untyped_handle
+  register_validate_write_callback( const cci_callback_untyped_handle& cb
+                                  , const cci_originator& orig ) = 0;
+  virtual bool
+  unregister_validate_write_callback( const cci_callback_untyped_handle& cb
+                                    , const cci_originator& orig ) = 0;
+
+  virtual bool unregister_all_callbacks(const cci_originator& orig) = 0;
+
+  virtual bool has_callbacks() const = 0;
+};
+
+/* ------------------------------------------------------------------------ */
+
+inline
+cci_param_write_event<void>::
+  cci_param_write_event( const value_type&     old_
+                       , const value_type&     new_
+                       , const cci_originator& orig_ )
+    : old_value(old_)
+    , new_value(new_)
+    , originator(orig_)
+{}
+
+template<typename T>
+cci_param_write_event<T>::
+  cci_param_write_event( const value_type&     old_
+                       , const value_type&     new_
+                       , const cci_originator& orig_ )
+    : old_value(old_)
+    , new_value(new_)
+    , originator(orig_)
+{}
+
+template<typename T>
+cci_param_write_event<T>::
+  generic_wrap::generic_wrap( const type& payload )
+    : old_value( payload.old_value )
+    , new_value( payload.new_value )
+    , wrapped_value(old_value, new_value, payload.originator)
+{}
+
+CCI_CLOSE_NAMESPACE_
+
+#endif // CCI_CFG_CCI_PARAM_CALLBACKS_H_INCLUDED_

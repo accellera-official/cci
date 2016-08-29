@@ -29,7 +29,7 @@
 #ifndef CCI_CCI_BROKER_IF_H_INCLUDED_
 #define CCI_CCI_BROKER_IF_H_INCLUDED_
 
-#include "cci_cfg/cci_callback.h"
+#include "cci_cfg/cci_broker_callbacks.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -53,6 +53,7 @@ CCI_OPEN_NAMESPACE_
    * This always returns not the owner's parameter objects but parameter handle wrappers.
    */
   class cci_broker_if
+    // : public cci_broker_callback_if
   {
   protected:
     friend class cci_broker_manager;
@@ -222,134 +223,6 @@ CCI_OPEN_NAMESPACE_
     
     // //////////////////////////////////////////////////////////////////// //
     // /////////////////   Callback Handling   //////////////////////////// //
-    
-#if 0
-    
-    /// Registers an observer callback function (with the signature of param_callb_func_ptr).
-    /**
-     * @todo This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
-     *
-     * Forwards callbacks to @see cci::cci_param_untyped_handle::register_callback
-     *
-     * \code
-     *   // Callback function with default signature.
-     *   void config_callback(cci_param_untyped_handle& changed_param, const callback_type& cb_reason) {
-     *     // some action
-     *   }
-     * \endcode
-     *
-     * @param type        Type of the callback.
-     * @param parname     Parameter name
-     * @param observer    Pointer to the observing object (the one being called).
-     * @param function    Function pointer to the function being called. Signature param_callb_func_ptr. For broker_callb_func_ptr @see cci_broker_if::register_str_callback
-     * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
-     */
-    shared_ptr<callb_adapt> register_callback(const callback_type type, const std::string& parname, void* observer, param_callb_func_ptr function) {
-      // call the pure virtual function performing the registration
-      return register_callback(parname, type, shared_ptr< callb_adapt>(new callb_adapt(observer, function, NULL)));
-    }
-    
-    /// Registers an observer callback function (with the signature of broker_callb_func_ptr).
-    /**
-     * @todo This should allow patterns as argument parname and return a set of callbacks being registered accordingly.
-     *
-     * Similar as @see cci_broker_if::register_callback but parameter string name in cb signature and additional
-     * - create param callbacks allowed
-     * - post_write-callbacks for implicit params possible (caused on json and init value access as 
-     *   long as they are implicit, when the param becomes explicit the callbacks are called 
-     *   (forwarded) from the param object)
-     * - (optionally) callbacks for regex names
-     * 
-     * This will forward callback registration to the explicit parameter object or handle self.
-     *
-     * Usage example:
-     * \code
-
-     class Observer
-     {
-     public:
-       
-       Observer(const char* name)
-       : mBroker(&cci::cci_broker_manager::get_current_broker(cci::cci_originator("OBSERVER")))
-       { 
-         // Register callback for new created parameters
-         mCallbacks.push_back( mBroker->register_str_callback(cci::create_param, "*", this, 
-                                                              cci::bind(&Observer::config_new_param_callback, this, _1, _2)) );
-       }
-       
-       ~Observer();
-       
-       /// Callback function with default signature announcing new parameters.
-       cci::callback_return_type config_new_param_callback(const std::string& par_name, const cci::callback_type& cb_reason) {
-         // It is recommended to register with the parameter object directly:
-         mCallbacks.push_back(p->register_callback(cci::pre_write, this, 
-         cci::bind(&Observer::config_callback, this, _1, _2)));
-         // It is possible (but not recommended) to let the broker forward the callback registration to the parameter
-         mCallbacks.push_back( mBroker->register_callback(cci::post_write, par_name.c_str(), this, 
-         cci::bind(&Observer::config_callback, this, _1, _2)));
-         // it is still possible to register a string callback function
-         mCallbacks.push_back( mBroker->register_str_callback(cci::post_write, par_name.c_str(), this, 
-         cci::bind(&Observer::config_str_callback, this, _1, _2)));
-       }
-       
-       /// Callback function with string signature showing changes for implicit and explicit parameters.
-       cci::callback_return_type config_str_callback(const std::string& par_name, const cci::callback_type& cb_reason) {
-         [...]
-       }
-       
-       [...]
-       
-     };
-
-     * \endcode
-     *
-     * @param type        Type of the callback.
-     * @param parname     Parameter name or pattern the callback should be applied to.
-     * @param observer    Pointer to the observing object (the one being called).
-     * @param function    Function pointer to the function being called. Signature broker_callb_func_ptr. For param_callb_func_ptr @see cci_broker_if::register_callback
-     * @return            Shared pointer to the callback adapter (e.g. to be used for unregister calls).
-     */
-    shared_ptr<callb_adapt> register_str_callback(const callback_type type, const std::string& parname, void* observer, broker_callb_func_ptr function) {
-      // call the pure virtual function performing the registration
-      return register_callback(parname, type, shared_ptr< callb_adapt>(new callb_adapt(observer, function, NULL)));
-    }
-    
-    /// Function handling the callback (should not be called by user)
-    virtual shared_ptr< callb_adapt> register_callback(const std::string& parname, const callback_type type, shared_ptr< callb_adapt> callb) = 0;
-
-    
-    /// Unregisters all callbacks (within all existing parameters) for the specified observer object (e.g. sc_module). 
-    /**
-     * @param observer   Pointer to the observer module who did register
-     *                   parameter callbacks. NULL shall be an error.
-     */
-    virtual void unregister_all_callbacks(void* observer) = 0;
-    
-    // TODO: If we want to provide create_param callbacks for initial values 
-    //       being set for not yet existing parameters (implicit parameters),
-    //       we will need another register_callback()-function with a different 
-    //       callback function signature getting <stringName,stringValue>-pair
-    //       instead of cci_param_untyped_handle.
-    
-    /// Unregisters the callback and (default) deletes the callback adapter.
-    /**
-     * Unregisters (only) the given callback.
-     *
-     * The callback adapter is NOT deleted because this should be done by the
-     * surrounding shared pointer!
-     *
-     * This may be used by a user module which stored the shared pointer to a
-     * specific callback or by the destructor of the param callback adapter.
-     *
-     * @param callb  Parameter callback adapter
-     * @return       If the callback adapter existed in this parameter.
-     */
-    virtual bool unregister_callback(callb_adapt* callb) = 0;
-    
-    /// Returns if the parameter has registered callbacks
-    virtual bool has_callbacks(const std::string& parname) = 0;
-    
-#endif
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //

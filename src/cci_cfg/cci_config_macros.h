@@ -32,9 +32,7 @@
 #ifndef CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 #define CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 
-/// Namespace for ASI Configuration, Control & Inspection (CCI) standard, Config part
-#define CCI_OPEN_NAMESPACE_  namespace cci {
-#define CCI_CLOSE_NAMESPACE_ }
+#include "cci_core/cci_config.h"
 
 // Some default strings - user should define custom ones before including CCI
 // (and before building parameter or broker code since they are used beyond
@@ -55,22 +53,4 @@
 #define __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__ __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "CNF"
 #endif
 
-//RVALUE_REFERENCES_SUPPORTED
-
-//Macros to check if r-value references are supported
-#ifndef __has_feature         // Optional of course.
-#define __has_feature(x) 0  // Compatibility with non-clang compilers.
-#endif
-#ifndef __has_extension
-#define __has_extension __has_feature // Compatibility with pre-3.0 compilers.
-#endif
-
-#if _MSC_VER >= 1600 || defined(__GXX_EXPERIMENTAL_CXX0X__) || __has_feature(cxx_rvalue_references)
-#	define CCI_RVALUE_REFERENCES_SUPPORTED
-#	include <utility>
-#	define CCI_MOVE(obj) std::move(obj)
-#else
-#	define CCI_MOVE(obj) obj
-#endif
-
-#endif
+#endif //CCI_CCI_CONFIG_MACROS_H_INCLUDED_

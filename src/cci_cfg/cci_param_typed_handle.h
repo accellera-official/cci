@@ -18,8 +18,8 @@
   limitations under the License.
  *****************************************************************************/
 
-#ifndef CCI_CCI_PARAM_TYPED_HANDLE_H_INCLUDED_
-#define CCI_CCI_PARAM_TYPED_HANDLE_H_INCLUDED_
+#ifndef CCI_CFG_CCI_PARAM_TYPED_HANDLE_H_INCLUDED_
+#define CCI_CFG_CCI_PARAM_TYPED_HANDLE_H_INCLUDED_
 
 #include "cci_cfg/cci_param_untyped_handle.h"
 
@@ -188,4 +188,4 @@ cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle untyp
 
 CCI_CLOSE_NAMESPACE_
 
-#endif //CCI_CCI_BASE_PARAM_HANDLE_H_INCLUDED_
+#endif //CCI_CFG_CCI_BASE_PARAM_HANDLE_H_INCLUDED_

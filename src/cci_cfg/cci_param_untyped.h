@@ -26,9 +26,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  *****************************************************************************/
-
-#ifndef CCI_CCI_PARAM_UNTYPED_H_INCLUDED_
-#define CCI_CCI_PARAM_UNTYPED_H_INCLUDED_
+/**
+ * @author Enrico Galli, Intel
+ */
+#ifndef CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_
+#define CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_
 
 #include <string>
 #include <vector>
@@ -38,15 +40,14 @@
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_shared_ptr.h"
-#include "cci_cfg/cci_callback.h"
 #include <greencontrol/config.h>
 
-/**
- * @author Enrico Galli, Intel
- */
+//TODO: remove header dependency
+#include <greencontrol/config.h>
 
 CCI_OPEN_NAMESPACE_
+
+class cci_broker_if;
 
 // CCI Configuration parameter base class
 /**
@@ -225,7 +226,7 @@ public:
 
 protected:
 	/// Constructor to create new parameter with given originator.
-	cci_param_untyped(bool is_top_level_name, cci::cci_broker_if* broker_handle,
+	cci_param_untyped(bool is_top_level_name, cci_broker_if* broker_handle,
 				   const std::string& desc, const cci_originator& originator);
 
 	///@name Initialization and Destructions methods
@@ -239,101 +240,7 @@ protected:
 	/// Updates the internal member m_latest_write_access_originator_cp
 	void update_latest_write_originator(const cci_originator& originator) const;
 
-	/// Callback forwarder class
-	/**
-     * This is instantiated and registered at the base param to forward a
-     * callback to the cci world when called by the gs_base_param.
-     * @see also see similar gs_cci_cnf_broker::internal_callback_forwarder
-     */
-	class internal_callback_forwarder {
-	public:
-		internal_callback_forwarder(cci::shared_ptr<cci::callb_adapt> _adapt,
-									const gs::cnf::callback_type _type,
-									cci_param_untyped_handle& _par)
-				: adapt(_adapt.get())
-				, type(_type)
-				, param(_par)
-				, calling_gs_adapter() {
-		}
-		~internal_callback_forwarder() {
-			//cout << "Destructing callback forwarder for param "<<param->get_name() << endl;
-			if (calling_gs_adapter) {
-				calling_gs_adapter->unregister_at_parameter();
-			}
-		}
-		// This gets called by the base gs_param
-		gs::cnf::callback_return_type call(gs::gs_param_base& par,
-										   gs::cnf::callback_type cbtype) {
-			gs::cnf::callback_return_type returned_gs_message =
-					gs::cnf::return_nothing;
-			cci::callback_return_type returned_cci_message =
-					cci::return_nothing;
-			switch(cbtype) {
-				case gs::cnf::destroy_param:
-					assert(par.is_destructing());
-					// TODO This cannot work because the cast the the already destructed cci_param_untyped fails.
-					// TODO adapt->call(*cci_p, cci::destroy_param);
-					break;
-				case gs::cnf::pre_read: // = cci::pre_read
-					returned_cci_message = adapt->call(param, cci::pre_read);
-					break;
-				case gs::cnf::reject_write: // = cci::reject_write
-					returned_cci_message = adapt->call(param,
-													   cci::reject_write);
-					break;
-				case gs::cnf::pre_write: // = cci::pre_write
-					returned_cci_message = adapt->call(param, cci::pre_write);
-					break;
-				case gs::cnf::post_write: // = cci::post_write
-					returned_cci_message = adapt->call(param, cci::post_write);
-					break;
-				default:
-					returned_cci_message = cci::return_other_error;
-					assert(false);
-			}
-			switch (returned_cci_message) {
-				case cci::return_value_change_rejected:
-					returned_gs_message = gs::cnf::return_value_change_rejected;
-					break;
-				case cci::return_other_error:
-					returned_gs_message = gs::cnf::return_other_error;
-					break;
-				default:
-					returned_gs_message = gs::cnf::return_nothing;
-			}
-			return returned_gs_message;
-		}
-		const gs::cnf::callback_type get_type() {
-			return type;
-		}
-
-		cci::callb_adapt* adapt;
-		gs::cnf::callback_type type;
-		cci_param_untyped_handle& param;
-		cci::shared_ptr< gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
-	};
-
-	/// Internal guard which is called on a value change to update
-	/// the value status variable(s)
-	struct status_guard {
-		status_guard(cci_param_untyped &_owner)
-		{
-			owner = dynamic_cast<cci_param_untyped*>(&_owner);
-		}
-		// This gets called by the base gs_param
-		cci::callback_return_type call(cci::cci_param_untyped_handle& changed_param,
-									   const cci::callback_type& cb_reason)
-		{
-			owner->m_is_default_value = false;
-			owner->m_is_invalid_value = false;
-			return cci::return_nothing;
-		}
-		cci_param_untyped* owner;
-	};
-
 protected:
-	/// Callback forwarder
-	std::vector<internal_callback_forwarder*> fw_vec;
 
 	/// Associated gs_param_base
 	gs::gs_param_base *m_gs_param_base;
@@ -344,9 +251,6 @@ protected:
 	/// Is invalid value
 	bool m_is_invalid_value;
 
-	/// Status guard
-	status_guard m_status_guard;
-
 	/// Description
 	std::string m_description;
 
@@ -356,14 +260,11 @@ protected:
 	/// Initialized
 	bool m_init_called;
 
-	/// Post write callback
-	cci::shared_ptr<cci::callb_adapt> m_post_write_callback;
-
 	/// Broker handle
-	cci::cci_broker_if* m_broker_handle;
+	cci_broker_if* m_broker_handle;
 
 	/// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
-	mutable cci::cci_originator m_latest_write_access_originator_cp;
+	mutable cci_originator m_latest_write_access_originator_cp;
 
 	/// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
 	mutable bool m_latest_write_access_originator_valid;
@@ -375,4 +276,4 @@ private:
 
 CCI_CLOSE_NAMESPACE_
   
-#endif //CCI_BASE_PARAM_H_INCLUDED_
+#endif // CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_

@@ -1,0 +1,12 @@
+SystemC Simulation
+Direct invocation: 
+17 -> 42
+Typed handle invocation: 
+17 -> 42
+Explicit untyped handle invocation: 
+17 -> 42
+Trigger registered callbacks: 
+17 ns -> 42 us
+[1.7e-8,"s"] -> [0.000042000000000000004,"s"]
+17 ns -> 42 us
+[1.7e-8,"s"] -> [0.000042000000000000004,"s"]

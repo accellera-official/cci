@@ -32,14 +32,11 @@
 
 #include <typeinfo>
 
-#include "cci_cfg/cci_shared_ptr.h"
-#include "cci_cfg/cci_callbacks.h"
-#include "cci_cfg/cci_callback.h"
-#include "cci_cfg/cci_callback_handle.h"
-#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_param_callbacks.h"
 
 /**
  * @author Enrico Galli, Intel
+ * @author Philipp A. Hartmann, Intel
  */
 
 CCI_OPEN_NAMESPACE_
@@ -57,7 +54,9 @@ class cci_originator;
 * - Callback handling
 */
 
-class cci_param_if {
+class cci_param_if
+//  : public cci_param_callback_if
+{
 
     friend class cci_param_untyped_handle;
 

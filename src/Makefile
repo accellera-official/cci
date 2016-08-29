@@ -40,10 +40,19 @@ GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 ## set some directories 
 CCI_DIR ?= $(GS_CCI_HOME)/src
 
+ifdef BOOST_HOME
+BOOST := $(BOOST_HOME)
+endif
+BOOST ?= /cad/tools/boost
+
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
-INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(RAPIDJSON)/include \
-         -I$(GREENCONTROL)
+INCDIR += -I.
+INCDIR := -I$(CCI_DIR)
+INCDIR += -I$(SYSTEMC)/include
+INCDIR += -I$(RAPIDJSON)/include
+INCDIR += -I$(GREENCONTROL)
+INCDIR += -I$(BOOST)
 
 ## -----------------------------------------------------------------------------
 

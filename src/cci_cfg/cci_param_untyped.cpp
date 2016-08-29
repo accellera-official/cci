@@ -29,17 +29,16 @@
  */
 
 #include "cci_param_untyped.h"
-#include "cci_callbacks.h"
-#include "cci_core/systemc.h"
+#include <greencontrol/config.h>
 
 CCI_OPEN_NAMESPACE_
 
 	cci_param_untyped::cci_param_untyped(bool is_top_level_name,
-								   cci::cci_broker_if* broker_handle,
+								   cci_broker_if* broker_handle,
 								   const std::string& desc,
 								   const cci_originator& originator)
 	: m_gs_param_base(NULL), m_is_default_value(0), m_is_invalid_value(!0), // TODO
-	  m_status_guard(*this), m_description(desc), m_init_called(false),
+    m_description(desc), m_init_called(false),
 	  m_broker_handle(broker_handle),
 	  m_latest_write_access_originator_cp("NONE"),
 	  m_latest_write_access_originator_valid(false),
@@ -137,4 +136,3 @@ CCI_OPEN_NAMESPACE_
 	}
 
 CCI_CLOSE_NAMESPACE_
-

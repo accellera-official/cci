@@ -25,7 +25,8 @@
  * @author Enrico Galli, Intel
  */
 
-#include "cci_param_untyped_handle.h"
+#include "cci_cfg/cci_param_untyped_handle.h"
+#include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -80,42 +81,6 @@ const cci_originator* cci_param_untyped_handle::get_latest_write_originator() co
 {
     check_is_valid();
     return m_orig_param->get_latest_write_originator();
-}
-
-shared_ptr<callb_adapt> cci_param_untyped_handle::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
-{
-    check_is_valid();
-    return m_orig_param->register_callback(type, observer, function, *this);
-}
-
-shared_ptr<callb_adapt> cci_param_untyped_handle::register_callback(const callback_type type, shared_ptr<callb_adapt> callb)
-{
-    check_is_valid();
-    return m_orig_param->register_callback(type, callb, *this);
-}
-
-void cci_param_untyped_handle::unregister_all_callbacks(void* observer)
-{
-    check_is_valid();
-    m_orig_param->unregister_all_callbacks(observer);
-}
-
-bool cci_param_untyped_handle::unregister_callback(cci::shared_ptr<callb_adapt> callb)
-{
-    check_is_valid();
-    return m_orig_param->unregister_callback(callb);
-}
-
-bool cci_param_untyped_handle::unregister_callback(callb_adapt* callb)
-{
-    check_is_valid();
-    return m_orig_param->unregister_callback(callb);
-}
-
-bool cci_param_untyped_handle::has_callbacks()
-{
-    check_is_valid();
-    return m_orig_param->has_callbacks();
 }
 
 bool cci_param_untyped_handle::lock(void* pwd)

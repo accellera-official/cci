@@ -28,6 +28,7 @@
 #define CCI_CCI_PARAM_TYPED_H_INCLUDED_
 
 #include "cci_cfg/cci_param_untyped.h"
+#include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_report_handler.h"
 
 /**
