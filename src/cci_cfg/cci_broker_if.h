@@ -167,7 +167,7 @@ CCI_OPEN_NAMESPACE_
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  CCI value of the parameter
      */
-    virtual const cci::cci_value get_cci_value_keep_unused(const std::string &parname) = 0;
+    virtual const cci::cci_value get_cci_value_keep_unused(const std::string &parname) const = 0;
 
     /// Get a parameter handle pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
     /**
