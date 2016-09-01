@@ -70,33 +70,33 @@ public:
     /// Constructor with an originator string name
     cci_originator(const std::string& originator_name, bool systemc_hierarchy);
 
+    /// Constructor with an originator (char *) name
+    /**
+     * This form (in addition to std::string) is necessary to avoid ambiguity
+     * between the sc_object, sc_module and std::string overloads for literal
+     * string constant arguments.
+     */
+    cci_originator(const char *originator_name);
+
     /// Destructor
     ~cci_originator();
 
-    /// Constructor with an originator (char *) name
-    /**
-    * This form (in addition to std::string) is necessary to avoid ambiguity
-    * between the sc_object, sc_module and std::string overloads for literal
-    * string constant arguments.
-    */
-    cci_originator(const char *originator_name);
-
     /// Returns a pointer to the current originator
     /**
-    * Might return NULL if there is no current originator or the current originator
-    * is only given by name (use get_originator_str() instead).
-    *
-    * @return Originator object pointer or NULL
-    */
+     * Might return NULL if there is no current originator or the current originator
+     * is only given by name (use get_originator_str() instead).
+     *
+     * @return Originator object pointer or NULL
+     */
     const sc_core::sc_object* get_object() const;
 
     /// Returns the name of the current originator
     /**
-    * Might return empty if there is no current originator.
-    * Automatically uses the originator object name if the originator is given by object pointer.
-    *
-    * @return Originator name or NULL
-    */
+     * Might return empty if there is no current originator.
+     * Automatically uses the originator object name if the originator is given by object pointer.
+     *
+     * @return Originator name or NULL
+     */
     const char* name() const;
 
     //Assignment operator overload
