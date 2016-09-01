@@ -68,7 +68,19 @@ public:
         m_originator_str(NULL) {}
 
     /// Constructor with an originator string name
-    cci_originator(const std::string& originator_name, bool systemc_hierarchy);
+    /**
+     * Might return NULL if there is no current originator or the current originator
+     * is only given by name (use get_originator_str() instead).
+     *
+     * @param originator_name originator name
+     * @param systemc_hierarchy If true, it will enforce SystemC hierarchy name
+     *                          first and use string name if the constructor is
+     *                          not called in a SystmC context.
+     *                          If false, it will use the provided name.
+     *                          Default value is false.
+     */
+    cci_originator(const std::string& originator_name,
+                   bool systemc_hierarchy = false);
 
     /// Constructor with an originator (char *) name
     /**

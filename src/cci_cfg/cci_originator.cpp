@@ -46,7 +46,7 @@ cci_originator::cci_originator(const cci_originator& originator)
 }
 
 cci_originator::cci_originator(const std::string &originator_name,
-                               bool systemc_hierarchy = false) {
+                               bool systemc_hierarchy) {
     if (!systemc_hierarchy) {
         m_originator_obj = NULL;
         m_originator_str = new std::string(originator_name);
