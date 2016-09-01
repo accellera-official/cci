@@ -111,23 +111,6 @@ struct cci_param_user_data_type
       const cci::cci_originator &originator);
 
   /**
-   *  @fn     std::string json_serialize(const user_data_type& val) const
-   *  @brief  Serialize the value to a string
-   *  @param  val The value to serialize
-   *  @return A string representation of the value
-   */
-  std::string json_serialize(const user_data_type& val) const;
-
-  /**
-   *  @fn     void json_deserialize(const std::string &json_string, const cci::cci_originator &originator)
-   *  @brief  Function deserialize the string representation into the target value type.
-   *  @param  target_val  The user defined value type to assign the string to
-   *  @param  str The string to be deserialized into the value
-   *  @return void
-   */
-  void json_deserialize(const std::string &json_string, const cci::cci_originator &originator);
-
-  /**
    *  @fn     const user_data_type& get_default_value_raw()
    *  @brief  Retrieve the default value of the parameter
    *  @return The user data type for the value of the parameter
@@ -135,21 +118,6 @@ struct cci_param_user_data_type
   const void* get_default_value_raw() const;
 
   // Virtual function in cci_base_param_impl_if
-
-  /**
-   *  @fn     void json_deserialize(const std::string& json_string)
-   *  @brief  Function to deserialize the string to the value
-   *  @param  json_string The JSON string to be deserialized
-   *  @return void
-   */
-  void json_deserialize(const std::string& json_string);
-
-  /**
-   *  @fn     std::string json_serilize() const
-   *  @brief  Function to serialize the value of the parameter into a JSON string
-   *  @return A string representing the value of the parameter
-   */
-  std::string json_serialize() const;
 
   /**
    *  @fn     const cci::basic_param_type get_basic_type() const

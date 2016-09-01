@@ -70,7 +70,7 @@ void ObserverModule::main_action() {
 /// Callback function with default signature showing changes.
 cci::callback_return_type ObserverModule::config_callback(cci::cci_param_handle& par, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::post_write);
-  std::string str = par.json_serialize();
+  std::string str = par.get_cci_value().to_json();
   DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
   return cci::return_nothing;
 }

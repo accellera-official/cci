@@ -61,47 +61,54 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Set initial value to the number of initiator(s) (within top_module)
   std::string initiatorHierarchicalName = "top_module_inst.number_of_initiators";
-  myGlobalBroker->json_deserialize_initial_value(initiatorHierarchicalName, "2");
+  myGlobalBroker->set_initial_cci_value(initiatorHierarchicalName,
+                                        cci::cci_value::from_json("2"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Setting initial value of the number"
                  " of initiators to 1");
 
   // The program considers only the last set initial value
-  myGlobalBroker->json_deserialize_initial_value(initiatorHierarchicalName, "1");
+  myGlobalBroker->set_initial_cci_value(initiatorHierarchicalName,
+                                        cci::cci_value::from_json("1"));
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Setting initial value of the number of targets to 4");
 
   // Set initial value to the number of target(s) (within top_module)
   std::string targetHierarchicalName = "top_module_inst.number_of_targets";
-  myGlobalBroker->json_deserialize_initial_value(targetHierarchicalName, "4");
+  myGlobalBroker->set_initial_cci_value(targetHierarchicalName,
+                                        cci::cci_value::from_json("4"));
 
   // Set the maximum addressing limit for the router
-  myGlobalBroker->json_deserialize_initial_value(
-      "top_module_inst.RouterInstance.addr_max", "1024");
+  myGlobalBroker->set_initial_cci_value(
+      "top_module_inst.RouterInstance.addr_max",
+      cci::cci_value::from_json("1024"));
 
   // Set and lock the Router Table initials values for target_1
   //  These values have again been tried to set within the Top_MODULE
   //  @see top_module.h
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Set and lock Router Table target_1 contents");
-  myGlobalBroker->json_deserialize_initial_value(
-      "top_module_inst.RouterInstance.r_index_1", "1");
+  myGlobalBroker->set_initial_cci_value(
+      "top_module_inst.RouterInstance.r_index_1",
+      cci::cci_value::from_json("1"));
   myGlobalBroker->lock_initial_value(
       "top_module_inst.RouterInstance.r_index_1");
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Set and lock Router Table Start Address for target_1"
                  " to 128");
-  myGlobalBroker->json_deserialize_initial_value(
-      "top_module_inst.RouterInstance.r_sa_1", "128");
+  myGlobalBroker->set_initial_cci_value(
+      "top_module_inst.RouterInstance.r_sa_1",
+      cci::cci_value::from_json("128"));
   myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_sa_1");
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Set and lock Router Table End Address for target_1"
                  " to 255");
-  myGlobalBroker->json_deserialize_initial_value(
-      "top_module_inst.RouterInstance.r_ea_1", "255");
+  myGlobalBroker->set_initial_cci_value(
+      "top_module_inst.RouterInstance.r_ea_1",
+      cci::cci_value::from_json("255"));
   myGlobalBroker->lock_initial_value("top_module_inst.RouterInstance.r_ea_1");
 
   SC_REPORT_INFO("sc_main",

@@ -126,8 +126,8 @@ class ex17_cci_configFile_Tool {
         it != cnf_set.get_config_map().end(); it++) {
       std::cout << "ConfigFile_Api: Applying initial value of param '"
                 << it->first << "' to '" << it->second << "'" << std::endl;
-      mApi->json_deserialize_initial_value(it->first.c_str(),
-                                           it->second.c_str());
+      mApi->set_initial_cci_value(it->first.c_str(),
+                                  cci::cci_value::from_json(it->second.c_str()));
     }
   }
 

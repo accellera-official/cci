@@ -89,7 +89,7 @@ SC_MODULE(ex04_simple_ip) {
     // Attempt to set new value (10) to param_1
     try {
       XREPORT("@Run: Assign new value (10) to " << param_1.get_name());
-      param_1.json_deserialize("10");
+      param_1.set_cci_value(cci::cci_value::from_json("10"));
     } catch (std::exception &x) {
       XREPORT_WARNING(x.what());
     }
@@ -98,7 +98,7 @@ SC_MODULE(ex04_simple_ip) {
     // Attempt to set new value (20) to param_2
     try {
       XREPORT("@Run: Assign new value (20) to " << param_2.get_name());
-      param_2.json_deserialize("20");
+      param_2.set_cci_value(cci::cci_value::from_json("20"));
     } catch (std::exception &x) {
       XREPORT_WARNING(x.what());
     }

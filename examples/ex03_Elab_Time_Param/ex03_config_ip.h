@@ -5,7 +5,7 @@
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
   
-  Copyright 2015 Ericsson
+  Copyright 2015-2016 Ericsson
   All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -77,13 +77,13 @@ SC_MODULE(ex03_config_ip) {
       // Update the structure_param value to 3 (invalid)
       try {
         XREPORT("execute: [EXTERNAL] Set value of "<< struc_param_name<< " to 3");
-        struc_param_ptr->json_deserialize("3");
+        struc_param_ptr->set_cci_value(cci::cci_value::from_json("3"));
       }catch(std::exception &x) {
         XREPORT_WARNING(x.what());
       }
 
       // Display new value
-      std::string new_value = struc_param_ptr->json_serialize();
+      std::string new_value = struc_param_ptr->get_cci_value().to_json();
       // XREPORT("execute: [EXTERNAL] Current value of " <<
       // struc_param_ptr->get_name()<< " is " << new_value);
       if ("1" == new_value) {

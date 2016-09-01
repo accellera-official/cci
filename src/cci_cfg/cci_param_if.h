@@ -49,7 +49,7 @@ class cci_originator;
 * - Name of the parameter,
 * - stores value untyped as string representation
 * - allows generic typed and list access
-* - JSON (de)serialize functions
+* - CCI value functions
 * - Callback handling
 */
 
@@ -62,18 +62,7 @@ public:
     /// Destructor.
     virtual ~cci_param_if() {}
 
-    ///@name Set and Get with JSON String Representation
-    ///@{
-
-    /// @copydoc cci_param_untyped_handle::json_deserialize
-    virtual void json_deserialize(const std::string &json_string) = 0;
-
-    /// @copydoc cci_param_untyped_handle::json_serialize
-    virtual std::string json_serialize() const = 0;
-
-    ///@}
-
-    ///@name JSON Data Type and access
+    ///@name CCI value Data Type and access
     ///@{
 
     /// @copydoc cci_param_untyped_handle::set_cci_value
@@ -207,10 +196,6 @@ public:
     create_param_handle(const cci_originator &originator) = 0;
 
 private:
-    /// @copydoc cci_param_typed::json_deserialize(const std::string&, const cci_originator&)
-    virtual void json_deserialize(const std::string &json_string,
-                                  const cci_originator &originator) = 0;
-
     /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const cci_originator&)
     virtual void set_cci_value(const cci_value &val,
                                const cci_originator &originator) = 0;

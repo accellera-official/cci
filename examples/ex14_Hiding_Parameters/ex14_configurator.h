@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -69,7 +72,7 @@ SC_MODULE(ex14_configurator) {
 
         XREPORT("[CFGR] : Parameter Name : "
                 << parent_base_param_ptr->get_name() << "\tParameter Value : "
-                << parent_base_param_ptr->json_serialize());
+                << parent_base_param_ptr->get_cci_value().to_json());
       } else {
         XREPORT("[CFGR] : Parameter by name"
                 " 'Top.parent_module.parent_int_buffer' doesn't exist");
@@ -105,11 +108,11 @@ SC_MODULE(ex14_configurator) {
 
       XREPORT("[CFGR] : Change the value of the 'parent_int_buffer' to '1000'");
 
-      parent_base_param_ptr->json_deserialize("1000");
+      parent_base_param_ptr->set_cci_value(cci::cci_value::from_json("1000"));
 
       XREPORT("[CFGR] : Parameter Name : "
               << parent_base_param_ptr->get_name() << "\tParameter Value : "
-              << parent_base_param_ptr->json_serialize());
+              << parent_base_param_ptr->get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);
     }

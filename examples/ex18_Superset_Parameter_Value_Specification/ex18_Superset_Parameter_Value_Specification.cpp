@@ -67,22 +67,23 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'integer type"
                  " parameter'");
-  myMainBrokerIF->json_deserialize_initial_value("param_owner.int_param", "10");
+  myMainBrokerIF->set_initial_cci_value("param_owner.int_param",
+                                        cci::cci_value::from_json("10"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'float type"
                  " parameter'");
-  myMainBrokerIF->json_deserialize_initial_value("param_owner.float_param",
-                                                 "11.11");
+  myMainBrokerIF->set_initial_cci_value("param_owner.float_param",
+                                        cci::cci_value::from_json("11.11"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'string type"
                  " parameter'");
-  myMainBrokerIF->json_deserialize_initial_value("param_owner.string_param",
-                                                 "Used_parameter");
+  myMainBrokerIF->set_initial_cci_value("param_owner.string_param",
+    cci::cci_value::from_json("Used_parameter"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'double type"
                  " parameter'");
-  myMainBrokerIF->json_deserialize_initial_value("param_owner.double_param",
-                                                 "100.123456789");
+  myMainBrokerIF->set_initial_cci_value("param_owner.double_param",
+    cci::cci_value::from_json("100.123456789"));
 #endif
 
   // Instatiation of 'parameter_owner' and 'parameter_configurator' modules

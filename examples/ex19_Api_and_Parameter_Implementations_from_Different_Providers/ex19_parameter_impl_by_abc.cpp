@@ -127,7 +127,7 @@ const void* cci_param_user_data_type::get_raw_value() const
 *  @return void
 */
 void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_originator &originator) {
-	std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
+	std::cout << "Function cci_param_user_data_type::set_raw_value Called " << std::endl;
 	if (l_password == NULL) {
 		value = *static_cast<const user_data_type*>(vp);
 	}
@@ -143,34 +143,10 @@ void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_orig
  */
 void cci_param_user_data_type::set_raw_value(const void *vp, const void *pwd,
     const cci::cci_originator &originator) {
-  std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_raw_value Called " << std::endl;
   if (l_password == pwd) {
     value = *static_cast<const user_data_type*>(vp);
   }
-}
-
-/**
- *  @fn     std::string cci_param_user_data_type::json_serialize(const user_data_type& val) const
- *  @brief  Serialize the value to a string
- *  @param  val The value to serialize
- *  @return A string representation of the value
- */
-std::string cci_param_user_data_type::json_serialize(const user_data_type& val) const {
-  std::cout << "Function cci_param_user_data_type::json_serialize Called " << std::endl;
-  return std::string("not IMplemented");
-}
-
-/**
- *  @fn     void cci_param_user_data_type::json_deserialize(user_data_type& target_val, const std:string& str)
- *  @brief  Function deserialize the string representation into the target value type.
- *  @param  target_val  The user defined value type to assign the string to
- *  @param  str The string to be deserialized into the value
- *  @return void
- */
-void cci_param_user_data_type::json_deserialize(const std::string &json_string,
-    const cci::cci_originator &originator) {
-  std::cout << "Function cci_param_user_data_type::json_deserialize Called " << std::endl;
-  std::cout << "With Json string " << json_string << std::endl;
 }
 
 /**
@@ -185,27 +161,6 @@ const void* cci_param_user_data_type::get_default_value_raw() const {
 }
 
 // Virtual function in cci_base_param_impl_if
-
-/**
- *  @fn     void cci_param_user_data_type::json_deserialize(const std::string& json_string)
- *  @brief  Function to deserialize the string to the value
- *  @param  json_string The JSON string to be deserialized
- *  @return void
- */
-void cci_param_user_data_type::json_deserialize(const std::string& json_string) {
-  std::cout << "Function cci_param_user_data_type::json_deserialize Called " << std::endl;
-  std::cout << "With Json string " << json_string << std::endl;
-}
-
-/**
- *  @fn     std::string cci_param_user_data_type::json_serialize() const
- *  @brief  Function to serialize the value of the parameter into a JSON string
- *  @return A string representing the value of the parameter
- */
-std::string cci_param_user_data_type::json_serialize() const {
-  std::cout << "Function cci_param_user_data_type::json_serialize Called " << std::endl;
-  return std::string("Not implemented");
-}
 
 /**
  *  @fn     const cci::basic_param_type cci_param_user_data_type::get_basic_type() const
@@ -225,22 +180,22 @@ cci::basic_param_type cci_param_user_data_type::get_basic_type() const {
  *  @return void
  */
 void cci_param_user_data_type::set_cci_value(const cci::cci_value& val) {
-  std::cout << "Function cci_param_user_data_type::set_value Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_cci_value Called " << std::endl;
   c_value = val;
 }
 
 void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const cci::cci_originator& originator) {
-  std::cout << "Function cci_param_user_data_type::set_value Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::set_cci_value Called " << std::endl;
   c_value = val;
 }
 
 /**
- *  @fn     cci::cci_value cci_param_user_data_type::get_value() const
+ *  @fn     cci::cci_value cci_param_user_data_type::get_cci_value() const
  *  @brief  Function to retrieve the value of the parameter
  *  @return The cci_value of the parameter
  */
 cci::cci_value cci_param_user_data_type::get_cci_value() const {
-  std::cout << "Function cci_param_user_data_type::get_value Called " << std::endl;
+  std::cout << "Function cci_param_user_data_type::get_cci_value Called " << std::endl;
   return c_value;
 }
 

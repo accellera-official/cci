@@ -72,10 +72,10 @@ MutabilityOwner:  mutable_int_param=4444
 MutabilityOwner:  unlock mutable_int_param
 MutabilityOwner:    set mutable_int_param should succeed
 ----------------------------
-Owner: Owner.int_param.json_serialize() = 11
+Owner: Owner.int_param.get_cci_value().to_json() = 11
 @1 ns /1 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Owner
 @1 ns /1 (Observer): Callback for parameter 'Owner.int_param' changed to value '555000', originator: Owner
-Owner: Owner.int_param.json_deserialize(555000) results in 555000
+Owner: Owner.int_param.set_cci_value(cci::cci_value::from_json("555000")) results in 555000
 Owner: set int_param = 100
 @1 ns /1 (Observer): Callback for parameter 'Owner.int_param' will change value, originator: Owner
 @1 ns /1 (Observer): Callback for parameter 'Owner.int_param' changed to value '100', originator: Owner
@@ -114,8 +114,8 @@ Owner: copy @1 ns /1 (Observer): Callback for parameter 'Owner.uint_param' will 
 
 ----------------------------
 @20 ns /8 (ValueMod): Set parameter Owner.uint_param to value=555 using cci_value
-@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: Observer
-@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' changed to value '555', originator: Observer
+@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' will change value, originator: ValueMod
+@20 ns /8 (Observer): Callback for parameter 'Owner.uint_param' changed to value '555', originator: ValueMod
 uint_param has value = 555
 
 str_param has value = "This is a test string."

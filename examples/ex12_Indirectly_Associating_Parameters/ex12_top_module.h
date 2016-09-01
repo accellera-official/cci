@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -85,7 +88,7 @@ SC_MODULE(ex12_top_module) {
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
               << temp->get_name() << "\tParameter Value : "
-              << temp->json_serialize());
+              << temp->get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
               << "\tnot found.");
@@ -99,7 +102,7 @@ SC_MODULE(ex12_top_module) {
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
               << temp->get_name() << "\tParameter Value : "
-              << temp->json_serialize());
+              << temp->get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
               << "\tnot found.");

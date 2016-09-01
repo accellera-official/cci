@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -101,7 +104,8 @@ class ex20_observer {
                   << observer_base_ptr->get_name() << "\thas been created."
                   << std::endl;
         std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Value : "
-                  << observer_base_ptr->json_serialize() << std::endl;
+                  << observer_base_ptr->get_cci_value().to_json()
+                  << std::endl;
 
         /// Registering other (read/write/destroy) callbacks on the newly created cci-parameters
         std::cout << "\n\t[OBSERVER - create_param_cb] : Registering other"
@@ -180,7 +184,7 @@ class ex20_observer {
                      " new cci-parameter" << std::endl;
         std::cout << "\t[OBSERVER - pre_write_cb] : Parameter Name : "
                   << _base_param.get_name() << "\tParameter Value : "
-                  << _base_param.json_serialize() << std::endl;
+                  << _base_param.get_cci_value().to_json() << std::endl;
         break;
       }
 
@@ -189,7 +193,7 @@ class ex20_observer {
                      " new cci-parameter" << std::endl;
         std::cout << "\t[OBSERVER - post_write_cb] : Parameter Name : "
                   << _base_param.get_name() << "\tParameter Value : "
-                  << _base_param.json_serialize() << std::endl;
+                  << _base_param.get_cci_value().to_json() << std::endl;
         break;
       }
 

@@ -119,7 +119,7 @@ SC_MODULE(ex19_parameter_configurator) {
     // Set parameter value using cci_base_parameter object
     XREPORT("[CFGR C_TOR] : Set parameter value to 10 using"
             " cci_base_parameter");
-    cfgr_param_ptr->json_deserialize("10");
+    cfgr_param_ptr->set_cci_value(cci::cci_value::from_json("10"));
 
     /// Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);
@@ -140,12 +140,12 @@ SC_MODULE(ex19_parameter_configurator) {
       XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get_value());
       if (cfgr_user_param_ptr != NULL) {
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
-                << cfgr_user_param_ptr->json_serialize());
+                << cfgr_user_param_ptr->get_cci_value().to_json());
 
-        cfgr_user_param_ptr->json_deserialize("EXP");
+        cfgr_user_param_ptr->set_cci_value(cci::cci_value::from_json("EXP"));
 
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
-                << cfgr_user_param_ptr->json_serialize());
+                << cfgr_user_param_ptr->get_cci_value().to_json());
       }
 
       wait(5.0, sc_core::SC_NS);

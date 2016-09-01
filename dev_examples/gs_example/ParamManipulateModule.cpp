@@ -37,9 +37,11 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value
-  mBroker->json_deserialize_initial_value("Owner.int_param", "10");
+  mBroker->set_initial_cci_value("Owner.int_param",
+                                 cci::cci_value::from_json("10"));
   // demonstrate waring issued by a second initial value
-  mBroker->json_deserialize_initial_value("Owner.int_param", "11");
+  mBroker->set_initial_cci_value("Owner.int_param",
+                                 cci::cci_value::from_json("11"));
   // demonstrate testing for existence
   if (mBroker->param_exists("Owner.int_param"))
     cout << "Owner.int_param exists (implicit or explicit)" << endl;
@@ -74,7 +76,7 @@ void ParamManipulateModule::main_action() {
   
   // demonstrate json setting
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");
-  int_param_p.json_deserialize("5000");
+  int_param_p.set_cci_value(cci::cci_value::from_json("5000"));
   cout << endl;
   wait(SC_ZERO_TIME);
   

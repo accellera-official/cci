@@ -53,25 +53,6 @@ public:
     /// Destructor.
     virtual ~cci_param_untyped_handle();
 
-    ///@name Set and Get with JSON String Representation
-    ///@{
-
-    /// Sets the value of this parameter given by a JSON string. @todo Alternative name: function set_json_string
-    /**
-    * @exception cci_exception_set_param Setting value failed
-    * @param json_string the new value, represented as a JSON string.
-    */
-    void json_deserialize(const std::string& json_string);
-
-    /// Get the JSON string representation of this parameter's value.
-    /**
-    * @exception cci_exception_get_param Getting value failed
-    * @return  The value of this parameter represented as a JSON string.
-    */
-    std::string json_serialize() const;
-
-    ///@}
-
     ///@name Description
     ///@{
 
@@ -83,17 +64,17 @@ public:
 
     ///@}
 
-    ///@name JSON Data Type and access
+    ///@name CCI value Data Type and access
     ///@{
 
-    /// Set the parameter's value to the given one.
+    /// Set the parameter's CCI value to the given one.
     /**
     * @exception cci_exception_set_param Setting value failed
     * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
     */
     void set_cci_value(const cci_value& val);
 
-    /// Get the parameter's value.
+    /// Get the parameter's CCI value.
     /**
     * @exception cci_exception_get_param Getting value failed
     * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
@@ -122,7 +103,7 @@ public:
     /// Indicates that the parameter received an initial value that has not since been modified.
     /**
      * True if the value was supplied using the broker's
-     * json_deserialize_initial_value function and not subsequently changed.
+     * set_initial_cci_value function and not subsequently changed.
      *
      * Note: false is returned even if the current value matches the initial
      * value but has undergone intermediate changes.
@@ -145,7 +126,7 @@ public:
      * subsequently updated to reflect the originator of any value changes.
      *
      * The originator is updated on successful calls to the following functions:
-     * json_deserialize(), set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
+     * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
      */
     const cci_originator* get_latest_write_originator() const;
 

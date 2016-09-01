@@ -5,6 +5,9 @@
   Copyright 2010-2015 CircuitSutra Technologies Pvt. Ltd.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -96,7 +99,7 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
     // Decision on Pre-Write & Post-Write callbacks
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
             << _base_param_1.get_name() << "\tValue : "
-            << _base_param_1.json_serialize());
+            << _base_param_1.get_cci_value().to_json());
 
     cci::cci_value freq = _base_param_1.get_cci_value();
     sc_assert( freq.is_number() );

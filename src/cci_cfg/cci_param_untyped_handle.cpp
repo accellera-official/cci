@@ -36,16 +36,6 @@ cci_param_untyped_handle::cci_param_untyped_handle(cci_param_if & orig_param, co
 cci_param_untyped_handle::~cci_param_untyped_handle()
 {}
 
-void cci_param_untyped_handle::json_deserialize(const std::string& json_string)
-{
-    m_orig_param.json_deserialize(json_string, m_originator);
-}
-
-std::string cci_param_untyped_handle::json_serialize() const
-{
-    return m_orig_param.json_serialize();
-}
-
 std::string cci_param_untyped_handle::get_description() const
 {
     return m_orig_param.get_description();
