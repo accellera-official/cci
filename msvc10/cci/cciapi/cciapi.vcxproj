@@ -138,10 +138,10 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_stack.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_value.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_value_traits.cpp" />
   </ItemGroup>
@@ -149,10 +149,6 @@
     <None Include="..\..\..\src\cci_configuration" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_stack.h" />
@@ -161,21 +157,25 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_datatypes.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_debug.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_factory.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_function.h" />
-    <ClInclude Include="..\..\..\src\cci_core\cci_gen_unique_name.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_originator.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_if.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed_handle.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_report_handler.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_shared_ptr.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_value.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_value_traits.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\rapidjson.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_gen_unique_name.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_version.h" />
     <ClInclude Include="..\..\..\src\cci_core\systemc.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\rapidjson.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
+
