@@ -46,7 +46,8 @@ SC_MODULE(ex10_parameter_configurator) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex10_parameter_configurator) {
+  SC_CTOR(ex10_parameter_configurator):
+      cfgr_param(cci::cci_originator(*this)) {
     // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF =
         &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
@@ -59,11 +60,10 @@ SC_MODULE(ex10_parameter_configurator) {
       XREPORT("[CFGR C_TOR] : Parameter exists");
 
       // Get handle of the owner parameter
-      cfgr_param_ptr =
-          myCfgrBrokerIF->get_param_handle("param_owner.mutable_int_param");
+      cfgr_param = myCfgrBrokerIF->get_param_handle("param_owner.mutable_int_param");
 
       // Assert if the owner parameter handle returned is NULL
-      assert(cfgr_param_ptr != NULL && "Parameter Handle is NULL");
+      assert(cfgr_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter doesn't exists.");
     }
@@ -71,7 +71,7 @@ SC_MODULE(ex10_parameter_configurator) {
     // Set parameter value using cci_base_parameter object
     XREPORT("[CFGR C_TOR] : Set parameter value to 10"
             " using cci_base_parameter");
-    cfgr_param_ptr->set_cci_value(cci::cci_value::from_json("10"));
+   cfgr_param.set_cci_value(cci::cci_value::from_json("10"));
 
     // Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);
@@ -112,7 +112,7 @@ SC_MODULE(ex10_parameter_configurator) {
 
  private:
   cci::cci_broker_if* myCfgrBrokerIF;      ///< cci configuration broker interface instance
-  cci::cci_param_handle* cfgr_param_ptr;   ///< CCI base parameter handle pointer
+  cci::cci_param_handle cfgr_param;        ///< CCI base parameter handle
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
 // ex10_parameter_configurator

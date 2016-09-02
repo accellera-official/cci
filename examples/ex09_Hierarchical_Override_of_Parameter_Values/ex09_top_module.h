@@ -72,9 +72,9 @@ SC_MODULE(ex09_top_module) {
            && "Default broker accessed by TOP_MODULE is NULL");
 
     XREPORT("[TOP_MODULE C_TOR] :  Number of initiators : "
-            << n_initiators.get());
+            << n_initiators.get_value());
     XREPORT("[TOP_MODULE C_TOR] :  Number of targets : "
-            << n_targets.get());
+            << n_targets.get_value());
 
     // Set and lock the number of initiators in Router Table
     // to value passed from 'sc_main'
@@ -102,10 +102,10 @@ SC_MODULE(ex09_top_module) {
 
     if (myDefaultBroker->param_exists(
         "top_module_inst.RouterInstance.addr_limit")) {
-      cci::cci_base_param* r_addr_limit_ptr = myDefaultBroker->get_param(
-          "top_module_inst.RouterInstance.addr_limit");
+      cci::cci_param_handle r_addr_limit = myDefaultBroker->get_param_handle(
+              "top_module_inst.RouterInstance.addr_limit");
       r_addr_max = atoi(
-              (r_addr_limit_ptr->get_cci_value().to_json()).c_str());
+              (r_addr_limit.get_cci_value().to_json()).c_str());
 
       XREPORT("[TOP_MODULE C_TOR] : Router's maximum addressable limit : "
               << r_addr_max);

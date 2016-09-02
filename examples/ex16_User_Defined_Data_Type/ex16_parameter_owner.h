@@ -63,7 +63,7 @@ SC_MODULE(ex16_parameter_owner) {
     // Query default value of a parameter using 'get_default_type()' API
     XREPORT("[OWNER -> Retrieve] : Using 'get_default_value()' : "
             << udt_param.get_default_value());
-    XREPORT("[OWNER -> Retrieve] : Parameter Value' : " << udt_param.get());
+    XREPORT("[OWNER -> Retrieve] : Parameter Value' : " << udt_param.get_value());
 
     // Set description for the user-defined data type
     XREPORT("[OWNER -> Set] : Param desc - 'This is user-defined data type");
@@ -92,7 +92,7 @@ SC_MODULE(ex16_parameter_owner) {
       XREPORT("@ " << sc_time_stamp());
 
       // Access parameter's value
-      XREPORT("[OWNER -> Retrieve] : UDT Value : " << udt_param.get());
+      XREPORT("[OWNER -> Retrieve] : UDT Value : " << udt_param.get_value());
 
       wait(28.0, SC_NS);
     }

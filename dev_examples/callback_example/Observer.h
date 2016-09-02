@@ -50,7 +50,8 @@ public:
   cci::callback_return_type config_new_param_callback(const std::string& par_name, const cci::callback_type& cb_reason);
 
   /// Callback function with default signature showing changes.
-  cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+  // TODO: fixme
+  //cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
   /// Debug output
   const char* name() const;

@@ -32,7 +32,9 @@
 #ifndef   EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_USER_DATATYPE_H_
 #define   EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_USER_DATATYPE_H_
 
-#define SC_INCLUDE_DYNAMIC_PROCESSES
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
+  #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
 
 #include <cci_configuration>
 #include <systemc.h>
@@ -148,7 +150,8 @@ inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
 // ----------------------------------------------------------------------------
 // copied from gs_cci_symbols.cpp
 
-#include "cci_params.h"
+// TODO: fixme
+/*#include "cci_params.h"
 
 namespace cci {
 #define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
@@ -167,7 +170,7 @@ CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(route_table_ut);
 #undef CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS
 #undef CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM
 
-} /* namespace cci */
+}*/ /* namespace cci */
 
 // ----------------------------------------------------------------------------
 

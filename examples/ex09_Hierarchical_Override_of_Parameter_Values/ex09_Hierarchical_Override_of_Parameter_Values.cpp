@@ -18,7 +18,9 @@
   limitations under the License.
  *****************************************************************************/
 
-#define SC_INCLUDE_DYNAMIC_PROCESSES
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
+  #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
 
 /**
  *  @file     main.cpp

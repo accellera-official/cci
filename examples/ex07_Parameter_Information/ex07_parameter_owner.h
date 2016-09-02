@@ -58,7 +58,7 @@ SC_MODULE(ex07_parameter_owner) {
             << "\tdemonstrating 'is_initial_value' API");
 
     XREPORT("[OWNER] : Parameter : " << int_param.get_name() << "\tValue : "
-            << int_param.get());
+            << int_param.get_value());
 
     XREPORT("Is initial value ?\t" << std::boolalpha
             << int_param.is_initial_value());
@@ -111,14 +111,14 @@ SC_MODULE(ex07_parameter_owner) {
       XREPORT("[OWNER -> Set] : New String Value : 'String_Value_Set_by_OWNER");
 
       cci::cci_value str_value("String_Value_Set_by_OWNER");
-      string_param.set_value(str_value);
+      string_param.set_cci_value(str_value);
 
       wait(2.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tdemonstrating retrieving values by OWNER using cci_value");
 
-      cci::cci_value rec_str_value = string_param.get_value();
+      cci::cci_value rec_str_value = string_param.get_cci_value();
       std::string recv_str = rec_str_value.get_string();
 
       XREPORT("[OWNER -> Retrieve] : Receive str_value using 'cci_value' : "

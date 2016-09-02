@@ -52,10 +52,10 @@ SC_MODULE(ex09_target) {
         target_ID("target_ID", "target_default"),
         s_base_addr("s_base_addr", 0),
         s_size("s_size", 256) {
-    XREPORT("[" << target_ID.get()
+    XREPORT("[" << target_ID.get_value()
             << " C_TOR] ------- [TARGET CONSTRUCTOR BEGINS HERE] --------");
-    XREPORT("[" << target_ID.get() << " C_TOR] : Base Address : "
-            << s_base_addr.get());
+    XREPORT("[" << target_ID.get_value() << " C_TOR] : Base Address : "
+            << s_base_addr.get_value());
 
     // Register b_transport
     target_socket.register_b_transport(this, &ex09_target::b_transport);
@@ -63,9 +63,9 @@ SC_MODULE(ex09_target) {
     write_latency = sc_core::sc_time(3, sc_core::SC_NS);
     read_latency = sc_core::sc_time(5, sc_core::SC_NS);
 
-    mem = new int[s_size.get()];
+    mem = new int[s_size.get_value()];
 
-    for (unsigned int i = 0; i < s_size.get(); i++)
+    for (unsigned int i = 0; i < s_size.get_value(); i++)
       mem[i] = 0xAABBCCDD | i;
 
     // target's SC_THREAD declaration
@@ -89,17 +89,18 @@ SC_MODULE(ex09_target) {
    */
   void b_transport(tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
     tlm::tlm_command cmd = trans.get_command();
-    sc_dt::uint64 adr = trans.get_address() - s_base_addr.get();
+    sc_dt::uint64 adr = trans.get_address() - s_base_addr.get_value();
     unsigned char* ptr = trans.get_data_ptr();
     unsigned int len = trans.get_data_length();
     unsigned char* byt = trans.get_byte_enable_ptr();
     unsigned int wid = trans.get_streaming_width();
 
     XREPORT("[TARGET] : adr ---- " << std::hex << adr);
-    XREPORT("[TARGET] : base addr ---- " << std::hex << s_base_addr.get());
+    XREPORT("[TARGET] : base addr ---- " << std::hex
+                                         << s_base_addr.get_value());
 
     // Check for storage address overflow
-    if (adr > s_size.get()) {
+    if (adr > s_size.get_value()) {
       trans.set_response_status(tlm::TLM_ADDRESS_ERROR_RESPONSE);
       return;
     }

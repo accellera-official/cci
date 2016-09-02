@@ -276,6 +276,11 @@ bool cci_param_user_data_type::is_initial_value() const {
   return initial_flag;
 }
 
+const std::type_info& cci_param_user_data_type::get_type_info() const {
+  std::cout << "Function cci_param_user_data_type::get_type_info Called " << std::endl;
+  return typeid(user_data_type);
+}
+
 /**
  *  @fn     const std::string& cci_param_user_data_type::get_name() const
  *  @brief  Function to get the name of the parameter

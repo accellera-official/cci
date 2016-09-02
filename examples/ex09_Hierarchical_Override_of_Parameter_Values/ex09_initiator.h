@@ -60,7 +60,7 @@ SC_MODULE(ex09_initiator) {
       : data(0),
         initiator_socket("initiator_socket"),
         initiator_ID("initiator_ID", "initiator_default") {
-    XREPORT("[" << initiator_ID.get()
+    XREPORT("[" << initiator_ID.get_value()
             << " C_TOR] ------- [INITIATOR CONSTRUCTOR BEGINS HERE] --------");
 
     // initiator's SC_THREAD declaration

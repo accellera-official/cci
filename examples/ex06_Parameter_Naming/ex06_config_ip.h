@@ -62,7 +62,6 @@ SC_MODULE(ex06_config_ip) {
    */
   void execute() {
     std::ostringstream ss;
-    cci::cci_param_handle *int_param_ptr = NULL;
     const std::string sim_ip_int_param_ip_name = "sim_ip.int_param_ip";
     const std::string sim_ip_int_param_ip_name_0 = "sim_ip.int_param_ip_0";
     const std::string sc_main_int_param_top_name = "int_param_top";
@@ -74,21 +73,22 @@ SC_MODULE(ex06_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(sim_ip_int_param_ip_name)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param_handle(sim_ip_int_param_ip_name);
-      assert(int_param_ptr != NULL);
+      cci::cci_param_handle int_param =
+          m_cci->get_param_handle(sim_ip_int_param_ip_name);
+      assert(int_param.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
               << sim_ip_int_param_ip_name << " is "
-              << int_param_ptr->get_cci_value().to_json());
+              << int_param.get_cci_value().to_json());
       XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name
               << " to 50");
-      int_param_ptr->set_cci_value(cci::cci_value::from_json("50"));
+      int_param.set_cci_value(cci::cci_value::from_json("50"));
 
       // Display new value
-      std::string new_value = int_param_ptr->get_cci_value().to_json();
+      std::string new_value = int_param.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_ptr->get_name() << " is " << new_value);
+              << int_param.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name
                     << ") is not found!");
@@ -97,21 +97,22 @@ SC_MODULE(ex06_config_ip) {
     // Check the auto generated parameter name due to name collision
     if (m_cci->param_exists(sim_ip_int_param_ip_name_0)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param_handle(sim_ip_int_param_ip_name_0);
-      assert(int_param_ptr != NULL);
+      cci::cci_param_handle int_param_ip =
+          m_cci->get_param_handle(sim_ip_int_param_ip_name_0);
+      assert(int_param_ip.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
               << sim_ip_int_param_ip_name_0 << " is "
-              << int_param_ptr->get_cci_value().to_json());
+              << int_param_ip.get_cci_value().to_json());
       XREPORT("execute: [EXTERNAL] Set value of " << sim_ip_int_param_ip_name_0
               << " to 60");
-      int_param_ptr->set_cci_value(cci::cci_value::from_json("60"));
+      int_param_ip.set_cci_value(cci::cci_value::from_json("60"));
 
       // Display new value
-      std::string new_value = int_param_ptr->get_cci_value().to_json();
+      std::string new_value = int_param_ip.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_ptr->get_name() << " is " << new_value);
+              << int_param_ip.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name_0
                     << ") is not found!");
@@ -120,21 +121,22 @@ SC_MODULE(ex06_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(sc_main_int_param_top_name)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param_handle(sc_main_int_param_top_name);
-      assert(int_param_ptr != NULL);
+      cci::cci_param_handle sc_main_int_param_top =
+          m_cci->get_param_handle(sc_main_int_param_top_name);
+      assert(sc_main_int_param_top.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
               << sc_main_int_param_top_name << " is "
-              << int_param_ptr->get_cci_value().to_json());
+              << sc_main_int_param_top.get_cci_value().to_json());
       XREPORT("execute: [EXTERNAL] Set value of " << sc_main_int_param_top_name
               << " to 70");
-      int_param_ptr->set_cci_value(cci::cci_value::from_json("70"));
+      sc_main_int_param_top.set_cci_value(cci::cci_value::from_json("70"));
 
       // Display new value
-      std::string new_value = int_param_ptr->get_cci_value().to_json();
+      std::string new_value = sc_main_int_param_top.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_ptr->get_name() << " is " << new_value);
+              << sc_main_int_param_top.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sc_main_int_param_top_name
                     << ") is not found!");
@@ -143,20 +145,20 @@ SC_MODULE(ex06_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(int_param_custom_name)) {
       // Get handle to the param
-      int_param_ptr = m_cci->get_param_handle(int_param_custom_name);
-      assert(int_param_ptr != NULL);
+      cci::cci_param_handle int_param_custom = m_cci->get_param_handle(int_param_custom_name);
+      assert(int_param_custom.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of " << int_param_custom_name
-              << " is " << int_param_ptr->get_cci_value().to_json());
+              << " is " << int_param_custom.get_cci_value().to_json());
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_custom_name
               << " to 80");
-      int_param_ptr->set_cci_value(cci::cci_value::from_json("80"));
+      int_param_custom.set_cci_value(cci::cci_value::from_json("80"));
 
       // Display new value
-      std::string new_value = int_param_ptr->get_cci_value().to_json();
+      std::string new_value = int_param_custom.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_ptr->get_name() << " is " << new_value);
+              << int_param_custom.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_custom_name
                     << ") is not found!");

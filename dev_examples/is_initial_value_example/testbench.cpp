@@ -52,18 +52,17 @@ void show_param_list() {
   std::vector<std::string> vec = mBroker->get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
-  cci::cci_base_param* p;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
     ss_show << std::endl;
     ss_show << *iter << " : ";
-    p = mBroker->get_param(*iter);
-    if (p) {
+    cci::cci_param_handle p = mBroker->get_param_handle(*iter);
+    if (p.is_valid()) {
       ss_show << "expl.";
-      if (p->is_initial_value())       ss_show << ", initial";
-      ss_show << ", val=" << p->get_cci_value().to_json();
+      if (p.is_initial_value())       ss_show << ", initial";
+      ss_show << ", val=" << p.get_cci_value().to_json();
     } else {
       ss_show << "impl. (is always initial)";
-      ss_show << ", val=" << mBroker->json_serialize(*iter);
+      ss_show << ", val=" << mBroker->get_cci_value(*iter);
     }
   }
   std::cout << "   " << ss_show.str() << std::endl<<std::endl;
