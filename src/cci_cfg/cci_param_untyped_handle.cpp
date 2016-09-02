@@ -189,11 +189,6 @@ bool cci_param_untyped_handle::equals(const cci_param_if& rhs) const
     return m_orig_param->equals(rhs);
 }
 
-bool cci_param_untyped_handle::is_handle() const
-{
-    return true;
-}
-
 const std::type_info& cci_param_untyped_handle::get_type_info() const
 {
     check_is_valid();

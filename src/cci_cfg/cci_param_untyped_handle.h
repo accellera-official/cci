@@ -273,12 +273,6 @@ public:
      */
     bool is_valid() const;
 
-    /// Indicates that this parameter is a handle to a parameter implementation.
-    /**
-     * @return   True (parameter handle)
-     */
-    bool is_handle() const;
-
 protected:
     /// Constructor to create handle with given originator.
     cci_param_untyped_handle(cci_param_if & orig_param, const cci_originator& originator);
