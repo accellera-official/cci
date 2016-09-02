@@ -165,6 +165,15 @@ struct cci_param_user_data_type
    */
   std::string get_description() const;
 
+
+  /// @copydoc cci_param_untyped::add_metadata
+  void add_metadata(const std::string &name, const cci::cci_value &value,
+	  const std::string &desc = "");
+
+  /// @copydoc cci_param_untyped::get_metadata
+  cci::cci_value_map get_metadata() const;
+
+
   /**
    *  @fn     bool is_default_value()
    *  @brief  Function to return true if the value if still the default
