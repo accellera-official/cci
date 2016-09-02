@@ -31,6 +31,7 @@
  */
 
 #include "ex19_parameter_impl_by_abc.h"
+using cci::cci_report_handler;
 
 /**
  *  @fn     std::ostream& operator <<(std::ostream& os, const user_data_type& ud)
@@ -219,6 +220,18 @@ void cci_param_user_data_type::set_description(const std::string& desc) {
 std::string cci_param_user_data_type::get_description() const {
   std::cout << "Function cci_param_user_data_type::get_description Called " << std::endl;
   return description;
+}
+
+void cci_param_user_data_type::add_metadata(const std::string &, const cci::cci_value &,
+	const std::string &) {
+	// Not required for the purposes of this example.
+	CCI_REPORT_ERROR("cci_param_user_data_type/add_metadata", "NOT IMPLEMENTED.");
+}
+
+cci::cci_value_map cci_param_user_data_type::get_metadata() const {
+	// Not required for the purposes of this example.
+	CCI_REPORT_ERROR("cci_param_user_data_type/add_metadata", "NOT IMPLEMENTED.");
+	return cci::cci_value_map();
 }
 
 /**

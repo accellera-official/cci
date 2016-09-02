@@ -64,21 +64,29 @@ public:
 
     ///@}
 
+    ///@name Metadata
+    ///@{
+
+    /// @see cci_param_untyped::get_metadata
+    cci_value_map get_metadata() const;
+
+    ///@}
+
     ///@name CCI value Data Type and access
     ///@{
 
     /// Set the parameter's CCI value to the given one.
     /**
-    * @exception cci_exception_set_param Setting value failed
-    * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
-    */
+     * @exception cci_exception_set_param Setting value failed
+     * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
+     */
     void set_cci_value(const cci_value& val);
 
     /// Get the parameter's CCI value.
     /**
-    * @exception cci_exception_get_param Getting value failed
-    * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
-    */
+     * @exception cci_exception_get_param Getting value failed
+     * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
+     */
     cci_value get_cci_value() const;
 
     ///@}
@@ -214,8 +222,8 @@ public:
 
     /// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type).
     /**
-    * @return Type
-    */
+     * @return Type
+     */
     basic_param_type get_basic_type() const;
 
     /// Get the name of this parameter.
@@ -242,16 +250,16 @@ public:
 
     /// Compare parameter handle values.
     /**
-    * @param rhs reference to another cci_param_untyped_handle implementation
-    * @return True if both values are equal and of the same data type
-    */
+     * @param rhs reference to another cci_param_untyped_handle implementation
+     * @return True if both values are equal and of the same data type
+     */
     bool equals(const cci_param_untyped_handle& rhs) const;
 
     /// Compare parameter values.
     /**
-    * @param rhs reference to another cci_param_if implementation
-    * @return True if both values are equal and of the same data type
-    */
+     * @param rhs reference to another cci_param_if implementation
+     * @return True if both values are equal and of the same data type
+     */
     bool equals(const cci_param_if& rhs) const;
 
     ///@}
@@ -265,30 +273,30 @@ protected:
 
     /// Get a pointer to the stored value.
     /**
-    * @return Pointer to type-punned value
-    */
+     * @return Pointer to type-punned value
+     */
     const void* get_raw_value() const;
 
 
     /// Get a pointer to the default value (passed in via constructor).
     /**
-    * @return Pointer to type-punned default value
-    */
+     * @return Pointer to type-punned default value
+     */
     const void* get_default_value_raw() const;
 
     /// Sets the value via type-punned argument.
     /**
-    * @param vp pointer to type-punned value
-    * @pre Type of vp must be equal to the internal type
-    */
+     * @param vp pointer to type-punned value
+     * @pre Type of vp must be equal to the internal type
+     */
     void set_raw_value(const void* vp);
 
     /// Sets the value via type-punned argument.
     /**
-    * @param vp pointer to type-punned value
-    * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL
-    * @pre Type of vp must be equal to the internal type
-    */
+     * @param vp pointer to type-punned value
+     * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL
+     * @pre Type of vp must be equal to the internal type
+     */
     void set_raw_value(const void* vp, const void* pwd);
 
     ///@name Accessor methods

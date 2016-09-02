@@ -79,6 +79,12 @@ SC_MODULE(ex07_parameter_owner) {
             " type integer parameter'");
     const std::string init_desc = "This is a mutable type integer parameter";
     int_param.set_description(init_desc);
+    int_param.add_metadata("min_value", cci::cci_value("0"),
+                           "Minimum value");
+    int_param.add_metadata("max_value", cci::cci_value("100"),
+                           "Maximum value");
+    int_param.add_metadata("unit", cci::cci_value("F"),
+                           "Unit of the parameter (Farad)");
   }
 
   /**

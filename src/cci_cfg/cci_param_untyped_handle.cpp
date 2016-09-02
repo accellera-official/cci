@@ -41,6 +41,11 @@ std::string cci_param_untyped_handle::get_description() const
     return m_orig_param.get_description();
 }
 
+cci_value_map cci_param_untyped_handle::get_metadata() const
+{
+    return m_orig_param.get_metadata();
+}
+
 void cci_param_untyped_handle::set_cci_value(const cci_value& val)
 {
     m_orig_param.set_cci_value(val, m_originator);
