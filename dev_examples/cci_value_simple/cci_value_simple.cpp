@@ -45,7 +45,7 @@ int sc_main( int, char*[] )
 
     sc_assert( v.is_null() );
     json = v.to_json();
-    std::cout << "JSON (null)   : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (null)   : " << json << std::endl;
     v = cci::cci_value::from_json(json);
 
     v.set_bool( true );
@@ -53,7 +53,7 @@ int sc_main( int, char*[] )
     sc_assert( v.is_true() );
     sc_assert( !v.is_false() );
     json = v.to_json();
-    std::cout << "JSON (bool)   : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (bool)   : " << json << std::endl;
     v = cci::cci_value::from_json(json);
   }
   {
@@ -62,7 +62,7 @@ int sc_main( int, char*[] )
     i.set<char>(42);
     sc_assert( i.is_int() );
     json = i.to_json();
-    std::cout << "JSON (int)    : " << cci_value::to_json(i) << std::endl;
+    std::cout << "JSON (int)    : " << json << std::endl;
     i = cci::cci_value::from_json(json);
 
     sc_assert( i.get_int() == 42 );
@@ -78,7 +78,7 @@ int sc_main( int, char*[] )
 
     sc_assert( v.is_int() );
     json = v.to_json();
-    std::cout << "JSON (sc_int) : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (sc_int) : " << json << std::endl;
     v = cci::cci_value::from_json(json);
 
     sc_dt::sc_int_base ib( i.length() );
@@ -95,7 +95,7 @@ int sc_main( int, char*[] )
     sc_assert( v.is_double() );
 
     json = v.to_json();
-    std::cout << "JSON (double) : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (double) : " << json << std::endl;
     v = cci::cci_value::from_json(json);
   }
   {
@@ -106,7 +106,7 @@ int sc_main( int, char*[] )
     sc_assert( str == v.get_string() );
     sc_assert( w == v.get_string() );
     json = v.to_json();
-    std::cout << "JSON (string) : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (string) : " << json << std::endl;
     v = cci::cci_value::from_json(json);
   }
   {
@@ -114,7 +114,7 @@ int sc_main( int, char*[] )
     cci_value v = cci_value::from_json( json );
 
     sc_assert( v.is_list() );
-    sc_assert( cci_value::to_json(v) == json );
+    sc_assert( json == json );
 
     std::vector<int> seq[2];
     v.get_list()
@@ -136,7 +136,7 @@ int sc_main( int, char*[] )
     vl[1].get_list().push_back(9);
     sc_assert( vl.try_get(seq) );
     sc_assert( seq[0][0] == 78 && seq[1][0] == 9 );
-    std::cout << "JSON (list)   : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (list)   : " << v.to_json() << std::endl;
   }
   {
     const char json[] = "{\"value\":10,\"unit\":\"ns\"}";
@@ -149,13 +149,13 @@ int sc_main( int, char*[] )
 
     sc_core::sc_time t;
     sc_assert( v.try_get(t) );
-    std::cout << "JSON (sc_time): " << cci_value::to_json( cci_value(t) ) << std::endl;
+    std::cout << "JSON (sc_time): " << cci_value(t).to_json() << std::endl;
 
-    sc_assert( cci_value::to_json(v) == json );
+    sc_assert( v.to_json() == json );
     v.push_entry( "scale", 1 );
     sc_assert( v.size() == 3 );
     sc_assert( v.has_entry("scale") );
-    std::cout << "JSON (map)    : " << cci_value::to_json(v) << std::endl;
+    std::cout << "JSON (map)    : " << v.to_json() << std::endl;
   }
 
   return EXIT_SUCCESS;

@@ -69,7 +69,7 @@ public:
 
     for (it = vec_all.begin() ; it < vec_all.end(); it++) {
       std::cout<<*it<<" = ";
-      std::cout<<m_cci->json_serialize(*it);
+      std::cout<<m_cci->get_cci_value(*it).to_json();
       std::cout<<std::endl;
     }
 
@@ -88,7 +88,7 @@ public:
 
     for (it = vec_all.begin() ; it < vec_all.end(); it++) {
       std::cout<<*it<<" = ";
-      std::cout<<m_cci->json_serialize(*it);
+      std::cout<<m_cci->get_cci_value(*it).to_json();
       std::cout<<std::endl;
     }
 
