@@ -450,7 +450,7 @@ const void* cci_param_typed<T, TM>::get_default_value_raw() const {
 template <typename T, param_mutable_type TM>
 const typename cci_param_typed<T, TM>::value_type& cci_param_typed<T, TM>::get_default_value()
 {
-	return *static_cast<const value_type *>(get_default_value());
+	return *static_cast<const value_type *>(get_default_value_raw());
 }
 
 template <typename T, param_mutable_type TM>
