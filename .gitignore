@@ -1,13 +1,19 @@
 ### make intermediates and products
 *.[oaxd]
 *.exe
+*.ipch
+*.sdf
+*.suo
+
 Makefile.*deps
 
 .cproject
 .project
 .settings
 testbench
-
+Upgradelog.XML
+Debug/
+_UpgradeReport_Files/
 ### self-test intermediates + results (except for reference golden.log)
 run/
 run.log
