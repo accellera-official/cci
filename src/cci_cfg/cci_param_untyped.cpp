@@ -65,6 +65,19 @@ CCI_OPEN_NAMESPACE_
 		return m_description;
 	}
 
+	void cci_param_untyped::add_metadata(const std::string &name,
+										 const cci_value &value,
+										 const std::string &desc)
+	{
+		metadata.push_entry(name, cci_value_list().push_back(value)
+				.push_back(desc));
+	}
+
+	cci_value_map cci_param_untyped::get_metadata() const
+	{
+		return metadata;
+	}
+
 	bool cci_param_untyped::is_default_value()
 	{
 		return m_is_default_value;

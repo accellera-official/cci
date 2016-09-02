@@ -85,6 +85,18 @@ public:
 
     ///@}
 
+    ///@name Metadata
+    ///@{
+
+    /// @copydoc cci_param_untyped::add_metadata
+    virtual void add_metadata(const std::string &name, const cci_value &value,
+                              const std::string &desc = "") = 0;
+
+    /// @copydoc cci_param_untyped::get_metadata
+    virtual cci_value_map get_metadata() const = 0;
+
+    ///@}
+
 
     ///@}
 
