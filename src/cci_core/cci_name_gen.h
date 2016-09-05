@@ -23,24 +23,31 @@
   limitations under the License.
  *****************************************************************************/
 
-#ifndef CCI_CORE_CCI_GEN_UNIQUE_NAME_H_INCLUDED_
-#define CCI_CORE_CCI_GEN_UNIQUE_NAME_H_INCLUDED_
+#ifndef CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
+#define CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
 
-#include <iostream>
-#include <map>
+#include "cci_cfg/cci_config_macros.h"
 
-namespace cci {
-  
-  /// Generate a cci-wide unique name. 
-  /** 
-   * Keeps the first name as it is, later adds _number, beginning with _0
-   * @TODO more elegant
-   */
-  const char* cci_gen_unique_name(const char* name);
+CCI_OPEN_NAMESPACE_
 
-} // end namespace cci
+/// Generate a cci-wide unique name.
+/**
+ * Keeps the first name as it is, later adds _number, beginning with _0
+ *
+ * @param name name of the CCI element
+ *
+ * @return pointer to the name
+ */
+const char* cci_gen_unique_name(const char* name);
 
-// TODO: add to proper core library
-#include "cci_core/cci_gen_unique_name.cpp"
+/// Get cci name pointer
+/**
+ * @param name name of the CCI element
+ *
+ * @return pointer to the name if exists or NULL if the name doesn't exist.
+ */
+const char* cci_get_name(const char* name);
+
+CCI_CLOSE_NAMESPACE_
 
 #endif
