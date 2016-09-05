@@ -58,15 +58,6 @@ public:
         m_originator_obj(static_cast<const sc_core::sc_object *>(&originator)),
         m_originator_str(NULL) {}
 
-    /// Constructor with an sc_object pointer originator
-    inline cci_originator(const sc_core::sc_object* originator):
-        m_originator_obj(originator), m_originator_str(NULL) {}
-
-    /// Convenience constructor with an sc_module pointer originator
-    inline cci_originator(const sc_core::sc_module* originator):
-        m_originator_obj(static_cast<const sc_core::sc_object *>(originator)),
-        m_originator_str(NULL) {}
-
     /// Constructor with an originator string name
     /**
      * Might return NULL if there is no current originator or the current originator
