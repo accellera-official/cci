@@ -49,6 +49,8 @@ class cci_param_untyped_handle
 {
 
 public:
+    /// Constructor to create handle with given originator.
+    cci_param_untyped_handle(cci_param_if & orig_param, const cci_originator& originator);
 
     /// Constructor to create an invalid param handle with given originator.
     explicit cci_param_untyped_handle(const cci_originator& originator);
@@ -274,9 +276,6 @@ public:
     bool is_valid() const;
 
 protected:
-    /// Constructor to create handle with given originator.
-    cci_param_untyped_handle(cci_param_if & orig_param, const cci_originator& originator);
-
     ///@name Type-punned value operations
     ///@{
 
