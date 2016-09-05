@@ -51,7 +51,7 @@ class cci_param_untyped_handle
 public:
 
     /// Constructor to create an invalid param handle with given originator.
-    cci_param_untyped_handle(const cci_originator& originator);
+    explicit cci_param_untyped_handle(const cci_originator& originator);
 
     /// Destructor.
     virtual ~cci_param_untyped_handle();
