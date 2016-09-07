@@ -28,12 +28,12 @@
 #define CCI_CCI_ORIGINATOR_H_INCLUDED_
 
 #include "cci_core/systemc.h"
+#include "cci_cfg/cci_config_macros.h"
 
 CCI_OPEN_NAMESPACE_
 
 /// Originator class which is used to track owners, handles and value providers of parameters.
 /**
- *
  * Static setter function is used by the parameter (proxy) to identify originator
  * changing parameter's value.
  *
@@ -44,9 +44,35 @@ class cci_originator
 {
 public:
     /// Default Constructor assumes current module is the originator
-    cci_originator();
+    inline cci_originator()
+            : m_originator_obj(current_originator_object()),
+              m_originator_str(NULL) {}
+
+    /// Constructor with an originator name
+    /**
+     * Constructor to associate explicitly a string name to an originator.
+     * The provided name will be used as the default name in case the
+     * originator is not build in the SystemC hierarchy.
+     *
+     * @param originator_name string name of the originator
+     */
+    cci_originator(const std::string& originator_name);
+
+    /// Constructor with an originator (char *) name
+    /**
+     * This form (in addition to @see cci_originator(const std::string&))
+     * is necessary to avoid ambiguity between the sc_object,
+     * sc_module and std::string overloads for literal string constant
+     * arguments.
+     *
+     * @param originator_name string name of the originator
+     */
+    cci_originator(const char *originator_name);
 
     /// Constructor with another originator whose content will be copied
+    /**
+     * @param originator originator whose content will be copied
+     */
     cci_originator(const cci_originator& originator);
 
     /// Constructor with an sc_object originator
@@ -57,29 +83,6 @@ public:
     inline cci_originator(const sc_core::sc_module& originator):
         m_originator_obj(static_cast<const sc_core::sc_object *>(&originator)),
         m_originator_str(NULL) {}
-
-    /// Constructor with an originator string name
-    /**
-     * Might return NULL if there is no current originator or the current originator
-     * is only given by name (use get_originator_str() instead).
-     *
-     * @param originator_name originator name
-     * @param systemc_hierarchy If true, it will enforce SystemC hierarchy name
-     *                          first and use string name if the constructor is
-     *                          not called in a SystmC context.
-     *                          If false, it will use the provided name.
-     *                          Default value is false.
-     */
-    cci_originator(const std::string& originator_name,
-                   bool systemc_hierarchy = false);
-
-    /// Constructor with an originator (char *) name
-    /**
-     * This form (in addition to std::string) is necessary to avoid ambiguity
-     * between the sc_object, sc_module and std::string overloads for literal
-     * string constant arguments.
-     */
-    cci_originator(const char *originator_name);
 
     /// Destructor
     ~cci_originator();
@@ -102,6 +105,15 @@ public:
      */
     const char* name() const;
 
+    /// Returns the string name of the current originator
+    /**
+     * Might return empty if no explicit string name was provided by the user
+     * during originator construction
+     *
+     * @return Originator user provided name or NULL
+     */
+    const char* string_name() const;
+
     //Assignment operator overload
     cci_originator& operator=( cci_originator originator );
 
@@ -113,7 +125,7 @@ protected:
     /// Pointer to the current originator object (priority compared to name m_originator_str)
     const sc_core::sc_object* m_originator_obj;
 
-    /// Name of the current originator (no relevance if m_originator_obj not NULL)
+    /// Name of the current originator
     std::string* m_originator_str;
 
 };

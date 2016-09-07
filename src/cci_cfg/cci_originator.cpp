@@ -29,14 +29,14 @@
 
 CCI_OPEN_NAMESPACE_
 
-cci_originator::cci_originator()
+cci_originator::cci_originator(const std::string& originator_name)
         : m_originator_obj(current_originator_object()),
-          m_originator_str(NULL) {
-    if (!m_originator_obj) {
-        // Caller needs to catch this exception & add identifying parameter info.
-        SC_REPORT_ERROR(__CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__,
-                        "Unable to determine parameter's owner.");
-    }
+          m_originator_str(new std::string(originator_name)) {
+}
+
+cci_originator::cci_originator(const char* originator_name)
+        : m_originator_obj(current_originator_object()),
+          m_originator_str(new std::string(originator_name)) {
 }
 
 cci_originator::cci_originator(const cci_originator& originator)
@@ -45,46 +45,34 @@ cci_originator::cci_originator(const cci_originator& originator)
                        new std::string(*(originator.m_originator_str)) : NULL;
 }
 
-cci_originator::cci_originator(const std::string &originator_name,
-                               bool systemc_hierarchy) {
-    if (!systemc_hierarchy) {
-        m_originator_obj = NULL;
-        m_originator_str = new std::string(originator_name);
-    } else {
-        m_originator_obj = current_originator_object();
-        if (!m_originator_obj) {
-            m_originator_str = new std::string(originator_name);
-        }
-    }
-}
-
-cci_originator::cci_originator(const char *originator_name)
-        : m_originator_obj(NULL),
-          m_originator_str(new std::string(originator_name)) {
-}
-
 const sc_core::sc_object *cci_originator::get_object() const {
     return m_originator_obj;
 }
 
-const char *cci_originator::name() const {
-    if (m_originator_obj) return m_originator_obj->name();
+const char* cci_originator::name() const {
+    static std::string default_name("unknow");
+    if (m_originator_obj) {
+        return m_originator_obj->name();
+    } else if(m_originator_str) {
+        return m_originator_str->c_str();
+    } else {
+        return default_name.c_str();
+    }
+}
+
+const char* cci_originator::string_name() const {
     return m_originator_str->c_str();
 }
 
 cci_originator &cci_originator::operator=(cci_originator originator) {
     std::swap(m_originator_obj, originator.m_originator_obj);
-    std::swap(m_originator_str, originator.m_originator_str);
+    m_originator_str = originator.m_originator_str ?
+                   new std::string(*(originator.m_originator_str)) : NULL;
     return *this;
 }
 
 sc_core::sc_object *cci_originator::current_originator_object() {
     sc_core::sc_object *originator_obj = sc_core::sc_get_current_object();
-    for (sc_core::sc_process_handle current_proc(originator_obj);
-         current_proc.valid(); // is this a process?
-         current_proc = sc_core::sc_process_handle(originator_obj)) {
-        originator_obj = current_proc.get_parent_object();
-    }
     return originator_obj;
 }
 
