@@ -144,6 +144,7 @@
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_value.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_value_traits.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\src\cci_configuration" />

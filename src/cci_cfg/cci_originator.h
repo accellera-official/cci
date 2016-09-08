@@ -28,13 +28,12 @@
 #define CCI_CCI_ORIGINATOR_H_INCLUDED_
 
 #include "cci_core/systemc.h"
-#include "cci_report_handler.h"
+#include "cci_cfg/cci_config_macros.h"
 
 CCI_OPEN_NAMESPACE_
 
 /// Originator class which is used to track owners, handles and value providers of parameters.
 /**
- *
  * Static setter function is used by the parameter (proxy) to identify originator
  * changing parameter's value.
  *
@@ -44,115 +43,90 @@ CCI_OPEN_NAMESPACE_
 class cci_originator
 {
 public:
+    /// Default Constructor assumes current module is the originator
+    inline cci_originator()
+            : m_originator_obj(current_originator_object()),
+              m_originator_str(NULL) {}
 
-  /// Default Constructor assumes current module is the originator
-  cci_originator() 
-  : m_originator_obj(sc_core::sc_get_curr_simcontext()->hierarchy_curr()) {
-	/**
-     * @todo Scrutinize how much of this code belongs in the standard (vs. implementation)
-	 * @todo Need standard way to get current module; 
-	 *       hierarchy_curr() is not standard.
-	 * @todo Check boundary conditions:
-	 *       - prior to initialization of hierarchy_curr
-	 */
-	if (!m_originator_obj) {
-	  // If unable to determine current module from module stack, try via current process
-	  sc_core::sc_process_handle h = sc_core::sc_get_current_process_handle();
-	  while (true) { // loop walking up the process chain
-		  sc_core::sc_object *p_parent = h.get_parent_object();
-		  if (!p_parent) // process is invalid
-			  break;
-		  if (sc_core::sc_module *p_parent_module = dynamic_cast<sc_core::sc_module *>(p_parent)) {
-			  m_originator_obj = p_parent_module;
-			  break;
-		  }
-		  if (sc_core::sc_process_b *p_parent_process = dynamic_cast<sc_core::sc_process_b *>(p_parent))
-			  // Parent is a process, evaluate its parent.
-			  h = sc_core::sc_process_handle(p_parent_process);
-	  }
-	}
-	if (m_originator_obj) {
-		m_originator_str = m_originator_obj->name();
-	}
-	else {
-		// Caller needs to catch this exception & add identifying parameter info.
-        CCI_REPORT_ERROR("cci_originator/cci_originator", "Unable to determine parameter's owner.");
-	}
-  }
+    /// Constructor with an originator name
+    /**
+     * Constructor to associate explicitly a string name to an originator.
+     * The provided name will be used as the default name in case the
+     * originator is not build in the SystemC hierarchy.
+     *
+     * @param originator_name string name of the originator
+     */
+    cci_originator(const std::string& originator_name);
 
-  /// Constructor with another originator whose content will be copied
-  cci_originator(const cci_originator& originator)
-  : m_originator_obj(originator.m_originator_obj)
-  , m_originator_str(originator.m_originator_str) {
-  }
+    /// Constructor with an originator (char *) name
+    /**
+     * This form (in addition to @see cci_originator(const std::string&))
+     * is necessary to avoid ambiguity between the sc_object,
+     * sc_module and std::string overloads for literal string constant
+     * arguments.
+     *
+     * @param originator_name string name of the originator
+     */
+    cci_originator(const char *originator_name);
 
-  /// Constructor with an sc_object originator
-  cci_originator(const sc_core::sc_object& originator)
-  : m_originator_obj(&originator)
-  , m_originator_str() {
-  }
+    /// Constructor with another originator whose content will be copied
+    /**
+     * @param originator originator whose content will be copied
+     */
+    cci_originator(const cci_originator& originator);
 
-  /// Convenience constructor with an sc_module originator
-  cci_originator(const sc_core::sc_module& originator)
-  : m_originator_obj(static_cast<const sc_core::sc_object*>(&originator))
-  , m_originator_str() {
-  }
+    /// Constructor with an sc_object originator
+    inline cci_originator(const sc_core::sc_object& originator)
+            : m_originator_obj(&originator), m_originator_str(NULL) {}
 
-  /// Constructor with an originator string name
-  cci_originator(const std::string& originator_name)
-  : m_originator_obj(NULL)
-  , m_originator_str(originator_name) {
-  }
+    /// Convenience constructor with an sc_module originator
+    inline cci_originator(const sc_core::sc_module& originator):
+        m_originator_obj(static_cast<const sc_core::sc_object *>(&originator)),
+        m_originator_str(NULL) {}
 
-  /// Constructor with an originator (char *) name
-  /**
-   * This form (in addition to std::string) is necessary to avoid ambiguity
-   * between the sc_object, sc_module and std::string overloads for literal
-   * string constant arguments.
-   */
-  cci_originator(const char *originator_name)
-  : m_originator_obj(NULL)
-  , m_originator_str(originator_name) {
-  }
+    /// Destructor
+    ~cci_originator();
 
-  /// Returns a pointer to the current originator
-  /**
-   * Might return NULL if there is no current originator or the current originator
-   * is only given by name (use get_originator_str() instead).
-   *
-   * @return Originator object pointer or NULL
-   */
-  const sc_core::sc_object* get() const {
-    return m_originator_obj;
-  }
+    /// Returns a pointer to the current originator
+    /**
+     * Might return NULL if there is no current originator or the current originator
+     * is only given by name (use get_originator_str() instead).
+     *
+     * @return Originator object pointer or NULL
+     */
+    const sc_core::sc_object* get_object() const;
 
-  /// Returns the name of the current originator
-  /**
-   * Might return empty if there is no current originator.
-   * Automatically uses the originator object name if the originator is given by object pointer.
-   *
-   * @return Originator name or NULL
-   */
-  const char* name() const {
-    if (m_originator_obj) return m_originator_obj->name();
-    return m_originator_str.c_str();
-  }
+    /// Returns the name of the current originator
+    /**
+     * Might return empty if there is no current originator.
+     * Automatically uses the originator object name if the originator is given by object pointer.
+     *
+     * @return Originator name or NULL
+     */
+    const char* name() const;
 
-  //Assignment operator overload
-  cci_originator& operator=( const cci_originator &originator )
-  {
-   this->m_originator_obj = originator.m_originator_obj;
-   this->m_originator_str = originator.m_originator_str;
-   return(*this);
-  }
+    /// Returns the string name of the current originator
+    /**
+     * Might return empty if no explicit string name was provided by the user
+     * during originator construction
+     *
+     * @return Originator user provided name or NULL
+     */
+    const char* string_name() const;
+
+    //Assignment operator overload
+    cci_originator& operator=( cci_originator originator );
 
 protected:
 
-  /// Pointer to the current originator object (priority compared to name m_originator_str)
-  const sc_core::sc_object* m_originator_obj;
+    /// Return the current originator object pointer
+    sc_core::sc_object* current_originator_object();
 
-  /// Name of the current originator (no relevance if m_originator_obj not NULL)
-  std::string m_originator_str;
+    /// Pointer to the current originator object (priority compared to name m_originator_str)
+    const sc_core::sc_object* m_originator_obj;
+
+    /// Name of the current originator
+    std::string* m_originator_str;
 
 };
 
