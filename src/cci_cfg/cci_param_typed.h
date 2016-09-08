@@ -53,10 +53,6 @@ public:
 	/// The parameter's value type.
 	typedef T value_type;
 
-	using cci_param_untyped::validate_write;
-
-	using cci_param_untyped::on_write;
-
 	///Assigns parameter a new value from another parameter
 	/**
 	* @param rhs New value to assign
@@ -94,10 +90,6 @@ public:
 
 	///Conversion operator to be able use cci_param_typed as a regular object
 	operator const value_type& () const;
-
-	cci_callback_handle validate_write(cci_callback<bool(const T&, const T&, const cci_originator&)> callback);
-
-	cci_callback_handle on_write(cci_callback<void(const T&, const T&, const cci_originator&)> callback);
 	
 	///Sets the stored value to a new value 
 	/**
@@ -336,41 +328,6 @@ private:
         return true;
     }
 
-	template<class TRet>
-	struct write_callback_forward
-	{
-		explicit write_callback_forward(cci_callback<TRet(const value_type&, const value_type&, const cci_originator&)> callback) : m_callback(CCI_MOVE(callback))
-		{}
-
-		write_callback_forward(const write_callback_forward& copy) : m_callback(copy.m_callback) {}
-
-#ifdef CCI_RVALUE_REFERENCES_SUPPORTED
-		write_callback_forward(write_callback_forward&& other) : m_callback(std::move(other.m_callback)) {}
-
- 		write_callback_forward& operator=(write_callback_forward&& other)
- 		{
- 			m_callback = std::move(other.m_callback);
- 			return *this;
- 		}
-
-#endif
-		write_callback_forward& operator=(const write_callback_forward& copy)
-		{
-			m_callback = copy.m_callback;
-			return *this;
-		}
-
-		TRet operator()(const void* old_value, const void* new_value, const cci_originator& originator)
-		{
-			return m_callback(*static_cast<const value_type*>(old_value),
-							  *static_cast<const value_type*>(new_value),
-							  originator
-			);
-		}
-
-		cci_callback<TRet(const value_type&, const value_type&, const cci_originator&)> m_callback;
-	};
-
 };
 
 template <typename T, param_mutable_type TM>
@@ -418,18 +375,6 @@ template <typename T, param_mutable_type TM>
 const T& cci_param_typed<T, TM>::get_value() const
 {
     return m_gs_param->getValue();
-}
-
-template <typename T, param_mutable_type TM>
-cci_callback_handle cci_param_typed<T, TM>::validate_write(cci_callback<bool(const T&, const T&, const cci_originator&)> callback)
-{
-	return validate_write(cci_param_typed<T, TM>::write_callback_forward<bool>(CCI_MOVE(callback)));
-}
-
-template <typename T, param_mutable_type TM>
-cci_callback_handle cci_param_typed<T, TM>::on_write(cci_callback<void(const T&, const T&, const cci_originator&)> callback)
-{
-	return on_write(cci_param_typed<T, TM>::write_callback_forward<void>(CCI_MOVE(callback)));
 }
 
 template <typename T, param_mutable_type TM>

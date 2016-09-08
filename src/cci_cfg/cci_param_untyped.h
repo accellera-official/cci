@@ -159,17 +159,7 @@ public:
 	
 	///@name Callback Handling
 	///@{
-
-	cci_callback_handle validate_write(cci_callback<bool(const cci_value&, const cci_value&, const cci_originator&)> callback);
-
-	cci_callback_handle on_write(cci_callback<void(const cci_value&, const cci_value&, const cci_originator&)> callback);
-
-	cci_callback_handle validate_read(cci_callback<bool(const cci_originator&)> callback);
-
-	cci_callback_handle validate_write(cci_callback<bool(const void*, const void*, const cci_originator&)> callback);
-
-	cci_callback_handle on_write(cci_callback<void(const void*, const void*, const cci_originator&)> callback);
-
+    // TODO
 	///@}
 
 	///@name Write-access control
@@ -378,13 +368,9 @@ protected:
 	/// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
 	mutable bool m_latest_write_access_originator_valid;
 
-	cci_param_untyped_handle* m_param_untyped_handle;
-
 private:
 	/// Originator of the parameter
 	const cci_originator m_originator;
-
-	std::vector<cci_callback_handle> m_callback_handles;
 };
 
 CCI_CLOSE_NAMESPACE_

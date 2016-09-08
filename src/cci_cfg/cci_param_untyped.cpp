@@ -51,15 +51,7 @@ CCI_OPEN_NAMESPACE_
 	{
 		m_broker_handle->remove_param(this);
 		assert(m_init_called && "If this happens, the construction did not call the base param init function!");
-		for (unsigned int i = 0; i < fw_vec.size(); ++i) {
-			fw_vec[i]->adapt->caller_param = NULL;
-		}
 		sc_core::sc_unregister_hierarchical_name(get_name().c_str());
-		for (std::vector<cci_callback_handle>::reverse_iterator ii = m_callback_handles.rbegin();
-			 ii != m_callback_handles.rend(); ++ii)
-		{
-			ii->unregister();
-		}
 	}
 
 	void cci_param_untyped::set_description(const std::string& desc)
@@ -109,31 +101,6 @@ CCI_OPEN_NAMESPACE_
 		m_latest_write_access_originator_cp = originator;
 	}
 
-	cci_callback_handle cci_param_untyped::validate_write(cci_callback<bool(const cci_value&, const cci_value&, const cci_originator&)> callback)
-	{
-		// TODO
-	}
-
-	cci_callback_handle cci_param_untyped::validate_write(cci_callback<bool(const void*, const void*, const cci_originator&)> callback)
-	{
-		// TODO
-	}
-
-	cci_callback_handle cci_param_untyped::on_write(cci_callback<void(const cci_value&, const cci_value&, const cci_originator&)> callback)
-	{
-		// TODO
-	}
-
-	cci_callback_handle cci_param_untyped::on_write(cci_callback<void(const void*, const void*, const cci_originator&)> callback)
-	{
-		// TODO
-	}
-
-	cci_callback_handle cci_param_untyped::validate_read(cci_callback<bool(const cci_originator&)> callback)
-	{
-		// TODO
-	}
-
 	bool cci_param_untyped::lock(void* pwd)
 	{
 		assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
@@ -167,13 +134,6 @@ CCI_OPEN_NAMESPACE_
 	{
 		assert(m_init_called == false && "init() function called more than once!");
 		m_init_called = true;
-		m_param_untyped_handle = this->create_param_handle(cci_originator());
-		/*m_post_write_callback = register_callback(cci::post_write,
-												  &m_status_guard,
-												  bind(&status_guard::call,
-													   &m_status_guard, _1,
-													   _2),
-												  *m_param_untyped_handle); // internal callback for status variables */
 	}
 
 CCI_CLOSE_NAMESPACE_
