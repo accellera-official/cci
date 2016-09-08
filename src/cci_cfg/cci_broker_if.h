@@ -30,6 +30,7 @@
 #define CCI_CCI_BROKER_IF_H_INCLUDED_
 
 #include "cci_cfg/cci_broker_callbacks.h"
+#include "cci_cfg/cci_value.h"
 
 CCI_OPEN_NAMESPACE_
 
