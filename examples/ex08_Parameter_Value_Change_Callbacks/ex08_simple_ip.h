@@ -53,7 +53,8 @@ SC_MODULE(ex08_simple_ip) {
     SC_THREAD(execute);
 
     // Register call back on param_1
-    param_1_pre_read_cb = param_1.register_callback(
+    // TODO: fixme
+    /*param_1_pre_read_cb = param_1.register_callback(
         cci::pre_read, this,
         cci::bind(&ex08_simple_ip::read_config_callback, this, _1, _2));
     param_1_pre_write_cb = param_1.register_callback(
@@ -74,7 +75,7 @@ SC_MODULE(ex08_simple_ip) {
         cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));
     param_2_post_write_cb = param_2.register_callback(
         cci::post_write, this,
-        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));
+        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));*/
 
     XREPORT("@Ctor: Value of " << param_1.get_name() << " is " << param_1
             << " (Default value Specified: 1)");
@@ -101,7 +102,8 @@ SC_MODULE(ex08_simple_ip) {
    *  @param  cb_reason The reason for the callback
    *  @return A callback_return_type
    */
-  cci::callback_return_type write_config_callback(
+  // TODO: fixme
+  /*cci::callback_return_type write_config_callback(
       cci::cci_base_param& selected_param,
       const cci::callback_type& cb_reason) {
     // Take action based on cb_reason
@@ -132,7 +134,7 @@ SC_MODULE(ex08_simple_ip) {
                         << cb_reason << ")");
     }
     return cci::return_nothing;
-  }
+  }*/
 
   /**
      *  @fn     cci::callback_return_type read_config_callback(cci::cci_base_param& selected_param, const cci::callback_type& cb_reason)
@@ -141,14 +143,15 @@ SC_MODULE(ex08_simple_ip) {
      *  @param  cb_reason The reason for the callback
      *  @return A callback_return_type
      */
-  cci::callback_return_type read_config_callback(
+  // TODO: fixme
+  /*cci::callback_return_type read_config_callback(
       cci::cci_base_param& selected_param,
       const cci::callback_type& cb_reason) {
     XREPORT_PLAIN("read_config_callback: pre_read: "
                   << selected_param.get_name() << " ("
                   << selected_param.get_cci_value().to_json() << ")");
     return cci::return_nothing;
-  }
+  }*/
 
   /**
    *  @fn     void execute()

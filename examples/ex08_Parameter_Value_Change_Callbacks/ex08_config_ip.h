@@ -67,18 +67,18 @@ SC_MODULE(ex08_config_ip) {
     // Check for existance of the param_1
     if (m_cci->param_exists(param_1_name)) {
       // Get handle to the param
-      cci::cci_base_param *param_1_ptr = m_cci->get_param(param_1_name);
-      assert(param_1_ptr != NULL);
+      cci::cci_param_handle param_1 = m_cci->get_param_handle(param_1_name);
+      assert(param_1.is_valid());
 
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
               << param_1_name << " to 10");
-      param_1_ptr->set_cci_value(cci::cci_value::from_json("10"));
+      param_1.set_cci_value(cci::cci_value::from_json("10"));
 
       // Display new value
-      std::string new_value = param_1_ptr->get_cci_value().to_json();
+      std::string new_value = param_1.get_cci_value().to_json();
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Current value of "
-              << param_1_ptr->get_name() << " is " << new_value);
+              << param_1.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("end_of_elaboration: Param (" << param_1_name
                     << ") is not found!");
@@ -87,15 +87,15 @@ SC_MODULE(ex08_config_ip) {
     // Check for existence of param_2
     if (m_cci->param_exists(param_2_name)) {
       // Get handle to the param
-      cci::cci_base_param *param_2_ptr = m_cci->get_param(param_2_name);
-      assert(param_2_ptr != NULL);
+      cci::cci_param_handle param_2 = m_cci->get_param_handle(param_2_name);
+      assert(param_2.is_valid());
 
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
               << param_2_name << " to 20");
       try {
         /// @note This should be rejected
-        param_2_ptr->set_cci_value(cci::cci_value::from_json("20"));
+        param_2.set_cci_value(cci::cci_value::from_json("20"));
       } catch (sc_core::sc_report const &e) {
         // Catch exception, if value-change is rejected and handle it
         if (cci::CCI_SET_PARAM_FAILURE
@@ -108,9 +108,9 @@ SC_MODULE(ex08_config_ip) {
       }
 
       // Display new value
-      std::string new_value = param_2_ptr->get_cci_value().to_json();
+      std::string new_value = param_2.get_cci_value().to_json();
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Current value of "
-              << param_2_ptr->get_name() << " is " << new_value);
+              << param_2.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("config_ip::end_of_elaboration: Param ("
                     << param_2_name << ") is not found!");

@@ -68,23 +68,24 @@ SC_MODULE(ex07_observer) {
     }
 
     // Gets the reference to the 'int' type cci-parameter of OWNER module
-    obsv_int_base_ptr = observerBrokerIF->get_param(
-        "param_owner.mutable_int_param");
+   cci::cci_param_handle obsv_int_base =
+           observerBrokerIF->get_param_handle("param_owner.mutable_int_param");
 
-    assert(obsv_int_base_ptr != NULL
+    assert(obsv_int_base.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
 
     // Observer registering PRE_READ, PRE_WRITE & POST_WRITE callbacks
     // on the integer parameter to monitor all actions on it
-    int_pre_read_cb = obsv_int_base_ptr->register_callback(
+    // TODO: fixme
+    /*int_pre_read_cb = obsv_int_base_ptr.register_callback(
         cci::pre_read, this,
         cci::bind(&ex07_observer::read_callback, this, _1, _2));
-    int_pre_write_cb = obsv_int_base_ptr->register_callback(
+    int_pre_write_cb = obsv_int_base_ptr.register_callback(
         cci::pre_write, this,
         cci::bind(&ex07_observer::write_callbacks, this, _1, _2));
-    int_post_write_cb = obsv_int_base_ptr->register_callback(
+    int_post_write_cb = obsv_int_base_ptr.register_callback(
         cci::post_write, this,
-        cci::bind(&ex07_observer::write_callbacks, this, _1, _2));
+        cci::bind(&ex07_observer::write_callbacks, this, _1, _2));*/
   }
 
   /**
@@ -94,7 +95,8 @@ SC_MODULE(ex07_observer) {
    *  @param   cci::callback_type&  Callback type
    *  @return  cci::callback_return_type  Callback return type
    */
-  cci::callback_return_type read_callback(
+  // TODO: fixme
+  /*cci::callback_return_type read_callback(
       cci::cci_base_param & _selected_base_param,
       const cci::callback_type & cb_reason) {
     switch (cb_reason) {
@@ -114,7 +116,7 @@ SC_MODULE(ex07_observer) {
     }
 
     return cci::return_nothing;
-  }
+  }*/
 
   /**
    *  @fn      cci::callback_return_type write_callback(cci::cci_base_param &, const cci::callback_type &)
@@ -123,7 +125,8 @@ SC_MODULE(ex07_observer) {
    *  @param   cci::callback_type&  Callback type (pre-read or post-read)
    *  @return  cci::callback_return_type  Callback return type
    */
-  cci::callback_return_type write_callbacks(
+  // TODO: fixme
+  /*cci::callback_return_type write_callbacks(
       cci::cci_base_param & _selected_base_param,
       const cci::callback_type & cb_reason) {
     const cci::cci_originator* myOriginator =
@@ -149,12 +152,11 @@ SC_MODULE(ex07_observer) {
     }
 
     return cci::return_nothing;
-  }
+  }*/
 
  private:
 
   cci::cci_broker_if* observerBrokerIF;  //!< Configuration broker instance
-  cci::cci_base_param* obsv_int_base_ptr;  //!< cci_base_param for integer type cci-param
 
   cci::shared_ptr<cci::callb_adapt> int_pre_read_cb; //!< 'pre_read' callback adaptor obj for int type cci-param
   cci::shared_ptr<cci::callb_adapt> int_pre_write_cb;  //!< 'pre_write' callback adaptor obj for int type cci-param

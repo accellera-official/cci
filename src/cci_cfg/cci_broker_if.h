@@ -177,7 +177,7 @@ CCI_OPEN_NAMESPACE_
      * @return  Pointer to the parameter handle object (NULL if not existing).
      *          @todo return a vector/iterator over param objects, because there might be more than one
      */ 
-    virtual cci_param_untyped_handle* get_param_handle(const std::string &parname) = 0;
+    virtual cci_param_untyped_handle get_param_handle(const std::string &parname) = 0;
     
     /// Return a list of all parameters (implicit and explicit) for the given scope (matching the pattern)
     /**
@@ -387,7 +387,7 @@ CCI_OPEN_NAMESPACE_
     // ///////////////    Optional functions   //////////////////////////// //
     // TODO: Optional Config broker functions to be discussed
 
-    /// Return a pointer list of all (explicit) parameter handles in the given scope (matching the pattern)
+    /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
     /**
      * pattern @see get_param_list
      * + (in the case the Many-to-one Mapping should work):
@@ -397,9 +397,9 @@ CCI_OPEN_NAMESPACE_
      * This returns not the owner's parameter objects but handles.
      *
      * @param pattern Specifies the parameters to be returned.
-     * @return Vector with parameter base object pointers.
+     * @return Vector with parameter handles.
      */
-    virtual const std::vector<cci_param_untyped_handle*> get_param_handles(const std::string& pattern = "") = 0;
+    virtual const std::vector<cci_param_untyped_handle> get_param_handles(const std::string& pattern = "") = 0;
     
     
     // Dropped due to conf call discussion in February
@@ -416,14 +416,14 @@ CCI_OPEN_NAMESPACE_
     //! @endcond
     //virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
         
-    /// Convenience function to get a typed parameter handle pointer.
+    /// Convenience function to get a typed parameter handle.
     /**
      * @param   parname   Full hierarchical parameter name.
-     * @return  Pointer to the parameter object (NULL if not existing).
+     * @return  Parameter handle (invalid if not existing or the type is not correct)
      */ 
     template<class T>
-    cci_param_typed_handle<T>* get_cci_param_handle(const std::string &parname) {
-      return dynamic_cast<cci_param_typed_handle<T>*>(get_param_handle(parname));
+    cci_param_typed_handle<T> get_cci_param_handle(const std::string &parname) {
+      return cci_param_typed_handle<T>(get_param_handle(parname));
     }
 
     ///If this broker is a private broker (or handle)

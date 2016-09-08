@@ -49,7 +49,7 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
     SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT exists!");
   const cci::cci_originator* orig = mBroker->get_latest_write_originator("Owner.int_param");
   assert (orig && "Originator must not be NULL here!");
-  if (mBroker->get_param("Owner.int_param")) {
+  if (mBroker->get_param_handle("Owner.int_param").is_valid()) {
     DEMO_DUMP(this->name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
   } else {
     DEMO_DUMP(this->name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig->name());
@@ -63,16 +63,18 @@ void ParamManipulateModule::main_action() {
   
   cout << "----------------------------" << endl;
   // get a parameter using the local config API
-  cci::cci_base_param *int_param_ptr = mBroker->get_param("Owner.int_param");
-  if (int_param_ptr == NULL) return;
+  cci::cci_param_handle int_param =
+          mBroker->get_param_handle("Owner.int_param");
+  if (!int_param.is_valid()) return;
   // make it a reference for convenience
-  cci::cci_param<int> &int_param_p = *static_cast<cci::cci_param<int>* >(int_param_ptr);
+  cci::cci_param_typed_handle<int> int_param_p = cci::cci_param_typed_handle<int>(int_param);
 
   // get a parameter using the local config API
-  cci::cci_base_param *uint_param_ptr = mBroker->get_param("Owner.uint_param");
-  if (uint_param_ptr == NULL) return;
+  cci::cci_param_handle uint_param =
+          mBroker->get_param_handle("Owner.uint_param");
+  if (!uint_param.is_valid()) return;
   // make it a reference for convenience
-  cci::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cci_param<unsigned int>* >(uint_param_ptr);
+  cci::cci_param_typed_handle<unsigned int> uint_param_p = cci::cci_param_typed_handle<unsigned int>(uint_param);
   
   // demonstrate json setting
   DEMO_DUMP(name(), "Set parameter Owner.int_param to value=5000");

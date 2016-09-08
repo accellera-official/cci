@@ -176,6 +176,14 @@ public:
 	 */
 	basic_param_type get_basic_type() const;
 
+	/// Returns the type information of the parameter
+	/**
+	 * @return Type information
+	 */
+	const std::type_info& get_type_info() const;
+
+	///@}
+
 	///@name CCI value Data Type and access
 	///@{
 
@@ -427,6 +435,12 @@ cci::basic_param_type cci_param_typed<T, TM>::get_basic_type() const
 }
 
 template <typename T, param_mutable_type TM>
+const std::type_info& cci_param_typed<T, TM>::get_type_info() const
+{
+	return typeid(T);
+}
+
+template <typename T, param_mutable_type TM>
 const void* cci_param_typed<T, TM>::get_default_value_raw() const {
 	if (!this->m_gs_param->has_default_value())
 		cci::cci_report_handler::get_param_failed("Param has no default value.");
@@ -436,7 +450,7 @@ const void* cci_param_typed<T, TM>::get_default_value_raw() const {
 template <typename T, param_mutable_type TM>
 const typename cci_param_typed<T, TM>::value_type& cci_param_typed<T, TM>::get_default_value()
 {
-	return *static_cast<const value_type *>(get_default_value());
+	return *static_cast<const value_type *>(get_default_value_raw());
 }
 
 template <typename T, param_mutable_type TM>

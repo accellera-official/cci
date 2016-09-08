@@ -5,6 +5,9 @@
   Copyright 2010-2015 Texas Instruments Inc.
   All rights reserved.
 
+  Copyright 2016 Ericsson
+  All rights reserved.
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -64,61 +67,56 @@ SC_MODULE(ex02_config_ip) {
     // Wait for 10 ns to update the values of the param
     wait(10, sc_core::SC_NS);
 
-    cci::cci_param_handle *base_int_param_ptr = NULL;
     // Check for existance of int_param
     if (m_cci->param_exists(param_name)) {
       // Get handle to the param
-      base_int_param_ptr = m_cci->get_param_handle(param_name);
-      assert(base_int_param_ptr != NULL);
+      cci::cci_param_handle int_param = m_cci->get_param_handle(param_name);
+      assert(int_param.is_valid());
 
-      /* @todo get_basic_type() needs to be implemented
-       cci::basic_param_type partype = cci::partype_not_available;
-       partype = base_int_param_ptr->get_basic_type();
-       if(partype == cci::partype_number) {
-       */
-      // Typecast the param to an 'int' type
-      cci::cci_param_typed_handle<int> *int_param_ptr =
-          dynamic_cast<cci::cci_param_typed_handle<int>*>(base_int_param_ptr);
-      if (int_param_ptr == NULL) {
-        XREPORT_WARNING("@execute: Typecast of " << int_param_ptr->get_name()
-                        << " to 'cci::cci_param<int> *' type failed.");
+      cci::basic_param_type partype = cci::param_type_not_available;
+      partype = int_param.get_basic_type();
+      if(partype == cci::param_type_number) {
+        XREPORT("@execute: Type of " << param_name << " is a number.");
       } else {
-        cci::cci_param_typed_handle<int> &int_param_ref = *int_param_ptr;
+        XREPORT_ERROR("@execute: Type of " << param_name << " is not a number.");
+      }
+
+      // Typecast the param to an 'int' type
+      cci::cci_param_typed_handle<int> int_param_typed =
+          cci::cci_param_typed_handle<int>(int_param);
+      if (!int_param_typed.is_valid()) {
+        XREPORT_WARNING("@execute: Typecast of " << int_param.get_name()
+                        << " to 'cci::cci_param_typed_handle<int> *' type failed.");
+      } else {
         XREPORT("@execute: Typecast of " << param_name
-                << " to 'cci::cci_param<int> *' succeeded");
-        XREPORT("@execute: Current value of " << int_param_ref.get_name()
-                << " is " << int_param_ref.get_value());
+                << " to 'cci::cci_param_typed_handle<int> *' succeeded");
+        XREPORT("@execute: Current value of " << int_param_typed.get_name()
+                << " is " << int_param_typed.get_value());
       }
 
       // Typecast the param to 'unsigned int' type
-      cci::cci_param_typed_handle<unsigned int> *uint_param_ptr =
-          dynamic_cast<cci::cci_param_typed_handle<unsigned int>*>(base_int_param_ptr);
-      if (uint_param_ptr == NULL) {
+      cci::cci_param_typed_handle<unsigned int> uint_param_typed =
+          cci::cci_param_typed_handle<unsigned int>(int_param);
+      if (!uint_param_typed.is_valid()) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
-                        << " to 'cci::cci_param<unsigned int> *'"
+                        << " to 'cci::cci_param_typed_handle<unsigned int> *'"
                         " type failed.");
       } else {
-        XREPORT("@execute: Current value of " << uint_param_ptr->get_name()
-                << " is " << uint_param_ptr->get_value());
+        XREPORT("@execute: Current value of " << uint_param_typed.get_name()
+                << " is " << uint_param_typed.get_value());
       }
 
       // Typecast the param to 'std::string' type
-      cci::cci_param_typed_handle<std::string> *string_param_ptr =
-          dynamic_cast<cci::cci_param_typed_handle<std::string>*>(base_int_param_ptr);
-      if (string_param_ptr == NULL) {
+      cci::cci_param_typed_handle<std::string> string_param_typed =
+          cci::cci_param_typed_handle<std::string>(int_param);
+      if (!string_param_typed.is_valid()) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
-                        << " to 'cci::cci_param<std::string> *'"
+                        << " to 'cci::cci_param_typed_handle<std::string> *'"
                         " type failed.");
       } else {
-        XREPORT("@execute: Current value of " << string_param_ptr->get_name()
-                << " is " << string_param_ptr->get_value());
+        XREPORT("@execute: Current value of " << string_param_typed.get_name()
+                << " is " << string_param_typed.get_value());
       }
-      /*
-       }
-       else {
-       XREPORT_WARNING("@execute: "<< base_int_param_ptr->get_name()<< " returned a non-partype_number type ("<< partype<< ")");
-       }
-       */
 
     } else {
       XREPORT_ERROR("execute: Param (" << param_name << ") is not found!");

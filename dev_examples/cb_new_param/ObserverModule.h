@@ -49,7 +49,8 @@ public:
   void main_action();
 
   /// Callback function with default signature showing changes.
-  cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+  // TODO: fixme
+  //cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
 
   /// Callback function with default signature announcing new parameters.
   cci::callback_return_type config_new_param_callback(const std::string& parname, const cci::callback_type& cb_reason);

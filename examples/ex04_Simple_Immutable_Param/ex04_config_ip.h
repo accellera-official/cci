@@ -85,14 +85,14 @@ SC_MODULE(ex04_config_ip) {
     wait(10, sc_core::SC_NS);
 
     if (m_cci->param_exists("sim_ip.param_2")) {
-      cci::cci_param_handle *param_2_ptr = m_cci->get_param_handle(
-          "sim_ip.param_2");
-      if (param_2_ptr == NULL) {
-        XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2_ptr'!");
+      cci::cci_param_handle param_2 =
+        m_cci->get_param_handle("sim_ip.param_2");
+      if (!param_2.is_valid()) {
+        XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2'!");
       } else {
         try {
           XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
-          param_2_ptr->set_cci_value(cci::cci_value::from_json("200"));
+          param_2.set_cci_value(cci::cci_value::from_json("200"));
         } catch (std::exception &x) {
           XREPORT_WARNING(x.what());
         }

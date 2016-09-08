@@ -46,7 +46,8 @@ class ex16_observer {
    *  @brief  The class constructor
    *  @return void
    */
-  ex16_observer() {
+  ex16_observer():
+      obsv_udt_base(cci::cci_originator("ex16_observer")) {
     // Instantiate a cci_originator in order to get hold of the
     // configuration broker interface
     cci::cci_originator observerOriginator("observerOriginator");
@@ -73,29 +74,30 @@ class ex16_observer {
     }
 
     // Gets the reference to the 'udt' type cci-parameter of OWNER module
-    obsv_udt_base_ptr =
-        observerBrokerIF->get_param("param_owner.User_data_type_param");
+    obsv_udt_base =
+        observerBrokerIF->get_param_handle("param_owner.User_data_type_param");
 
-    assert(obsv_udt_base_ptr != NULL
+    assert(obsv_udt_base.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
 
     // Observer registering 'PRE_READ', 'PRE_WRITE' & 'POST_WRITE' callbacks
     // on the UDT parameter to monitor all actions on it
-    udt_pre_read_cb = obsv_udt_base_ptr->register_callback(cci::pre_read,
+    // TODO: fixme
+    /*udt_pre_read_cb = obsv_udt_base.register_callback(cci::pre_read,
                                                            this,
                                                            cci::bind(&ex16_observer::read_callback,
                                                                      this,
                                                                      _1, _2));
-    udt_pre_write_cb = obsv_udt_base_ptr->register_callback(cci::pre_write,
+    udt_pre_write_cb = obsv_udt_base.register_callback(cci::pre_write,
                                                             this,
                                                             cci::bind(&ex16_observer::write_callbacks,
                                                                       this,
                                                                       _1, _2));
-    udt_post_write_cb = obsv_udt_base_ptr->register_callback(cci::post_write,
+    udt_post_write_cb = obsv_udt_base.register_callback(cci::post_write,
                                                              this,
                                                              cci::bind(&ex16_observer::write_callbacks,
                                                                        this,
-                                                                       _1, _2));
+                                                                       _1, _2));*/
   }
 
   /**
@@ -105,7 +107,8 @@ class ex16_observer {
    *  @param  cb_reason The reason for the callback
    *  @return The exit status of the function
    */
-  cci::callback_return_type read_callback(const cci::cci_base_param& _selected_base_param,
+  // TODO: fixme
+  /*cci::callback_return_type read_callback(const cci::cci_base_param& _selected_base_param,
                                                const cci::callback_type& cb_reason) {
     switch (cb_reason) {
       case cci::pre_read: {
@@ -125,7 +128,7 @@ class ex16_observer {
     }
 
     return cci::return_nothing;
-  }
+  }*/
 
   /**
    *  @fn     cci::callback_return_type write_callback(const cci::cci_base_param& _seleceted_param, const cci::callback_return_type& cb_reason)
@@ -134,7 +137,8 @@ class ex16_observer {
    *  @param  cb_reason The reason for the callback being called
    *  @return The exit status for the callback function
    */
-  cci::callback_return_type write_callbacks(const cci::cci_base_param& _selected_base_param,
+  // TODO: fixme
+  /*cci::callback_return_type write_callbacks(const cci::cci_base_param& _selected_base_param,
                                                  const cci::callback_type& cb_reason) {
     const cci::cci_originator* myOriginator =
         cci::cci_originator::get_global_originator();
@@ -160,12 +164,12 @@ class ex16_observer {
     }
 
     return cci::return_nothing;
-  }
+  }*/
 
  private:
   cci::cci_broker_if* observerBrokerIF;  ///< CCI configuration broker instance
 
-  cci::cci_base_param* obsv_udt_base_ptr;  ///< Declare cci_base_param for int type cci-parameter
+  cci::cci_param_handle obsv_udt_base;  ///< Declare CCI param handle for int type cci-parameter
 
   // Callback Adaptor Objects for 'int' type parameter
   cci::shared_ptr<cci::callb_adapt> udt_pre_read_cb; ///< Callback adapter object for pre-read

@@ -92,7 +92,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Perform comparisons across mutability classes.  Access params directly
   // for convenience (generally we would look them up via broker).
-  if (pc.mutab_str_param.get() == pc.immutab_str_param.get()) {
+  if (pc.mutab_str_param.get_value() == pc.immutab_str_param.get_value()) { // TODO
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'immutable' type String"
                    " parameters - VALUES MATCH");
   } else {
@@ -100,7 +100,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                    " parameters - VALUES DO NOT MATCH");
   }
 
-  if (pc.mutab_str_param.get() == pc.elab_str_param.get()) {
+  if (pc.mutab_str_param.get_value() == pc.elab_str_param.get_value()) { // TODO
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
                    " String - VALUES MATCH");
   } else {

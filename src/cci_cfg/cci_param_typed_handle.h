@@ -101,6 +101,9 @@ public:
     /// Constructor to create new parameter handle with given originator and
     /// original parameter
     cci_param_typed_handle(cci_param_if& orig_param, const cci_originator& originator);
+
+    /// Constructor to create a typed parameter handle
+    cci_param_typed_handle(cci_param_untyped_handle untyped);
 };
 
 template <typename T>
@@ -170,9 +173,18 @@ const typename cci_param_typed_handle<T>::value_type& cci_param_typed_handle<T>:
 
 template <typename T>
 cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_if& orig_param,
-                                              const cci_originator& originator)
+                                                  const cci_originator& originator)
  : cci_param_untyped_handle(orig_param, originator)
 { }
+
+template <typename T>
+cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle untyped)
+ : cci_param_untyped_handle(untyped)
+{
+    if(is_valid() && typeid(T) != get_type_info()) {
+        invalidate();
+    }
+}
 
 CCI_CLOSE_NAMESPACE_
 

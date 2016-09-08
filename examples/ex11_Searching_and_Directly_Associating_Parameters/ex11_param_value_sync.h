@@ -50,14 +50,14 @@ SC_MODULE(ex11_param_value_sync) {
   SC_HAS_PROCESS(ex11_param_value_sync);
 
   /**
-   *  @fn     ex11_param_value_sync(sc_core::sc_module_name _name, std::vector<cci::cci_base_param *> BaseParamList)
+   *  @fn     ex11_param_value_sync(sc_core::sc_module_name _name, std::vector<cci::cci_param_handle> BaseParamList)
    *  @brief  The class constructor
    *  @param  _name The name of the class
-   *  @param  BaseParamList The list of base CCI parameters
+   *  @param  BaseParamList The list of CCI parameter handles
    *  @return void
    */
   ex11_param_value_sync(sc_core::sc_module_name _name,
-                        std::vector<cci::cci_base_param *> BaseParamList)
+                        std::vector<cci::cci_param_handle> BaseParamList)
       // Define an originator in order to get hold of the default broker
       : ValueSyncOriginator("ValueSyncOriginator") {
     // Get handle of the broker responsible for the class/module
@@ -80,7 +80,8 @@ SC_MODULE(ex11_param_value_sync) {
    *  @param  _base_param_2 The parameter to sync to
    *  @return The result of the callback execution
    */
-  cci::callback_return_type
+  // TODO: fixme
+  /*cci::callback_return_type
       write_callback(const cci::cci_base_param& _base_param_1,
                      const cci::callback_type& cb_reason,
                      cci::cci_base_param * _base_param_2) {
@@ -93,44 +94,44 @@ SC_MODULE(ex11_param_value_sync) {
             _base_param_1.get_value().to_json()));
 
     return cci::return_nothing;
-  }
+  }*/
 
   /**
-   *  @fn     void synchValues(cci::cci_base_param* _base_param_1, cci::cci_base_param* _base_param_2)
+   *  @fn     void synchValues(cci::cci_param_handle _param_handle_1, cci::cci_param_handle _param_handle_2)
    *  @brief  Function for synchronizing the values of cci_parameter of OWNER
    *          modules via the PARAM_VALUE_SYNC
-   *  @param  _base_param_1 The first parameter to be synced
-   *  @param  _base_param_2 The second parameter to be synced
+   *  @param  _param_handle_1 The first parameter to be synced
+   *  @param  _param_handle_2 The second parameter to be synced
    *  @return void
    */
-  void synchValues(cci::cci_base_param * _base_param_1,
-                   cci::cci_base_param * _base_param_2) {
+  void synchValues(cci::cci_param_handle _param_handle_1,
+                   cci::cci_param_handle _param_handle_2) {
     // In order to synchronize even the default values of the owner modules,
     // use cci_base_param of one parameter as reference, write the same value
     // to the other pararmeter's cci_base_param using JSON
-    _base_param_2->set_cci_value(cci::cci_value::from_json(
-            _base_param_1->get_value().to_json()));
+    _param_handle_2.set_cci_value(_param_handle_1.get_cci_value());
 
-    post_write_cb_vec.push_back(
-        _base_param_1->register_callback(cci::post_write,
+    // TODO: fixme
+    /*post_write_cb_vec.push_back(
+        _param_handle_1->register_callback(cci::post_write,
                                          this,
                                          cci::bind(&ex11_param_value_sync::write_callback,
                                                    this, _1, _2,
-                                                   _base_param_2)));
+                                                   _param_handle_2)));
 
     post_write_cb_vec.push_back(
-        _base_param_2->register_callback(cci::post_write,
+        _param_handle_2->register_callback(cci::post_write,
                                          this,
                                          cci::bind(&ex11_param_value_sync::write_callback,
                                                    this, _1, _2,
-                                                   _base_param_1)));
+                                                   _param_handle_1)));*/
   }
 
  private:
   cci::cci_originator ValueSyncOriginator; ///< Declaring a CCI originator
   cci::cci_broker_if* ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
   std::vector<cci::shared_ptr<cci::callb_adapt> > post_write_cb_vec; ///< Callback Adaptor Objects
-  std::vector<cci::cci_base_param*> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI base parameter pointers
+  std::vector<cci::cci_param_handle> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI parameter handles
 };
 // ex11_parameter_value_sync
 

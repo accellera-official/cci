@@ -36,8 +36,6 @@ Info: param_cfgr: @0 s, [CFGR C_TOR] : param_owner.mutable_string_param	Initial 
 
 Info: param_cfgr: @0 s, [CFGR C_TOR] : Is initial value ?	true
 
-Info: param_cfgr: @0 s, [CFGR C_TOR] : Set description to the string-type cci-parameter
-
 Info: observer: @0 s, [OBSERVER C_TOR] : Broker Type : DEFAULT_BROKER- is not a private broker.
 
 Info: param_cfgr: @0 s, @ 0 s	demonstrating 'is_default_value()'

@@ -203,6 +203,13 @@ struct cci_param_user_data_type
   bool is_initial_value() const;
 
   /**
+   *  @fn     std::type_info& get_type_info() const
+   *  @brief  Function to get the type info of a parameter
+   *  @return Type info of the parameter
+   */
+  const std::type_info& get_type_info() const;
+
+  /**
    *  @fn     const std::string& get_name() const
    *  @brief  Function to get the name of the parameter
    *  @return The string representation of the name of the parameter

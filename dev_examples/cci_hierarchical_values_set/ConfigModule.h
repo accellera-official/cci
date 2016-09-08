@@ -79,7 +79,7 @@ public:
 
 
     for (it = vec_ll.begin() ; it < vec_ll.end(); it++) {
-        (m_cci->get_param_handle(*it))->set_cci_value(tar_value);
+        (m_cci->get_param_handle(*it)).set_cci_value(tar_value);
     }
 
     wait(20,sc_core::SC_NS);

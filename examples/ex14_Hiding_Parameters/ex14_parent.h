@@ -67,7 +67,8 @@ SC_MODULE(ex14_parent) {
         // immediately above PARENT which specifies the list of publicly
         // visible parameters
         parent_int_param("parent_int_param", 300, *priv_broker),
-        parent_buffer("parent_int_buffer", 350, *priv_broker) {
+        parent_buffer("parent_int_buffer", 350, *priv_broker),
+        child_base_param(cci::cci_originator(*this)) {
     // Asserts if the returned broker handle is NULL
     assert(parent_BrokerIF != NULL
            && "Returned broker handle for 'parent' is NULL");
@@ -81,9 +82,9 @@ SC_MODULE(ex14_parent) {
       child_param_path.append(".child_inst.priv_int_param");
 
       if (parent_BrokerIF->param_exists(child_param_path)) {
-        child_base_param_ptr = parent_BrokerIF->get_param_handle(child_param_path);
+        child_base_param = parent_BrokerIF->get_param_handle(child_param_path);
 
-        assert(child_base_param_ptr != NULL
+        assert(child_base_param.is_valid()
                && "Returned broker handle for 'priv_int_param' of 'child'"
                " is NULL");
 
@@ -91,12 +92,13 @@ SC_MODULE(ex14_parent) {
         // Configurators writes to 'parent_buffer' cci-parameter (registered
         // to the default global broker). Changes to the 'parent_buffer' will
         // be reflected on to the 'priv_int_param' of child as well
-        parent_post_write_cb =
+        // TODO: fixme
+        /*parent_post_write_cb =
             parent_buffer.register_callback(cci::post_write,
                                             this,
                                             cci::bind(&ex14_parent::write_callback,
                                                       this, _1, _2,
-                                                      child_base_param_ptr));
+                                                      child_base_param));*/
       } else {
         XREPORT("[PARENT C_TOR] : Desired cci-parameter of 'child' module is"
                 " not available");
@@ -120,7 +122,8 @@ SC_MODULE(ex14_parent) {
    *  @param  _child_base_param_ptr A pointer to a child parameter to be updated
    *  @return The exit status of the callback function
    */
-  cci::callback_return_type write_callback(
+  // TODO: fixme
+  /*cci::callback_return_type write_callback(
       cci::cci_param_handle & _base_param,
       const cci::callback_type & cb_reason,
       cci::cci_param_handle * _child_base_param_ptr) {
@@ -132,7 +135,7 @@ SC_MODULE(ex14_parent) {
             << _base_param.get_cci_value().to_json());
 
     return cci::return_nothing;
-  }
+  }*/
 
   /**
    *  @fn     void run_parent(void)
@@ -167,7 +170,7 @@ SC_MODULE(ex14_parent) {
   cci::cci_param<int> parent_buffer; ///< CCI int parameter for a buffer
 
   /// Declare cci_base_param pointers
-  cci::cci_param_handle* child_base_param_ptr; ///< Pointer to the child
+  cci::cci_param_handle child_base_param; ///< Handle to the child
 
   // Callback Adaptor Object
   cci::shared_ptr<cci::callb_adapt> parent_post_write_cb;  ///< callback adapter object

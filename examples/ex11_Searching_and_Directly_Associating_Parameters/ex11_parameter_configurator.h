@@ -51,7 +51,9 @@ SC_MODULE(ex11_parameter_configurator) {
    *  @fn     ex11_parameter_configurator()
    *  @brief  The class constructor
    */
-  SC_CTOR(ex11_parameter_configurator) {
+  SC_CTOR(ex11_parameter_configurator):
+      cfgr_param1(cci::cci_originator(*this)),
+      cfgr_param2(cci::cci_originator(*this)) {
     // Get handle of the broker responsible for the class/module
     myCfgrBrokerIF =
         &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
@@ -65,14 +67,14 @@ SC_MODULE(ex11_parameter_configurator) {
 
     // Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
     if (myCfgrBrokerIF->param_exists(cfgr_param_str1)) {
-      cfgr_param_ptr1 = myCfgrBrokerIF->get_param(cfgr_param_str1);
+      cfgr_param1 = myCfgrBrokerIF->get_param_handle(cfgr_param_str1);
 
-      assert(cfgr_param_ptr1 != NULL
+      assert(cfgr_param1.is_valid()
              && "Configuration parameter returned is NULL");
 
-      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr1->get_name()
+      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param1.get_name()
               << "\tParameter Value : "
-              << cfgr_param_ptr1->get_cci_value().to_json());
+              << cfgr_param1.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
               << "\tdoesn't exists in top_module");
@@ -80,14 +82,14 @@ SC_MODULE(ex11_parameter_configurator) {
 
     // Check for the existence of 'clock_speed_Hz' cci_parameter of owner 2
     if (myCfgrBrokerIF->param_exists(cfgr_param_str2)) {
-      cfgr_param_ptr2 = myCfgrBrokerIF->get_param(cfgr_param_str2);
+      cfgr_param2 = myCfgrBrokerIF->get_param_handle(cfgr_param_str2);
 
-      assert(cfgr_param_ptr2 != NULL
+      assert(cfgr_param2.is_valid()
              && "Configuration parameter returned is NULL");
 
-      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param_ptr2->get_name()
+      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param2.get_name()
               << "\tParameter Value : "
-              << cfgr_param_ptr2->get_cci_value().to_json());
+              << cfgr_param2.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
               << "\tdoesn't exists in top_module");
@@ -106,20 +108,20 @@ SC_MODULE(ex11_parameter_configurator) {
   void before_end_of_elaboration(void) {
     // Change the value of the cci_parameter 'clk_freq_Hz' of OWNER (1)
     // to '5000' (Hz)
-    if (cfgr_param_ptr1 != NULL) {
+    if (cfgr_param1.is_valid()) {
       XREPORT("[CFGR within beoe] Within the BEOE phase");
       XREPORT("[CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1)"
               " to 5000 (Hz).");
-      cfgr_param_ptr1->set_cci_value(cci::cci_value::from_json("5000"));
+      cfgr_param1.set_cci_value(cci::cci_value::from_json("5000"));
     }
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
-            << cfgr_param_ptr1->get_name() << "\tParameter Value : "
-            << cfgr_param_ptr1->get_cci_value().to_json());
+            << cfgr_param1.get_name() << "\tParameter Value : "
+            << cfgr_param1.get_cci_value().to_json());
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
-            << cfgr_param_ptr2->get_name() << "\tParameter Value : "
-            << cfgr_param_ptr2->get_cci_value().to_json());
+            << cfgr_param2.get_name() << "\tParameter Value : "
+            << cfgr_param2.get_cci_value().to_json());
   }
 
   /**
@@ -132,20 +134,20 @@ SC_MODULE(ex11_parameter_configurator) {
     while (1) {
       // Change the value of the cci_parameter 'clock_speed_Hz' of
       // OWNER (2) to '12000' (Hz)
-      if (cfgr_param_ptr2 != NULL) {
+      if (cfgr_param2.is_valid()) {
         XREPORT("@ " << sc_core::sc_time_stamp());
         XREPORT("[CFGR] : Changing the 'clock_speed_Hz' of OWNER (2)"
                 " to 12000 (Hz).");
-        cfgr_param_ptr2->set_cci_value(cci::cci_value::from_json("12000"));
+        cfgr_param2.set_cci_value(cci::cci_value::from_json("12000"));
       }
 
-      XREPORT("[CFGR] : Parameter Name : " << cfgr_param_ptr1->get_name()
+      XREPORT("[CFGR] : Parameter Name : " << cfgr_param1.get_name()
               << "\tParameter Value : "
-              << cfgr_param_ptr1->get_cci_value().to_json());
+              << cfgr_param1.get_cci_value().to_json());
 
-      XREPORT("[CFGR] : Parameter Name : " << cfgr_param_ptr2->get_name()
+      XREPORT("[CFGR] : Parameter Name : " << cfgr_param2.get_name()
               << "\tParameter Value : "
-              << cfgr_param_ptr2->get_cci_value().to_json());
+              << cfgr_param2.get_cci_value().to_json());
 
       wait(50.0, sc_core::SC_NS);
     }
@@ -155,8 +157,8 @@ SC_MODULE(ex11_parameter_configurator) {
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   // CCI base parameters
-  cci::cci_base_param* cfgr_param_ptr1;  ///< CCI base parameter
-  cci::cci_base_param* cfgr_param_ptr2;  ///< CCI base parameter
+  cci::cci_param_handle cfgr_param1;  ///< CCI base parameter
+  cci::cci_param_handle cfgr_param2;  ///< CCI base parameter
 };
 // ex11_parameter_configurator
 

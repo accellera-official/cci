@@ -91,8 +91,6 @@ SC_MODULE(ex18_parameter_configurator) {
  private:
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
-  cci::cci_base_param* cfgr_param_ptr; ///< CCI base parameter
-
   // std::vector to store the list of the unconsumed parameters
   std::vector<std::string> complete_parameter_list; ///< List of all parameters
   std::vector<std::string> unconsumed_parameter_list; ///< List of parameters unconsumed

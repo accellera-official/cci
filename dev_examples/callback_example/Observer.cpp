@@ -66,26 +66,28 @@ cci::callback_return_type Observer::config_str_callback(const std::string& par_n
 cci::callback_return_type Observer::config_new_param_callback(const std::string& par_name, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::create_param);
   DEMO_DUMP(name(), "***** New parameter callback: '" << par_name << "'");
-  cci::cci_base_param* p = mBroker->get_param(par_name);
-  assert(p && "This new param should already be available!");
-  std::string str = p->to_json();
+  cci::cci_param_handle p = mBroker->get_param_handle(par_name);
+  assert(p.is_valid() && "This new param should already be available!");
+  std::string str = p.get_cci_value().to_json();
   DEMO_DUMP(name(), "   value="<<str);
   // Now register for some other callbacks
   // It is recommended to register with the parameter object directly:
-  mCallbacks.push_back(p->register_callback(cci::pre_write, this, 
+  // TODO: fixme
+  /*mCallbacks.push_back(p->register_callback(cci::pre_write, this,
                                             cci::bind(&Observer::config_callback, this, _1, _2)));
   // It is possible (but not recommended) to let the broker forward the callback registration to the parameter
   mCallbacks.push_back( mBroker->register_callback(cci::post_write, par_name.c_str(), this, 
                                                    cci::bind(&Observer::config_callback, this, _1, _2)));
   // it is still possible to register a string callback function
   mCallbacks.push_back( mBroker->register_str_callback(cci::post_write, par_name.c_str(), this, 
-                                                       cci::bind(&Observer::config_str_callback, this, _1, _2)));
+                                                       cci::bind(&Observer::config_str_callback, this, _1, _2)));*/
 
   return cci::return_nothing;
 }
 
 /// Callback function with default signature showing changes.
-cci::callback_return_type Observer::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+// TODO: fixme
+/*cci::callback_return_type Observer::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
   std::string str;
   switch (cb_reason) {
     case cci::pre_write:
@@ -100,7 +102,7 @@ cci::callback_return_type Observer::config_callback(cci::cci_base_param& par, co
       assert(false && "not awaited cb reason");
   }
   return cci::return_nothing;
-}
+}*/
 
 const char* Observer::name() const {
   return mName.c_str();

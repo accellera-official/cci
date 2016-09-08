@@ -114,7 +114,7 @@ int sc_main( int, char*[] )
     cci_value v = cci_value::from_json( json );
 
     sc_assert( v.is_list() );
-    sc_assert( json == json );
+    sc_assert( v.to_json() == json );
 
     std::vector<int> seq[2];
     v.get_list()

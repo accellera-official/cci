@@ -47,7 +47,7 @@ SC_MODULE(ex15_memory_block) {
   SC_CTOR(ex15_memory_block)
       : mem_size("mem_size", 500) {
     XREPORT("[MEMORY_BLOCK C_TOR] : Default Memory Size : "
-            << mem_size.get() << "\n");
+            << mem_size.get_value() << "\n");
   }
 
  private:

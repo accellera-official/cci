@@ -48,7 +48,7 @@ SC_MODULE(ex15_address_lines_register) {
   SC_CTOR(ex15_address_lines_register)
       : no_of_addr_lines("curr_addr_lines", 9) {
     XREPORT("[ADDR_LINES_REG C_TOR] : Default Address Lines : "
-            << no_of_addr_lines.get());
+            << no_of_addr_lines.get_value());
   }
 
  private:

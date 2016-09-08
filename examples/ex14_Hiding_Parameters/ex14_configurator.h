@@ -51,7 +51,8 @@ SC_MODULE(ex14_configurator) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex14_configurator) {
+  SC_CTOR(ex14_configurator):
+      parent_base_param(cci::cci_originator(*this)) {
   // Gets the reference of a DEFAULT GLOBAL BROKER
     myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(
         cci::cci_originator(*this));
@@ -63,16 +64,16 @@ SC_MODULE(ex14_configurator) {
     if (myCfgrBrokerIF != NULL) {
       if (myCfgrBrokerIF->param_exists("Top.parent_inst.parent_int_buffer")) {
         // Get handle of the parent_module's cci-parameter
-        parent_base_param_ptr = myCfgrBrokerIF->get_param_handle(
+        parent_base_param = myCfgrBrokerIF->get_param_handle(
             "Top.parent_inst.parent_int_buffer");
 
         // Assert if the handle returned is NULL
-        assert(parent_base_param_ptr != NULL
+        assert(parent_base_param.is_valid()
                && "Returned handle of parent_module's cci-parameter is NULL");
 
         XREPORT("[CFGR] : Parameter Name : "
-                << parent_base_param_ptr->get_name() << "\tParameter Value : "
-                << parent_base_param_ptr->get_cci_value().to_json());
+                << parent_base_param.get_name() << "\tParameter Value : "
+                << parent_base_param.get_cci_value().to_json());
       } else {
         XREPORT("[CFGR] : Parameter by name"
                 " 'Top.parent_module.parent_int_buffer' doesn't exist");
@@ -108,11 +109,11 @@ SC_MODULE(ex14_configurator) {
 
       XREPORT("[CFGR] : Change the value of the 'parent_int_buffer' to '1000'");
 
-      parent_base_param_ptr->set_cci_value(cci::cci_value::from_json("1000"));
+      parent_base_param.set_cci_value(cci::cci_value::from_json("1000"));
 
       XREPORT("[CFGR] : Parameter Name : "
-              << parent_base_param_ptr->get_name() << "\tParameter Value : "
-              << parent_base_param_ptr->get_cci_value().to_json());
+              << parent_base_param.get_name() << "\tParameter Value : "
+              << parent_base_param.get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);
     }
@@ -120,7 +121,7 @@ SC_MODULE(ex14_configurator) {
 
  private:
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
-  cci::cci_param_handle* parent_base_param_ptr;  ///< Few directly accessible cci-parameters
+  cci::cci_param_handle parent_base_param;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator
 

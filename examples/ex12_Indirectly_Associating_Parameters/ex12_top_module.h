@@ -83,12 +83,12 @@ SC_MODULE(ex12_top_module) {
     std::string param2_str = "top_mod.param_owner2.clock_speed_KHz";
 
     if (myTopModBrokerIF->param_exists(param1_str)) {
-      cci::cci_param_handle *temp = myTopModBrokerIF->get_param_handle(param1_str);
+      cci::cci_param_handle temp = myTopModBrokerIF->get_param_handle(param1_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
-              << temp->get_name() << "\tParameter Value : "
-              << temp->get_cci_value().to_json());
+              << temp.get_name() << "\tParameter Value : "
+              << temp.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
               << "\tnot found.");
@@ -97,12 +97,12 @@ SC_MODULE(ex12_top_module) {
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_param_handle
     if (myTopModBrokerIF->param_exists(param2_str)) {
-      cci::cci_param_handle *temp = myTopModBrokerIF->get_param_handle(param2_str);
+      cci::cci_param_handle temp = myTopModBrokerIF->get_param_handle(param2_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
-              << temp->get_name() << "\tParameter Value : "
-              << temp->get_cci_value().to_json());
+              << temp.get_name() << "\tParameter Value : "
+              << temp.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
               << "\tnot found.");
@@ -116,7 +116,7 @@ SC_MODULE(ex12_top_module) {
 
  private:
   cci::cci_broker_if* myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
-  std::vector<cci::cci_param_handle*> selectedBaseParamList; ///< Selected cci_base_parameter list (selection done by top_module)
+  std::vector<cci::cci_param_handle> selectedBaseParamList; ///< Selected cci_param_handle list (selection done by top_module)
 };
 // ex12_top_module
 
