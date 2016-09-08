@@ -249,17 +249,6 @@ public:
     cci_param_typed(const std::string& name, const cci_value& value, cci_top_level_name, cci_broker_if& private_broker, const std::string& desc = "");
 
 protected:
-	///Constructor to create new parameter with given originator and cci_value
-	cci_param_typed(const std::string& name, const cci_value &value,
-				bool is_top_level_name, cci::cci_broker_if* broker_handle,
-				const std::string& desc,
-				const cci_originator & originator);
-	///Constructor to create new parameter with given originator and T value
-	cci_param_typed(const std::string& name, const value_type &value,
-				bool is_top_level_name, cci::cci_broker_if* broker_handle,
-				const std::string& desc,
-				const cci_originator & originator);
-
 	/// GS Parameter internal
 	gs::gs_param<T>* m_gs_param;
 
