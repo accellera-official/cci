@@ -48,7 +48,10 @@ SC_MODULE(ex17_parameter_configurator) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex17_parameter_configurator) {
+  SC_CTOR(ex17_parameter_configurator):
+      int_param(cci::cci_originator(*this)),
+      float_param(cci::cci_originator(*this)),
+      str_param(cci::cci_originator(*this)) {
     // Get reference of the responsible broker for the module
     myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
@@ -58,9 +61,10 @@ SC_MODULE(ex17_parameter_configurator) {
     if (myCfgrBrokerIF->param_exists("param_owner.mutable_int_param")) {
       XREPORT("[CFGR C_TOR] : Integer parameter exists");
 
-      int_param_ptr = myCfgrBrokerIF->get_param("param_owner.mutable_int_param");
+      int_param =
+              myCfgrBrokerIF->get_param_handle("param_owner.mutable_int_param");
 
-      assert(int_param_ptr != NULL && "Parameter Handle is NULL");
+      assert(int_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Integer parameter doesn't exists.");
     }
@@ -69,9 +73,10 @@ SC_MODULE(ex17_parameter_configurator) {
     if (myCfgrBrokerIF->param_exists("param_owner.mutable_float_param")) {
       XREPORT("[CFGR C_TOR] : Float parameter exists");
 
-      float_param_ptr = myCfgrBrokerIF->get_param("param_owner.mutable_float_param");
+      float_param =
+              myCfgrBrokerIF->get_param_handle("param_owner.mutable_float_param");
 
-      assert(float_param_ptr != NULL && "Parameter Handle is NULL");
+      assert(float_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Float parameter doesn't exists.");
     }
@@ -80,9 +85,10 @@ SC_MODULE(ex17_parameter_configurator) {
     if (myCfgrBrokerIF->param_exists("param_owner.mutable_string_param")) {
       XREPORT("[CFGR C_TOR] : String parameter exists");
 
-      str_param_ptr = myCfgrBrokerIF->get_param("param_owner.mutable_string_param");
+      str_param =
+              myCfgrBrokerIF->get_param_handle("param_owner.mutable_string_param");
 
-      assert(str_param_ptr != NULL && "Parameter Handle is NULL");
+      assert(str_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : String parameter doesn't exists.");
     }
@@ -102,12 +108,12 @@ SC_MODULE(ex17_parameter_configurator) {
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Set integer parameter value to '20'"
               " using cci_base_parameter");
-      int_param_ptr->set_cci_value(cci::cci_value::from_json("20"));
+      int_param.set_cci_value(cci::cci_value::from_json("20"));
 
       // Set value to the 'string' parameter of the owner module
       XREPORT("[CFGR] : Set string  parameter value to 'configure'"
               " using cci_base_parameter");
-      str_param_ptr->set_cci_value(cci::cci_value::from_json("\"configure\""));
+      str_param.set_cci_value(cci::cci_value::from_json("\"configure\""));
 
       wait(50.0, sc_core::SC_NS);
     }
@@ -117,9 +123,9 @@ SC_MODULE(ex17_parameter_configurator) {
   cci::cci_broker_if* myCfgrBrokerIF;  ///< Declare a configuration broker
 
   // Declare cci_base_param for each of the owner's cci-parameters
-  cci::cci_base_param* int_param_ptr;  ///< Base pointer to an int parameter
-  cci::cci_base_param* float_param_ptr;  ///< Base pointer to a float parameter
-  cci::cci_base_param* str_param_ptr;  ///< Base pointer to a string parameter
+  cci::cci_param_handle int_param;  ///< Parameter handle to an int parameter
+  cci::cci_param_handle float_param;  ///< Parameter handle to a float parameter
+  cci::cci_param_handle str_param;  ///< Parameter handle to a string parameter
 };
 // ex17_parameter_configurator
 

@@ -250,12 +250,6 @@ public:
 
 	///@name Accessor methods
 	///@{
-
-	/// Indicates that this parameter is a handle to a parameter implementation.
-	/**
-	 * @return   False (parameter creator)
-	 */
-	bool is_handle() const;
 	
 	/// Gets cci_originator of the parameter.
 	/**

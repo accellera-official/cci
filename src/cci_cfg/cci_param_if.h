@@ -30,6 +30,8 @@
 #ifndef CCI_CCI_PARAM_IF_H_INCLUDED_
 #define CCI_CCI_PARAM_IF_H_INCLUDED_
 
+#include <typeinfo>
+
 #include "cci_cfg/cci_shared_ptr.h"
 #include "cci_cfg/cci_callbacks.h"
 #include "cci_cfg/cci_value.h"
@@ -189,8 +191,8 @@ public:
 
     ///@}
 
-    /// @copydoc cci_param_untyped::is_handle
-    virtual bool is_handle() const = 0;
+    /// @copydoc cci_param_typed::get_type_info
+    virtual const std::type_info& get_type_info() const = 0;
 
     ///@name Initialization and Destructions methods
     ///@{

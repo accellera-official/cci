@@ -57,7 +57,9 @@ SC_MODULE(ex15_processor) {
    */
   SC_CTOR(ex15_processor)
       : addr_lines_module("addr_lines_mod"),
-        memory_block_module("memory_block") {
+        memory_block_module("memory_block"),
+        addr_lines_base(cci::cci_originator(*this)),
+        mem_size_base(cci::cci_originator(*this)) {
     // Get reference of the broker responsible for the module
     processor_BrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 
@@ -71,9 +73,9 @@ SC_MODULE(ex15_processor) {
       param_path.append(".addr_lines_mod.curr_addr_lines");
 
       if (processor_BrokerIF->param_exists(param_path)) {
-        addr_lines_base_ptr = processor_BrokerIF->get_param(param_path);
+        addr_lines_base = processor_BrokerIF->get_param_handle(param_path);
 
-        assert(addr_lines_base_ptr != NULL
+        assert(addr_lines_base.is_valid()
                && "Returned handle of 'no_of_addr_lines' cci-parameter"
                " is NULL");
       } else {
@@ -88,9 +90,9 @@ SC_MODULE(ex15_processor) {
       param_path.append(".memory_block.mem_size");
 
       if (processor_BrokerIF->param_exists(param_path)) {
-        mem_size_base_ptr = processor_BrokerIF->get_param(param_path);
+        mem_size_base = processor_BrokerIF->get_param_handle(param_path);
 
-        assert(mem_size_base_ptr != NULL
+        assert(mem_size_base.is_valid()
                && "Returned handle of 'memory_block_size' cci-parameter"
                " is NULL");
       } else {
@@ -102,25 +104,26 @@ SC_MODULE(ex15_processor) {
     // Checks for the condition whether the default total number of the
     // address lines can address the default address location
     total_addr_lines =
-            atoi(addr_lines_base_ptr->get_cci_value().to_json().c_str());
+            atoi(addr_lines_base.get_cci_value().to_json().c_str());
     mem_block_size =
-            atoi(mem_size_base_ptr->get_cci_value().to_json().c_str());
+            atoi(mem_size_base.get_cci_value().to_json().c_str());
     TestCondition(total_addr_lines, mem_block_size);
 
     // Registering 'POST_WRITE' callbacks on the cci-parameters of the
     // two register modules
-    addr_lines_post_wr_cb =
-        addr_lines_base_ptr->register_callback(cci::post_write,
+    // TODO: fixme
+    /*addr_lines_post_wr_cb =
+        addr_lines_base.register_callback(cci::post_write,
                                                this,
                                                cci::bind(&ex15_processor::addr_lines_post_wr_cb_func,
                                                          this, _1, _2,
-                                                         mem_size_base_ptr));
+                                                         mem_size_base));
     mem_block_post_wr_cb =
-        mem_size_base_ptr->register_callback(cci::post_write,
+        mem_size_base.register_callback(cci::post_write,
                                              this,
                                              cci::bind(&ex15_processor::mem_block_post_wr_cb_func,
                                                        this, _1, _2,
-                                                       addr_lines_base_ptr));
+                                                       addr_lines_base));*/
   }
 
   /**
@@ -131,7 +134,8 @@ SC_MODULE(ex15_processor) {
    *  @param  _mem_size_base_ptr  Pointer to the base of the memory size
    *  @return The status of the execution of the function
    */
-  cci::callback_return_type addr_lines_post_wr_cb_func(cci::cci_base_param & _base_param,
+  // TODO: fixme
+  /*cci::callback_return_type addr_lines_post_wr_cb_func(cci::cci_base_param & _base_param,
                                                             const cci::callback_type & cb_reason,
                                                             cci::cci_base_param * _mem_size_base_ptr) {
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
@@ -151,7 +155,7 @@ SC_MODULE(ex15_processor) {
     TestCondition(total_addr_lines, mem_block_size);
 
     return cci::return_nothing;
-  }
+  }*/
 
   /**
    *  @fn     cci::callback_return_type mem_block_post_wr_cb_func(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason, cci::cci_base_param* _addr_lines_base_ptr)
@@ -161,7 +165,8 @@ SC_MODULE(ex15_processor) {
    *  @param  _addr_lines_base_ptr  Pointer to the base of the address lines for the memory block
    *  @return The status result of the function execution
    */
-  cci::callback_return_type mem_block_post_wr_cb_func(cci::cci_base_param & _base_param,
+  // TODO: fixme
+  /*cci::callback_return_type mem_block_post_wr_cb_func(cci::cci_base_param & _base_param,
                                                            const cci::callback_type & cb_reason,
                                                            cci::cci_base_param * _addr_lines_base_ptr) {
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
@@ -169,17 +174,17 @@ SC_MODULE(ex15_processor) {
             << _base_param.get_cci_value().to_json());
 
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << _addr_lines_base_ptr->get_name() << "\tParameter Value : "
-            << _addr_lines_base_ptr->get_cci_value().to_json());
+            << _addr_lines_base.get_name() << "\tParameter Value : "
+            << _addr_lines_base.get_cci_value().to_json());
 
     mem_block_size = atoi(_base_param.get_cci_value().to_json().c_str());
     total_addr_lines = atoi(
-            _addr_lines_base_ptr->get_cci_value().to_json().c_str());
+            _addr_lines_base.get_cci_value().to_json().c_str());
 
     TestCondition(total_addr_lines, mem_block_size);
 
     return cci::return_nothing;
-  }
+  }*/
 
   /**
    *  @fn     void TestCondition(int lines, int memory_size)
@@ -220,8 +225,8 @@ SC_MODULE(ex15_processor) {
   int mem_block_size; ///< The size of the memory block
 
   // CCI Base parameter pointer
-  cci::cci_base_param* addr_lines_base_ptr;  ///< Pointer to the address lines
-  cci::cci_base_param* mem_size_base_ptr;  ///< Pointer to the base of the memory size
+  cci::cci_param_handle addr_lines_base;  ///< Handle to the address lines
+  cci::cci_param_handle mem_size_base;  ///< Handle to the base of the memory size
 
   // Callback Adaptor Objects
   cci::shared_ptr<cci::callb_adapt> addr_lines_post_wr_cb; ///< Address lines callback adapter object

@@ -54,29 +54,33 @@ void ObserverModule::main_action() {
   // ******** register for new parameter callbacks ***************
   DEMO_DUMP(name(), "Registering for new parameter callbacks");
   cci::shared_ptr<cci::callb_adapt> cb_new_pa;
-  cb_new_pa = mApi->register_str_callback(cci::create_param, "*", this, 
-                                   cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
+  // TODO: fixme
+  /*cb_new_pa = mApi->register_str_callback(cci::create_param, "*", this,
+                                   cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));*/
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
 
   // ******** register for parameter change callbacks ***************
   DEMO_DUMP(name(), "Registering for Owner.int_param post_write callbacks");
-  cci::cci_base_param* p = mApi->get_param("Owner.int_param");
-  assert(p != NULL);
+  cci::cci_param_handle p = mApi->get_param_handle("Owner.int_param");
+  assert(p.is_valid());
   cci::shared_ptr<cci::callb_adapt> cb1, cb3;
-  cb1 = p->register_callback(cci::post_write, this, 
-                             cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  // TODO: fixme
+  /*cb1 = p->register_callback(cci::post_write, this,
+                             cci::bind(&ObserverModule::config_callback, this, _1, _2));*/
  
   DEMO_DUMP(name(), "Registering for Owner.uint_param post_write callbacks");
-  cci::cci_base_param* p2 = mApi->get_param("Owner.uint_param");
-  assert(p2 != NULL);
-  cb3 = p2->register_callback(cci::post_write, this, 
-                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  cci::cci_param_handle p2 = mApi->get_param_handle("Owner.uint_param");
+  assert(p2.is_valid());
+  // TODO: fixme
+  /*cb3 = p2->register_callback(cci::post_write, this,
+                              cci::bind(&ObserverModule::config_callback, this, _1, _2));*/
   
   mCallbacks.push_back(cb3);// This will not be deleted after end of main_action()
 }
 
 /// Callback function with default signature showing changes.
-cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+// TODO: fixme
+/*cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
   assert(cb_reason == cci::post_write);
   std::string str = par.get_cci_value().to_json();
   DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
@@ -90,4 +94,4 @@ cci::callback_return_type ObserverModule::config_new_param_callback(const std::s
   std::string str_val = p_param->get_cci_value().to_json();
   DEMO_DUMP(name(), "New parameter callback '" << parname << "', value '" << str_val << "'");
   return cci::return_nothing;
-}
+}*/

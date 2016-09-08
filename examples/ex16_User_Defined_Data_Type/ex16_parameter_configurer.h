@@ -51,7 +51,8 @@ SC_MODULE(ex16_parameter_configurer) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex16_parameter_configurer) {
+  SC_CTOR(ex16_parameter_configurer):
+      udt_param(cci::cci_originator(*this)) {
     // Get the broker responsible for this module using
     // 'get_current_broker' API
     myBrokerInterface =
@@ -75,10 +76,10 @@ SC_MODULE(ex16_parameter_configurer) {
     // Check the existence of the user-defined data type cci-parameter
     if (myBrokerInterface->param_exists(udt_param_str)) {
       // If parameter exists, get handle of the parameter using 'get_param' API
-      udt_param_ptr = myBrokerInterface->get_param(udt_param_str);
+      udt_param = myBrokerInterface->get_param_handle(udt_param_str);
 
       // Report if parameter handle is returned NULL
-      assert(udt_param_ptr != NULL
+      assert(udt_param.is_valid()
              && "User define data type CCI Parameter Handle returned NULL");
     } else {
       XREPORT("[CFGR C_TOR] : User define datatype  parameter does not exist");
@@ -101,15 +102,15 @@ SC_MODULE(ex16_parameter_configurer) {
 
       // Access parameter's name using 'get_name()' API
       XREPORT("[CFGR -> Retrieve] : Parameter name : "
-              << udt_param_ptr->get_name());
+              << udt_param.get_name());
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
-              << udt_param_ptr->get_cci_value().to_json());
+              << udt_param.get_cci_value().to_json());
 
       // Access parameter's description using 'get_description()' API
       XREPORT("[CFGR -> Retrieve] : Parameter desc: "
-              << udt_param_ptr->get_description());
+              << udt_param.get_description());
 
       wait(2.0, SC_NS);
 
@@ -118,18 +119,18 @@ SC_MODULE(ex16_parameter_configurer) {
 
       std::string set_string("{\"s_address\":1024,\"d_address"
                              "\":1280,\"index\":3}");
-      udt_param_ptr->set_cci_value(cci::cci_value::from_json(set_string));
+      udt_param.set_cci_value(cci::cci_value::from_json(set_string));
 
       wait(2.0, SC_NS);
       XREPORT("@ " << sc_time_stamp());
 
       // Access parameter's name using 'get_name()' API
       XREPORT("[CFGR -> Retrieve] : Parameter name : "
-              << udt_param_ptr->get_name());
+              << udt_param.get_name());
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
-              << udt_param_ptr->get_cci_value().to_json());
+              << udt_param.get_cci_value().to_json());
 
       wait(20.0, SC_NS);
     }
@@ -140,8 +141,8 @@ SC_MODULE(ex16_parameter_configurer) {
 
   std::string udt_param_str;  ///< std::string types for storing parameters hierarchical paths
 
-  // Declaring cci_base_parameters
-  cci::cci_base_param* udt_param_ptr;  ///< CCI base parameter pointer
+  // Declaring CCI parameter handles
+  cci::cci_param_handle udt_param;  ///< CCI parameter handle
 };
 // ex16_parameter_configurer
 

@@ -69,18 +69,17 @@ SC_MODULE(ex01_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(int_param_name)) {
       // Get handle to the param
-      cci::cci_param_handle *int_param_ptr = m_cci->get_param_handle(
-          int_param_name);
-      assert(int_param_ptr != NULL);
+      cci::cci_param_handle int_param = m_cci->get_param_handle(int_param_name);
+      assert(int_param.is_valid());
 
       // Update the param's value to 2
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 2");
-      int_param_ptr->set_cci_value(cci::cci_value::from_json("2"));
+      int_param.set_cci_value(cci::cci_value::from_json("2"));
 
       // Display new value
-      std::string new_value = int_param_ptr->get_cci_value().to_json();
+      std::string new_value = int_param.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_ptr->get_name() << " is " << new_value);
+              << int_param.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
     }

@@ -240,11 +240,6 @@ CCI_OPEN_NAMESPACE_
 		return m_gs_param_base->getName();
 	}
 
-	bool cci_param_untyped::is_handle() const
-	{
-		return false;
-	}
-
 	cci_originator cci_param_untyped::get_originator() const
 	{
 		return m_originator;

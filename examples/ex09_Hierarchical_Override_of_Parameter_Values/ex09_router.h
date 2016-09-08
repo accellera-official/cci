@@ -70,6 +70,7 @@ SC_MODULE(ex09_router) {
         r_initiators("r_initiators", 0),
         r_targets("r_targets", 0),
         addr_limit("addr_max", 64),
+        base(cci::cci_originator(*this)),
         addrSize(0) {
     XREPORT("[ROUTER C_TOR] ----- [ROUTER CONSTRUCTOR BEGINS HERE] ------");
 
@@ -93,12 +94,13 @@ SC_MODULE(ex09_router) {
   void before_end_of_elaboration(void) {
     XREPORT("[ROUTER in beoe] : Number of initiator(s) : "
             << r_initiators.get_cci_value().to_json());
-    XREPORT("[ROUTER in beoe] : Number of target(s) : " << r_targets.get());
+    XREPORT("[ROUTER in beoe] : Number of target(s) : "
+                    << r_targets.get_value());
     XREPORT("[ROUTER in beoe] : Maximum Addressable Limit of the router : "
-            << addr_limit.get());
+            << addr_limit.get_value());
 
     char targetName[10];      ///< Holds router table's fields' names
-    addrSize = (unsigned int) (addr_limit.get() / r_targets);
+    addrSize = (unsigned int) (addr_limit.get_value() / r_targets);
 
     // Printing the Router Table contents
     XREPORT("============= ROUTER TABLE INFORMATION ==============");
@@ -130,16 +132,16 @@ SC_MODULE(ex09_router) {
                "top_module_inst.target_%d.s_base_addr", i);
 
       if (myBrokerForRouter->param_exists(stringName)) {
-        base_ptr = myBrokerForRouter->get_param(stringName);
-        assert(base_ptr != NULL
+        base = myBrokerForRouter->get_param_handle(stringName);
+        assert(base.is_valid()
                && "target Base Address Handle returned is NULL");
       }
 	  std::stringstream row_ss;
-	  row_ss << "| " << std::setw(10) << r_target_index[i]->get()
-		     << " | " << std::setw(10) << std::hex << std::showbase << r_addr_start[i]->get()
-		     << " | " << std::setw(10) << r_addr_end[i]->get() 
+	  row_ss << "| " << std::setw(10) << r_target_index[i]->get_value()
+		     << " | " << std::setw(10) << std::hex << std::showbase << r_addr_start[i]->get_value()
+		     << " | " << std::setw(10) << r_addr_end[i]->get_value()
 		     << " | " << std::setw(10)
-             << base_ptr->get_cci_value().to_json() << " |";
+             << base.get_cci_value().to_json() << " |";
 	XREPORT(row_ss.str().c_str());
     XREPORT("-----------------------------------------------------");
     }
@@ -153,20 +155,20 @@ SC_MODULE(ex09_router) {
 
     sc_dt::uint64 addr = trans.get_address();
 
-    if (addr >= static_cast<sc_dt::uint64>(addr_limit.get())) {
+    if (addr >= static_cast<sc_dt::uint64>(addr_limit.get_value())) {
       trans.set_response_status(tlm::TLM_ADDRESS_ERROR_RESPONSE);
       return;
     }
 
     for (unsigned int i = 0; i < r_target_index.size(); i++) {
-      if ((addr >= (r_addr_start[i]->get()))
-          && (addr <= (r_addr_end[i]->get()))) {
+      if ((addr >= (r_addr_start[i]->get_value()))
+          && (addr <= (r_addr_end[i]->get_value()))) {
         XREPORT("[Router in 'b_transport' layer]");
         XREPORT("Address       = " << std::hex << addr);
-        XREPORT("Index         = " << (r_target_index[i])->get());
-        XREPORT("Start addres  = " << std::hex << (r_addr_start[i]->get()));
-        XREPORT("End   Address = " << std::hex << (r_addr_end[i]->get()));
-        Router_initiator[(r_target_index[i])->get()]->b_transport(trans, delay);
+        XREPORT("Index         = " << (r_target_index[i])->get_value());
+        XREPORT("Start addres  = " << std::hex << (r_addr_start[i]->get_value()));
+        XREPORT("End   Address = " << std::hex << (r_addr_end[i]->get_value()));
+        Router_initiator[(r_target_index[i])->get_value()]->b_transport(trans, delay);
         break;
       }
     }
@@ -188,7 +190,7 @@ SC_MODULE(ex09_router) {
   std::vector<cci::cci_param<unsigned int,
                                   cci::elaboration_time_param> *> r_addr_end;  ///< Router table end address
 
-  cci::cci_base_param* base_ptr; ///< CCI base parameter for target base address
+  cci::cci_param_handle base; ///< CCI base parameter for target base address
 
   int addrSize;
   char stringName[50];
