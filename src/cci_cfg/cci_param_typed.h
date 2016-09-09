@@ -212,6 +212,35 @@ public:
 
     ///@}
 
+    ///@name Callback Handling
+    ///@{
+
+    /// CCI param write callback typed type
+    typedef typename cci_param_write_callback<T>::type
+            cci_param_write_callback_typed;
+
+    /// @copydoc cci_param_untyped::register_write_callback
+    cci_callback_untyped_handle register_write_callback(
+            const cci_param_write_callback_typed &cb);
+
+    /// @copydoc cci_param_untyped::unregister_write_callback
+    bool unregister_write_callback(
+            const cci_param_write_callback_typed &cb);
+
+    /// CCI param write callback typed type
+    typedef typename cci_param_validate_write_callback<T>::type
+            cci_param_validate_write_callback_typed;
+
+    /// @copydoc cci_param_untyped::register_validate_write_callback
+    cci_callback_untyped_handle register_validate_write_callback(
+            const cci_param_validate_write_callback_typed &cb);
+
+    /// @copydoc cci_param_untyped::unregister_validate_write_callback
+    bool unregister_validate_write_callback(
+            const cci_param_validate_write_callback_typed &cb);
+
+    ///@}
+
     /// Free resources attached to parameter.
     void destroy();
 
@@ -394,11 +423,39 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value, const cci_originat
         return;
     }
     if (set_cci_value_allowed()) {
-        if (!m_gs_param->setValue(val))
-            cci::cci_report_handler::set_param_failed(
-                    "Value rejected by callback.");
-        else
-            update_latest_write_originator(originator);
+        // Write callback payload
+        cci_param_write_event<T> ev(get_value(),
+                                    *(static_cast<const T*>(value)),
+                                    originator);
+
+        // Write callbacks
+        for (unsigned i = 0; i < m_write_callbacks.size(); ++i) {
+            typename cci_param_write_callback_handle<T>::type
+                    typed_write_cb(m_write_callbacks[i].callback);
+            if (typed_write_cb.valid()) {
+                typed_write_cb.invoke(
+                        static_cast<const cci_param_write_event <T> >(ev));
+            }
+        }
+
+        // Validate write callbacks
+        for (unsigned i = 0; i < m_validate_write_callbacks.size(); ++i) {
+            typename cci_param_validate_write_callback_handle<T>::type
+                    typed_validate_write_cb(
+                    m_validate_write_callbacks[i].callback);
+            if (!typed_validate_write_cb.invoke(
+                    static_cast<const cci_param_write_event<T> >(ev))) {
+                // Write denied
+                cci::cci_report_handler::set_param_failed(
+                        "Value rejected by callback.");
+            }
+        }
+
+        // Effective write
+        m_gs_param->setValue(val); // TODO: fixme, remove dependency
+
+        // Update latest write originator
+        update_latest_write_originator(originator);
     }
 }
 
@@ -501,6 +558,43 @@ void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
 template <typename T, param_mutable_type TM>
 cci::cci_value cci_param_typed<T, TM>::get_cci_value() const {
     return cci::cci_value(this->m_gs_param->getValue());
+}
+
+template <typename T, param_mutable_type TM>
+cci_callback_untyped_handle cci_param_typed<T, TM>::register_write_callback(
+        const cci_param_write_callback_typed &cb)
+{
+    typename cci_param_write_callback_handle<T>::type typed_cb(cb);
+    if (typed_cb.valid()) {
+        return cci_param_untyped::register_write_callback(typed_cb);
+    }
+    return typed_cb;
+}
+
+template <typename T, param_mutable_type TM>
+bool cci_param_typed<T, TM>::unregister_write_callback(
+        const cci_param_write_callback_typed &cb)
+{
+    return cci_param_untyped::unregister_write_callback(cb);
+}
+
+template <typename T, param_mutable_type TM>
+cci_callback_untyped_handle
+cci_param_typed<T, TM>::register_validate_write_callback(
+        const cci_param_validate_write_callback_typed &cb)
+{
+    typename cci_param_validate_write_callback_handle<T>::type typed_cb(cb);
+    if (typed_cb.valid()) {
+        return cci_param_untyped::register_validate_write_callback(typed_cb);
+    }
+    return typed_cb;
+}
+
+template <typename T, param_mutable_type TM>
+bool cci_param_typed<T, TM>::unregister_validate_write_callback(
+        const cci_param_validate_write_callback_typed &cb)
+{
+    return cci_param_untyped::unregister_validate_write_callback(cb);
 }
 
 template <typename T, param_mutable_type TM>

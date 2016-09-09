@@ -147,6 +147,27 @@ public:
     ///@name Callback Handling
     ///@{
 
+    /// @copydoc cci_param_typed::register_write_callback
+    cci_callback_untyped_handle register_write_callback(
+            const cci_param_write_callback_untyped &cb);
+
+    /// @copydoc cci_param_typed::unregister_write_callback
+    bool unregister_write_callback(const cci_param_write_callback_untyped &cb);
+
+    /// @copydoc cci_param_typed::register_validate_write_callback
+    cci_callback_untyped_handle register_validate_write_callback(
+            const cci_param_write_callback_untyped &cb);
+
+    /// @copydoc cci_param_typed::unregister_validate_write_callback
+    bool unregister_validate_write_callback(
+            const cci_param_write_callback_untyped &cb);
+
+    /// @copydoc cci_param_typed::unregister_all_callbacks
+    bool unregister_all_callbacks();
+
+    /// @copydoc cci_param_typed::has_callbacks
+    bool has_callbacks() const;
+
     ///@}
 
     ///@name Write-access control

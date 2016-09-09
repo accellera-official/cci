@@ -157,11 +157,115 @@ public:
 
     ///@}
 
-    
     ///@name Callback Handling
     ///@{
-    // TODO
+
+protected:
+    /// Register function as a write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    cci_callback_untyped_handle
+    register_write_callback(const cci_callback_untyped_handle &cb);
+
+    /// Unregister function as a write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    bool
+    unregister_write_callback(const cci_callback_untyped_handle &cb);
+
+    /// Register function as a validate write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @return
+     */
+    cci_callback_untyped_handle
+    register_validate_write_callback(const cci_callback_untyped_handle &cb);
+
+    /// Unreegister function as a validate write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    bool
+    unregister_validate_write_callback(const cci_callback_untyped_handle &cb);
+
+public:
+    /// Unregister all callbacks
+    /**
+     * // TODO
+     *
+     */
+    bool unregister_all_callbacks();
+
+    /// Returns if the parameter has registered callbacks.
+    bool has_callbacks() const;
+
+private:
+    /// Register function as a write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param orig // TODO
+     */
+    cci_callback_untyped_handle
+    register_write_callback(const cci_callback_untyped_handle &cb,
+                            const cci_originator &orig);
+
+    /// Unregister function as a write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param orig // TODO
+     */
+    bool
+    unregister_write_callback(const cci_callback_untyped_handle &cb,
+                              const cci_originator &orig);
+
+    /// Register function as a validate write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param orig // TODO
+     * @return
+     */
+    cci_callback_untyped_handle
+    register_validate_write_callback(const cci_callback_untyped_handle &cb,
+                                     const cci_originator &orig);
+
+    /// Unreegister function as a validate write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param orig // TODO
+     */
+    bool
+    unregister_validate_write_callback(const cci_callback_untyped_handle &cb,
+                                       const cci_originator &orig);
+
+    /// Unregister all callbacks
+    /**
+     * // TODO
+     *
+     * @param orig // TODO
+     */
+    bool unregister_all_callbacks(const cci_originator &orig);
+
     ///@}
+
+public:
 
     ///@name Write-access control
     ///@{
@@ -223,7 +327,6 @@ public:
 
     ///@}
 
-
 protected:
     /// Constructor to create new parameter with given originator.
     cci_param_untyped(bool is_top_level_name, cci_broker_if* broker_handle,
@@ -268,6 +371,27 @@ protected:
 
     /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
     mutable bool m_latest_write_access_originator_valid;
+
+    /// Callback object
+    template<class T>
+    struct callback_obj {
+        callback_obj(T cb, const cci_originator& orig):
+                callback(cb), originator(orig) {}
+        T callback;
+        cci_originator originator;
+    };
+
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            write_callback_obj_t;
+
+    /// Write callbacks
+    std::vector<write_callback_obj_t> m_write_callbacks;
+
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            validate_write_callback_obj_t;
+
+    /// Validate write callbacks
+    std::vector<validate_write_callback_obj_t> m_validate_write_callbacks;
 
 private:
     /// Originator of the parameter

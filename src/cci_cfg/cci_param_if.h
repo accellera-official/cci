@@ -54,8 +54,7 @@ class cci_originator;
 * - Callback handling
 */
 
-class cci_param_if
-//  : public cci_param_callback_if
+class cci_param_if : public cci_param_callback_if
 {
 
     friend class cci_param_untyped_handle;
@@ -120,11 +119,6 @@ public:
     /// @copydoc cci_param_untyped::get_latest_write_originator
     virtual const cci_originator *get_latest_write_originator() const = 0;
 
-    ///@}
-
-    ///@name Callback Handling
-    ///@{
-    // TODO
     ///@}
 
     ///@name Write-access control

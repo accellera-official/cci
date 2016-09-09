@@ -98,6 +98,34 @@ public:
     ///Get the value passed in via constructor
     const value_type & get_default_value();
 
+    ///@name Callback Handling
+    ///@{
+
+    /// Write callback typed type
+    typedef typename cci_param_write_callback<T>::type
+            cci_param_write_callback_typed;
+
+    /// @copydoc cci_param_typed::register_write_callback
+    cci_callback_untyped_handle register_write_callback(
+            const cci_param_write_callback_typed &cb);
+
+    /// @copydoc cci_param_typed::unregister_write_callback
+    bool unregister_write_callback(const cci_param_write_callback_typed &cb);
+
+    /// Validate write callback typed type
+    typedef typename cci_param_write_callback<T>::type
+            cci_param_validate_write_callback_typed;
+
+    /// @copydoc cci_param_typed::register_validate_write_callback
+    cci_callback_untyped_handle register_validate_write_callback(
+            const cci_param_validate_write_callback_typed &cb);
+
+    /// @copydoc cci_param_typed::unregister_validate_write_callback
+    bool unregister_validate_write_callback(
+            const cci_param_validate_write_callback_typed &cb);
+
+    ///@}
+
     /// Constructor to create new parameter handle with given originator and
     /// original parameter
     cci_param_typed_handle(cci_param_if& orig_param, const cci_originator& originator);
@@ -169,6 +197,38 @@ template <typename T>
 const typename cci_param_typed_handle<T>::value_type& cci_param_typed_handle<T>::get_default_value()
 {
     return *static_cast<const value_type *>(cci_param_untyped_handle::get_default_value_raw());
+}
+
+template <typename T>
+cci_callback_untyped_handle
+cci_param_typed_handle<T>::register_write_callback(
+        const cci_param_write_callback_typed &cb)
+{
+    return  cci_param_untyped_handle::register_write_callback(cb);
+}
+
+template <typename T>
+bool
+cci_param_typed_handle<T>::unregister_write_callback(
+        const cci_param_write_callback_typed &cb)
+{
+    return cci_param_untyped_handle::unregister_write_callback(cb);
+}
+
+template <typename T>
+cci_callback_untyped_handle
+cci_param_typed_handle<T>::register_validate_write_callback(
+        const cci_param_validate_write_callback_typed &cb)
+{
+    return cci_param_untyped_handle::register_validate_write_callback(cb);
+}
+
+template <typename T>
+bool
+cci_param_typed_handle<T>::unregister_validate_write_callback(
+        const cci_param_validate_write_callback_typed &cb)
+{
+    return cci_param_untyped_handle::unregister_validate_write_callback(cb);
 }
 
 template <typename T>

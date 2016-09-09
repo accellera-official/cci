@@ -83,6 +83,47 @@ const cci_originator* cci_param_untyped_handle::get_latest_write_originator() co
     return m_orig_param->get_latest_write_originator();
 }
 
+cci_callback_untyped_handle cci_param_untyped_handle::register_write_callback(
+        const cci_param_write_callback_untyped &cb)
+{
+    check_is_valid();
+    return m_orig_param->register_write_callback(cb, m_originator);
+}
+
+bool cci_param_untyped_handle::unregister_write_callback(
+        const cci_param_write_callback_untyped &cb)
+{
+    check_is_valid();
+    return m_orig_param->unregister_write_callback(cb, m_originator);
+}
+
+cci_callback_untyped_handle
+cci_param_untyped_handle::register_validate_write_callback(
+        const cci_param_write_callback_untyped &cb)
+{
+    check_is_valid();
+    return m_orig_param->register_validate_write_callback(cb, m_originator);
+}
+
+bool cci_param_untyped_handle::unregister_validate_write_callback(
+        const cci_param_write_callback_untyped &cb)
+{
+    check_is_valid();
+    return m_orig_param->unregister_validate_write_callback(cb, m_originator);
+}
+
+bool cci_param_untyped_handle::unregister_all_callbacks()
+{
+    check_is_valid();
+    return m_orig_param->unregister_all_callbacks(m_originator);
+}
+
+bool cci_param_untyped_handle::has_callbacks() const
+{
+    check_is_valid();
+    return m_orig_param->has_callbacks();
+}
+
 bool cci_param_untyped_handle::lock(void* pwd)
 {
     check_is_valid();

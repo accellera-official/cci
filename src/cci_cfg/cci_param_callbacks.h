@@ -143,6 +143,24 @@ typedef cci_param_validate_write_callback<>::type
 /// Callback API of CCI parameter implementations
 struct cci_param_callback_if
 {
+  friend class cci_param_untyped_handle;
+
+  virtual cci_callback_untyped_handle
+  register_write_callback( const cci_callback_untyped_handle& cb ) = 0;
+  virtual bool
+  unregister_write_callback( const cci_callback_untyped_handle& cb ) = 0;
+
+  virtual cci_callback_untyped_handle
+  register_validate_write_callback( const cci_callback_untyped_handle& cb ) = 0;
+  virtual bool
+  unregister_validate_write_callback(
+          const cci_callback_untyped_handle& cb ) = 0;
+
+  virtual bool unregister_all_callbacks() = 0;
+
+  virtual bool has_callbacks() const = 0;
+
+private:
   virtual cci_callback_untyped_handle
   register_write_callback( const cci_callback_untyped_handle& cb
                          , const cci_originator& orig ) = 0;
@@ -158,8 +176,6 @@ struct cci_param_callback_if
                                     , const cci_originator& orig ) = 0;
 
   virtual bool unregister_all_callbacks(const cci_originator& orig) = 0;
-
-  virtual bool has_callbacks() const = 0;
 };
 
 /* ------------------------------------------------------------------------ */
