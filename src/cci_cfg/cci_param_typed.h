@@ -342,6 +342,18 @@ private:
         }
     }
 
+    void read_callback(T value) const
+    {
+        // Read callback payload
+        cci_param_read_event <T> ev(value, get_originator());
+
+        // Read callbacks
+        for (unsigned i = 0; i < m_read_callbacks.size(); ++i) {
+            m_read_callbacks[i].callback.invoke(
+                    static_cast<const cci_param_read_event <T> >(ev));
+        }
+    }
+
     /// Check whether value update is allowed
     //@todo Should these checks be moved into the parameter proxy (cci_param_typed)?
     bool set_cci_value_allowed()
@@ -398,12 +410,13 @@ cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_type
 template <typename T, param_mutable_type TM>
 cci_param_typed<T, TM>::operator const T&() const
 {
-    return m_gs_param->getValue();
+    return get_value();
 }
 
 template <typename T, param_mutable_type TM>
 const T& cci_param_typed<T, TM>::get_value() const
 {
+    read_callback(m_gs_param->getValue());
     return m_gs_param->getValue();
 }
 
@@ -424,7 +437,7 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value, const cci_originat
     }
     if (set_cci_value_allowed()) {
         // Write callback payload
-        cci_param_write_event<T> ev(get_value(),
+        cci_param_write_event<T> ev(m_gs_param->getValue(),
                                     *(static_cast<const T*>(value)),
                                     originator);
 
@@ -496,7 +509,9 @@ void cci_param_typed<T, TM>::set(const value_type& value, const void *pwd)
 template <typename T, param_mutable_type TM>
 const void* cci_param_typed<T, TM>::get_raw_value() const
 {
-    return &m_gs_param->getValue();
+    const T& value = get_value();
+    read_callback(value);
+    return static_cast<const void*>(&value);
 }
 
 template <typename T, param_mutable_type TM>
@@ -557,7 +572,9 @@ void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
 
 template <typename T, param_mutable_type TM>
 cci::cci_value cci_param_typed<T, TM>::get_cci_value() const {
-    return cci::cci_value(this->m_gs_param->getValue());
+    const T& value = this->m_gs_param->getValue();
+    read_callback(value);
+    return cci::cci_value(value);
 }
 
 template <typename T, param_mutable_type TM>

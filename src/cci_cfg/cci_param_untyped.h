@@ -199,6 +199,24 @@ protected:
     unregister_validate_write_callback(const cci_callback_untyped_handle &cb);
 
 public:
+    /// Register function as a read callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    cci_callback_untyped_handle
+    register_read_callback(const cci_callback_untyped_handle &cb);
+
+    /// Unregister function as a read callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    bool
+    unregister_read_callback(const cci_callback_untyped_handle &cb);
+
     /// Unregister all callbacks
     /**
      * // TODO
@@ -254,6 +272,28 @@ private:
     bool
     unregister_validate_write_callback(const cci_callback_untyped_handle &cb,
                                        const cci_originator &orig);
+
+    /// Register function as a read callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param orig // TODO
+     */
+    cci_callback_untyped_handle
+    register_read_callback(const cci_callback_untyped_handle &cb,
+                            const cci_originator &orig);
+
+    /// Unregister function as a read callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param orig // TODO
+     */
+    bool
+    unregister_read_callback(const cci_callback_untyped_handle &cb,
+                              const cci_originator &orig);
 
     /// Unregister all callbacks
     /**
@@ -392,6 +432,12 @@ protected:
 
     /// Validate write callbacks
     std::vector<validate_write_callback_obj_t> m_validate_write_callbacks;
+
+    typedef callback_obj<typename cci_param_read_callback_handle<int>::type>
+            read_callback_obj_t;
+
+    /// Read callbacks
+    std::vector<read_callback_obj_t> m_read_callbacks;
 
 private:
     /// Originator of the parameter

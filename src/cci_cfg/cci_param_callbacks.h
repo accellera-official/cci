@@ -82,6 +82,55 @@ struct cci_param_write_event
 
 }; // cci_param_write_event
 
+template<typename T = void>
+struct cci_param_read_event;
+
+/// Payload for type-independent read callbacks
+template<>
+struct cci_param_read_event<void>
+{
+    typedef cci_param_read_event type;
+    typedef cci_value value_type;
+
+    cci_param_read_event( const value_type&     val_
+                        , const cci_originator& orig_ );
+
+    /// Parameter value
+    const value_type& value;
+    /// Originator of new value
+    const cci_originator& originator;
+};
+
+/// Payload for read callbacks
+template<typename T>
+struct cci_param_read_event
+{
+    typedef cci_param_read_event type;
+    typedef T value_type;
+
+    cci_param_read_event( const value_type&     val_
+                        , const cci_originator& orig_ );
+
+    /// Parameter value
+    const value_type& value;
+    /// Originator of new value
+    const cci_originator& originator;
+
+    /// Type-punned specialization
+    typedef const cci_param_read_event<>& generic_type;
+
+    /// Conversion to a generic (type independent) event
+    struct generic_wrap
+    {
+        generic_type get() const { return wrapped_value; }
+        explicit generic_wrap(const type& payload);
+
+        cci_value value;
+        typename detail::remove_reference<generic_type>::type wrapped_value;
+    }; // struct generic_wrap
+
+}; // cci_param_read_event
+
 /* ------------------------------------------------------------------------ */
 
 #if CCI_HAS_CXX_TEMPLATE_ALIAS
@@ -106,6 +155,16 @@ template <typename T = void>
 using cci_param_validate_write_callback_handle
   = cci_callback_typed_handle<const cci_param_write_event<T>&, bool>;
 
+/// Parameter read callback
+template <typename T = void>
+using cci_param_read_callback
+  = cci_callback<const cci_param_read_event<T>&>;
+
+/// Parameter read callback handle
+template <typename T = void>
+using cci_param_read_callback_handle
+  = cci_callback_typed_handle<const cci_param_read_event<T>&>;
+
 #else // CCI_HAS_CXX_TEMPLATE_ALIAS
 
 /// Parameter write callback
@@ -128,6 +187,16 @@ template <typename T = void>
 struct cci_param_validate_write_callback_handle
   : cci_callback_typed_handle<const cci_param_write_event<T>&, bool> {};
 
+/// Parameter read callback
+template <typename T = void>
+struct cci_param_read_callback
+        : cci_callback<const cci_param_read_event<T>& > {};
+
+/// Parameter read callback handle
+template <typename T = void>
+struct cci_param_read_callback_handle
+        : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
+
 #endif // CCI_HAS_CXX_TEMPLATE_ALIAS_
 
 /// Untyped parameter write callback
@@ -137,6 +206,10 @@ typedef cci_param_write_callback<>::type
 /// Untyped parameter write validation callback
 typedef cci_param_validate_write_callback<>::type
   cci_param_validate_write_callback_untyped;
+
+/// Untyped parameter read callback
+typedef cci_param_read_callback<>::type
+        cci_param_read_callback_untyped;
 
 /* ------------------------------------------------------------------------ */
 
@@ -156,6 +229,11 @@ struct cci_param_callback_if
   unregister_validate_write_callback(
           const cci_callback_untyped_handle& cb ) = 0;
 
+  virtual cci_callback_untyped_handle
+  register_read_callback( const cci_callback_untyped_handle& cb ) = 0;
+  virtual bool
+  unregister_read_callback( const cci_callback_untyped_handle& cb ) = 0;
+
   virtual bool unregister_all_callbacks() = 0;
 
   virtual bool has_callbacks() const = 0;
@@ -174,6 +252,13 @@ private:
   virtual bool
   unregister_validate_write_callback( const cci_callback_untyped_handle& cb
                                     , const cci_originator& orig ) = 0;
+
+  virtual cci_callback_untyped_handle
+  register_read_callback( const cci_callback_untyped_handle& cb
+                        , const cci_originator& orig ) = 0;
+  virtual bool
+  unregister_read_callback( const cci_callback_untyped_handle& cb
+                          , const cci_originator& orig ) = 0;
 
   virtual bool unregister_all_callbacks(const cci_originator& orig) = 0;
 };
@@ -206,6 +291,29 @@ cci_param_write_event<T>::
     : old_value( payload.old_value )
     , new_value( payload.new_value )
     , wrapped_value(old_value, new_value, payload.originator)
+{}
+
+inline
+cci_param_read_event<void>::
+  cci_param_read_event( const value_type&     val_
+                      , const cci_originator& orig_ )
+    : value(val_)
+    , originator(orig_)
+{}
+
+template<typename T>
+cci_param_read_event<T>::
+  cci_param_read_event( const value_type&     val_
+                      , const cci_originator& orig_ )
+    : value(val_)
+    , originator(orig_)
+{}
+
+template<typename T>
+cci_param_read_event<T>::
+  generic_wrap::generic_wrap( const type& payload )
+        : value( payload.value )
+        , wrapped_value(value, payload.originator)
 {}
 
 CCI_CLOSE_NAMESPACE_
