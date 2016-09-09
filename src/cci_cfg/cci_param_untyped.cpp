@@ -33,106 +33,106 @@
 
 CCI_OPEN_NAMESPACE_
 
-	cci_param_untyped::cci_param_untyped(bool is_top_level_name,
-								   cci_broker_if* broker_handle,
-								   const std::string& desc,
-								   const cci_originator& originator)
-	: m_gs_param_base(NULL), m_is_default_value(0), m_is_invalid_value(!0), // TODO
-    m_description(desc), m_init_called(false),
-	  m_broker_handle(broker_handle),
-	  m_latest_write_access_originator_cp("NONE"),
-	  m_latest_write_access_originator_valid(false),
-	  m_originator(originator)
-	{
-	}
+cci_param_untyped::cci_param_untyped(bool is_top_level_name,
+                               cci_broker_if* broker_handle,
+                               const std::string& desc,
+                               const cci_originator& originator)
+: m_gs_param_base(NULL), m_is_default_value(0), m_is_invalid_value(!0), // TODO
+m_description(desc), m_init_called(false),
+  m_broker_handle(broker_handle),
+  m_latest_write_access_originator_cp("NONE"),
+  m_latest_write_access_originator_valid(false),
+  m_originator(originator)
+{
+}
 
-	cci_param_untyped::~cci_param_untyped()
-	{
-		m_broker_handle->remove_param(this);
-		assert(m_init_called && "If this happens, the construction did not call the base param init function!");
-		sc_core::sc_unregister_hierarchical_name(get_name().c_str());
-	}
+cci_param_untyped::~cci_param_untyped()
+{
+    m_broker_handle->remove_param(this);
+    assert(m_init_called && "If this happens, the construction did not call the base param init function!");
+    sc_core::sc_unregister_hierarchical_name(get_name().c_str());
+}
 
-	void cci_param_untyped::set_description(const std::string& desc)
-	{
-		m_description = desc;
-	}
+void cci_param_untyped::set_description(const std::string& desc)
+{
+    m_description = desc;
+}
 
-	std::string cci_param_untyped::get_description() const
-	{
-		return m_description;
-	}
+std::string cci_param_untyped::get_description() const
+{
+    return m_description;
+}
 
-	void cci_param_untyped::add_metadata(const std::string &name,
-										 const cci_value &value,
-										 const std::string &desc)
-	{
-		metadata.push_entry(name, cci_value_list().push_back(value)
-				.push_back(desc));
-	}
+void cci_param_untyped::add_metadata(const std::string &name,
+                                     const cci_value &value,
+                                     const std::string &desc)
+{
+    metadata.push_entry(name, cci_value_list().push_back(value)
+            .push_back(desc));
+}
 
-	cci_value_map cci_param_untyped::get_metadata() const
-	{
-		return metadata;
-	}
+cci_value_map cci_param_untyped::get_metadata() const
+{
+    return metadata;
+}
 
-	bool cci_param_untyped::is_default_value()
-	{
-		return m_is_default_value;
-	}
+bool cci_param_untyped::is_default_value()
+{
+    return m_is_default_value;
+}
 
-	bool cci_param_untyped::is_initial_value() const
-	{
-		assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-		return m_gs_param_base->is_initial_value();
-	}
+bool cci_param_untyped::is_initial_value() const
+{
+    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+    return m_gs_param_base->is_initial_value();
+}
 
-	const cci_originator* cci_param_untyped::get_latest_write_originator() const
-	{
-		if (!m_latest_write_access_originator_valid) {
-			return NULL;
-		}
-		return &m_latest_write_access_originator_cp;
-	}
+const cci_originator* cci_param_untyped::get_latest_write_originator() const
+{
+    if (!m_latest_write_access_originator_valid) {
+        return NULL;
+    }
+    return &m_latest_write_access_originator_cp;
+}
 
-	void cci_param_untyped::update_latest_write_originator(const cci_originator& originator) const {
-		m_latest_write_access_originator_valid = true;
-		m_latest_write_access_originator_cp = originator;
-	}
+void cci_param_untyped::update_latest_write_originator(const cci_originator& originator) const {
+    m_latest_write_access_originator_valid = true;
+    m_latest_write_access_originator_cp = originator;
+}
 
-	bool cci_param_untyped::lock(void* pwd)
-	{
-		assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-		return m_gs_param_base->lock(pwd);
-	}
+bool cci_param_untyped::lock(void* pwd)
+{
+    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+    return m_gs_param_base->lock(pwd);
+}
 
-	bool cci_param_untyped::unlock(void* pwd)
-	{
-		assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-		return m_gs_param_base->unlock(pwd);
-	}
+bool cci_param_untyped::unlock(void* pwd)
+{
+    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+    return m_gs_param_base->unlock(pwd);
+}
 
-	bool cci_param_untyped::is_locked() const
-	{
-		assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-		return m_gs_param_base->locked();
-	}
+bool cci_param_untyped::is_locked() const
+{
+    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+    return m_gs_param_base->locked();
+}
 
-	const std::string& cci_param_untyped::get_name() const
-	{
-		assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-		return m_gs_param_base->getName();
-	}
+const std::string& cci_param_untyped::get_name() const
+{
+    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
+    return m_gs_param_base->getName();
+}
 
-	cci_originator cci_param_untyped::get_originator() const
-	{
-		return m_originator;
-	}
+cci_originator cci_param_untyped::get_originator() const
+{
+    return m_originator;
+}
 
-	void cci_param_untyped::init()
-	{
-		assert(m_init_called == false && "init() function called more than once!");
-		m_init_called = true;
-	}
+void cci_param_untyped::init()
+{
+    assert(m_init_called == false && "init() function called more than once!");
+    m_init_called = true;
+}
 
 CCI_CLOSE_NAMESPACE_

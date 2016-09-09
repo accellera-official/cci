@@ -59,219 +59,219 @@ class cci_param_untyped : public cci_param_if
 
 public:
 
-	/// Destructor.
-	virtual ~cci_param_untyped();
+    /// Destructor.
+    virtual ~cci_param_untyped();
 
-	///@name Description
-	///@{
+    ///@name Description
+    ///@{
 
-	/// Set parameter description.
-	/**
-	 * Set the parameter's description describing purpose and
-	 * intended use, allowed value range etc. in a human readable way.
-	 *
-	 * @param desc Human readable description
-	 */
+    /// Set parameter description.
+    /**
+     * Set the parameter's description describing purpose and
+     * intended use, allowed value range etc. in a human readable way.
+     *
+     * @param desc Human readable description
+     */
     virtual void set_description(const std::string& desc);
-	
-	/// Get the parameter's description.
-	/**
-	 * return Description
-	 */
-	virtual std::string get_description() const;
+    
+    /// Get the parameter's description.
+    /**
+     * return Description
+     */
+    virtual std::string get_description() const;
 
-	///@}
+    ///@}
 
-	///@name Metadata
-	///@{
+    ///@name Metadata
+    ///@{
 
-	/// Add metadata
-	/**
-	 * Add metadata to the parameter identified by its name, value
-	 * and a human readable description.
-	 *
-	 * @param name Name of the metadata
-	 * @param value Value of the metadata
-	 * @param desc Human readable description
-	 */
-	void add_metadata(const std::string &name, const cci::cci_value &value,
-					  const std::string &desc = "");
+    /// Add metadata
+    /**
+     * Add metadata to the parameter identified by its name, value
+     * and a human readable description.
+     *
+     * @param name Name of the metadata
+     * @param value Value of the metadata
+     * @param desc Human readable description
+     */
+    void add_metadata(const std::string &name, const cci::cci_value &value,
+                      const std::string &desc = "");
 
-	/// Return the metadata value
-	/**
-	 * Return value of the metadata by its given name.
-	 *
-	 * @return name Name of the metadata
-	 * @return Metadata value
-	 */
-	cci_value_map get_metadata() const;
+    /// Return the metadata value
+    /**
+     * Return value of the metadata by its given name.
+     *
+     * @return name Name of the metadata
+     * @return Metadata value
+     */
+    cci_value_map get_metadata() const;
 
-	///@}
+    ///@}
 
-	///@name Parameter Value Status
-	///@{
+    ///@name Parameter Value Status
+    ///@{
 
-	/// Indicates whether the value provided at parameter construction persists.
-	/**
-	 * True if the value was supplied as a constructor argument and not
-	 * subsequently changed.
-	 *
-	 * Note: false is returned even if the current value matches the constructor
-	 * supplied default but has undergone intermediate changes.
-	 *
-	 * @return false if the parameter received an initial value or its value has
-	 *         changed; otherwise, true
-	 */
-	virtual bool is_default_value();
+    /// Indicates whether the value provided at parameter construction persists.
+    /**
+     * True if the value was supplied as a constructor argument and not
+     * subsequently changed.
+     *
+     * Note: false is returned even if the current value matches the constructor
+     * supplied default but has undergone intermediate changes.
+     *
+     * @return false if the parameter received an initial value or its value has
+     *         changed; otherwise, true
+     */
+    virtual bool is_default_value();
 
 
-	/// Indicates that the parameter received an initial value that has not since been modified.
-	/**
-	 * True if the value was supplied using the broker's
-	 * set_initial_cci_value function and not subsequently changed.
-	 *
-	 * Note: false is returned even if the current value matches the initial
-	 * value but has undergone intermediate changes.
-	 *
-	 * @return fase if no initial value was supplied or the parameter's value has
-	 *         changed; otherwise, true
-	 */
+    /// Indicates that the parameter received an initial value that has not since been modified.
+    /**
+     * True if the value was supplied using the broker's
+     * set_initial_cci_value function and not subsequently changed.
+     *
+     * Note: false is returned even if the current value matches the initial
+     * value but has undergone intermediate changes.
+     *
+     * @return fase if no initial value was supplied or the parameter's value has
+     *         changed; otherwise, true
+     */
     virtual bool is_initial_value() const;
 
-	///@}
+    ///@}
 
 
-	///@name Miscellaneous
-	///@{
+    ///@name Miscellaneous
+    ///@{
 
-	/// Returns the originator of the parameter's current value. 
-	/**
-	 * This initially reflects originator of the parameter's starting value,
-	 * e.g. the owning module or startup configuration file.  It is
-	 * subsequently updated to reflect the originator of any value changes.
-	 *
-	 * The originator is updated on successful calls to the following functions:
-	 * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
-	 */
-	const cci_originator* get_latest_write_originator() const;
+    /// Returns the originator of the parameter's current value. 
+    /**
+     * This initially reflects originator of the parameter's starting value,
+     * e.g. the owning module or startup configuration file.  It is
+     * subsequently updated to reflect the originator of any value changes.
+     *
+     * The originator is updated on successful calls to the following functions:
+     * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
+     */
+    const cci_originator* get_latest_write_originator() const;
 
-	///@}
+    ///@}
 
-	
-	///@name Callback Handling
-	///@{
+    
+    ///@name Callback Handling
+    ///@{
     // TODO
-	///@}
+    ///@}
 
-	///@name Write-access control
-	///@{
+    ///@name Write-access control
+    ///@{
 
-	/// Locking this parameter, optionally with a password.
-	/**
-	 * Makes a parameter read-only.
-	 *
-	 * Returns false
-	 * - if this parameter was already locked with a different password (this call has no effect)
-	 *
-	 * Returns true
-	 * - if the parameter was not locked (and is locked now) or
-	 * - if the parameter was locked without a password. Then it is locked now with the given password
-	 * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
-	 *
- 	 * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
-	 * @return If the lock was successful.
-	 */
-	bool lock(void* pwd = NULL);
+    /// Locking this parameter, optionally with a password.
+    /**
+     * Makes a parameter read-only.
+     *
+     * Returns false
+     * - if this parameter was already locked with a different password (this call has no effect)
+     *
+     * Returns true
+     * - if the parameter was not locked (and is locked now) or
+     * - if the parameter was locked without a password. Then it is locked now with the given password
+     * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
+     *
+     * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
+     * @return If the lock was successful.
+     */
+    bool lock(void* pwd = NULL);
 
-	/// Unlocking this parameter, optionally with a password if needed.
-	/**
-	 * @param pwd Password to unlock the param (if needed), default = NULL.
-	 * @return If the parameter is unlocked now.
-	 */
-	bool unlock(void* pwd = NULL);
-	
-	/// If this parameter is locked.
-	/**
-	* @return If this parameter is locked
-	*/
-	bool is_locked() const;
+    /// Unlocking this parameter, optionally with a password if needed.
+    /**
+     * @param pwd Password to unlock the param (if needed), default = NULL.
+     * @return If the parameter is unlocked now.
+     */
+    bool unlock(void* pwd = NULL);
 
-	///@}
+    /// If this parameter is locked.
+    /**
+    * @return If this parameter is locked
+    */
+    bool is_locked() const;
 
-	///@name Query parameter type and name
-	///@{
+    ///@}
 
-	/// Get the name of this parameter.
-	/**
-	 * @return   Name of the parameter.
-	 */
-	const std::string& get_name() const;
+    ///@name Query parameter type and name
+    ///@{
 
-	///@}
+    /// Get the name of this parameter.
+    /**
+     * @return   Name of the parameter.
+     */
+    const std::string& get_name() const;
 
-	///@name Accessor methods
-	///@{
-	
-	/// Gets cci_originator of the parameter.
-	/**
-	 * The originator reflects ownership of the parameter proxy, which points
-	 * to an implementation.  For a handle, the originator identifies the
-	 * entity accessing the parameter.  Otherwise, the originator reflects
-	 * the parameter's creator.
-	 */
-	cci_originator get_originator() const;
-	
-	///@}
+    ///@}
 
+    ///@name Accessor methods
+    ///@{
 
-protected:
-	/// Constructor to create new parameter with given originator.
-	cci_param_untyped(bool is_top_level_name, cci_broker_if* broker_handle,
-				   const std::string& desc, const cci_originator& originator);
+    /// Gets cci_originator of the parameter.
+    /**
+     * The originator reflects ownership of the parameter proxy, which points
+     * to an implementation.  For a handle, the originator identifies the
+     * entity accessing the parameter.  Otherwise, the originator reflects
+     * the parameter's creator.
+     */
+    cci_originator get_originator() const;
 
-	///@name Initialization and Destructions methods
-	///@{
+    ///@}
 
-	/// Initialize.
-	void init();
-
-	///@}
-
-	/// Updates the internal member m_latest_write_access_originator_cp
-	void update_latest_write_originator(const cci_originator& originator) const;
 
 protected:
+    /// Constructor to create new parameter with given originator.
+    cci_param_untyped(bool is_top_level_name, cci_broker_if* broker_handle,
+                   const std::string& desc, const cci_originator& originator);
 
-	/// Associated gs_param_base
-	gs::gs_param_base *m_gs_param_base;
+    ///@name Initialization and Destructions methods
+    ///@{
 
-	/// Is default value
-	bool m_is_default_value;
+    /// Initialize.
+    void init();
 
-	/// Is invalid value
-	bool m_is_invalid_value;
+    ///@}
 
-	/// Description
-	std::string m_description;
+    /// Updates the internal member m_latest_write_access_originator_cp
+    void update_latest_write_originator(const cci_originator& originator) const;
 
-	/// Metadata
-	cci_value_map metadata;
+protected:
 
-	/// Initialized
-	bool m_init_called;
+    /// Associated gs_param_base
+    gs::gs_param_base *m_gs_param_base;
 
-	/// Broker handle
-	cci_broker_if* m_broker_handle;
+    /// Is default value
+    bool m_is_default_value;
 
-	/// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
-	mutable cci_originator m_latest_write_access_originator_cp;
+    /// Is invalid value
+    bool m_is_invalid_value;
 
-	/// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
-	mutable bool m_latest_write_access_originator_valid;
+    /// Description
+    std::string m_description;
+
+    /// Metadata
+    cci_value_map metadata;
+
+    /// Initialized
+    bool m_init_called;
+
+    /// Broker handle
+    cci_broker_if* m_broker_handle;
+
+    /// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
+    mutable cci_originator m_latest_write_access_originator_cp;
+
+    /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
+    mutable bool m_latest_write_access_originator_valid;
 
 private:
-	/// Originator of the parameter
-	const cci_originator m_originator;
+    /// Originator of the parameter
+    const cci_originator m_originator;
 };
 
 CCI_CLOSE_NAMESPACE_
