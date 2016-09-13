@@ -180,7 +180,7 @@ public:
     ///@}
 
     /// @copydoc cci_param_typed::create_param_handle
-    virtual cci_param_untyped_handle *
+    virtual cci_param_untyped_handle
     create_param_handle(const cci_originator &originator) = 0;
 
 private:

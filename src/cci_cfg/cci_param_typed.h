@@ -252,7 +252,7 @@ public:
      * @return  A newed copy pointing to the same implementation parameter.
      *          Memory management has to be done by the caller!
      */
-    cci_param_untyped_handle* create_param_handle(const cci_originator& originator);
+    cci_param_untyped_handle create_param_handle(const cci_originator& originator);
 
     /**
      * Constructor with (local/hierarchical) name, default value,
@@ -650,9 +650,9 @@ bool cci_param_typed<T, TM>::unregister_validate_write_callback(
 }
 
 template <typename T, param_mutable_type TM>
-cci_param_untyped_handle* cci_param_typed<T, TM>::create_param_handle(const cci_originator& originator)
+cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(const cci_originator& originator)
 {
-    return new cci_param_typed_handle<T>(*this, originator);
+    return cci_param_typed_handle<T>(*this, originator);
 }
 
 template <typename T, param_mutable_type TM>
