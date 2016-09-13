@@ -370,6 +370,55 @@ private:
         return true;
     }
 
+    /// Write callback
+    void
+    write_callback(value_type value, const cci_originator &originator) const
+    {
+        // Write callback payload
+        cci_param_write_event <value_type> ev(m_gs_param->getValue(),
+                                     value,
+                                     originator);
+
+        // Write callbacks
+        for (unsigned i = 0; i < m_write_callbacks.size(); ++i) {
+            typename cci_param_write_callback_handle<T>::type
+                    typed_write_cb(m_write_callbacks[i].callback);
+            if (typed_write_cb.valid()) {
+                typed_write_cb.invoke(
+                        static_cast<
+                                const cci_param_write_event <value_type> >(ev));
+            }
+        }
+    }
+
+    /// Validate write callback
+    bool
+    validate_write_callback(value_type value,
+                            const cci_originator &originator) const
+    {
+        bool result = true;
+
+        // Write callback payload
+        cci_param_write_event <T> ev(m_gs_param->getValue(),
+                                     value,
+                                     originator);
+
+        // Validate write callbacks
+        for (unsigned i = 0; i < m_validate_write_callbacks.size(); ++i) {
+            typename cci_param_validate_write_callback_handle<value_type>::type
+                    typed_validate_write_cb(
+                    m_validate_write_callbacks[i].callback);
+            if (!typed_validate_write_cb.invoke(
+                    static_cast<
+                            const cci_param_write_event <value_type> >(ev))) {
+                // Write denied
+                cci::cci_report_handler::set_param_failed(
+                        "Value rejected by callback.");
+                result = false;
+            }
+        }
+        return result;
+    }
 };
 
 template <typename T, param_mutable_type TM>
@@ -430,45 +479,22 @@ template <typename T, param_mutable_type TM>
 void cci_param_typed<T, TM>::set_raw_value(const void* value, const cci_originator& originator)
 {
     value_type val = *static_cast<const value_type*>(value);
-    if (m_gs_param->locked())
-    {
+    if (m_gs_param->locked()) {
         cci::cci_report_handler::set_param_failed("Parameter locked.");
         return;
     }
     if (set_cci_value_allowed()) {
-        // Write callback payload
-        cci_param_write_event<T> ev(m_gs_param->getValue(),
-                                    *(static_cast<const T*>(value)),
-                                    originator);
+        write_callback(val, originator);
 
-        // Write callbacks
-        for (unsigned i = 0; i < m_write_callbacks.size(); ++i) {
-            typename cci_param_write_callback_handle<T>::type
-                    typed_write_cb(m_write_callbacks[i].callback);
-            if (typed_write_cb.valid()) {
-                typed_write_cb.invoke(
-                        static_cast<const cci_param_write_event <T> >(ev));
+        if(validate_write_callback(val, originator)) {
+            // Effective write
+            if (!m_gs_param->setValue(val)) { // TODO: fixme, remove dependency
+                cci::cci_report_handler::set_param_failed("Bad value.");
+            } else {
+                // Update latest write originator
+                update_latest_write_originator(originator);
             }
         }
-
-        // Validate write callbacks
-        for (unsigned i = 0; i < m_validate_write_callbacks.size(); ++i) {
-            typename cci_param_validate_write_callback_handle<T>::type
-                    typed_validate_write_cb(
-                    m_validate_write_callbacks[i].callback);
-            if (!typed_validate_write_cb.invoke(
-                    static_cast<const cci_param_write_event<T> >(ev))) {
-                // Write denied
-                cci::cci_report_handler::set_param_failed(
-                        "Value rejected by callback.");
-            }
-        }
-
-        // Effective write
-        m_gs_param->setValue(val); // TODO: fixme, remove dependency
-
-        // Update latest write originator
-        update_latest_write_originator(originator);
     }
 }
 
@@ -482,15 +508,24 @@ template <typename T, param_mutable_type TM>
 void cci_param_typed<T, TM>::set_raw_value(const void* value, const void *pwd,
                          const cci_originator& originator)
 {
+    value_type val = *static_cast<const value_type*>(value);
     if (!m_gs_param->check_pwd(pwd)) {
         cci::cci_report_handler::set_param_failed("Wrong key.");
         return;
     }
     if (set_cci_value_allowed()) {
-        if (!m_gs_param->setValue(*static_cast<const value_type *>(value), pwd))
-            cci::cci_report_handler::set_param_failed("Bad value.");
-        else
-            update_latest_write_originator(originator);
+        write_callback(val, originator);
+
+        if(validate_write_callback(val, originator)) {
+            // Effective write
+            if (!m_gs_param->setValue(val,
+                                      pwd)) { // TODO: fixme, remove dependency
+                cci::cci_report_handler::set_param_failed("Bad value.");
+            } else {
+                // Update latest write originator
+                update_latest_write_originator(originator);
+            }
+        }
     }
 }
 
