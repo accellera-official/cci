@@ -12,25 +12,25 @@ available from the WG's Accellera workspace, for more detailed instructions.
 - generate doxygen documentation in doc/:
    doxygen cci_doxygen_examples.conf
    doxygen cci_doxygen_api_ref.conf
-   doxygen cci_doxygen_gs_impl_ref.conf
+
 - review the generated documentation in:
    doc/Examples/index.html
    doc/API_ref/index.html
-   doc/GS_implementation_ref/index.html
 
 - build and run examples:
-  See README.txt and 'CCI Instructions for MSVS2015.pdf' in msvc80/cci for 
+  See README.txt and 'CCI Instructions for MSVS2015.pdf' in msvc10/cci for 
   Windows-specific instructions.
 
   - Initialize environment variables
     - CCI_HOME (git root)
     - BOOST_HOME (Boost include dir)
-    - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.1)
+    - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.2)
     - TARGET_ARCH (e.g. linux64)
+
   - build libraries by invoking 'gmake' in the following directories:
     - src
     - packages/gs_broker
-    - packages/gs_param
+   
   - run individual examples or the full suite
     - follow instructions in examples/README.txt
     - be sure to review the PowerPoint presentation in each example's docs/
@@ -45,8 +45,7 @@ src/       :  CCI interface files, only include <cci_configuration> in user code
 packages/  :  external packages, namely rapidjson
     greencontrol/ : GreenSocs configuration implementation
     gs_broker/    : GreenSocs broker wrapper
-    gs_param/     : GreenSocs parameter wrapper
 dev_examples/ :  developer examples (i.e. test cases)
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)
-msvc80/    :  Microsoft Visual Studio project files
+msvc10/    :  Microsoft Visual Studio project files

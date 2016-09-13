@@ -1,6 +1,6 @@
 ================================================================================
                     Accellera/CCI Examples README
-Date  : 07/05/2013
+Date  : 09/13/2016
 ================================================================================
 
 ToC
@@ -8,13 +8,12 @@ ToC
   Introduction
   Directory Structure
   Running the examples
-  TODO
-  ISSUES
+  Note
 
 Introduction
 ------------
   This README provides an overview of the Accellera/CCI package examples and 
-how to build and run them. The build is based on systemc-regressions/ package's
+how to build and run them. The build is branched from systemc-regressions/ package's
 verify.pl script.
 
 Directory Structure
@@ -37,26 +36,28 @@ Running the examples
     installation. A sample file has been provided for your reference.
 
 -- [ cci_env.bash ]
-  export SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/systemc-2.3.0
-  export BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_44_0
-  export CCI_HOME=/proj/sds_cce/cci_ti/cci
+  export SYSTEMC_HOME=../systemc
+  export BOOST_HOME=../boost/1.57.0/win_64/vc_12/include/boost-1_57
+  export CCI_HOME=../cci
 # export SYSTEMC_PTHREADS=1
   export SYSTEMC_TEST=${CCI_HOME}/examples
-  export CXX=g++
-# export PATH=/apps/free/gcc/4.4.5/bin:${PATH}
+  export CXX=g++ (for Linux)
+         CXX=cl  (for Windows)
+# export PATH=/apps/free/gcc/4.4.5/bin:${PATH} (for Linux)
+         PATH=/cygdrive/c/Program\ Files\ \(x86\)/Mirosoft\ Visual\ Studio\ 14.0/VC/bin/amd64:${PATH} (for Windows)
 # export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
 --
 
-2) Ensure that you build the 3 CCI libs before attempting to build the examples.
+2) Ensure that you build the 2 CCI libs before attempting to build the examples.
 
 3) Create a directory called run/ in your CCI_HOME folder, and 'cd' into it.
 +------------------------------------------------+
   % pwd
-  /proj/sds_cce/cci_ti/cci
+  ../cci
   % mkdir run
   % cd run
   % pwd
-  /proj/sds_cce/cci_ti/cci/run
+  ../cci/run
 +------------------------------------------------+
 
 4) The verify.pl script needs to be invoked to build/run/compare-golden results.
@@ -80,16 +81,8 @@ Running the examples
     %../scripts/verify.pl dev_examples examples
 +-----------------------------------------------+
 
-
-ISSUES
+Note
 -------
-1) Should the scripts/ folder be part of CCI package or should this be imported
-  from systemc-regressions/ package.
-  1.1) If this is imported from systemc-integration package, then
-    a. Everyone using cci/ package should also import systemc-regression/ package.
-    b. The CCI related changes to the script must be protected with flags so as to 
-       not impact systemc-regressions.
-  1.2) If this not imported then,
-    a. The verify.pl scripts may need to be synced up periodically for any new 
-       features and/or bug-fixes.
+CCI specific changes are included between #--CCI and #--/CCI in verify.pl script which is branched from 
+systemc-regressions/ package
 

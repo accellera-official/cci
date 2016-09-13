@@ -3,14 +3,15 @@ README for building CCI libraries/examples/regression with Microsoft Visual C++
 
 Authors: Lei Liang <lei.liang@ericsson.com>
          Philipp A. Hartmann <philipp.hartmann@offis.de>
-Date   : 2014-12-30
+         Sonal Poddar <sonal.poddar@intel.com>
+Date   : 2016-09-13
 --------------------------------------------------------------------------------
 
 Table of Contents
 -----------------
   - Introduction
   - Prerequisites
-  - How to build the three PoC libraries
+  - How to build the two PoC libraries
   - How to run regression tests
   - How to build examples
 
@@ -20,10 +21,9 @@ Introduction
 
 This README gives step-by-step instructions for
 
-  1. building all three proof-of-concept (PoC) libraries
+  1. building proof-of-concept (PoC) libraries
     - api
     - packages/gs_broker
-    - packages/gs_param
   
   2. running existing regression in a Windows environment
     - Cygwin or MSYS + MSVC
@@ -45,11 +45,12 @@ You shall have the following software/libraries before you start:
 And they are verified with following versions:
 
   1. SystemC
+     - 2.3.2
      - 2.3.1 (required for 64-bit support)
      - 2.3.0
 
   2. Cygwin / MSYS
-     - CYGWIN_NT-6.1
+     - CYGWIN_NT-6.3
      - MINGW32_NT-6.1 1.0.17
 
      Note: Depending on your Cygwin/MSYS installation, you may need to install
@@ -68,7 +69,7 @@ And they are verified with following versions:
            (later than 10.0/2010).
 
 
-How to build the three PoC libraries
+How to build the two PoC libraries
 ------------------------------------
 
   0. Upgrade the MSVC solution/projects, for newer MSVC versions (optional)
@@ -102,10 +103,9 @@ How to build the three PoC libraries
      - File -> Open -> Project/Solution
         - From your CCI home -> msvcXX -> cci -> cci.sln
           (with `msvcXX' matching your MSVC version as of Step 0)
-     - Under the `cci.sln' solution, you can see three MSVC projects:
+     - Under the `cci.sln' solution, you can see two MSVC projects:
        - cciapi
        - ccibrokerimpl
-       - cciparamimpl
 
   2. Update property sheet
 
@@ -139,7 +139,7 @@ How to build the three PoC libraries
 
          If you don't want to set up an environment variable `SYSTEMC_HOME`
          for the SystemC base directory, you can add a fixed path here as well,
-         e.g. "c:\systemc-2.3.1\$(MSVC)"
+         e.g. "c:\systemc-2.3.2\$(MSVC)"
 
        * `BOOST' - location of Boost header files
 
@@ -156,13 +156,13 @@ How to build the three PoC libraries
        - Debug / Release
        - Win32 / x64
 
-         Note: MSVC 64-bit support has been added to SystemC in version 2.3.1.
+         Note: MSVC 64-bit support has been added to SystemC in version 2.3.2.
                With older SystemC versions (e.g. 2.2.0/2.3.0), only 32-bit is
                available.
 
      - Build the whole cci solution (e.g. by hitting F7)
 
-       All three CCI PoC libraries will be created for the given configuration.
+       The two CCI PoC libraries will be created for the given configuration.
 
 
 How to run regression tests
@@ -216,10 +216,10 @@ has the correct name for the version of Visual C++ you are using
      - SYSTEMC_HOME - location of SystemC installation directory
 
        - MinGW  (drop drive colon and use '/' instead of '\'):
-         export SYSTEMC_HOME=/c/systemc-2.3.1
+         export SYSTEMC_HOME=/c/systemc-2.3.2
 
        - Cygwin (additionally, paths are prefixed with '/cygdrive'):
-         export SYSTEMC_HOME=/cygdrive/c/systemc-2.3.1
+         export SYSTEMC_HOME=/cygdrive/c/systemc-2.3.2
 
      - BOOST_HOME - location of Boost installation directory
 
@@ -260,7 +260,7 @@ There is no MSVC projects provided for each example by default. Instead, a
 the given property sheet and updating the User Macros stated below,
 you shall be able to compile and run the examples.
 
-  0. Build the 3 PoC libraries according to the previous instructions.
+  0. Build the two PoC libraries according to the previous instructions.
 
   1. Create a new MSVC project
      - File -> New -> Project -> Win32 Console Application

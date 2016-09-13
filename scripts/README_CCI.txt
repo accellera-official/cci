@@ -2,7 +2,8 @@
                   README for CCI-Examples Build/Run
 
 Author: R. Swaminathan (swaminathan@ti.com)
-Date  :  09/14/2013 
+        Sonal Poddar (sonal.poddar@intel.com)
+Date  :  09/13/2016 
 --------------------------------------------------------------------------------
 
 Table of Contents
@@ -10,16 +11,15 @@ Table of Contents
   - Introduction
   - How to build/run the CCI examples?
   - Testing
-  - Changes to verify.pl(1) script
+  - Note
 
 Introduction
 -------------
-  This script is derived from verify.pl(1)* script present in 
+  This script is branched from verify.pl script present in 
 OSCI/systemc_regressions/scripts folder of SystemC Regressions Git Repo. The
 script has been updated to accomodate minor changes to build/run CCI examples.
 
-(*) verify.pl(1) refers to original verify.pl script in systemc-regressions
-area
+CCI specific changes are included between #--CCI and #--/CCI in verify.pl script.
 
 How to build/run the CCI examples?
 ----------------------------------
@@ -30,7 +30,6 @@ Step 0. Build the required SystemC/CCI libraries
 
   * CCI libs
     - libcciapi.a
-    - libcciparamimpl.a
     - libccibrokerimpl.a
 
 Step 1. Setup the following environment variables -
@@ -40,14 +39,16 @@ The following is an example of the environment variables to be setup for the
 bash shell.
 
 -- [ source.bash ]
-export  SYSTEMC_HOME=/vobs/ti_systemc/tools/systemc/systemc-2.3.0
-export    BOOST_HOME=/vobs/ti_systemc/tools/boost/boost_1_44_0
-export      CCI_HOME=/proj/sds_cce/cci_ti/cci
+export  SYSTEMC_HOME=../systemc-2.3.2
+export    BOOST_HOME=../boost/1.57.0/win_64/vc_12/include/boost-1_57
+export      CCI_HOME=../cci
 export  SYSTEMC_TEST=${CCI_HOME}/examples
-export           CXX=g++
+export           CXX=g++ (for Linux)
+                 CXX=cl (for Windows)
 #-- Update the following, if need be
 # export SYSTEMC_PTHREADS=1
-# export PATH=/apps/free/gcc/4.4.5/bin:${PATH}
+# export PATH=/apps/free/gcc/4.4.5/bin:${PATH} (for Linux)
+         PATH=/cygdrive/c/Program\ Files\ \(x86\)/Mirosoft\ Visual\ Studio\ 14.0/VC/bin/amd64:${PATH} (for Windows)
 # export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
 --
 
@@ -75,27 +76,12 @@ $ ../verify.pl -I $CCI_HOME/examples/common/inc dev_examples/priv_broker_example
 
 Testing
 -------
-* The script has been verified on Linux-RHEL4/gcc-4.4/64-bit platform
-* [NOTE] Could not get the verify.pl(1) script to work on Windows platform with
-Cygwin installed and hence skipped testing on this.
+The script has been verified on Linux-RHEL4/gcc-4.4/64-bit platform and on Windows platform with Cygwin installed
 
-Changes to verify.pl(1) script
-------------------------------
-1. verify.pl(1) was auto-appending tests/ path to the environment variable.
-Due to different hierarchy in cci/examples, this feature has been disabled.
-
-  - SYSTEMC_TEST must include the trailing tests/ directory, if changes are
-  merged back.
-
-2. Bug?  verify.pl(1) was not stripping the header line - 'SystemC Simulation' 
-in output log. This is fixed. 
-
-  - Existing systemc-regression golden logs may need to strip this extra line 
-  at beginning, if these changes are merged back.
-
-3. New Environment Variables have been added.
-    o CCI_HOME: CCI home directory path
-    o BOOST_HOME: Boost home directory path
+Note
+-------
+CCI specific changes are included between #--CCI and #--/CCI in verify.pl script which is branched from 
+systemc-regressions/ package
 
 #-- Taf!
 
