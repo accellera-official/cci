@@ -224,51 +224,115 @@ public:
      */
     cci_param_untyped_handle* create_param_handle(const cci_originator& originator);
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default typed value of the parameter (Typed value)
+     * @param desc Description of the paramaeter
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const value_type& default_value,
                     const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (CCI value)
+     * @param desc Description of the paramaeter
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const cci_value& default_value,
                     const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// top-level name and description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * top-level name, description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (Typed value)
+     * @param desc Description of the paramaeter
+     * @param cci_top_level_name Either the name should be absolute or relative
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const value_type& default_value,
                     cci_top_level_name, const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// top-level name, description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * top-level name, description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (CCI value)
+     * @param desc Description of the paramaeter
+     * @param cci_top_level_name Either the name should be absolute or relative
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const cci_value& default_value,
                     cci_top_level_name, const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// private broker, description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * private broker, description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (Typed value)
+     * @param desc Description of the paramaeter
+     * @param private_broker Associated private broker
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const value_type& default_value,
                     cci_broker_if& private_broker, const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// private broker, description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * private broker, description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (CCI value)
+     * @param desc Description of the paramaeter
+     * @param private_broker Associated private broker
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const cci_value& default_value,
                     cci_broker_if& private_broker, const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// top-level name, private broker, description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * private broker, top-level name, description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (Typed value)
+     * @param cci_top_level_name Either the name should be absolute or relative
+     * @param desc Description of the paramaeter
+     * @param private_broker Associated private broker
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const value_type& default_value,
                     cci_top_level_name, cci_broker_if& private_broker,
                     const std::string& desc = "",
                     const cci_originator& originator = cci_originator());
 
-    /// Constructor with (local/hierarchical) name, default value,
-    /// top-level name, private broker, description and originator.
+    /**
+     * Constructor with (local/hierarchical) name, default value,
+     * private broker, top-level name, description and originator.
+     *
+     * @param name Name of the parameter
+     * @param default_value Default value of the parameter (CCI value)
+     * @param cci_top_level_name Either the name should be absolute or relative
+     * @param desc Description of the paramaeter
+     * @param private_broker Associated private broker
+     * @param originator Originator of the parameter
+     */
     cci_param_typed(const std::string& name, const cci_value& default_value,
                     cci_top_level_name, cci_broker_if& private_broker,
                     const std::string& desc = "",
