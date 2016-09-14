@@ -1,5 +1,29 @@
 SystemC Simulation
 
+Warning: (W534) name already exists: Top (sc_module)
+In file: <removed by verify.pl>
+
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top is already used in the SystemC hierarchy, using Top_0 instead
+In file: <removed by verify.pl>
+
+Warning: (W534) name already exists: Top.ModuleA.ModuleB (sc_module)
+In file: <removed by verify.pl>
+
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.ModuleA.ModuleB is already used in the SystemC hierarchy, using Top.ModuleA.ModuleB_0 instead
+In file: <removed by verify.pl>
+
+Warning: (W534) name already exists: Top (sc_module)
+In file: <removed by verify.pl>
+
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top is already used in the SystemC hierarchy, using Top_1 instead
+In file: <removed by verify.pl>
+
+Warning: (W534) name already exists: Top.ModuleA2.ModuleB (sc_module)
+In file: <removed by verify.pl>
+
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.ModuleA2.ModuleB is already used in the SystemC hierarchy, using Top.ModuleA2.ModuleB_0 instead
+In file: <removed by verify.pl>
+
 ------ sc_start() ----------------
 
 ----------------------------
