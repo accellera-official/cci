@@ -39,9 +39,9 @@ The following is an example of the environment variables to be setup for the
 bash shell.
 
 -- [ source.bash ]
-export  SYSTEMC_HOME=../systemc-2.3.2
-export    BOOST_HOME=../boost/1.57.0/win_64/vc_12/include/boost-1_57
-export      CCI_HOME=../cci
+export  SYSTEMC_HOME=.../systemc-2.3.2
+export    BOOST_HOME=.../boost/1.57.0/win_64/vc_12/include/boost-1_57
+export      CCI_HOME=.../cci
 export  SYSTEMC_TEST=${CCI_HOME}/examples
 export           CXX=g++ (for Linux)
                  CXX=cl (for Windows)

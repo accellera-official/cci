@@ -36,9 +36,9 @@ Running the examples
     installation. A sample file has been provided for your reference.
 
 -- [ cci_env.bash ]
-  export SYSTEMC_HOME=../systemc
-  export BOOST_HOME=../boost/1.57.0/win_64/vc_12/include/boost-1_57
-  export CCI_HOME=../cci
+  export SYSTEMC_HOME=.../systemc
+  export BOOST_HOME=.../boost/1.57.0/win_64/vc_12/include/boost-1_57
+  export CCI_HOME=.../cci
 # export SYSTEMC_PTHREADS=1
   export SYSTEMC_TEST=${CCI_HOME}/examples
   export CXX=g++ (for Linux)
@@ -53,11 +53,11 @@ Running the examples
 3) Create a directory called run/ in your CCI_HOME folder, and 'cd' into it.
 +------------------------------------------------+
   % pwd
-  ../cci
+  .../cci
   % mkdir run
   % cd run
   % pwd
-  ../cci/run
+  .../cci/run
 +------------------------------------------------+
 
 4) The verify.pl script needs to be invoked to build/run/compare-golden results.
