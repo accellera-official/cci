@@ -12,6 +12,9 @@ And we add the following incremental guidance:
 - "cci_" prefix for all class names
   Extend prefix (e.g. "cci_cfg") as needed to avoid conflict
   (refer to: https://github.com/OSCI-WG/cci/issues/44)
+- Include guard macros are named concatenating the directory basename, class
+  name, and "_INCLUDED_"; e.g. CCI_CFG_CCI_PARAM_IF_H_INCLUDED_ 
+  for (cci_cfg/cci_param_if.h).
 - comply with relevant precedent for getters/setters, for examples:
     STL: size()/resize() for containers,
     SystemC/TLM: name()
