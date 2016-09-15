@@ -142,7 +142,7 @@ cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_para
 }
 
 template <typename T>
-cci_param_typed_handle<T>::operator const value_type&() const
+cci_param_typed_handle<T>::operator const T&() const
 {
     return get_value();
 }
