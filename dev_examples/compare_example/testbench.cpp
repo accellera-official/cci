@@ -31,10 +31,14 @@ class test_module : public sc_core::sc_module
 SC_HAS_PROCESS(test_module);
 public:
 	test_module(sc_core::sc_module_name name) : sc_core::sc_module(name)
-		, int_param_mutable  ("int_param_mutable", cci::cci_value(10),   cci::CCI_TOP_LEVEL_NAME)
-		, int_param_mutable2 ("int_param_mutable2",  100,                cci::CCI_TOP_LEVEL_NAME)
-		, int_param_immutable("int_param_immutable", cci::cci_value(11), cci::CCI_TOP_LEVEL_NAME)
-		, int_param_elab     ("int_param_elab",      11,                 cci::CCI_TOP_LEVEL_NAME)
+		, int_param_mutable  ("int_param_mutable", cci::cci_value(10),   
+				      "A mutable int parameter.", cci::CCI_ABSOLUTE_NAME)
+		, int_param_mutable2 ("int_param_mutable2",  100,
+				      "Another mutable int parameter.", cci::CCI_ABSOLUTE_NAME)
+		, int_param_immutable("int_param_immutable", cci::cci_value(11),
+				      "An immutable int parameter.", cci::CCI_ABSOLUTE_NAME)
+		, int_param_elab     ("int_param_elab",      11,
+				      "An elaboration int parameter.", cci::CCI_ABSOLUTE_NAME)
 	{
 		SC_THREAD(perform_test);
 	}
