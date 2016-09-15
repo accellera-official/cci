@@ -194,7 +194,7 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Access parameter's metadata using 'get_metadata()'
         XREPORT("[CFGR -> Retrieve] Parameter's metadata : "
-                        << int_param_ptr->get_metadata());
+                        << int_param.get_metadata());
 
         wait(2.0, sc_core::SC_NS);
 

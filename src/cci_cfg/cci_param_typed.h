@@ -336,7 +336,7 @@ cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_type
 }
 
 template <typename T, param_mutable_type TM>
-cci_param_typed<T, TM>::operator const value_type&() const
+cci_param_typed<T, TM>::operator const T&() const
 {
 	return m_gs_param->getValue();
 }

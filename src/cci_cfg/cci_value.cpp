@@ -535,7 +535,7 @@ cci_value_ref::json_deserialize( std::string const & src )
   try {
     doc.Parse( src.c_str() );
   }
-  catch ( rapidjson::ParseException const & e )
+  catch ( rapidjson::ParseException const & )
   {
     return false;
   }
