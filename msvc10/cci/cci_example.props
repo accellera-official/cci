@@ -4,7 +4,10 @@
     <Import Project="cci_lib.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup>
+    <OutDir>$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(CCI_HOME)\src\;$(CCI_HOME)\examples\common\inc;$(CCI_HOME)\packages\gs_param;$(CCI_HOME)\packages\gs_broker;$(CCI_HOME)\packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
