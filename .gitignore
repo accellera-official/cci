@@ -4,6 +4,8 @@
 *.ipch
 *.sdf
 *.suo
+*.user
+*.db
 
 Makefile.*deps
 
