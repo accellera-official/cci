@@ -49,23 +49,21 @@ SC_MODULE(ex06_simple_ip) {
         int_param_ip_dup(
             "sim_ip.int_param_ip",
             2,
-            cci::CCI_TOP_LEVEL_NAME,
-            cci::cci_broker_manager::get_current_broker(
-                cci::cci_originator(*this))),
+	    "An int parameter given a duplicate absolute name.",
+            cci::CCI_ABSOLUTE_NAME),
         // Param name - Absolute
         int_param_top(
             "int_param_top",
             3,
-            cci::CCI_TOP_LEVEL_NAME,
-            cci::cci_broker_manager::get_current_broker(
-                cci::cci_originator(*this))),
+	    "An int parameter given an absolute name.",
+            cci::CCI_ABSOLUTE_NAME),
         // Param name - Custom
         int_param_custom(
             "top.sub.int_param_custom",
             4,
-            cci::CCI_TOP_LEVEL_NAME,
-            cci::cci_broker_manager::get_current_broker(
-                cci::cci_originator(*this))) {
+	    "An int parameter with name outside of module hierarchy.",
+            cci::CCI_ABSOLUTE_NAME)
+  {
     SC_THREAD(execute);
     XREPORT("Ctor: Default value of " << int_param_ip.get_name() << " is "
             << int_param_ip);
