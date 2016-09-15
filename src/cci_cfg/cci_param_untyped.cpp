@@ -30,6 +30,7 @@
 
 #include "cci_param_untyped.h"
 #include "cci_callbacks.h"
+#include "cci_core/systemc.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -53,6 +54,7 @@ CCI_OPEN_NAMESPACE_
 		for (unsigned int i = 0; i < fw_vec.size(); ++i) {
 			fw_vec[i]->adapt->caller_param = NULL;
 		}
+		sc_core::sc_unregister_hierarchical_name(get_name().c_str());
 	}
 
 	void cci_param_untyped::set_description(const std::string& desc)

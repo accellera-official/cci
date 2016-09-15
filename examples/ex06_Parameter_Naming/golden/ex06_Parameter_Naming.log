@@ -1,5 +1,11 @@
 SystemC Simulation
 
+Warning: (W534) name already exists: sim_ip.int_param_ip (external name)
+In file: <removed by verify.pl>
+
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: sim_ip.int_param_ip is already used in the SystemC hierarchy, using sim_ip.int_param_ip_0 instead
+In file: <removed by verify.pl>
+
 Warning: sim_ip.gs_param_base_1: the paramater sim_ip.int_param_ip is already existing, new name sim_ip.int_param_ip_0 is assigned
 
 In file: <removed by verify.pl>

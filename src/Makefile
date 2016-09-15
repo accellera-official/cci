@@ -15,7 +15,8 @@ SRCS = cci_cfg/cci_broker_manager.cpp \
        cci_cfg/cci_value_traits.cpp \
        cci_cfg/cci_originator.cpp \
 	   cci_cfg/cci_param_untyped.cpp \
-	   cci_cfg/cci_param_untyped_handle.cpp
+	   cci_cfg/cci_param_untyped_handle.cpp \
+	   cci_core/cci_name_gen.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
