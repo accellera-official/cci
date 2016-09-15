@@ -84,10 +84,19 @@ const cci_originator* cci_param_untyped_handle::get_latest_write_originator() co
 }
 
 cci_callback_untyped_handle cci_param_untyped_handle::register_write_callback(
-        const cci_param_write_callback_untyped &cb)
+        const cci_param_write_callback_untyped &cb,
+        cci_untyped_tag)
 {
     check_is_valid();
     return m_orig_param->register_write_callback(cb, m_originator);
+}
+
+template<typename C>
+cci_callback_untyped_handle cci_param_untyped_handle::register_write_callback(
+        cci_param_write_callback_untyped::signature (C::*cb), C* obj,
+        cci_untyped_tag)
+{
+    return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
 }
 
 bool cci_param_untyped_handle::unregister_write_callback(
@@ -99,10 +108,20 @@ bool cci_param_untyped_handle::unregister_write_callback(
 
 cci_callback_untyped_handle
 cci_param_untyped_handle::register_validate_write_callback(
-        const cci_param_write_callback_untyped &cb)
+        const cci_param_write_callback_untyped &cb,
+        cci_untyped_tag)
 {
     check_is_valid();
     return m_orig_param->register_validate_write_callback(cb, m_originator);
+}
+
+template<typename C>
+cci_callback_untyped_handle
+cci_param_untyped_handle::register_validate_write_callback(
+        cci_param_write_callback_untyped::signature (C::*cb), C* obj,
+        cci_untyped_tag)
+{
+    return register_validate_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
 }
 
 bool cci_param_untyped_handle::unregister_validate_write_callback(
