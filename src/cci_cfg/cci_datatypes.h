@@ -61,9 +61,15 @@ CCI_OPEN_NAMESPACE_
     /// Vendor specific/other Parameter type
     other_param
   };
-  
-  /// Enumeration for convenient cci_param_typed constructor: for chose if a param gets a top-level-name
-  enum cci_top_level_name { CCI_TOP_LEVEL_NAME=0 };
+
+  /**
+   * Enumeration for convenient cci_param_typed constructor.
+   * Choose if a param gets a relative or an absolute name.
+   */
+  enum cci_name_type {
+    CCI_RELATIVE_NAME,
+    CCI_ABSOLUTE_NAME
+  };
   
   
 CCI_CLOSE_NAMESPACE_
