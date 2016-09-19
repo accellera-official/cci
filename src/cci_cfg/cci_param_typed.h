@@ -485,23 +485,7 @@ template <typename value_type, param_mutable_type TM>
 void cci_param_typed<value_type, TM>::set_raw_value(
         const void* value, const cci_originator& originator)
 {
-    value_type val = *static_cast<const value_type*>(value);
-    if (m_gs_param->locked()) {
-        cci::cci_report_handler::set_param_failed("Parameter locked.");
-        return;
-    }
-    if (set_cci_value_allowed() && validate_write_callback(val, originator)) {
-        // Effective write
-        if (!m_gs_param->setValue(val)) { // TODO: fixme, remove dependency
-            cci::cci_report_handler::set_param_failed("Bad value.");
-        } else {
-            // Write callback(s)
-            write_callback(val, originator);
-
-            // Update latest write originator
-            update_latest_write_originator(originator);
-        }
-    }
+    set_raw_value(value, NULL, originator);
 }
 
 template <typename value_type, param_mutable_type TM>
@@ -517,15 +501,32 @@ void cci_param_typed<value_type, TM>::set_raw_value(const void* value,
                          const cci_originator& originator)
 {
     value_type val = *static_cast<const value_type*>(value);
-    if (!m_gs_param->check_pwd(pwd)) {
-        cci::cci_report_handler::set_param_failed("Wrong key.");
-        return;
+    if(!pwd) {
+        if (m_gs_param->locked()) {
+            cci::cci_report_handler::set_param_failed("Parameter locked.");
+            return;
+        }
+    } else {
+        if (!m_gs_param->check_pwd(pwd)) {
+            cci::cci_report_handler::set_param_failed("Wrong key.");
+            return;
+        }
     }
+
     if (set_cci_value_allowed() && validate_write_callback(val, originator)) {
-        // Effective write
-        if (!m_gs_param->setValue(val,
-                                  pwd)) { // TODO: fixme, remove dependency
+        bool actual_write_result = false;
+
+        // Actual write
+        if(!pwd) {
+            // TODO: remove dependency
+            actual_write_result = m_gs_param->setValue(val);
+        } else {
+            // TODO: remove dependency
+            actual_write_result = m_gs_param->setValue(val, pwd);
+        }
+        if (!actual_write_result) {
             cci::cci_report_handler::set_param_failed("Bad value.");
+            return;
         } else {
             // Write callback(s)
             write_callback(val, originator);
