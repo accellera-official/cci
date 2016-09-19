@@ -490,17 +490,16 @@ void cci_param_typed<value_type, TM>::set_raw_value(
         cci::cci_report_handler::set_param_failed("Parameter locked.");
         return;
     }
-    if (set_cci_value_allowed()) {
-        write_callback(val, originator);
+    if (set_cci_value_allowed() && validate_write_callback(val, originator)) {
+        // Effective write
+        if (!m_gs_param->setValue(val)) { // TODO: fixme, remove dependency
+            cci::cci_report_handler::set_param_failed("Bad value.");
+        } else {
+            // Write callback(s)
+            write_callback(val, originator);
 
-        if(validate_write_callback(val, originator)) {
-            // Effective write
-            if (!m_gs_param->setValue(val)) { // TODO: fixme, remove dependency
-                cci::cci_report_handler::set_param_failed("Bad value.");
-            } else {
-                // Update latest write originator
-                update_latest_write_originator(originator);
-            }
+            // Update latest write originator
+            update_latest_write_originator(originator);
         }
     }
 }
@@ -522,18 +521,17 @@ void cci_param_typed<value_type, TM>::set_raw_value(const void* value,
         cci::cci_report_handler::set_param_failed("Wrong key.");
         return;
     }
-    if (set_cci_value_allowed()) {
-        write_callback(val, originator);
+    if (set_cci_value_allowed() && validate_write_callback(val, originator)) {
+        // Effective write
+        if (!m_gs_param->setValue(val,
+                                  pwd)) { // TODO: fixme, remove dependency
+            cci::cci_report_handler::set_param_failed("Bad value.");
+        } else {
+            // Write callback(s)
+            write_callback(val, originator);
 
-        if(validate_write_callback(val, originator)) {
-            // Effective write
-            if (!m_gs_param->setValue(val,
-                                      pwd)) { // TODO: fixme, remove dependency
-                cci::cci_report_handler::set_param_failed("Bad value.");
-            } else {
-                // Update latest write originator
-                update_latest_write_originator(originator);
-            }
+            // Update latest write originator
+            update_latest_write_originator(originator);
         }
     }
 }
