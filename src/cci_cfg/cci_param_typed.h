@@ -344,17 +344,6 @@ private:
         }
     }
 
-    void read_callback(const value_type& value) const
-    {
-        // Read callback payload
-        const cci_param_read_event <value_type> ev(value, get_originator());
-
-        // Read callbacks
-        for (unsigned i = 0; i < m_read_callbacks.size(); ++i) {
-            m_read_callbacks[i].callback.invoke(ev);
-        }
-    }
-
     /// Check whether value update is allowed
     //@todo Should these checks be moved into the parameter proxy (cci_param_typed)?
     bool set_cci_value_allowed()
@@ -369,6 +358,18 @@ private:
             return false;
         }
         return true;
+    }
+
+    /// Read callback
+    void read_callback(const value_type& value) const
+    {
+        // Read callback payload
+        const cci_param_read_event <value_type> ev(value, get_originator());
+
+        // Read callbacks
+        for (unsigned i = 0; i < m_read_callbacks.size(); ++i) {
+            m_read_callbacks[i].callback.invoke(ev);
+        }
     }
 
     /// Write callback
