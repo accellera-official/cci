@@ -344,15 +344,14 @@ private:
         }
     }
 
-    void read_callback(value_type& value) const
+    void read_callback(const value_type& value) const
     {
         // Read callback payload
-        cci_param_read_event <value_type> ev(value, get_originator());
+        const cci_param_read_event <value_type> ev(value, get_originator());
 
         // Read callbacks
         for (unsigned i = 0; i < m_read_callbacks.size(); ++i) {
-            m_read_callbacks[i].callback.invoke(
-                    static_cast<const cci_param_read_event <value_type> >(ev));
+            m_read_callbacks[i].callback.invoke(ev);
         }
     }
 
@@ -374,10 +373,10 @@ private:
 
     /// Write callback
     void
-    write_callback(value_type& value, const cci_originator &originator) const
+    write_callback(const value_type& value, const cci_originator &originator) const
     {
         // Write callback payload
-        cci_param_write_event <value_type> ev(m_gs_param->getValue(),
+        const cci_param_write_event <value_type> ev(m_gs_param->getValue(),
                                      value,
                                      originator);
 
@@ -386,9 +385,7 @@ private:
             typename cci_param_write_callback_handle<value_type>::type
                     typed_write_cb(m_write_callbacks[i].callback);
             if (typed_write_cb.valid()) {
-                typed_write_cb.invoke(
-                        static_cast<
-                                const cci_param_write_event <value_type> >(ev));
+                typed_write_cb.invoke(ev);
             }
         }
     }
