@@ -344,7 +344,7 @@ private:
         }
     }
 
-    void read_callback(value_type value) const
+    void read_callback(value_type& value) const
     {
         // Read callback payload
         cci_param_read_event <value_type> ev(value, get_originator());
@@ -374,7 +374,7 @@ private:
 
     /// Write callback
     void
-    write_callback(value_type value, const cci_originator &originator) const
+    write_callback(value_type& value, const cci_originator &originator) const
     {
         // Write callback payload
         cci_param_write_event <value_type> ev(m_gs_param->getValue(),
