@@ -59,7 +59,8 @@ public:
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (const cci_param_typed<T, TM> & rhs);
+    cci_param_typed<value_type, TM>& operator= (
+            const cci_param_typed<value_type, TM> & rhs);
 
     ///Assigns parameter a new value from another legacy parameter
     /**
@@ -73,7 +74,8 @@ public:
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (const cci_param_typed_handle<T> & rhs);
+    cci_param_typed<value_type, TM>& operator= (
+            const cci_param_typed_handle<value_type> & rhs);
 
     ///Assigns parameter a new value from another untyped parameter handle
     /**
@@ -216,7 +218,7 @@ public:
     ///@{
 
     /// CCI param write callback typed type
-    typedef typename cci_param_write_callback<T>::type
+    typedef typename cci_param_write_callback<value_type>::type
             cci_param_write_callback_typed;
 
     /// @copydoc cci_param_untyped::register_write_callback
@@ -228,7 +230,7 @@ public:
             const cci_param_write_callback_typed &cb);
 
     /// CCI param write callback typed type
-    typedef typename cci_param_validate_write_callback<T>::type
+    typedef typename cci_param_validate_write_callback<value_type>::type
             cci_param_validate_write_callback_typed;
 
     /// @copydoc cci_param_untyped::register_validate_write_callback
@@ -320,7 +322,7 @@ public:
 
 protected:
     /// GS Parameter internal
-    gs::gs_param<T>* m_gs_param;
+    gs::gs_param<value_type>* m_gs_param;
 
 private:
     /// Constructor to create handles with a giver originator
@@ -342,15 +344,15 @@ private:
         }
     }
 
-    void read_callback(T value) const
+    void read_callback(value_type value) const
     {
         // Read callback payload
-        cci_param_read_event <T> ev(value, get_originator());
+        cci_param_read_event <value_type> ev(value, get_originator());
 
         // Read callbacks
         for (unsigned i = 0; i < m_read_callbacks.size(); ++i) {
             m_read_callbacks[i].callback.invoke(
-                    static_cast<const cci_param_read_event <T> >(ev));
+                    static_cast<const cci_param_read_event <value_type> >(ev));
         }
     }
 
@@ -381,7 +383,7 @@ private:
 
         // Write callbacks
         for (unsigned i = 0; i < m_write_callbacks.size(); ++i) {
-            typename cci_param_write_callback_handle<T>::type
+            typename cci_param_write_callback_handle<value_type>::type
                     typed_write_cb(m_write_callbacks[i].callback);
             if (typed_write_cb.valid()) {
                 typed_write_cb.invoke(
@@ -399,7 +401,7 @@ private:
         bool result = true;
 
         // Write callback payload
-        cci_param_write_event <T> ev(m_gs_param->getValue(),
+        cci_param_write_event <value_type> ev(m_gs_param->getValue(),
                                      value,
                                      originator);
 
@@ -421,36 +423,43 @@ private:
     }
 };
 
-template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const cci_param_typed<T, TM>& rhs)
+template <typename value_type, param_mutable_type TM>
+cci_param_typed<typename cci_param_typed<value_type, TM>::value_type, TM>&
+cci_param_typed<value_type, TM>::operator=(const cci_param_typed<value_type,
+        TM>& rhs)
 {
     set(rhs.get_value());
     return *this;
 }
 
-template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const cci_param_if& rhs)
+template <typename value_type, param_mutable_type TM>
+cci_param_typed<typename cci_param_typed<value_type, TM>::value_type, TM>&
+cci_param_typed<value_type, TM>::operator=(const cci_param_if& rhs)
 {
     set_cci_value(rhs.get_cci_value());
     return *this;
 }
 
-template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const cci_param_typed_handle<T>& rhs)
+template <typename value_type, param_mutable_type TM>
+cci_param_typed<typename cci_param_typed<value_type, TM>::value_type, TM>&
+cci_param_typed<value_type, TM>::operator=(
+        const cci_param_typed_handle<value_type>& rhs)
 {
     set(rhs.get_value());
     return *this;
 }
 
-template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const cci_param_untyped_handle& rhs)
+template <typename value_type, param_mutable_type TM>
+cci_param_typed<typename cci_param_typed<value_type, TM>::value_type, TM>&
+cci_param_typed<value_type, TM>::operator=(const cci_param_untyped_handle& rhs)
 {
     set_cci_value(rhs.get_cci_value());
     return *this;
 }
 
-template <typename T, param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>& cci_param_typed<T, TM>::operator=(const value_type& rhs)
+template <typename value_type, param_mutable_type TM>
+cci_param_typed<typename cci_param_typed<value_type, TM>::value_type, TM>&
+cci_param_typed<value_type, TM>::operator=(const value_type& rhs)
 {
     set(rhs);
     return *this;
@@ -462,21 +471,22 @@ cci_param_typed<T, TM>::operator const T&() const
     return get_value();
 }
 
-template <typename T, param_mutable_type TM>
-const T& cci_param_typed<T, TM>::get_value() const
+template <typename value_type, param_mutable_type TM>
+const value_type& cci_param_typed<value_type, TM>::get_value() const
 {
     read_callback(m_gs_param->getValue());
     return m_gs_param->getValue();
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(const void* value)
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set_raw_value(const void* value)
 {
     set_raw_value(value, get_originator());
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(const void* value, const cci_originator& originator)
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set_raw_value(
+        const void* value, const cci_originator& originator)
 {
     value_type val = *static_cast<const value_type*>(value);
     if (m_gs_param->locked()) {
@@ -498,14 +508,16 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value, const cci_originat
     }
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(const void* value, const void *pwd)
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set_raw_value(const void* value,
+                                                    const void *pwd)
 {
     set_raw_value(value, pwd, get_originator());
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(const void* value, const void *pwd,
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set_raw_value(const void* value,
+                                                    const void *pwd,
                          const cci_originator& originator)
 {
     value_type val = *static_cast<const value_type*>(value);
@@ -529,36 +541,39 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value, const void *pwd,
     }
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set(const value_type& value)
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set(const value_type& value)
 {
     set_raw_value(&value);
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set(const value_type& value, const void *pwd)
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set(const value_type& value,
+                                          const void *pwd)
 {
     set_raw_value(&value, pwd);
 }
 
-template <typename T, param_mutable_type TM>
-const void* cci_param_typed<T, TM>::get_raw_value() const
+template <typename value_type, param_mutable_type TM>
+const void* cci_param_typed<value_type, TM>::get_raw_value() const
 {
-    const T& value = get_value();
+    const value_type& value = get_value();
     read_callback(value);
     return static_cast<const void*>(&value);
 }
 
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::equals(const cci::cci_param_untyped_handle& rhs) const
+template <typename value_type, param_mutable_type TM>
+bool cci_param_typed<value_type, TM>::equals(
+        const cci::cci_param_untyped_handle& rhs) const
 {
     return rhs.equals(*this);
 }
 
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::equals(const cci::cci_param_if& rhs) const
+template <typename value_type, param_mutable_type TM>
+bool cci_param_typed<value_type, TM>::equals(const cci::cci_param_if& rhs) const
 {
-    const cci_param_typed<T, TM>* other = dynamic_cast<const cci_param_typed<T, TM>*>(&rhs);
+    const cci_param_typed<value_type, TM>* other =
+            dynamic_cast<const cci_param_typed<value_type, TM>*>(&rhs);
     if (other)
     {
         return other->m_gs_param->getValue() == this->m_gs_param->getValue();
@@ -566,97 +581,102 @@ bool cci_param_typed<T, TM>::equals(const cci::cci_param_if& rhs) const
     return false;
 }
 
-template <typename T, param_mutable_type TM>
-cci::basic_param_type cci_param_typed<T, TM>::get_basic_type() const
+template <typename value_type, param_mutable_type TM>
+cci::basic_param_type cci_param_typed<value_type, TM>::get_basic_type() const
 {
     return get_cci_value().basic_type();
 }
 
-template <typename T, param_mutable_type TM>
-const std::type_info& cci_param_typed<T, TM>::get_type_info() const
+template <typename value_type, param_mutable_type TM>
+const std::type_info& cci_param_typed<value_type, TM>::get_type_info() const
 {
-    return typeid(T);
+    return typeid(value_type);
 }
 
-template <typename T, param_mutable_type TM>
-const void* cci_param_typed<T, TM>::get_default_value_raw() const {
+template <typename value_type, param_mutable_type TM>
+const void* cci_param_typed<value_type, TM>::get_default_value_raw() const {
     if (!this->m_gs_param->has_default_value())
-        cci::cci_report_handler::get_param_failed("Param has no default value.");
+        cci::cci_report_handler::get_param_failed(
+                "Param has no default value.");
     return &this->m_gs_param->get_default_value();
 }
 
-template <typename T, param_mutable_type TM>
-const typename cci_param_typed<T, TM>::value_type& cci_param_typed<T, TM>::get_default_value()
+template <typename value_type, param_mutable_type TM>
+const typename cci_param_typed<value_type, TM>::value_type&
+cci_param_typed<value_type, TM>::get_default_value()
 {
     return *static_cast<const value_type *>(get_default_value_raw());
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set_cci_value(const cci_value& val)
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set_cci_value(const cci_value& val)
 {
     set_cci_value(val, get_originator());
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::set_cci_value(const cci_value& val,
                                const cci_originator& originator)
 {
     value_type v = val.get<value_type>();
     set_raw_value(&v, originator);
 }
 
-template <typename T, param_mutable_type TM>
-cci::cci_value cci_param_typed<T, TM>::get_cci_value() const {
-    const T& value = this->m_gs_param->getValue();
+template <typename value_type, param_mutable_type TM>
+cci::cci_value cci_param_typed<value_type, TM>::get_cci_value() const {
+    const value_type& value = this->m_gs_param->getValue();
     read_callback(value);
     return cci::cci_value(value);
 }
 
-template <typename T, param_mutable_type TM>
-cci_callback_untyped_handle cci_param_typed<T, TM>::register_write_callback(
+template <typename value_type, param_mutable_type TM>
+cci_callback_untyped_handle
+cci_param_typed<value_type, TM>::register_write_callback(
         const cci_param_write_callback_typed &cb)
 {
-    typename cci_param_write_callback_handle<T>::type typed_cb(cb);
+    typename cci_param_write_callback_handle<value_type>::type typed_cb(cb);
     if (typed_cb.valid()) {
         return cci_param_untyped::register_write_callback(typed_cb);
     }
     return typed_cb;
 }
 
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::unregister_write_callback(
+template <typename value_type, param_mutable_type TM>
+bool cci_param_typed<value_type, TM>::unregister_write_callback(
         const cci_param_write_callback_typed &cb)
 {
     return cci_param_untyped::unregister_write_callback(cb);
 }
 
-template <typename T, param_mutable_type TM>
+template <typename value_type, param_mutable_type TM>
 cci_callback_untyped_handle
-cci_param_typed<T, TM>::register_validate_write_callback(
+cci_param_typed<value_type, TM>::register_validate_write_callback(
         const cci_param_validate_write_callback_typed &cb)
 {
-    typename cci_param_validate_write_callback_handle<T>::type typed_cb(cb);
+    typename cci_param_validate_write_callback_handle<value_type>::type
+            typed_cb(cb);
     if (typed_cb.valid()) {
         return cci_param_untyped::register_validate_write_callback(typed_cb);
     }
     return typed_cb;
 }
 
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::unregister_validate_write_callback(
+template <typename value_type, param_mutable_type TM>
+bool cci_param_typed<value_type, TM>::unregister_validate_write_callback(
         const cci_param_validate_write_callback_typed &cb)
 {
     return cci_param_untyped::unregister_validate_write_callback(cb);
 }
 
-template <typename T, param_mutable_type TM>
-cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(const cci_originator& originator)
+template <typename value_type, param_mutable_type TM>
+cci_param_untyped_handle cci_param_typed<value_type, TM>::create_param_handle(
+        const cci_originator& originator)
 {
-    return cci_param_typed_handle<T>(*this, originator);
+    return cci_param_typed_handle<value_type>(*this, originator);
 }
 
-template <typename T, param_mutable_type TM>
-void cci_param_typed<T, TM>::destroy()
+template <typename value_type, param_mutable_type TM>
+void cci_param_typed<value_type, TM>::destroy()
 {
     delete this;
 }
@@ -664,11 +684,11 @@ void cci_param_typed<T, TM>::destroy()
 /// Constructors
 
 #define CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL(signature, broker)                \
-template <typename T, param_mutable_type TM>                                   \
-cci_param_typed<T, TM>::cci_param_typed signature                              \
+template <typename value_type, param_mutable_type TM>                          \
+cci_param_typed<value_type, TM>::cci_param_typed signature                     \
 : cci_param_untyped((name_type == CCI_RELATIVE_NAME) ? false : true, &broker,  \
                     desc, originator),                                         \
-  m_gs_param(new gs::gs_param<T>(name, "", NULL,                               \
+  m_gs_param(new gs::gs_param<value_type>(name, "", NULL,                      \
              (name_type == CCI_RELATIVE_NAME) ? false : true, true))           \
 {                                                                              \
     m_gs_param->setString(default_value.to_json());                            \
@@ -678,11 +698,11 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
 }
 
 #define CCI_PARAM_CONSTRUCTOR_IMPL(signature, broker)                          \
-template <typename T, param_mutable_type TM>                                   \
-cci_param_typed<T, TM>::cci_param_typed signature                              \
-: cci_param_untyped((name_type == CCI_RELATIVE_NAME) ? false : true,           \
-                     &broker, desc, originator),                               \
-  m_gs_param(new gs::gs_param<T>(name, default_value,                          \
+template <typename value_type, param_mutable_type TM>                          \
+cci_param_typed<value_type, TM>::cci_param_typed signature                     \
+: cci_param_untyped((name_type == CCI_RELATIVE_NAME) ? false : true, &broker,  \
+                    desc, originator),                                         \
+  m_gs_param(new gs::gs_param<value_type>(name, default_value,                 \
              (name_type == CCI_RELATIVE_NAME) ? false : true))                 \
 {                                                                              \
     cci_param_untyped::m_gs_param_base = m_gs_param;                           \
@@ -737,8 +757,8 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
 #undef CCI_PARAM_CONSTRUCTOR_IMPL
 #undef CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL
 
-template <typename T, param_mutable_type TM>
-cci_param_typed<T, TM>::cci_param_typed(cci_param_typed<value_type, TM>& copy, const cci_originator& originator)
+template <typename value_type, param_mutable_type TM>
+cci_param_typed<value_type, TM>::cci_param_typed(cci_param_typed<value_type, TM>& copy, const cci_originator& originator)
 : cci_param_untyped(copy, originator),
   m_gs_param(copy.m_gs_param)
 {
