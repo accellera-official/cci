@@ -53,8 +53,7 @@ CCI_OPEN_NAMESPACE_
    *
    * This always returns not the owner's parameter objects but parameter handle wrappers.
    */
-  class cci_broker_if
-    // : public cci_broker_callback_if
+  class cci_broker_if : public cci_broker_callback_if
   {
   protected:
     friend class cci_broker_manager;
