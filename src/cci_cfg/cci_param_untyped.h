@@ -433,7 +433,7 @@ protected:
     /// Validate write callbacks
     std::vector<validate_write_callback_obj_t> m_validate_write_callbacks;
 
-    typedef callback_obj<typename cci_param_read_callback_handle<int>::type>
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
             read_callback_obj_t;
 
     /// Read callbacks

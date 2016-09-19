@@ -368,7 +368,11 @@ private:
 
         // Read callbacks
         for (unsigned i = 0; i < m_read_callbacks.size(); ++i) {
-            m_read_callbacks[i].callback.invoke(ev);
+            typename cci_param_read_callback_handle<value_type>::type
+                    typed_read_cb(m_read_callbacks[i].callback);
+            if (typed_read_cb.valid()) {
+                typed_read_cb.invoke(ev);
+            }
         }
     }
 
