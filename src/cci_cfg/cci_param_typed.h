@@ -210,7 +210,7 @@ public:
      * @exception cci_exception_get_param Getting value failed
      * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
      */
-    cci::cci_value get_cci_value() const;
+    cci_value get_cci_value() const;
 
     ///@}
 
@@ -359,13 +359,13 @@ private:
     //@todo Should these checks be moved into the parameter proxy (cci_param_typed)?
     bool set_cci_value_allowed()
     {
-        if (TM == cci::elaboration_time_param) {
+        if (TM == elaboration_time_param) {
             if(!isScElabPhase()) {
-                cci::cci_report_handler::set_param_failed("Attempt to set elaboration parameter during simulation.");
+                cci_report_handler::set_param_failed("Attempt to set elaboration parameter during simulation.");
                 return false;
             }
-        } else if (TM == cci::immutable_param) {
-            cci::cci_report_handler::set_param_failed("Parameter is immutable.");
+        } else if (TM == immutable_param) {
+            cci_report_handler::set_param_failed("Parameter is immutable.");
             return false;
         }
         return true;
@@ -411,7 +411,7 @@ private:
                     static_cast<
                             const cci_param_write_event <value_type> >(ev))) {
                 // Write denied
-                cci::cci_report_handler::set_param_failed(
+                cci_report_handler::set_param_failed(
                         "Value rejected by callback.");
                 result = false;
             }
@@ -503,12 +503,12 @@ void cci_param_typed<value_type, TM>::set_raw_value(const void* value,
     value_type val = *static_cast<const value_type*>(value);
     if(!pwd) {
         if (m_gs_param->locked()) {
-            cci::cci_report_handler::set_param_failed("Parameter locked.");
+            cci_report_handler::set_param_failed("Parameter locked.");
             return;
         }
     } else {
         if (!m_gs_param->check_pwd(pwd)) {
-            cci::cci_report_handler::set_param_failed("Wrong key.");
+            cci_report_handler::set_param_failed("Wrong key.");
             return;
         }
     }
@@ -525,7 +525,7 @@ void cci_param_typed<value_type, TM>::set_raw_value(const void* value,
             actual_write_result = m_gs_param->setValue(val, pwd);
         }
         if (!actual_write_result) {
-            cci::cci_report_handler::set_param_failed("Bad value.");
+            cci_report_handler::set_param_failed("Bad value.");
             return;
         } else {
             // Write callback(s)
@@ -560,13 +560,13 @@ const void* cci_param_typed<value_type, TM>::get_raw_value() const
 
 template <typename value_type, param_mutable_type TM>
 bool cci_param_typed<value_type, TM>::equals(
-        const cci::cci_param_untyped_handle& rhs) const
+        const cci_param_untyped_handle& rhs) const
 {
     return rhs.equals(*this);
 }
 
 template <typename value_type, param_mutable_type TM>
-bool cci_param_typed<value_type, TM>::equals(const cci::cci_param_if& rhs) const
+bool cci_param_typed<value_type, TM>::equals(const cci_param_if& rhs) const
 {
     const cci_param_typed<value_type, TM>* other =
             dynamic_cast<const cci_param_typed<value_type, TM>*>(&rhs);
@@ -578,7 +578,7 @@ bool cci_param_typed<value_type, TM>::equals(const cci::cci_param_if& rhs) const
 }
 
 template <typename value_type, param_mutable_type TM>
-cci::basic_param_type cci_param_typed<value_type, TM>::get_basic_type() const
+basic_param_type cci_param_typed<value_type, TM>::get_basic_type() const
 {
     return get_cci_value().basic_type();
 }
@@ -592,7 +592,7 @@ const std::type_info& cci_param_typed<value_type, TM>::get_type_info() const
 template <typename value_type, param_mutable_type TM>
 const void* cci_param_typed<value_type, TM>::get_default_value_raw() const {
     if (!this->m_gs_param->has_default_value())
-        cci::cci_report_handler::get_param_failed(
+        cci_report_handler::get_param_failed(
                 "Param has no default value.");
     return &this->m_gs_param->get_default_value();
 }
@@ -619,10 +619,10 @@ void cci_param_typed<value_type, TM>::set_cci_value(const cci_value& val,
 }
 
 template <typename value_type, param_mutable_type TM>
-cci::cci_value cci_param_typed<value_type, TM>::get_cci_value() const {
+cci_value cci_param_typed<value_type, TM>::get_cci_value() const {
     const value_type& value = this->m_gs_param->getValue();
     read_callback(value);
-    return cci::cci_value(value);
+    return cci_value(value);
 }
 
 template <typename value_type, param_mutable_type TM>
