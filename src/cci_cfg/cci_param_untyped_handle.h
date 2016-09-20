@@ -161,6 +161,10 @@ public:
         return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
+    /// TODO
+    cci_callback_untyped_handle register_write_callback(
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
+
     /// @copydoc cci_param_typed::unregister_write_callback
     bool unregister_write_callback(const cci_param_write_callback_untyped &cb);
 
@@ -178,6 +182,10 @@ public:
         return register_validate_write_callback(
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
+
+    /// TODO
+    cci_callback_untyped_handle register_validate_write_callback(
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
 
     /// @copydoc cci_param_typed::unregister_validate_write_callback
     bool unregister_validate_write_callback(
