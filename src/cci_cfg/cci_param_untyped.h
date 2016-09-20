@@ -182,7 +182,10 @@ public:
     cci_callback_untyped_handle
     register_write_callback(cci_param_write_callback_untyped::signature
                             (C::*cb), C* obj,
-                            cci_untyped_tag = cci_untyped_tag());
+                            cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
+    }
 
     /// Register an untyped validate write callback.
     /**
@@ -207,7 +210,11 @@ public:
     cci_callback_untyped_handle
     register_validate_write_callback(
             cci_param_validate_write_callback_untyped::signature(C::*cb),
-            C* obj, cci_untyped_tag = cci_untyped_tag());
+            C* obj, cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_validate_write_callback(
+                sc_bind(cb, obj, sc_unnamed::_1));
+    }
 
     /// Register an untyped read callback.
     /**
@@ -217,7 +224,7 @@ public:
      */
     cci_callback_untyped_handle
     register_read_callback(const cci_param_read_callback_untyped& cb,
-                            cci_untyped_tag = cci_untyped_tag());
+                           cci_untyped_tag = cci_untyped_tag());
 
     /// Register an untyped read callback with method and object instance
     /**
@@ -230,7 +237,10 @@ public:
     cci_callback_untyped_handle
     register_read_callback(cci_param_read_callback_untyped::signature
                             (C::*cb), C* obj,
-                            cci_untyped_tag = cci_untyped_tag());
+                            cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
+    }
 
     /// Unregister all callbacks
     /**
