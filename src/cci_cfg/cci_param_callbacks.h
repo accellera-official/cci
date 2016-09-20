@@ -218,11 +218,6 @@ struct cci_param_callback_if
 {
   friend class cci_param_untyped_handle;
 
-  virtual cci_callback_untyped_handle
-  register_read_callback( const cci_callback_untyped_handle& cb ) = 0;
-  virtual bool
-  unregister_read_callback( const cci_callback_untyped_handle& cb ) = 0;
-
   virtual bool unregister_all_callbacks() = 0;
 
   virtual bool has_callbacks() const = 0;

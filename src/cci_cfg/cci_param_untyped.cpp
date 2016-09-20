@@ -155,12 +155,8 @@ cci_callback_untyped_handle cci_param_untyped::register_read_callback(
         const cci_callback_untyped_handle &cb,
         const cci_originator &orig)
 {
-    typename cci_param_read_callback_handle<int>::type typed_cb(cb);
-    if (typed_cb.valid()) {
-        m_read_callbacks.push_back(
-                read_callback_obj_t(typed_cb, orig));
-    }
-    return typed_cb;
+    m_read_callbacks.push_back(read_callback_obj_t(cb, orig));
+    return cb;
 }
 
 bool cci_param_untyped::unregister_read_callback(
@@ -237,16 +233,22 @@ cci_param_untyped::register_validate_write_callback(
                                             m_originator);
 }
 
-cci_callback_untyped_handle cci_param_untyped::register_read_callback(
-        const cci_callback_untyped_handle &cb)
+
+cci_callback_untyped_handle
+cci_param_untyped::register_read_callback(
+        const cci_param_read_callback_untyped& cb, cci_untyped_tag)
 {
     return register_read_callback(cb, m_originator);
 }
 
-bool cci_param_untyped::unregister_read_callback(
-        const cci_callback_untyped_handle &cb)
+template<typename C>
+cci_callback_untyped_handle
+cci_param_untyped::register_read_callback(
+        cci_param_read_callback_untyped::signature (C::*cb), C* obj,
+        cci_untyped_tag)
 {
-    return unregister_read_callback(cb, m_originator);
+    return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1),
+                                  m_originator);
 }
 
 bool cci_param_untyped::unregister_all_callbacks()

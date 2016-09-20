@@ -209,23 +209,28 @@ public:
             cci_param_validate_write_callback_untyped::signature(C::*cb),
             C* obj, cci_untyped_tag = cci_untyped_tag());
 
-    /// Register function as a read callback.
+    /// Register an untyped read callback.
     /**
      * // TODO
      *
      * @param cb // TODO
      */
     cci_callback_untyped_handle
-    register_read_callback(const cci_callback_untyped_handle &cb);
+    register_read_callback(const cci_param_read_callback_untyped& cb,
+                            cci_untyped_tag = cci_untyped_tag());
 
-    /// Unregister function as a read callback.
+    /// Register an untyped read callback with method and object instance
     /**
      * // TODO
      *
      * @param cb // TODO
+     * @param obj // TODO
      */
-    bool
-    unregister_read_callback(const cci_callback_untyped_handle &cb);
+    template<typename C>
+    cci_callback_untyped_handle
+    register_read_callback(cci_param_read_callback_untyped::signature
+                            (C::*cb), C* obj,
+                            cci_untyped_tag = cci_untyped_tag());
 
     /// Unregister all callbacks
     /**
@@ -292,7 +297,7 @@ protected:
      */
     cci_callback_untyped_handle
     register_read_callback(const cci_callback_untyped_handle &cb,
-                            const cci_originator &orig);
+                           const cci_originator &orig);
 
     /// Unregister function as a read callback.
     /**
@@ -303,7 +308,7 @@ protected:
      */
     bool
     unregister_read_callback(const cci_callback_untyped_handle &cb,
-                              const cci_originator &orig);
+                             const cci_originator &orig);
 
     /// Unregister all callbacks
     /**
