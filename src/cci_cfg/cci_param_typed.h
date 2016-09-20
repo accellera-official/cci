@@ -214,20 +214,17 @@ public:
 
     ///@}
 
-    ///@name Callback Handling
-    ///@{
-
-    ///@name Write callback
-    ///@{
+    /// @name Write callback handling
+    /// @{
 
     // Untyped callbacks
 
-    /// TODO
+    /// @copydoc cci_param_untyped::register_write_callback(const cci_param_write_callback_untyped, cci_untyped_tag)
     cci_callback_untyped_handle register_write_callback(
             const cci_param_write_callback_untyped &cb,
             cci_untyped_tag);
 
-    /// TODO
+    /// @copydoc cci_param_untyped::register_write_callback(cci_param_write_callback_untyped::signature, C*, cci_untyped_tag)
     template<typename C>
     cci_callback_untyped_handle register_write_callback(
             cci_param_write_callback_untyped::signature (C::*cb), C* obj,
@@ -235,16 +232,29 @@ public:
 
     // Typed callbacks
 
-    /// CCI param write callback typed type
+    /// Typed write callback type
     typedef typename cci_param_write_callback<value_type>::type
             cci_param_write_callback_typed;
 
-    /// Register write callback with a typed callback
+    /// Register a typed write callback.
+    /**
+     * @param cb Typed write callback
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
     cci_callback_untyped_handle register_write_callback(
             const cci_param_write_callback_typed &cb,
             cci_typed_tag<value_type> = cci_typed_tag<value_type>());
 
-    /// Register write callback with a method and an object instance pointer
+    /// Register a typed write callback with a method as callback
+    /**
+     * @param cb Typed write callback method
+     * @param obj Associated object instance pointer
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
     template<typename C>
     cci_callback_untyped_handle register_write_callback(
             typename cci_param_write_callback_typed::signature (C::*cb),
@@ -254,19 +264,19 @@ public:
     bool unregister_write_callback(
             const cci_param_write_callback_typed &cb);
 
-    ///@}
+    /// @}
 
-    ///@name Validate write callback
-    ///@{
+    /// @name Validate write callback handling
+    /// @{
 
     // Untyped callbacks
 
-    /// TODO
+    /// @copydoc cci_param_untyped::register_validate_write_callback(const cci_param_validate_write_callback_untyped, cci_untyped_tag)
     cci_callback_untyped_handle register_validate_write_callback(
             const cci_param_validate_write_callback_untyped &cb,
             cci_untyped_tag);
 
-    /// TODO
+    /// @copydoc cci_param_untyped::register_validate_write_callback(cci_param_validate_write_callback_untyped::signature, C*, cci_untyped_tag)
     template<typename C>
     cci_callback_untyped_handle register_validate_write_callback(
             cci_param_validate_write_callback_untyped::signature (C::*cb),
@@ -274,17 +284,29 @@ public:
 
     // Typed callbacks
 
-    /// CCI param validate write callback typed type
+    /// Typed validate write callback type
     typedef typename cci_param_validate_write_callback<value_type>::type
             cci_param_validate_write_callback_typed;
 
-    /// Register validate write callback with a typed callback
+    /// Register a typed validate write callback.
+    /**
+     * @param cb Typed validate write callback
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
     cci_callback_untyped_handle register_validate_write_callback(
             const cci_param_validate_write_callback_typed &cb,
             cci_typed_tag<value_type> = cci_typed_tag<value_type>());
 
-    /// Register validate write callback with a method and
-    /// an object instance pointer
+    /// Register a typed validate write callback with a method as callback
+    /**
+     * @param cb Typed validate write callback method
+     * @param obj Associated object instance pointer
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
     template<typename C>
     cci_callback_untyped_handle register_validate_write_callback(
             typename cci_param_validate_write_callback_typed::signature
@@ -295,19 +317,19 @@ public:
     bool unregister_validate_write_callback(
             const cci_param_validate_write_callback_typed &cb);
 
-    ///@}
+    /// @}
 
-    ///@name Read callback
-    ///@{
+    /// @name Read callback handling
+    /// @{
 
     // Untyped callbacks
 
-    /// TODO
+    /// @copydoc cci_param_untyped::register_read_callback(const cci_param_read_callback_untyped, cci_untyped_tag)
     cci_callback_untyped_handle register_read_callback(
             const cci_param_read_callback_untyped &cb,
             cci_untyped_tag);
 
-    /// TODO
+    /// @copydoc cci_param_untyped::register_read_callback(cci_param_read_callback_untyped::signature, C*, cci_untyped_tag)
     template<typename C>
     cci_callback_untyped_handle register_read_callback(
             cci_param_read_callback_untyped::signature (C::*cb), C* obj,
@@ -315,29 +337,39 @@ public:
 
     // Typed callbacks
 
-    /// CCI param read callback typed type
+    /// Typed read callback type
     typedef typename cci_param_read_callback<value_type>::type
             cci_param_read_callback_typed;
 
-    /// Register read callback with a typed callback
+    /// Register a typed read callback.
+    /**
+     * @param cb Typed read callback
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
     cci_callback_untyped_handle register_read_callback(
             const cci_param_read_callback_typed &cb,
             cci_typed_tag<value_type> = cci_typed_tag<value_type>());
 
-    /// Register read callback with a method and an object instance pointer
+    /// Register a typed read callback with a method as callback
+    /**
+     * @param cb Typed read callback method
+     * @param obj Associated object instance pointer
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
     template<typename C>
     cci_callback_untyped_handle register_read_callback(
-            typename cci_param_read_callback_typed::signature
-            (C::*cb), C* obj,
+            typename cci_param_read_callback_typed::signature (C::*cb), C* obj,
             cci_typed_tag<value_type> = cci_typed_tag<value_type>());
 
     /// @copydoc cci_param_untyped::unregister_read_callback
     bool unregister_read_callback(
             const cci_param_read_callback_typed &cb);
 
-    ///@}
-
-    ///@}
+    /// @}
 
     /// Free resources attached to parameter.
     void destroy();
@@ -424,7 +456,7 @@ private:
     /// Constructor to create handles with a giver originator
     cci_param_typed(cci_param_typed<value_type, TM> & copy, const cci_originator& originator);
 
-    //Used verify kernel phase for elaboration time parameters
+    /// Verify kernel phase for elaboration time parameters
     /**
      * Before setValue is called for elaboration parameter updates,
      * this function is called to determine whether the value updates
@@ -441,7 +473,6 @@ private:
     }
 
     /// Check whether value update is allowed
-    //@todo Should these checks be moved into the parameter proxy (cci_param_typed)?
     bool set_cci_value_allowed()
     {
         if (TM == elaboration_time_param) {
@@ -473,8 +504,8 @@ private:
     }
 
     /// Write callback
-    void
-    write_callback(const value_type& value, const cci_originator &originator) const
+    void write_callback(const value_type& value,
+                        const cci_originator &originator) const
     {
         // Write callback payload
         const cci_param_write_event <value_type> ev(m_gs_param->getValue(),

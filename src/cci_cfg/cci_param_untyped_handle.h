@@ -147,12 +147,12 @@ public:
     /// @name Write callback handling
     /// @{
 
-    /// @copydoc cci_param_typed::register_write_callback
+    /// @copydoc cci_param_untyped::register_write_callback(const cci_param_write_callback_untyped, cci_untyped_tag)
     cci_callback_untyped_handle register_write_callback(
             const cci_param_write_callback_untyped &cb,
             cci_untyped_tag = cci_untyped_tag());
 
-    /// @copydoc cci_param_typed::register_write_callback
+    /// @copydoc cci_param_untyped::register_write_callback(cci_param_write_callback_untyped::signature, C*, cci_untyped_tag)
     template<typename C>
     cci_callback_untyped_handle register_write_callback(
             cci_param_write_callback_untyped::signature (C::*cb), C* obj,
@@ -161,11 +161,7 @@ public:
         return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// TODO
-    cci_callback_untyped_handle register_write_callback(
-            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
-
-    /// @copydoc cci_param_typed::unregister_write_callback
+    /// @copydoc cci_param_untyped::unregister_write_callback(const cci_param_write_callback_untyped)
     bool unregister_write_callback(const cci_param_write_callback_untyped &cb);
 
     /// @}
@@ -173,12 +169,12 @@ public:
     /// @name Validate write callback handling
     /// @{
 
-    /// @copydoc cci_param_typed::register_validate_write_callback
+    /// @copydoc cci_param_untyped::register_validate_write_callback(const cci_param_write_callback_untyped, cci_untyped_tag)
     cci_callback_untyped_handle register_validate_write_callback(
             const cci_param_write_callback_untyped &cb,
             cci_untyped_tag = cci_untyped_tag());
 
-    /// @copydoc cci_param_typed::register_validate_write_callback
+    /// @copydoc cci_param_untyped::register_validate_write_callback(cci_param_write_callback_untyped::signature, C*, cci_untyped_tag)
     template<typename C>
     cci_callback_untyped_handle register_validate_write_callback(
             cci_param_write_callback_untyped::signature (C::*cb), C* obj,
@@ -188,11 +184,7 @@ public:
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// TODO
-    cci_callback_untyped_handle register_validate_write_callback(
-            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
-
-    /// @copydoc cci_param_typed::unregister_validate_write_callback
+    /// @copydoc cci_param_untyped::unregister_validate_write_callback(const cci_param_write_callback_untyped)
     bool unregister_validate_write_callback(
             const cci_param_write_callback_untyped &cb);
 
@@ -201,12 +193,12 @@ public:
     /// @name Read callback handling
     /// @{
 
-    /// @copydoc cci_param_typed::register_read_callback
+    /// @copydoc cci_param_untyped::register_read_callback(const cci_param_read_callback_untyped, cci_untyped_tag)
     cci_callback_untyped_handle register_read_callback(
             const cci_param_read_callback_untyped &cb,
             cci_untyped_tag = cci_untyped_tag());
 
-    /// @copydoc cci_param_typed::register_read_callback
+    /// @copydoc cci_param_untyped::register_read_callback(cci_param_read_callback_untyped::signature, C*, cci_untyped_tag)
     template<typename C>
     cci_callback_untyped_handle register_read_callback(
             cci_param_read_callback_untyped::signature (C::*cb), C* obj,
@@ -216,11 +208,7 @@ public:
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// TODO
-    cci_callback_untyped_handle register_read_callback(
-            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
-
-    /// @copydoc cci_param_typed::unregister_read_callback
+    /// @copydoc cci_param_untyped::unregister_read_callback(const cci_param_read_callback_untyped)
     bool unregister_read_callback(const cci_param_read_callback_untyped &cb);
 
     /// @}
@@ -228,10 +216,10 @@ public:
     /// @name CCI callback handling
     /// @{
 
-    /// @copydoc cci_param_typed::unregister_all_callbacks
+    /// @copydoc cci_param_untyped::unregister_all_callbacks
     bool unregister_all_callbacks();
 
-    /// @copydoc cci_param_typed::has_callbacks
+    /// @copydoc cci_param_untyped::has_callbacks
     bool has_callbacks() const;
 
     /// @}
@@ -375,6 +363,23 @@ protected:
     void destroy();
 
     ///@}
+
+    /// @name Callback handling
+    /// @{
+
+    /// Register typed write callback
+    cci_callback_untyped_handle register_write_callback(
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
+
+    /// Register typed validate write callback
+    cci_callback_untyped_handle register_validate_write_callback(
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
+
+    /// Register typed read callback
+    cci_callback_untyped_handle register_read_callback(
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
+
+    /// @}
 
 private:
     /// Originator of the parameter proxy.

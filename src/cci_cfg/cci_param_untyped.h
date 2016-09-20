@@ -76,7 +76,7 @@ public:
     
     /// Get the parameter's description.
     /**
-     * return Description
+     * @return Description
      */
     virtual std::string get_description() const;
 
@@ -157,26 +157,27 @@ public:
 
     ///@}
 
-    ///@name Callback Handling
-    ///@{
+    /// @name Write callback handling
+    /// @{
 
-public:
     /// Register an untyped write callback.
     /**
-     * // TODO
+     * @param cb Untyped write callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
-     * @param cb // TODO
+     * @return Untyped callback handle
      */
     cci_callback_untyped_handle
     register_write_callback(const cci_param_write_callback_untyped& cb,
                             cci_untyped_tag = cci_untyped_tag());
 
-    /// Register an untyped write callback with method and object instance
+    /// Register an untyped write callback with a method as callback
     /**
-     * // TODO
+     * @param cb Untyped write callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
-     * @param cb // TODO
-     * @param obj // TODO
+     * @return Untyped callback handle
      */
     template<typename C>
     cci_callback_untyped_handle
@@ -187,24 +188,30 @@ public:
         return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
+    /// @}
+
+    /// @name Validate write callback handling
+    /// @{
+
     /// Register an untyped validate write callback.
     /**
-     * // TODO
+     * @param cb Untyped validate write callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
-     * @param cb // TODO
+     * @return Untyped callback handle
      */
     cci_callback_untyped_handle
     register_validate_write_callback(
             const cci_param_validate_write_callback_untyped& cb,
             cci_untyped_tag = cci_untyped_tag());
 
-    /// Register an untyped validate write callback with method and
-    /// object instance
+    /// Register an untyped validate write callback with a method as callback
     /**
-     * // TODO
+     * @param cb Untyped validate write callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
-     * @param cb // TODO
-     * @param obj // TODO
+     * @return Untyped callback handle
      */
     template<typename C>
     cci_callback_untyped_handle
@@ -216,22 +223,29 @@ public:
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
+    /// @}
+
+    /// @name Read callback handling
+    /// @{
+
     /// Register an untyped read callback.
     /**
-     * // TODO
+     * @param cb Untyped read callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
-     * @param cb // TODO
+     * @return Untyped callback handle
      */
     cci_callback_untyped_handle
     register_read_callback(const cci_param_read_callback_untyped& cb,
                            cci_untyped_tag = cci_untyped_tag());
 
-    /// Register an untyped read callback with method and object instance
+    /// Register an untyped read callback with a method as callback
     /**
-     * // TODO
+     * @param cb Untyped read callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
-     * @param cb // TODO
-     * @param obj // TODO
+     * @return Untyped callback handle
      */
     template<typename C>
     cci_callback_untyped_handle
@@ -242,89 +256,115 @@ public:
         return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
+    /// @}
+
+    /// @name Callback handling
+    /// @{
+
     /// Unregister all callbacks
     /**
-     * // TODO
-     *
+     * @return True if success, otherwise False
      */
     bool unregister_all_callbacks();
 
     /// Returns if the parameter has registered callbacks.
+    /**
+     * @return True if the parameter has registered callbacks, otherwise False
+     */
     bool has_callbacks() const;
 
+    /// @}
+
 protected:
-    /// Register function as a write callback.
+    /// @name Write callback handling implementation
+    /// @{
+
+    /// Register a write callback handle
     /**
-     * // TODO
+     * @param cb Untyped write callback handle
+     * @param cci_originator Originator
      *
-     * @param cb // TODO
-     * @param orig // TODO
+     * @return Untyped callback handle
      */
     cci_callback_untyped_handle
     register_write_callback(const cci_callback_untyped_handle &cb,
                             const cci_originator &orig);
 
-    /// Unregister function as a write callback.
+    /// Unregister a write callback handle
     /**
-     * // TODO
+     * @param cb Untyped write callback handle
+     * @param cci_originator Originator
      *
-     * @param cb // TODO
-     * @param orig // TODO
+     * @return True if unregister is a success. Otherwise False.
      */
     bool
     unregister_write_callback(const cci_callback_untyped_handle &cb,
                               const cci_originator &orig);
 
-    /// Register function as a validate write callback.
+    /// @}
+
+    /// @name Validate write callback handling implementation
+    /// @{
+
+    /// Register a validate write callback handle
     /**
-     * // TODO
+     * @param cb Untyped validate write callback handle
+     * @param cci_originator Originator
      *
-     * @param cb // TODO
-     * @param orig // TODO
-     * @return
+     * @return Untyped callback handle
      */
     cci_callback_untyped_handle
     register_validate_write_callback(const cci_callback_untyped_handle &cb,
                                      const cci_originator &orig);
 
-    /// Unreegister function as a validate write callback.
+    /// Unregister a validate write callback handle
     /**
-     * // TODO
+     * @param cb Untyped validate write callback handle
+     * @param cci_originator Originator
      *
-     * @param cb // TODO
-     * @param orig // TODO
+     * @return True if unregister is a success. Otherwise False.
      */
     bool
     unregister_validate_write_callback(const cci_callback_untyped_handle &cb,
                                        const cci_originator &orig);
 
-    /// Register function as a read callback.
+    /// @}
+
+    /// @name Read callback handling implementation
+    /// @{
+
+    /// Register a read callback handle
     /**
-     * // TODO
+     * @param cb Untyped read callback handle
+     * @param cci_originator Originator
      *
-     * @param cb // TODO
-     * @param orig // TODO
+     * @return Untyped callback handle
      */
     cci_callback_untyped_handle
     register_read_callback(const cci_callback_untyped_handle &cb,
                            const cci_originator &orig);
 
-    /// Unregister function as a read callback.
+    /// Unregister a read callback handle
     /**
-     * // TODO
+     * @param cb Untyped read callback handle
+     * @param cci_originator Originator
      *
-     * @param cb // TODO
-     * @param orig // TODO
+     * @return True if unregister is a success. Otherwise False.
      */
     bool
     unregister_read_callback(const cci_callback_untyped_handle &cb,
                              const cci_originator &orig);
 
-    /// Unregister all callbacks
+    /// @}
+
+    /// @name Callback handling implementation
+    /// @{
+
+    /// Unregister all callbacks (write, validate write and read callbacks).
     /**
-     * // TODO
+     * @param cci_originator Originator
      *
-     * @param orig // TODO
+     * @return True if unregister is a success. Otherwise False.
      */
     bool unregister_all_callbacks(const cci_originator &orig);
 
