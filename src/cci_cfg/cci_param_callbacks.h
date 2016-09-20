@@ -226,8 +226,6 @@ struct cci_param_callback_if
 {
   friend class cci_param_untyped_handle;
 
-  virtual bool unregister_all_callbacks() = 0;
-
   virtual bool has_callbacks() const = 0;
 
 protected:
