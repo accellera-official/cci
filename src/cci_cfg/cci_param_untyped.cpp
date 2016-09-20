@@ -105,6 +105,7 @@ cci_callback_untyped_handle cci_param_untyped::register_write_callback(
         const cci_callback_untyped_handle &cb,
         const cci_originator &orig)
 {
+    write_callback_obj_t test(cb, orig);
     m_write_callbacks.push_back(write_callback_obj_t(cb, orig));
     return cb;
 }
@@ -200,29 +201,40 @@ bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
     return result;
 }
 
-cci_callback_untyped_handle cci_param_untyped::register_write_callback(
-        const cci_callback_untyped_handle &cb)
+cci_callback_untyped_handle
+cci_param_untyped::register_write_callback(
+        const cci_param_write_callback_untyped& cb,
+        cci_untyped_tag)
 {
     return register_write_callback(cb, m_originator);
 }
 
-bool cci_param_untyped::unregister_write_callback(
-        const cci_callback_untyped_handle &cb)
+template<typename C>
+cci_callback_untyped_handle
+cci_param_untyped::register_write_callback(
+        cci_param_write_callback_untyped::signature(C::*cb), C* obj,
+        cci_untyped_tag)
 {
-    return unregister_write_callback(cb, m_originator);
+    return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1),
+                                   m_originator);
 }
 
 cci_callback_untyped_handle
 cci_param_untyped::register_validate_write_callback(
-        const cci_callback_untyped_handle &cb)
+        const cci_param_validate_write_callback_untyped& cb,
+        cci_untyped_tag)
 {
     return register_validate_write_callback(cb, m_originator);
 }
 
-bool cci_param_untyped::unregister_validate_write_callback(
-        const cci_callback_untyped_handle &cb)
+template<typename C>
+cci_callback_untyped_handle
+cci_param_untyped::register_validate_write_callback(
+        cci_param_validate_write_callback_untyped::signature(C::*cb),
+        C* obj, cci_untyped_tag)
 {
-    return unregister_validate_write_callback(cb, m_originator);
+    return register_validate_write_callback(sc_bind(cb, obj, sc_unnamed::_1),
+                                            m_originator);
 }
 
 cci_callback_untyped_handle cci_param_untyped::register_read_callback(

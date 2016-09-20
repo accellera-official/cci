@@ -160,45 +160,55 @@ public:
     ///@name Callback Handling
     ///@{
 
-protected:
-    /// Register function as a write callback.
-    /**
-     * // TODO
-     *
-     * @param cb // TODO
-     */
-    cci_callback_untyped_handle
-    register_write_callback(const cci_callback_untyped_handle &cb);
-
-    /// Unregister function as a write callback.
-    /**
-     * // TODO
-     *
-     * @param cb // TODO
-     */
-    bool
-    unregister_write_callback(const cci_callback_untyped_handle &cb);
-
-    /// Register function as a validate write callback.
-    /**
-     * // TODO
-     *
-     * @param cb // TODO
-     * @return
-     */
-    cci_callback_untyped_handle
-    register_validate_write_callback(const cci_callback_untyped_handle &cb);
-
-    /// Unreegister function as a validate write callback.
-    /**
-     * // TODO
-     *
-     * @param cb // TODO
-     */
-    bool
-    unregister_validate_write_callback(const cci_callback_untyped_handle &cb);
-
 public:
+    /// Register an untyped write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    cci_callback_untyped_handle
+    register_write_callback(const cci_param_write_callback_untyped& cb,
+                            cci_untyped_tag = cci_untyped_tag());
+
+    /// Register an untyped write callback with method and object instance
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param obj // TODO
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_write_callback(cci_param_write_callback_untyped::signature
+                            (C::*cb), C* obj,
+                            cci_untyped_tag = cci_untyped_tag());
+
+    /// Register an untyped validate write callback.
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     */
+    cci_callback_untyped_handle
+    register_validate_write_callback(
+            const cci_param_validate_write_callback_untyped& cb,
+            cci_untyped_tag = cci_untyped_tag());
+
+    /// Register an untyped validate write callback with method and
+    /// object instance
+    /**
+     * // TODO
+     *
+     * @param cb // TODO
+     * @param obj // TODO
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_validate_write_callback(
+            cci_param_validate_write_callback_untyped::signature(C::*cb),
+            C* obj, cci_untyped_tag = cci_untyped_tag());
+
     /// Register function as a read callback.
     /**
      * // TODO
@@ -227,7 +237,7 @@ public:
     /// Returns if the parameter has registered callbacks.
     bool has_callbacks() const;
 
-private:
+protected:
     /// Register function as a write callback.
     /**
      * // TODO
@@ -439,7 +449,6 @@ protected:
     /// Read callbacks
     std::vector<read_callback_obj_t> m_read_callbacks;
 
-private:
     /// Originator of the parameter
     const cci_originator m_originator;
 };
