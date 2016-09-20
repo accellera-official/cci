@@ -199,6 +199,10 @@ struct cci_param_read_callback_handle
 
 #endif // CCI_HAS_CXX_TEMPLATE_ALIAS_
 
+/// Untyped parameter write event
+typedef cci_param_write_event<>::type
+        cci_param_write_event_untyped;
+
 /// Untyped parameter write callback
 typedef cci_param_write_callback<>::type
   cci_param_write_callback_untyped;
@@ -206,6 +210,10 @@ typedef cci_param_write_callback<>::type
 /// Untyped parameter write validation callback
 typedef cci_param_validate_write_callback<>::type
   cci_param_validate_write_callback_untyped;
+
+/// Untyped parameter read event
+typedef cci_param_read_event<>::type
+        cci_param_read_event_untyped;
 
 /// Untyped parameter read callback
 typedef cci_param_read_callback<>::type
