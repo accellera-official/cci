@@ -144,8 +144,8 @@ public:
     ///@}
 
 
-    ///@name Callback Handling
-    ///@{
+    /// @name Write callback handling
+    /// @{
 
     /// @copydoc cci_param_typed::register_write_callback
     cci_callback_untyped_handle register_write_callback(
@@ -167,6 +167,11 @@ public:
 
     /// @copydoc cci_param_typed::unregister_write_callback
     bool unregister_write_callback(const cci_param_write_callback_untyped &cb);
+
+    /// @}
+
+    /// @name Validate write callback handling
+    /// @{
 
     /// @copydoc cci_param_typed::register_validate_write_callback
     cci_callback_untyped_handle register_validate_write_callback(
@@ -191,13 +196,45 @@ public:
     bool unregister_validate_write_callback(
             const cci_param_write_callback_untyped &cb);
 
+    /// @}
+
+    /// @name Read callback handling
+    /// @{
+
+    /// @copydoc cci_param_typed::register_read_callback
+    cci_callback_untyped_handle register_read_callback(
+            const cci_param_read_callback_untyped &cb,
+            cci_untyped_tag = cci_untyped_tag());
+
+    /// @copydoc cci_param_typed::register_read_callback
+    template<typename C>
+    cci_callback_untyped_handle register_read_callback(
+            cci_param_read_callback_untyped::signature (C::*cb), C* obj,
+            cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_read_callback(
+                sc_bind(cb, obj, sc_unnamed::_1));
+    }
+
+    /// TODO
+    cci_callback_untyped_handle register_read_callback(
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>);
+
+    /// @copydoc cci_param_typed::unregister_read_callback
+    bool unregister_read_callback(const cci_param_read_callback_untyped &cb);
+
+    /// @}
+
+    /// @name CCI callback handling
+    /// @{
+
     /// @copydoc cci_param_typed::unregister_all_callbacks
     bool unregister_all_callbacks();
 
     /// @copydoc cci_param_typed::has_callbacks
     bool has_callbacks() const;
 
-    ///@}
+    /// @}
 
     ///@name Write-access control
     ///@{

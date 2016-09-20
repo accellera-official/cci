@@ -129,6 +129,30 @@ bool cci_param_untyped_handle::unregister_validate_write_callback(
     return m_orig_param->unregister_validate_write_callback(cb, m_originator);
 }
 
+cci_callback_untyped_handle
+cci_param_untyped_handle::register_read_callback(
+        const cci_param_read_callback_untyped &cb,
+        cci_untyped_tag)
+{
+    check_is_valid();
+    return m_orig_param->register_read_callback(cb, m_originator);
+}
+
+cci_callback_untyped_handle
+cci_param_untyped_handle::register_read_callback(
+        const cci_callback_untyped_handle& cb, cci_typed_tag<void>)
+{
+    check_is_valid();
+    return m_orig_param->register_read_callback(cb, m_originator);
+}
+
+bool cci_param_untyped_handle::unregister_read_callback(
+        const cci_param_read_callback_untyped &cb)
+{
+    check_is_valid();
+    return m_orig_param->unregister_read_callback(cb, m_originator);
+}
+
 bool cci_param_untyped_handle::unregister_all_callbacks()
 {
     check_is_valid();
