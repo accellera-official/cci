@@ -59,22 +59,21 @@ public:
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (
-            const cci_param_typed<value_type, TM> & rhs);
+    cci_param_typed& operator= (const cci_param_typed & rhs);
 
     ///Assigns parameter a new value from another legacy parameter
     /**
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (const cci_param_if & rhs);
+    cci_param_typed& operator= (const cci_param_if & rhs);
 
     ///Assigns parameter a new value from another parameter handle
     /**
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (
+    cci_param_typed& operator= (
             const cci_param_typed_handle<value_type> & rhs);
 
     ///Assigns parameter a new value from another untyped parameter handle
@@ -82,14 +81,14 @@ public:
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (const cci_param_untyped_handle & rhs);
+    cci_param_typed& operator= (const cci_param_untyped_handle & rhs);
 
     ///Assigns parameter a new value
     /**
      * @param rhs New value to assign
      * @return reference to this object
      */
-    cci_param_typed<value_type, TM>& operator= (const value_type & rhs);
+    cci_param_typed& operator= (const value_type & rhs);
 
     ///Conversion operator to be able use cci_param_typed as a regular object
     operator const value_type& () const;
