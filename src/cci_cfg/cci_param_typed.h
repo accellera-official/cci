@@ -723,7 +723,7 @@ const std::type_info& cci_param_typed<T, TM>::get_type_info() const
 
 template <typename T, param_mutable_type TM>
 const void* cci_param_typed<T, TM>::get_default_value_raw() const {
-    if (!this->m_gs_param->has_default_value())
+    if (!this->m_gs_param->has_default_value()) // TODO: remove dependency and check (all cci_param have a default value)
         cci_report_handler::get_param_failed(
                 "Param has no default value.");
     return &this->m_gs_param->get_default_value();
