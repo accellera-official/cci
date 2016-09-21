@@ -188,6 +188,15 @@ public:
         return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
+    /// Unregister a write callback handle
+    /**
+     * @param cb Untyped write callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_write_callback(const cci_callback_untyped_handle &cb);
+
     /// @}
 
     /// @name Validate write callback handling
@@ -223,6 +232,15 @@ public:
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
+    /// Unregister a validate write callback handle
+    /**
+     * @param cb Untyped validate write callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_validate_write_callback(const cci_callback_untyped_handle &cb);
+
     /// @}
 
     /// @name Read callback handling
@@ -255,6 +273,15 @@ public:
     {
         return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
+
+    /// Unregister a read callback handle
+    /**
+     * @param cb Untyped read callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_read_callback(const cci_callback_untyped_handle &cb);
 
     /// @}
 

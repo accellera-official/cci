@@ -260,10 +260,6 @@ public:
             typename cci_param_write_callback_typed::signature (C::*cb),
             C* obj, cci_typed_tag<value_type> = cci_typed_tag<value_type>());
 
-    /// @copydoc cci_param_untyped::unregister_write_callback
-    bool unregister_write_callback(
-            const cci_param_write_callback_typed &cb);
-
     /// @}
 
     /// @name Validate write callback handling
@@ -313,10 +309,6 @@ public:
             (C::*cb), C* obj,
             cci_typed_tag<value_type> = cci_typed_tag<value_type>());
 
-    /// @copydoc cci_param_untyped::unregister_validate_write_callback
-    bool unregister_validate_write_callback(
-            const cci_param_validate_write_callback_typed &cb);
-
     /// @}
 
     /// @name Read callback handling
@@ -364,10 +356,6 @@ public:
     cci_callback_untyped_handle register_read_callback(
             typename cci_param_read_callback_typed::signature (C::*cb), C* obj,
             cci_typed_tag<value_type> = cci_typed_tag<value_type>());
-
-    /// @copydoc cci_param_untyped::unregister_read_callback
-    bool unregister_read_callback(
-            const cci_param_read_callback_typed &cb);
 
     /// @}
 
@@ -800,13 +788,6 @@ cci_param_typed<T, TM>::register_write_callback(
     return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
 }
 
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::unregister_write_callback(
-        const cci_param_write_callback_typed &cb)
-{
-    return cci_param_untyped::unregister_write_callback(cb, m_originator);
-}
-
 // Validate write callback / untyped
 
 template <typename T, param_mutable_type TM>
@@ -850,13 +831,6 @@ cci_param_typed<T, TM>::register_validate_write_callback(
     return register_validate_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
 }
 
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::unregister_validate_write_callback(
-        const cci_param_validate_write_callback_typed &cb)
-{
-    return cci_param_untyped::unregister_validate_write_callback(cb);
-}
-
 // Read callback / untyped
 
 template <typename T, param_mutable_type TM>
@@ -896,13 +870,6 @@ cci_param_typed<T, TM>::register_read_callback(
         C* obj, cci_typed_tag<T>)
 {
     return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
-}
-
-template <typename T, param_mutable_type TM>
-bool cci_param_typed<T, TM>::unregister_read_callback(
-        const cci_param_read_callback_typed &cb)
-{
-    return cci_param_untyped::unregister_read_callback(cb);
 }
 
 // End of callback

@@ -161,8 +161,8 @@ public:
         return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// @copydoc cci_param_untyped::unregister_write_callback(const cci_param_write_callback_untyped)
-    bool unregister_write_callback(const cci_param_write_callback_untyped &cb);
+    /// @copydoc cci_param_untyped::unregister_write_callback(const cci_callback_untyped_handle)
+    bool unregister_write_callback(const cci_callback_untyped_handle &cb);
 
     /// @}
 
@@ -184,9 +184,9 @@ public:
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// @copydoc cci_param_untyped::unregister_validate_write_callback(const cci_param_write_callback_untyped)
+    /// @copydoc cci_param_untyped::unregister_validate_write_callback(const cci_callback_untyped_handle)
     bool unregister_validate_write_callback(
-            const cci_param_write_callback_untyped &cb);
+            const cci_callback_untyped_handle &cb);
 
     /// @}
 
@@ -208,8 +208,8 @@ public:
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// @copydoc cci_param_untyped::unregister_read_callback(const cci_param_read_callback_untyped)
-    bool unregister_read_callback(const cci_param_read_callback_untyped &cb);
+    /// @copydoc cci_param_untyped::unregister_read_callback(const cci_callback_untyped_handle)
+    bool unregister_read_callback(const cci_callback_untyped_handle &cb);
 
     /// @}
 

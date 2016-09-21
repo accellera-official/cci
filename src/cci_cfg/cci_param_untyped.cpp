@@ -205,6 +205,12 @@ cci_param_untyped::register_write_callback(
     return register_write_callback(cb, m_originator);
 }
 
+bool cci_param_untyped::unregister_write_callback(
+        const cci_callback_untyped_handle &cb)
+{
+    return unregister_write_callback(cb, m_originator);
+}
+
 cci_callback_untyped_handle
 cci_param_untyped::register_validate_write_callback(
         const cci_param_validate_write_callback_untyped& cb,
@@ -213,11 +219,23 @@ cci_param_untyped::register_validate_write_callback(
     return register_validate_write_callback(cb, m_originator);
 }
 
+bool cci_param_untyped::unregister_validate_write_callback(
+        const cci_callback_untyped_handle &cb)
+{
+    return unregister_validate_write_callback(cb, m_originator);
+}
+
 cci_callback_untyped_handle
 cci_param_untyped::register_read_callback(
         const cci_param_read_callback_untyped& cb, cci_untyped_tag)
 {
     return register_read_callback(cb, m_originator);
+}
+
+bool cci_param_untyped::unregister_read_callback(
+        const cci_callback_untyped_handle &cb)
+{
+    return unregister_read_callback(cb, m_originator);
 }
 
 bool cci_param_untyped::unregister_all_callbacks()
