@@ -2,7 +2,8 @@ We aim for consistency with other SystemC Standards. We follow Philipp's
 recommendations (from https://github.com/OSCI-WG/cci/pull/17) as a foundation:
 
 - generally follow Google C++ style guide
-- naming all lower-case, separated by underscores (i.e. no CamelCase)
+- class naming: all lower-case, separated by underscores (i.e. no CamelCase)
+- enum values use domain prefix (i.e. CCI_), all upper-case, separated by underscores
 - nested typedefs with `_type`
 - base classes ending with `_base` (or `_b`)
 
@@ -42,5 +43,9 @@ And we add the following incremental guidance:
     class: @class, @brief 
     class methods: @brief, @param, @return, @exception
     sc_main function: @fn, @brief, @param, @return
+
+  @copydoc should be used when overriding a parent class method (or similiar
+  situation). The actual documentation should exist in the uppermost (or
+  otherwise most prominent) class.
 
   Detailed descriptions are encouraged when warranted.
