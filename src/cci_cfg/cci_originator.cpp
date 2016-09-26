@@ -17,6 +17,8 @@
 
  ****************************************************************************/
 
+#include <cstring>
+
 #include "cci_cfg/cci_originator.h"
 #include "cci_report_handler.h"
 
@@ -71,6 +73,10 @@ bool cci_originator::operator==( const cci_originator& originator ) {
     return (this->get_object() == originator.get_object()) &&
             !std::strcmp(this->name(), originator.name()) &&
             (this->string_name() == originator.string_name());
+}
+
+bool cci_originator::operator<(const cci_originator& originator) const {
+    return std::strcmp(name(), originator.name()) < 0;
 }
 
 sc_core::sc_object *cci_originator::current_originator_object() {

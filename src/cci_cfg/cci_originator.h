@@ -113,6 +113,9 @@ public:
     /// Compare operator overload
     bool operator==( const cci_originator& originator );
 
+    /// Less operator overload
+    bool operator<(const cci_originator& originator) const;
+
 protected:
 
     /// Return the current originator object pointer

@@ -139,7 +139,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_stack.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_value.cpp" />
@@ -154,7 +153,8 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_callbacks.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_stack.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_callbacks.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_callbacks.hpp" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_datatypes.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_debug.h" />
