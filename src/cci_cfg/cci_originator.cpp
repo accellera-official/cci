@@ -43,13 +43,13 @@ const sc_core::sc_object *cci_originator::get_object() const {
 }
 
 const char* cci_originator::name() const {
-    static std::string default_name("unknow");
+    static const char default_name[](__CCI_UNKNOWN_ORIGINATOR_STRING__);
     if (m_originator_obj) {
         return m_originator_obj->name();
     } else if(m_originator_str) {
         return m_originator_str->c_str();
     } else {
-        return default_name.c_str();
+        return default_name;
     }
 }
 
