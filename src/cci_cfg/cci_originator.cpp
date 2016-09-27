@@ -61,7 +61,10 @@ const char* cci_originator::name() const {
 }
 
 const char* cci_originator::string_name() const {
-    return m_originator_str->c_str();
+    if(m_originator_str)
+        return m_originator_str->c_str();
+    else
+        return NULL;
 }
 
 cci_originator &cci_originator::operator=(cci_originator originator) {
