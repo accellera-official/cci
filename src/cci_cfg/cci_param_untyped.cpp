@@ -128,7 +128,7 @@ cci_param_untyped::unregister_##name##_callback(                               \
     for(it=m_##name##_callbacks.begin() ; it < m_##name##_callbacks.end();     \
         it++)                                                                  \
     {                                                                          \
-        if(it->callback == cb /*&& it->originator == orig TODO: FIXME */) {    \
+        if(it->callback == cb && it->originator == orig) {    \
             m_##name##_callbacks.erase(it);                                    \
             return true;                                                       \
         }                                                                      \
@@ -151,7 +151,7 @@ bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
             m_pre_write_callbacks.begin();
          it < m_pre_write_callbacks.end(); it++)
     {
-        if(1/*itt->originator == orig TODO: FIXME */) {
+        if(it->originator == orig) {
             m_pre_write_callbacks.erase(it);
             result = true;
         }
@@ -160,7 +160,7 @@ bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
             m_post_write_callbacks.begin();
         it < m_post_write_callbacks.end(); it++)
     {
-        if(1/*it->originator == orig TODO: FIXME */) {
+        if(it->originator == orig) {
             m_post_write_callbacks.erase(it);
             result = true;
         }
@@ -169,7 +169,7 @@ bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
             m_pre_read_callbacks.begin();
         it < m_pre_read_callbacks.end(); it++)
     {
-        if(1/*it->originator == orig TODO: FIXME */) {
+        if(it->originator == orig) {
             m_pre_read_callbacks.erase(it);
             result = true;
         }
@@ -178,7 +178,7 @@ bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
             m_post_read_callbacks.begin();
         it < m_post_read_callbacks.end(); it++)
     {
-        if(1/*it->originator == orig TODO: FIXME */) {
+        if(it->originator == orig) {
             m_post_read_callbacks.erase(it);
             result = true;
         }
