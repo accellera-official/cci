@@ -74,6 +74,12 @@ cci_originator &cci_originator::operator=(cci_originator originator) {
     return *this;
 }
 
+bool cci_originator::operator==( const cci_originator& originator ) {
+    return (this->get_object() == originator.get_object()) &&
+            !std::strcmp(this->name(), originator.name()) &&
+            (this->string_name() == originator.string_name());
+}
+
 sc_core::sc_object *cci_originator::current_originator_object() {
     sc_core::sc_object *originator_obj = sc_core::sc_get_current_object();
     return originator_obj;
