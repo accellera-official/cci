@@ -186,6 +186,13 @@ public:
 
     /// @}
 
+    /// @name Post read callback handling
+    /// @{
+
+    CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_(post_read);
+
+    /// @}
+
 #undef CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_
 
     /// @name CCI callback handling

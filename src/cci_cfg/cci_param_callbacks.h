@@ -165,6 +165,16 @@ template <typename T = void>
 using cci_param_pre_read_callback_handle
   = cci_callback_typed_handle<const cci_param_read_event<T>&>;
 
+/// Parameter post read callback
+template <typename T = void>
+using cci_param_post_read_callback
+  = cci_callback<const cci_param_read_event<T>&>;
+
+/// Parameter post read callback handle
+template <typename T = void>
+using cci_param_post_read_callback_handle
+  = cci_callback_typed_handle<const cci_param_read_event<T>&>;
+
 #else // CCI_HAS_CXX_TEMPLATE_ALIAS
 
 /// Parameter pre write callback
@@ -197,6 +207,16 @@ template <typename T = void>
 struct cci_param_pre_read_callback_handle
         : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
 
+/// Parameter post read callback
+template <typename T = void>
+struct cci_param_post_read_callback
+        : cci_callback<const cci_param_read_event<T>& > {};
+
+/// Parameter post read callback handle
+template <typename T = void>
+struct cci_param_post_read_callback_handle
+        : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
+
 #endif // CCI_HAS_CXX_TEMPLATE_ALIAS_
 
 /// Untyped parameter write event
@@ -218,6 +238,10 @@ typedef cci_param_read_event<>::type
 /// Untyped parameter pre read callback
 typedef cci_param_pre_read_callback<>::type
         cci_param_pre_read_callback_untyped;
+
+/// Untyped parameter post read callback
+typedef cci_param_post_read_callback<>::type
+        cci_param_post_read_callback_untyped;
 
 /* ------------------------------------------------------------------------ */
 
@@ -249,6 +273,13 @@ protected:
   virtual bool
   unregister_pre_read_callback( const cci_callback_untyped_handle& cb
                               , const cci_originator& orig ) = 0;
+
+  virtual cci_callback_untyped_handle
+  register_post_read_callback( const cci_callback_untyped_handle& cb
+                             , const cci_originator& orig ) = 0;
+  virtual bool
+  unregister_post_read_callback( const cci_callback_untyped_handle& cb
+                               , const cci_originator& orig ) = 0;
 
   virtual bool unregister_all_callbacks(const cci_originator& orig) = 0;
 };

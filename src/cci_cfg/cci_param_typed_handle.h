@@ -146,6 +146,13 @@ public:
 
     /// @}
 
+    /// @name Post read callback handling
+    /// @{
+
+    CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_(post_read);
+
+    /// @}
+
 #undef CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_
 
     /// Constructor to create new parameter handle with given originator and
@@ -265,6 +272,8 @@ CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(pre_write)
 CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(post_write)
 
 CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(pre_read)
+
+CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(post_read)
 
 template <typename T>
 cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_if& orig_param,

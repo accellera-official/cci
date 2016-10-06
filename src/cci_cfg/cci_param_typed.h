@@ -358,6 +358,54 @@ public:
 
     /// @}
 
+    /// @name Post read callback handling
+    /// @{
+
+    // Untyped callbacks
+
+    /// @copydoc cci_param_untyped::register_post_read_callback(const cci_param_post_read_callback_untyped, cci_untyped_tag)
+    cci_callback_untyped_handle register_post_read_callback(
+            const cci_param_post_read_callback_untyped &cb,
+            cci_untyped_tag);
+
+    /// @copydoc cci_param_untyped::register_post_read_callback(cci_param_post_read_callback_untyped::signature, C*, cci_untyped_tag)
+    template<typename C>
+    cci_callback_untyped_handle register_post_read_callback(
+            cci_param_post_read_callback_untyped::signature (C::*cb), C* obj,
+            cci_untyped_tag);
+
+    // Typed callbacks
+
+    /// Typed read callback type
+    typedef typename cci_param_post_read_callback<value_type>::type
+            cci_param_post_read_callback_typed;
+
+    /// Register a typed post read callback.
+    /**
+     * @param cb Typed post read callback
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle register_post_read_callback(
+            const cci_param_post_read_callback_typed &cb,
+            cci_typed_tag<value_type> = cci_typed_tag<value_type>());
+
+    /// Register a typed post read callback with a method as callback
+    /**
+     * @param cb Typed post read callback method
+     * @param obj Associated object instance pointer
+     * @param cci_typed_tag Typed tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    template<typename C>
+    cci_callback_untyped_handle register_post_read_callback(
+            typename cci_param_post_read_callback_typed::signature (C::*cb), C* obj,
+            cci_typed_tag<value_type> = cci_typed_tag<value_type>());
+
+    /// @}
+
     /// Free resources attached to parameter.
     void destroy();
 
@@ -538,6 +586,22 @@ private:
             }
         }
     }
+
+    /// Pre read callback
+    void post_read_callback(const value_type& value) const
+    {
+        // Read callback payload
+        const cci_param_read_event <value_type> ev(value, get_originator());
+
+        // Read callbacks
+        for (unsigned i = 0; i < m_post_read_callbacks.size(); ++i) {
+            typename cci_param_post_read_callback_handle<value_type>::type
+                    typed_pre_read_cb(m_post_read_callbacks[i].callback);
+            if (typed_pre_read_cb.valid()) {
+                typed_pre_read_cb.invoke(ev);
+            }
+        }
+    }
 };
 
 template <typename T, param_mutable_type TM>
@@ -592,6 +656,7 @@ template <typename T, param_mutable_type TM>
 const T& cci_param_typed<T, TM>::get_value() const
 {
     pre_read_callback(m_gs_param->getValue());
+    post_read_callback(m_gs_param->getValue());
     return m_gs_param->getValue();
 }
 
@@ -677,6 +742,7 @@ const void* cci_param_typed<T, TM>::get_raw_value() const
 {
     const value_type& value = get_value();
     pre_read_callback(value);
+    post_read_callback(value);
     return static_cast<const void*>(&value);
 }
 
@@ -744,6 +810,7 @@ template <typename T, param_mutable_type TM>
 cci_value cci_param_typed<T, TM>::get_cci_value() const {
     const value_type& value = this->m_gs_param->getValue();
     pre_read_callback(value);
+    post_read_callback(value);
     return cci_value(value);
 }
 
@@ -795,6 +862,9 @@ CCI_PARAM_TYPED_CALLBACK_IMPL_(post_write)
 
 // Pre read callback
 CCI_PARAM_TYPED_CALLBACK_IMPL_(pre_read)
+
+// Post read callback
+CCI_PARAM_TYPED_CALLBACK_IMPL_(post_read)
 
 template <typename T, param_mutable_type TM>
 cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(

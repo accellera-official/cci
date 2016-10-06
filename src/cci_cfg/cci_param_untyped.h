@@ -286,6 +286,48 @@ public:
 
     /// @}
 
+    /// @name Post read callback handling
+    /// @{
+
+    /// Register an untyped post read callback.
+    /**
+     * @param cb Untyped post read callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_post_read_callback(const cci_param_post_read_callback_untyped& cb,
+                               cci_untyped_tag = cci_untyped_tag());
+
+    /// Register an untyped post read callback with a method as callback
+    /**
+     * @param cb Untyped post read callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_post_read_callback(cci_param_post_read_callback_untyped::signature
+                               (C::*cb), C* obj,
+                               cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_post_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
+    }
+
+    /// Unregister a post read callback handle
+    /**
+     * @param cb Untyped post read callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_post_read_callback(const cci_callback_untyped_handle &cb);
+
+    /// @}
+
     /// @name Callback handling
     /// @{
 
@@ -382,6 +424,33 @@ protected:
     bool
     unregister_pre_read_callback(const cci_callback_untyped_handle &cb,
                                  const cci_originator &orig);
+
+    /// @}
+
+    /// @name Post read callback handling implementation
+    /// @{
+
+    /// Register a post read callback handle
+    /**
+     * @param cb Untyped post read callback handle
+     * @param cci_originator Originator
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_post_read_callback(const cci_callback_untyped_handle &cb,
+                                const cci_originator &orig);
+
+    /// Unregister a post read callback handle
+    /**
+     * @param cb Untyped post read callback handle
+     * @param cci_originator Originator
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_post_read_callback(const cci_callback_untyped_handle &cb,
+                                  const cci_originator &orig);
 
     /// @}
 
@@ -531,6 +600,12 @@ protected:
             pre_read_callback_obj_t;
 
     std::vector<pre_read_callback_obj_t> m_pre_read_callbacks;
+
+    /// Post read callbacks
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            post_read_callback_obj_t;
+
+    std::vector<post_read_callback_obj_t> m_post_read_callbacks;
 
     /// Originator of the parameter
     const cci_originator m_originator;

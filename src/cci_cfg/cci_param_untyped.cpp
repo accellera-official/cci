@@ -142,24 +142,44 @@ CCI_PARAM_UNTYPED_CALLBACK_IMPL_(post_write)
 
 CCI_PARAM_UNTYPED_CALLBACK_IMPL_(pre_read)
 
+CCI_PARAM_UNTYPED_CALLBACK_IMPL_(post_read)
+
 bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
 {
     bool result = false;
-    std::vector<pre_write_callback_obj_t>::iterator itt;
-    for (itt = m_pre_write_callbacks.begin();
-         itt < m_pre_write_callbacks.end(); itt++)
+    for (std::vector<pre_write_callback_obj_t>::iterator it =
+            m_pre_write_callbacks.begin();
+         it < m_pre_write_callbacks.end(); it++)
     {
         if(1/*itt->originator == orig TODO: FIXME */) {
-            m_pre_write_callbacks.erase(itt);
+            m_pre_write_callbacks.erase(it);
             result = true;
         }
     }
-    std::vector<post_write_callback_obj_t>::iterator it;
-    for(it=m_post_write_callbacks.begin(); it < m_post_write_callbacks.end();
-        it++)
+    for(std::vector<post_write_callback_obj_t>::iterator it =
+            m_post_write_callbacks.begin();
+        it < m_post_write_callbacks.end(); it++)
     {
         if(1/*it->originator == orig TODO: FIXME */) {
             m_post_write_callbacks.erase(it);
+            result = true;
+        }
+    }
+    for(std::vector<pre_read_callback_obj_t>::iterator it =
+            m_pre_read_callbacks.begin();
+        it < m_pre_read_callbacks.end(); it++)
+    {
+        if(1/*it->originator == orig TODO: FIXME */) {
+            m_pre_read_callbacks.erase(it);
+            result = true;
+        }
+    }
+    for(std::vector<post_read_callback_obj_t>::iterator it =
+            m_post_read_callbacks.begin();
+        it < m_post_read_callbacks.end(); it++)
+    {
+        if(1/*it->originator == orig TODO: FIXME */) {
+            m_post_read_callbacks.erase(it);
             result = true;
         }
     }

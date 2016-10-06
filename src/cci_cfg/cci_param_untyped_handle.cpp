@@ -117,6 +117,9 @@ CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(post_write)
 // Pre read callback
 CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(pre_read)
 
+// Post read callback
+CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(post_read)
+
 bool cci_param_untyped_handle::unregister_all_callbacks()
 {
     check_is_valid();
