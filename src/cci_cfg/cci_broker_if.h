@@ -94,7 +94,6 @@ public:
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //
 
-
     /// Set a parameter's init value.
     /**
      * The init value has priority to the default value being set by the owner!
@@ -214,20 +213,14 @@ public:
      */
     virtual bool is_used(const std::string &parname) = 0;
 
-
     // //////////////////////////////////////////////////////////////////// //
     // ////////////////   Get Parameter List   //////////////////////////// //
-
 
     /// Returns a list of all parameters existing (implicit and explicit) in the registry.
     /**
      * @return Vector with full hierarchical parameter names.
      */
     virtual const std::vector <std::string> get_param_list() = 0;
-
-
-    // //////////////////////////////////////////////////////////////////// //
-    // /////////////////   Callback Handling   //////////////////////////// //
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
@@ -258,7 +251,6 @@ public:
      */
     virtual void remove_param(cci_param_if *par) = 0;
 
-
 public:
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////    Optional functions   //////////////////////////// //
@@ -278,21 +270,6 @@ public:
      */
     virtual const std::vector <cci_param_untyped_handle>
     get_param_handles(const std::string &pattern = "") = 0;
-
-
-    // Dropped due to conf call discussion in February
-    //! @cond Doxygen_Suppress
-    /// Set an alias to a parameter name
-    /**
-     * TODO: Guideline for other CCI functions, e.g.:
-     * - get_param_list will NOT return any alias names
-     * - all parameter access functions will take an alias
-     *
-     * @param orig_parname    Full hierarchical name of the original parameter (or another alias).
-     * @param alias_parname   Full hierarchical (full user chosen) alias name.
-     */
-    //! @endcond
-    //virtual void set_alias(std::string& orig_parname, std::string& alias_parname) = 0;
 
     /// Convenience function to get a typed parameter handle.
     /**
