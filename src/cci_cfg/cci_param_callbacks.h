@@ -29,7 +29,7 @@ CCI_OPEN_NAMESPACE_
 template<typename T = void>
 struct cci_param_write_event;
 
-/// Payload for type-independent write and validate_write callbacks
+/// Payload for type-independent pre write and post write callbacks
 template<>
 struct cci_param_write_event<void>
 {
@@ -48,7 +48,7 @@ struct cci_param_write_event<void>
   const cci_originator& originator;
 };
 
-/// Payload for write and validate_write callbacks
+/// Payload for pre write and post write callbacks
 template<typename T>
 struct cci_param_write_event
 {
@@ -135,66 +135,66 @@ struct cci_param_read_event
 
 #if CCI_HAS_CXX_TEMPLATE_ALIAS
 
-/// Parameter write callback
+/// Parameter pre write callback
 template <typename T = void>
-using cci_param_write_callback
-  = cci_callback<const cci_param_write_event<T>&>;
-
-/// Parameter write callback handle
-template <typename T = void>
-using cci_param_write_callback_handle
-  = cci_callback_typed_handle<const cci_param_write_event<T>&>;
-
-/// Parameter write validation callback
-template <typename T = void>
-using cci_param_validate_write_callback
+using cci_param_pre_write_callback
   = cci_callback<const cci_param_write_event<T>&, bool>;
 
-/// Parameter write validation callback handle
+/// Parameter pre write callback handle
 template <typename T = void>
-using cci_param_validate_write_callback_handle
+using cci_param_pre_write_callback_handle
   = cci_callback_typed_handle<const cci_param_write_event<T>&, bool>;
 
-/// Parameter read callback
+/// Parameter post write callback
 template <typename T = void>
-using cci_param_read_callback
+using cci_param_post_write_callback
+  = cci_callback<const cci_param_write_event<T>&>;
+
+/// Parameter post write callback handle
+template <typename T = void>
+using cci_param_post_write_callback_handle
+  = cci_callback_typed_handle<const cci_param_write_event<T>&>;
+
+/// Parameter pre read callback
+template <typename T = void>
+using cci_param_pre_read_callback
   = cci_callback<const cci_param_read_event<T>&>;
 
-/// Parameter read callback handle
+/// Parameter pre read callback handle
 template <typename T = void>
-using cci_param_read_callback_handle
+using cci_param_pre_read_callback_handle
   = cci_callback_typed_handle<const cci_param_read_event<T>&>;
 
 #else // CCI_HAS_CXX_TEMPLATE_ALIAS
 
-/// Parameter write callback
+/// Parameter pre write callback
 template <typename T = void>
-struct cci_param_write_callback
+struct cci_param_pre_write_callback
+        : cci_callback<const cci_param_write_event<T>&, bool> {};
+
+/// Parameter pre write callback handle
+template <typename T = void>
+struct cci_param_pre_write_callback_handle
+        : cci_callback_typed_handle<const cci_param_write_event<T>&, bool> {};
+
+/// Parameter post write callback
+template <typename T = void>
+struct cci_param_post_write_callback
   : cci_callback<const cci_param_write_event<T>& > {};
 
-/// Parameter write callback handle
+/// Parameter post write callback handle
 template <typename T = void>
-struct cci_param_write_callback_handle
+struct cci_param_post_write_callback_handle
   : cci_callback_typed_handle<const cci_param_write_event<T>&> {};
 
-/// Parameter write validation callback
+/// Parameter pre read callback
 template <typename T = void>
-struct cci_param_validate_write_callback
-  : cci_callback<const cci_param_write_event<T>&, bool> {};
-
-/// Parameter write validation callback handle
-template <typename T = void>
-struct cci_param_validate_write_callback_handle
-  : cci_callback_typed_handle<const cci_param_write_event<T>&, bool> {};
-
-/// Parameter read callback
-template <typename T = void>
-struct cci_param_read_callback
+struct cci_param_pre_read_callback
         : cci_callback<const cci_param_read_event<T>& > {};
 
-/// Parameter read callback handle
+/// Parameter pre read callback handle
 template <typename T = void>
-struct cci_param_read_callback_handle
+struct cci_param_pre_read_callback_handle
         : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
 
 #endif // CCI_HAS_CXX_TEMPLATE_ALIAS_
@@ -203,21 +203,21 @@ struct cci_param_read_callback_handle
 typedef cci_param_write_event<>::type
         cci_param_write_event_untyped;
 
-/// Untyped parameter write callback
-typedef cci_param_write_callback<>::type
-  cci_param_write_callback_untyped;
+/// Untyped parameter pre write callback
+typedef cci_param_pre_write_callback<>::type
+  cci_param_pre_write_callback_untyped;
 
-/// Untyped parameter write validation callback
-typedef cci_param_validate_write_callback<>::type
-  cci_param_validate_write_callback_untyped;
+/// Untyped parameter post write callback
+typedef cci_param_post_write_callback<>::type
+        cci_param_post_write_callback_untyped;
 
 /// Untyped parameter read event
 typedef cci_param_read_event<>::type
         cci_param_read_event_untyped;
 
-/// Untyped parameter read callback
-typedef cci_param_read_callback<>::type
-        cci_param_read_callback_untyped;
+/// Untyped parameter pre read callback
+typedef cci_param_pre_read_callback<>::type
+        cci_param_pre_read_callback_untyped;
 
 /* ------------------------------------------------------------------------ */
 
@@ -230,25 +230,25 @@ struct cci_param_callback_if
 
 protected:
   virtual cci_callback_untyped_handle
-  register_write_callback( const cci_callback_untyped_handle& cb
-                         , const cci_originator& orig ) = 0;
+  register_pre_write_callback( const cci_callback_untyped_handle& cb
+                             , const cci_originator& orig ) = 0;
   virtual bool
-  unregister_write_callback( const cci_callback_untyped_handle& cb
-                           , const cci_originator& orig ) = 0;
+  unregister_pre_write_callback( const cci_callback_untyped_handle& cb
+                               , const cci_originator& orig ) = 0;
 
   virtual cci_callback_untyped_handle
-  register_validate_write_callback( const cci_callback_untyped_handle& cb
-                                  , const cci_originator& orig ) = 0;
+  register_post_write_callback( const cci_callback_untyped_handle& cb
+                              , const cci_originator& orig ) = 0;
   virtual bool
-  unregister_validate_write_callback( const cci_callback_untyped_handle& cb
-                                    , const cci_originator& orig ) = 0;
+  unregister_post_write_callback( const cci_callback_untyped_handle& cb
+                                , const cci_originator& orig ) = 0;
 
   virtual cci_callback_untyped_handle
-  register_read_callback( const cci_callback_untyped_handle& cb
-                        , const cci_originator& orig ) = 0;
+  register_pre_read_callback( const cci_callback_untyped_handle& cb
+                            , const cci_originator& orig ) = 0;
   virtual bool
-  unregister_read_callback( const cci_callback_untyped_handle& cb
-                          , const cci_originator& orig ) = 0;
+  unregister_pre_read_callback( const cci_callback_untyped_handle& cb
+                              , const cci_originator& orig ) = 0;
 
   virtual bool unregister_all_callbacks(const cci_originator& orig) = 0;
 };

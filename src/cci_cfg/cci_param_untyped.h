@@ -157,23 +157,24 @@ public:
 
     ///@}
 
-    /// @name Write callback handling
+    /// @name Post write callback handling
     /// @{
 
     /// Register an untyped write callback.
     /**
-     * @param cb Untyped write callback
+     * @param cb Untyped post write callback
      * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
      * @return Untyped callback handle
      */
     cci_callback_untyped_handle
-    register_write_callback(const cci_param_write_callback_untyped& cb,
-                            cci_untyped_tag = cci_untyped_tag());
+    register_post_write_callback(
+            const cci_param_post_write_callback_untyped& cb,
+            cci_untyped_tag = cci_untyped_tag());
 
-    /// Register an untyped write callback with a method as callback
+    /// Register an untyped post write callback with a method as callback
     /**
-     * @param cb Untyped write callback method
+     * @param cb Untyped post write callback method
      * @param obj Associated object instance pointer
      * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
@@ -181,40 +182,40 @@ public:
      */
     template<typename C>
     cci_callback_untyped_handle
-    register_write_callback(cci_param_write_callback_untyped::signature
-                            (C::*cb), C* obj,
-                            cci_untyped_tag = cci_untyped_tag())
+    register_post_write_callback(
+            cci_param_post_write_callback_untyped::signature (C::*cb), C* obj,
+            cci_untyped_tag = cci_untyped_tag())
     {
-        return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
+        return register_post_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// Unregister a write callback handle
+    /// Unregister a post write callback handle
     /**
-     * @param cb Untyped write callback handle
+     * @param cb Untyped post write callback handle
      *
      * @return True if unregister is a success. Otherwise False.
      */
     bool
-    unregister_write_callback(const cci_callback_untyped_handle &cb);
+    unregister_post_write_callback(const cci_callback_untyped_handle &cb);
 
     /// @}
 
-    /// @name Validate write callback handling
+    /// @name Pre write callback handling
     /// @{
 
-    /// Register an untyped validate write callback.
+    /// Register an untyped pre write callback.
     /**
-     * @param cb Untyped validate write callback
+     * @param cb Untyped pre write callback
      * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
      * @return Untyped callback handle
      */
     cci_callback_untyped_handle
-    register_validate_write_callback(
-            const cci_param_validate_write_callback_untyped& cb,
+    register_pre_write_callback(
+            const cci_param_pre_write_callback_untyped& cb,
             cci_untyped_tag = cci_untyped_tag());
 
-    /// Register an untyped validate write callback with a method as callback
+    /// Register an untyped pre write callback with a method as callback
     /**
      * @param cb Untyped validate write callback method
      * @param obj Associated object instance pointer
@@ -224,42 +225,42 @@ public:
      */
     template<typename C>
     cci_callback_untyped_handle
-    register_validate_write_callback(
-            cci_param_validate_write_callback_untyped::signature(C::*cb),
+    register_pre_write_callback(
+            cci_param_pre_write_callback_untyped::signature(C::*cb),
             C* obj, cci_untyped_tag = cci_untyped_tag())
     {
-        return register_validate_write_callback(
+        return register_pre_write_callback(
                 sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// Unregister a validate write callback handle
+    /// Unregister a pre write callback handle
     /**
-     * @param cb Untyped validate write callback handle
+     * @param cb Untyped pre write callback handle
      *
      * @return True if unregister is a success. Otherwise False.
      */
     bool
-    unregister_validate_write_callback(const cci_callback_untyped_handle &cb);
+    unregister_pre_write_callback(const cci_callback_untyped_handle &cb);
 
     /// @}
 
-    /// @name Read callback handling
+    /// @name Pre read callback handling
     /// @{
 
-    /// Register an untyped read callback.
+    /// Register an untyped pre read callback.
     /**
-     * @param cb Untyped read callback
+     * @param cb Untyped pre read callback
      * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
      * @return Untyped callback handle
      */
     cci_callback_untyped_handle
-    register_read_callback(const cci_param_read_callback_untyped& cb,
-                           cci_untyped_tag = cci_untyped_tag());
+    register_pre_read_callback(const cci_param_pre_read_callback_untyped& cb,
+                               cci_untyped_tag = cci_untyped_tag());
 
-    /// Register an untyped read callback with a method as callback
+    /// Register an untyped pre read callback with a method as callback
     /**
-     * @param cb Untyped read callback method
+     * @param cb Untyped pre read callback method
      * @param obj Associated object instance pointer
      * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
      *
@@ -267,21 +268,21 @@ public:
      */
     template<typename C>
     cci_callback_untyped_handle
-    register_read_callback(cci_param_read_callback_untyped::signature
-                            (C::*cb), C* obj,
-                            cci_untyped_tag = cci_untyped_tag())
+    register_pre_read_callback(cci_param_pre_read_callback_untyped::signature
+                               (C::*cb), C* obj,
+                               cci_untyped_tag = cci_untyped_tag())
     {
-        return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
+        return register_pre_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
     }
 
-    /// Unregister a read callback handle
+    /// Unregister a pre read callback handle
     /**
-     * @param cb Untyped read callback handle
+     * @param cb Untyped pre read callback handle
      *
      * @return True if unregister is a success. Otherwise False.
      */
     bool
-    unregister_read_callback(const cci_callback_untyped_handle &cb);
+    unregister_pre_read_callback(const cci_callback_untyped_handle &cb);
 
     /// @}
 
@@ -303,84 +304,84 @@ public:
     /// @}
 
 protected:
-    /// @name Write callback handling implementation
+    /// @name Post callback handling implementation
     /// @{
 
-    /// Register a write callback handle
+    /// Register a post write callback handle
     /**
-     * @param cb Untyped write callback handle
+     * @param cb Untyped post write callback handle
      * @param cci_originator Originator
      *
      * @return Untyped callback handle
      */
     cci_callback_untyped_handle
-    register_write_callback(const cci_callback_untyped_handle &cb,
-                            const cci_originator &orig);
+    register_post_write_callback(const cci_callback_untyped_handle &cb,
+                                 const cci_originator &orig);
 
-    /// Unregister a write callback handle
+    /// Unregister a post write callback handle
     /**
-     * @param cb Untyped write callback handle
+     * @param cb Untyped post write callback handle
      * @param cci_originator Originator
      *
      * @return True if unregister is a success. Otherwise False.
      */
     bool
-    unregister_write_callback(const cci_callback_untyped_handle &cb,
-                              const cci_originator &orig);
+    unregister_post_write_callback(const cci_callback_untyped_handle &cb,
+                                   const cci_originator &orig);
 
     /// @}
 
-    /// @name Validate write callback handling implementation
+    /// @name Pre write callback handling implementation
     /// @{
 
-    /// Register a validate write callback handle
+    /// Register a pre write callback handle
     /**
-     * @param cb Untyped validate write callback handle
+     * @param cb Untyped pre write callback handle
      * @param cci_originator Originator
      *
      * @return Untyped callback handle
      */
     cci_callback_untyped_handle
-    register_validate_write_callback(const cci_callback_untyped_handle &cb,
+    register_pre_write_callback(const cci_callback_untyped_handle &cb,
                                      const cci_originator &orig);
 
-    /// Unregister a validate write callback handle
+    /// Unregister a pre write callback handle
     /**
-     * @param cb Untyped validate write callback handle
+     * @param cb Untyped pre write callback handle
      * @param cci_originator Originator
      *
      * @return True if unregister is a success. Otherwise False.
      */
     bool
-    unregister_validate_write_callback(const cci_callback_untyped_handle &cb,
+    unregister_pre_write_callback(const cci_callback_untyped_handle &cb,
                                        const cci_originator &orig);
 
     /// @}
 
-    /// @name Read callback handling implementation
+    /// @name Pre read callback handling implementation
     /// @{
 
-    /// Register a read callback handle
+    /// Register a pre read callback handle
     /**
-     * @param cb Untyped read callback handle
+     * @param cb Untyped pre read callback handle
      * @param cci_originator Originator
      *
      * @return Untyped callback handle
      */
     cci_callback_untyped_handle
-    register_read_callback(const cci_callback_untyped_handle &cb,
-                           const cci_originator &orig);
+    register_pre_read_callback(const cci_callback_untyped_handle &cb,
+                               const cci_originator &orig);
 
-    /// Unregister a read callback handle
+    /// Unregister a pre read callback handle
     /**
-     * @param cb Untyped read callback handle
+     * @param cb Untyped pre read callback handle
      * @param cci_originator Originator
      *
      * @return True if unregister is a success. Otherwise False.
      */
     bool
-    unregister_read_callback(const cci_callback_untyped_handle &cb,
-                             const cci_originator &orig);
+    unregister_pre_read_callback(const cci_callback_untyped_handle &cb,
+                                 const cci_originator &orig);
 
     /// @}
 
@@ -513,23 +514,23 @@ protected:
         cci_originator originator;
     };
 
+    /// Pre write callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
-            write_callback_obj_t;
+            pre_write_callback_obj_t;
 
-    /// Write callbacks
-    std::vector<write_callback_obj_t> m_write_callbacks;
+    std::vector<pre_write_callback_obj_t> m_pre_write_callbacks;
 
+    /// Post write callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
-            validate_write_callback_obj_t;
+            post_write_callback_obj_t;
 
-    /// Validate write callbacks
-    std::vector<validate_write_callback_obj_t> m_validate_write_callbacks;
+    std::vector<post_write_callback_obj_t> m_post_write_callbacks;
 
+    /// Pre read callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
-            read_callback_obj_t;
+            pre_read_callback_obj_t;
 
-    /// Read callbacks
-    std::vector<read_callback_obj_t> m_read_callbacks;
+    std::vector<pre_read_callback_obj_t> m_pre_read_callbacks;
 
     /// Originator of the parameter
     const cci_originator m_originator;

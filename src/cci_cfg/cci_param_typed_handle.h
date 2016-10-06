@@ -98,110 +98,55 @@ public:
     ///Get the value passed in via constructor
     const value_type & get_default_value();
 
-    /// @name Write callback handling
+#define CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_(name)                            \
+    /* @copydoc cci_param_untyped::register_##name##_callback(const cci_param_##name##_callback_untyped, cci_untyped_tag) */ \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            const cci_param_##name##_callback_untyped &cb,                     \
+            cci_untyped_tag);                                                  \
+                                                                               \
+    /* @copydoc cci_param_untyped::register_##name##_callback(cci_param_##name##_callback_untyped::signature, C*, cci_untyped_tag) */ \
+    template<typename C>                                                       \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            cci_param_##name##_callback_untyped::signature (C::*cb), C* obj,   \
+            cci_untyped_tag);                                                  \
+                                                                               \
+    /* Typed ##name## callback type */                                         \
+    typedef typename cci_param_##name##_callback<value_type>::type             \
+            cci_param_##name##_callback_typed;                                 \
+                                                                               \
+    /* @copydoc cci_param_typed::register_##name##_callback(const cci_param_##name##_callback_typed&, cci_typed_tag<value_type>) */ \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            const cci_param_##name##_callback_typed& cb,                       \
+            cci_typed_tag<value_type> = cci_typed_tag<value_type>());          \
+                                                                               \
+    /* @copydoc cci_param_typed::register_##name##_callback(typename cci_param_##name##_callback_typed::signature, C*, cci_typed_tag<value_type>) */ \
+    template<typename C>                                                       \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            typename cci_param_##name##_callback_typed::signature (C::*cb),    \
+            C* obj, cci_typed_tag<value_type> = cci_typed_tag<value_type>())
+
+    /// @name Pre write callback handling
     /// @{
 
-    // Untyped callbacks
-
-    /// @copydoc cci_param_untyped::register_write_callback(const cci_param_write_callback_untyped, cci_untyped_tag)
-    cci_callback_untyped_handle register_write_callback(
-            const cci_param_write_callback_untyped &cb,
-            cci_untyped_tag);
-
-    /// @copydoc cci_param_untyped::register_write_callback(cci_param_write_callback_untyped::signature, C*, cci_untyped_tag)
-    template<typename C>
-    cci_callback_untyped_handle register_write_callback(
-            cci_param_write_callback_untyped::signature (C::*cb), C* obj,
-            cci_untyped_tag);
-
-    // Typed callbacks
-
-    /// Typed write callback type
-    typedef typename cci_param_write_callback<value_type>::type
-            cci_param_write_callback_typed;
-
-    /// @copydoc cci_param_typed::register_write_callback(const cci_param_write_callback_typed&, cci_typed_tag<value_type>)
-    cci_callback_untyped_handle register_write_callback(
-            const cci_param_write_callback_typed& cb,
-            cci_typed_tag<value_type> = cci_typed_tag<value_type>());
-
-    /// @copydoc cci_param_typed::register_write_callback(typename cci_param_write_callback_typed::signature, C*, cci_typed_tag<value_type>)
-    template<typename C>
-    cci_callback_untyped_handle register_write_callback(
-            typename cci_param_write_callback_typed::signature (C::*cb),
-            C* obj, cci_typed_tag<value_type> = cci_typed_tag<value_type>());
+    CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_(pre_write);
 
     /// @}
 
-    /// @name Validate write callback handling
+    /// @name Post write callback handling
     /// @{
 
-    // Untyped callbacks
-
-    /// @copydoc cci_param_typed::register_validate_write_callback(const cci_param_validate_write_callback_untyped, cci_untyped_tag)
-    cci_callback_untyped_handle register_validate_write_callback(
-            const cci_param_validate_write_callback_untyped &cb,
-            cci_untyped_tag);
-
-    /// @copydoc cci_param_typed::register_validate_write_callback(cci_param_validate_write_callback_untyped::signature, C*, cci_untyped_tag)
-    template<typename C>
-    cci_callback_untyped_handle register_validate_write_callback(
-            cci_param_validate_write_callback_untyped::signature (C::*cb), C* obj,
-            cci_untyped_tag);
-
-    // Typed callbacks
-
-    /// Typed validate write callback type
-    typedef typename cci_param_validate_write_callback<value_type>::type
-            cci_param_validate_write_callback_typed;
-
-    /// @copydoc cci_param_typed::register_validate_write_callback(const cci_param_validate_write_callback_typed&, cci_typed_tag<value_type>)
-    cci_callback_untyped_handle register_validate_write_callback(
-            const cci_param_validate_write_callback_typed& cb,
-            cci_typed_tag<value_type> = cci_typed_tag<value_type>());
-
-    /// @copydoc cci_param_typed::register_validate_write_callback(typename cci_param_validate_write_callback_typed::signature, C*, cci_typed_tag<value_type>)
-    template<typename C>
-    cci_callback_untyped_handle register_validate_write_callback(
-            typename cci_param_validate_write_callback_typed::signature (C::*cb),
-            C* obj, cci_typed_tag<value_type> = cci_typed_tag<value_type>());
+    CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_(post_write);
 
     /// @}
 
-    /// @name Read callback handling
+    /// @name Pre read callback handling
     /// @{
 
-    // Untyped callbacks
-
-    /// @copydoc cci_param_typed::register_read_callback(const cci_param_read_callback_untyped, cci_untyped_tag)
-    cci_callback_untyped_handle register_read_callback(
-            const cci_param_read_callback_untyped &cb,
-            cci_untyped_tag);
-
-    /// @copydoc cci_param_typed::register_read_callback(cci_param_read_callback_untyped::signature, C*, cci_untyped_tag)
-    template<typename C>
-    cci_callback_untyped_handle register_read_callback(
-            cci_param_read_callback_untyped::signature (C::*cb), C* obj,
-            cci_untyped_tag);
-
-    // Typed callbacks
-
-    /// Typed read callback type
-    typedef typename cci_param_read_callback<value_type>::type
-            cci_param_read_callback_typed;
-
-    /// @copydoc cci_param_typed::register_read_callback(const cci_param_read_callback_typed&, cci_typed_tag<value_type>)
-    cci_callback_untyped_handle register_read_callback(
-            const cci_param_read_callback_typed &cb,
-            cci_typed_tag<value_type> = cci_typed_tag<value_type>());
-
-    /// @copydoc cci_param_typed::register_read_callback(typename cci_param_read_callback_typed::signature, C*, cci_typed_tag<value_type>)
-    template<typename C>
-    cci_callback_untyped_handle register_read_callback(
-            typename cci_param_read_callback_typed::signature (C::*cb), C* obj,
-            cci_typed_tag<value_type> = cci_typed_tag<value_type>());
+    CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_(pre_read);
 
     /// @}
+
+#undef CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_
 
     /// Constructor to create new parameter handle with given originator and
     /// original parameter
@@ -276,119 +221,50 @@ const typename cci_param_typed_handle<T>::value_type& cci_param_typed_handle<T>:
     return *static_cast<const value_type *>(cci_param_untyped_handle::get_default_value_raw());
 }
 
-template <typename T>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_write_callback(
-        const cci_param_write_callback_untyped &cb, cci_untyped_tag)
-{
-    return cci_param_untyped_handle::register_write_callback(cb);
+#define CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(name)                            \
+template <typename T>                                                          \
+cci_callback_untyped_handle                                                    \
+cci_param_typed_handle<T>::register_##name##_callback(                         \
+        const cci_param_##name##_callback_untyped &cb,                         \
+        cci_untyped_tag)                                                       \
+{                                                                              \
+    return cci_param_untyped_handle::register_##name##_callback(cb);           \
+}                                                                              \
+                                                                               \
+template <typename T>                                                          \
+template<typename C>                                                           \
+cci_callback_untyped_handle                                                    \
+cci_param_typed_handle<T>::register_##name##_callback(                         \
+        cci_param_##name##_callback_untyped::signature (C::*cb), C* obj,       \
+        cci_untyped_tag)                                                       \
+{                                                                              \
+    return cci_param_untyped_handle::register_##name##_callback(cb, obj);      \
+}                                                                              \
+                                                                               \
+template <typename T>                                                          \
+cci_callback_untyped_handle                                                    \
+cci_param_typed_handle<T>::register_##name##_callback(                         \
+        const cci_param_##name##_callback_typed &cb, cci_typed_tag<T>)         \
+{                                                                              \
+    return cci_param_untyped_handle::register_##name##_callback(cb,            \
+           cci_typed_tag<void>());                                             \
+}                                                                              \
+                                                                               \
+template <typename T>                                                          \
+template <typename C>                                                          \
+cci_callback_untyped_handle                                                    \
+cci_param_typed_handle<T>::register_##name##_callback(                         \
+        typename cci_param_##name##_callback_typed::signature (C::*cb),        \
+        C* obj, cci_typed_tag<T>)                                              \
+{                                                                              \
+    return register_##name##_callback(sc_bind(cb, obj, sc_unnamed::_1));       \
 }
 
-template<typename T>
-template<typename C>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_write_callback(
-        cci_param_write_callback_untyped::signature (C::*cb),
-        C* obj, cci_untyped_tag)
-{
-    return cci_param_untyped_handle::register_write_callback(cb, obj);
-}
+CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(pre_write)
 
-template <typename T>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_write_callback(
-        const cci_param_write_callback_typed& cb,
-        cci_typed_tag<T>)
-{
-    return cci_param_untyped_handle::register_write_callback(
-            cb, cci_typed_tag<void>());
-}
+CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(post_write)
 
-template<typename T>
-template<typename C>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_write_callback(
-        typename cci_param_write_callback_typed::signature (C::*cb)
-        , C* obj, cci_typed_tag<T>)
-{
-    return register_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
-}
-
-template <typename T>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_validate_write_callback(
-        const cci_param_validate_write_callback_untyped &cb, cci_untyped_tag)
-{
-    return cci_param_untyped_handle::register_validate_write_callback(cb);
-}
-
-template<typename T>
-template<typename C>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_validate_write_callback(
-        cci_param_validate_write_callback_untyped::signature (C::*cb),
-        C* obj, cci_untyped_tag)
-{
-    return cci_param_untyped_handle::register_validate_write_callback(cb, obj);
-}
-
-template <typename T>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_validate_write_callback(
-        const cci_param_validate_write_callback_typed& cb,
-        cci_typed_tag<T>)
-{
-    return cci_param_untyped_handle::register_validate_write_callback(
-            cb, cci_typed_tag<void>());
-}
-
-template<typename T>
-template<typename C>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_validate_write_callback(
-        typename cci_param_validate_write_callback_typed::signature (C::*cb)
-        , C* obj, cci_typed_tag<T>)
-{
-    return register_validate_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
-}
-
-template <typename T>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_read_callback(
-        const cci_param_read_callback_untyped &cb, cci_untyped_tag)
-{
-    return cci_param_untyped_handle::register_read_callback(cb);
-}
-
-template<typename T>
-template<typename C>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_read_callback(
-        cci_param_read_callback_untyped::signature (C::*cb),
-        C* obj, cci_untyped_tag)
-{
-    return cci_param_untyped_handle::register_read_callback(cb, obj);
-}
-
-template <typename T>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_read_callback(
-        const cci_param_read_callback_typed& cb,
-        cci_typed_tag<T>)
-{
-    return cci_param_untyped_handle::register_read_callback(
-            cb, cci_typed_tag<void>());
-}
-
-template<typename T>
-template<typename C>
-cci_callback_untyped_handle
-cci_param_typed_handle<T>::register_read_callback(
-        typename cci_param_read_callback_typed::signature (C::*cb)
-        , C* obj, cci_typed_tag<T>)
-{
-    return register_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
-}
+CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(pre_read)
 
 template <typename T>
 cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_if& orig_param,
@@ -404,6 +280,8 @@ cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle untyp
         invalidate();
     }
 }
+
+#undef CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_
 
 CCI_CLOSE_NAMESPACE_
 
