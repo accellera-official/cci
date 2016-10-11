@@ -17,7 +17,7 @@
 
  ****************************************************************************/
 /**
- * \file cci_config.h
+ * \file cci_cmnhdr.h
  * \brief Some platform helpers other implementation-defined parts
  *
  * @author Enrico Galli, Intel

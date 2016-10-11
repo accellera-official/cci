@@ -27,7 +27,7 @@
 #ifndef CCI_CORE_CCI_CALLBACK_IMPL_H_INCLUDED_
 #define CCI_CORE_CCI_CALLBACK_IMPL_H_INCLUDED_
 
-#include "cci_core/cci_config.h"
+#include "cci_core/cci_cmnhdr.h"
 #include "cci_core/cci_meta.h"
 
 CCI_OPEN_NAMESPACE_

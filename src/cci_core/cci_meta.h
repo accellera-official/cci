@@ -27,7 +27,7 @@
 #define CCI_CORE_CCI_META_H_INCLUDED_
 
 #include <cci_core/systemc.h>
-#include <cci_core/cci_config.h>
+#include <cci_core/cci_cmnhdr.h>
 
 CCI_OPEN_NAMESPACE_
 

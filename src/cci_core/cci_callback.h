@@ -25,7 +25,7 @@
 #ifndef CCI_CORE_CCI_CALLBACK_H_INCLUDED_
 #define CCI_CORE_CCI_CALLBACK_H_INCLUDED_
 
-#include "cci_core/cci_config.h"
+#include "cci_core/cci_cmnhdr.h"
 #include <algorithm> // std::swap
 
 CCI_OPEN_NAMESPACE_

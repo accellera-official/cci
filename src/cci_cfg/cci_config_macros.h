@@ -32,7 +32,7 @@
 #ifndef CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 #define CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 
-#include "cci_core/cci_config.h"
+#include "cci_core/cci_cmnhdr.h"
 
 // Some default strings - user should define custom ones before including CCI
 // (and before building parameter or broker code since they are used beyond
