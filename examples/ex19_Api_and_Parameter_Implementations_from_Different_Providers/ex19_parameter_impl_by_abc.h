@@ -319,6 +319,12 @@ struct cci_param_user_data_type
   
   /// Destroy
   void destroy();
+
+  /// Add a parameter handle
+  void add_param_handle(cci::cci_param_untyped_handle* param_handle);
+
+  /// Remove a parameter handle
+  void remove_param_handle(cci::cci_param_untyped_handle* param_handle);
   
   /**
    *  @fn     cci::cci_originator* get_latest_write_originator() const
