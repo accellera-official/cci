@@ -61,7 +61,10 @@ const char* cci_originator::name() const {
 }
 
 const char* cci_originator::string_name() const {
-    return m_originator_str->c_str();
+    if(m_originator_str)
+        return m_originator_str->c_str();
+    else
+        return NULL;
 }
 
 cci_originator &cci_originator::operator=(cci_originator originator) {
@@ -69,6 +72,12 @@ cci_originator &cci_originator::operator=(cci_originator originator) {
     m_originator_str = originator.m_originator_str ?
                    new std::string(*(originator.m_originator_str)) : NULL;
     return *this;
+}
+
+bool cci_originator::operator==( const cci_originator& originator ) {
+    return (this->get_object() == originator.get_object()) &&
+            !std::strcmp(this->name(), originator.name()) &&
+            (this->string_name() == originator.string_name());
 }
 
 sc_core::sc_object *cci_originator::current_originator_object() {

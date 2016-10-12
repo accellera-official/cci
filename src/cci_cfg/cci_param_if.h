@@ -32,12 +32,11 @@
 
 #include <typeinfo>
 
-#include "cci_cfg/cci_shared_ptr.h"
-#include "cci_cfg/cci_callbacks.h"
-#include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_param_callbacks.h"
 
 /**
  * @author Enrico Galli, Intel
+ * @author Philipp A. Hartmann, Intel
  */
 
 CCI_OPEN_NAMESPACE_
@@ -55,7 +54,8 @@ class cci_originator;
 * - Callback handling
 */
 
-class cci_param_if {
+class cci_param_if : public cci_param_callback_if
+{
 
     friend class cci_param_untyped_handle;
 
@@ -121,32 +121,6 @@ public:
 
     ///@}
 
-    ///@name Callback Handling
-    ///@{
-
-    /// @copydoc cci_param_untyped::register_callback(const callback_type, void*, param_callb_func_ptr)
-    virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
-                                                       void *observer,
-                                                       param_callb_func_ptr function) = 0;
-
-    /// @copydoc cci_param_untyped::register_callback(const callback_type, cci::shared_ptr<callb_adapt>)
-    virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
-                                                       shared_ptr <callb_adapt> callb) = 0;
-
-    /// @copydoc cci_param_untyped::unregister_all_callbacks
-    virtual void unregister_all_callbacks(void *observer) = 0;
-
-    /// @copydoc cci_param_untyped::unregister_callback(cci::shared_ptr<callb_adapt>)
-    virtual bool unregister_callback(shared_ptr <callb_adapt> callb) = 0;
-
-    /// @copydoc cci_param_untyped::unregister_callback(callb_adapt*)
-    virtual bool unregister_callback(callb_adapt *callb) = 0;
-
-    /// @copydoc cci_param_untyped::has_callbacks
-    virtual bool has_callbacks() = 0;
-
-    ///@}
-
     ///@name Write-access control
     ///@{
 
@@ -206,7 +180,7 @@ public:
     ///@}
 
     /// @copydoc cci_param_typed::create_param_handle
-    virtual cci_param_untyped_handle *
+    virtual cci_param_untyped_handle
     create_param_handle(const cci_originator &originator) = 0;
 
 private:
@@ -220,15 +194,6 @@ private:
     /// @copydoc cci_param_typed::set_raw_value(const void*, const void*, const cci_originator&)
     virtual void set_raw_value(const void *vp, const void *pwd,
                                const cci_originator &originator) = 0;
-
-    virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
-                                                       void *observer,
-                                                       param_callb_func_ptr function,
-                                                       cci_param_untyped_handle& param) = 0;
-
-    virtual shared_ptr <callb_adapt> register_callback(const callback_type type,
-                                                       shared_ptr <callb_adapt> callb,
-                                                       cci_param_untyped_handle& param) = 0;
 
     /// @copydoc cci_param_typed::get_raw_value
     virtual const void *get_raw_value() const = 0;

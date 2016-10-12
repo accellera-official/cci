@@ -26,25 +26,28 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  *****************************************************************************/
-
-#ifndef CCI_CCI_PARAM_UNTYPED_H_INCLUDED_
-#define CCI_CCI_PARAM_UNTYPED_H_INCLUDED_
+/**
+ * @author Enrico Galli, Intel
+ */
+#ifndef CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_
+#define CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_
 
 #include <string>
+#include <vector>
+
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_shared_ptr.h"
-#include "cci_cfg/cci_callbacks.h"
 #include <greencontrol/config.h>
 
-/**
- * @author Enrico Galli, Intel
- */
+//TODO: remove header dependency
+#include <greencontrol/config.h>
 
 CCI_OPEN_NAMESPACE_
+
+class cci_broker_if;
 
 // CCI Configuration parameter base class
 /**
@@ -56,211 +59,291 @@ class cci_param_untyped : public cci_param_if
 
 public:
 
-	/// Destructor.
-	virtual ~cci_param_untyped();
+    /// Destructor.
+    virtual ~cci_param_untyped();
 
-	///@name Description
-	///@{
+    ///@name Description
+    ///@{
 
-	/// Set parameter description.
-	/**
-	 * Set the parameter's description describing purpose and
-	 * intended use, allowed value range etc. in a human readable way.
-	 *
-	 * @param desc Human readable description
-	 */
+    /// Set parameter description.
+    /**
+     * Set the parameter's description describing purpose and
+     * intended use, allowed value range etc. in a human readable way.
+     *
+     * @param desc Human readable description
+     */
     virtual void set_description(const std::string& desc);
-	
-	/// Get the parameter's description.
-	/**
-	 * return Description
-	 */
-	virtual std::string get_description() const;
+    
+    /// Get the parameter's description.
+    /**
+     * @return Description
+     */
+    virtual std::string get_description() const;
 
-	///@}
+    ///@}
 
-	///@name Metadata
-	///@{
+    ///@name Metadata
+    ///@{
 
-	/// Add metadata
-	/**
-	 * Add metadata to the parameter identified by its name, value
-	 * and a human readable description.
-	 *
-	 * @param name Name of the metadata
-	 * @param value Value of the metadata
-	 * @param desc Human readable description
-	 */
-	void add_metadata(const std::string &name, const cci::cci_value &value,
-					  const std::string &desc = "");
+    /// Add metadata
+    /**
+     * Add metadata to the parameter identified by its name, value
+     * and a human readable description.
+     *
+     * @param name Name of the metadata
+     * @param value Value of the metadata
+     * @param desc Human readable description
+     */
+    void add_metadata(const std::string &name, const cci::cci_value &value,
+                      const std::string &desc = "");
 
-	/// Return the metadata value
-	/**
-	 * Return value of the metadata by its given name.
-	 *
-	 * @return name Name of the metadata
-	 * @return Metadata value
-	 */
-	cci_value_map get_metadata() const;
+    /// Return the metadata value
+    /**
+     * Return value of the metadata by its given name.
+     *
+     * @return name Name of the metadata
+     * @return Metadata value
+     */
+    cci_value_map get_metadata() const;
 
-	///@}
+    ///@}
 
-	///@name Parameter Value Status
-	///@{
+    ///@name Parameter Value Status
+    ///@{
 
-	/// Indicates whether the value provided at parameter construction persists.
-	/**
-	 * True if the value was supplied as a constructor argument and not
-	 * subsequently changed.
-	 *
-	 * Note: false is returned even if the current value matches the constructor
-	 * supplied default but has undergone intermediate changes.
-	 *
-	 * @return false if the parameter received an initial value or its value has
-	 *         changed; otherwise, true
-	 */
-	virtual bool is_default_value();
+    /// Indicates whether the value provided at parameter construction persists.
+    /**
+     * True if the value was supplied as a constructor argument and not
+     * subsequently changed.
+     *
+     * Note: false is returned even if the current value matches the constructor
+     * supplied default but has undergone intermediate changes.
+     *
+     * @return false if the parameter received an initial value or its value has
+     *         changed; otherwise, true
+     */
+    virtual bool is_default_value();
 
 
-	/// Indicates that the parameter received an initial value that has not since been modified.
-	/**
-	 * True if the value was supplied using the broker's
-	 * set_initial_cci_value function and not subsequently changed.
-	 *
-	 * Note: false is returned even if the current value matches the initial
-	 * value but has undergone intermediate changes.
-	 *
-	 * @return fase if no initial value was supplied or the parameter's value has
-	 *         changed; otherwise, true
-	 */
+    /// Indicates that the parameter received an initial value that has not since been modified.
+    /**
+     * True if the value was supplied using the broker's
+     * set_initial_cci_value function and not subsequently changed.
+     *
+     * Note: false is returned even if the current value matches the initial
+     * value but has undergone intermediate changes.
+     *
+     * @return fase if no initial value was supplied or the parameter's value has
+     *         changed; otherwise, true
+     */
     virtual bool is_initial_value() const;
 
-	///@}
+    ///@}
 
 
-	///@name Miscellaneous
-	///@{
+    ///@name Miscellaneous
+    ///@{
 
-	/// Returns the originator of the parameter's current value. 
-	/**
-	 * This initially reflects originator of the parameter's starting value,
-	 * e.g. the owning module or startup configuration file.  It is
-	 * subsequently updated to reflect the originator of any value changes.
-	 *
-	 * The originator is updated on successful calls to the following functions:
-	 * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
-	 */
-	const cci_originator* get_latest_write_originator() const;
+    /// Returns the originator of the parameter's current value. 
+    /**
+     * This initially reflects originator of the parameter's starting value,
+     * e.g. the owning module or startup configuration file.  It is
+     * subsequently updated to reflect the originator of any value changes.
+     *
+     * The originator is updated on successful calls to the following functions:
+     * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
+     */
+    const cci_originator* get_latest_write_originator() const;
 
-	///@}
+    ///@}
 
-	
-	///@name Callback Handling
-	///@{
+    /// @name Post write callback handling
+    /// @{
 
-	/// Registers functions as a callback (from handle).
-	shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function, cci_param_untyped_handle& param);
-	
-	/// Function registering a callback object (should not be called by user) (from handle).
-	shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb, cci_param_untyped_handle& param);
+    /// Register an untyped write callback.
+    /**
+     * @param cb Untyped post write callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_post_write_callback(
+            const cci_param_post_write_callback_untyped& cb,
+            cci_untyped_tag = cci_untyped_tag());
 
-	/// Registers functions as a callback.
-	shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
+    /// Register an untyped post write callback with a method as callback
+    /**
+     * @param cb Untyped post write callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_post_write_callback(
+            cci_param_post_write_callback_untyped::signature (C::*cb), C* obj,
+            cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_post_write_callback(sc_bind(cb, obj, sc_unnamed::_1));
+    }
 
-	/// Function registering a callback object (should not be called by user).
-	shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb);
-	
-	/// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module). 
-	/**
-	 * observer = NULL should be an error (and not mean unregister all callbacks)
-	 *                 to avoid accidental unregistration of e.g. callbacks initiated
-	 *                 by a tool.
-	 * @param observer Pointer to the observer module that registered parameter callbacks.
-	 */
-	void unregister_all_callbacks(void* observer);
-	
-	/// Unregisters the callback and (default) deletes the callback adapter.
-	/**
-	 * Unregisters (only) the given callback.
-	 *
-	 * The callback adapter is NOT deleted explicitly because this
-	 * should be done by the surrounding shared pointer!
-	 *
-	 * This may be used by a user module which stored the shared pointer to a
-	 * specific callback or by the destructor of the param callback adapter.
-	 *
-	 * @param callb  Parameter callback adapter
-	 * @return       If the callback adapter existed in this parameter.
-	 */
-	bool unregister_callback(shared_ptr<callb_adapt> callb); 
-	
-	/// @see unregister_callback(shared_ptr<>).
-	bool unregister_callback(callb_adapt* callb);
-	
-	/// Returns if the parameter has registered callbacks.
-	bool has_callbacks();
+    /// Unregister a post write callback handle
+    /**
+     * @param cb Untyped post write callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_post_write_callback(const cci_callback_untyped_handle &cb);
 
-	///@}
+    /// @}
 
-	///@name Write-access control
-	///@{
+    /// @name Pre write callback handling
+    /// @{
 
-	/// Locking this parameter, optionally with a password.
-	/**
-	 * Makes a parameter read-only.
-	 *
-	 * Returns false
-	 * - if this parameter was already locked with a different password (this call has no effect)
-	 *
-	 * Returns true
-	 * - if the parameter was not locked (and is locked now) or
-	 * - if the parameter was locked without a password. Then it is locked now with the given password
-	 * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
-	 *
- 	 * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
-	 * @return If the lock was successful.
-	 */
-	bool lock(void* pwd = NULL);
+    /// Register an untyped pre write callback.
+    /**
+     * @param cb Untyped pre write callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_pre_write_callback(
+            const cci_param_pre_write_callback_untyped& cb,
+            cci_untyped_tag = cci_untyped_tag());
 
-	/// Unlocking this parameter, optionally with a password if needed.
-	/**
-	 * @param pwd Password to unlock the param (if needed), default = NULL.
-	 * @return If the parameter is unlocked now.
-	 */
-	bool unlock(void* pwd = NULL);
-	
-	/// If this parameter is locked.
-	/**
-	* @return If this parameter is locked
-	*/
-	bool is_locked() const;
+    /// Register an untyped pre write callback with a method as callback
+    /**
+     * @param cb Untyped validate write callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_pre_write_callback(
+            cci_param_pre_write_callback_untyped::signature(C::*cb),
+            C* obj, cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_pre_write_callback(
+                sc_bind(cb, obj, sc_unnamed::_1));
+    }
 
-	///@}
+    /// Unregister a pre write callback handle
+    /**
+     * @param cb Untyped pre write callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_pre_write_callback(const cci_callback_untyped_handle &cb);
 
-	///@name Query parameter type and name
-	///@{
+    /// @}
 
-	/// Get the name of this parameter.
-	/**
-	 * @return   Name of the parameter.
-	 */
-	const std::string& get_name() const;
+    /// @name Pre read callback handling
+    /// @{
 
-	///@}
+    /// Register an untyped pre read callback.
+    /**
+     * @param cb Untyped pre read callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_pre_read_callback(const cci_param_pre_read_callback_untyped& cb,
+                               cci_untyped_tag = cci_untyped_tag());
 
-	///@name Accessor methods
-	///@{
-	
-	/// Gets cci_originator of the parameter.
-	/**
-	 * The originator reflects ownership of the parameter proxy, which points
-	 * to an implementation.  For a handle, the originator identifies the
-	 * entity accessing the parameter.  Otherwise, the originator reflects
-	 * the parameter's creator.
-	 */
-	cci_originator get_originator() const;
-	
-	///@}
+    /// Register an untyped pre read callback with a method as callback
+    /**
+     * @param cb Untyped pre read callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_pre_read_callback(cci_param_pre_read_callback_untyped::signature
+                               (C::*cb), C* obj,
+                               cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_pre_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
+    }
+
+    /// Unregister a pre read callback handle
+    /**
+     * @param cb Untyped pre read callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_pre_read_callback(const cci_callback_untyped_handle &cb);
+
+    /// @}
+
+    /// @name Post read callback handling
+    /// @{
+
+    /// Register an untyped post read callback.
+    /**
+     * @param cb Untyped post read callback
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_post_read_callback(const cci_param_post_read_callback_untyped& cb,
+                               cci_untyped_tag = cci_untyped_tag());
+
+    /// Register an untyped post read callback with a method as callback
+    /**
+     * @param cb Untyped post read callback method
+     * @param obj Associated object instance pointer
+     * @param cci_untyped_tag Untyped tag to avoid compiler ambiguity
+     *
+     * @return Untyped callback handle
+     */
+    template<typename C>
+    cci_callback_untyped_handle
+    register_post_read_callback(cci_param_post_read_callback_untyped::signature
+                               (C::*cb), C* obj,
+                               cci_untyped_tag = cci_untyped_tag())
+    {
+        return register_post_read_callback(sc_bind(cb, obj, sc_unnamed::_1));
+    }
+
+    /// Unregister a post read callback handle
+    /**
+     * @param cb Untyped post read callback handle
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_post_read_callback(const cci_callback_untyped_handle &cb);
+
+    /// @}
+
+    /// @name Callback handling
+    /// @{
+
+    /// Unregister all callbacks
+    /**
+     * @return True if success, otherwise False
+     */
+    bool unregister_all_callbacks();
+
+    /// Returns if the parameter has registered callbacks.
+    /**
+     * @return True if the parameter has registered callbacks, otherwise False
+     */
+    bool has_callbacks() const;
+
+	/// @}
 
     /// Add parameter handle
     /**
@@ -280,161 +363,276 @@ public:
 
 
 protected:
-	/// Constructor to create new parameter with given originator.
-	cci_param_untyped(bool is_top_level_name, cci::cci_broker_if* broker_handle,
-				   const std::string& desc, const cci_originator& originator);
+    /// @name Post callback handling implementation
+    /// @{
 
-	///@name Initialization and Destructions methods
-	///@{
-
-	/// Initialize.
-	void init();
-
-	///@}
-
-	/// Updates the internal member m_latest_write_access_originator_cp
-	void update_latest_write_originator(const cci_originator& originator) const;
-
-	/// Callback forwarder class
-	/**
-     * This is instantiated and registered at the base param to forward a
-     * callback to the cci world when called by the gs_base_param.
-     * @see also see similar gs_cci_cnf_broker::internal_callback_forwarder
+    /// Register a post write callback handle
+    /**
+     * @param cb Untyped post write callback handle
+     * @param cci_originator Originator
+     *
+     * @return Untyped callback handle
      */
-	class internal_callback_forwarder {
-	public:
-		internal_callback_forwarder(cci::shared_ptr<cci::callb_adapt> _adapt,
-									const gs::cnf::callback_type _type,
-									cci_param_untyped_handle& _par)
-				: adapt(_adapt.get())
-				, type(_type)
-				, param(_par)
-				, calling_gs_adapter() {
-		}
-		~internal_callback_forwarder() {
-			//cout << "Destructing callback forwarder for param "<<param->get_name() << endl;
-			if (calling_gs_adapter) {
-				calling_gs_adapter->unregister_at_parameter();
-			}
-		}
-		// This gets called by the base gs_param
-		gs::cnf::callback_return_type call(gs::gs_param_base& par,
-										   gs::cnf::callback_type cbtype) {
-			gs::cnf::callback_return_type returned_gs_message =
-					gs::cnf::return_nothing;
-			cci::callback_return_type returned_cci_message =
-					cci::return_nothing;
-			switch(cbtype) {
-				case gs::cnf::destroy_param:
-					assert(par.is_destructing());
-					// TODO This cannot work because the cast the the already destructed cci_param_untyped fails.
-					// TODO adapt->call(*cci_p, cci::destroy_param);
-					break;
-				case gs::cnf::pre_read: // = cci::pre_read
-					returned_cci_message = adapt->call(param, cci::pre_read);
-					break;
-				case gs::cnf::reject_write: // = cci::reject_write
-					returned_cci_message = adapt->call(param,
-													   cci::reject_write);
-					break;
-				case gs::cnf::pre_write: // = cci::pre_write
-					returned_cci_message = adapt->call(param, cci::pre_write);
-					break;
-				case gs::cnf::post_write: // = cci::post_write
-					returned_cci_message = adapt->call(param, cci::post_write);
-					break;
-				default:
-					returned_cci_message = cci::return_other_error;
-					assert(false);
-			}
-			switch (returned_cci_message) {
-				case cci::return_value_change_rejected:
-					returned_gs_message = gs::cnf::return_value_change_rejected;
-					break;
-				case cci::return_other_error:
-					returned_gs_message = gs::cnf::return_other_error;
-					break;
-				default:
-					returned_gs_message = gs::cnf::return_nothing;
-			}
-			return returned_gs_message;
-		}
-		const gs::cnf::callback_type get_type() {
-			return type;
-		}
+    cci_callback_untyped_handle
+    register_post_write_callback(const cci_callback_untyped_handle &cb,
+                                 const cci_originator &orig);
 
-		cci::callb_adapt* adapt;
-		gs::cnf::callback_type type;
-		cci_param_untyped_handle& param;
-		cci::shared_ptr< gs::cnf::ParamCallbAdapt_b> calling_gs_adapter;
-	};
+    /// Unregister a post write callback handle
+    /**
+     * @param cb Untyped post write callback handle
+     * @param cci_originator Originator
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_post_write_callback(const cci_callback_untyped_handle &cb,
+                                   const cci_originator &orig);
 
-	/// Internal guard which is called on a value change to update
-	/// the value status variable(s)
-	struct status_guard {
-		status_guard(cci_param_untyped &_owner)
-		{
-			owner = dynamic_cast<cci_param_untyped*>(&_owner);
-		}
-		// This gets called by the base gs_param
-		cci::callback_return_type call(cci::cci_param_untyped_handle& changed_param,
-									   const cci::callback_type& cb_reason)
-		{
-			owner->m_is_default_value = false;
-			owner->m_is_invalid_value = false;
-			return cci::return_nothing;
-		}
-		cci_param_untyped* owner;
-	};
+    /// @}
+
+    /// @name Pre write callback handling implementation
+    /// @{
+
+    /// Register a pre write callback handle
+    /**
+     * @param cb Untyped pre write callback handle
+     * @param cci_originator Originator
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_pre_write_callback(const cci_callback_untyped_handle &cb,
+                                     const cci_originator &orig);
+
+    /// Unregister a pre write callback handle
+    /**
+     * @param cb Untyped pre write callback handle
+     * @param cci_originator Originator
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_pre_write_callback(const cci_callback_untyped_handle &cb,
+                                       const cci_originator &orig);
+
+    /// @}
+
+    /// @name Pre read callback handling implementation
+    /// @{
+
+    /// Register a pre read callback handle
+    /**
+     * @param cb Untyped pre read callback handle
+     * @param cci_originator Originator
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_pre_read_callback(const cci_callback_untyped_handle &cb,
+                               const cci_originator &orig);
+
+    /// Unregister a pre read callback handle
+    /**
+     * @param cb Untyped pre read callback handle
+     * @param cci_originator Originator
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_pre_read_callback(const cci_callback_untyped_handle &cb,
+                                 const cci_originator &orig);
+
+    /// @}
+
+    /// @name Post read callback handling implementation
+    /// @{
+
+    /// Register a post read callback handle
+    /**
+     * @param cb Untyped post read callback handle
+     * @param cci_originator Originator
+     *
+     * @return Untyped callback handle
+     */
+    cci_callback_untyped_handle
+    register_post_read_callback(const cci_callback_untyped_handle &cb,
+                                const cci_originator &orig);
+
+    /// Unregister a post read callback handle
+    /**
+     * @param cb Untyped post read callback handle
+     * @param cci_originator Originator
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool
+    unregister_post_read_callback(const cci_callback_untyped_handle &cb,
+                                  const cci_originator &orig);
+
+    /// @}
+
+    /// @name Callback handling implementation
+    /// @{
+
+    /// Unregister all callbacks (write, validate write and read callbacks).
+    /**
+     * @param cci_originator Originator
+     *
+     * @return True if unregister is a success. Otherwise False.
+     */
+    bool unregister_all_callbacks(const cci_originator &orig);
+
+    ///@}
+
+public:
+
+    ///@name Write-access control
+    ///@{
+
+    /// Locking this parameter, optionally with a password.
+    /**
+     * Makes a parameter read-only.
+     *
+     * Returns false
+     * - if this parameter was already locked with a different password (this call has no effect)
+     *
+     * Returns true
+     * - if the parameter was not locked (and is locked now) or
+     * - if the parameter was locked without a password. Then it is locked now with the given password
+     * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
+     *
+     * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
+     * @return If the lock was successful.
+     */
+    bool lock(void* pwd = NULL);
+
+    /// Unlocking this parameter, optionally with a password if needed.
+    /**
+     * @param pwd Password to unlock the param (if needed), default = NULL.
+     * @return If the parameter is unlocked now.
+     */
+    bool unlock(void* pwd = NULL);
+
+    /// If this parameter is locked.
+    /**
+    * @return If this parameter is locked
+    */
+    bool is_locked() const;
+
+    ///@}
+
+    ///@name Query parameter type and name
+    ///@{
+
+    /// Get the name of this parameter.
+    /**
+     * @return   Name of the parameter.
+     */
+    const std::string& get_name() const;
+
+    ///@}
+
+    ///@name Accessor methods
+    ///@{
+
+    /// Gets cci_originator of the parameter.
+    /**
+     * The originator reflects ownership of the parameter proxy, which points
+     * to an implementation.  For a handle, the originator identifies the
+     * entity accessing the parameter.  Otherwise, the originator reflects
+     * the parameter's creator.
+     */
+    cci_originator get_originator() const;
+
+    ///@}
 
 protected:
-	/// Callback forwarder
-	std::vector<internal_callback_forwarder*> fw_vec;
+    /// Constructor to create new parameter with given originator.
+    cci_param_untyped(bool is_top_level_name, cci_broker_if* broker_handle,
+                   const std::string& desc, const cci_originator& originator);
 
-	/// Associated gs_param_base
-	gs::gs_param_base *m_gs_param_base;
+    ///@name Initialization and Destructions methods
+    ///@{
 
-	/// Is default value
-	bool m_is_default_value;
+    /// Initialize.
+    void init();
 
-	/// Is invalid value
-	bool m_is_invalid_value;
+    ///@}
 
-	/// Status guard
-	status_guard m_status_guard;
+    /// Updates the internal member m_latest_write_access_originator_cp
+    void update_latest_write_originator(const cci_originator& originator) const;
 
-	/// Description
-	std::string m_description;
+protected:
 
-	/// Metadata
-	cci_value_map metadata;
+    /// Associated gs_param_base
+    gs::gs_param_base *m_gs_param_base;
 
-	/// Initialized
-	bool m_init_called;
+    /// Is default value
+    bool m_is_default_value;
 
-	/// Post write callback
-	cci::shared_ptr<cci::callb_adapt> m_post_write_callback;
+    /// Is invalid value
+    bool m_is_invalid_value;
 
-	/// Broker handle
-	cci::cci_broker_if* m_broker_handle;
+    /// Description
+    std::string m_description;
 
-	/// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
-	mutable cci::cci_originator m_latest_write_access_originator_cp;
+    /// Metadata
+    cci_value_map metadata;
 
-	/// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
-	mutable bool m_latest_write_access_originator_valid;
+    /// Initialized
+    bool m_init_called;
 
-	cci_param_untyped_handle* m_param_untyped_handle;
+    /// Broker handle
+    cci_broker_if* m_broker_handle;
+
+    /// Stores the originator of the latest successful write access (status within post_write) as an alternative to get originator information within the callback(s)
+    mutable cci_originator m_latest_write_access_originator_cp;
+
+    /// Stores if there is a valid m_latest_write_access_originator_cp (latest originator of the latest successful write access)
+    mutable bool m_latest_write_access_originator_valid;
+
+    /// Callback object
+    template<class T>
+    struct callback_obj {
+        callback_obj(T cb, const cci_originator& orig):
+                callback(cb), originator(orig) {}
+        T callback;
+        cci_originator originator;
+    };
+
+    /// Pre write callbacks
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            pre_write_callback_obj_t;
+
+    std::vector<pre_write_callback_obj_t> m_pre_write_callbacks;
+
+    /// Post write callbacks
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            post_write_callback_obj_t;
+
+    std::vector<post_write_callback_obj_t> m_post_write_callbacks;
+
+    /// Pre read callbacks
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            pre_read_callback_obj_t;
+
+    std::vector<pre_read_callback_obj_t> m_pre_read_callbacks;
+
+    /// Post read callbacks
+    typedef callback_obj<typename cci_callback_untyped_handle::type>
+            post_read_callback_obj_t;
+
+	std::vector<post_read_callback_obj_t> m_post_read_callbacks;
+
+private:
+
+    /// Originator of the parameter
+    const cci_originator m_originator;
 
 	/// Parameter handles
 	std::vector<cci_param_untyped_handle*> m_param_handles;
-
-private:
-	/// Originator of the parameter
-	const cci_originator m_originator;
-
 };
 
 CCI_CLOSE_NAMESPACE_
   
-#endif //CCI_BASE_PARAM_H_INCLUDED_
+#endif // CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_

@@ -25,8 +25,9 @@
  * @author Enrico Galli, Intel
  */
 
-#include "cci_param_untyped_handle.h"
-#include "cci_broker_manager.h"
+#include "cci_cfg/cci_param_untyped_handle.h"
+#include "cci_cfg/cci_broker_manager.h"
+#include "cci_cfg/cci_report_handler.h"
 #include "cci_core/cci_name_gen.h"
 
 CCI_OPEN_NAMESPACE_
@@ -102,37 +103,50 @@ const cci_originator* cci_param_untyped_handle::get_latest_write_originator() co
     return m_orig_param->get_latest_write_originator();
 }
 
-shared_ptr<callb_adapt> cci_param_untyped_handle::register_callback(const callback_type type, void* observer, param_callb_func_ptr function)
-{
-    check_is_valid();
-    return m_orig_param->register_callback(type, observer, function, *this);
+#define CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(name)                          \
+cci_callback_untyped_handle                                                    \
+cci_param_untyped_handle::register_##name##_callback(                          \
+        const cci_param_##name##_callback_untyped &cb,                         \
+        cci_untyped_tag)                                                       \
+{                                                                              \
+    check_is_valid();                                                          \
+    return m_orig_param->register_##name##_callback(cb, m_originator);         \
+}                                                                              \
+                                                                               \
+cci_callback_untyped_handle                                                    \
+cci_param_untyped_handle::register_##name##_callback(                          \
+        const cci_callback_untyped_handle& cb, cci_typed_tag<void>)            \
+{                                                                              \
+    check_is_valid();                                                          \
+    return m_orig_param->register_##name##_callback(cb, m_originator);         \
+}                                                                              \
+                                                                               \
+bool cci_param_untyped_handle::unregister_##name##_callback(                   \
+        const cci_callback_untyped_handle &cb)                                 \
+{                                                                              \
+    check_is_valid();                                                          \
+    return m_orig_param->unregister_##name##_callback(cb, m_originator);       \
 }
 
-shared_ptr<callb_adapt> cci_param_untyped_handle::register_callback(const callback_type type, shared_ptr<callb_adapt> callb)
+// Pre write callback
+CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(pre_write)
+
+// Post write callback
+CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(post_write)
+
+// Pre read callback
+CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(pre_read)
+
+// Post read callback
+CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(post_read)
+
+bool cci_param_untyped_handle::unregister_all_callbacks()
 {
     check_is_valid();
-    return m_orig_param->register_callback(type, callb, *this);
+    return m_orig_param->unregister_all_callbacks(m_originator);
 }
 
-void cci_param_untyped_handle::unregister_all_callbacks(void* observer)
-{
-    check_is_valid();
-    m_orig_param->unregister_all_callbacks(observer);
-}
-
-bool cci_param_untyped_handle::unregister_callback(cci::shared_ptr<callb_adapt> callb)
-{
-    check_is_valid();
-    return m_orig_param->unregister_callback(callb);
-}
-
-bool cci_param_untyped_handle::unregister_callback(callb_adapt* callb)
-{
-    check_is_valid();
-    return m_orig_param->unregister_callback(callb);
-}
-
-bool cci_param_untyped_handle::has_callbacks()
+bool cci_param_untyped_handle::has_callbacks() const
 {
     check_is_valid();
     return m_orig_param->has_callbacks();
@@ -259,5 +273,7 @@ void cci_param_untyped_handle::check_is_valid(bool report_error) const
     } else {
     }
 }
+
+#undef CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_
 
 CCI_CLOSE_NAMESPACE_
