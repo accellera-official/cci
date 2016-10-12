@@ -1,4 +1,0 @@
-This is a test file for commit tests.
-Feel free to change its content to try out if you can commit.Commit by CS
-Commit by CS
-GIT COMMIT by CS
