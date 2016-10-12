@@ -270,7 +270,6 @@ void cci_param_untyped_handle::check_is_valid(bool report_error) const
         } else {
             m_orig_param = param_handle.m_orig_param;
         }
-    } else {
     }
 }
 

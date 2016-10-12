@@ -51,6 +51,11 @@ cci_param_untyped::~cci_param_untyped()
     m_broker_handle->remove_param(this);
     assert(m_init_called && "If this happens, the construction did not call the base param init function!");
     sc_core::sc_unregister_hierarchical_name(get_name().c_str());
+    for (std::vector<cci_param_untyped_handle*>::iterator it = m_param_handles.begin();
+         it != m_param_handles.end(); it++) {
+        (*it)->invalidate();
+    }
+    delete m_gs_param_base;
 }
 
 void cci_param_untyped::set_description(const std::string& desc)
