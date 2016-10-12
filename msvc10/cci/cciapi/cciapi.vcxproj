@@ -151,27 +151,29 @@
     <None Include="..\..\..\src\cci_configuration" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_callbacks.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_stack.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_callbacks.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_callbacks.hpp" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_datatypes.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_debug.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_function.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_originator.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_callbacks.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_report_handler.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_shared_ptr.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_value.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_value_traits.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\rapidjson.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_callback.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_callback_impl.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_config.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_meta.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_name_gen.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_version.h" />
     <ClInclude Include="..\..\..\src\cci_core\systemc.h" />
