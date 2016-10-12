@@ -262,6 +262,22 @@ public:
 	
 	///@}
 
+    /// Add parameter handle
+    /**
+     * Add a parameter handle associated with this parameter.
+     *
+     * @param param_handle Parameter handle to add.
+     */
+    void add_param_handle(cci_param_untyped_handle* param_handle);
+
+    /// Remove parameter handle
+    /**
+     * Remove a parameter handle associated with this parameter.
+     *
+     * @param param_handle Parameter handle to remove.
+     */
+    void remove_param_handle(cci_param_untyped_handle* param_handle);
+
 
 protected:
 	/// Constructor to create new parameter with given originator.
@@ -409,6 +425,9 @@ protected:
 	mutable bool m_latest_write_access_originator_valid;
 
 	cci_param_untyped_handle* m_param_untyped_handle;
+
+	/// Parameter handles
+	std::vector<cci_param_untyped_handle*> m_param_handles;
 
 private:
 	/// Originator of the parameter

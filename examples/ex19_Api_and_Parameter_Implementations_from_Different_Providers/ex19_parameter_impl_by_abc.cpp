@@ -454,6 +454,17 @@ void cci_param_user_data_type::destroy()
 	delete this;
 }
 
+void cci_param_user_data_type::add_param_handle(
+        cci::cci_param_untyped_handle* param_handle)
+{
+  // Not implemented
+}
+
+void cci_param_user_data_type::remove_param_handle(
+        cci::cci_param_untyped_handle* param_handle)
+{
+  // Not implemented
+}
 
 
 

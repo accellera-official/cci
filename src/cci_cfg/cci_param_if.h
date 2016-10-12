@@ -236,6 +236,11 @@ private:
     /// @copydoc cci_param_typed::get_default_value_raw
     virtual const void *get_default_value_raw() const = 0;
 
+    /// @copydoc cci_param_untyped::add_param_handle
+    virtual void add_param_handle(cci_param_untyped_handle* param_handle) = 0;
+
+    /// @copydoc cci_param_untyped::remove_param_handle
+    virtual void remove_param_handle(cci_param_untyped_handle* param_handle) = 0;
 };
 
 CCI_CLOSE_NAMESPACE_
