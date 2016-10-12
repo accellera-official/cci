@@ -30,10 +30,9 @@ cci_param_untyped::cci_param_untyped(bool is_top_level_name,
                                const std::string& desc,
                                const cci_originator& originator)
 : m_gs_param_base(NULL), m_is_default_value(0), m_is_invalid_value(!0), // TODO
-m_description(desc), m_init_called(false),
+  m_description(desc), m_init_called(false),
   m_broker_handle(broker_handle),
-  m_latest_write_access_originator_cp("NONE"),
-  m_latest_write_access_originator_valid(false),
+  m_value_originator(originator),
   m_originator(originator)
 {
 }
@@ -84,18 +83,15 @@ bool cci_param_untyped::is_initial_value() const
     return m_gs_param_base->is_initial_value();
 }
 
-const cci_originator* cci_param_untyped::get_latest_write_originator() const
+const cci_originator& cci_param_untyped::get_latest_write_originator() const
 {
-    if (!m_latest_write_access_originator_valid) {
-        return NULL;
-    }
-    return &m_latest_write_access_originator_cp;
+    return m_value_originator;
 }
 
-void cci_param_untyped::update_latest_write_originator(const cci_originator& originator) const
+void cci_param_untyped::update_latest_write_originator(
+        const cci_originator& originator) const
 {
-    m_latest_write_access_originator_valid = true;
-    m_latest_write_access_originator_cp = originator;
+    m_value_originator = originator;
 }
 
 #define CCI_PARAM_UNTYPED_CALLBACK_IMPL_(name)                                 \
