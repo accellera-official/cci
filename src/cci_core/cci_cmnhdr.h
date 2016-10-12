@@ -16,6 +16,7 @@
   permissions and limitations under the License.
 
  ****************************************************************************/
+
 /**
  * \file cci_cmnhdr.h
  * \brief Some platform helpers other implementation-defined parts

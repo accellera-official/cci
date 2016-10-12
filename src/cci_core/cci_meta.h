@@ -16,6 +16,7 @@
   permissions and limitations under the License.
 
  ****************************************************************************/
+
 /**
  * \file   cci_meta.h
  * \author Philipp A. Hartmann, Intel
