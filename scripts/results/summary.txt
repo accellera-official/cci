@@ -22,6 +22,7 @@ examples/ex13_Parameter_Value_Locking/ex13_Parameter_Value_Locking.cpp
 examples/ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_Specifying_Parameter_Values_via_a_Configuration_File.cpp
 examples/ex18_Superset_Parameter_Value_Specification/ex18_Superset_Parameter_Value_Specification.cpp
 examples/ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_Api_and_Parameter_Implementations_from_Different_Providers.f
+examples/ex21_Param_Destruction_Resurrection/ex21_Param_Destruction_Resurrection.cpp
 
 -------------------------------------------------------------------------------
  Tests that failed :
@@ -29,16 +30,16 @@ examples/ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_Ap
                 diff                : dev_examples/callback_example/callback_example.f
                 diff                : dev_examples/cb_new_param/cb_new_param.f
              compiling              : dev_examples/gs_example/gs_example.f
-             compiling              : examples/ex07_Parameter_Information/ex07_Parameter_Information.cpp
+                diff                : examples/ex07_Parameter_Information/ex07_Parameter_Information.cpp
                 diff                : examples/ex08_Parameter_Value_Change_Callbacks/ex08_Parameter_Value_Change_Callbacks.cpp
                 diff                : examples/ex11_Searching_and_Directly_Associating_Parameters/ex11_Searching_and_Directly_Associating_Parameters.cpp
                 diff                : examples/ex12_Indirectly_Associating_Parameters/ex12_Indirectly_Associating_Parameters.cpp
-                diff                : examples/ex14_Hiding_Parameters/ex14_Hiding_Parameters.cpp
+              running               : examples/ex14_Hiding_Parameters/ex14_Hiding_Parameters.cpp
                 diff                : examples/ex15_Inter_Parameter_Value_Constraints/ex15_Inter_Parameter_Value_Constraints.cpp
                 diff                : examples/ex16_User_Defined_Data_Type/ex16_User_Defined_Data_Type.cpp
                 diff                : examples/ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
 
-Total passed : 19
+Total passed : 20
 Total failed : 11
 
-   GUT METER : 63 %
+   GUT METER : 64 %
