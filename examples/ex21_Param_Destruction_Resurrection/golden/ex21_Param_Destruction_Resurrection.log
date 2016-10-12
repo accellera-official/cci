@@ -1,0 +1,27 @@
+SystemC Simulation
+
+Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param is 10
+
+Info: sc_main: Begin Simulation.
+
+Info: sim_ip: @10 ns, execute: Set value of int_param to 20
+
+Info: sim_ip: @10 ns, execute: Current value of int_param is 20
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.int_param to 2
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param is 2
+
+Info: sim_ip: @30 ns, execute: Destroy sim_ip.int_param
+
+Info: cfg_ip: @50 ns, execute: [EXTERNAL] Parameter handle of sim_ip.int_param is no more valid
+
+Info: sim_ip: @60 ns, execute: Resurrect sim_ip.int_param
+
+Info: cfg_ip: @90 ns, execute: [EXTERNAL] Parameter handle of sim_ip.int_param is valid again
+
+Info: cfg_ip: @90 ns, execute: [EXTERNAL] Current value of sim_ip.int_param is -10
+
+Info: sc_main: End Simulation.
+
+Info: sim_ip: Dtor: Current value of sim_ip.int_param is -10

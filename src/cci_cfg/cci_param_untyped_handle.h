@@ -50,10 +50,14 @@ class cci_param_untyped_handle
 
 public:
     /// Constructor to create handle with given originator.
-    cci_param_untyped_handle(cci_param_if & orig_param, const cci_originator& originator);
+    cci_param_untyped_handle(cci_param_if & orig_param,
+                             const cci_originator& originator);
 
     /// Constructor to create an invalid param handle with given originator.
     explicit cci_param_untyped_handle(const cci_originator& originator);
+
+    /// Copy constructor
+    cci_param_untyped_handle(const cci_param_untyped_handle& param_handle);
 
     /// Destructor.
     virtual ~cci_param_untyped_handle();
@@ -271,9 +275,20 @@ public:
 
     /// Indicates if the handled parameter is valid or not
     /**
+     * @param check If set to true and the handle is invalid, the handle will
+     *        try to revalidate itself using the current broker and the name
+     *        of the original parameter before to return the result.
+     *
      * @return false if handled parameter is invalid; otherwise, true
      */
-    bool is_valid() const;
+    bool is_valid(bool check = false) const;
+
+    /// Invalidate the parameter handle
+    /**
+     * @param remove If true, remove the parameter handle from the original
+     *        parameter before to invalidate. Otherwise, just invalidate.
+     */
+    void invalidate(bool remove = false);
 
 protected:
     ///@name Type-punned value operations
@@ -313,9 +328,6 @@ protected:
      */
     const std::type_info& get_type_info() const;
 
-    /// Invalidate the parameter handle
-    void invalidate();
-
     ///@name Initialization and Destructions methods
     ///@{
 
@@ -332,14 +344,17 @@ private:
     cci_originator m_originator;
 
     /// Original parameter
-    cci_param_if* m_orig_param;
+    mutable cci_param_if* m_orig_param;
 
     /// Check handled parameter is valid
     /**
      * In case the handled parameter is no more valid, it will report an error.
+     * @param report_error Disable error report
      */
-    void check_is_valid() const;
+    void check_is_valid(bool report_error = true) const;
 
+    /// Original parameter name
+    const char* m_orig_param_name;
 };
 
 CCI_CLOSE_NAMESPACE_

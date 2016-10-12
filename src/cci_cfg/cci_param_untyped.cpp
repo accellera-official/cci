@@ -55,6 +55,11 @@ CCI_OPEN_NAMESPACE_
 			fw_vec[i]->adapt->caller_param = NULL;
 		}
 		sc_core::sc_unregister_hierarchical_name(get_name().c_str());
+        for (std::vector<cci_param_untyped_handle*>::iterator it = m_param_handles.begin();
+             it != m_param_handles.end(); it++) {
+            (*it)->invalidate();
+        }
+        delete m_gs_param_base;
 	}
 
 	void cci_param_untyped::set_description(const std::string& desc)
@@ -259,6 +264,16 @@ CCI_OPEN_NAMESPACE_
 													   _2),
 												  *m_param_untyped_handle); // internal callback for status variables
 	}
+
+    void cci_param_untyped::add_param_handle(cci_param_untyped_handle* param_handle)
+    {
+        m_param_handles.push_back(param_handle);
+    }
+
+    void cci_param_untyped::remove_param_handle(cci_param_untyped_handle* param_handle)
+    {
+        m_param_handles.erase(std::remove(m_param_handles.begin(), m_param_handles.end(), param_handle), m_param_handles.end());
+    }
 
 CCI_CLOSE_NAMESPACE_
 

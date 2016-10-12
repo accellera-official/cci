@@ -32,11 +32,11 @@
 #include <boost/bind.hpp>
 
 namespace cci {
-  
+
   using boost::function;
   using boost::function2;
   using boost::bind;
-  
+
 } // end namespace cci
 
 #endif
