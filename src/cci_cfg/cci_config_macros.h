@@ -32,9 +32,7 @@
 #ifndef CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 #define CCI_CCI_CONFIG_MACROS_H_INCLUDED_
 
-/// Namespace for ASI Configuration, Control & Inspection (CCI) standard, Config part
-#define CCI_OPEN_NAMESPACE_  namespace cci {
-#define CCI_CLOSE_NAMESPACE_ }
+#include "cci_core/cci_cmnhdr.h"
 
 // Some default strings - user should define custom ones before including CCI
 // (and before building parameter or broker code since they are used beyond
@@ -55,4 +53,4 @@
 #define __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__ __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "CNF"
 #endif
 
-#endif
+#endif //CCI_CCI_CONFIG_MACROS_H_INCLUDED_

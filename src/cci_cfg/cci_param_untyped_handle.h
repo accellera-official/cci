@@ -23,11 +23,9 @@
 
 #include <string>
 #include "cci_cfg/cci_config_macros.h"
-#include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_value.h"
-#include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_shared_ptr.h"
 
 class cci_param_if;
 
@@ -149,47 +147,68 @@ public:
 
     ///@}
 
+#define CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_(name)                          \
+    /* @copydoc cci_param_untyped::register_##name##_callback(const cci_param_##name##_callback_untyped, cci_untyped_tag) */ \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            const cci_param_##name##_callback_untyped &cb,                     \
+            cci_untyped_tag = cci_untyped_tag());                              \
+                                                                               \
+    /* @copydoc cci_param_untyped::register_##name##_callback(cci_param_##name##_callback_untyped::signature, C*, cci_untyped_tag) */ \
+    template<typename C>                                                                        \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            cci_param_##name##_callback_untyped::signature (C::*cb), C* obj,   \
+            cci_untyped_tag = cci_untyped_tag())                               \
+    {                                                                          \
+        return register_##name##_callback(sc_bind(cb, obj, sc_unnamed::_1));   \
+    }                                                                          \
+                                                                               \
+    /* @copydoc cci_param_untyped::unregister_##name##_callback(const cci_callback_untyped_handle) */ \
+    bool unregister_##name##_callback(const cci_callback_untyped_handle &cb);  \
+                                                                               \
+    /* TODO: doc */                                                            \
+    cci_callback_untyped_handle register_##name##_callback(                    \
+            const cci_callback_untyped_handle& cb, cci_typed_tag<void>)
 
-    ///@name Callback Handling
-    ///@{
+    /// @name Pre write callback handling
+    /// @{
 
-    /// Registers functions as a callback.
-    shared_ptr<callb_adapt> register_callback(const callback_type type, void* observer, param_callb_func_ptr function);
+    CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_(pre_write);
 
-    /// Function registering a callback object (should not be called by user).
-    shared_ptr<callb_adapt> register_callback(const callback_type type, shared_ptr<callb_adapt> callb);
+    /// @}
 
-    /// Unregisters all callbacks (within this parameter) for the specified observer object (e.g. sc_module).
-    /**
-     * observer = NULL should be an error (and not mean unregister all callbacks)
-     *                 to avoid accidental unregistration of e.g. callbacks initiated
-     *                 by a tool.
-     * @param observer Pointer to the observer module that registered parameter callbacks.
-     */
-    void unregister_all_callbacks(void* observer);
+    /// @name Post write callback handling
+    /// @{
 
-    /// Unregisters the callback and (default) deletes the callback adapter.
-    /**
-     * Unregisters (only) the given callback.
-     *
-     * The callback adapter is NOT deleted explicitly because this
-     * should be done by the surrounding shared pointer!
-     *
-     * This may be used by a user module which stored the shared pointer to a
-     * specific callback or by the destructor of the param callback adapter.
-     *
-     * @param callb  Parameter callback adapter
-     * @return       If the callback adapter existed in this parameter.
-     */
-    bool unregister_callback(shared_ptr<callb_adapt> callb);
+    CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_(post_write);
 
-    /// @see unregister_callback(shared_ptr<>).
-    bool unregister_callback(callb_adapt* callb);
+    /// @}
 
-    /// Returns if the parameter has registered callbacks.
-    bool has_callbacks();
+    /// @name Pre read callback handling
+    /// @{
 
-    ///@}
+    CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_(pre_read);
+
+    /// @}
+
+    /// @name Post read callback handling
+    /// @{
+
+    CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_(post_read);
+
+    /// @}
+
+#undef CCI_PARAM_UNTYPED_HANDLE_CALLBACK_DECL_
+
+    /// @name CCI callback handling
+    /// @{
+
+    /// @copydoc cci_param_untyped::unregister_all_callbacks
+    bool unregister_all_callbacks();
+
+    /// @copydoc cci_param_untyped::has_callbacks
+    bool has_callbacks() const;
+
+    /// @}
 
     ///@name Write-access control
     ///@{

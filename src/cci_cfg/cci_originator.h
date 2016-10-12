@@ -114,8 +114,11 @@ public:
      */
     const char* string_name() const;
 
-    //Assignment operator overload
+    /// Assignment operator overload
     cci_originator& operator=( cci_originator originator );
+
+    /// Compare operator overload
+    bool operator==( const cci_originator& originator );
 
 protected:
 

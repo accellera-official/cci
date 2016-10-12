@@ -9,27 +9,13 @@ OPT    = -g -Wall -Werror -Wno-unused-local-typedefs
 OTHER  = -pedantic -Wno-long-long
 CXXFLAGS = $(OPT) $(OTHER)
 
-SRCS = cci_cfg/cci_broker_manager.cpp \
-       cci_cfg/cci_broker_stack.cpp \
-       cci_cfg/cci_value.cpp \
-       cci_cfg/cci_value_traits.cpp \
-       cci_cfg/cci_originator.cpp \
-	   cci_cfg/cci_param_untyped.cpp \
-	   cci_cfg/cci_param_untyped_handle.cpp \
-	   cci_core/cci_name_gen.cpp
+SRCS := $(wildcard cci_cfg/*.cpp)
+SRCS += $(wildcard cci_core/*.cpp)
 
-OBJS = $(SRCS:.cpp=.o)
-
-OBJS_W_PATHS = $(SRCS:.cpp=.o)
-
+OBJS := $(SRCS:.cpp=.o)
 DEPS := $(OBJS:.o=.d)
 
 ## -----------------------------------------------------------------------------
-
-ifdef BOOST_HOME
-BOOST = $(BOOST_HOME)
-endif
-BOOST ?= /cad/tools/boost
 
 ifdef GREENCONTROL_HOME
 GREENCONTROL=$(GREENCONTROL_HOME)
@@ -54,10 +40,19 @@ GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
 ## set some directories 
 CCI_DIR ?= $(GS_CCI_HOME)/src
 
+ifdef BOOST_HOME
+BOOST := $(BOOST_HOME)
+endif
+BOOST ?= /cad/tools/boost
+
 DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
 
-INCDIR = -I. -I$(CCI_DIR) -I$(SYSTEMC)/include -I$(BOOST)  -I$(RAPIDJSON)/include \
-         -I$(GREENCONTROL)
+INCDIR += -I.
+INCDIR := -I$(CCI_DIR)
+INCDIR += -I$(SYSTEMC)/include
+INCDIR += -I$(RAPIDJSON)/include
+INCDIR += -I$(GREENCONTROL)
+INCDIR += -I$(BOOST)
 
 ## -----------------------------------------------------------------------------
 
