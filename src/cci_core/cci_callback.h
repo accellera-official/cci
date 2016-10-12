@@ -16,12 +16,14 @@
   permissions and limitations under the License.
 
  ****************************************************************************/
+
 /**
 * \file   cci_callback.h
 * \author Philipp A. Hartmann, Intel
 * \author Enrico Galli, Intel
 * \brief  Callback interface classes
 */
+
 #ifndef CCI_CORE_CCI_CALLBACK_H_INCLUDED_
 #define CCI_CORE_CCI_CALLBACK_H_INCLUDED_
 

@@ -16,6 +16,7 @@
   permissions and limitations under the License.
 
  ****************************************************************************/
+
 /**
 * \file   cci_callback_impl.h
 * \author Philipp A. Hartmann, Intel
