@@ -334,7 +334,7 @@ public:
      */
     bool has_callbacks() const;
 
-	/// @}
+  /// @}
 
     /// Add parameter handle
     /**
@@ -591,37 +591,45 @@ protected:
         cci_originator originator;
     };
 
+    /// Callback object vector with tag to avoid nested callback
+    template<class T>
+    struct callback_obj_vector {
+      callback_obj_vector():oncall(false){};
+      std::vector<T> vec;
+      mutable bool oncall;
+    };
+
     /// Pre write callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
             pre_write_callback_obj_t;
 
-    std::vector<pre_write_callback_obj_t> m_pre_write_callbacks;
+    callback_obj_vector<pre_write_callback_obj_t> m_pre_write_callbacks;
 
     /// Post write callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
             post_write_callback_obj_t;
 
-    std::vector<post_write_callback_obj_t> m_post_write_callbacks;
+    callback_obj_vector<post_write_callback_obj_t> m_post_write_callbacks;
 
     /// Pre read callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
             pre_read_callback_obj_t;
 
-    std::vector<pre_read_callback_obj_t> m_pre_read_callbacks;
+    callback_obj_vector<pre_read_callback_obj_t> m_pre_read_callbacks;
 
     /// Post read callbacks
     typedef callback_obj<typename cci_callback_untyped_handle::type>
             post_read_callback_obj_t;
 
-	std::vector<post_read_callback_obj_t> m_post_read_callbacks;
+    callback_obj_vector<pre_read_callback_obj_t> m_post_read_callbacks;
 
 private:
 
     /// Originator of the parameter
     const cci_originator m_originator;
 
-	/// Parameter handles
-	std::vector<cci_param_untyped_handle*> m_param_handles;
+  /// Parameter handles
+  std::vector<cci_param_untyped_handle*> m_param_handles;
 };
 
 CCI_CLOSE_NAMESPACE_

@@ -98,39 +98,39 @@ void cci_param_untyped::update_latest_write_originator(const cci_originator& ori
     m_latest_write_access_originator_cp = originator;
 }
 
-#define CCI_PARAM_UNTYPED_CALLBACK_IMPL_(name)                                 \
-cci_callback_untyped_handle                                                    \
-cci_param_untyped::register_##name##_callback(                                 \
-        const cci_callback_untyped_handle &cb,                                 \
-        const cci_originator &orig)                                            \
-{                                                                              \
-    m_##name##_callbacks.push_back(name##_callback_obj_t(cb, orig));           \
-    return cb;                                                                 \
-}                                                                              \
-                                                                               \
-cci_callback_untyped_handle                                                    \
-cci_param_untyped::register_##name##_callback(                                 \
-        const cci_param_##name##_callback_untyped& cb,                         \
-        cci_untyped_tag)                                                       \
-{                                                                              \
-    return cci_param_untyped::register_##name##_callback(cb, m_originator);    \
-}                                                                              \
-                                                                               \
-bool                                                                           \
-cci_param_untyped::unregister_##name##_callback(                               \
-        const cci_callback_untyped_handle &cb,                                 \
-        const cci_originator &orig)                                            \
-{                                                                              \
-    std::vector<name##_callback_obj_t>::iterator it;                           \
-    for(it=m_##name##_callbacks.begin() ; it < m_##name##_callbacks.end();     \
-        it++)                                                                  \
-    {                                                                          \
-        if(it->callback == cb && it->originator == orig) {    \
-            m_##name##_callbacks.erase(it);                                    \
-            return true;                                                       \
-        }                                                                      \
-    }                                                                          \
-    return false;                                                              \
+#define CCI_PARAM_UNTYPED_CALLBACK_IMPL_(name)                                    \
+cci_callback_untyped_handle                                                       \
+cci_param_untyped::register_##name##_callback(                                    \
+        const cci_callback_untyped_handle &cb,                                    \
+        const cci_originator &orig)                                               \
+{                                                                                 \
+    m_##name##_callbacks.vec.push_back(name##_callback_obj_t(cb, orig));          \
+    return cb;                                                                    \
+}                                                                                 \
+                                                                                  \
+cci_callback_untyped_handle                                                       \
+cci_param_untyped::register_##name##_callback(                                    \
+        const cci_param_##name##_callback_untyped& cb,                            \
+        cci_untyped_tag)                                                          \
+{                                                                                 \
+    return cci_param_untyped::register_##name##_callback(cb, m_originator);       \
+}                                                                                 \
+                                                                                  \
+bool                                                                              \
+cci_param_untyped::unregister_##name##_callback(                                  \
+        const cci_callback_untyped_handle &cb,                                    \
+        const cci_originator &orig)                                               \
+{                                                                                 \
+    std::vector<name##_callback_obj_t>::iterator it;                              \
+    for(it=m_##name##_callbacks.vec.begin() ; it < m_##name##_callbacks.vec.end();\
+        it++)                                                                     \
+    {                                                                             \
+        if(it->callback == cb && it->originator == orig) {                        \
+            m_##name##_callbacks.vec.erase(it);                                   \
+            return true;                                                          \
+        }                                                                         \
+    }                                                                             \
+    return false;                                                                 \
 }
 
 CCI_PARAM_UNTYPED_CALLBACK_IMPL_(pre_write)
@@ -145,38 +145,38 @@ bool cci_param_untyped::unregister_all_callbacks(const cci_originator &orig)
 {
     bool result = false;
     for (std::vector<pre_write_callback_obj_t>::iterator it =
-            m_pre_write_callbacks.begin();
-         it < m_pre_write_callbacks.end(); it++)
+            m_pre_write_callbacks.vec.begin();
+         it < m_pre_write_callbacks.vec.end(); it++)
     {
         if(it->originator == orig) {
-            m_pre_write_callbacks.erase(it);
+            m_pre_write_callbacks.vec.erase(it);
             result = true;
         }
     }
     for(std::vector<post_write_callback_obj_t>::iterator it =
-            m_post_write_callbacks.begin();
-        it < m_post_write_callbacks.end(); it++)
+            m_post_write_callbacks.vec.begin();
+        it < m_post_write_callbacks.vec.end(); it++)
     {
         if(it->originator == orig) {
-            m_post_write_callbacks.erase(it);
+            m_post_write_callbacks.vec.erase(it);
             result = true;
         }
     }
     for(std::vector<pre_read_callback_obj_t>::iterator it =
-            m_pre_read_callbacks.begin();
-        it < m_pre_read_callbacks.end(); it++)
+            m_pre_read_callbacks.vec.begin();
+        it < m_pre_read_callbacks.vec.end(); it++)
     {
         if(it->originator == orig) {
-            m_pre_read_callbacks.erase(it);
+            m_pre_read_callbacks.vec.erase(it);
             result = true;
         }
     }
     for(std::vector<post_read_callback_obj_t>::iterator it =
-            m_post_read_callbacks.begin();
-        it < m_post_read_callbacks.end(); it++)
+            m_post_read_callbacks.vec.begin();
+        it < m_post_read_callbacks.vec.end(); it++)
     {
         if(it->originator == orig) {
-            m_post_read_callbacks.erase(it);
+            m_post_read_callbacks.vec.erase(it);
             result = true;
         }
     }
@@ -190,8 +190,8 @@ bool cci_param_untyped::unregister_all_callbacks()
 
 bool cci_param_untyped::has_callbacks() const
 {
-    return (!m_post_write_callbacks.empty() ||
-            !m_pre_write_callbacks.empty());
+    return (!m_post_write_callbacks.vec.empty() ||
+            !m_pre_write_callbacks.vec.empty());
 }
 
 bool cci_param_untyped::lock(void* pwd)
