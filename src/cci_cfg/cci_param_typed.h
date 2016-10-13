@@ -520,18 +520,26 @@ private:
     pre_write_callback(value_type value,
                        const cci_originator &originator) const
     {
+        // Lock the tag to prevent nested callback
+        if(m_pre_write_callbacks.oncall) return false;
+        else m_pre_write_callbacks.oncall=true;
+
         bool result = true;
+
+        // Prepare parameter handle for callback event
+        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), originator);
 
         // Write callback payload
         cci_param_write_event <value_type> ev(m_gs_param->getValue(),
                                               value,
-                                              originator);
+                                              originator,
+                                              param_handle);
 
         // Validate write callbacks
-        for (unsigned i = 0; i < m_pre_write_callbacks.size(); ++i) {
+        for (unsigned i = 0; i < m_pre_write_callbacks.vec.size(); ++i) {
             typename cci_param_pre_write_callback_handle<value_type>::type
                     typed_pre_write_cb(
-                    m_pre_write_callbacks[i].callback);
+                    m_pre_write_callbacks.vec[i].callback);
             if (!typed_pre_write_cb.invoke(
                     static_cast<
                             const cci_param_write_event <value_type> >(ev))) {
@@ -541,6 +549,10 @@ private:
                 result = false;
             }
         }
+
+        // Unlock the tag
+        m_pre_write_callbacks.oncall=false;
+
         return result;
     }
 
@@ -549,51 +561,82 @@ private:
                              const value_type& new_value,
                              const cci_originator &originator) const
     {
+        // Lock the tag to prevent nested callback
+        if(m_post_write_callbacks.oncall) return;
+        else m_post_write_callbacks.oncall=true;
+
+        // Prepare parameter handle for callback event
+        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), originator);
+
         // Write callback payload
         const cci_param_write_event <value_type> ev(old_value,
                                                     new_value,
-                                                    originator);
+                                                    originator,
+                                                    param_handle);
 
         // Write callbacks
-        for (unsigned i = 0; i < m_post_write_callbacks.size(); ++i) {
+        for (unsigned i = 0; i < m_post_write_callbacks.vec.size(); ++i) {
             typename cci_param_post_write_callback_handle<value_type>::type
-                    typed_post_write_cb(m_post_write_callbacks[i].callback);
+                    typed_post_write_cb(m_post_write_callbacks.vec[i].callback);
             if (typed_post_write_cb.valid()) {
                 typed_post_write_cb.invoke(ev);
             }
         }
+
+        // Unlock the tag
+        m_post_write_callbacks.oncall=false;
     }
 
     /// Pre read callback
     void pre_read_callback(const value_type& value) const
     {
+        // Lock the tag to prevent nested callback
+        if(m_pre_read_callbacks.oncall) return;
+        else m_pre_read_callbacks.oncall=true;
+
+        // Prepare parameter handle for callback event
+        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), get_originator());
+
         // Read callback payload
-        const cci_param_read_event <value_type> ev(value, get_originator());
+        const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
 
         // Read callbacks
-        for (unsigned i = 0; i < m_pre_read_callbacks.size(); ++i) {
+        for (unsigned i = 0; i < m_pre_read_callbacks.vec.size(); ++i) {
             typename cci_param_pre_read_callback_handle<value_type>::type
-                    typed_pre_read_cb(m_pre_read_callbacks[i].callback);
+                    typed_pre_read_cb(m_pre_read_callbacks.vec[i].callback);
             if (typed_pre_read_cb.valid()) {
                 typed_pre_read_cb.invoke(ev);
             }
         }
+
+        //Unlock the tag
+        m_pre_read_callbacks.oncall=false;
     }
 
     /// Pre read callback
     void post_read_callback(const value_type& value) const
     {
+        // Lock the tag to prevent nested callback
+        if(m_post_read_callbacks.oncall) return;
+        else m_post_read_callbacks.oncall=true;
+
+        // Prepare parameter handle for callback event
+        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), get_originator());
+
         // Read callback payload
-        const cci_param_read_event <value_type> ev(value, get_originator());
+        const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
 
         // Read callbacks
-        for (unsigned i = 0; i < m_post_read_callbacks.size(); ++i) {
+        for (unsigned i = 0; i < m_post_read_callbacks.vec.size(); ++i) {
             typename cci_param_post_read_callback_handle<value_type>::type
-                    typed_pre_read_cb(m_post_read_callbacks[i].callback);
+                    typed_pre_read_cb(m_post_read_callbacks.vec[i].callback);
             if (typed_pre_read_cb.valid()) {
                 typed_pre_read_cb.invoke(ev);
             }
         }
+
+        // Unlock the tag
+        m_post_read_callbacks.oncall=false;
     }
 };
 
@@ -834,7 +877,7 @@ cci_callback_untyped_handle                                                    \
 cci_param_typed<T, TM>::register_##name##_callback(                            \
         const cci_param_##name##_callback_typed &cb, cci_typed_tag<T>)         \
 {                                                                              \
-    return cci_param_untyped::register_##name##_callback(cb, m_originator);    \
+    return cci_param_untyped::register_##name##_callback(cb, get_originator());\
 }                                                                              \
                                                                                \
 template <typename T, param_mutable_type TM>                                   \
