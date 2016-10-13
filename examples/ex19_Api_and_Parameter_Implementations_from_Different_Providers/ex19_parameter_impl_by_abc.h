@@ -220,58 +220,98 @@ struct cci_param_user_data_type
   bool is_handle() const;
 
   /**
-   *  @fn     cci::chared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function)
-   *  @brief  Function to register callbacks
-   *  @param  type  The type of callback to register
-   *  @param  observer  Observer for the callback
-   *  @param  function  Callback function to be called
-   *  @return Pointer to the callback function
+   * @param cb Untyped pre write callback handle
+   * @param cci_originator Originator
+   *
+   * @return Untyped callback handle
    */
-  cci::shared_ptr<cci::callb_adapt>
-      register_callback(const cci::callback_type type, void* observer,
-                        cci::param_callb_func_ptr function);
+  cci::cci_callback_untyped_handle
+  register_pre_write_callback(const cci::cci_callback_untyped_handle &cb,
+                              const cci::cci_originator &orig);
 
   /**
-   *  @fn     cci::chared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type, cci::shared_ptr<cci::callb_adapt> callb)
-   *  @brief  Function to register callbacks
-   *  @param  type  The type of callback to register
-   *  @param  callb Pointer to the callback function
-   *  @return Pointer to the callback function
+   * @param cb Untyped pre write callback handle
+   * @param cci_originator Originator
+   *
+   * @return True if unregister is a success. Otherwise False.
    */
-  cci::shared_ptr<cci::callb_adapt>
-      register_callback(const cci::callback_type type,
-                        cci::shared_ptr<cci::callb_adapt> callb);
+  bool
+  unregister_pre_write_callback(const cci::cci_callback_untyped_handle &cb,
+                                const cci::cci_originator &orig);
 
   /**
-   *  @fn     void unregister_all_callbacks(void* observer)
-   *  @brief  Function to unregister all callbacks with a given observer
-   *  @param  observer  The observer to unregister the callbacks for
-   *  @return void
+   * @param cb Untyped post write callback handle
+   * @param cci_originator Originator
+   *
+   * @return Untyped callback handle
    */
-  void unregister_all_callbacks(void* observer);
+  cci::cci_callback_untyped_handle
+  register_post_write_callback(const cci::cci_callback_untyped_handle &cb,
+                               const cci::cci_originator &orig);
 
   /**
-   *  @fn     bool unregister_callback(cci::shared_ptr<cci::callb_adpt> callb)
-   *  @brief  Function to unregister a particular callback function
-   *  @param  callb The function to be unregistered
-   *  @return True or false depending on whether it was successfully unregistered
+   * @param cb Untyped post write callback handle
+   * @param cci_originator Originator
+   *
+   * @return True if unregister is a success. Otherwise False.
    */
-  bool unregister_callback(cci::shared_ptr<cci::callb_adapt> callb);
+  bool
+  unregister_post_write_callback(const cci::cci_callback_untyped_handle &cb,
+                                 const cci::cci_originator &orig);
 
   /**
-   *  @fn     bool unregister_callback(cci::callb_adapt* callb)
-   *  @brief  Function to unregister a particular callback function
-   *  @param  callb The function to be unregistered
-   *  @return A true or false depending on whether the function was unregistered or not
+   * @param cb Untyped pre read callback handle
+   * @param cci_originator Originator
+   *
+   * @return Untyped callback handle
    */
-  bool unregister_callback(cci::callb_adapt * callb);
+  cci::cci_callback_untyped_handle
+  register_pre_read_callback(const cci::cci_callback_untyped_handle &cb,
+                             const cci::cci_originator &orig);
+
+  /**
+   * @param cb Untyped pre read callback handle
+   * @param cci_originator Originator
+   *
+   * @return True if unregister is a success. Otherwise False.
+   */
+  bool
+  unregister_pre_read_callback(const cci::cci_callback_untyped_handle &cb,
+                               const cci::cci_originator &orig);
+
+  /**
+   * @param cb Untyped post read callback handle
+   * @param cci_originator Originator
+   *
+   * @return Untyped callback handle
+   */
+  cci::cci_callback_untyped_handle
+  register_post_read_callback(const cci::cci_callback_untyped_handle &cb,
+                              const cci::cci_originator &orig);
+
+  /**
+   * @param cb Untyped post read callback handle
+   * @param cci_originator Originator
+   *
+   * @return True if unregister is a success. Otherwise False.
+   */
+  bool
+  unregister_post_read_callback(const cci::cci_callback_untyped_handle &cb,
+                                const cci::cci_originator &orig);
+
+  /**
+   * @param cci_originator Originator
+   *
+   * @return True if unregister is a success. Otherwise False.
+   */
+  bool unregister_all_callbacks(const cci::cci_originator &orig);
 
   /**
    *  @fn     bool has_callback()
    *  @brief  Function to determine if the parameter has callbacks registered or not
    *  @return True or false depending on whether callbacks are registered
    */
-  bool has_callbacks();
+  bool has_callbacks() const;
 
   /**
    *  @fn     bool lock(void* pwd = NULL)
@@ -331,18 +371,9 @@ struct cci_param_user_data_type
     return NULL; /* TODO */
   }
 
-  cci::cci_param_handle* create_param_handle(const cci::cci_originator& originator) {
-    return NULL;
+  cci::cci_param_untyped_handle create_param_handle(const cci::cci_originator& originator) {
+    return cci::cci_param_untyped_handle(*this,cci::cci_originator("cci_param_user_data_type"));
   }
-
-  cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type,
-                                                     void *observer,
-                                                     cci::param_callb_func_ptr function,
-                                                     cci::cci_param_untyped_handle& param) {cci::shared_ptr<cci::callb_adapt> a; return a;}
-
-  cci::shared_ptr<cci::callb_adapt> register_callback(const cci::callback_type type,
-                                                     cci::shared_ptr <cci::callb_adapt> callb,
-                                                     cci::cci_param_untyped_handle& param) {return callb;}
 
   /**
    *  @fn     cci_param_user_data_type(const std::string& _name, const user_data_type& _dvalue)

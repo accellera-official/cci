@@ -81,99 +81,78 @@ class ex16_observer {
 
     // Observer registering 'PRE_READ', 'PRE_WRITE' & 'POST_WRITE' callbacks
     // on the UDT parameter to monitor all actions on it
-    // TODO: fixme
-    /*udt_pre_read_cb = obsv_udt_base.register_callback(cci::pre_read,
-                                                           this,
-                                                           cci::bind(&ex16_observer::read_callback,
-                                                                     this,
-                                                                     _1, _2));
-    udt_pre_write_cb = obsv_udt_base.register_callback(cci::pre_write,
-                                                            this,
-                                                            cci::bind(&ex16_observer::write_callbacks,
-                                                                      this,
-                                                                      _1, _2));
-    udt_post_write_cb = obsv_udt_base.register_callback(cci::post_write,
-                                                             this,
-                                                             cci::bind(&ex16_observer::write_callbacks,
-                                                                       this,
-                                                                       _1, _2));*/
+    udt_pre_read_cb = obsv_udt_base.register_pre_read_callback(
+        &ex16_observer::untyped_pre_read_callback,this);
+
+    udt_post_read_cb = obsv_udt_base.register_post_read_callback(
+        &ex16_observer::untyped_post_read_callback,this);
+
+    udt_pre_write_cb = obsv_udt_base.register_pre_write_callback(
+        &ex16_observer::untyped_pre_write_callback,this);
+
+    udt_post_write_cb = obsv_udt_base.register_post_write_callback(
+        &ex16_observer::untyped_post_write_callback,this);
   }
 
   /**
-   *  @fn     cci::callback_return_type read_callback(const cci::cci_base_param& _selected_base_param, const cci::callback_type& cb_reason)
-   *  @brief  Implementation of the pre-read callback
-   *  @param  _selected_base_param  The parameter for the callback
-   *  @param  cb_reason The reason for the callback
-   *  @return The exit status of the function
+   *  @fn     void typed_pre_read_callback(const cci::cci_param_read_event<int> & ev)
+   *  @brief  Pre Callback function for reads on parameters
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type read_callback(const cci::cci_base_param& _selected_base_param,
-                                               const cci::callback_type& cb_reason) {
-    switch (cb_reason) {
-      case cci::pre_read: {
-        const cci::cci_originator* myOriginator =
-            cci::cci_originator::get_global_originator();
-
-        std::cout << "\n\t[OBSERVER pre_read_cb] :  Parameter Name : "
-                  << _selected_base_param.get_name() << "\tOriginator info : "
-                  << myOriginator->name() << std::endl;
-
-        break;
-      }
-
-      default:
-        std::cout << "\n\t[OBSERVER pre_read_cb] - Unknown Callback Type"
-                  << std::endl;
-    }
-
-    return cci::return_nothing;
-  }*/
+  void untyped_pre_read_callback(const cci::cci_param_read_event<> & ev)
+  {
+    std::cout << "\n\t[OBSERVER pre_read_cb] :  Parameter Name : "
+              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.originator.name() << std::endl;
+  }
 
   /**
-   *  @fn     cci::callback_return_type write_callback(const cci::cci_base_param& _seleceted_param, const cci::callback_return_type& cb_reason)
-   *  @brief  The implementation of the pre-write and post-write callbacks
-   *  @param  _seleceted_base_param The cci parameter for the callback
-   *  @param  cb_reason The reason for the callback being called
-   *  @return The exit status for the callback function
+   *  @fn     void typed_pre_read_callback(const cci::cci_param_read_event<int> & ev)
+   *  @brief  Post Callback function for reads on parameters
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type write_callbacks(const cci::cci_base_param& _selected_base_param,
-                                                 const cci::callback_type& cb_reason) {
-    const cci::cci_originator* myOriginator =
-        cci::cci_originator::get_global_originator();
+  void untyped_post_read_callback(const cci::cci_param_read_event<> & ev)
+  {
+    std::cout << "\n\t[OBSERVER post_read_cb]:  Parameter Name : "
+              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.originator.name() << std::endl;
+  }
 
-    switch (cb_reason) {
-      case cci::pre_write: {
-        std::cout << "\n\t[OBSERVER pre_write_cb] :  Parameter Name : "
-                  << _selected_base_param.get_name() << "\tOriginator info : "
-                  << myOriginator->name() << std::endl;
-        break;
-      }
+  /**
+   *  @fn     bool typed_pre_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Pre Callback function for writes on parameters
+   *  @return True to indicate the write is valid
+   */
+  bool untyped_pre_write_callback(const cci::cci_param_write_event<> & ev)
+  {
+    std::cout << "\n\t[OBSERVER pre_write_cb] :  Parameter Name : "
+              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.originator.name() << std::endl;
+    return true;
+  }
 
-      case cci::post_write: {
-        std::cout << "\n\t[OBSERVER post_write_cb] :  Parameter Name : "
-                  << _selected_base_param.get_name() << "\tOriginator info : "
-                  << myOriginator->name() << std::endl;
-        break;
-      }
-
-      default:
-        std::cout << "\n\t[OBSERVER write_cb] - Unknown Callback Type"
-                  << std::endl;
-    }
-
-    return cci::return_nothing;
-  }*/
+  /**
+   *  @fn     void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Post Callback function for writes on parameters
+   *  @return void
+   */
+  void untyped_post_write_callback(const cci::cci_param_write_event<> & ev)
+  {
+    std::cout << "\n\t[OBSERVER post_write_cb] :  Parameter Name : "
+              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.originator.name() << std::endl;
+  }
 
  private:
   cci::cci_broker_if* observerBrokerIF;  ///< CCI configuration broker instance
 
   cci::cci_param_handle obsv_udt_base;  ///< Declare CCI param handle for int type cci-parameter
 
-  // Callback Adaptor Objects for 'int' type parameter
-  cci::shared_ptr<cci::callb_adapt> udt_pre_read_cb; ///< Callback adapter object for pre-read
-  cci::shared_ptr<cci::callb_adapt> udt_pre_write_cb;  ///< Callback adapter object for pre-write
-  cci::shared_ptr<cci::callb_adapt> udt_post_write_cb; ///< Callback adapter object for post-write
+  // Callback handle Objects for 'int' type parameter
+  cci::cci_callback_untyped_handle udt_pre_read_cb;   ///< Callback handle object for pre-read
+  cci::cci_callback_untyped_handle udt_post_read_cb;  ///< Callback handle object for pre-read
+  cci::cci_callback_untyped_handle udt_pre_write_cb;  ///< Callback handle object for pre-write
+  cci::cci_callback_untyped_handle udt_post_write_cb; ///< Callback handle object for post-write
 };
 // ex16_observer.h
 

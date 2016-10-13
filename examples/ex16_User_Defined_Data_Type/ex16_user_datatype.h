@@ -34,7 +34,6 @@
 
 #include <cci_configuration>
 #include <systemc.h>
-#include <cci_cfg/cci_shared_ptr.h>  // HACK; a proper publicly shareable CCI wrapper needed
 #include <greencontrol/config.h>
 #include <string>
 #include <iostream>

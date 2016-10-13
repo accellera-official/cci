@@ -48,30 +48,21 @@ SC_MODULE(ex08_simple_ip) {
         param_2("param_2", 2) {
     SC_THREAD(execute);
 
-    // Register call back on param_1
-    // TODO: fixme
-    /*param_1_pre_read_cb = param_1.register_callback(
-        cci::pre_read, this,
-        cci::bind(&ex08_simple_ip::read_config_callback, this, _1, _2));
-    param_1_pre_write_cb = param_1.register_callback(
-        cci::pre_write, this,
-        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));
-    param_1_post_write_cb = param_1.register_callback(
-        cci::post_write, this,
-        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));
+    // Register callback on param_1
+    param_1_pre_read_cb   = param_1.register_pre_read_callback(
+        &ex08_simple_ip::typed_pre_read_callback,this);
+    param_1_pre_write_cb  = param_1.register_pre_write_callback(
+        &ex08_simple_ip::typed_pre_write_callback,this);
+    param_1_post_write_cb = param_1.register_post_write_callback(
+        &ex08_simple_ip::typed_post_write_callback,this);
 
-    param_2_pre_read_cb = param_2.register_callback(
-        cci::pre_read, this,
-        cci::bind(&ex08_simple_ip::read_config_callback, this, _1, _2));
-    param_2_pre_write_cb = param_2.register_callback(
-        cci::pre_write, this,
-        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));
-    param_2_reject_write_cb = param_2.register_callback(
-        cci::reject_write, this,
-        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));
-    param_2_post_write_cb = param_2.register_callback(
-        cci::post_write, this,
-        cci::bind(&ex08_simple_ip::write_config_callback, this, _1, _2));*/
+    // Register callback on param_2
+    param_2_pre_read_cb   = param_2.register_pre_read_callback(
+        &ex08_simple_ip::typed_pre_read_callback,this);
+    param_2_pre_write_cb  = param_2.register_pre_write_callback(
+        &ex08_simple_ip::typed_pre_write_callback_rejected,this);
+    param_2_post_write_cb = param_2.register_post_write_callback(
+        &ex08_simple_ip::typed_post_write_callback,this);
 
     XREPORT("@Ctor: Value of " << param_1.get_name() << " is " << param_1
             << " (Default value Specified: 1)");
@@ -92,62 +83,58 @@ SC_MODULE(ex08_simple_ip) {
   }
 
   /**
-   *  @fn     cci::callback_return_type write_config_callback(cci::cci_base_param& selected_param, const cci::callback_type& cb_reason)
-   *  @brief  Callback function of writes on parameters
-   *  @param  selected_param  Paramter callback was trigger on
-   *  @param  cb_reason The reason for the callback
-   *  @return A callback_return_type
+   *  @fn     void typed_pre_read_callback(const cci::cci_param_read_event<int> & ev)
+   *  @brief  Pre Callback function for reads on parameters
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type write_config_callback(
-      cci::cci_base_param& selected_param,
-      const cci::callback_type& cb_reason) {
-    // Take action based on cb_reason
-    switch (cb_reason) {
-      case cci::pre_write:
-        XREPORT("write_config_callback: pre_write: "
-                << selected_param.get_name() << " ("
-                << selected_param.get_cci_value().to_json() << ")");
-        break;
-      case cci::reject_write:
-        if (selected_param.get_name() == "sim_ip.param_2") {
-          XREPORT("write_config_callback: reject_write: Rejecting Value"
-                  " change on " << selected_param.get_name() << " ("
-                  << selected_param.get_cci_value().to_json() << ")");
-          return cci::return_value_change_rejected;
-        } else {
-          XREPORT("write_config_callback: reject_write: "
-                  << selected_param.get_name() << " ("
-                  << selected_param.get_cci_value().to_json() << ")");
-        }
-        break;
-      case cci::post_write:
-        XREPORT("write_config_callback: post_write: "
-                << selected_param.get_name());
-        break;
-      default:
-        XREPORT_WARNING("write_config_callback: Unexpected callback" " type ("
-                        << cb_reason << ")");
-    }
-    return cci::return_nothing;
-  }*/
+  void typed_pre_read_callback(const cci::cci_param_read_event<int> & ev)
+  {
+    XREPORT("typed_pre_read_callback:"
+            << ev.param_handle.get_name() << " ("
+            << ev.value
+            << ") by " << ev.originator.name());
+  }
 
   /**
-     *  @fn     cci::callback_return_type read_config_callback(cci::cci_base_param& selected_param, const cci::callback_type& cb_reason)
-     *  @brief  Callback function for reads on parameters
-     *  @param  selected_param  Paramter callback was trigger on
-     *  @param  cb_reason The reason for the callback
-     *  @return A callback_return_type
-     */
-  // TODO: fixme
-  /*cci::callback_return_type read_config_callback(
-      cci::cci_base_param& selected_param,
-      const cci::callback_type& cb_reason) {
-    XREPORT_PLAIN("read_config_callback: pre_read: "
-                  << selected_param.get_name() << " ("
-                  << selected_param.get_cci_value().to_json() << ")");
-    return cci::return_nothing;
-  }*/
+   *  @fn     bool typed_pre_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Pre Callback function for writes on parameters
+   *  @return True to indicate the write is valid
+   */
+  bool typed_pre_write_callback(const cci::cci_param_write_event<int> & ev)
+  {
+    XREPORT("typed_pre_write_callback:"
+            << ev.param_handle.get_name() << " ("
+            << ev.old_value << " -> " << ev.new_value
+            << ") by " << ev.originator.name());
+    return true;
+  }
+
+  /**
+   *  @fn     void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Post Callback function for writes on parameters
+   *  @return void
+   */
+  void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+  {
+    XREPORT("typed_post_write_callback:"
+            << ev.param_handle.get_name() << " ("
+            << ev.old_value << " -> " << ev.new_value
+            << ") by " << ev.originator.name());
+  }
+
+  /**
+   *  @fn     bool typed_pre_write_callback_rejected(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Pre Callback function for writes on parameters
+   *  @return False to indicate the write is not valid
+   */
+  bool typed_pre_write_callback_rejected(const cci::cci_param_write_event<int> & ev)
+  {
+    XREPORT("reject_pre_write_callback: Rejecting Value change on "
+            << ev.param_handle.get_name() << " ("
+            << ev.old_value << " -> " << ev.new_value
+            << ") by " << ev.originator.name());
+    return false;
+  }
 
   /**
    *  @fn     void execute()
@@ -163,14 +150,13 @@ SC_MODULE(ex08_simple_ip) {
   cci::cci_param<int> param_2; ///< CCI int parameter
 
   // Callback pointers
-  cci::shared_ptr<cci::callb_adapt> param_1_pre_read_cb; ///< Parameter 1 pre read callback pointer
-  cci::shared_ptr<cci::callb_adapt> param_1_pre_write_cb;  ///< Parameter 1 pre write callback pointer
-  cci::shared_ptr<cci::callb_adapt> param_1_post_write_cb; ///< Parameter 1 post write callback pointer
+  cci::cci_callback_untyped_handle param_1_pre_read_cb;   ///< Parameter 1 pre read callback handle
+  cci::cci_callback_untyped_handle param_1_pre_write_cb;  ///< Parameter 1 pre write callback handle
+  cci::cci_callback_untyped_handle param_1_post_write_cb; ///< Parameter 1 post write callback handle
 
-  cci::shared_ptr<cci::callb_adapt> param_2_pre_read_cb; ///< Parameter 2 pre read callback pointer
-  cci::shared_ptr<cci::callb_adapt> param_2_pre_write_cb;  ///< Parameter 2 pre write callback pointer
-  cci::shared_ptr<cci::callb_adapt> param_2_reject_write_cb; ///< Parameter 2 reject callback pointer
-  cci::shared_ptr<cci::callb_adapt> param_2_post_write_cb; ///< Parameter 2 post write callback pointer
+  cci::cci_callback_untyped_handle param_2_pre_read_cb;   ///< Parameter 2 pre read callback handle
+  cci::cci_callback_untyped_handle param_2_pre_write_cb;  ///< Parameter 2 pre write callback handle
+  cci::cci_callback_untyped_handle param_2_post_write_cb; ///< Parameter 2 post write callback handle
 };
 // ex08_simple_ip
 

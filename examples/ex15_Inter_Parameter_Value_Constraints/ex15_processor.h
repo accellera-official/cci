@@ -107,80 +107,59 @@ SC_MODULE(ex15_processor) {
 
     // Registering 'POST_WRITE' callbacks on the cci-parameters of the
     // two register modules
-    // TODO: fixme
-    /*addr_lines_post_wr_cb =
-        addr_lines_base.register_callback(cci::post_write,
-                                               this,
-                                               cci::bind(&ex15_processor::addr_lines_post_wr_cb_func,
-                                                         this, _1, _2,
-                                                         mem_size_base));
-    mem_block_post_wr_cb =
-        mem_size_base.register_callback(cci::post_write,
-                                             this,
-                                             cci::bind(&ex15_processor::mem_block_post_wr_cb_func,
-                                                       this, _1, _2,
-                                                       addr_lines_base));*/
+    addr_lines_post_wr_cb = addr_lines_base.register_post_write_callback(
+        sc_bind(&ex15_processor::addr_lines_post_wr_cb_func,
+        this, sc_unnamed::_1, mem_size_base));
+
+    mem_block_post_wr_cb = mem_size_base.register_post_write_callback(
+        sc_bind(&ex15_processor::mem_block_post_wr_cb_func,
+        this, sc_unnamed::_1, addr_lines_base));
   }
 
   /**
-   *  @fn     cci::callback_return_type addr_lines_post_wr_sb_func(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason, cci::cci_base_param* _mem_size_base_ptr)
-   *  @brief  Implementation of the callback function for address lines
-   *  @param  _base_param The parameter for the callback
-   *  @param  cb_reason Reason for the callback
-   *  @param  _mem_size_base_ptr  Pointer to the base of the memory size
-   *  @return The status of the execution of the function
+   *  @fn     void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Post Callback function for address line
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type addr_lines_post_wr_cb_func(cci::cci_base_param & _base_param,
-                                                            const cci::callback_type & cb_reason,
-                                                            cci::cci_base_param * _mem_size_base_ptr) {
+  void addr_lines_post_wr_cb_func(const cci::cci_param_write_event<> & ev ,
+                                   cci::cci_param_handle mem_size_handle)
+  {
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
-            << _base_param.get_name() << "\tParameter Value : "
-            << _base_param.get_cci_value().to_json());
+            << ev.param_handle.get_name() << "\tParameter Value : "
+            << ev.new_value);
 
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
-            << _mem_size_base_ptr->get_name() << "\tParameter Value : "
-            << _mem_size_base_ptr->get_cci_value().to_json());
+            << mem_size_handle.get_name() << "\tParameter Value : "
+            << mem_size_handle.get_cci_value());
 
-    total_addr_lines =
-            atoi(_base_param.get_cci_value().to_json().c_str());
-    mem_block_size =
-            atoi(_mem_size_base_ptr->get_cci_value().to_json().c_str());
+    total_addr_lines = atoi(ev.new_value.to_json().c_str());
+    mem_block_size = atoi(mem_size_handle.get_cci_value().to_json().c_str());
 
     // Test condition : X < 2^n - 1
     TestCondition(total_addr_lines, mem_block_size);
-
-    return cci::return_nothing;
-  }*/
+  }
 
   /**
-   *  @fn     cci::callback_return_type mem_block_post_wr_cb_func(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason, cci::cci_base_param* _addr_lines_base_ptr)
-   *  @brief  The implementation of the callback function for post writes to the memory block
-   *  @param  _base_param The CCI parameter for the callback
-   *  @param  cb_reason The reason for the callback being called
-   *  @param  _addr_lines_base_ptr  Pointer to the base of the address lines for the memory block
-   *  @return The status result of the function execution
+   *  @fn     void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Post Callback function for memory block
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type mem_block_post_wr_cb_func(cci::cci_base_param & _base_param,
-                                                           const cci::callback_type & cb_reason,
-                                                           cci::cci_base_param * _addr_lines_base_ptr) {
+  void mem_block_post_wr_cb_func(const cci::cci_param_write_event<> & ev ,
+                                   cci::cci_param_handle addr_lines_handle)
+  {
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << _base_param.get_name() << "\tParameter Value : "
-            << _base_param.get_cci_value().to_json());
+            << ev.param_handle.get_name() << "\tParameter Value : "
+            << ev.new_value);
 
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << _addr_lines_base.get_name() << "\tParameter Value : "
-            << _addr_lines_base.get_cci_value().to_json());
+            << addr_lines_handle.get_name() << "\tParameter Value : "
+            << addr_lines_handle.get_cci_value());
 
-    mem_block_size = atoi(_base_param.get_cci_value().to_json().c_str());
-    total_addr_lines = atoi(
-            _addr_lines_base.get_cci_value().to_json().c_str());
+    mem_block_size = atoi(ev.new_value.to_json().c_str());
+    total_addr_lines = atoi(addr_lines_handle.get_cci_value().to_json().c_str());
 
     TestCondition(total_addr_lines, mem_block_size);
-
-    return cci::return_nothing;
-  }*/
+  }
 
   /**
    *  @fn     void TestCondition(int lines, int memory_size)
@@ -225,8 +204,8 @@ SC_MODULE(ex15_processor) {
   cci::cci_param_handle mem_size_base;  ///< Handle to the base of the memory size
 
   // Callback Adaptor Objects
-  cci::shared_ptr<cci::callb_adapt> addr_lines_post_wr_cb; ///< Address lines callback adapter object
-  cci::shared_ptr<cci::callb_adapt> mem_block_post_wr_cb;  ///< Memory block callback adapter object
+  cci::cci_callback_untyped_handle addr_lines_post_wr_cb; ///< Address lines callback adapter object
+  cci::cci_callback_untyped_handle mem_block_post_wr_cb;  ///< Memory block callback adapter object
 };
 // ex15_processor
 
