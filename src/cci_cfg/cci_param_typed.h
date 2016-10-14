@@ -410,7 +410,7 @@ public:
      * @return  A newed copy pointing to the same implementation parameter.
      *          Memory management has to be done by the caller!
      */
-    cci_param_untyped_handle create_param_handle(const cci_originator& originator);
+    cci_param_untyped_handle create_param_handle(const cci_originator& originator) const;
 
     /**
      * Constructor with (local/hierarchical) name, default value,
@@ -527,7 +527,7 @@ private:
         bool result = true;
 
         // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), originator);
+        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
 
         // Write callback payload
         cci_param_write_event <value_type> ev(m_gs_param->getValue(),
@@ -566,7 +566,7 @@ private:
         else m_post_write_callbacks.oncall=true;
 
         // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), originator);
+        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
 
         // Write callback payload
         const cci_param_write_event <value_type> ev(old_value,
@@ -595,7 +595,7 @@ private:
         else m_pre_read_callbacks.oncall=true;
 
         // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), get_originator());
+        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
 
         // Read callback payload
         const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
@@ -621,7 +621,7 @@ private:
         else m_post_read_callbacks.oncall=true;
 
         // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle(*(const_cast<cci_param_typed<T,TM>* >(this)), get_originator());
+        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
 
         // Read callback payload
         const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
@@ -904,9 +904,10 @@ CCI_PARAM_TYPED_CALLBACK_IMPL_(post_read)
 
 template <typename T, param_mutable_type TM>
 cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(
-        const cci_originator& originator)
+        const cci_originator& originator) const
 {
-    return cci_param_typed_handle<value_type>(*this, originator);
+    return cci_param_typed_handle<value_type>(
+        (*(const_cast<cci_param_typed<T,TM>* >(this))),originator);
 }
 
 template <typename T, param_mutable_type TM>

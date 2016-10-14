@@ -371,8 +371,10 @@ struct cci_param_user_data_type
     return NULL; /* TODO */
   }
 
-  cci::cci_param_untyped_handle create_param_handle(const cci::cci_originator& originator) {
-    return cci::cci_param_untyped_handle(*this,cci::cci_originator("cci_param_user_data_type"));
+  cci::cci_param_untyped_handle create_param_handle(const cci::cci_originator& originator) const{
+    return cci::cci_param_untyped_handle(
+            (*(const_cast<cci_param_user_data_type*>(this))),
+            cci::cci_originator("cci_param_user_data_type"));
   }
 
   /**
