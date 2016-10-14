@@ -84,7 +84,7 @@ cci_value cci_param_untyped_handle::get_cci_value() const
     return m_orig_param->get_cci_value();
 }
 
-param_mutable_type cci_param_untyped_handle::get_mutable_type() const
+cci_param_mutable_type cci_param_untyped_handle::get_mutable_type() const
 {
     check_is_valid();
     return m_orig_param->get_mutable_type();

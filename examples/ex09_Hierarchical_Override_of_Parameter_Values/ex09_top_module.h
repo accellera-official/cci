@@ -218,8 +218,8 @@ SC_MODULE(ex09_top_module) {
 
  private:
   // Immutable type cci-parameters
-  cci::cci_param<int, cci::immutable_param> n_initiators; ///< Number of initiators to be instantiated
-  cci::cci_param<int, cci::immutable_param> n_targets;  ///< Number of targets to be instantiated
+  cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> n_initiators; ///< Number of initiators to be instantiated
+  cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> n_targets;  ///< Number of targets to be instantiated
 
   cci::cci_broker_if* myDefaultBroker; ///< Configuration broker instance
 

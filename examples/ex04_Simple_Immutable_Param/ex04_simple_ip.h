@@ -110,18 +110,18 @@ SC_MODULE(ex04_simple_ip) {
   }
 
   const std::string mutable_type_to_string(
-      cci::param_mutable_type mutable_type) {
+      cci::cci_param_mutable_type mutable_type) {
      switch(mutable_type) {
-         case cci::mutable_param:
+         case cci::CCI_MUTABLE_PARAM:
              return "mutable";
             break;
-         case cci::immutable_param:
+         case cci::CCI_IMMUTABLE_PARAM:
              return "immutable";
              break;
-         case cci::elaboration_time_param:
+         case cci::CCI_ELABORATION_TIME_PARAM:
              return "elaboration_time_param";
              break;
-         case cci::other_param:
+         case cci::CCI_OTHER_PARAM:
              return "other_param";
             break;
          default:
@@ -131,8 +131,8 @@ SC_MODULE(ex04_simple_ip) {
  }
 
  private:
-  cci::cci_param<int, cci::immutable_param> param_1;  ///< CCI immutable param
-  cci::cci_param<int, cci::immutable_param> param_2;  ///< CCI immutable param
+  cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> param_1;  ///< CCI immutable param
+  cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> param_2;  ///< CCI immutable param
 };
 // ex04_simple_ip
 

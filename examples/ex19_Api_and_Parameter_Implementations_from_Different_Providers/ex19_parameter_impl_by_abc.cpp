@@ -197,6 +197,15 @@ cci::cci_value cci_param_user_data_type::get_cci_value() const {
 }
 
 /**
+ *  @fn     cci::cci_value cci_param_user_data_type::get_cci_value() const
+ *  @brief  Function to retrieve the value of the parameter
+ *  @return The cci_value of the parameter
+ */
+cci::cci_param_mutable_type cci_param_user_data_type::get_mutable_type() const {
+  return cci::CCI_MUTABLE_PARAM;
+}
+
+/**
  *  @fn     void cci_param_user_data_type::set_description(const std::string& doc)
  *  @brief  Function to add description (descirption) to the parameter
  *  @param  doc The description to add
@@ -438,14 +447,14 @@ bool cci_param_user_data_type::equals(const cci::cci_param_untyped_handle &rhs) 
 void cci_param_user_data_type::init()
 {
 	cout
-		<< "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::mutable_param"
+		<< "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::CCI_MUTABLE_PARAM"
 		<< endl;
 }
 
 void cci_param_user_data_type::destroy()
 {
 	cout
-		<< "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::mutable_param"
+		<< "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::CCI_MUTABLE_PARAM"
 		<< endl;
 	delete this;
 }

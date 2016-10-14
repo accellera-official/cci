@@ -61,10 +61,10 @@ public:
 	}
 
 protected:
-  cci::cci_param<int, cci::mutable_param>          int_param_mutable;
-  cci::cci_param<int, cci::mutable_param>          int_param_mutable2;
-  cci::cci_param<int, cci::immutable_param>        int_param_immutable;
-  cci::cci_param<int, cci::elaboration_time_param> int_param_elab;
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM>          int_param_mutable;
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM>          int_param_mutable2;
+  cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM>        int_param_immutable;
+  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> int_param_elab;
 };
   
   

@@ -44,15 +44,15 @@ CCI_OPEN_NAMESPACE_
   
   
   /// Enumeration for cci_param_typed template specifying the parameter type according the lock behavior
-  enum param_mutable_type {
+  enum cci_param_mutable_type {
     /// Mutable Parameter
-    mutable_param = 0,
+    CCI_MUTABLE_PARAM = 0,
     /// Immutable Parameter
-    immutable_param,
+    CCI_IMMUTABLE_PARAM,
     /// Elaboration Time Parameter (Mutable up to end_of_elaboration)
-    elaboration_time_param,
+    CCI_ELABORATION_TIME_PARAM,
     /// Vendor specific/other Parameter type
-    other_param
+    CCI_OTHER_PARAM
   };
 
   /**
@@ -60,11 +60,13 @@ CCI_OPEN_NAMESPACE_
    * Choose if a param gets a relative or an absolute name.
    */
   enum cci_name_type {
+    /// Relative name
     CCI_RELATIVE_NAME,
+    /// Absolute name
     CCI_ABSOLUTE_NAME
   };
-  
-  
+
+
 CCI_CLOSE_NAMESPACE_
 
 #endif
