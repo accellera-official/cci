@@ -24,7 +24,10 @@
 
 CCI_OPEN_NAMESPACE_
 
-/// Enumeration for basic data types, whose rough getting and setting is supported by base class directly
+/**
+ *  Enumeration for basic data types, whose rough getting and setting is
+ *  supported by base class directly
+ */
 enum basic_param_type {
     /// default, type unknown
     param_type_not_available = 0,
@@ -42,7 +45,10 @@ enum basic_param_type {
     param_type_other
 };
 
-/// Enumeration for cci_param_typed template specifying the parameter type according the lock behavior
+/**
+ * Enumeration for cci_param_typed template specifying the parameter type
+ * according the lock behavior
+ */
 enum cci_param_mutable_type {
     /// Mutable Parameter
     CCI_MUTABLE_PARAM = 0,
