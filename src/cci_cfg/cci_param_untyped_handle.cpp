@@ -176,7 +176,7 @@ bool cci_param_untyped_handle::is_locked() const
     return m_orig_param->is_locked();
 }
 
-basic_param_type cci_param_untyped_handle::get_basic_type() const
+cci_data_type cci_param_untyped_handle::get_basic_type() const
 {
     check_is_valid();
     return m_orig_param->get_basic_type();

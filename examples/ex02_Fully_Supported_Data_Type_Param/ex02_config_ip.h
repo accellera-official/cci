@@ -69,9 +69,9 @@ SC_MODULE(ex02_config_ip) {
       cci::cci_param_handle int_param = m_cci->get_param_handle(param_name);
       assert(int_param.is_valid());
 
-      cci::basic_param_type partype = cci::param_type_not_available;
+      cci::cci_data_type partype = cci::CCI_UNAVAILABLE_DATA;
       partype = int_param.get_basic_type();
-      if(partype == cci::param_type_number) {
+      if(partype == cci::CCI_NUMBER_DATA) {
         XREPORT("@execute: Type of " << param_name << " is a number.");
       } else {
         XREPORT_ERROR("@execute: Type of " << param_name << " is not a number.");

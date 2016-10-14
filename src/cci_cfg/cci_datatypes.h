@@ -28,21 +28,21 @@ CCI_OPEN_NAMESPACE_
  *  Enumeration for basic data types, whose rough getting and setting is
  *  supported by base class directly
  */
-enum basic_param_type {
-    /// default, type unknown
-    param_type_not_available = 0,
-    /// used for all param data types that can handle integer numbers
-    param_type_number,
-    /// used for all param data types that can handle real numbers
-    param_type_real,
-    /// used for all param data types that can handle bool
-    param_type_bool,
-    /// used for all param data types that can handle strings
-    param_type_string,
-    /// used for all param lists
-    param_type_list,
-    /// used for all param other data types (objects etc.)
-    param_type_other
+enum cci_data_type {
+    /// Default, unknow data types
+    CCI_UNAVAILABLE_DATA = 0,
+    /// Data types that can handle integer numbers
+    CCI_NUMBER_DATA,
+    /// Data types that can handle real numbers
+    CCI_REAL_DATA,
+    /// Data types that can handle bools
+    CCI_BOOL_DATA,
+    /// Data types that can handle strings
+    CCI_STRING_DATA,
+    /// Data types that can handle lists
+    CCI_LIST_DATA,
+    /// Data types that can handle other data types (objects etc.)
+    CCI_OTHER_DATA
 };
 
 /**

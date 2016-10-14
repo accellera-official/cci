@@ -79,33 +79,33 @@ operator == ( cci_value_cref const & left, cci_value_cref const & right )
   return DEREF(left) == DEREF(right);
 }
 
-basic_param_type
+cci_data_type
 cci_value_cref::basic_type() const
 {
   if( !THIS )
-    return param_type_not_available;
+    return CCI_UNAVAILABLE_DATA;
 
   switch(THIS->GetType())
   {
   case rapidjson::kFalseType:
   case rapidjson::kTrueType:
-    return param_type_bool;
+    return CCI_BOOL_DATA;
 
   case rapidjson::kNumberType:
-    return THIS->IsDouble() ? param_type_real : param_type_number;
+    return THIS->IsDouble() ? CCI_REAL_DATA : CCI_NUMBER_DATA;
 
   case rapidjson::kStringType:
-    return param_type_string;
+    return CCI_STRING_DATA;
 
   case rapidjson::kArrayType:
-    return param_type_list;
+    return CCI_LIST_DATA;
 
   case rapidjson::kObjectType:
-    return param_type_other;
+    return CCI_OTHER_DATA;
 
   case rapidjson::kNullType:
   default:
-    return param_type_not_available;
+    return CCI_UNAVAILABLE_DATA;
   }
 }
 

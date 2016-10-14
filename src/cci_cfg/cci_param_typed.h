@@ -169,7 +169,7 @@ public:
     /**
      * @return Type
      */
-    basic_param_type get_basic_type() const;
+    cci_data_type get_basic_type() const;
 
     /// Returns the type information of the parameter
     /**
@@ -765,7 +765,7 @@ bool cci_param_typed<T, TM>::equals(const cci_param_if& rhs) const
 }
 
 template <typename T, cci_param_mutable_type TM>
-basic_param_type cci_param_typed<T, TM>::get_basic_type() const
+cci_data_type cci_param_typed<T, TM>::get_basic_type() const
 {
     return get_cci_value().basic_type();
 }
