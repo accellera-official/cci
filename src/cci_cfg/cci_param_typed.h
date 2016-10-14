@@ -197,6 +197,12 @@ public:
      */
     void set_cci_value(const cci_value& val, const cci_originator& originator);
 
+    /// Get the parameter's mutable type
+    /**
+     * @return Parameter mutable type
+     */
+    param_mutable_type get_mutable_type() const;
+
     /// Get the parameter's value.
     /**
      * @exception cci_exception_get_param Getting value failed
@@ -789,6 +795,12 @@ template <typename T, param_mutable_type TM>
 void cci_param_typed<T, TM>::set_cci_value(const cci_value& val)
 {
     set_cci_value(val, get_originator());
+}
+
+template <typename T, param_mutable_type TM>
+param_mutable_type cci_param_typed<T, TM>::get_mutable_type() const
+{
+    return TM;
 }
 
 template <typename T, param_mutable_type TM>

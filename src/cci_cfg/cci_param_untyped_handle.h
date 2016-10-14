@@ -84,6 +84,9 @@ public:
     /// @copydoc cci_param_typed::get_cci_value
     cci_value get_cci_value() const;
 
+    /// @copydoc cci_param_typed::get_mutable_type
+    param_mutable_type get_mutable_type() const;
+
     ///@}
 
     ///@name Parameter Value Status

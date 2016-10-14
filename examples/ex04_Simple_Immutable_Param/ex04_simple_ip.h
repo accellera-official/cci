@@ -44,10 +44,15 @@ SC_MODULE(ex04_simple_ip) {
       : param_1("param_1", 1),
         param_2("param_2", 2) {
     SC_THREAD(execute);
-    XREPORT("@Ctor: Default vale specified for " << param_1.get_name()
+    XREPORT("@Ctor: Default value specified for " << param_1.get_name()
             << " is 1");
-    XREPORT("@Ctor: Default vale specified for " << param_2.get_name()
+    XREPORT("@Ctor: Default value specified for " << param_2.get_name()
             << " is 2");
+
+    XREPORT("@Ctor: param_1 mutable type is "
+                    << mutable_type_to_string(param_1.get_mutable_type()));
+    XREPORT("@Ctor: param_2 mutable type is "
+                    << mutable_type_to_string(param_2.get_mutable_type()));
 
     expect("Ctor: immutable param:", "param_1", static_cast<int>(param_1), 100);
     expect("Ctor: immutable param:", "param_2", static_cast<int>(param_2), 2);
@@ -103,6 +108,27 @@ SC_MODULE(ex04_simple_ip) {
     }
     expect("@Run: ", "param_2", static_cast<int>(param_2), 2);
   }
+
+  const std::string mutable_type_to_string(
+      cci::param_mutable_type mutable_type) {
+     switch(mutable_type) {
+         case cci::mutable_param:
+             return "mutable";
+            break;
+         case cci::immutable_param:
+             return "immutable";
+             break;
+         case cci::elaboration_time_param:
+             return "elaboration_time_param";
+             break;
+         case cci::other_param:
+             return "other_param";
+            break;
+         default:
+             return "unknow";
+            break;
+     }
+ }
 
  private:
   cci::cci_param<int, cci::immutable_param> param_1;  ///< CCI immutable param

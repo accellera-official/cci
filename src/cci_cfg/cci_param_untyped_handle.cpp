@@ -28,19 +28,22 @@
 
 CCI_OPEN_NAMESPACE_
 
-cci_param_untyped_handle::cci_param_untyped_handle(cci_param_if & orig_param,
-                                                   const cci_originator & originator)
+cci_param_untyped_handle::cci_param_untyped_handle(
+        cci_param_if & orig_param,
+        const cci_originator & originator)
         : m_originator(originator), m_orig_param(&orig_param),
           m_orig_param_name(cci_get_name(orig_param.get_name().c_str()))
 {
     m_orig_param->add_param_handle(this);
 }
 
-cci_param_untyped_handle::cci_param_untyped_handle(const cci_originator & originator)
+cci_param_untyped_handle::cci_param_untyped_handle(
+        const cci_originator & originator)
         : m_originator(originator), m_orig_param(NULL), m_orig_param_name(NULL)
 {}
 
-cci_param_untyped_handle::cci_param_untyped_handle(const cci_param_untyped_handle& param_handle)
+cci_param_untyped_handle::cci_param_untyped_handle(
+        const cci_param_untyped_handle& param_handle)
         : m_originator(param_handle.m_originator),
           m_orig_param(param_handle.m_orig_param),
           m_orig_param_name(param_handle.m_orig_param_name)
@@ -81,6 +84,12 @@ cci_value cci_param_untyped_handle::get_cci_value() const
     return m_orig_param->get_cci_value();
 }
 
+param_mutable_type cci_param_untyped_handle::get_mutable_type() const
+{
+    check_is_valid();
+    return m_orig_param->get_mutable_type();
+}
+
 bool cci_param_untyped_handle::is_default_value()
 {
     check_is_valid();
@@ -93,7 +102,8 @@ bool cci_param_untyped_handle::is_initial_value() const
     return m_orig_param->is_initial_value();
 }
 
-const cci_originator* cci_param_untyped_handle::get_latest_write_originator() const
+const cci_originator*
+cci_param_untyped_handle::get_latest_write_originator() const
 {
     check_is_valid();
     return m_orig_param->get_latest_write_originator();
