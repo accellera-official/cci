@@ -23,6 +23,7 @@
 #include <typeinfo>
 
 #include "cci_cfg/cci_param_callbacks.h"
+#include "cci_cfg/cci_mutable_types.h"
 
 /**
  * @author Enrico Galli, Intel

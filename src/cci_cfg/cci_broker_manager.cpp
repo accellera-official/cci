@@ -18,7 +18,7 @@
  ****************************************************************************/
 
 #include "cci_cfg/cci_debug.h"
-#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_core_types.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_param_typed.h"
 #include "cci_cfg/cci_broker_manager.h"

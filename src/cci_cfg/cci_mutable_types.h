@@ -17,33 +17,12 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_DATATYPES_H_INCLUDED_
-#define CCI_CCI_DATATYPES_H_INCLUDED_
+#ifndef CCI_CCI_MUTABLE_TYPES_H_INCLUDED_
+#define CCI_CCI_MUTABLE_TYPES_H_INCLUDED_
 
 #include "cci_cfg/cci_config_macros.h"
 
 CCI_OPEN_NAMESPACE_
-
-/**
- *  Enumeration for basic data types, whose rough getting and setting is
- *  supported by base class directly
- */
-enum cci_data_type {
-    /// Default, unknow data types
-    CCI_UNAVAILABLE_DATA = 0,
-    /// Data types that can handle integer numbers
-    CCI_NUMBER_DATA,
-    /// Data types that can handle real numbers
-    CCI_REAL_DATA,
-    /// Data types that can handle bools
-    CCI_BOOL_DATA,
-    /// Data types that can handle strings
-    CCI_STRING_DATA,
-    /// Data types that can handle lists
-    CCI_LIST_DATA,
-    /// Data types that can handle other data types (objects etc.)
-    CCI_OTHER_DATA
-};
 
 /**
  * Enumeration for cci_param_typed template specifying the parameter type
@@ -60,18 +39,8 @@ enum cci_param_mutable_type {
     CCI_OTHER_PARAM
 };
 
-/**
- * Enumeration for convenient cci_param_typed constructor.
- * Choose if a param gets a relative or an absolute name.
- */
-enum cci_name_type {
-    /// Relative name
-    CCI_RELATIVE_NAME,
-    /// Absolute name
-    CCI_ABSOLUTE_NAME
-};
-
-
 CCI_CLOSE_NAMESPACE_
 
 #endif
+
+

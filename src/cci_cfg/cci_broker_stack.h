@@ -22,6 +22,8 @@
 
 #include <vector>
 
+#include "cci_cfg/cci_config_macros.h"
+
 CCI_OPEN_NAMESPACE_
 
 class cci_broker_if;
