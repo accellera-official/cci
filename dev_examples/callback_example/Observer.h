@@ -44,7 +44,7 @@ public:
   void config_str_post_write_callback(const cci::cci_param_write_event<> & ev);
 
   /// Callback function with default signature announcing new parameters.
-  void config_new_param_callback(cci::cci_param_untyped_handle& param_handle);
+  void config_new_param_callback(const cci::cci_param_untyped_handle& param_handle);
 
   /// Callback function with default signature showing changes.
   void config_post_write_callback(const cci::cci_param_write_event<> & ev);
