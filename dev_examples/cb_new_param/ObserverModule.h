@@ -47,18 +47,17 @@ public:
   void main_action();
 
   /// Callback function with default signature showing changes.
-  // TODO: fixme
-  //cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+  void config_callback(const cci::cci_param_write_event<> & ev);
 
   /// Callback function with default signature announcing new parameters.
-  cci::callback_return_type config_new_param_callback(const std::string& parname, const cci::callback_type& cb_reason);
+  void config_new_param_callback(cci::cci_param_untyped_handle param_handle);
 
 protected:
   /// Pointer the the module's configuration API
   cci::cci_broker_if* mApi;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
-  std::vector< cci::shared_ptr<cci::callb_adapt> > mCallbacks;
+  std::vector<cci::cci_callback_untyped_handle> mCallbacks;
   
 };
 
