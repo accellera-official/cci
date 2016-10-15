@@ -51,7 +51,7 @@ void Observer::config_str_post_write_callback(const cci::cci_param_write_event<>
 }
 
 /// Callback function with string signature announcing new parameters.
-void Observer::config_new_param_callback(cci::cci_param_untyped_handle param_handle) {
+void Observer::config_new_param_callback(cci::cci_param_untyped_handle& param_handle) {
   DEMO_DUMP(name(), "***** New parameter callback: '" << param_handle.get_name() << "'");
   cci::cci_param_handle p = mBroker->get_param_handle(param_handle.get_name());
   assert(p.is_valid() && "This new param should already be available!");

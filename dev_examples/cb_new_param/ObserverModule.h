@@ -50,7 +50,7 @@ public:
   void config_callback(const cci::cci_param_write_event<> & ev);
 
   /// Callback function with default signature announcing new parameters.
-  void config_new_param_callback(cci::cci_param_untyped_handle param_handle);
+  void config_new_param_callback(cci::cci_param_untyped_handle& param_handle);
 
 protected:
   /// Pointer the the module's configuration API
