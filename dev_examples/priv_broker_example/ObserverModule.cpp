@@ -37,10 +37,10 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector<cci::cci_callback_untyped_handle>::iterator iter;
-  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
-    iter->clear();
-  }
+//  std::vector<cci::cci_callback_untyped_handle>::iterator iter;
+//  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
+//    iter->unregister_at_parameter();
+//  }
 }
 
 

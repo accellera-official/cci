@@ -334,7 +334,7 @@ public:
      */
     bool has_callbacks() const;
 
-  /// @}
+    /// @}
 
     /// Add parameter handle
     /**
@@ -628,8 +628,8 @@ private:
     /// Originator of the parameter
     const cci_originator m_originator;
 
-  /// Parameter handles
-  std::vector<cci_param_untyped_handle*> m_param_handles;
+    /// Parameter handles
+    std::vector<cci_param_untyped_handle*> m_param_handles;
 };
 
 CCI_CLOSE_NAMESPACE_
