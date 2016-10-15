@@ -81,7 +81,7 @@ void ObserverModule::config_callback(const cci::cci_param_write_event<> & ev) {
 }
 
 /// Callback function with default signature announcing new parameters.
-void ObserverModule::config_new_param_callback(cci::cci_param_untyped_handle& param_handle) {
+void ObserverModule::config_new_param_callback(const cci::cci_param_untyped_handle& param_handle) {
   DEMO_DUMP(name(), "New parameter callback '" << param_handle.get_name()
             << "', value '" << param_handle.get_cci_value() << "'");
 }
