@@ -526,20 +526,23 @@ private:
 
         bool result = true;
 
-        // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
-
-        // Write callback payload
-        cci_param_write_event <value_type> ev(m_gs_param->getValue(),
-                                              value,
-                                              originator,
-                                              param_handle);
-
         // Validate write callbacks
         for (unsigned i = 0; i < m_pre_write_callbacks.vec.size(); ++i) {
             typename cci_param_pre_write_callback_handle<value_type>::type
                     typed_pre_write_cb(
                     m_pre_write_callbacks.vec[i].callback);
+
+
+            // Prepare parameter handle for callback event
+            cci_param_untyped_handle param_handle =
+                    create_param_handle(m_pre_write_callbacks.vec[i].originator);
+
+            // Write callback payload
+            cci_param_write_event <value_type> ev(m_gs_param->getValue(),
+                                                  value,
+                                                  originator,
+                                                  param_handle);
+
             if (!typed_pre_write_cb.invoke(
                     static_cast<
                             const cci_param_write_event <value_type> >(ev))) {
@@ -565,20 +568,22 @@ private:
         if(m_post_write_callbacks.oncall) return;
         else m_post_write_callbacks.oncall=true;
 
-        // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
-
-        // Write callback payload
-        const cci_param_write_event <value_type> ev(old_value,
-                                                    new_value,
-                                                    originator,
-                                                    param_handle);
-
         // Write callbacks
         for (unsigned i = 0; i < m_post_write_callbacks.vec.size(); ++i) {
             typename cci_param_post_write_callback_handle<value_type>::type
                     typed_post_write_cb(m_post_write_callbacks.vec[i].callback);
             if (typed_post_write_cb.valid()) {
+
+                // Prepare parameter handle for callback event
+                cci_param_untyped_handle param_handle =
+                        create_param_handle(m_post_write_callbacks.vec[i].originator);
+
+                // Write callback payload
+                const cci_param_write_event <value_type> ev(old_value,
+                                                            new_value,
+                                                            originator,
+                                                            param_handle);
+
                 typed_post_write_cb.invoke(ev);
             }
         }
@@ -594,17 +599,19 @@ private:
         if(m_pre_read_callbacks.oncall) return;
         else m_pre_read_callbacks.oncall=true;
 
-        // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
-
-        // Read callback payload
-        const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
-
         // Read callbacks
         for (unsigned i = 0; i < m_pre_read_callbacks.vec.size(); ++i) {
             typename cci_param_pre_read_callback_handle<value_type>::type
                     typed_pre_read_cb(m_pre_read_callbacks.vec[i].callback);
             if (typed_pre_read_cb.valid()) {
+
+                // Prepare parameter handle for callback event
+                cci_param_untyped_handle param_handle =
+                        create_param_handle(m_pre_read_callbacks.vec[i].originator);
+
+                // Read callback payload
+                const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
+
                 typed_pre_read_cb.invoke(ev);
             }
         }
@@ -620,17 +627,19 @@ private:
         if(m_post_read_callbacks.oncall) return;
         else m_post_read_callbacks.oncall=true;
 
-        // Prepare parameter handle for callback event
-        cci_param_untyped_handle param_handle = create_param_handle(get_originator());
-
-        // Read callback payload
-        const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
-
         // Read callbacks
         for (unsigned i = 0; i < m_post_read_callbacks.vec.size(); ++i) {
             typename cci_param_post_read_callback_handle<value_type>::type
                     typed_pre_read_cb(m_post_read_callbacks.vec[i].callback);
             if (typed_pre_read_cb.valid()) {
+
+                // Prepare parameter handle for callback event
+                cci_param_untyped_handle param_handle =
+                        create_param_handle(m_post_read_callbacks.vec[i].originator);
+
+                // Read callback payload
+                const cci_param_read_event <value_type> ev(value, get_originator(),param_handle);
+
                 typed_pre_read_cb.invoke(ev);
             }
         }
