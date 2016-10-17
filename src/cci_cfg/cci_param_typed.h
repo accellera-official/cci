@@ -23,14 +23,20 @@
 #include "cci_cfg/cci_param_untyped.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_report_handler.h"
+#include "cci_cfg/cci_broker_manager.h"
 
 /**
  * @author Enrico Galli, Intel
+ * @author Guillaume Delbergue, GreenSocs / Ericsson
  */
 CCI_OPEN_NAMESPACE_
 
 // Convenient name
 #define cci_param cci_param_typed
+
+// Forward declaration
+template<class T>
+class cci_param_typed_handle;
 
 /// Parameter class, internally forwarding calls to the implementation
 /**
@@ -483,8 +489,11 @@ public:
                     const cci_originator& originator = cci_originator());
 
 protected:
-    /// GS Parameter internal
-    gs::gs_param<value_type>* m_gs_param;
+    /// Value
+    value_type m_value;
+
+    /// Default value
+    value_type m_default_value;
 
 private:
     /// Constructor to create handles with a giver originator
@@ -544,7 +553,7 @@ private:
                     create_param_handle(m_pre_write_callbacks.vec[i].originator);
 
             // Write callback payload
-            cci_param_write_event <value_type> ev(m_gs_param->getValue(),
+            cci_param_write_event <value_type> ev(m_value,
                                                   value,
                                                   originator,
                                                   param_handle);
@@ -573,6 +582,10 @@ private:
         // Lock the tag to prevent nested callback
         if(m_post_write_callbacks.oncall) return;
         else m_post_write_callbacks.oncall=true;
+
+        // Disable default value and initial value on first write
+        m_is_initial_value = false;
+        m_is_default_value = false;
 
         // Write callbacks
         for (unsigned i = 0; i < m_post_write_callbacks.vec.size(); ++i) {
@@ -706,9 +719,9 @@ cci_param_typed<T, TM>::operator const T&() const
 template <typename T, cci_param_mutable_type TM>
 const T& cci_param_typed<T, TM>::get_value() const
 {
-    pre_read_callback(m_gs_param->getValue());
-    post_read_callback(m_gs_param->getValue());
-    return m_gs_param->getValue();
+    pre_read_callback(m_value);
+    post_read_callback(m_value);
+    return m_value;
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -726,7 +739,7 @@ void cci_param_typed<T, TM>::set_raw_value(
 
 template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::set_raw_value(const void* value,
-                                                    const void *pwd)
+                                           const void *pwd)
 {
     set_raw_value(value, pwd, get_originator());
 }
@@ -736,16 +749,16 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
                                            const void *pwd,
                                            const cci_originator& originator)
 {
-    value_type old_value = m_gs_param->getValue();
+    value_type old_value = m_value;
     value_type new_value = *static_cast<const value_type*>(value);
 
     if(!pwd) {
-        if (m_gs_param->locked()) {
+        if (cci_param_untyped::is_locked()) {
             cci_report_handler::set_param_failed("Parameter locked.");
             return;
         }
     } else {
-        if (!m_gs_param->check_pwd(pwd)) {
+        if (pwd != m_lock_pwd) {
             cci_report_handler::set_param_failed("Wrong key.");
             return;
         }
@@ -753,14 +766,20 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
 
     if (set_cci_value_allowed() && pre_write_callback(new_value, originator)) {
         bool actual_write_result = false;
+        value_type value_typed = *static_cast<const value_type*>(value);
 
         // Actual write
         if(!pwd) {
-            // TODO: remove dependency
-            actual_write_result = m_gs_param->setValue(new_value);
+            m_value = value_typed;
+            actual_write_result = true;
         } else {
-            // TODO: remove dependency
-            actual_write_result = m_gs_param->setValue(new_value, pwd);
+            if(cci_param_untyped::is_locked() &&
+                    cci_param_untyped::m_lock_pwd == pwd) {
+                m_value = value_typed;
+                actual_write_result = true;
+            } else {
+                actual_write_result = false;
+            }
         }
         if (!actual_write_result) {
             cci_report_handler::set_param_failed("Bad value.");
@@ -811,7 +830,7 @@ bool cci_param_typed<T, TM>::equals(const cci_param_if& rhs) const
             dynamic_cast<const cci_param_typed<value_type, TM>*>(&rhs);
     if (other)
     {
-        return other->m_gs_param->getValue() == this->m_gs_param->getValue();
+        return other->m_value == this->m_value;
     }
     return false;
 }
@@ -830,10 +849,7 @@ const std::type_info& cci_param_typed<T, TM>::get_type_info() const
 
 template <typename T, cci_param_mutable_type TM>
 const void* cci_param_typed<T, TM>::get_default_value_raw() const {
-    if (!this->m_gs_param->has_default_value()) // TODO: remove dependency and check (all cci_param have a default value)
-        cci_report_handler::get_param_failed(
-                "Param has no default value.");
-    return &this->m_gs_param->get_default_value();
+    return &this->m_default_value;
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -865,10 +881,9 @@ void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
 
 template <typename T, cci_param_mutable_type TM>
 cci_value cci_param_typed<T, TM>::get_cci_value() const {
-    const value_type& value = this->m_gs_param->getValue();
-    pre_read_callback(value);
-    post_read_callback(value);
-    return cci_value(value);
+    pre_read_callback(m_value);
+    post_read_callback(m_value);
+    return cci_value(m_value);
 }
 
 // Callbacks
@@ -940,31 +955,27 @@ void cci_param_typed<T, TM>::destroy()
 /// Constructors
 
 #define CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL(signature, broker)                \
-template <typename T, cci_param_mutable_type TM>                                   \
+template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
-: cci_param_untyped((name_type == CCI_RELATIVE_NAME) ? false : true, &broker,  \
-                    desc, originator),                                         \
-  m_gs_param(new gs::gs_param<T>(name, "", NULL,                               \
-             (name_type == CCI_RELATIVE_NAME) ? false : true, true))           \
+: cci_param_untyped(name, name_type, &broker, desc, originator),               \
+  m_value(default_value.get<T>()),                                             \
+  m_default_value(default_value.get<T>())                                      \
 {                                                                              \
-    m_gs_param->setString(default_value.to_json());                            \
-    cci_param_untyped::m_gs_param_base = m_gs_param;                           \
     broker.add_param(this);                                                    \
     this->init();                                                              \
 }
 
 #define CCI_PARAM_CONSTRUCTOR_IMPL(signature, broker)                          \
-template <typename T, cci_param_mutable_type TM>                                   \
+template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
-: cci_param_untyped((name_type == CCI_RELATIVE_NAME) ? false : true, &broker,  \
-                    desc, originator),                                         \
-  m_gs_param(new gs::gs_param<T>(name, default_value,                          \
-             (name_type == CCI_RELATIVE_NAME) ? false : true))                 \
+: cci_param_untyped(name, name_type, &broker, desc, originator),               \
+  m_value(default_value),                                                      \
+  m_default_value(default_value)                                               \
 {                                                                              \
-    cci_param_untyped::m_gs_param_base = m_gs_param;                           \
     cci_value init_value = broker.get_initial_cci_value(get_name());           \
     if(!init_value.is_null()) {                                                \
-        m_gs_param->setString(init_value.to_json());                           \
+        m_value = init_value.get<T>();                                         \
+        m_is_initial_value = true;                                             \
         const cci_originator* init_value_originator =                          \
             broker.get_latest_write_originator(get_name());                    \
         if(init_value_originator) {                                            \
@@ -1021,12 +1032,10 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
 #undef CCI_PARAM_TYPED_CALLBACK_IMPL_
 
 template <typename T, cci_param_mutable_type TM>
-cci_param_typed<T, TM>::cci_param_typed(cci_param_typed<T, TM>& copy, const cci_originator& originator)
-: cci_param_untyped(copy, originator),
-  m_gs_param(copy.m_gs_param)
-{
-    cci_param_untyped::m_gs_param_base = m_gs_param;
-}
+cci_param_typed<T, TM>::cci_param_typed(cci_param_typed<T, TM>& copy,
+                                        const cci_originator& originator)
+: cci_param_untyped(copy, originator)
+{}
 
 CCI_CLOSE_NAMESPACE_
 

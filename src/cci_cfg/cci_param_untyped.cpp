@@ -18,23 +18,48 @@
  ****************************************************************************/
 /**
  * @author Enrico Galli, Intel
+ * @author Guillaume Delbergue, GreenSocs / Ericsson
  */
 
 #include "cci_param_untyped.h"
-#include <greencontrol/config.h>
+#include "cci_broker_if.h"
+#include "cci_core/cci_name_gen.h"
 
 CCI_OPEN_NAMESPACE_
 
-cci_param_untyped::cci_param_untyped(bool is_top_level_name,
-                               cci_broker_if* broker_handle,
-                               const std::string& desc,
-                               const cci_originator& originator)
-: m_gs_param_base(NULL), m_is_default_value(0), m_is_invalid_value(!0), // TODO
-  m_description(desc), m_init_called(false),
-  m_broker_handle(broker_handle),
+cci_param_untyped::cci_param_untyped(const std::string& name,
+                                     cci_name_type name_type,
+                                     cci_broker_if* broker_handle,
+                                     const std::string& desc,
+                                     const cci_originator& originator)
+: m_is_default_value(true), m_is_initial_value(false),
+  m_description(desc), m_init_called(false), m_locked(false),
+  m_lock_pwd(NULL), m_broker_handle(broker_handle),
   m_value_originator(originator),
   m_originator(originator)
 {
+    if(name_type == CCI_ABSOLUTE_NAME) {
+        m_name = name;
+    } else {
+        sc_core::sc_object* current_obj = sc_core::sc_get_current_object();
+        for (sc_core::sc_process_handle current_proc(current_obj);
+             current_proc.valid();
+             current_proc = sc_core::sc_process_handle(current_obj)) { 
+            current_obj = current_proc.get_parent_object(); 
+        }
+        if(current_obj) {
+            m_name = std::string(current_obj->name()) +
+                sc_core::SC_HIERARCHY_CHAR + name;
+        } else {
+            m_name = name;
+        }
+    }
+
+    // Handle name collision and destruction / resurrection
+    std::string unique_name = std::string(cci_gen_unique_name(m_name.c_str()));
+    if (unique_name != m_name && broker_handle->param_exists(m_name)) {
+        m_name = unique_name;
+    }
 }
 
 cci_param_untyped::~cci_param_untyped()
@@ -46,7 +71,6 @@ cci_param_untyped::~cci_param_untyped()
          it != m_param_handles.end(); it++) {
         (*it)->invalidate();
     }
-    delete m_gs_param_base;
 }
 
 void cci_param_untyped::set_description(const std::string& desc)
@@ -79,8 +103,7 @@ bool cci_param_untyped::is_default_value()
 
 bool cci_param_untyped::is_initial_value() const
 {
-    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-    return m_gs_param_base->is_initial_value();
+    return m_is_initial_value;
 }
 
 const cci_originator& cci_param_untyped::get_latest_write_originator() const
@@ -193,26 +216,31 @@ bool cci_param_untyped::has_callbacks() const
 
 bool cci_param_untyped::lock(void* pwd)
 {
-    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-    return m_gs_param_base->lock(pwd);
+    if(m_locked && pwd != m_lock_pwd && m_lock_pwd != NULL) {
+        return false;
+    } else {
+        m_lock_pwd = pwd;
+        m_locked = true;
+        return true;
+    }
 }
 
 bool cci_param_untyped::unlock(void* pwd)
 {
-    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-    return m_gs_param_base->unlock(pwd);
+    if(pwd == m_lock_pwd) {
+        m_locked = false;
+    }
+    return !m_locked;
 }
 
 bool cci_param_untyped::is_locked() const
 {
-    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-    return m_gs_param_base->locked();
+    return m_locked;
 }
 
 const std::string& cci_param_untyped::get_name() const
 {
-    assert(m_gs_param_base != NULL && "This must been set immediately after construction!");
-    return m_gs_param_base->getName();
+    return m_name;
 }
 
 cci_originator cci_param_untyped::get_originator() const
@@ -231,9 +259,13 @@ void cci_param_untyped::add_param_handle(cci_param_untyped_handle* param_handle)
     m_param_handles.push_back(param_handle);
 }
 
-void cci_param_untyped::remove_param_handle(cci_param_untyped_handle* param_handle)
+void cci_param_untyped::remove_param_handle(
+        cci_param_untyped_handle* param_handle)
 {
-    m_param_handles.erase(std::remove(m_param_handles.begin(), m_param_handles.end(), param_handle), m_param_handles.end());
+    m_param_handles.erase(std::remove(m_param_handles.begin(),
+                                      m_param_handles.end(),
+                                      param_handle),
+                          m_param_handles.end());
 }
 
 CCI_CLOSE_NAMESPACE_
