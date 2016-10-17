@@ -216,6 +216,14 @@ public:
      */
     cci_value get_cci_value() const;
 
+    /// Get the parameter's default value.
+    /**
+     * @return This default value is either (in the case of a pure basic param)
+     * converted from the JSON string or (in the case of a typed parameter)
+     * from the actual data type
+     */
+    cci_value get_default_cci_value() const;
+
     ///@}
 
     /// @name Post write callback handling
@@ -884,6 +892,11 @@ cci_value cci_param_typed<T, TM>::get_cci_value() const {
     pre_read_callback(m_value);
     post_read_callback(m_value);
     return cci_value(m_value);
+}
+
+template <typename T, cci_param_mutable_type TM>
+cci_value cci_param_typed<T, TM>::get_default_cci_value() const {
+    return cci_value(m_default_value);
 }
 
 // Callbacks
