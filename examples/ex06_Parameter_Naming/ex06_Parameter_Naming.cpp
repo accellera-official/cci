@@ -27,6 +27,26 @@
 #include "ex06_simple_ip.h"
 #include "ex06_config_ip.h"
 
+#define REPORT_INFO(msg_stream) do { \
+  std::ostringstream ss; \
+  ss<< msg_stream; \
+  SC_REPORT_INFO("sc_main", ss.str().c_str()); \
+} while (0)
+
+class Tool {
+public:
+    Tool(): external_param("tool.external_param", 10, "External parameter",
+                           cci::CCI_RELATIVE_NAME, cci::cci_originator("tool"))
+    {}
+
+    const std::string get_external_param_originator_name() {
+        return external_param.get_originator().name();
+    }
+
+private:
+    cci::cci_param<int> external_param;
+};
+
 /**
  *  @fn     int sc_main(int argc, char *argv[])
  *  @brief  The testbench for the CCI parameter naming example
@@ -35,12 +55,44 @@
  *  @return An integer representing the execution status of the program
  */
 int sc_main(int argc, char *argv[]) {
+  Tool tool;
   ex06_simple_ip sim_ip("sim_ip");
   ex06_config_ip cfg_ip("cfg_ip");
+  cci::cci_param<std::string> sc_main_param("sc_main_param", "value");
 
   SC_REPORT_INFO("sc_main", "Begin Simulation.");
   sc_core::sc_start();
   SC_REPORT_INFO("sc_main", "End Simulation.");
+
+  cci::cci_broker_if* sc_main_broker =
+          &cci::cci_broker_manager::get_current_broker(
+                  cci::cci_originator("sc_main"));
+
+  std::cout << std::endl << "List of parameters:" << std::endl;
+  std::vector<std::string> vec = sc_main_broker->get_param_list();
+  std::vector<std::string>::iterator iter;
+  std::stringstream ss_show;
+  for (iter = vec.begin() ; iter < vec.end(); iter++) {
+      std::cout << "   " << *iter << std::endl;
+  }
+
+  cci::cci_param_handle param_handle = sc_main_broker->get_param_handle(
+          "tool.external_param");
+  REPORT_INFO("Current value of tool.external_param is "
+                      << param_handle.get_cci_value().to_json());
+  REPORT_INFO("Originator of tool.external_param handle is "
+                      << param_handle.get_originator().name());
+  REPORT_INFO("Originator of tool.external_param is "
+                      << tool.get_external_param_originator_name());
+
+  param_handle = sc_main_broker->get_param_handle(
+          "sc_main_param");
+  REPORT_INFO("Current value of sc_main_param is "
+                      << param_handle.get_cci_value().to_json());
+  REPORT_INFO("Originator of sc_main_param handle is "
+                      << param_handle.get_originator().name());
+  REPORT_INFO("Originator of sc_main_param is "
+                      << sc_main_param.get_originator().name());
 
   return EXIT_SUCCESS;
 }
