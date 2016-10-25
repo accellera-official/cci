@@ -90,7 +90,7 @@ cci_originator &cci_originator::operator=(cci_originator copy) {
 bool cci_originator::operator==( const cci_originator& originator ) {
     return (this->get_object() == originator.get_object()) &&
             !std::strcmp(this->name(), originator.name()) &&
-            (this->string_name() == originator.string_name());
+            !std::strcmp(this->string_name(), originator.string_name());
 }
 
 bool cci_originator::operator<(const cci_originator& originator) const {
