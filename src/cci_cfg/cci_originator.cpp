@@ -80,8 +80,7 @@ bool cci_originator::operator<(const cci_originator& originator) const {
 }
 
 sc_core::sc_object *cci_originator::current_originator_object() {
-    sc_core::sc_object *originator_obj = sc_core::sc_get_current_object();
-    return originator_obj;
+    return sc_core::sc_get_current_object();
 }
 
 cci_originator::~cci_originator() {
