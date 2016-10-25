@@ -30,22 +30,19 @@ std::map<cci_originator, cci_broker_if *> cci_broker_manager::m_brokers;
 cci_broker_if&
 cci_broker_manager::get_current_broker(const cci_originator &originator)
 {
-    std::map<cci_originator, cci_broker_if *>::iterator it = m_brokers.find(
-            originator);
-
-    if (it != m_brokers.end()) {
-        return *(it->second);
-    } else {
-        cci_broker_if *broker_handle = &get_current_parent_broker(originator).
+    cci_broker_if*& broker = m_brokers[originator];
+    if (!broker) {
+        broker = &get_current_parent_broker(originator).
                 create_broker_handle(originator);
-        m_brokers[originator] = broker_handle;
-        return *broker_handle;
     }
+
+    return *broker;
 }
 
 cci_broker_if&
 cci_broker_manager::get_current_parent_broker(const cci_originator &originator)
 {
+    // Get parent originator
     const sc_core::sc_object *current_object = originator.get_object();
 
     if (current_object != NULL) {
@@ -53,31 +50,24 @@ cci_broker_manager::get_current_parent_broker(const cci_originator &originator)
                 current_object->get_parent_object();
         if (parent_object) {
             cci_originator parent_originator(*parent_object);
-            std::map<cci_originator, cci_broker_if *>::iterator it =
-                    m_brokers.find(parent_originator);
-            if (it != m_brokers.end()) {
-                return *(it->second);
-            } else {
-                cci_broker_if *broker_handle =
-                        &get_current_parent_broker(parent_originator).
-                                create_broker_handle(parent_originator);
-                m_brokers[parent_originator] = broker_handle;
-                return *broker_handle;
+            cci_broker_if*& broker = m_brokers[parent_originator];
+            if (!broker) {
+                broker = &get_current_parent_broker(parent_originator).
+                        create_broker_handle(parent_originator);
             }
+            return *broker;
         }
     }
 
-    std::map<cci_originator, cci_broker_if *>::iterator it =
-            m_brokers.find(cci_originator(""));
-
-    if(it != m_brokers.end()) {
-        return *(it->second);
-    } else {
-        cci_broker_if *broker_handle = &(create_global_cnf_broker().
-                create_broker_handle(cci_originator("")));
-        m_brokers[originator] = broker_handle;
-        return *broker_handle;
+    // Return handle to the broker found for the parent originator
+    cci_originator global_originator("");
+    cci_broker_if*& broker = m_brokers[global_originator];
+    if (!broker) {
+        broker = &create_global_cnf_broker().
+                create_broker_handle(global_originator);
     }
+
+    return *broker;
 }
 
 CCI_CLOSE_NAMESPACE_
