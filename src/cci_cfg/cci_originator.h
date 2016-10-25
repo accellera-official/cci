@@ -39,7 +39,9 @@ public:
     /// Default Constructor assumes current module is the originator
     inline cci_originator()
             : m_originator_obj(current_originator_object()),
-              m_originator_str(NULL) {}
+              m_originator_str(NULL) {
+        check_is_valid();
+    }
 
     /// Constructor with an originator name
     /**
@@ -120,6 +122,9 @@ protected:
 
     /// Return the current originator object pointer
     sc_core::sc_object* current_originator_object();
+
+    /// Check originator is valid (sc_object or not empty string name)
+    void check_is_valid() const;
 
     /// Pointer to the current originator object (priority compared to name m_originator_str)
     const sc_core::sc_object* m_originator_obj;

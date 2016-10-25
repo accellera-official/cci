@@ -58,7 +58,10 @@ int sc_main(int argc, char *argv[]) {
   Tool tool;
   ex06_simple_ip sim_ip("sim_ip");
   ex06_config_ip cfg_ip("cfg_ip");
-  cci::cci_param<std::string> sc_main_param("sc_main_param", "value");
+  cci::cci_param<std::string> sc_main_param("sc_main_param", "value",
+                                            "sc_main parameter",
+                                            cci::CCI_RELATIVE_NAME,
+                                            cci::cci_originator("sc_main"));
 
   SC_REPORT_INFO("sc_main", "Begin Simulation.");
   sc_core::sc_start();

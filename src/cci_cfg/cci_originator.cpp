@@ -27,11 +27,13 @@ CCI_OPEN_NAMESPACE_
 cci_originator::cci_originator(const std::string& originator_name)
         : m_originator_obj(current_originator_object()),
           m_originator_str(new std::string(originator_name)) {
+    check_is_valid();
 }
 
 cci_originator::cci_originator(const char* originator_name)
         : m_originator_obj(current_originator_object()),
           m_originator_str(new std::string(originator_name)) {
+    check_is_valid();
 }
 
 cci_originator::cci_originator(const cci_originator& originator)
@@ -81,6 +83,14 @@ bool cci_originator::operator<(const cci_originator& originator) const {
 
 sc_core::sc_object *cci_originator::current_originator_object() {
     return sc_core::sc_get_current_object();
+}
+
+void cci_originator::check_is_valid() const {
+    if (!m_originator_obj && !m_originator_str) {
+        CCI_REPORT_ERROR("cci_originator/check_is_valid",
+                         "It is forbidden to build an originator without "
+                         "information (no SystemC hierarchy or empty name)!");
+    }
 }
 
 cci_originator::~cci_originator() {
