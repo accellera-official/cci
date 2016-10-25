@@ -87,6 +87,9 @@ public:
      */
     const sc_core::sc_object* get_object() const;
 
+    /// Returns the parent originator
+    cci_originator get_parent_originator() const;
+
     /// Returns the name of the current originator
     /**
      * Might return empty if there is no current originator.

@@ -46,6 +46,19 @@ const sc_core::sc_object *cci_originator::get_object() const {
     return m_originator_obj;
 }
 
+cci_originator cci_originator::get_parent_originator() const {
+    if (m_originator_obj != NULL) {
+        const sc_core::sc_object *parent_object =
+                m_originator_obj->get_parent_object();
+        if (parent_object) {
+            return cci_originator(*parent_object);
+        }
+    }
+    cci_originator invalid_originator(__CCI_UNKNOWN_ORIGINATOR_STRING__);
+    invalid_originator.m_originator_obj = NULL;
+    return invalid_originator;
+}
+
 const char* cci_originator::name() const {
     static const char default_name[](__CCI_UNKNOWN_ORIGINATOR_STRING__);
     if (m_originator_obj) {

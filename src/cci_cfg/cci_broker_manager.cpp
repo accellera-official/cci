@@ -43,30 +43,19 @@ cci_broker_if&
 cci_broker_manager::get_current_parent_broker(const cci_originator &originator)
 {
     // Get parent originator
-    const sc_core::sc_object *current_object = originator.get_object();
-
-    if (current_object != NULL) {
-        const sc_core::sc_object *parent_object =
-                current_object->get_parent_object();
-        if (parent_object) {
-            cci_originator parent_originator(*parent_object);
-            cci_broker_if*& broker = m_brokers[parent_originator];
-            if (!broker) {
-                broker = &get_current_parent_broker(parent_originator).
-                        create_broker_handle(parent_originator);
-            }
-            return *broker;
-        }
-    }
+    cci_originator parent_originator = originator.get_parent_originator();
 
     // Return handle to the broker found for the parent originator
-    cci_originator global_originator("");
-    cci_broker_if*& broker = m_brokers[global_originator];
+    cci_broker_if*& broker = m_brokers[parent_originator];
     if (!broker) {
-        broker = &create_global_cnf_broker().
-                create_broker_handle(global_originator);
+        if(!strcmp(parent_originator.name(),
+                   __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
+            return create_global_cnf_broker().create_broker_handle(originator);
+        } else {
+            broker = &get_current_parent_broker(parent_originator).
+                    create_broker_handle(parent_originator);
+        }
     }
-
     return *broker;
 }
 
