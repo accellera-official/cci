@@ -52,7 +52,7 @@ public:
      *
      * @param originator_name string name of the originator
      */
-    cci_originator(const std::string& originator_name);
+    explicit cci_originator(const std::string& originator_name);
 
     /// Constructor with an originator (char *) name
     /**
@@ -63,7 +63,7 @@ public:
      *
      * @param originator_name string name of the originator
      */
-    cci_originator(const char *originator_name);
+    explicit cci_originator(const char *originator_name);
 
     /// Constructor with another originator whose content will be copied
     /**
@@ -74,11 +74,6 @@ public:
     /// Constructor with an sc_object originator
     inline cci_originator(const sc_core::sc_object& originator)
             : m_originator_obj(&originator), m_originator_str(NULL) {}
-
-    /// Convenience constructor with an sc_module originator
-    inline cci_originator(const sc_core::sc_module& originator):
-        m_originator_obj(static_cast<const sc_core::sc_object *>(&originator)),
-        m_originator_str(NULL) {}
 
     /// Destructor
     ~cci_originator();
