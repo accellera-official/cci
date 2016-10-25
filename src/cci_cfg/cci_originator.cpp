@@ -64,10 +64,13 @@ const char* cci_originator::string_name() const {
         return NULL;
 }
 
-cci_originator &cci_originator::operator=(cci_originator originator) {
-    std::swap(m_originator_obj, originator.m_originator_obj);
-    m_originator_str = originator.m_originator_str ?
-                   new std::string(*(originator.m_originator_str)) : NULL;
+void cci_originator::swap(cci_originator& that) {
+    std::swap(m_originator_obj, that.m_originator_obj);
+    std::swap(m_originator_str, that.m_originator_str);
+}
+
+cci_originator &cci_originator::operator=(cci_originator copy) {
+    copy.swap(*this);
     return *this;
 }
 

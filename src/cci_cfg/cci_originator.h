@@ -25,10 +25,11 @@
 
 CCI_OPEN_NAMESPACE_
 
-/// Originator class which is used to track owners, handles and value providers of parameters.
+/// Originator class which is used to track owners, handles and value providers
+/// of parameters.
 /**
- * Static setter function is used by the parameter (proxy) to identify originator
- * changing parameter's value.
+ * Static setter function is used by the parameter (proxy) to identify
+ * originator changing parameter's value.
  *
  * Static getter function is used by the parameter implementation to record
  * originator's identity.
@@ -84,8 +85,8 @@ public:
 
     /// Returns a pointer to the current originator
     /**
-     * Might return NULL if there is no current originator or the current originator
-     * is only given by name (use get_originator_str() instead).
+     * Might return NULL if there is no current originator or the current
+     * originator is only given by name (use get_originator_str() instead).
      *
      * @return Originator object pointer or NULL
      */
@@ -94,7 +95,8 @@ public:
     /// Returns the name of the current originator
     /**
      * Might return empty if there is no current originator.
-     * Automatically uses the originator object name if the originator is given by object pointer.
+     * Automatically uses the originator object name if the originator is
+     * given by object pointer.
      *
      * @return Originator name or NULL
      */
@@ -110,6 +112,10 @@ public:
     const char* string_name() const;
 
     /// Assignment operator overload
+    /**
+     * @param originator Originator to assign. Pass by value is intentional.
+     * @return Assigned originator
+     */
     cci_originator& operator=( cci_originator originator );
 
     /// Compare operator overload
@@ -126,7 +132,14 @@ protected:
     /// Check originator is valid (sc_object or not empty string name)
     void check_is_valid() const;
 
-    /// Pointer to the current originator object (priority compared to name m_originator_str)
+    /// Swap originator object and string name with the provided originator.
+    /**
+     * @param that Originator to swap
+     */
+    void swap(cci_originator& that);
+
+    /// Pointer to the current originator object (priority compared to
+    /// name m_originator_str)
     const sc_core::sc_object* m_originator_obj;
 
     /// Name of the current originator
