@@ -59,6 +59,20 @@ public:
     static cci_broker_if &get_current_parent_broker(const
                                                     cci_originator &originator);
 
+    /// Register a broker handle in the broker hierarchy
+    /**
+     * This can be used to register a private broker handle for a specific
+     * module in the hierarchy.
+     *
+     * In case a broker is already registered at the specified originator, it
+     * will overwrite it.
+     *
+     * @param broker Broker handle to register
+     * @param originator Originator the broker handle will point to
+     */
+    static void register_broker(cci_broker_if* broker,
+                                const cci_originator &originator);
+
 private:
     /// Public broker hierarchy
     static std::map<cci_originator, cci_broker_if*> m_brokers;
