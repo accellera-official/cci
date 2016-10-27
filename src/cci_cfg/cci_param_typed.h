@@ -900,6 +900,12 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
     cci_value init_value = broker.get_initial_cci_value(get_name());           \
     if(!init_value.is_null()) {                                                \
         m_gs_param->setString(init_value.to_json());                           \
+        const cci_originator* init_value_originator =                          \
+            broker.get_latest_write_originator(get_name());                    \
+        if(init_value_originator) {                                            \
+            cci_param_untyped::update_latest_write_originator(                 \
+                    *init_value_originator);                                   \
+        }                                                                      \
     }                                                                          \
     broker.add_param(this);                                                    \
     this->init();                                                              \

@@ -93,7 +93,7 @@ bool cci_param_untyped_handle::is_initial_value() const
     return m_orig_param->is_initial_value();
 }
 
-const cci_originator* cci_param_untyped_handle::get_latest_write_originator() const
+const cci_originator& cci_param_untyped_handle::get_latest_write_originator() const
 {
     check_is_valid();
     return m_orig_param->get_latest_write_originator();

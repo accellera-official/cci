@@ -142,7 +142,7 @@ public:
      * The originator is updated on successful calls to the following functions:
      * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
      */
-    const cci_originator* get_latest_write_originator() const;
+    const cci_originator& get_latest_write_originator() const;
 
     ///@}
 
