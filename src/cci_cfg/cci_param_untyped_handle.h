@@ -62,10 +62,7 @@ public:
     ///@name Description
     ///@{
 
-    /// Get the parameter's description.
-    /**
-     * return Description
-     */
+    /// @copydoc cci_param_untyped::get_description
     virtual std::string get_description() const;
 
     ///@}
@@ -73,7 +70,7 @@ public:
     ///@name Metadata
     ///@{
 
-    /// @see cci_param_untyped::get_metadata
+    /// @copydoc cci_param_untyped::get_metadata
     cci_value_map get_metadata() const;
 
     ///@}
@@ -81,50 +78,25 @@ public:
     ///@name CCI value Data Type and access
     ///@{
 
-    /// Set the parameter's CCI value to the given one.
-    /**
-     * @exception cci_exception_set_param Setting value failed
-     * @param val This value is either (in the case of a pure basic param) converted into a JSON string and stored in the base param or (in the case of a typed parameter) into the actual data type
-     */
+    /// @copydoc cci_param_typed::set_cci_value
     void set_cci_value(const cci_value& val);
 
-    /// Get the parameter's CCI value.
-    /**
-     * @exception cci_exception_get_param Getting value failed
-     * @return This value is either (in the case of a pure basic param) converted from the JSON string or (in the case of a typed parameter) from the actual data type
-     */
+    /// @copydoc cci_param_typed::get_cci_value
     cci_value get_cci_value() const;
+
+    /// @copydoc cci_param_typed::get_mutable_type
+    cci_param_mutable_type get_mutable_type() const;
 
     ///@}
 
     ///@name Parameter Value Status
     ///@{
 
-    /// Indicates whether the value provided at parameter construction persists.
-    /**
-     * True if the value was supplied as a constructor argument and not
-     * subsequently changed.
-     *
-     * Note: false is returned even if the current value matches the constructor
-     * supplied default but has undergone intermediate changes.
-     *
-     * @return false if the parameter received an initial value or its value has
-     *         changed; otherwise, true
-     */
+    /// @copydoc cci_param_untyped::is_default_value
     virtual bool is_default_value();
 
 
-    /// Indicates that the parameter received an initial value that has not since been modified.
-    /**
-     * True if the value was supplied using the broker's
-     * set_initial_cci_value function and not subsequently changed.
-     *
-     * Note: false is returned even if the current value matches the initial
-     * value but has undergone intermediate changes.
-     *
-     * @return fase if no initial value was supplied or the parameter's value has
-     *         changed; otherwise, true
-     */
+    /// @copydoc cci_param_untyped::is_initial_value
     virtual bool is_initial_value() const;
 
     ///@}
@@ -133,15 +105,7 @@ public:
     ///@name Miscellaneous
     ///@{
 
-    /// Returns the originator of the parameter's current value.
-    /**
-     * This initially reflects originator of the parameter's starting value,
-     * e.g. the owning module or startup configuration file.  It is
-     * subsequently updated to reflect the originator of any value changes.
-     *
-     * The originator is updated on successful calls to the following functions:
-     * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
-     */
+    /// @copydoc cci_param_untyped::get_latest_write_originator
     const cci_originator& get_latest_write_originator() const;
 
     ///@}
@@ -212,34 +176,13 @@ public:
     ///@name Write-access control
     ///@{
 
-    /// Locking this parameter, optionally with a password.
-    /**
-     * Makes a parameter read-only.
-     *
-     * Returns false
-     * - if this parameter was already locked with a different password (this call has no effect)
-     *
-     * Returns true
-     * - if the parameter was not locked (and is locked now) or
-     * - if the parameter was locked without a password. Then it is locked now with the given password
-     * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
-     *
-      * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
-     * @return If the lock was successful.
-     */
+    /// @copydoc cci_param_untyped::lock
     bool lock(void* pwd = NULL);
 
-    /// Unlocking this parameter, optionally with a password if needed.
-    /**
-     * @param pwd Password to unlock the param (if needed), default = NULL.
-     * @return If the parameter is unlocked now.
-     */
+    /// @copydoc cci_param_untyped::unlock
     bool unlock(void* pwd = NULL);
 
-    /// If this parameter is locked.
-    /**
-     * @return If this parameter is locked
-     */
+    /// @copydoc cci_param_untyped::is_locked
     bool is_locked() const;
 
     ///@}
@@ -247,27 +190,15 @@ public:
     ///@name Query parameter type and name
     ///@{
 
-    /// Returns a basic type this parameter can be converted to or from (which is not necessarily the actual parameter type).
-    /**
-     * @return Type
-     */
+    /// @copydoc cci_param_typed::get_basic_type
     basic_param_type get_basic_type() const;
 
-    /// Get the name of this parameter.
-    /**
-     * @return   Name of the parameter.
-     */
+    /// @copydoc cci_param_untyped::get_name
     const std::string& get_name() const;
 
     ///@}
 
-    /// Gets cci_originator of the parameter.
-    /**
-     * The originator reflects ownership of the parameter proxy, which points
-     * to an implementation.  For a handle, the originator identifies the
-     * entity accessing the parameter.  Otherwise, the originator reflects
-     * the parameter's creator.
-     */
+    /// @copydoc cci_param_untyped::get_originator
     cci_originator get_originator() const;
 
     ///@}
@@ -275,18 +206,10 @@ public:
     ///@name Type-punned value operations
     ///@{
 
-    /// Compare parameter handle values.
-    /**
-     * @param rhs reference to another cci_param_untyped_handle implementation
-     * @return True if both values are equal and of the same data type
-     */
+    /// @copydoc cci_param_typed::equals
     bool equals(const cci_param_untyped_handle& rhs) const;
 
-    /// Compare parameter values.
-    /**
-     * @param rhs reference to another cci_param_if implementation
-     * @return True if both values are equal and of the same data type
-     */
+    /// @copydoc cci_param_typed::equals
     bool equals(const cci_param_if& rhs) const;
 
     ///@}
@@ -312,47 +235,29 @@ protected:
     ///@name Type-punned value operations
     ///@{
 
-    /// Get a pointer to the stored value.
-    /**
-     * @return Pointer to type-punned value
-     */
+    /// @copydoc cci_param_typed::get_raw_value
     const void* get_raw_value() const;
 
 
-    /// Get a pointer to the default value (passed in via constructor).
-    /**
-     * @return Pointer to type-punned default value
-     */
+    /// @copydoc cci_param_typed::get_default_value_raw
     const void* get_default_value_raw() const;
 
-    /// Sets the value via type-punned argument.
-    /**
-     * @param vp pointer to type-punned value
-     * @pre Type of vp must be equal to the internal type
-     */
+    /// @copydoc cci_param_typed::set_raw_value(const void*)
     void set_raw_value(const void* vp);
 
-    /// Sets the value via type-punned argument.
-    /**
-     * @param vp pointer to type-punned value
-     * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL
-     * @pre Type of vp must be equal to the internal type
-     */
+    /// @copydoc cci_param_typed::set_raw_value(const void*, const void*)
     void set_raw_value(const void* vp, const void* pwd);
 
-    /// Returns the type information of the handled parameter
-    /**
-     * @return Type information
-     */
+    /// @copydoc cci_param_typed::get_type_info
     const std::type_info& get_type_info() const;
 
     ///@name Initialization and Destructions methods
     ///@{
 
-    /// Initialize.
+    /// @copydoc cci_param_untyped::init
     void init();
 
-    /// Free resources attached to parameter.
+    /// @copydoc cci_param_typed::destroy
     void destroy();
 
     ///@}

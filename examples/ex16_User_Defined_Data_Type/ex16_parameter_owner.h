@@ -95,7 +95,7 @@ SC_MODULE(ex16_parameter_owner) {
   }
 
  private:
-  cci::cci_param<route_table_ut, cci::mutable_param> udt_param; ///< CCI mutable parameter
+  cci::cci_param<route_table_ut, cci::CCI_MUTABLE_PARAM> udt_param; ///< CCI mutable parameter
 };
 // ex16_parameter_owner
 

@@ -42,9 +42,9 @@ public:
 	, elab_str_param("string_elab_param", "String_Value_B")
 	{}
 
-	cci::cci_param<std::string, cci::mutable_param> mutab_str_param;
-	cci::cci_param<std::string, cci::immutable_param> immutab_str_param;
-	cci::cci_param<std::string, cci::elaboration_time_param> elab_str_param;
+	cci::cci_param<std::string, cci::CCI_MUTABLE_PARAM> mutab_str_param;
+	cci::cci_param<std::string, cci::CCI_IMMUTABLE_PARAM> immutab_str_param;
+	cci::cci_param<std::string, cci::CCI_ELABORATION_TIME_PARAM> elab_str_param;
 };
 
 /**

@@ -147,6 +147,13 @@ struct cci_param_user_data_type
   cci::cci_value get_cci_value() const;
 
   /**
+   *  @fn     cci::cci_param_mutable_type get_mutable_type() const
+   *  @brief  Function to retrieve the parameter mutable type
+   *  @return The mutable type of the parameter
+   */
+  cci::cci_param_mutable_type get_mutable_type() const;
+
+  /**
    *  @fn     void set_description(const std::string& desc)
    *  @brief  Function to add description (descirption) to the parameter
    *  @param  desc The description to add
