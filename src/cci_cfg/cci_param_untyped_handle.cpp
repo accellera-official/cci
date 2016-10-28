@@ -264,17 +264,23 @@ void cci_param_untyped_handle::invalidate(bool remove) {
 
 void cci_param_untyped_handle::check_is_valid(bool report_error) const
 {
+    bool invalid_error = false;
     if(!is_valid()) {
-        cci_param_handle param_handle =
-                cci_broker_manager::get_current_broker(m_originator).
-                        get_param_handle(m_orig_param_name);
-        if(!param_handle.is_valid()) {
-            if(report_error) {
-                CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
-                                 "The handled parameter is not valid.");
+        if(m_orig_param_name) {
+            cci_param_handle param_handle =
+                    cci_broker_manager::get_current_broker(m_originator).
+                            get_param_handle(m_orig_param_name);
+            if(!param_handle.is_valid()) {
+                invalid_error = true;
+            } else {
+                m_orig_param = param_handle.m_orig_param;
             }
         } else {
-            m_orig_param = param_handle.m_orig_param;
+            invalid_error = true;
+        }
+        if(report_error && invalid_error) {
+            CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
+                             "The handled parameter is not valid.");
         }
     }
 }
