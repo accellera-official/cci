@@ -37,10 +37,10 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector< cci::shared_ptr<cci::callb_adapt> >::iterator iter;
-  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
-    (*iter)->unregister_at_parameter();
-  }
+//  std::vector<cci::cci_callback_untyped_handle>::iterator iter;
+//  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
+//    iter->unregister_at_parameter();
+//  }
 }
 
 
@@ -65,19 +65,15 @@ void ObserverModule::main_action() {
 
 
 /// Callback function with default signature showing changes.
-cci::callback_return_type ObserverModule::config_callback(cci::cci_param_handle& par, const cci::callback_type& cb_reason) {
-  assert(cb_reason == cci::post_write);
-  std::string str = par.get_cci_value().to_json();
-  DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"'");
-  return cci::return_nothing;
+void ObserverModule::config_callback(const cci::cci_param_write_event<> & ev) {
+  DEMO_DUMP(name(), "Callback for parameter '" << ev.param_handle.get_name() << "' changed to value '"<<ev.new_value<<"'");
 }
 
 /// Callback function with default signature rejecting all changes.
-cci::callback_return_type ObserverModule::config_callback_reject_changes(cci::cci_param_handle& par, const cci::callback_type& cb_reason) {
-  assert(cb_reason == cci::reject_write);
+bool ObserverModule::config_callback_reject_changes(const cci::cci_param_write_event<> & ev) {
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
-  cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << endl;
+  cout << "  Parameter '" << ev.param_handle.get_name() << "' type " << "reject" << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;
   cout << endl;
-  return cci::return_value_change_rejected;
+  return false;
 }

@@ -88,13 +88,11 @@ SC_MODULE(ex14_parent) {
         // Configurators writes to 'parent_buffer' cci-parameter (registered
         // to the default global broker). Changes to the 'parent_buffer' will
         // be reflected on to the 'priv_int_param' of child as well
-        // TODO: fixme
-        /*parent_post_write_cb =
-            parent_buffer.register_callback(cci::post_write,
-                                            this,
-                                            cci::bind(&ex14_parent::write_callback,
-                                                      this, _1, _2,
-                                                      child_base_param));*/
+        cci::cci_param_post_write_callback_untyped untyped_post_write_cb(
+                        sc_bind(&ex14_parent::untyped_post_write_callback, this, sc_unnamed::_1,child_base_param));
+
+        parent_post_write_cb = parent_buffer.register_post_write_callback(untyped_post_write_cb);
+
       } else {
         XREPORT("[PARENT C_TOR] : Desired cci-parameter of 'child' module is"
                 " not available");
@@ -111,27 +109,20 @@ SC_MODULE(ex14_parent) {
   }
 
   /**
-   *  @fn     cci::callback_return_type write_callback(cci::cci_base_param& _base_param, const cci::callback_type& cb_reason, cci::cci_base_param* _child_base_param_ptr)
-   *  @brief  Post write parameter callback implementation
-   *  @param  _base_param Parameter with the callback
-   *  @param  cb_reason The reason for the callback
-   *  @param  _child_base_param_ptr A pointer to a child parameter to be updated
-   *  @return The exit status of the callback function
+   *  @fn     void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Post Callback function for writes on parameters
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type write_callback(
-      cci::cci_param_handle & _base_param,
-      const cci::callback_type & cb_reason,
-      cci::cci_param_handle * _child_base_param_ptr) {
-     _child_base_param_ptr->set_cci_value(_base_param.get_cci_value());
+  void untyped_post_write_callback(const cci::cci_param_write_event<> & ev,
+                                 cci::cci_param_handle child_param_handle)
+  {
+    child_param_handle.set_cci_value(ev.new_value);
 
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
-            << _base_param.get_name()
+            << ev.param_handle.get_name()
             << "\tParameter Value : "
-            << _base_param.get_cci_value().to_json());
-
-    return cci::return_nothing;
-  }*/
+            << ev.new_value);
+  }
 
   /**
    *  @fn     void run_parent(void)
@@ -168,8 +159,8 @@ SC_MODULE(ex14_parent) {
   /// Declare cci_base_param pointers
   cci::cci_param_handle child_base_param; ///< Handle to the child
 
-  // Callback Adaptor Object
-  cci::shared_ptr<cci::callb_adapt> parent_post_write_cb;  ///< callback adapter object
+  /// Callback handle
+  cci::cci_callback_untyped_handle parent_post_write_cb;  /// callback handle
 };
 /// ex14_parent
 

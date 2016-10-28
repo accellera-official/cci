@@ -41,14 +41,15 @@ public:
   ~Observer();
   
   /// Callback function with string signature showing changes for implicit and explicit parameters.
-  cci::callback_return_type config_str_callback(const std::string& par_name, const cci::callback_type& cb_reason);
+  void config_str_post_write_callback(const cci::cci_param_write_event<> & ev);
 
   /// Callback function with default signature announcing new parameters.
-  cci::callback_return_type config_new_param_callback(const std::string& par_name, const cci::callback_type& cb_reason);
+  void config_new_param_callback(const cci::cci_param_untyped_handle& param_handle);
 
   /// Callback function with default signature showing changes.
-  // TODO: fixme
-  //cci::callback_return_type config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason);
+  void config_post_write_callback(const cci::cci_param_write_event<> & ev);
+
+  bool config_pre_write_callback(const cci::cci_param_write_event<> & ev);
 
   /// Debug output
   const char* name() const;
@@ -59,7 +60,7 @@ protected:
   cci::cci_broker_if* mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
-  std::vector< cci::shared_ptr<cci::callb_adapt> > mCallbacks;
+  std::vector<cci::cci_callback_untyped_handle> mCallbacks;
 
   /// Name for debug info
   std::string mName;

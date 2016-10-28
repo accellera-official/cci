@@ -80,6 +80,7 @@ cci_param_user_data_type::cci_param_user_data_type(
   /*Register created parameter into global broker*/
   m_broker_handle = &cci::cci_broker_manager::get_current_broker(cci::cci_originator());
   m_broker_handle->add_param(this);
+
   /* DO some hack for cci_value */
 }
 
@@ -308,83 +309,11 @@ bool cci_param_user_data_type::is_handle() const {
 }
 
 /**
- *  @fn     cci::chared_ptr<cci::callb_adapt> cci_param_user_data_type::register_callback(const cci::callback_type type, void* observer, cci::param_callb_func_ptr function)
- *  @brief  Function to register callbacks
- *  @param  type  The type of callback to register
- *  @param  observer  Observer for the callback
- *  @param  function  Callback function to be called
- *  @return Pointer to the callback function
- */
-cci::shared_ptr<cci::callb_adapt>
-    cci_param_user_data_type::register_callback(const cci::callback_type type,
-                                                void* observer,
-                                                cci::param_callb_func_ptr function) {
-  std::cout << "Function cci_param_user_data_type::register_callback Called " << std::endl;
-  /* Complex Later */
-
-  static cci::shared_ptr<cci::callb_adapt> dummy;
-  return dummy;  // dummy return value for now
-}
-
-/**
- *  @fn     cci::chared_ptr<cci::callb_adapt> cci_param_user_data_type::register_callback(const cci::callback_type type, cci::shared_ptr<cci::callb_adapt> callb)
- *  @brief  Function to register callbacks
- *  @param  type  The type of callback to register
- *  @param  callb Pointer to the callback function
- *  @return Pointer to the callback function
- */
-cci::shared_ptr<cci::callb_adapt>
-    cci_param_user_data_type::register_callback(const cci::callback_type type,
-                                                cci::shared_ptr<cci::callb_adapt> callb) {
-  std::cout << "Function cci_param_user_data_type::register_callback Called " << std::endl;
-  /* Complex Later */
-  return callb;  // dummy return value for now
-}
-
-/**
- *  @fn     void cci_param_user_data_type::unregister_all_callbacks(void* observer)
- *  @brief  Function to unregister all callbacks with a given observer
- *  @param  observer  The observer to unregister the callbacks for
- *  @return void
- */
-void cci_param_user_data_type::unregister_all_callbacks(void* observer) {
-  std::cout << "Function cci_param_user_data_type::unregister_all_callbacks Called " << std::endl;
-
-  /* Complex Later */
-}
-
-/**
- *  @fn     bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::callb_adpt> callb)
- *  @brief  Function to unregister a particular callback function
- *  @param  callb The function to be unregistered
- *  @return True or false depending on whether it was successfully unregistered
- */
-bool cci_param_user_data_type::unregister_callback(cci::shared_ptr<cci::callb_adapt> callb) {
-  std::cout << "Function cci_param_user_data_type::unregister_callback Called " << std::endl;
-
-  /* Complex Later */
-  return true;  // dummy return value for now
-}
-
-/**
- *  @fn     bool cci_param_user_data_type::unregister_callback(cci::callb_adapt* callb)
- *  @brief  Function to unregister a particular callback function
- *  @param  callb The function to be unregistered
- *  @return A true or false depending on whether the function was unregistered or not
- */
-bool cci_param_user_data_type::unregister_callback(cci::callb_adapt* callb) {
-  std::cout << "Function cci_param_user_data_type::unregister_callback Called " << std::endl;
-
-  /* Complex Later */
-  return true;  // dummy return value for now
-}
-
-/**
  *  @fn     bool cci_param_user_data_type::has_callback()
  *  @brief  Function to determine if the parameter has callbacks registered or not
  *  @return True or false depending on whether callbacks are registered
  */
-bool cci_param_user_data_type::has_callbacks() {
+bool cci_param_user_data_type::has_callbacks() const {
   std::cout << "Function cci_param_user_data_type::has_callbacks Called " << std::endl;
   return callback_flag;
 }
@@ -471,5 +400,60 @@ void cci_param_user_data_type::remove_param_handle(
   // Not implemented
 }
 
+cci::cci_callback_untyped_handle
+cci_param_user_data_type::register_pre_write_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return cci::cci_callback_untyped_handle();
+}
 
+bool cci_param_user_data_type::unregister_pre_write_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return false;
+}
 
+cci::cci_callback_untyped_handle
+cci_param_user_data_type::register_post_write_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return cci::cci_callback_untyped_handle();
+}
+
+bool cci_param_user_data_type::unregister_post_write_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return false;
+}
+
+cci::cci_callback_untyped_handle
+cci_param_user_data_type::register_pre_read_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return cci::cci_callback_untyped_handle();
+}
+
+bool cci_param_user_data_type::unregister_pre_read_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return false;
+}
+
+cci::cci_callback_untyped_handle
+cci_param_user_data_type::register_post_read_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return cci::cci_callback_untyped_handle();
+}
+
+bool cci_param_user_data_type::unregister_post_read_callback
+(const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)
+{
+  return false;
+}
+
+bool cci_param_user_data_type::unregister_all_callbacks
+(const cci::cci_originator &orig)
+{
+ return false;
+}

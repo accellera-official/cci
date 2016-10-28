@@ -69,28 +69,19 @@ SC_MODULE(ex11_param_value_sync) {
   }
 
   /**
-   *  @fn     cci::cmf::callback_return_type write_callback(const cci::cci_base_param& _base_param_1, const cci::callback_type& cb_reason, cci::cci_base_param* _base_param_2)
-   *  @brief  Pre-write and post-write callback implementation
-   *  @param  _base_param_1 Parameter to sync from
-   *  @param  cb_reason Reason the callback was triggered
-   *  @param  _base_param_2 The parameter to sync to
-   *  @return The result of the callback execution
+   *  @fn     void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
+   *  @brief  Post Callback function to sync ongoing written parameter value with synced_handle value
+   *  @return void
    */
-  // TODO: fixme
-  /*cci::callback_return_type
-      write_callback(const cci::cci_base_param& _base_param_1,
-                     const cci::callback_type& cb_reason,
-                     cci::cci_base_param * _base_param_2) {
-    // Post-Write callbacks
+  void untyped_post_write_callback(const cci::cci_param_write_event<> & ev ,
+                                   cci::cci_param_handle synced_handle)
+  {
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
-            << _base_param_1.get_name() << "\tValue : "
-            << _base_param_1.get_cci_value().to_json());
+            << ev.param_handle.get_name() << "\tValue : "
+            << ev.new_value);
 
-    _base_param_2->set_cci_value(cci::cci_value::from_json(
-            _base_param_1.get_value().to_json()));
-
-    return cci::return_nothing;
-  }*/
+    synced_handle.set_cci_value(ev.new_value);
+  }
 
   /**
    *  @fn     void synchValues(cci::cci_param_handle _param_handle_1, cci::cci_param_handle _param_handle_2)
@@ -107,26 +98,19 @@ SC_MODULE(ex11_param_value_sync) {
     // to the other pararmeter's cci_base_param using JSON
     _param_handle_2.set_cci_value(_param_handle_1.get_cci_value());
 
-    // TODO: fixme
-    /*post_write_cb_vec.push_back(
-        _param_handle_1->register_callback(cci::post_write,
-                                         this,
-                                         cci::bind(&ex11_param_value_sync::write_callback,
-                                                   this, _1, _2,
-                                                   _param_handle_2)));
+    post_write_cb_vec.push_back(_param_handle_1.register_post_write_callback(
+            sc_bind(&ex11_param_value_sync::untyped_post_write_callback,
+                    this, sc_unnamed::_1, _param_handle_2)));
 
-    post_write_cb_vec.push_back(
-        _param_handle_2->register_callback(cci::post_write,
-                                         this,
-                                         cci::bind(&ex11_param_value_sync::write_callback,
-                                                   this, _1, _2,
-                                                   _param_handle_1)));*/
+    post_write_cb_vec.push_back(_param_handle_2.register_post_write_callback(
+            sc_bind(&ex11_param_value_sync::untyped_post_write_callback,
+                    this, sc_unnamed::_1, _param_handle_1)));
   }
 
  private:
   cci::cci_originator ValueSyncOriginator; ///< Declaring a CCI originator
   cci::cci_broker_if* ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
-  std::vector<cci::shared_ptr<cci::callb_adapt> > post_write_cb_vec; ///< Callback Adaptor Objects
+  std::vector<cci::cci_callback_untyped_handle> post_write_cb_vec; ///< Callback Adaptor Objects
   std::vector<cci::cci_param_handle> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI parameter handles
 };
 // ex11_parameter_value_sync

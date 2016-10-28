@@ -30,6 +30,9 @@ CCI_OPEN_NAMESPACE_
 template<typename T = void>
 struct cci_param_write_event;
 
+/// Forward declaration
+class cci_param_untyped_handle;
+
 /// Payload for type-independent pre write and post write callbacks
 template<>
 struct cci_param_write_event<void>
@@ -39,7 +42,8 @@ struct cci_param_write_event<void>
 
   cci_param_write_event( const value_type&     old_
                        , const value_type&     new_
-                       , const cci_originator& orig_ );
+                       , const cci_originator& orig_
+                       , const cci_param_untyped_handle& handle_ );
 
   /// Old parameter value
   const value_type& old_value;
@@ -47,6 +51,8 @@ struct cci_param_write_event<void>
   const value_type& new_value;
   /// Originator of new value
   const cci_originator& originator;
+  /// Parameter handle
+  const cci_param_untyped_handle& param_handle;
 };
 
 /// Payload for pre write and post write callbacks
@@ -58,14 +64,16 @@ struct cci_param_write_event
 
   cci_param_write_event( const value_type&     old_
                        , const value_type&     new_
-                       , const cci_originator& orig_ );
-
+                       , const cci_originator& orig_
+                       , const cci_param_untyped_handle& handle_ );
   /// Old parameter value
   const value_type& old_value;
   /// New parameter value
   const value_type& new_value;
   /// Originator of new value
   const cci_originator& originator;
+  /// Parameter handle
+  const cci_param_untyped_handle& param_handle;
 
   /// Type-punned specialization
   typedef const cci_param_write_event<>& generic_type;
@@ -94,12 +102,15 @@ struct cci_param_read_event<void>
     typedef cci_value value_type;
 
     cci_param_read_event( const value_type&     val_
-                        , const cci_originator& orig_ );
+                        , const cci_originator& orig_
+                        , const cci_param_untyped_handle& handle_ );
 
     /// Parameter value
     const value_type& value;
     /// Originator of new value
     const cci_originator& originator;
+    /// Parameter handle
+    const cci_param_untyped_handle& param_handle;
 };
 
 /// Payload for read callbacks
@@ -110,12 +121,15 @@ struct cci_param_read_event
     typedef T value_type;
 
     cci_param_read_event( const value_type&     val_
-                        , const cci_originator& orig_ );
+                        , const cci_originator& orig_
+                        , const cci_param_untyped_handle& handle_ );
 
     /// Parameter value
     const value_type& value;
     /// Originator of new value
     const cci_originator& originator;
+    /// Parameter handle
+    const cci_param_untyped_handle& param_handle;
 
     /// Type-punned specialization
     typedef const cci_param_read_event<>& generic_type;
@@ -291,20 +305,24 @@ inline
 cci_param_write_event<void>::
   cci_param_write_event( const value_type&     old_
                        , const value_type&     new_
-                       , const cci_originator& orig_ )
+                       , const cci_originator& orig_
+                       , const cci_param_untyped_handle& handle_ )
     : old_value(old_)
     , new_value(new_)
     , originator(orig_)
+    , param_handle(handle_)
 {}
 
 template<typename T>
 cci_param_write_event<T>::
   cci_param_write_event( const value_type&     old_
                        , const value_type&     new_
-                       , const cci_originator& orig_ )
+                       , const cci_originator& orig_
+                       , const cci_param_untyped_handle& handle_ )
     : old_value(old_)
     , new_value(new_)
     , originator(orig_)
+    , param_handle(handle_)
 {}
 
 template<typename T>
@@ -312,30 +330,34 @@ cci_param_write_event<T>::
   generic_wrap::generic_wrap( const type& payload )
     : old_value( payload.old_value )
     , new_value( payload.new_value )
-    , wrapped_value(old_value, new_value, payload.originator)
+    , wrapped_value(old_value, new_value, payload.originator, payload.param_handle)
 {}
 
 inline
 cci_param_read_event<void>::
   cci_param_read_event( const value_type&     val_
-                      , const cci_originator& orig_ )
+                      , const cci_originator& orig_
+                      , const cci_param_untyped_handle& handle_ )
     : value(val_)
     , originator(orig_)
+    , param_handle(handle_)
 {}
 
 template<typename T>
 cci_param_read_event<T>::
   cci_param_read_event( const value_type&     val_
-                      , const cci_originator& orig_ )
+                      , const cci_originator& orig_
+                      , const cci_param_untyped_handle& handle_ )
     : value(val_)
     , originator(orig_)
+    , param_handle(handle_)
 {}
 
 template<typename T>
 cci_param_read_event<T>::
   generic_wrap::generic_wrap( const type& payload )
         : value( payload.value )
-        , wrapped_value(value, payload.originator)
+        , wrapped_value(value, payload.originator, payload.param_handle)
 {}
 
 CCI_CLOSE_NAMESPACE_

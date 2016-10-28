@@ -17,11 +17,9 @@ Info: param_owner: @0 s, @ 0 s
 Info: param_owner: @0 s, [OWNER] : Setting new value to the 'int' type param to '15'
 
 	[OBSERVER - pre_write_cb] : Retrieving details of new cci-parameter
-	[OBSERVER - pre_read_cb] : Parammeter Name : param_owner.int_param	value will be read.
-	[OBSERVER - pre_write_cb] : Parameter Name : param_owner.int_param	Parameter Value : 10
+	[OBSERVER - pre_write_cb] : Parameter Name : param_owner.int_param	Parameter Value : 15
 
 	[OBSERVER - post_write_cb] : Retrieving details of new cci-parameter
-	[OBSERVER - pre_read_cb] : Parammeter Name : param_owner.int_param	value will be read.
 	[OBSERVER - post_write_cb] : Parameter Name : param_owner.int_param	Parameter Value : 15
 
 Info: param_owner: @5 ns, @ 5 ns
