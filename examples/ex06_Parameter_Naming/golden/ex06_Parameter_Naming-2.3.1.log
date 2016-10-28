@@ -73,6 +73,27 @@ Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_cus
 
 Info: sc_main: End Simulation.
 
+List of parameters:
+   int_param_top
+   sc_main_param
+   sim_ip.int_param_ip
+   sim_ip.int_param_ip_0
+   sim_ip.sub_ip_0
+   tool.external_param
+   top.sub.int_param_custom
+
+Info: sc_main: Current value of tool.external_param is 10
+
+Info: sc_main: Originator of tool.external_param handle is sc_main
+
+Info: sc_main: Originator of tool.external_param is tool
+
+Info: sc_main: Current value of sc_main_param is "value"
+
+Info: sc_main: Originator of sc_main_param handle is sc_main
+
+Info: sc_main: Originator of sc_main_param is unknow
+
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 50
 
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip_0 is 60
