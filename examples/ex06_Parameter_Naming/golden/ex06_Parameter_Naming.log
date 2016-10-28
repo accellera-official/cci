@@ -87,6 +87,7 @@ List of parameters:
    sc_main_param
    sim_ip.int_param_ip
    sim_ip.int_param_ip_0
+   sim_ip.sub_ip_0
    tool.external_param
    top.sub.int_param_custom
 
