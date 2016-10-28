@@ -63,6 +63,9 @@ public:
     /// @copydoc cci_param_typed::get_cci_value
     virtual cci_value get_cci_value() const = 0;
 
+    /// @copydoc cci_param_typed::get_mutable_type
+    virtual cci_param_mutable_type get_mutable_type() const = 0;
+
     ///@}
 
 

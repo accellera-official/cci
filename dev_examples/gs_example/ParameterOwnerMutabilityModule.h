@@ -52,11 +52,11 @@ public:
   void main_action();
   
   /// Example mutable parameter.
-  cci::cci_param<int, cci::mutable_param>    mutable_int_param;
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM>    mutable_int_param;
   /// Example immutable parameter.
-  cci::cci_param<int, cci::immutable_param>  immutable_int_param;
+  cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM>  immutable_int_param;
   /// Example elaboration_time_parameter parameter.
-  cci::cci_param<int, cci::elaboration_time_param>  elab_time_int_param;
+  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM>  elab_time_int_param;
   
 };
 

@@ -128,9 +128,9 @@ SC_MODULE(ex09_target) {
   }
 
  private:
-  cci::cci_param<std::string, cci::elaboration_time_param> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
+  cci::cci_param<std::string, cci::CCI_ELABORATION_TIME_PARAM> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
 
-  cci::cci_param<int, cci::elaboration_time_param> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
+  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
 
   cci::cci_param<unsigned int> s_size; ///< Mutable time parameter for setting target's size (initialized by router);
 

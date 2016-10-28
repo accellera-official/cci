@@ -133,7 +133,7 @@ SC_MODULE(ex09_initiator) {
   }
 
  private:
-  cci::cci_param<std::string, cci::elaboration_time_param> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
+  cci::cci_param<std::string, cci::CCI_ELABORATION_TIME_PARAM> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
 };
 // ex09_initiator
 
