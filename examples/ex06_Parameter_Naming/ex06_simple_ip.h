@@ -138,8 +138,8 @@ SC_MODULE(ex06_simple_ip) {
             << " is " << int_param_custom);
   }
 
- private:
   ex06_simple_sub_ip sub_ip;
+ private:
   cci::cci_param<bool> bool_param; ///< Duplicate name of sub_ip
   cci::cci_param<int> int_param_ip;  ///< CCI param to hold buffer size
   cci::cci_param<int> int_param_ip_dup;  ///< Duplicate of int_param_ip
