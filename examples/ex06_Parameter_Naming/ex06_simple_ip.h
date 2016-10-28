@@ -30,6 +30,14 @@
 #include "xreport.hpp"
 
 /**
+ *  @class  ex06_simple_sub_ip
+ *  @brief  A simple sub IP class to register a name in SystemC hierarchy
+ */
+SC_MODULE(ex06_simple_sub_ip) {
+        SC_CTOR(ex06_simple_sub_ip) {}
+};
+
+/**
  *  @class  ex06_simple_ip
  *  @brief  The simple ip owns a CCI param
  */
@@ -43,7 +51,9 @@ SC_MODULE(ex06_simple_ip) {
   SC_CTOR(ex06_simple_ip)
   // Initialize int_param with 0
   // Param name - In line with SystemC Hierarchy
-      : int_param_ip("int_param_ip", 1),
+      : sub_ip("sub_ip"),
+        bool_param("sub_ip", true),
+        int_param_ip("int_param_ip", 1),
         // Param name (Duplicate)
         int_param_ip_dup(
             "sim_ip.int_param_ip",
@@ -64,6 +74,7 @@ SC_MODULE(ex06_simple_ip) {
             cci::CCI_ABSOLUTE_NAME)
   {
     SC_THREAD(execute);
+    XREPORT("Ctor: Name of bool_param is " << bool_param.get_name());
     XREPORT("Ctor: Default value of " << int_param_ip.get_name() << " is "
             << int_param_ip);
     XREPORT("Ctor: Default value of " << int_param_ip_dup.get_name() << " is "
@@ -127,7 +138,9 @@ SC_MODULE(ex06_simple_ip) {
             << " is " << int_param_custom);
   }
 
+  ex06_simple_sub_ip sub_ip;
  private:
+  cci::cci_param<bool> bool_param; ///< Duplicate name of sub_ip
   cci::cci_param<int> int_param_ip;  ///< CCI param to hold buffer size
   cci::cci_param<int> int_param_ip_dup;  ///< Duplicate of int_param_ip
   cci::cci_param<int> int_param_top; ///< CCI param
