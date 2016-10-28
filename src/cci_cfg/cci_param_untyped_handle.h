@@ -22,7 +22,7 @@
 
 #include <string>
 #include "cci_cfg/cci_config_macros.h"
-#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_core_types.h"
 #include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_value.h"
 
@@ -191,7 +191,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_typed::get_basic_type
-    basic_param_type get_basic_type() const;
+    cci_data_type get_basic_type() const;
 
     /// @copydoc cci_param_untyped::get_name
     const std::string& get_name() const;

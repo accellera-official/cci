@@ -18,7 +18,6 @@
  ****************************************************************************/
 
 #include "cci_cfg/cci_debug.h"
-#include "cci_cfg/cci_datatypes.h"
 #include "cci_cfg/cci_broker_stack.h"
 
 CCI_OPEN_NAMESPACE_

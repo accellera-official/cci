@@ -20,7 +20,7 @@
 #ifndef CCI_CCI_VALUE_H_INCLUDED_
 #define CCI_CCI_VALUE_H_INCLUDED_
 
-#include "cci_cfg/cci_datatypes.h"
+#include "cci_cfg/cci_core_types.h"
 #include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
 #include <cstring> // std::strlen
@@ -92,7 +92,7 @@ public:
 
   /** @name type queries */
   ///@{
-  basic_param_type  basic_type() const;
+  cci_data_type  basic_type() const;
   bool is_null()    const;
 
   bool is_bool()    const;
@@ -743,7 +743,7 @@ public:
 
   /// constructor from basic type
   explicit
-  cci_value( basic_param_type ); ///< @todo drop this?
+  cci_value( cci_data_type ); ///< @todo drop this?
 
   /// constructor from arbitrary cci_value_traits enabled value
   template<typename T>
