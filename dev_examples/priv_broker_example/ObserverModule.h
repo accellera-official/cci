@@ -47,17 +47,17 @@ public:
   void main_action();
 
   /// Callback function with default signature showing changes.
-  cci::callback_return_type config_callback(cci::cci_param_handle& par, const cci::callback_type& cb_reason);
+  void config_callback(const cci::cci_param_write_event<> & ev);
 
   /// Callback function with default signature rejecting all changes.
-  cci::callback_return_type config_callback_reject_changes(cci::cci_param_handle& par, const cci::callback_type& cb_reason);
+  bool config_callback_reject_changes(const cci::cci_param_write_event<> & ev);
 
 protected:
   /// Pointer the the module's configuration broker
   cci::cci_broker_if* mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
-  std::vector< cci::shared_ptr<cci::callb_adapt> > mCallbacks;
+  std::vector<cci::cci_callback_untyped_handle> mCallbacks;
   
 };
 

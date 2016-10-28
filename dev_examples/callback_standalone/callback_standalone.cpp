@@ -19,6 +19,7 @@
 
 #include "cci_cfg/cci_param_callbacks.h"
 #include "cci_cfg/cci_broker_callbacks.h"
+#include "cci_cfg/cci_param_untyped_handle.h"
 
 using namespace sc_core;
 using namespace CCI_NAMESPACE;
@@ -266,9 +267,9 @@ public:
 
 int sc_main(int, char*[])
 {
-
+  cci_param_untyped_handle dummy_handle(cci_originator("sc_main"));
   int old_v = 17, new_v = 42;
-  cci_param_write_event<int> ev(old_v,new_v,cci_originator("sc_main"));
+  cci_param_write_event<int> ev(old_v,new_v,cci_originator("sc_main"),dummy_handle);
 
   cci_param_post_write_callback<int>::type cb( write_callback<int> );
   std::cout << "Direct invocation: " << std::endl;
@@ -301,6 +302,7 @@ int sc_main(int, char*[])
         sc_time(17, SC_NS)
       , sc_time(42, SC_US)
       , mock_originator
+      , dummy_handle
     );
     p.trigger( tev );
   }

@@ -175,7 +175,7 @@ public:
 
     /// @copydoc cci_param_typed::create_param_handle
     virtual cci_param_untyped_handle
-    create_param_handle(const cci_originator &originator) = 0;
+    create_param_handle(const cci_originator &originator) const = 0;
 
 private:
     /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const cci_originator&)
