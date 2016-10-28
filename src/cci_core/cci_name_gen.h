@@ -20,7 +20,10 @@
 #ifndef CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
 #define CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
 
+#include <map>
+
 #include "cci_cfg/cci_config_macros.h"
+#include "cci_core/systemc.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -41,6 +44,24 @@ const char* cci_gen_unique_name(const char* name);
  * @return pointer to the name if exists or NULL if the name doesn't exist.
  */
 const char* cci_get_name(const char* name);
+
+/// Unregister a cci name
+/**
+ * @param name name of the CCI element to unregister
+ *
+ * @return true if unregistration succeeded. Otherwise, false.
+ */
+bool cci_unregister_name(const char* name);
+
+#if CCI_SYSTEMC_VERSION_CODE_ < CCI_VERSION_HELPER_(2,3,2)
+enum cci_name_state {
+    cci_name_free,
+    cci_name_used
+};
+
+/// CCI unique names map used when SystemC < 2.3.2
+extern std::map<std::string, std::pair<int, cci_name_state> > cci_unique_names;
+#endif
 
 CCI_CLOSE_NAMESPACE_
 
