@@ -36,14 +36,46 @@ class ParamContainer : public sc_core::sc_module
 {
 public:
 	ParamContainer(sc_core::sc_module_name name) : sc_module(name)
-	, top_param1("top.param1", "This is a param with top-level-name", cci::CCI_TOP_LEVEL_NAME)
-	, top_param2("param2", cci::cci_value("This is a param with top-level-name"), cci::CCI_TOP_LEVEL_NAME)
-	, top_param3("top.arbitrary.param3", cci::cci_value("This is a param with top-level-name"), cci::CCI_TOP_LEVEL_NAME)
-	{}
+	, top_param1("top.param1", "This is a param with top-level-name", "String parameter", cci::CCI_ABSOLUTE_NAME)
+	{
+        try {
+            top_param2 = new cci::cci_param<bool>("param2",
+                                                cci::cci_value(
+                                                        "This is a param with top-level-name"),
+                                                "A bool parameter with absolute name.",
+                                                cci::CCI_ABSOLUTE_NAME);
+        }
+        catch (sc_core::sc_report e) {
+            std::cout << std::endl << name
+                      << ": Unable to initialize 'ParamContainer.top_param2'" << std::endl;
+            switch (cci::cci_report_handler::get_param_failure(e)) {
+                case cci::CCI_VALUE_FAILURE:
+                    std::cout << e.what() << std::endl;
+                    break;
+            }
+        }
+
+        try {
+            top_param3 = new cci::cci_param<int>("top.arbitrary.top_param3",
+                                                cci::cci_value(
+                                                        "This is a param with top-level-name"),
+                                                "A integer parameter with absolute name.",
+                                                cci::CCI_ABSOLUTE_NAME);
+        }
+        catch (sc_core::sc_report e) {
+            std::cout << std::endl << name
+                      << ": Unable to initialize 'ParamContainer.top_param'" << std::endl;
+            switch (cci::cci_report_handler::get_param_failure(e)) {
+                case cci::CCI_VALUE_FAILURE:
+                    std::cout << e.what() << std::endl;
+                    break;
+            }
+        }
+    }
 protected:
   cci::cci_param<std::string> top_param1;
-  cci::cci_param<bool>        top_param2;
-  cci::cci_param<int>         top_param3;
+  cci::cci_param<bool>*       top_param2;
+  cci::cci_param<int>*        top_param3;
 };
 
 /// Testbench for the CCI example application which uses the GreenSocs demo implemenation

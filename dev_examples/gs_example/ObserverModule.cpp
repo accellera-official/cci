@@ -39,10 +39,11 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 
 ObserverModule::~ObserverModule() {
   // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-  std::vector< cci::shared_ptr<cci::callb_adapt> >::iterator iter;
-  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
-    (*iter)->unregister_at_parameter();
-  }
+  std::vector<cci::cci_callback_untyped_handle>::iterator iter;
+  // TODO: FIXME
+  /*for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
+    mBroker.
+  }*/
 }
 
 
@@ -58,9 +59,10 @@ void ObserverModule::main_action() {
   }
   
   DEMO_DUMP(name(), "register for new parameter callbacks");
-  cci::shared_ptr<cci::callb_adapt> cb_new_pa;
-  cb_new_pa = mBroker->register_str_callback(cci::create_param, "*", this, 
-                                             cci::bind(&ObserverModule::config_new_param_callback, this, _1, _2));
+  cci::cci_callback_untyped_handle cb_new_pa;
+  cb_new_pa = mBroker->register_create_callback(sc_bind(
+          &ObserverModule::config_new_param_callback, this, sc_unnamed::_1),
+          cci::cci_originator());
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
   
   DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");
@@ -70,28 +72,22 @@ void ObserverModule::main_action() {
   assert(p.is_valid());
 
   // ******** register for parameter change callback ***************
-  cci::shared_ptr<cci::callb_adapt> cb1a, cb1b, cb3a, cb3b;
-  // TODO: fixme
-  /*cb1a = p.register_callback(cci::pre_write, this,
-                              cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  cb1b = p.register_callback(cci::post_write, this, 
-                              cci::bind(&ObserverModule::config_callback, this, _1, _2));*/
+  cci::cci_callback_untyped_handle cb1a, cb1b, cb3a, cb3b;
+  cb1a = p.register_pre_write_callback(&ObserverModule::config_pre_write_callback, this);
+  cb1b = p.register_post_write_callback(&ObserverModule::config_post_write_callback, this);
+  mCallbacks.push_back(cb1a);// This will not be deleted after end of main_action()
+  mCallbacks.push_back(cb1b);// This will not be deleted after end of main_action()*/
   cci::cci_param_handle p2 = mBroker->get_param_handle("Owner.uint_param");
   assert(p2.is_valid());
-  // TODO: fixme
-  /*cb3a = p2->register_callback(cci::pre_write, this,
-                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
-  cb3b = p2->register_callback(cci::post_write, this, 
-                               cci::bind(&ObserverModule::config_callback, this, _1, _2));
+  p2.register_pre_write_callback(&ObserverModule::config_pre_write_callback, this);
+  p2.register_post_write_callback(&ObserverModule::config_post_write_callback, this);
   mCallbacks.push_back(cb3a);// This will not be deleted after end of main_action()
-  mCallbacks.push_back(cb3b);// This will not be deleted after end of main_action()*/
+  mCallbacks.push_back(cb3b);// This will not be deleted after end of main_action()
 
   // ******* Testing parameter lock with callback returns *************
   // Register Callback for parameter int_param in module other_ip (IP1)
-  cci::shared_ptr<cci::callb_adapt> cb2;
-  // TODO: fixme
-  /*cb2 = p.register_callback(cci::reject_write, this,
-                             cci::bind(&ObserverModule::config_callback_reject_changes, this, _1, _2));*/
+  cci::cci_callback_untyped_handle cb2;
+  cb2 = p.register_pre_write_callback(&ObserverModule::config_callback_reject_changes, this);
   std::string str = p.get_cci_value().to_json();
   cout << "int_param has value = " << str << endl;
   cout << "int_param set value = 99 (shall fail)" << endl;
@@ -111,7 +107,7 @@ void ObserverModule::main_action() {
   str = p.get_cci_value().to_json();
   cout << "int_param has value = " << str << endl;
   //p.unregister_all_callbacks(this); // this would unregister all calbacks to this module
-  p.unregister_callback(cb2); // unregister a callback
+  p.unregister_pre_write_callback(cb2); // unregister a callback
   
   // ********* show param list **************
   cout << "param list:" << endl;
@@ -126,9 +122,9 @@ void ObserverModule::main_action() {
   // **** check for latest originator using the alternative API on parameter objects 
   // (instead of global originator function within callbacks)
   
-  DEMO_DUMP(name(), "latest write originator of parameter '"<< p.get_name() << "': " << p.get_latest_write_originator()->name());
+  DEMO_DUMP(name(), "latest write originator of parameter '"<< p.get_name() << "': " << p.get_latest_write_originator().name());
   p.set_cci_value(cci::cci_value::from_json("666666"));
-  DEMO_DUMP(name(), "latest write originator of parameter '"<< p.get_name() << "': " << p.get_latest_write_originator()->name());
+  DEMO_DUMP(name(), "latest write originator of parameter '"<< p.get_name() << "': " << p.get_latest_write_originator().name());
   
   orig = mBroker->get_latest_write_originator(p.get_name());
   assert (orig && "Originator must not be NULL here!");
@@ -142,41 +138,32 @@ void ObserverModule::main_action() {
 
 
 /// Callback function with default signature showing changes.
-// TODO: fixme
-/*cci::callback_return_type ObserverModule::config_callback(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
+bool ObserverModule::config_pre_write_callback(const cci::cci_param_write_event<> & ev) {
   std::string str;
-  assert(cci::cci_originator::get_global_originator() && "Originator shall not be null!");
-  switch (cb_reason) {
-  case cci::pre_write:
-    str = par.get_cci_value().to_json();
-    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' will change value, originator: "<< cci::cci_originator::get_global_originator()->name());
-    break;
-  case cci::post_write:
-    str = par.get_cci_value().to_json();
-    DEMO_DUMP(name(), "Callback for parameter '" << par.get_name() << "' changed to value '"<<str<<"', originator: "<< cci::cci_originator::get_global_originator()->name());
-    break;
-  default:
-    assert(false && "not awaited cb reason");
-  }
-  return cci::return_nothing;
+  str = ev.param_handle.get_cci_value().to_json();
+  DEMO_DUMP(name(), "Callback for parameter '" << ev.param_handle.get_name() << "' will change value, originator: "<< ev.originator.name());
+  return true;
+}
+
+void ObserverModule::config_post_write_callback(const cci::cci_param_write_event<> & ev) {
+  std::string str;
+  str = ev.param_handle.get_cci_value().to_json();
+  DEMO_DUMP(name(), "Callback for parameter '" << ev.param_handle.get_name() << "' changed to value '"<<str<<"', originator: "<< ev.originator.name());
 }
 
 /// Callback function with default signature announcing new parameters.
-cci::callback_return_type ObserverModule::config_new_param_callback(const std::string& par_name, const cci::callback_type& cb_reason) {
-  assert(cb_reason == cci::create_param);
-  cci::cci_base_param* p = mBroker->get_param_handle(par_name);
-  assert(p && "This new param should already be available!");
-  std::string str = p.get_cci_value().to_json();
-  DEMO_DUMP(name(), "New parameter callback '" << par_name << "', value '"<<str<<"', originator: "<< cci::cci_originator::get_global_originator()->name());
-  return cci::return_nothing;
+void ObserverModule::config_new_param_callback(
+        const cci::cci_param_untyped_handle& param_handle) {
+  assert(param_handle.is_valid() && "This new param should already be valid!");
+  std::string str = param_handle.get_cci_value().to_json();
+  DEMO_DUMP(name(), "New parameter callback '" << param_handle.get_name() << "', value '"<<str<<"', originator: "<< param_handle.get_originator().name());
 }
 
 /// Callback function with default signature rejecting all changes.
-cci::callback_return_type ObserverModule::config_callback_reject_changes(cci::cci_base_param& par, const cci::callback_type& cb_reason) {
-  assert(cb_reason == cci::reject_write);
+bool ObserverModule::config_callback_reject_changes(const cci::cci_param_write_event<> & ev) {
   DEMO_DUMP(name(), "Callback method called (which rejects changes):");
-  cout << "  Parameter '" << par.get_name() << "' type " << cb_reason << ", originator: "<< cci::cci_originator::get_global_originator()->name() << endl;
+  cout << "  Parameter '" << ev.param_handle.get_name() << "', originator: "<< ev.originator.name() << endl;
   cout << "  REJECT VALUE CHANGE!!" << endl;
   cout << endl;
-  return cci::return_value_change_rejected;
-}*/
+  return false;
+}
