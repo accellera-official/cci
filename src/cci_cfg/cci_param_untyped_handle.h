@@ -22,7 +22,7 @@
 
 #include <string>
 #include "cci_cfg/cci_config_macros.h"
-#include "cci_cfg/cci_core_types.h"
+#include "cci_core/cci_core_types.h"
 #include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_value.h"
 

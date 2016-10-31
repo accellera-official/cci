@@ -24,11 +24,11 @@
 
 #include "cci_core/cci_version.h"
 #include "cci_core/cci_name_gen.h"
+#include "cci_core/cci_core_types.h"
 
 // CCI config includes
 
 #include "cci_cfg/cci_debug.h"
-#include "cci_cfg/cci_core_types.h"
 #include "cci_cfg/cci_mutable_types.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_broker_manager.h"
