@@ -569,6 +569,9 @@ private:
             if (!typed_pre_write_cb.invoke(
                     static_cast<
                             const cci_param_write_event <value_type> >(ev))) {
+                // Unlock the tag
+                m_pre_write_callbacks.oncall=false;
+
                 // Write denied
                 cci_report_handler::set_param_failed(
                         "Value rejected by callback.");
