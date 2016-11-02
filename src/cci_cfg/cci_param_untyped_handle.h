@@ -234,6 +234,14 @@ public:
      */
     void invalidate(bool remove = false);
 
+    /// Assigns parameter untyped handle a new value from another legacy
+    /// parameter untyped handle
+    /**
+     * @param param_handle New parameter untyped handle to assign
+     * @return reference to this object
+     */
+    cci_param_untyped_handle& operator=(const cci_param_untyped_handle& param_handle);
+
 protected:
     ///@name Type-punned value operations
     ///@{

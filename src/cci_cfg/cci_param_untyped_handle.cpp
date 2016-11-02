@@ -55,9 +55,23 @@ cci_param_untyped_handle::cci_param_untyped_handle(
 
 cci_param_untyped_handle::~cci_param_untyped_handle()
 {
-    if(m_orig_param) {
+    if(is_valid()) {
         m_orig_param->remove_param_handle(this);
     }
+}
+
+cci_param_untyped_handle& cci_param_untyped_handle::operator=(
+        const cci_param_untyped_handle& param_handle)
+{
+    cci_originator originator(param_handle.m_originator);
+    std::swap(m_originator, originator);
+    m_orig_param = param_handle.m_orig_param;
+    m_orig_param_name = param_handle.m_orig_param_name;
+
+    if(is_valid()) {
+        m_orig_param->add_param_handle(this);
+    }
+    return *this;
 }
 
 std::string cci_param_untyped_handle::get_description() const
