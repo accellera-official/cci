@@ -193,7 +193,7 @@ private:
                                const cci_originator &originator) = 0;
 
     /// @copydoc cci_param_typed::get_raw_value
-    virtual const void *get_raw_value() const = 0;
+    virtual const void *get_raw_value(const cci_originator &originator) const = 0;
 
     /// @copydoc cci_param_typed::get_default_value_raw
     virtual const void *get_default_value_raw() const = 0;

@@ -110,9 +110,10 @@ public:
 
     /// Get a pointer to the stored value.
     /**
+     * @param originator reference to the originator
      * @return Pointer to type-punned value
      */
-    const void* get_raw_value() const;
+    const void* get_raw_value(const cci_originator &originator) const;
 
     ///Conversion operator to be able use cci_param_typed as a regular object
     const value_type& get_value() const;
@@ -691,7 +692,8 @@ private:
     }
 
     /// Pre read callback
-    void pre_read_callback(const value_type& value) const
+    void pre_read_callback(const value_type& value,
+                           const cci_originator &originator) const
     {
         // Lock the tag to prevent nested callback
         if(m_pre_read_callbacks.oncall) return;
@@ -709,7 +711,7 @@ private:
 
                 // Read callback payload
                 const cci_param_read_event <value_type> ev(value,
-                                                           get_originator(),
+                                                           originator,
                                                            param_handle);
 
                 typed_pre_read_cb.invoke(ev);
@@ -721,7 +723,8 @@ private:
     }
 
     /// Pre read callback
-    void post_read_callback(const value_type& value) const
+    void post_read_callback(const value_type& value,
+                            const cci_originator &originator) const
     {
         // Lock the tag to prevent nested callback
         if(m_post_read_callbacks.oncall) return;
@@ -739,7 +742,7 @@ private:
 
                 // Read callback payload
                 const cci_param_read_event <value_type> ev(value,
-                                                           get_originator(),
+                                                           originator,
                                                            param_handle);
 
                 typed_pre_read_cb.invoke(ev);
@@ -802,9 +805,7 @@ cci_param_typed<T, TM>::operator const T&() const
 template <typename T, cci_param_mutable_type TM>
 const T& cci_param_typed<T, TM>::get_value() const
 {
-    pre_read_callback(m_value);
-    post_read_callback(m_value);
-    return m_value;
+    return *static_cast<const value_type *>(get_raw_value(get_originator()));
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -849,12 +850,12 @@ void cci_param_typed<T, TM>::set(const T& value,
 }
 
 template <typename T, cci_param_mutable_type TM>
-const void* cci_param_typed<T, TM>::get_raw_value() const
+const void* cci_param_typed<T, TM>::get_raw_value(
+        const cci_originator &originator) const
 {
-    const value_type& value = get_value();
-    pre_read_callback(value);
-    post_read_callback(value);
-    return static_cast<const void*>(&value);
+    pre_read_callback(m_value, originator);
+    post_read_callback(m_value, originator);
+    return static_cast<const void*>(&m_value);
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -922,9 +923,8 @@ void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
 
 template <typename T, cci_param_mutable_type TM>
 cci_value cci_param_typed<T, TM>::get_cci_value() const {
-    pre_read_callback(m_value);
-    post_read_callback(m_value);
-    return cci_value(m_value);
+    return cci_value(
+            *static_cast<const value_type *>(get_raw_value(get_originator())));
 }
 
 template <typename T, cci_param_mutable_type TM>
