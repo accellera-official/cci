@@ -219,7 +219,7 @@ public:
      */
     cci_param_mutable_type get_mutable_type() const;
 
-    /// Get the parameter's value.
+    /// Get the parameter's CCI value.
     /**
      * @exception cci_exception_get_param Getting value failed
      * @return This value is either (in the case of a pure basic param)
@@ -227,6 +227,16 @@ public:
      *         parameter) from the actual data type
      */
     cci_value get_cci_value() const;
+
+    /// Get the parameter's CCI value.
+    /**
+     * @exception cci_exception_get_param Getting value failed
+     * @param originator reference to the originator
+     * @return This value is either (in the case of a pure basic param)
+     *         converted from the JSON string or (in the case of a typed
+     *         parameter) from the actual data type
+     */
+    cci_value get_cci_value(const cci_originator& originator) const;
 
     /// Get the parameter's default value.
     /**
@@ -915,16 +925,24 @@ cci_param_mutable_type cci_param_typed<T, TM>::get_mutable_type() const
 
 template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
-                               const cci_originator& originator)
+                                           const cci_originator& originator)
 {
     value_type v = val.get<value_type>();
     set_raw_value(&v, originator);
 }
 
 template <typename T, cci_param_mutable_type TM>
-cci_value cci_param_typed<T, TM>::get_cci_value() const {
+cci_value cci_param_typed<T, TM>::get_cci_value() const
+{
+    return get_cci_value(get_originator());
+}
+
+template <typename T, cci_param_mutable_type TM>
+cci_value cci_param_typed<T, TM>::get_cci_value(
+        const cci_originator& originator) const
+{
     return cci_value(
-            *static_cast<const value_type *>(get_raw_value(get_originator())));
+            *static_cast<const value_type *>(get_raw_value(originator)));
 }
 
 template <typename T, cci_param_mutable_type TM>

@@ -81,7 +81,7 @@ void cci_param_untyped_handle::set_cci_value(const cci_value& val)
 cci_value cci_param_untyped_handle::get_cci_value() const
 {
     check_is_valid();
-    return m_orig_param->get_cci_value();
+    return m_orig_param->get_cci_value(m_originator);
 }
 
 cci_param_mutable_type cci_param_untyped_handle::get_mutable_type() const

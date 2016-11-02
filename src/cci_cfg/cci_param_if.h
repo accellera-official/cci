@@ -192,6 +192,9 @@ private:
     virtual void set_raw_value(const void *vp, const void *pwd,
                                const cci_originator &originator) = 0;
 
+    /// @copydoc cci_param_typed::get_cci_value(const cci_originator&)
+    virtual cci_value get_cci_value(const cci_originator &originator) const = 0;
+
     /// @copydoc cci_param_typed::get_raw_value
     virtual const void *get_raw_value(const cci_originator &originator) const = 0;
 
