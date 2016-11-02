@@ -122,7 +122,7 @@ public:
     /**
      * @return Pointer to type-punned default value
      */
-    const void* get_default_value_raw() const;
+    const void* get_raw_default_value() const;
 
     /// Sets the value via type-punned argument.
     /**
@@ -890,7 +890,7 @@ const std::type_info& cci_param_typed<T, TM>::get_type_info() const
 }
 
 template <typename T, cci_param_mutable_type TM>
-const void* cci_param_typed<T, TM>::get_default_value_raw() const {
+const void* cci_param_typed<T, TM>::get_raw_default_value() const {
     return &this->m_default_value;
 }
 
@@ -898,7 +898,7 @@ template <typename T, cci_param_mutable_type TM>
 const typename cci_param_typed<T, TM>::value_type&
 cci_param_typed<T, TM>::get_default_value()
 {
-    return *static_cast<const value_type *>(get_default_value_raw());
+    return *static_cast<const value_type *>(get_raw_default_value());
 }
 
 template <typename T, cci_param_mutable_type TM>

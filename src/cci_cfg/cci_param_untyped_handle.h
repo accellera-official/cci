@@ -242,8 +242,8 @@ protected:
     const void* get_raw_value() const;
 
 
-    /// @copydoc cci_param_typed::get_default_value_raw
-    const void* get_default_value_raw() const;
+    /// @copydoc cci_param_typed::get_raw_default_value
+    const void* get_raw_default_value() const;
 
     /// @copydoc cci_param_typed::set_raw_value(const void*)
     void set_raw_value(const void* vp);

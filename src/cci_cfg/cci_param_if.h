@@ -195,8 +195,8 @@ private:
     /// @copydoc cci_param_typed::get_raw_value
     virtual const void *get_raw_value(const cci_originator &originator) const = 0;
 
-    /// @copydoc cci_param_typed::get_default_value_raw
-    virtual const void *get_default_value_raw() const = 0;
+    /// @copydoc cci_param_typed::get_raw_default_value
+    virtual const void *get_raw_default_value() const = 0;
 
     /// @copydoc cci_param_untyped::add_param_handle
     virtual void add_param_handle(cci_param_untyped_handle* param_handle) = 0;

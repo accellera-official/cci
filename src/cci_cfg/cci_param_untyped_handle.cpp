@@ -205,10 +205,10 @@ const void* cci_param_untyped_handle::get_raw_value() const
     return m_orig_param->get_raw_value(m_originator);
 }
 
-const void* cci_param_untyped_handle::get_default_value_raw() const
+const void* cci_param_untyped_handle::get_raw_default_value() const
 {
     check_is_valid();
-    return m_orig_param->get_default_value_raw();
+    return m_orig_param->get_raw_default_value();
 }
 
 void cci_param_untyped_handle::set_raw_value(const void* vp)
