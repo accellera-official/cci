@@ -1,5 +1,11 @@
 SystemC Simulation
 
+Warning: (W534) name already exists: Top (sc_module)
+In file: <removed by verify.pl>
+
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top is already used in the SystemC hierarchy, using Top_0 instead
+In file: <removed by verify.pl>
+
 Info: Top.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Is Private Broker? : true
 
 Info: Top.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.parent_inst.child_inst.priv_int_param    Parameter Value : 100
