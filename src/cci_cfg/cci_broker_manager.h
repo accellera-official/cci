@@ -71,8 +71,8 @@ public:
      * @param broker Broker handle to register
      * @param originator Originator the broker handle will point to
      */
-    static void register_broker(cci_broker_if* broker,
-                                const cci_originator &originator);
+    static cci_broker_if &register_broker(cci_broker_if* broker,
+                                          const cci_originator &originator);
 
 private:
     /// Public broker hierarchy

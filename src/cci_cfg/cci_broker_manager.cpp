@@ -59,10 +59,12 @@ cci_broker_manager::get_current_parent_broker(const cci_originator &originator)
     return *broker;
 }
 
-void cci_broker_manager::register_broker(cci_broker_if* broker,
-                                         const cci_originator &originator)
+cci_broker_if&
+cci_broker_manager::register_broker(cci_broker_if* broker,
+                                    const cci_originator &originator)
 {
     m_brokers[originator] = broker;
+    return *broker;
 }
 
 CCI_CLOSE_NAMESPACE_
