@@ -43,7 +43,8 @@ public:
      * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_if &get_current_broker(const cci_originator &originator);
+    static cci_broker_if &get_current_broker(
+            const cci_originator &originator = cci_originator());
 
     /// Returns a handle to the broker currently on second top of broker stack
     /**
@@ -56,8 +57,8 @@ public:
      * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_if &get_current_parent_broker(const
-                                                    cci_originator &originator);
+    static cci_broker_if &get_current_parent_broker(
+            const cci_originator &originator = cci_originator());
 
     /// Register a broker handle in the broker hierarchy
     /**
