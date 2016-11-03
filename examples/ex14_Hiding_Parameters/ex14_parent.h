@@ -54,7 +54,7 @@ SC_MODULE(ex14_parent) {
    *  @return void
    */
   ex14_parent(sc_core::sc_module_name _name,
-              cci::cci_broker_manager priv_broker)
+              cci::cci_broker_if* priv_broker)
       : sc_core::sc_module(_name),
         parent_BrokerIF(priv_broker),
         child_inst("child_inst"),
