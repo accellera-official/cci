@@ -65,7 +65,10 @@ SC_MODULE(ex14_top) {
                 boost::assign::list_of("parent_inst.parent_int_buffer")(
                     "parent_inst.child_inst.pub_int_param"))),
         // Broker instantiated is passed as an argument to the parent module
-        parent_inst(new ex14_parent("parent_inst", privBroker)),
+        parent_inst(new ex14_parent("parent_inst",
+            &cci::cci_broker_manager::register_broker(privBroker,
+                cci::cci_originator(
+                    std::string(this->name()) + ".parent_inst")))),
         param_cfgr("param_cfgr") {}
 
   /**
