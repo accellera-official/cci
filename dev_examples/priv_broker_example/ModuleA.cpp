@@ -27,7 +27,7 @@
 #include <systemc.h>
 
 // within this contructor the private broker stack is valid containing the priv_broker broker as top
-ModuleA::ModuleA(sc_core::sc_module_name name, cci::cci_broker_manager priv_broker)
+ModuleA::ModuleA(sc_core::sc_module_name name, cci::cci_broker_if* priv_broker)
 : sc_core::sc_module(name)
 , m_broker(priv_broker)
 , int_param ("int_param", 50, *m_broker )
