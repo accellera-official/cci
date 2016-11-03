@@ -28,19 +28,10 @@
 
 ModuleC::ModuleC(sc_core::sc_module_name name, cci::cci_broker_manager priv_broker)
 : sc_core::sc_module(name)
-//, cci::cci_broker_manager(new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("int_param"), cci::cci_originator(*this)))
 , m_broker(priv_broker)
 , priv_param ("priv_param", "this is private information", *m_broker)
 { 
   SC_THREAD(main_action);
-}
-
-ModuleC::~ModuleC() {
-  // TODO: delete private broker that was newed during construction!
-  // Don't delete while params existing!
-  /*cci::cci_broker_if* pb = get_broker();
-   register_private_broker(NULL);
-   delete pb;*/
 }
 
 void ModuleC::main_action() {

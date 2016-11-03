@@ -53,9 +53,6 @@ public:
   ModuleA(sc_core::sc_module_name name, cci::cci_broker_manager); 
   // Important: never use a private_broker_manager anywhere else than as constructor argument!!!
   
-  /// Destructor
-  ~ModuleA();
-  
   /// Main action to make tests with parameters.
   void main_action();
   

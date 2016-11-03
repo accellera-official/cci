@@ -41,8 +41,6 @@ public:
   SC_HAS_PROCESS(ObserverModule);
   ObserverModule(sc_core::sc_module_name name);
   
-  ~ObserverModule();
-  
   /// Main action to make tests with parameters.
   void main_action();
 

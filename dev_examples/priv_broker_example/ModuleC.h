@@ -51,9 +51,6 @@ public:
   /// Constructor
   ModuleC(sc_core::sc_module_name name, cci::cci_broker_manager priv_broker);
   
-  /// Destructor
-  ~ModuleC();
-  
   /// Main action to make tests with parameters.
   void main_action();
   

@@ -34,16 +34,6 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
   SC_THREAD(main_action);
 }
 
-
-ObserverModule::~ObserverModule() {
-  // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-//  std::vector<cci::cci_callback_untyped_handle>::iterator iter;
-//  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
-//    iter->unregister_at_parameter();
-//  }
-}
-
-
 void ObserverModule::main_action() {
 
   cout << "----------------------------" << endl<< endl;
@@ -62,7 +52,6 @@ void ObserverModule::main_action() {
   std::cout << std::endl;
 
 }
-
 
 /// Callback function with default signature showing changes.
 void ObserverModule::config_callback(const cci::cci_param_write_event<> & ev) {
