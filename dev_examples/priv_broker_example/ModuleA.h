@@ -30,7 +30,9 @@
 #include "ex_globals.h"
 #include "cci_configuration"
 
-#define SC_INCLUDE_DYNAMIC_PROCESSES
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
+  #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
 #include "gs_cci_cnf_private_broker_handle.h"
 
 #include "ModuleB.h"
