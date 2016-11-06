@@ -32,6 +32,7 @@
  * (added in SystemC 2.3.1).
  *
  */
+
 #ifndef CCI_CORE_SYSTEMC_H_INCLUDED_
 #define CCI_CORE_SYSTEMC_H_INCLUDED_
 
@@ -39,6 +40,11 @@
 #pragma warning( push )
 #pragma warning( disable: 4244 )
 #pragma warning( disable: 4267 )
+#endif
+
+// Required by CCI callback mechanism using sc_unnamed bind argument
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
+# define SC_INCLUDE_DYNAMIC_PROCESSES
 #endif
 
 #include <systemc>
