@@ -6,18 +6,10 @@ In file: <removed by verify.pl>
 Warning: /ASI/CCI/cci_name_gen/gen_unique_name: sim_ip.sub_ip is already used in the SystemC hierarchy, using sim_ip.sub_ip_0 instead
 In file: <removed by verify.pl>
 
-Warning: sim_ip.gs_param_base_0: the name sim_ip.sub_ip is already used, new name sim_ip.sub_ip_0 is assigned
-
-In file: <removed by verify.pl>
-
 Warning: (W534) name already exists: sim_ip.int_param_ip (external name)
 In file: <removed by verify.pl>
 
 Warning: /ASI/CCI/cci_name_gen/gen_unique_name: sim_ip.int_param_ip is already used in the SystemC hierarchy, using sim_ip.int_param_ip_0 instead
-In file: <removed by verify.pl>
-
-Warning: sim_ip.gs_param_base_2: the name sim_ip.int_param_ip is already used, new name sim_ip.int_param_ip_0 is assigned
-
 In file: <removed by verify.pl>
 
 Info: sim_ip: @0 s, Ctor: Name of bool_param is sim_ip.sub_ip_0

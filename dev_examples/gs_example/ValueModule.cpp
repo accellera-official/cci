@@ -42,16 +42,17 @@ void ValueModule::main_action() {
   cout << "----------------------------" << endl;
   
   // get a parameter using the local config broker
-  cci::cci_base_param *uint_param_ptr = mBroker->get_param("Owner.uint_param");
-  if (uint_param_ptr == NULL) return;
+  cci::cci_param_handle uint_param_handle = mBroker->get_param_handle("Owner.uint_param");
+  if (!uint_param_handle.is_valid()) return;
   // make it a reference for convenience
-  cci::cci_param<unsigned int> &uint_param_p = *static_cast<cci::cci_param<unsigned int>* >(uint_param_ptr);
+  cci::cci_param_typed_handle<unsigned int> uint_param_typed_handle =
+    cci::cci_param_typed_handle<unsigned int>(uint_param_handle);
 
   // demonstrate setting a parameter using a cci value
   DEMO_DUMP(name(), "Set parameter Owner.uint_param to value=555 using cci_value");
   cci::cci_value val(555);
   try {
-    uint_param_p.set_value(val);
+    uint_param_typed_handle.set_cci_value(val);
   } catch(sc_core::sc_report e) {
     switch ( cci::cci_report_handler::get_param_failure(e) ) {
       case cci::CCI_VALUE_FAILURE: 
@@ -62,21 +63,22 @@ void ValueModule::main_action() {
         throw e;
     }
   }
-  std::cout << "uint_param has value = " << uint_param_p.get_cci_value().to_json() << endl;
+  std::cout << "uint_param has value = " << uint_param_typed_handle.get_cci_value().to_json() << endl;
 
   // get a parameter using the local config API
-  cci::cci_base_param *str_param_ptr = mBroker->get_param("Owner.str_param");
-  if (str_param_ptr == NULL) return;
+  cci::cci_param_handle str_param_handle = mBroker->get_param_handle("Owner.str_param");
+  if (!str_param_handle.is_valid()) return;
   // make it a reference for convenience
-  cci::cci_param<std::string> &str_param_p = *static_cast<cci::cci_param<std::string>* >(str_param_ptr);
+  cci::cci_param_typed_handle<std::string> str_param_typed_handle =
+          cci::cci_param_typed_handle<std::string>(str_param_handle);
   
   // show parameter's default value
-  std::cout << std::endl << "str_param has value = " << str_param_p.get_cci_value().to_json() << endl;
+  std::cout << std::endl << "str_param has value = " << str_param_typed_handle.get_cci_value().to_json() << endl;
   // demonstrate setting a parameter using a cci value
   DEMO_DUMP(name(), "Set parameter Owner.str_param to value=\"test cci value string\" using cci_value");
   cci::cci_value vals("test cci value string");
-  str_param_p.set_value(vals);
-  std::cout << "str_param has value = " << str_param_p.get_cci_value().to_json() << endl;
+  str_param_typed_handle.set_cci_value(vals);
+  std::cout << "str_param has value = " << str_param_typed_handle.get_cci_value().to_json() << endl;
   
   std::cout << std::endl;
   

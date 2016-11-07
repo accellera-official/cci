@@ -225,7 +225,7 @@ const T& cci_param_typed_handle<T>::get_value() const
 template <typename T>
 const typename cci_param_typed_handle<T>::value_type& cci_param_typed_handle<T>::get_default_value()
 {
-    return *static_cast<const value_type *>(cci_param_untyped_handle::get_default_value_raw());
+    return *static_cast<const value_type *>(cci_param_untyped_handle::get_raw_default_value());
 }
 
 #define CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(name)                            \

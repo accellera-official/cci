@@ -55,9 +55,23 @@ cci_param_untyped_handle::cci_param_untyped_handle(
 
 cci_param_untyped_handle::~cci_param_untyped_handle()
 {
-    if(m_orig_param) {
+    if(is_valid()) {
         m_orig_param->remove_param_handle(this);
     }
+}
+
+cci_param_untyped_handle& cci_param_untyped_handle::operator=(
+        const cci_param_untyped_handle& param_handle)
+{
+    cci_originator originator(param_handle.m_originator);
+    std::swap(m_originator, originator);
+    m_orig_param = param_handle.m_orig_param;
+    m_orig_param_name = param_handle.m_orig_param_name;
+
+    if(is_valid()) {
+        m_orig_param->add_param_handle(this);
+    }
+    return *this;
 }
 
 std::string cci_param_untyped_handle::get_description() const
@@ -81,13 +95,19 @@ void cci_param_untyped_handle::set_cci_value(const cci_value& val)
 cci_value cci_param_untyped_handle::get_cci_value() const
 {
     check_is_valid();
-    return m_orig_param->get_cci_value();
+    return m_orig_param->get_cci_value(m_originator);
 }
 
 cci_param_mutable_type cci_param_untyped_handle::get_mutable_type() const
 {
     check_is_valid();
     return m_orig_param->get_mutable_type();
+}
+
+cci_value cci_param_untyped_handle::get_default_cci_value() const
+{
+    check_is_valid();
+    return m_orig_param->get_default_cci_value();
 }
 
 bool cci_param_untyped_handle::is_default_value()
@@ -196,13 +216,13 @@ cci_originator cci_param_untyped_handle::get_originator() const
 const void* cci_param_untyped_handle::get_raw_value() const
 {
     check_is_valid();
-    return m_orig_param->get_raw_value();
+    return m_orig_param->get_raw_value(m_originator);
 }
 
-const void* cci_param_untyped_handle::get_default_value_raw() const
+const void* cci_param_untyped_handle::get_raw_default_value() const
 {
     check_is_valid();
-    return m_orig_param->get_default_value_raw();
+    return m_orig_param->get_raw_default_value();
 }
 
 void cci_param_untyped_handle::set_raw_value(const void* vp)

@@ -84,7 +84,7 @@ struct cci_param_user_data_type
    *  @brief  Function to get the user defined type for the parameter
    *  @return The pointer to user_data_type of the parameter.
    */
-  const void * get_raw_value() const;
+  const void * get_raw_value(const cci::cci_originator&) const;
 
    /**
    *  @fn     void set_raw_value(const void *vp, const cci::cci_originator &originator)
@@ -107,11 +107,18 @@ struct cci_param_user_data_type
       const cci::cci_originator &originator);
 
   /**
-   *  @fn     const user_data_type& get_default_value_raw()
+   *  @fn     cci::cci_value get_default_cci_value()
+   *  @brief  Retrieve the default CCI value of the parameter
+   *  @return The user data type for the value of the parameter
+   */
+  cci::cci_value get_default_cci_value() const;
+
+  /**
+   *  @fn     const user_data_type& get_raw_default_value()
    *  @brief  Retrieve the default value of the parameter
    *  @return The user data type for the value of the parameter
    */
-  const void* get_default_value_raw() const;
+  const void* get_raw_default_value() const;
 
   // Virtual function in cci_base_param_impl_if
 
@@ -145,6 +152,13 @@ struct cci_param_user_data_type
    *  @return The cci_value of the parameter
    */
   cci::cci_value get_cci_value() const;
+
+  /**
+   *  @fn     cci::cci_value get_cci_value(const cci::cci_originator&) const
+   *  @brief  Function to retrieve the cci_value of the parameter
+   *  @return The cci_value of the parameter
+   */
+  cci::cci_value get_cci_value(const cci::cci_originator&) const;
 
   /**
    *  @fn     cci::cci_param_mutable_type get_mutable_type() const
@@ -374,8 +388,9 @@ struct cci_param_user_data_type
    *  @brief  Retrieve the last person to write to the parameter
    *  @return The last person to write to the parameter
    */
-  cci::cci_originator* get_latest_write_originator() const {
-    return NULL; /* TODO */
+  cci::cci_originator& get_latest_write_originator() const {
+    static cci::cci_originator originator = cci::cci_originator();
+    return originator; /* TODO */
   }
 
   cci::cci_param_untyped_handle create_param_handle(const cci::cci_originator& originator) const{

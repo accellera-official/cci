@@ -16,7 +16,7 @@ Info: sim_ip: @0 s, typed_pre_write_callback:sim_ip.param_1 (1 -> 10) by cfg_ip
 
 Info: sim_ip: @0 s, typed_post_write_callback:sim_ip.param_1 (1 -> 10) by cfg_ip
 
-Info: sim_ip: @0 s, typed_pre_read_callback:sim_ip.param_1 (10) by sim_ip
+Info: sim_ip: @0 s, typed_pre_read_callback:sim_ip.param_1 (10) by cfg_ip
 
 Info: cfg_ip: @0 s, config_ip::end_of_elaboration: [EXTERNAL] Current value of sim_ip.param_1 is 10
 
@@ -28,7 +28,7 @@ Warning: cfg_ip: @0 s, Caught exception: Error: /ASI/CCI/SET_PARAM_FAILED: Value
 In file: <removed by verify.pl>
 In file: <removed by verify.pl>
 
-Info: sim_ip: @0 s, typed_pre_read_callback:sim_ip.param_2 (2) by sim_ip
+Info: sim_ip: @0 s, typed_pre_read_callback:sim_ip.param_2 (2) by cfg_ip
 
 Info: cfg_ip: @0 s, config_ip::end_of_elaboration: [EXTERNAL] Current value of sim_ip.param_2 is 2
 
