@@ -10,7 +10,7 @@ Info: sim_ip: @0 s, Before_End_Elab: Value of struc_param changed to: 1
 
 Info: sim_ip: @10 ns, execute: Set value of struc_param to 2
 
-Warning: sim_ip: @10 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Attempt to set elaboration parameter during simulation.
+Warning: sim_ip: @10 ns, Error: /Accellera/CCI/SET_PARAM_FAILED: Attempt to set elaboration parameter during simulation.
 In file: <removed by verify.pl>
 In process: sim_ip.execute @ 10 ns
 In file: <removed by verify.pl>
@@ -22,7 +22,7 @@ Info: sim_ip: @10 ns, execute: Creating a struc_param_post_eoe after end_of elab
 
 Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.struc_param to 3
 
-Warning: cfg_ip: @20 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Attempt to set elaboration parameter during simulation.
+Warning: cfg_ip: @20 ns, Error: /Accellera/CCI/SET_PARAM_FAILED: Attempt to set elaboration parameter during simulation.
 In file: <removed by verify.pl>
 In process: cfg_ip.execute @ 20 ns
 In file: <removed by verify.pl>
@@ -32,7 +32,7 @@ Info: cfg_ip: @20 ns, execute: [EXTERNAL] Value of sim_ip.struc_param remains un
 
 Info: sim_ip: @20 ns, execute: Set value of struc_param_post_eoe to 1
 
-Warning: sim_ip: @20 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Attempt to set elaboration parameter during simulation.
+Warning: sim_ip: @20 ns, Error: /Accellera/CCI/SET_PARAM_FAILED: Attempt to set elaboration parameter during simulation.
 In file: <removed by verify.pl>
 In process: sim_ip.execute @ 20 ns
 In file: <removed by verify.pl>

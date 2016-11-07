@@ -76,7 +76,7 @@ Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_1
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: <removed by verify.pl>
 
-Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /ASI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed.
 In file: <removed by verify.pl>
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of target_1
@@ -84,7 +84,7 @@ Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of targe
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: <removed by verify.pl>
 
-Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /ASI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed.
 In file: <removed by verify.pl>
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_1
@@ -92,7 +92,7 @@ Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_
 Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
 In file: <removed by verify.pl>
 
-Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /ASI/CCI/SET_PARAM_FAILED: Setting initial value failed.
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed.
 In file: <removed by verify.pl>
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_2
