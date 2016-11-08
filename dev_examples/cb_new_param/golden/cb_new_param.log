@@ -19,12 +19,6 @@ SystemC Simulation
 @1 ns /1 (Owner): - Changing uint_param2 value to 2
 
 @1 ns /1 (Owner): - List of all parameters:
-	Owner.bool_param
-	Owner.int_param
-	Owner.str_param
-	Owner.uchar_param
-	Owner.uint_param
-	Owner.uint_param2
 
 
 ------ sc_start() returned -------
