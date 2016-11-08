@@ -46,7 +46,8 @@ SC_MODULE(ex07_parameter_owner) {
   // Assign initial value to mutable_int_param
       : int_param("mutable_int_param", 0),
         // Assign a name to the string param (Default is not assigned)
-        string_param("mutable_string_param", "Default_Value") {
+        string_param("mutable_string_param", "Default_Value",
+                     "This is a mutable type string parameter") {
     SC_THREAD(run_thread);
 
     XREPORT("Prior to " << sc_core::sc_time_stamp()

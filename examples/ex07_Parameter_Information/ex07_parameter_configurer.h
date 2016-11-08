@@ -280,10 +280,10 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Get the latest write originator for the write value to
         // the string type cci-parameter
-        const cci::cci_originator* str_originator =
+        const cci::cci_originator& str_originator =
                 str_param.get_latest_write_originator();
         XREPORT("[CFGR] : Originator for the latest write on string"
-                " type cci-parameter : " << str_originator->name());
+                " type cci-parameter : " << str_originator.name());
 
         XREPORT("@ " << sc_core::sc_time_stamp()
                 << " demonstrating 'get_value' for string-type param"

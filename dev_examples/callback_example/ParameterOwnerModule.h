@@ -48,10 +48,12 @@ public:
   , uint_param2("uint_param2", 12)
   , str_param("str_param", cci::cci_value("This is a test string."))
   , bool_param("bool_param", false)
-  , top_param("top.arbitrary.param", cci::cci_value("This is a param with top-level-name") , 
-	      "A string parameter with absolute name.", cci::CCI_ABSOLUTE_NAME)
-  { 
-    SC_THREAD(main_action);
+  , top_param("top.arbitrary.param",
+          cci::cci_value("This is a param with top-level-name"),
+          "A string parameter with absolute name.",
+          cci::CCI_ABSOLUTE_NAME)
+  {
+      SC_THREAD(main_action);
   }
   
   /// Main action to make tests with parameters.
@@ -68,7 +70,7 @@ public:
   /// Example parameter.
   cci::cci_param<bool>            bool_param;
   /// Example parameter for top-level-name
-  cci::cci_param<int>             top_param;
+  cci::cci_param<std::string>     top_param;
 
 };
 

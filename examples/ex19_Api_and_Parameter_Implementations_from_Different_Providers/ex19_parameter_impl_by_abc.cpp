@@ -112,7 +112,7 @@ const user_data_type& cci_param_user_data_type::get_value() const
  *  @brief  Function to get the user defined type for the parameter
  *  @return The pointer to user_data_type of the parameter.
  */
-const void* cci_param_user_data_type::get_raw_value() const
+const void* cci_param_user_data_type::get_raw_value(const cci::cci_originator&) const
 {
   return NULL;
 }
@@ -148,12 +148,22 @@ void cci_param_user_data_type::set_raw_value(const void *vp, const void *pwd,
 }
 
 /**
- *  @fn     const user_data_type& cci_param_user_data_type::get_default_value()
+ *  @fn     cci::cci_value cci_param_user_data_type::get_default_cci_value()
+ *  @brief  Retrieve the default CCI value of the parameter
+ *  @return The user data type for the value of the parameter
+ */
+cci::cci_value cci_param_user_data_type::get_default_cci_value() const {
+    std::cout << "Function cci_param_user_data_type::get_default_cci_value Called " << std::endl;
+    return c_value; /* TODO */
+}
+
+/**
+ *  @fn     const user_data_type& cci_param_user_data_type::get_raw_default_value()
  *  @brief  Retrieve the default value of the parameter
  *  @return The user data type for the value of the parameter
  */
-const void* cci_param_user_data_type::get_default_value_raw() const {
-  std::cout << "Function cci_param_user_data_type::get_default_value Called " << std::endl;
+const void* cci_param_user_data_type::get_raw_default_value() const {
+  std::cout << "Function cci_param_user_data_type::get_raw_default_value Called " << std::endl;
 
   return &default_value;
 }
@@ -196,6 +206,17 @@ cci::cci_value cci_param_user_data_type::get_cci_value() const {
   std::cout << "Function cci_param_user_data_type::get_cci_value Called " << std::endl;
   return c_value;
 }
+
+/**
+ *  @fn     cci::cci_value cci_param_user_data_type::get_cci_value(const cci::cci_originator&) const
+ *  @brief  Function to retrieve the value of the parameter
+ *  @return The cci_value of the parameter
+ */
+cci::cci_value cci_param_user_data_type::get_cci_value(const cci::cci_originator&) const {
+    std::cout << "Function cci_param_user_data_type::get_cci_value Called " << std::endl;
+    return c_value;
+}
+
 
 /**
  *  @fn     cci::cci_value cci_param_user_data_type::get_cci_value() const

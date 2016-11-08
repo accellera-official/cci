@@ -66,11 +66,13 @@ Info: param_cfgr: @2 ns, [CFGR -> Retrieve] : Parameter value : Initialized with
 
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
 
-Info: observer: @4 ns, [OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_owner
+Info: observer: @4 ns, [OBSERVER pre_read_cb] :  Parameter Name : param_owner.mutable_int_param	Originator info : param_cfgr
 
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's value : 1
 
-Info: param_cfgr: @4 ns, [CFGR -> Retreive] Parameter's desc : This is a mutable type integer parameter
+Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's desc : This is a mutable type integer parameter
+
+Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's metadata : {"min_value":["0","Minimum value"],"max_value":["100","Maximum value"],"unit":["F","Unit of the parameter (Farad)"]}
 
 Info: param_cfgr: @6 ns, @ 6 ns
 

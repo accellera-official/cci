@@ -67,6 +67,9 @@ public:
     /// @copydoc cci_param_typed::get_mutable_type
     virtual cci_param_mutable_type get_mutable_type() const = 0;
 
+    /// @copydoc cci_param_typed::get_default_cci_value
+    virtual cci_value get_default_cci_value() const = 0;
+
     ///@}
 
 
@@ -189,11 +192,14 @@ private:
     virtual void set_raw_value(const void *vp, const void *pwd,
                                const cci_originator &originator) = 0;
 
-    /// @copydoc cci_param_typed::get_raw_value
-    virtual const void *get_raw_value() const = 0;
+    /// @copydoc cci_param_typed::get_cci_value(const cci_originator&)
+    virtual cci_value get_cci_value(const cci_originator &originator) const = 0;
 
-    /// @copydoc cci_param_typed::get_default_value_raw
-    virtual const void *get_default_value_raw() const = 0;
+    /// @copydoc cci_param_typed::get_raw_value
+    virtual const void *get_raw_value(const cci_originator &originator) const = 0;
+
+    /// @copydoc cci_param_typed::get_raw_default_value
+    virtual const void *get_raw_default_value() const = 0;
 
     /// @copydoc cci_param_untyped::add_param_handle
     virtual void add_param_handle(cci_param_untyped_handle* param_handle) = 0;

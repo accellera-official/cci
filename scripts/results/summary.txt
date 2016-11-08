@@ -4,12 +4,14 @@
 -------------------------------------------------------------------------------
  Tests that passed :
 -------------------------------------------------------------------------------
+dev_examples/callback_example/callback_example.f
 dev_examples/callback_standalone/callback_standalone.cpp
 dev_examples/cb_new_param/cb_new_param.f
 dev_examples/cci_hierarchical_values_set/cci_hierarchical_values_set.f
 dev_examples/cci_value_example/cci_value_example.f
 dev_examples/cci_value_simple/cci_value_simple.cpp
 dev_examples/compare_example/testbench.cpp
+dev_examples/gs_example/gs_example.f
 dev_examples/gs_example_diff_impl/gs_example_diff_impl.f
 dev_examples/is_initial_value_example/testbench.cpp
 dev_examples/priv_broker_example/priv_broker_example.f
@@ -19,12 +21,14 @@ examples/ex03_Elab_Time_Param/ex03_Elab_Time_Param.cpp
 examples/ex04_Simple_Immutable_Param/ex04_Simple_Immutable_Param.cpp
 examples/ex05_Default_and_Initial_Value/ex05_Default_and_Initial_Value.cpp
 examples/ex06_Parameter_Naming/ex06_Parameter_Naming.cpp
+examples/ex07_Parameter_Information/ex07_Parameter_Information.cpp
 examples/ex08_Parameter_Value_Change_Callbacks/ex08_Parameter_Value_Change_Callbacks.cpp
 examples/ex09_Hierarchical_Override_of_Parameter_Values/ex09_Hierarchical_Override_of_Parameter_Values.cpp
 examples/ex10_Shared_Parameters/ex10_Shared_Parameters.cpp
 examples/ex11_Searching_and_Directly_Associating_Parameters/ex11_Searching_and_Directly_Associating_Parameters.cpp
 examples/ex12_Indirectly_Associating_Parameters/ex12_Indirectly_Associating_Parameters.cpp
 examples/ex13_Parameter_Value_Locking/ex13_Parameter_Value_Locking.cpp
+examples/ex14_Hiding_Parameters/ex14_Hiding_Parameters.cpp
 examples/ex15_Inter_Parameter_Value_Constraints/ex15_Inter_Parameter_Value_Constraints.cpp
 examples/ex16_User_Defined_Data_Type/ex16_User_Defined_Data_Type.cpp
 examples/ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_Specifying_Parameter_Values_via_a_Configuration_File.cpp
@@ -36,12 +40,8 @@ examples/ex21_Param_Destruction_Resurrection/ex21_Param_Destruction_Resurrection
 -------------------------------------------------------------------------------
  Tests that failed :
 -------------------------------------------------------------------------------
-                diff                : dev_examples/callback_example/callback_example.f
-             compiling              : dev_examples/gs_example/gs_example.f
-             compiling              : examples/ex07_Parameter_Information/ex07_Parameter_Information.cpp
-              running               : examples/ex14_Hiding_Parameters/ex14_Hiding_Parameters.cpp
 
-Total passed : 28
-Total failed : 4
+Total passed : 32
+Total failed : 0
 
-   GUT METER : 87 %
+   GUT METER : 100 %

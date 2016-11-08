@@ -31,10 +31,6 @@
 #include "cci_core/cci_core_types.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
-#include <greencontrol/config.h>
-
-//TODO: remove header dependency
-#include <greencontrol/config.h>
 
 CCI_OPEN_NAMESPACE_
 
@@ -539,8 +535,9 @@ public:
 
 protected:
     /// Constructor to create new parameter with given originator.
-    cci_param_untyped(bool is_top_level_name, cci_broker_if* broker_handle,
-                   const std::string& desc, const cci_originator& originator);
+    cci_param_untyped(const std::string& name, cci_name_type name_type,
+                      cci_broker_if* broker_handle, const std::string& desc,
+                      const cci_originator& originator);
 
     ///@name Initialization and Destructions methods
     ///@{
@@ -554,15 +551,14 @@ protected:
     void update_latest_write_originator(const cci_originator& originator) const;
 
 protected:
-
-    /// Associated gs_param_base
-    gs::gs_param_base *m_gs_param_base;
-
     /// Is default value
-    bool m_is_default_value;
+    mutable bool m_is_default_value;
 
-    /// Is invalid value
-    bool m_is_invalid_value;
+    /// Is initial value
+    mutable bool m_is_initial_value;
+
+    /// Name
+    std::string m_name;
 
     /// Description
     std::string m_description;
@@ -572,6 +568,12 @@ protected:
 
     /// Initialized
     bool m_init_called;
+
+    /// Locked
+    bool m_locked;
+
+    /// Passwort needed to unlock the parameter or override the lock
+    void* m_lock_pwd;
 
     /// Broker handle
     cci_broker_if* m_broker_handle;

@@ -87,6 +87,9 @@ public:
     /// @copydoc cci_param_typed::get_mutable_type
     cci_param_mutable_type get_mutable_type() const;
 
+    /// @copydoc cci_param_typed::get_default_cci_value
+    cci_value get_default_cci_value() const;
+
     ///@}
 
     ///@name Parameter Value Status
@@ -231,6 +234,14 @@ public:
      */
     void invalidate(bool remove = false);
 
+    /// Assigns parameter untyped handle a new value from another legacy
+    /// parameter untyped handle
+    /**
+     * @param param_handle New parameter untyped handle to assign
+     * @return reference to this object
+     */
+    cci_param_untyped_handle& operator=(const cci_param_untyped_handle& param_handle);
+
 protected:
     ///@name Type-punned value operations
     ///@{
@@ -239,8 +250,8 @@ protected:
     const void* get_raw_value() const;
 
 
-    /// @copydoc cci_param_typed::get_default_value_raw
-    const void* get_default_value_raw() const;
+    /// @copydoc cci_param_typed::get_raw_default_value
+    const void* get_raw_default_value() const;
 
     /// @copydoc cci_param_typed::set_raw_value(const void*)
     void set_raw_value(const void* vp);
