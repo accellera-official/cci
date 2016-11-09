@@ -14,24 +14,44 @@ Info: Top.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.p
 
 Info: Top.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.parent_inst.parent_int_param	Parameter Value : 300
 
-Info: Top.parent_inst: @0 s, [PARENT C_TOR] : Desired cci-parameter of 'child' module is not available
-
 Info: Top.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.parent_inst.parent_int_buffer	Parameter Value : 350
 
 Info: Top.param_cfgr: @0 s, [CFGR] : Parameter Name : Top.parent_inst.parent_int_buffer	Parameter Value : 350
 
 Info: Top.parent_inst.child_inst: @0 s, @ 0 s	Visible parameters to 'child' module
 
+Info: Top.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.parent_inst.child_inst.priv_int_param
+
+Info: Top.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.parent_inst.parent_int_param
+
+Info: Top.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.parent_inst.child_inst.pub_int_param
+
+Info: Top.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.parent_inst.parent_int_buffer
+
 Info: Top.parent_inst: @5 ns, @ 5 ns	Visible parameters to the 'parent' module
 
+Info: Top.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.parent_inst.child_inst.priv_int_param
+
+Info: Top.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.parent_inst.parent_int_param
+
+Info: Top.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.parent_inst.child_inst.pub_int_param
+
+Info: Top.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.parent_inst.parent_int_buffer
+
 Info: Top.param_cfgr: @15 ns, @ 15 ns	Visible parameters to the 'configurator' module
+
+Info: Top.param_cfgr: @15 ns, [CFGR] : Parameter Name : Top.parent_inst.child_inst.pub_int_param
+
+Info: Top.param_cfgr: @15 ns, [CFGR] : Parameter Name : Top.parent_inst.parent_int_buffer
 
 Info: Top.param_cfgr: @20 ns, @ 20 ns
 
 Info: Top.param_cfgr: @20 ns, [CFGR] : Change the value of the 'parent_int_buffer' to '1000'
 
+Info: Top.parent_inst: @20 ns, [PARENT - post_write_cb] : Parameter Name : Top.parent_inst.parent_int_buffer	Parameter Value : 1000
+
 Info: Top.param_cfgr: @20 ns, [CFGR] : Parameter Name : Top.parent_inst.parent_int_buffer	Parameter Value : 1000
 
 Info: Top.parent_inst.child_inst: @25 ns, @ 25 ns
 
-Info: Top.parent_inst.child_inst: @25 ns, [CHILD] : Parameter Name : Top.parent_inst.child_inst.priv_int_param	Parameter Value : 100
+Info: Top.parent_inst.child_inst: @25 ns, [CHILD] : Parameter Name : Top.parent_inst.child_inst.priv_int_param	Parameter Value : 1000

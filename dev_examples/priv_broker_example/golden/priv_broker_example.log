@@ -30,37 +30,107 @@ In file: <removed by verify.pl>
 
 
 **** Parameter list (visible in Top.Observer): 
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------
 
 
 **** Parameter list (visible in Top.ModuleA.ModuleB.ModuleC): 
+   Top.ModuleA.ModuleB.ModuleC.priv_param
+   Top.ModuleA.ModuleB.bool_param
+   Top.ModuleA.ModuleB.int_param
+   Top.ModuleA.ModuleB.str_param
+   Top.ModuleA.ModuleB.uint_param
+   Top.ModuleA.ModuleB.uint_param2
+   Top.ModuleA.bool_param
+   Top.ModuleA.str_param
+   Top.ModuleA.uint_param
+   Top.ModuleA.uint_param2
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------
 
 **** Parameter list (visible in Top.ModuleA2): 
+   Top.ModuleA2.ModuleB.bool_param
+   Top.ModuleA2.ModuleB.int_param
+   Top.ModuleA2.ModuleB.str_param
+   Top.ModuleA2.ModuleB.uint_param
+   Top.ModuleA2.ModuleB.uint_param2
+   Top.ModuleA2.bool_param
+   Top.ModuleA2.str_param
+   Top.ModuleA2.uint_param
+   Top.ModuleA2.uint_param2
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------
 
 **** Parameter list (visible in Top.ModuleA2.ModuleB): 
+   Top.ModuleA2.ModuleB.bool_param
+   Top.ModuleA2.ModuleB.int_param
+   Top.ModuleA2.ModuleB.str_param
+   Top.ModuleA2.ModuleB.uint_param
+   Top.ModuleA2.ModuleB.uint_param2
+   Top.ModuleA2.bool_param
+   Top.ModuleA2.str_param
+   Top.ModuleA2.uint_param
+   Top.ModuleA2.uint_param2
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------
 
 **** Parameter list (visible in Top.ModuleA2.ModuleB.ModuleC): 
+   Top.ModuleA2.ModuleB.ModuleC.priv_param
+   Top.ModuleA2.ModuleB.bool_param
+   Top.ModuleA2.ModuleB.int_param
+   Top.ModuleA2.ModuleB.str_param
+   Top.ModuleA2.ModuleB.uint_param
+   Top.ModuleA2.ModuleB.uint_param2
+   Top.ModuleA2.bool_param
+   Top.ModuleA2.str_param
+   Top.ModuleA2.uint_param
+   Top.ModuleA2.uint_param2
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------
 
 **** Parameter list (visible in Top.ModuleA): 
+   Top.ModuleA.ModuleB.bool_param
+   Top.ModuleA.ModuleB.int_param
+   Top.ModuleA.ModuleB.str_param
+   Top.ModuleA.ModuleB.uint_param
+   Top.ModuleA.ModuleB.uint_param2
+   Top.ModuleA.bool_param
+   Top.ModuleA.str_param
+   Top.ModuleA.uint_param
+   Top.ModuleA.uint_param2
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------
 
 **** Parameter list (visible in Top.ModuleA.ModuleB): 
+   Top.ModuleA.ModuleB.bool_param
+   Top.ModuleA.ModuleB.int_param
+   Top.ModuleA.ModuleB.str_param
+   Top.ModuleA.ModuleB.uint_param
+   Top.ModuleA.ModuleB.uint_param2
+   Top.ModuleA.bool_param
+   Top.ModuleA.str_param
+   Top.ModuleA.uint_param
+   Top.ModuleA.uint_param2
+   Top.ModuleA.int_param
+   Top.ModuleA2.int_param
 
 
 ----------------------------

@@ -60,7 +60,7 @@ Owner: copy @1 ns /1 (Observer): **** Object callback for parameter 'Owner.uint_
 ----------------------------
 
 **** Parameter list: 
-   
+   Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2, top.arbitrary.param
 
 
 ------ sc_start() returned -------

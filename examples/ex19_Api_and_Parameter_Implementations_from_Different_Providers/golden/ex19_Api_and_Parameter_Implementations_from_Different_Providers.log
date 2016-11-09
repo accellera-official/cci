@@ -1,6 +1,9 @@
 SystemC Simulation
 Function cci_param_user_data_type::get_name Called 
 Return Name = mutable_udtype_param
+Function cci_param_user_data_type::get_name Called 
+Return Name = mutable_udtype_param
+Function cci_param_user_data_type::get_default_cci_value Called 
 
 Info: param_owner: @0 s, [OWNER C_TOR] : Default Value : 5
 

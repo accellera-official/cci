@@ -75,6 +75,13 @@ Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_cus
 Info: sc_main: End Simulation.
 
 List of parameters:
+   int_param_top
+   sc_main_param
+   sim_ip.int_param_ip
+   sim_ip.int_param_ip_0
+   sim_ip.sub_ip_0
+   tool.external_param
+   top.sub.int_param_custom
 
 Info: sc_main: Current value of tool.external_param is 10
 

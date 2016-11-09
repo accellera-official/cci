@@ -24,7 +24,7 @@ In file: <removed by verify.pl>
 In process: Observer.main_action @ 0 s
 int_param has value = 11
 param list:
-Owner.int_param 
+MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 param2 top.arbitrary.param top.arbitrary.top_param3 top.param1 
 
 ----------------------------
 Owner: uint_param get_default_value()=12000
@@ -120,7 +120,7 @@ str_param has value = "test cci value string"
 ----------------------------
 
 **** Parameter list: 
-   Owner.int_param
+   MutabilityOwner.elab_time_int_param, MutabilityOwner.immutable_int_param, MutabilityOwner.mutable_int_param, Owner.bool_param, Owner.int_param, Owner.str_param, Owner.uchar_param, Owner.uint_param, Owner.uint_param2, param2, top.arbitrary.param, top.arbitrary.top_param3, top.param1
 
 
 ------ sc_start() returned -------
