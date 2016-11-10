@@ -1,4 +1,4 @@
-rem ##########################################################################
+rem ***************************************************************************
 rem
 rem  Licensed to Accellera Systems Initiative Inc. (Accellera) under one or
 rem  more contributor license agreements.  See the NOTICE file distributed
@@ -15,7 +15,27 @@ rem  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 rem  implied.  See the License for the specific language governing
 rem  permissions and limitations under the License.
 rem
-rem #########################################################################
+rem ***************************************************************************
+rem
+rem  vsvars.bat --
+rem  Run this file in a command prompt to load MS Visual C++ environment
+rem
+rem  Original Author: Philipp A. Hartmann, OFFIS, 2013-12-09
+rem
+rem ***************************************************************************
+rem
+rem  You can specify the version and the platform to use via additional
+rem  command-line options given to vsvars.bat, e.g.
+rem
+rem    vsvars.bat [arch]               # load MSVC 2005 for [arch]
+rem    vsvars.bat [version]            # load MSVC [version] for x86
+rem    vsvars.bat [version] [platform] # load MSVC [version] for [platform]
+rem
+rem    vsvars.bat 2010 amd64  # load 64-bit tools for MSVC 10.0
+rem    vsvars.bat 11.0        # load default (x86) tools for MSVC 2012
+rem    vsvars.vat x86_amd64   # load x64 cross-tools for MSVC 2005
+rem
+rem ***************************************************************************
 
 @echo off
 set SYSTEMC_MSVC_VERSION=
@@ -33,6 +53,8 @@ if "%1" == "2012"  goto check_MSVC110
 if "%1" == "12.0"  goto check_MSVC120
 if "%1" == "2013"  goto check_MSVC120
 if "%1" == "2014"  goto check_MSVC120
+if "%1" == "14.0"  goto check_MSVC140
+if "%1" == "2015"  goto check_MSVC140
 
 if not "%1" == "" set SYSTEMC_MSVC_PLATFORM=%1
 if     "%1" == "" set SYSTEMC_MSVC_PLATFORM=x86
@@ -64,6 +86,11 @@ goto load_MSVC
 :check_MSVC120
 set SYSTEMC_MSVC_VERSION=12.0 (2013)
 set VSINSTALLDIR=%VS120COMNTOOLS%..\..\
+goto load_MSVC
+
+:check_MSVC140
+set SYSTEMC_MSVC_VERSION=14.0 (2015)
+set VSINSTALLDIR=%VS140COMNTOOLS%..\..\
 goto load_MSVC
 
 :load_MSVC
