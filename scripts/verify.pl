@@ -911,7 +911,6 @@ sub prepare_environment
     # predefined macros
     @rt_defines = ();
     push @rt_defines, 'SC_ENABLE_ASSERTIONS';
-    push @rt_defines, 'SC_INCLUDE_DYNAMIC_PROCESSES'; # Required by GreenControl
 
     if( $rt_systemc_arch eq "gccsparcOS5" ) {
         $rt_ldrpath       = "-Wl,-R";
