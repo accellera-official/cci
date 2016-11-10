@@ -36,12 +36,13 @@ examples/ex18_Superset_Parameter_Value_Specification/ex18_Superset_Parameter_Val
 examples/ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_Api_and_Parameter_Implementations_from_Different_Providers.f
 examples/ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
 examples/ex21_Param_Destruction_Resurrection/ex21_Param_Destruction_Resurrection.cpp
+examples/ex22_Search_Predicate/ex22_Search_Predicate.cpp
 
 -------------------------------------------------------------------------------
  Tests that failed :
 -------------------------------------------------------------------------------
 
-Total passed : 32
+Total passed : 33
 Total failed : 0
 
    GUT METER : 100 %

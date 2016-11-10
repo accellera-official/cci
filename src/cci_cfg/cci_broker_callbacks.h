@@ -43,6 +43,14 @@ typedef cci_callback<const cci_param_untyped_handle& >
 typedef cci_callback_typed_handle<const cci_param_untyped_handle& >
   cci_param_destroy_callback_handle;
 
+/// Parameter predicate
+typedef cci_callback<const cci_param_untyped_handle&, bool >
+        cci_param_predicate;
+
+/// Parameter predicate handle
+typedef cci_callback_typed_handle<const cci_param_untyped_handle&, bool >
+        cci_param_predicate_handle;
+
 /* ------------------------------------------------------------------------ */
 
 /// Callback API of CCI brokers

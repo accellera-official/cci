@@ -23,6 +23,7 @@
 #include "cci_cfg/cci_broker_callbacks.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_value.h"
+#include "cci_cfg/cci_param_filter_iterator.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -261,6 +262,14 @@ public:
      */
     virtual const std::vector <cci_param_untyped_handle>
     get_param_handles(const std::string &pattern = "") = 0;
+
+    /// Search parameters with a user-defined predicate callback
+    /**
+     * @param pred Callback to filter parameters
+     * @return cci_iterable Iterable parameters
+     */
+    virtual cci_param_filter_iterator
+    get_param_handles(cci_param_predicate& pred) = 0;
 
     /// Convenience function to get a typed parameter handle.
     /**
