@@ -17,33 +17,33 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CFG_CCI_PARAM_FILTER_ITERATOR_H_INCLUDED_
-#define CCI_CFG_CCI_PARAM_FILTER_ITERATOR_H_INCLUDED_
+#ifndef CCI_CORE_CCI_FILTER_ITERATOR_H_INCLUDED_
+#define CCI_CORE_CCI_FILTER_ITERATOR_H_INCLUDED_
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
  */
 
+#include <vector>
+
+#include "cci_cfg/cci_config_macros.h"
+
 CCI_OPEN_NAMESPACE_
 
-#include "cci_cfg/cci_param_untyped_handle.h"
-#include "cci_cfg/cci_broker_callbacks.h"
-
 /**
- * @class cci_param_filter_iterator
- * @brief CCI parameter filter iterator class
+ * @class cci_filter_iterator
+ * @brief CCI filter iterator class
  *
  * The filter iterator class allows to iterate over a range skipping some
  * elements lazily. A predicate controls elements which are skipped.
  */
-class cci_param_filter_iterator
+template<typename T, typename P>
+class cci_filter_iterator
 {
 public:
-    typedef std::vector<cci_param_untyped_handle>::iterator iterator;
+    typedef typename std::vector<T>::iterator iterator;
 
-    cci_param_filter_iterator(cci_param_predicate pred,
-                              iterator begin,
-                              iterator end):
+    cci_filter_iterator(P pred, iterator begin, iterator end):
             m_pred(pred),
             m_begin(begin),
             m_end(end),
@@ -52,10 +52,7 @@ public:
         init();
     }
 
-    cci_param_filter_iterator(cci_param_predicate pred,
-                              iterator begin,
-                              iterator end,
-                              iterator current):
+    cci_filter_iterator(P pred, iterator begin, iterator end, iterator current):
             m_pred(pred),
             m_begin(begin),
             m_end(end),
@@ -64,27 +61,26 @@ public:
         init();
     }
 
-    cci_param_filter_iterator(cci_param_predicate pred,
-                              std::vector<cci_param_untyped_handle> handles):
+    cci_filter_iterator(P pred, std::vector<T> values):
             m_pred(pred),
-            m_handles(handles),
-            m_begin(m_handles.begin()),
-            m_end(m_handles.end()),
-            m_current(m_handles.begin())
+            m_values(values),
+            m_begin(m_values.begin()),
+            m_end(m_values.end()),
+            m_current(m_values.begin())
     {
         init();
     }
 
-    cci_param_filter_iterator& operator++() {
+    cci_filter_iterator& operator++() {
         increment();
         return *this;
     }
 
-    cci_param_untyped_handle operator*() const {
+    T operator*() const {
         return *m_current;
     }
 
-    cci_param_untyped_handle operator->() const {
+    T operator->() const {
         return *m_current;
     }
 
@@ -102,12 +98,12 @@ public:
         return !(operator==(it));
     }
 
-    cci_param_predicate predicate() const {
+    P predicate() const {
         return m_pred;
     }
 
-    cci_param_filter_iterator begin() {
-        return cci_param_filter_iterator(m_pred, m_begin, m_end, m_begin);
+    cci_filter_iterator begin() {
+        return cci_filter_iterator(m_pred, m_begin, m_end, m_begin);
     }
 
     iterator end() {
@@ -129,8 +125,8 @@ private:
         }
     }
 
-    cci_param_predicate m_pred;
-    std::vector<cci_param_untyped_handle> m_handles;
+    P m_pred;
+    std::vector<T> m_values;
     iterator m_begin;
     iterator m_end;
     iterator m_current;
@@ -138,4 +134,4 @@ private:
 
 CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CFG_CCI_PARAM_FILTER_ITERATOR_H_INCLUDED_
+#endif // CCI_CORE_CCI_FILTER_ITERATOR_H_INCLUDED_

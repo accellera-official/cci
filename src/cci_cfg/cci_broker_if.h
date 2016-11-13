@@ -23,7 +23,7 @@
 #include "cci_cfg/cci_broker_callbacks.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_value.h"
-#include "cci_cfg/cci_param_filter_iterator.h"
+#include "cci_core/cci_filter_iterator.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -36,6 +36,10 @@ class cci_param_typed_handle;
 
 // forward declaration for friend class
 class cci_broker_manager;
+
+/// CCI parameter filter iterator type
+typedef cci_filter_iterator<cci_param_untyped_handle, cci_param_predicate>
+        cci_param_filter_iterator;
 
 /// CCI configuration broker interface.
 /**
@@ -242,11 +246,6 @@ public:
      * @param par Parameter pointer.
      */
     virtual void remove_param(cci_param_if *par) = 0;
-
-public:
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////    Optional functions   //////////////////////////// //
-    // TODO: Optional Config broker functions to be discussed
 
     /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
     /**
