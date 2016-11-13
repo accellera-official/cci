@@ -41,6 +41,11 @@ class cci_broker_manager;
 typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
         cci_param_filter_iterator;
 
+/// CCI initial value filter iterator type
+typedef cci_filtered_range<std::pair<std::string, cci_value>,
+                           cci_initial_value_predicate>
+        cci_initial_value_range;
+
 /// CCI configuration broker interface.
 /**
  * This can be used by a tool to access the database or parameter objects, set initial values etc.
@@ -111,6 +116,38 @@ public:
      */
     virtual const cci::cci_value
     get_initial_cci_value(const std::string &parname) = 0;
+
+    /// Get unconsumed initial values
+    /**
+     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created.
+     *
+     * @return           Vector of unconsumed parameter's initial value.
+     */
+    virtual std::vector< std::pair<std::string, cci_value> >
+    get_unconsumed_initial_values() = 0;
+
+    /// Get unconsumed initial values with a user-defined predicate callback
+    /**
+     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created.
+     *
+     * @param pred       Callback to filter unconsumed initial values.
+     * @return           Vector of unconsumed parameter's initial value.
+     */
+    virtual cci_initial_value_range get_unconsumed_initial_values(
+            const cci_initial_value_predicate &pred) = 0;
+
+    /// Ignore unconsumed initial values
+    /**
+     * Filtering of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created. This method
+     * affects future calls to @see get_unconsumed_initial_values().
+     *
+     * @param pred       Callback to ignore unconsumed initial values.
+     */
+    virtual void ignore_unconsumed_initial_values(
+            const cci_initial_value_predicate &pred) = 0;
 
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
