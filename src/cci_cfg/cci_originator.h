@@ -122,6 +122,15 @@ public:
     /// Less operator overload
     bool operator<(const cci_originator& originator) const;
 
+    /// Swap originator object and string name with the provided originator.
+    /**
+     * Assists the assignment operator avoiding code duplication and creating
+     * an exception safe implementation.
+     *
+     * @param that Originator to swap
+     */
+    void swap(cci_originator& that);
+
 protected:
 
     /// Return the current originator object pointer
@@ -129,12 +138,6 @@ protected:
 
     /// Check originator is valid (sc_object or not empty string name)
     void check_is_valid() const;
-
-    /// Swap originator object and string name with the provided originator.
-    /**
-     * @param that Originator to swap
-     */
-    void swap(cci_originator& that);
 
     /// Pointer to the current originator object (priority compared to
     /// name m_originator_str)
