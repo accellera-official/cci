@@ -290,7 +290,7 @@ public:
 };
 
 /// Creates or returns the one non-private global config broker provided by the broker implementation
-/// Called by the header function get_current_broker, NEVER call this as a user!
+/// Called by the header function get_broker, NEVER call this as a user!
 /**
  * This returns the raw broker, not a handle, thus this
  * shall not be returned directy to the user!

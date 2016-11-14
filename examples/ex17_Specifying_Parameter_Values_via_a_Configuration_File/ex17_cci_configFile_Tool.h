@@ -83,7 +83,7 @@ class ex17_cci_configFile_Tool {
   explicit ex17_cci_configFile_Tool(const char* name)
       : mToolOriginator(name) {
     // get responsible broker
-    mApi = &cci::cci_broker_manager::get_current_broker(mToolOriginator);
+    mApi = &cci::cci_broker_manager::get_broker(mToolOriginator);
   }
 
   /**

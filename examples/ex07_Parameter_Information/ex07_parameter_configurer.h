@@ -49,8 +49,8 @@ SC_MODULE(ex07_parameter_configurer) {
       : int_param(cci::cci_originator(*this)),
         str_param(cci::cci_originator(*this)), check(0) {
     // Get the broker responsible for this module
-    // using 'get_current_broker' API
-    myBrokerInterface = &cci::cci_broker_manager::get_current_broker(
+    // using 'get_broker' API
+    myBrokerInterface = &cci::cci_broker_manager::get_broker(
         cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL

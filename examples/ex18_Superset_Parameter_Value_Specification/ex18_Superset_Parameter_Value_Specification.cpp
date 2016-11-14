@@ -59,7 +59,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Get reference/handle of the default global broker
   cci::cci_broker_if* myMainBrokerIF =
-      &cci::cci_broker_manager::get_current_broker(sc_main_originator);
+      &cci::cci_broker_manager::get_broker(sc_main_originator);
 
   // Assert if the returned broker handle is NULL
   assert(myMainBrokerIF != NULL && "SC_MAIN_BROKER_IF handle is returned NULL");

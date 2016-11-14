@@ -52,9 +52,9 @@ class ex16_observer {
     cci::cci_originator observerOriginator("observerOriginator");
 
     // Get the broker responsible for this module using
-    // 'get_current_broker' API
+    // 'get_broker' API
     observerBrokerIF =
-        &cci::cci_broker_manager::get_current_broker(observerOriginator);
+        &cci::cci_broker_manager::get_broker(observerOriginator);
 
     // Assert if broker handle returned is NULL
     assert(observerBrokerIF != NULL

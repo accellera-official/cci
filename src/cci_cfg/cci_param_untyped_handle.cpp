@@ -288,7 +288,7 @@ void cci_param_untyped_handle::check_is_valid(bool report_error) const
     if(!is_valid()) {
         if(m_orig_param_name) {
             cci_param_handle param_handle =
-                    cci_broker_manager::get_current_broker(m_originator).
+                    cci_broker_manager::get_broker(m_originator).
                             get_param_handle(m_orig_param_name);
             if(!param_handle.is_valid()) {
                 invalid_error = true;

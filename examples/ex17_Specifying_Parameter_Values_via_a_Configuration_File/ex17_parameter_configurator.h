@@ -49,7 +49,7 @@ SC_MODULE(ex17_parameter_configurator) {
       float_param(cci::cci_originator(*this)),
       str_param(cci::cci_originator(*this)) {
     // Get reference of the responsible broker for the module
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
 
     assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");
 

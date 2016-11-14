@@ -29,7 +29,7 @@ CCI_OPEN_NAMESPACE_
 /// Class managing broker hierarchy
 
 /**
- * To get access to a broker, use static cci_broker_manager::get_current_broker
+ * To get access to a broker, use static cci_broker_manager::get_broker
  * function.
  */
 class cci_broker_manager
@@ -38,12 +38,12 @@ public:
     /// Returns a handle to the broker currently on top of broker
     /**
      * Returns a handle to a private or the global broker.
-     * Returns a handle to the global broker if no broker on the stack.
+     * Returns a handle to the global broker if no registered broker.
      *
      * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_if &get_current_broker(
+    static cci_broker_if &get_broker(
             const cci_originator &originator = cci_originator());
 
     /// Register a broker handle in the broker hierarchy
@@ -72,7 +72,7 @@ protected:
      * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_if &get_current_parent_broker(
+    static cci_broker_if &get_parent_broker(
             const cci_originator &originator = cci_originator());
 
 private:

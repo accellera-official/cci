@@ -58,7 +58,7 @@ SC_MODULE(ex11_param_value_sync) {
       : ValueSyncOriginator("ValueSyncOriginator") {
     // Get handle of the broker responsible for the class/module
     ValueSyncBrokerIF =
-        &cci::cci_broker_manager::get_current_broker(ValueSyncOriginator);
+        &cci::cci_broker_manager::get_broker(ValueSyncOriginator);
 
     // Copy the list of selected base parameters to a local std::vector
     returnBaseParamList = BaseParamList;

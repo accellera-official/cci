@@ -71,7 +71,7 @@ SC_MODULE(ex09_router) {
     XREPORT("[ROUTER C_TOR] ----- [ROUTER CONSTRUCTOR BEGINS HERE] ------");
 
     // Get handle of the broker
-    myBrokerForRouter = &cci::cci_broker_manager::get_current_broker(
+    myBrokerForRouter = &cci::cci_broker_manager::get_broker(
         cci::cci_originator(*this));
 
     // Assert if NULL

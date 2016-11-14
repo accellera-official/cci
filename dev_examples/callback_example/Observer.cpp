@@ -27,7 +27,7 @@
 #include <systemc.h>
 
 Observer::Observer(const char* name)
-: mBroker(&cci::cci_broker_manager::get_current_broker(cci::cci_originator("OBSERVER")))
+: mBroker(&cci::cci_broker_manager::get_broker(cci::cci_originator("OBSERVER")))
 , mName(name)
 { 
   DEMO_DUMP(mName.c_str(), "register for new parameter callbacks");

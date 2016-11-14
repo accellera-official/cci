@@ -34,7 +34,7 @@ void ParameterOwnerModule::main_action() {
   DEMO_DUMP(name(), "Executing main_action");
 
   // get the config API which is responsible for this module
-  cci::cci_broker_if* mApi = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+  cci::cci_broker_if* mApi = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
   assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
   
   // create a local parameter

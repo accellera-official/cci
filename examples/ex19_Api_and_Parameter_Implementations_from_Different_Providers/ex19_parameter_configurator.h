@@ -53,7 +53,7 @@ SC_MODULE(ex19_parameter_configurator) {
         cfgr_user_param(cci::cci_originator(*this)),
         cfgr_shared_param(0) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(*this);
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker(*this);
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Parameter-Setter handle is NULL");

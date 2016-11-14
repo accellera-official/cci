@@ -60,7 +60,7 @@ SC_MODULE(ex09_top_module) {
     XREPORT("[TOP_MODULE C_TOR] -- [TOP MODULE CONSTRUCTOR BEGINS HERE]");
 
     // Get handle of the default broker
-    myDefaultBroker = &cci::cci_broker_manager::get_current_broker(
+    myDefaultBroker = &cci::cci_broker_manager::get_broker(
         cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL

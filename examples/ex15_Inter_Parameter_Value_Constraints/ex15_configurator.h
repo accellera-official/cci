@@ -49,7 +49,7 @@ SC_MODULE(ex15_configurator) {
       addr_lines_base(cci::cci_originator(*this)),
       mem_size_base(cci::cci_originator(*this)) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");

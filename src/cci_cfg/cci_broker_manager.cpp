@@ -28,11 +28,11 @@ CCI_OPEN_NAMESPACE_
 std::map<cci_originator, cci_broker_if *> cci_broker_manager::m_brokers;
 
 cci_broker_if&
-cci_broker_manager::get_current_broker(const cci_originator &originator)
+cci_broker_manager::get_broker(const cci_originator &originator)
 {
     cci_broker_if*& broker = m_brokers[originator];
     if (!broker) {
-        broker = &get_current_parent_broker(originator).
+        broker = &get_parent_broker(originator).
                 create_broker_handle(originator);
     }
 
@@ -40,7 +40,7 @@ cci_broker_manager::get_current_broker(const cci_originator &originator)
 }
 
 cci_broker_if&
-cci_broker_manager::get_current_parent_broker(const cci_originator &originator)
+cci_broker_manager::get_parent_broker(const cci_originator &originator)
 {
     // Get parent originator
     cci_originator parent_originator = originator.get_parent_originator();
@@ -52,7 +52,7 @@ cci_broker_manager::get_current_parent_broker(const cci_originator &originator)
                    __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
             return create_global_cnf_broker().create_broker_handle(originator);
         } else {
-            broker = &get_current_parent_broker(parent_originator).
+            broker = &get_parent_broker(parent_originator).
                     create_broker_handle(parent_originator);
         }
     }

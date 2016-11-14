@@ -1058,7 +1058,7 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name,
                             const std::string& desc,
                             cci_name_type name_type,
                             const cci_originator& originator),
-                            cci_broker_manager::get_current_broker(
+                            cci_broker_manager::get_broker(
                                 originator))
 
 /// Constructor with (local/hierarchical) name, default value, description,
@@ -1068,7 +1068,7 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
                                       const std::string& desc,
                                       cci_name_type name_type,
                                       const cci_originator& originator),
-                                      cci_broker_manager::get_current_broker(
+                                      cci_broker_manager::get_broker(
                                           originator))
 
 /// Constructor with (local/hierarchical) name, default value, private broker,

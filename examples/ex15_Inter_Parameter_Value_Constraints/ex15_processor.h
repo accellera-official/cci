@@ -57,7 +57,7 @@ SC_MODULE(ex15_processor) {
         addr_lines_base(cci::cci_originator(*this)),
         mem_size_base(cci::cci_originator(*this)) {
     // Get reference of the broker responsible for the module
-    processor_BrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+    processor_BrokerIF = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
 
     assert(processor_BrokerIF != NULL
            && "Broker's Handle for the 'processor' module is returned NULL");

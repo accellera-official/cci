@@ -61,7 +61,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Get handle of the broker using the originator
   cci::cci_broker_if* globalBroker =
-      &cci::cci_broker_manager::get_current_broker(myOriginator);
+      &cci::cci_broker_manager::get_broker(myOriginator);
 
   // Assert if broker handle returned is NULL
   assert(globalBroker != NULL

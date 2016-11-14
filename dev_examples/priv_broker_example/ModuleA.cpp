@@ -42,7 +42,7 @@ ModuleA::ModuleA(sc_core::sc_module_name name, cci::cci_broker_if* priv_broker)
 
 void ModuleA::main_action() {
 
-  // Note: Do NOT use cci_broker_manager::get_current_broker here, it won't return the private broker!
+  // Note: Do NOT use cci_broker_manager::get_broker here, it won't return the private broker!
   
   
   wait(10, SC_SEC);

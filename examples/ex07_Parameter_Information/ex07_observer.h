@@ -48,8 +48,8 @@ SC_MODULE(ex07_observer) {
     cci::cci_originator observerOriginator("observerOriginator");
 
     // Get the broker responsible for this module using
-    // 'get_current_broker' API
-    observerBrokerIF = &cci::cci_broker_manager::get_current_broker(
+    // 'get_broker' API
+    observerBrokerIF = &cci::cci_broker_manager::get_broker(
         observerOriginator);
 
     // Assert if broker handle returned is NULL

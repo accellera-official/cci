@@ -48,7 +48,7 @@ SC_MODULE(ex18_parameter_configurator) {
    */
   SC_CTOR(ex18_parameter_configurator) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF =&cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+    myCfgrBrokerIF =&cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");

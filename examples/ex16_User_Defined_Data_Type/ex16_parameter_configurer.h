@@ -50,9 +50,9 @@ SC_MODULE(ex16_parameter_configurer) {
   SC_CTOR(ex16_parameter_configurer):
       udt_param(cci::cci_originator(*this)) {
     // Get the broker responsible for this module using
-    // 'get_current_broker' API
+    // 'get_broker' API
     myBrokerInterface =
-        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+        &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
 
     // Assert if broker handle returned is NULL
     assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");

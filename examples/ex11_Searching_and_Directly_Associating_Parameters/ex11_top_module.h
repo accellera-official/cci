@@ -57,7 +57,7 @@ SC_MODULE(ex11_top_module) {
   SC_CTOR(ex11_top_module) {
     // Get handle of the broker responsible for the class/module
     myTopModBrokerIF =
-        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+        &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
 
     // Strings to store the names of the owner's parameters
     std::string str1, str2;

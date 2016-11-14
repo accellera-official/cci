@@ -53,7 +53,7 @@ class ex20_observer {
 
     // Get handle of the broker responsible for the class/module
     Observer_BrokerIF =
-        &cci::cci_broker_manager::get_current_broker(observer_originator);
+        &cci::cci_broker_manager::get_broker(observer_originator);
 
     // Report if handle returned is NULL
     assert(Observer_BrokerIF != NULL && "Configuration Broker handle is NULL");
