@@ -46,20 +46,6 @@ public:
     static cci_broker_if &get_current_broker(
             const cci_originator &originator = cci_originator());
 
-    /// Returns a handle to the broker currently on second top of broker stack
-    /**
-     * This can be used by a private broker to identify its parent's broker -
-     * which is the broker it needs to forward the public actions to.
-     *
-     * Returns a handle to a private or the global broker.
-     * Returns a handle to the global broker if not two brokers on the stack.
-     *
-     * @param originator Originator the handle shall point to
-     * @return Broker (private or global) handle
-     */
-    static cci_broker_if &get_current_parent_broker(
-            const cci_originator &originator = cci_originator());
-
     /// Register a broker handle in the broker hierarchy
     /**
      * This can be used to register a private broker handle for a specific
@@ -73,6 +59,21 @@ public:
      */
     static cci_broker_if &register_broker(cci_broker_if* broker,
                                           const cci_originator &originator);
+
+protected:
+    /// Returns a handle to the parent broker
+    /**
+     * This can be used by a private broker to identify its parent's broker -
+     * which is the broker it needs to forward the public actions to.
+     *
+     * Returns a handle to a private or the global broker.
+     * Returns a handle to the global broker if no parent broker.
+     *
+     * @param originator Originator the handle shall point to
+     * @return Broker (private or global) handle
+     */
+    static cci_broker_if &get_current_parent_broker(
+            const cci_originator &originator = cci_originator());
 
 private:
     /// Public broker hierarchy
