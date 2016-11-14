@@ -100,15 +100,6 @@ public:
      */
     const char* name() const;
 
-    /// Returns the string name of the current originator
-    /**
-     * Might return empty if no explicit string name was provided by the user
-     * during originator construction
-     *
-     * @return Originator user provided name or NULL
-     */
-    const char* string_name() const;
-
     /// Assignment operator overload
     /**
      * @param originator Originator to assign. Pass by value is intentional.
@@ -117,7 +108,7 @@ public:
     cci_originator& operator=( cci_originator originator );
 
     /// Compare operator overload
-    bool operator==( const cci_originator& originator );
+    bool operator==( const cci_originator& originator ) const;
 
     /// Less operator overload
     bool operator<(const cci_originator& originator) const;
@@ -138,6 +129,9 @@ protected:
 
     /// Check originator is valid (sc_object or not empty string name)
     void check_is_valid() const;
+
+    /// Returns the string name of the current originator
+    const char* string_name() const;
 
     /// Pointer to the current originator object (priority compared to
     /// name m_originator_str)
