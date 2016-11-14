@@ -65,9 +65,8 @@ const char* cci_originator::name() const {
         return m_originator_obj->name();
     } else if(m_originator_str) {
         return m_originator_str->c_str();
-    } else {
-        return default_name;
     }
+    return default_name;
 }
 
 const char* cci_originator::string_name() const {
