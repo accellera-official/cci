@@ -76,13 +76,10 @@ SC_MODULE(ex03_simple_ip) {
     } else {
       XREPORT_ERROR("Before_End_Elab: Invalid update to struc_param,"
                     " value changed to: " << struc_param);
-      assert(0);
+      sc_assert(0);
     }
   }
 
-  /// Start Of Simulation->TODO
-  // void start_of_simulation()    {
-  //}
 
   /**
    *  @fn     void execute()
@@ -90,7 +87,7 @@ SC_MODULE(ex03_simple_ip) {
    *  @return void
    */
   void execute() {
-    // Wait for 10ns to allow config_ip to update int_param value FIXME
+    // Wait for 10ns to allow config_ip to update int_param value
     wait(10, sc_core::SC_NS);
 
     // Update struc_param value to 2 (invalid)
@@ -110,7 +107,7 @@ SC_MODULE(ex03_simple_ip) {
     } else {
       XREPORT_ERROR("execute: Invalid update to struc_param,value changed to: "
                     << struc_param);
-      assert(0);
+      sc_assert(0);
     }
 
     /// Create an elab-time param after end_of elaboration()
@@ -140,7 +137,7 @@ SC_MODULE(ex03_simple_ip) {
     } else {
       XREPORT_ERROR("execute: Invalid update to struc_param_post_eoe,"
                     " value changed to: " << struc_param_post_eoe);
-      assert(0);
+      sc_assert(0);
     }
   }
 

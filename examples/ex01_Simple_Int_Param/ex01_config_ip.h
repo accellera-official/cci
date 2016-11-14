@@ -27,7 +27,6 @@
 #define EXAMPLES_EX01_SIMPLE_INT_PARAM_EX01_CONFIG_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -46,7 +45,7 @@ SC_MODULE(ex01_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cci_broker_manager::get_current_broker(
         cci::cci_originator(*this));
-    assert(m_cci != NULL);
+    sc_assert(m_cci != NULL);
     SC_THREAD(execute);
   }
 
@@ -65,17 +64,17 @@ SC_MODULE(ex01_config_ip) {
     // Check for existance of the param
     if (m_cci->param_exists(int_param_name)) {
       // Get handle to the param
-      cci::cci_param_handle int_param = m_cci->get_param_handle(int_param_name);
-      assert(int_param.is_valid());
+      cci::cci_param_handle int_param_handle = m_cci->get_param_handle(int_param_name);
+      sc_assert(int_param_handle.is_valid());
 
       // Update the param's value to 2
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 2");
-      int_param.set_cci_value(cci::cci_value::from_json("2"));
+      int_param_handle.set_cci_value(cci::cci_value::from_json("2"));
 
       // Display new value
-      std::string new_value = int_param.get_cci_value().to_json();
+      std::string new_value = int_param_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param.get_name() << " is " << new_value);
+              << int_param_handle.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
     }

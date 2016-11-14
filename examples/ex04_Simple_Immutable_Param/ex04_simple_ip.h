@@ -59,22 +59,21 @@ SC_MODULE(ex04_simple_ip) {
   }
 
   /**
-   *  @fn     void expect(const char* phase, const char* key, const int val, const int exp)
+   *  @fn     void expect(const char* phase, const char* Name, const int val, const int exp)
    *  @brief  Compares the expected value with the actual value
    *  @param  phase Current phase
-   *  @param  key Parameter key used to lookup the parameter
+   *  @param  Name The name of the parameter
    *  @param  val The value of the parameter
    *  @param  exp The expected value of the parameter
    *  @return void
    */
-  //! @note remove this function after the CCI implementation is in place
-  void expect(const char* phase, const char *key, const int val,
+  void expect(const char* phase, const char *Name, const int val,
               const int exp) {
     if (val != exp) {
-      XREPORT_PLAIN("Warning: " << phase << key << " Expected to have value = "
-                    << exp << " but has " << val << ". TBD?");
+      XREPORT_PLAIN("Warning: " << phase << Name << " Expected to have value = "
+                    << exp << " but has " << val << "(not expected)");
     } else {
-      XREPORT_PLAIN("Info: " << phase << key << " = " << val << " (expected)");
+      XREPORT_PLAIN("Info: " << phase << Name << " = " << val << " (expected)");
     }
   }
 
@@ -84,11 +83,14 @@ SC_MODULE(ex04_simple_ip) {
    *  @return void
    */
   void execute() {
-    wait(20, sc_core::SC_NS);
+	//UC-1: Attempt to change the parameter at run time
+	SC_REPORT_INFO("simple_ip::execute", "Testing UC-1");
+
+	// Wait for 10ns to allow simple_ip to update param_1 value
+    wait(10, sc_core::SC_NS);
 
     // Display current value of bufsiz
     expect("@Run: ", "param_1", static_cast<int>(param_1), 100);
-    expect("@Run: ", "param_2", static_cast<int>(param_2), 2);
 
     // Attempt to set new value (10) to param_1
     try {
@@ -98,6 +100,17 @@ SC_MODULE(ex04_simple_ip) {
       XREPORT_WARNING(x.what());
     }
     expect("@Run: ", "param_1", static_cast<int>(param_1), 100);
+
+	//UC-2: Precedence of initial value over default value of the parameter
+    SC_REPORT_INFO("simple_ip::execute", "Testing UC-2");
+
+	// Wait for 11ns to allow config_ip to update param_2 value
+	wait(11, sc_core::SC_NS);
+
+	expect("@Run: ", "param_2", static_cast<int>(param_2), 2);
+
+	// Wait for 9ns to allow simple_ip to update param_2 value
+	wait(9, sc_core::SC_NS);
 
     // Attempt to set new value (20) to param_2
     try {

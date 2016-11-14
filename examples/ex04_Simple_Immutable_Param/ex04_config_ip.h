@@ -27,7 +27,6 @@
 #define EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_CONFIG_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include "xreport.hpp"
 
 /**
@@ -45,32 +44,18 @@ SC_MODULE(ex04_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cci_broker_manager::get_current_broker(
         cci::cci_originator(*this));
-    assert(m_cci != NULL);
+    sc_assert(m_cci != NULL);
     SC_THREAD(execute);
-
-    setup_sim_ip("Attempting to setup config_ip to 100 before IP construction",
-                 "sim_ip.param_1", "100");
-  }
-
-  /**
-   *  @fn     void setup_sim_ip(const char* msg, const char* key, const char* val)
-   *  @brief  Function to setup the simulation
-   *  @param  msg A message to be printed regarding the setup
-   *  @param  key The parameter key to lookup and modify
-   *  @param  val The value to assign to the parameter referenced by key
-   *  @return void
-   */
-  void setup_sim_ip(const char *msg, const char *key, const char *val) {
-    XREPORT(msg);
-
-    if (m_cci->param_exists(key)) {
+	XREPORT("Attempting to setup config_ip to 100 before IP construction");
+	 if (m_cci->param_exists("sim_ip.param_1")) {
       XREPORT_ERROR("Instantiate config_ip ahead of simple_ip"
                     " to demonstrate this example");
     } else {
-      XREPORT("Set init-value of " << key << " to " << val);
-      m_cci->set_initial_cci_value(key, cci::cci_value::from_json(val));
+      XREPORT("Set init-value of " << "sim_ip.param_1" << " to " << "100");
+      m_cci->set_initial_cci_value("sim_ip.param_1", cci::cci_value::from_json("100"));
     }
   }
+
 
   /**
    *  @fn     void execute()
@@ -78,17 +63,18 @@ SC_MODULE(ex04_config_ip) {
    *  @return void
    */
   void execute() {
-    wait(10, sc_core::SC_NS);
+	// Wait for 20ns to allow config_ip to update parameter value
+    wait(20, sc_core::SC_NS);
 
     if (m_cci->param_exists("sim_ip.param_2")) {
-      cci::cci_param_handle param_2 =
+      cci::cci_param_handle param_2_handle =
         m_cci->get_param_handle("sim_ip.param_2");
-      if (!param_2.is_valid()) {
+      if (!param_2_handle.is_valid()) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2'!");
       } else {
         try {
           XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
-          param_2.set_cci_value(cci::cci_value::from_json("200"));
+          param_2_handle.set_cci_value(cci::cci_value::from_json("200"));
         } catch (std::exception &x) {
           XREPORT_WARNING(x.what());
         }

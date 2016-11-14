@@ -30,13 +30,13 @@
 #include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
-// #include "boost/cstdint.hpp"
+ #include "boost/cstdint.hpp"
 
-#define MK64(a, b) (((boost::int64_t)(a)<< 32) | (b))
+ #define MK64(a, b) (((boost::int64_t)(a)<< 32) | (b))
 
 /**
  *  @class  ex02_simple_ip
- *  @brief  The class for the simple_ip which owns CCI params represetning basic data types
+ *  @brief  The class for the simple_ip which owns CCI params representing basic data types
  */
 SC_MODULE(ex02_simple_ip) {
  public:
@@ -50,10 +50,9 @@ SC_MODULE(ex02_simple_ip) {
         char_param("char_param", 'A'),
         uchar_param("uchar_param", 'U'),
         int_param("int_param", -1),
-        uint_param("uint_param", 0xFEEDF00D)
-        //, int16_param ("int16_param", 0x1234)
-        //, int64_param ("int64_param", MK64(0x9,0x876543210))
-            ,
+        uint_param("uint_param", 0xFEEDF00D),
+        int16_param ("int16_param", 0x1234),
+        int64_param ("int64_param", MK64(0x9,0x876543210)),
         float_param("float_param", 3.14),
         double_param("double_param", 2.714),
         string_param("string_param", "C++ String") {
@@ -67,10 +66,10 @@ SC_MODULE(ex02_simple_ip) {
             << int_param.get_value());
     XREPORT("@Ctor: Default value of " << uint_param.get_name() << " is 0x"
             << std::hex << uint_param.get_value());
-    // XREPORT("@Ctor: Default value of " << int16_param.get_name() <<
-    // " is 0x" << std::hex << int16_param.get_value());
-    // XREPORT("@Ctor: Default value of " << int64_param.get_name() <<
-    // " is 0x" << std::hex << int64_param.get_value());
+    XREPORT("@Ctor: Default value of " << int16_param.get_name() <<" is 0x"
+		    << std::hex << int16_param.get_value());
+    XREPORT("@Ctor: Default value of " << int64_param.get_name() <<" is 0x" 
+	        << std::hex << int64_param.get_value());
     XREPORT("@Ctor: Default value of " << float_param.get_name() << " is "
             << float_param.get_value());
     XREPORT("@Ctor: Default value of " << double_param.get_name() << " is "
@@ -87,7 +86,7 @@ SC_MODULE(ex02_simple_ip) {
    *  @return void
    */
   void execute() {
-    // Wait for 20 ns
+    // Wait for 20ns to allow config_ip to update parameter value
     wait(20, sc_core::SC_NS);
   }
 
@@ -98,8 +97,8 @@ SC_MODULE(ex02_simple_ip) {
   cci::cci_param<unsigned char> uchar_param; ///< unsigned char parameter
   cci::cci_param<int> int_param; ///< int parameter
   cci::cci_param<unsigned int> uint_param; ///< unsigned int parameter
-  // cci::cci_param<short int> int16_param;  ///< 16-bit integer parameter
-  // cci::cci_param<boost::int64_t> int64_param; ///< 64-bit integer parameter
+  cci::cci_param<short int> int16_param;  ///< 16-bit integer parameter
+  cci::cci_param<boost::int64_t> int64_param; ///< 64-bit integer parameter
   cci::cci_param<float> float_param; ///< float parameter
   cci::cci_param<double> double_param; ///< double parameter
   cci::cci_param<std::string> string_param;  ///< string parameter
