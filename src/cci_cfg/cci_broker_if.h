@@ -39,7 +39,7 @@ class cci_broker_manager;
 
 /// CCI parameter filter iterator type
 typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
-        cci_param_filter_iterator;
+        cci_param_range;
 
 /// CCI initial value filter iterator type
 typedef cci_filtered_range<std::pair<std::string, cci_value>,
@@ -304,7 +304,7 @@ public:
      * @param pred Callback to filter parameters
      * @return cci_iterable Iterable parameters
      */
-    virtual cci_param_filter_iterator
+    virtual cci_param_range
     get_param_handles(cci_param_predicate& pred) = 0;
 
     /// Convenience function to get a typed parameter handle.
