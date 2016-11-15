@@ -68,7 +68,7 @@ cci_param_untyped_handle& cci_param_untyped_handle::operator=(
     m_orig_param = param_handle.m_orig_param;
     m_orig_param_name = param_handle.m_orig_param_name;
 
-    if(is_valid()) {
+    if((this != &param_handle) && is_valid()) {
         m_orig_param->add_param_handle(this);
     }
     return *this;
