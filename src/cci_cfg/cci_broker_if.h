@@ -23,7 +23,7 @@
 #include "cci_cfg/cci_broker_callbacks.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_value.h"
-#include "cci_core/cci_filter_iterator.h"
+#include "cci_core/cci_filtered_range.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -38,7 +38,7 @@ class cci_param_typed_handle;
 class cci_broker_manager;
 
 /// CCI parameter filter iterator type
-typedef cci_filter_iterator<cci_param_untyped_handle, cci_param_predicate>
+typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
         cci_param_filter_iterator;
 
 /// CCI configuration broker interface.

@@ -17,8 +17,8 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CORE_CCI_FILTER_ITERATOR_H_INCLUDED_
-#define CCI_CORE_CCI_FILTER_ITERATOR_H_INCLUDED_
+#ifndef CCI_CORE_CCI_FILTERED_RANGE_H_INCLUDED_
+#define CCI_CORE_CCI_FILTERED_RANGE_H_INCLUDED_
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
@@ -31,19 +31,19 @@
 CCI_OPEN_NAMESPACE_
 
 /**
- * @class cci_filter_iterator
+ * @class cci_filtered_range
  * @brief CCI filter iterator class
  *
  * The filter iterator class allows to iterate over a range skipping some
  * elements lazily. A predicate controls elements which are skipped.
  */
 template<typename T, typename P, typename Container = std::vector<T> >
-class cci_filter_iterator
+class cci_filtered_range
 {
 public:
     typedef typename Container::iterator iterator;
 
-    cci_filter_iterator(P pred, iterator begin, iterator end):
+    cci_filtered_range(P pred, iterator begin, iterator end):
             m_pred(pred),
             m_begin(begin),
             m_end(end),
@@ -52,7 +52,7 @@ public:
         init();
     }
 
-    cci_filter_iterator(P pred, iterator begin, iterator end, iterator current):
+    cci_filtered_range(P pred, iterator begin, iterator end, iterator current):
             m_pred(pred),
             m_begin(begin),
             m_end(end),
@@ -61,7 +61,7 @@ public:
         init();
     }
 
-    cci_filter_iterator(P pred, Container values):
+    cci_filtered_range(P pred, Container values):
             m_pred(pred),
             m_values(values),
             m_begin(m_values.begin()),
@@ -71,7 +71,7 @@ public:
         init();
     }
 
-    cci_filter_iterator& operator++() {
+    cci_filtered_range& operator++() {
         increment();
         return *this;
     }
@@ -102,8 +102,8 @@ public:
         return m_pred;
     }
 
-    cci_filter_iterator begin() {
-        return cci_filter_iterator(m_pred, m_begin, m_end, m_begin);
+    cci_filtered_range begin() {
+        return cci_filtered_range(m_pred, m_begin, m_end, m_begin);
     }
 
     iterator end() {
@@ -134,4 +134,4 @@ private:
 
 CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CORE_CCI_FILTER_ITERATOR_H_INCLUDED_
+#endif // CCI_CORE_CCI_FILTERED_RANGE_H_INCLUDED_
