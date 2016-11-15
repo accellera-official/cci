@@ -37,11 +37,11 @@ CCI_OPEN_NAMESPACE_
  * The filter iterator class allows to iterate over a range skipping some
  * elements lazily. A predicate controls elements which are skipped.
  */
-template<typename T, typename P>
+template<typename T, typename P, typename Container = std::vector<T> >
 class cci_filter_iterator
 {
 public:
-    typedef typename std::vector<T>::iterator iterator;
+    typedef typename Container::iterator iterator;
 
     cci_filter_iterator(P pred, iterator begin, iterator end):
             m_pred(pred),
@@ -61,7 +61,7 @@ public:
         init();
     }
 
-    cci_filter_iterator(P pred, std::vector<T> values):
+    cci_filter_iterator(P pred, Container values):
             m_pred(pred),
             m_values(values),
             m_begin(m_values.begin()),
@@ -126,7 +126,7 @@ private:
     }
 
     P m_pred;
-    std::vector<T> m_values;
+    Container m_values;
     iterator m_begin;
     iterator m_end;
     iterator m_current;
