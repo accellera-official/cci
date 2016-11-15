@@ -10,6 +10,10 @@ Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int_param is -1
 
 Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uint_param is 0xfeedf00d
 
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int16_param is 0x1234
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int64_param is 0x976543210
+
 Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.float_param is 3.14
 
 Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.double_param is 2.714

@@ -28,7 +28,6 @@
 #define EXAMPLES_EX02_FULLY_SUPPORTED_DATA_TYPE_PARAM_EX02_CONFIG_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -47,7 +46,7 @@ SC_MODULE(ex02_config_ip) {
     // Get CCI configuration handle
     m_cci = &cci::cci_broker_manager::get_current_broker(
         cci::cci_originator(*this));
-    assert(m_cci != NULL);
+    sc_assert(m_cci != NULL);
     SC_THREAD(execute);
   }
 
@@ -66,52 +65,52 @@ SC_MODULE(ex02_config_ip) {
     // Check for existance of int_param
     if (m_cci->param_exists(param_name)) {
       // Get handle to the param
-      cci::cci_param_handle int_param = m_cci->get_param_handle(param_name);
-      assert(int_param.is_valid());
+      cci::cci_param_handle int_param_handle = m_cci->get_param_handle(param_name);
+      sc_assert(int_param_handle.is_valid());
 
       cci::cci_data_type partype = cci::CCI_UNAVAILABLE_DATA;
-      partype = int_param.get_basic_type();
+      partype = int_param_handle.get_basic_type();
       if(partype == cci::CCI_NUMBER_DATA) {
         XREPORT("@execute: Type of " << param_name << " is a number.");
       } else {
         XREPORT_ERROR("@execute: Type of " << param_name << " is not a number.");
       }
 
-      // Typecast the param to an 'int' type
-      cci::cci_param_typed_handle<int> int_param_typed =
-          cci::cci_param_typed_handle<int>(int_param);
-      if (!int_param_typed.is_valid()) {
-        XREPORT_WARNING("@execute: Typecast of " << int_param.get_name()
+      // Convert the untyped handle of the param to a typed handle 'int' 
+      cci::cci_param_typed_handle<int> int_param_typed_handle =
+          cci::cci_param_typed_handle<int>(int_param_handle);
+      if (!int_param_typed_handle.is_valid()) {
+        XREPORT_WARNING("@execute: Typecast of " << int_param_handle.get_name()
                         << " to 'cci::cci_param_typed_handle<int> *' type failed.");
       } else {
         XREPORT("@execute: Typecast of " << param_name
                 << " to 'cci::cci_param_typed_handle<int> *' succeeded");
-        XREPORT("@execute: Current value of " << int_param_typed.get_name()
-                << " is " << int_param_typed.get_value());
+        XREPORT("@execute: Current value of " << int_param_typed_handle.get_name()
+                << " is " << int_param_typed_handle.get_value());
       }
 
-      // Typecast the param to 'unsigned int' type
-      cci::cci_param_typed_handle<unsigned int> uint_param_typed =
-          cci::cci_param_typed_handle<unsigned int>(int_param);
-      if (!uint_param_typed.is_valid()) {
+      // Convert the untyped handle of the param to a typed handle 'unsigned int'
+      cci::cci_param_typed_handle<unsigned int> uint_param_typed_handle =
+          cci::cci_param_typed_handle<unsigned int>(int_param_handle);
+      if (!uint_param_typed_handle.is_valid()) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
                         << " to 'cci::cci_param_typed_handle<unsigned int> *'"
                         " type failed.");
       } else {
-        XREPORT("@execute: Current value of " << uint_param_typed.get_name()
-                << " is " << uint_param_typed.get_value());
+        XREPORT("@execute: Current value of " << uint_param_typed_handle.get_name()
+                << " is " << uint_param_typed_handle.get_value());
       }
 
-      // Typecast the param to 'std::string' type
-      cci::cci_param_typed_handle<std::string> string_param_typed =
-          cci::cci_param_typed_handle<std::string>(int_param);
-      if (!string_param_typed.is_valid()) {
+      // Convert the untyped handle of the param to a typed handle 'std::string'
+      cci::cci_param_typed_handle<std::string> string_param_typed_handle =
+          cci::cci_param_typed_handle<std::string>(int_param_handle);
+      if (!string_param_typed_handle.is_valid()) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
                         << " to 'cci::cci_param_typed_handle<std::string> *'"
                         " type failed.");
       } else {
-        XREPORT("@execute: Current value of " << string_param_typed.get_name()
-                << " is " << string_param_typed.get_value());
+        XREPORT("@execute: Current value of " << string_param_typed_handle.get_name()
+                << " is " << string_param_typed_handle.get_value());
       }
 
     } else {

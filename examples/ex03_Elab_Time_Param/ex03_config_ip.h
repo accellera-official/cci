@@ -28,7 +28,6 @@
 #define EXAMPLES_EX03_ELAB_TIME_PARAM_EX03_CONFIG_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -47,7 +46,7 @@ SC_MODULE(ex03_config_ip) {
     // Get CCI configuration handle specific for this module
     m_cci = &cci::cci_broker_manager::get_current_broker(
         cci::cci_originator(*this));
-    assert(m_cci != NULL);
+    sc_assert(m_cci != NULL);
     SC_THREAD(execute);
   }
 
@@ -66,34 +65,34 @@ SC_MODULE(ex03_config_ip) {
     // Check for existance of the structure_param
     if (m_cci->param_exists(struc_param_name)) {
       // Get handle to the param
-      cci::cci_param_handle struc_param =
+      cci::cci_param_handle struc_param_handle =
           m_cci->get_param_handle(struc_param_name);
-      assert(struc_param.is_valid());
+      sc_assert(struc_param_handle.is_valid());
 
       // Update the structure_param value to 3 (invalid)
       try {
         XREPORT("execute: [EXTERNAL] Set value of "<< struc_param_name<< " to 3");
-        struc_param.set_cci_value(cci::cci_value::from_json("3"));
+        struc_param_handle.set_cci_value(cci::cci_value::from_json("3"));
       }catch(std::exception &x) {
         XREPORT_WARNING(x.what());
       }
 
       // Display new value
-      std::string new_value = struc_param.get_cci_value().to_json();
+      std::string new_value = struc_param_handle.get_cci_value().to_json();
       // XREPORT("execute: [EXTERNAL] Current value of " <<
       // struc_param.get_name()<< " is " << new_value);
       if ("1" == new_value) {
-        XREPORT("execute: [EXTERNAL] Value of " << struc_param.get_name()
+        XREPORT("execute: [EXTERNAL] Value of " << struc_param_handle.get_name()
                 << " remains unchanged " << new_value);
       } else if ("3" == new_value) {
         XREPORT_WARNING("execute: [EXTERNAL] Value of "
-                        << struc_param.get_name() << " changed to: "
+                        << struc_param_handle.get_name() << " changed to: "
                         << new_value);
       } else {
         XREPORT_ERROR("execute: [EXTERNAL] Invalid update to "
-                      << struc_param.get_name() << " value changed to: "
+                      << struc_param_handle.get_name() << " value changed to: "
                       << new_value);
-        assert(0);
+        sc_assert(0);
       }
     } else {
       XREPORT_ERROR("execute: Param (" << struc_param_name
