@@ -32,104 +32,134 @@ CCI_OPEN_NAMESPACE_
 
 /**
  * @class cci_filtered_range
- * @brief CCI filter iterator class
+ * @brief CCI filtered range class
  *
- * The filter iterator class allows to iterate over a range skipping some
+ * The filtered range class allows to iterate over a range skipping some
  * elements lazily. A predicate controls elements which are skipped.
  */
-template<typename T, typename P, typename Container = std::vector<T> >
+template<typename T, typename Predicate, typename Container = std::vector<T> >
 class cci_filtered_range
 {
 public:
-    typedef typename Container::iterator iterator;
+    typedef typename Container::iterator container_iterator;
 
-    cci_filtered_range(P pred, iterator begin, iterator end):
+private:
+    class cci_iterator
+    {
+    public:
+        friend class cci_filtered_range;
+
+        cci_iterator():
+                m_fr(NULL)
+        {};
+
+    private:
+        cci_iterator(container_iterator it, cci_filtered_range* fr):
+                m_current(it),
+                m_fr(fr)
+        {};
+
+    public:
+        cci_iterator& operator--() {
+            if(m_fr) {
+                decrement();
+            }
+            return *this;
+        }
+
+        cci_iterator& operator++() {
+            if(m_fr) {
+                increment();
+            }
+            return *this;
+        }
+
+        T operator*() const {
+            return *m_current;
+        }
+
+        T operator->() const {
+            return *m_current;
+        }
+
+        operator container_iterator() const {
+            return m_current;
+        }
+
+        bool operator==(
+                const container_iterator& it) const {
+            return m_current == it;
+        }
+
+        bool operator!=(
+                const container_iterator& it) const {
+            return !(operator==(it));
+        }
+
+    private:
+        void increment() {
+            ++m_current;
+            while((m_current != m_fr->m_end)
+                  && (!m_fr->m_pred(*(m_current)))) {
+                ++m_current;
+            }
+        }
+
+        void decrement() {
+            --m_current;
+            while((m_current != m_fr->m_begin)
+                  && (!m_fr->m_pred(*(m_current)))) {
+                --m_current;
+            }
+        }
+
+        container_iterator m_current;
+        cci_filtered_range* m_fr;
+    };
+
+public:
+    typedef cci_iterator iterator;
+    typedef const cci_iterator const_iterator;
+
+    cci_filtered_range(Predicate pred,
+                       Container container):
             m_pred(pred),
-            m_begin(begin),
-            m_end(end),
-            m_current(begin)
+            m_container(container),
+            m_begin(m_container.begin()),
+            m_end(m_container.end())
     {
         init();
     }
 
-    cci_filtered_range(P pred, iterator begin, iterator end, iterator current):
-            m_pred(pred),
-            m_begin(begin),
-            m_end(end),
-            m_current(current)
-    {
-        init();
-    }
-
-    cci_filtered_range(P pred, Container values):
-            m_pred(pred),
-            m_values(values),
-            m_begin(m_values.begin()),
-            m_end(m_values.end()),
-            m_current(m_values.begin())
-    {
-        init();
-    }
-
-    cci_filtered_range& operator++() {
-        increment();
-        return *this;
-    }
-
-    T operator*() const {
-        return *m_current;
-    }
-
-    T operator->() const {
-        return *m_current;
-    }
-
-    operator iterator() const {
-        return m_current;
-    }
-
-    bool operator==(
-            const iterator& it) const {
-        return m_current == it;
-    }
-
-    bool operator!=(
-            const iterator& it) const {
-        return !(operator==(it));
-    }
-
-    P predicate() const {
+    Predicate predicate() const {
         return m_pred;
     }
 
-    cci_filtered_range begin() {
-        return cci_filtered_range(m_pred, m_begin, m_end, m_begin);
+    const Container& container() {
+        return m_container;
+    }
+
+    iterator begin() {
+        return iterator(m_begin, this);
     }
 
     iterator end() {
-        return m_end;
+        return iterator(m_end, this);
     }
 
-private:
+public:
     void init() {
-        if ((m_current != m_end) && (!m_pred(*(m_current)))) {
-            increment();
+        cci_iterator it(m_begin, this);
+        if ((it != m_end) && (!m_pred(*it))) {
+            ++it;
         }
-        m_begin = m_current;
+        m_begin = it;
     }
 
-    void increment() {
-        ++m_current;
-        while((m_current != m_end) && (!m_pred(*(m_current)))) {
-            ++m_current;
-        }
-    }
-
-    P m_pred;
-    Container m_values;
-    iterator m_begin;
-    iterator m_end;
-    iterator m_current;
+    Predicate m_pred;
+    Container m_container;
+    container_iterator m_begin;
+    container_iterator m_end;
 };
 
 CCI_CLOSE_NAMESPACE_
