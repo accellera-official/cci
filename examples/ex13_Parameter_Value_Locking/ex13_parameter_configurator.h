@@ -48,7 +48,7 @@ SC_MODULE(ex13_parameter_configurator) {
       int_param(cci::cci_originator(*this)) {
     // Getting handle of the default broker for the class/sc_module
     myConfigBroker =
-        &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
+        &cci::cci_broker_manager::get_broker();
 
     // Assert if broker handle returned is NULL
     assert(myConfigBroker != NULL && "Broker handle returned is NULL");

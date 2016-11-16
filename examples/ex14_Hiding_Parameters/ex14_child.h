@@ -52,17 +52,14 @@ SC_MODULE(ex14_child) {
   SC_CTOR(ex14_child)
       : priv_int_param("priv_int_param",
                        100,
-                       cci::cci_broker_manager::get_broker(
-                           cci::cci_originator(*this))),
+                       cci::cci_broker_manager::get_broker()),
         pub_int_param("pub_int_param",
                       150,
-                      cci::cci_broker_manager::get_broker(
-                          cci::cci_originator(*this))) {
+                      cci::cci_broker_manager::get_broker()) {
     // Get the reference to the broker responsible for this module
-    // child_BrokerIF = &cci::cci_broker_manager::get_broker(
-    // cci::cci_originator(*this));
+    // child_BrokerIF = &cci::cci_broker_manager::get_broker();
     child_BrokerIF =
-        &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
+        &cci::cci_broker_manager::get_broker();
 
     assert(child_BrokerIF != NULL
            && "Returned broker handle of 'child' module is NULL");

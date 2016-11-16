@@ -31,7 +31,7 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config broker which is responsible for this module
-  mBroker = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
+  mBroker = &cci::cci_broker_manager::get_broker();
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value

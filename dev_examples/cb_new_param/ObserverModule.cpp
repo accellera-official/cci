@@ -30,7 +30,7 @@ ObserverModule::ObserverModule(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
 { 
   // get the config API which is responsible for this module
-  mApi = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
+  mApi = &cci::cci_broker_manager::get_broker();
   SC_THREAD(main_action);
 }
 

@@ -42,8 +42,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex22_search_ip):
-        m_cci(cci::cci_broker_manager::get_broker(
-                cci::cci_originator(*this)))
+        m_cci(cci::cci_broker_manager::get_broker())
     {
         SC_THREAD(execute);
     }

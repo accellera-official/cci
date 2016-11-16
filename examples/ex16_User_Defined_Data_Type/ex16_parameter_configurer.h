@@ -52,7 +52,7 @@ SC_MODULE(ex16_parameter_configurer) {
     // Get the broker responsible for this module using
     // 'get_broker' API
     myBrokerInterface =
-        &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
+        &cci::cci_broker_manager::get_broker();
 
     // Assert if broker handle returned is NULL
     assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");

@@ -68,8 +68,7 @@ int sc_main(int argc, char *argv[]) {
   SC_REPORT_INFO("sc_main", "End Simulation.");
 
   cci::cci_broker_if* sc_main_broker =
-          &cci::cci_broker_manager::get_broker(
-                  cci::cci_originator("sc_main"));
+          &cci::cci_broker_manager::get_broker(cci::cci_originator("sc_main"));
 
   std::cout << std::endl << "List of parameters:" << std::endl;
   std::vector<std::string> vec = sc_main_broker->get_param_list();

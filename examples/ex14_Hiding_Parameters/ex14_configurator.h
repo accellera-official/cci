@@ -50,8 +50,7 @@ SC_MODULE(ex14_configurator) {
   SC_CTOR(ex14_configurator):
       parent_base_param(cci::cci_originator(*this)) {
   // Gets the reference of a DEFAULT GLOBAL BROKER
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker(
-        cci::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker();
 
     // Asserts if the returned broker handle is NULL
     assert(myCfgrBrokerIF != NULL

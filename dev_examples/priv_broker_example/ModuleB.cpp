@@ -29,18 +29,18 @@
 
 ModuleB::ModuleB(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, int_param ("int_param", 50, cci::cci_broker_manager::get_broker(cci::cci_originator(*this)) )
-, uint_param("uint_param", 12000, cci::cci_broker_manager::get_broker(cci::cci_originator(*this)))
-, uint_param2("uint_param2", 12, cci::cci_broker_manager::get_broker(cci::cci_originator(*this)))
-, str_param ("str_param", "This is a test string.", cci::cci_broker_manager::get_broker(cci::cci_originator(*this)))
-, bool_param("bool_param", false, cci::cci_broker_manager::get_broker(cci::cci_originator(*this))) // no default value
+, int_param ("int_param", 50, cci::cci_broker_manager::get_broker() )
+, uint_param("uint_param", 12000, cci::cci_broker_manager::get_broker())
+, uint_param2("uint_param2", 12, cci::cci_broker_manager::get_broker())
+, str_param ("str_param", "This is a test string.", cci::cci_broker_manager::get_broker())
+, bool_param("bool_param", false, cci::cci_broker_manager::get_broker()) // no default value
 , mC("ModuleC", &cci::cci_broker_manager::register_broker(new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")),
                                                           cci::cci_originator(std::string(this->name()) + ".ModuleC")))
 {
   SC_THREAD(main_action);
 
   // This needs to be done during construction (NOT within the sc_thread)!
-  m_broker_accessor = &cci::cci_broker_manager::get_broker(cci::cci_originator(*this));
+  m_broker_accessor = &cci::cci_broker_manager::get_broker();
 }
 
 void ModuleB::main_action() {

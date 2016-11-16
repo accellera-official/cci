@@ -50,8 +50,7 @@ SC_MODULE(ex12_parameter_configurator) {
       cfgr_param1(cci::cci_originator(*this)),
       cfgr_param2(cci::cci_originator(*this)) {
     // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker(
-        cci::cci_originator(*this));
+    myCfgrBrokerIF = &cci::cci_broker_manager::get_broker();
 
     // Report if handle returned is NULL
     assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");

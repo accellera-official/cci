@@ -42,8 +42,7 @@ public:
 
   ConfigModule(sc_core::sc_module_name name)
   {
-    m_cci = &cci::cci_broker_manager::get_broker(
-            cci::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_broker();
     assert(m_cci != NULL);
     SC_THREAD(execute);
   };

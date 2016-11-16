@@ -45,8 +45,7 @@ SC_MODULE(ex03_config_ip) {
    */
   SC_CTOR(ex03_config_ip) {
     // Get CCI configuration handle specific for this module
-    m_cci = &cci::cci_broker_manager::get_broker(
-        cci::cci_originator(*this));
+    m_cci = &cci::cci_broker_manager::get_broker();
     assert(m_cci != NULL);
     SC_THREAD(execute);
   }
