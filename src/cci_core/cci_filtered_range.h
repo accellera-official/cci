@@ -41,116 +41,189 @@ template<typename T, typename Predicate, typename Container = std::vector<T> >
 class cci_filtered_range
 {
 public:
-    typedef typename Container::iterator container_iterator;
+    typedef typename Container::reference reference;
+    typedef typename Container::const_reference const_reference;
+    typedef typename Container::reference pointer;
+    typedef typename Container::const_reference const_pointer;
 
 private:
+    typedef typename Container::iterator container_iterator;
+
+    template<typename BaseIterator>
     class cci_iterator
     {
-    public:
         friend class cci_filtered_range;
+
+    public:
+        typedef std::bidirectional_iterator_tag iterator_category;
+        typedef typename BaseIterator::value_type value_type;
+        typedef typename BaseIterator:: difference_type difference_type;
+        typedef typename BaseIterator:: pointer pointer;
+        typedef typename BaseIterator:: reference reference;
 
         cci_iterator():
                 m_fr(NULL)
         {};
 
     private:
-        cci_iterator(container_iterator it, cci_filtered_range* fr):
+        cci_iterator(container_iterator it):
+                m_current(it),
+                m_fr(NULL)
+        {};
+
+        cci_iterator(container_iterator it, const cci_filtered_range* fr):
                 m_current(it),
                 m_fr(fr)
         {};
 
+        typedef typename BaseIterator::reference bit_reference;
+        typedef typename BaseIterator::pointer bit_pointer;
+
     public:
         cci_iterator& operator--() {
-            if(m_fr) {
-                decrement();
-            }
+            decrement();
             return *this;
         }
 
         cci_iterator& operator++() {
-            if(m_fr) {
-                increment();
-            }
+            increment();
             return *this;
         }
 
-        T operator*() const {
+        cci_iterator operator--(int) {
+            cci_iterator ret = *this;
+            decrement();
+            return ret;
+        }
+
+        cci_iterator operator++(int) {
+            cci_iterator ret = *this;
+            increment();
+            return ret;
+        }
+
+        bit_reference operator*() {
             return *m_current;
         }
 
-        T operator->() const {
+        const_reference operator*() const {
             return *m_current;
         }
 
-        operator container_iterator() const {
-            return m_current;
+        bit_pointer operator->() {
+            return &(*m_current);
         }
 
-        bool operator==(
-                const container_iterator& it) const {
-            return m_current == it;
+        const_pointer operator->() const {
+            return &(*m_current);
         }
 
-        bool operator!=(
-                const container_iterator& it) const {
+        bool operator==(const cci_iterator& it) const {
+            return m_current == it.m_current;
+        }
+
+        bool operator!=(const cci_iterator& it) const {
             return !(operator==(it));
         }
 
     private:
         void increment() {
-            ++m_current;
-            while((m_current != m_fr->m_end)
-                  && (!m_fr->m_pred(*(m_current)))) {
-                ++m_current;
+            if(m_fr) {
+                if(m_current != m_fr->m_container.end()) {
+                    ++m_current;
+                }
+                while((m_current != m_fr->m_container.end())
+                      && (!m_fr->m_pred(*(m_current)))) {
+                    ++m_current;
+                }
             }
         }
 
         void decrement() {
-            --m_current;
-            while((m_current != m_fr->m_begin)
-                  && (!m_fr->m_pred(*(m_current)))) {
-                --m_current;
+            if(m_fr) {
+                if(m_current != m_fr->m_begin) {
+                    --m_current;
+                }
+                while((m_current != m_fr->m_begin)
+                      && (!m_fr->m_pred(*(m_current)))) {
+                    --m_current;
+                }
             }
         }
 
         container_iterator m_current;
-        cci_filtered_range* m_fr;
+        const cci_filtered_range* m_fr;
     };
 
 public:
-    typedef cci_iterator iterator;
-    typedef const cci_iterator const_iterator;
+    typedef cci_iterator<typename Container::iterator> iterator;
+    typedef cci_iterator<typename Container::const_iterator> const_iterator;
+    typedef std::reverse_iterator<iterator> reverse_iterator;
+    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
-    cci_filtered_range(Predicate pred,
-                       Container container):
+    cci_filtered_range(const Predicate& pred,
+                       const Container& container):
             m_pred(pred),
             m_container(container),
-            m_begin(m_container.begin()),
-            m_end(m_container.end())
+            m_begin(m_container.begin(), this)
     {
         init();
     }
 
-    Predicate predicate() const {
-        return m_pred;
-    }
-
-    const Container& container() {
-        return m_container;
-    }
-
     iterator begin() {
-        return iterator(m_begin, this);
+        return m_begin;
     }
 
     iterator end() {
-        return iterator(m_end, this);
+        return m_container.end();
+    }
+
+    const_iterator begin() const {
+        const_iterator it(m_begin.m_current, this);
+        return it;
+    }
+
+    const_iterator end() const {
+        return m_container.end();
+    }
+
+    const_iterator cbegin() const {
+        return begin();
+    }
+
+    const_iterator cend() const {
+        return end();
+    }
+
+    reverse_iterator rbegin() {
+        return reverse_iterator(m_container.end(), this);
+    }
+
+    const_reverse_iterator rbegin() const {
+        return crbegin();
+    }
+
+    const_reverse_iterator crbegin() const {
+        return const_reverse_iterator(m_container.end(), this);
+    }
+
+    reverse_iterator rend() {
+        return reverse_iterator(m_begin.m_current, this);
+    }
+
+    const_reverse_iterator rend() const {
+        return crend();
+    }
+
+    const_reverse_iterator crend() const {
+        return const_reverse_iterator(m_begin.m_current, this);
     }
 
 public:
     void init() {
-        cci_iterator it(m_begin, this);
-        if ((it != m_end) && (!m_pred(*it))) {
+        iterator it = m_begin;
+        iterator it_end(m_container.end());
+        if ((it != it_end) && (!m_pred(*it))) {
             ++it;
         }
         m_begin = it;
@@ -158,8 +231,7 @@ public:
 
     Predicate m_pred;
     Container m_container;
-    container_iterator m_begin;
-    container_iterator m_end;
+    iterator m_begin;
 };
 
 CCI_CLOSE_NAMESPACE_
