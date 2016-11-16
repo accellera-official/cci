@@ -27,10 +27,9 @@
 #include <systemc.h>
 
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-{ 
-  // get the config broker which is responsible for this module
-  mBroker = &cci::cci_broker_manager::get_broker();
+: sc_core::sc_module(name),
+  mBroker(cci::cci_broker_manager::get_broker())
+{
   SC_THREAD(main_action);
 }
 
@@ -40,7 +39,7 @@ void ObserverModule::main_action() {
 
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = mBroker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

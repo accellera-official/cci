@@ -44,23 +44,25 @@ protected:
 
 /// Shows a parameter list with information about value, explicit/implicit status and is_initial_value status
 void show_param_list() {
-  static cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_broker(cci::cci_originator("PARAM_LIST"));
+  static cci::cci_broker_if& mBroker =
+          cci::cci_broker_manager::get_broker(
+                  cci::cci_originator("PARAM_LIST"));
 
   std::cout << std::endl << "**** Parameter list: ";
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = mBroker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
     ss_show << std::endl;
     ss_show << *iter << " : ";
-    cci::cci_param_handle p = mBroker->get_param_handle(*iter);
+    cci::cci_param_handle p = mBroker.get_param_handle(*iter);
     if (p.is_valid()) {
       ss_show << "expl.";
       if (p.is_initial_value())       ss_show << ", initial";
       ss_show << ", val=" << p.get_cci_value().to_json();
     } else {
       ss_show << "impl. (is always initial)";
-      ss_show << ", val=" << mBroker->get_cci_value(*iter);
+      ss_show << ", val=" << mBroker.get_cci_value(*iter);
     }
   }
   std::cout << "   " << ss_show.str() << std::endl<<std::endl;
@@ -69,11 +71,12 @@ void show_param_list() {
 /// Testbench for the CCI development example testing the is_initial_value functionality
 int sc_main(int argc, char *argv[]) {
   
-  cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_broker(cci::cci_originator("SCMAIN"));
+  cci::cci_broker_if& mBroker = cci::cci_broker_manager::get_broker(
+          cci::cci_originator("SCMAIN"));
   
-  mBroker->set_initial_cci_value("params.int_param_with_initial_value",
+  mBroker.set_initial_cci_value("params.int_param_with_initial_value",
                                  cci::cci_value::from_json("100"));
-  mBroker->set_initial_cci_value("params.int_param_only_implicit",
+  mBroker.set_initial_cci_value("params.int_param_only_implicit",
                                  cci::cci_value::from_json("130"));
   
   ParamContainer params("params");
@@ -82,7 +85,7 @@ int sc_main(int argc, char *argv[]) {
 
   // This does NOT change the status to initial because this write to an explicit parameter is translated 
   // 'just' into a usual write
-  mBroker->set_initial_cci_value("params.int_param_with_late_initial_value",
+  mBroker.set_initial_cci_value("params.int_param_with_late_initial_value",
                                  cci::cci_value::from_json("120"));
   
   show_param_list();

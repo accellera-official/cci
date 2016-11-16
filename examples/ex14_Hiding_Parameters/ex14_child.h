@@ -50,22 +50,16 @@ SC_MODULE(ex14_child) {
    *  @return void
    */
   SC_CTOR(ex14_child)
-      : priv_int_param("priv_int_param",
+      : child_BrokerIF(cci::cci_broker_manager::get_broker()),
+        priv_int_param("priv_int_param",
                        100,
                        cci::cci_broker_manager::get_broker()),
         pub_int_param("pub_int_param",
                       150,
-                      cci::cci_broker_manager::get_broker()) {
-    // Get the reference to the broker responsible for this module
-    // child_BrokerIF = &cci::cci_broker_manager::get_broker();
-    child_BrokerIF =
-        &cci::cci_broker_manager::get_broker();
-
-    assert(child_BrokerIF != NULL
-           && "Returned broker handle of 'child' module is NULL");
-
+                      cci::cci_broker_manager::get_broker())
+  {
     XREPORT("[CHILD C_TOR] : Is Private Broker? : " << std::boolalpha
-            << child_BrokerIF->is_private_broker());
+            << child_BrokerIF.is_private_broker());
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
             << priv_int_param.get_name() << "\tParameter Value : "
@@ -87,7 +81,7 @@ SC_MODULE(ex14_child) {
   void run_child(void) {
     // List of cci_parameters directly visible to the outside world
     std::vector<std::string> child_param_list =
-        child_BrokerIF->get_param_list();
+        child_BrokerIF.get_param_list();
 
     while (1) {
       XREPORT("@ " << sc_core::sc_time_stamp()
@@ -109,7 +103,7 @@ SC_MODULE(ex14_child) {
   }
 
  private:
-  cci::cci_broker_if* child_BrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_if& child_BrokerIF;  ///< Declare a configuration broker
 
   // Declare instances of mutable CCI parameters of type 'int'
   cci::cci_param<int> priv_int_param;  ///< private int CCI parameter

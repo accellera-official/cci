@@ -421,7 +421,7 @@ struct cci_param_user_data_type
   void * l_password;  ///< lock password
   std::string description;  ///< parameter description
   std::string nam;  ///< the name of the parameter
-  cci::cci_broker_if* m_broker_handle; ///broker pointer used to register parameter
+  cci::cci_broker_if& m_broker; ///broker pointer used to register parameter
 };
 // ex19_parameter_impl_by_abc
 

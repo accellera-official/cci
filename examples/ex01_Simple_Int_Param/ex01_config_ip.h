@@ -42,10 +42,9 @@ SC_MODULE(ex01_config_ip) {
    *  @brief  The constructor for the class.
    *  @return void
    */
-  SC_CTOR(ex01_config_ip) {
-    // Get CCI configuration handle specific for this module
-    m_cci = &cci::cci_broker_manager::get_broker();
-    assert(m_cci != NULL);
+  SC_CTOR(ex01_config_ip):
+            m_cci(cci::cci_broker_manager::get_broker())
+  {
     SC_THREAD(execute);
   }
 
@@ -62,9 +61,9 @@ SC_MODULE(ex01_config_ip) {
     wait(20, sc_core::SC_NS);
 
     // Check for existance of the param
-    if (m_cci->param_exists(int_param_name)) {
+    if (m_cci.param_exists(int_param_name)) {
       // Get handle to the param
-      cci::cci_param_handle int_param = m_cci->get_param_handle(int_param_name);
+      cci::cci_param_handle int_param = m_cci.get_param_handle(int_param_name);
       assert(int_param.is_valid());
 
       // Update the param's value to 2
@@ -81,7 +80,7 @@ SC_MODULE(ex01_config_ip) {
   }
 
  private:
-  cci::cci_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if& m_cci; ///< CCI configuration handle
 };
 // ex01_config_ip
 

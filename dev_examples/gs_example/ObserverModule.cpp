@@ -27,12 +27,9 @@
 #include <systemc.h>
 
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-{ 
-  // get the config broker which is responsible for this module
-  //mBroker = &cci::cci_broker_manager::get_broker();
-  // new:
-  mBroker = &cci::cci_broker_manager::get_broker();
+: sc_core::sc_module(name),
+  mBroker(cci::cci_broker_manager::get_broker())
+{
   SC_THREAD(main_action);
 }
 
@@ -50,9 +47,9 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   cout << "----------------------------" << endl;
 
-  const cci::cci_originator* orig = mBroker->get_latest_write_originator("Owner.int_param");
+  const cci::cci_originator* orig = mBroker.get_latest_write_originator("Owner.int_param");
   assert (orig && "Originator must not be NULL here!");
-  if (mBroker->get_param_handle("Owner.int_param").is_valid()) {
+  if (mBroker.get_param_handle("Owner.int_param").is_valid()) {
     DEMO_DUMP(name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
   } else {
     DEMO_DUMP(name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig->name());
@@ -60,7 +57,7 @@ void ObserverModule::main_action() {
   
   DEMO_DUMP(name(), "register for new parameter callbacks");
   cci::cci_callback_untyped_handle cb_new_pa;
-  cb_new_pa = mBroker->register_create_callback(sc_bind(
+  cb_new_pa = mBroker.register_create_callback(sc_bind(
           &ObserverModule::config_new_param_callback, this, sc_unnamed::_1),
           cci::cci_originator());
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
@@ -68,7 +65,7 @@ void ObserverModule::main_action() {
   DEMO_DUMP(name(), "register pre write callback for int_param to check value settings and reject them");
 
   // get access to a foreign parameter using the module's config API
-  cci::cci_param_handle p = mBroker->get_param_handle("Owner.int_param");
+  cci::cci_param_handle p = mBroker.get_param_handle("Owner.int_param");
   assert(p.is_valid());
 
   // ******** register for parameter change callback ***************
@@ -77,7 +74,7 @@ void ObserverModule::main_action() {
   cb1b = p.register_post_write_callback(&ObserverModule::config_post_write_callback, this);
   mCallbacks.push_back(cb1a);// This will not be deleted after end of main_action()
   mCallbacks.push_back(cb1b);// This will not be deleted after end of main_action()*/
-  cci::cci_param_handle p2 = mBroker->get_param_handle("Owner.uint_param");
+  cci::cci_param_handle p2 = mBroker.get_param_handle("Owner.uint_param");
   assert(p2.is_valid());
   p2.register_pre_write_callback(&ObserverModule::config_pre_write_callback, this);
   p2.register_post_write_callback(&ObserverModule::config_post_write_callback, this);
@@ -111,7 +108,7 @@ void ObserverModule::main_action() {
   
   // ********* show param list **************
   cout << "param list:" << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = mBroker.get_param_list();
   for (std::vector<std::string>::iterator iter = vec.begin(); iter != vec.end(); iter++)
     cout << *iter << " ";
   cout << endl;
@@ -126,9 +123,9 @@ void ObserverModule::main_action() {
   p.set_cci_value(cci::cci_value::from_json("666666"));
   DEMO_DUMP(name(), "latest write originator of parameter '"<< p.get_name() << "': " << p.get_latest_write_originator().name());
   
-  orig = mBroker->get_latest_write_originator(p.get_name());
+  orig = mBroker.get_latest_write_originator(p.get_name());
   assert (orig && "Originator must not be NULL here!");
-  if (mBroker->get_param_handle(p.get_name()).is_valid()) {
+  if (mBroker.get_param_handle(p.get_name()).is_valid()) {
     DEMO_DUMP(this->name(), "Write originator for EXPLICIT param "<<p.get_name()<<" (from broker): " << orig->name());
   } else {
     DEMO_DUMP(this->name(), "Write originator for IMPLICIT param "<<p.get_name()<<" (from broker): " << orig->name());

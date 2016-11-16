@@ -43,14 +43,14 @@ class ModuleA
 {
 protected:
   /// for secure access by parameters
-  cci::cci_broker_if* m_broker;
+  cci::cci_broker_if& m_broker;
 
 public:
   
   SC_HAS_PROCESS(ModuleA);
 	
   /// Constructor
-  ModuleA(sc_core::sc_module_name name, cci::cci_broker_if*);
+  ModuleA(sc_core::sc_module_name name, cci::cci_broker_if&);
   // Important: never use a private_broker_manager anywhere else than as constructor argument!!!
   
   /// Main action to make tests with parameters.

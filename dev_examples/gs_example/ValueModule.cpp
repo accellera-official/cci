@@ -27,10 +27,9 @@
 #include <systemc.h>
 
 ValueModule::ValueModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-{ 
-  // get the config broker which is responsible for this module
-  mBroker = &cci::cci_broker_manager::get_broker();
+: sc_core::sc_module(name),
+  mBroker(cci::cci_broker_manager::get_broker())
+{
   SC_THREAD(main_action);
 }
 
@@ -42,7 +41,7 @@ void ValueModule::main_action() {
   cout << "----------------------------" << endl;
   
   // get a parameter using the local config broker
-  cci::cci_param_handle uint_param_handle = mBroker->get_param_handle("Owner.uint_param");
+  cci::cci_param_handle uint_param_handle = mBroker.get_param_handle("Owner.uint_param");
   if (!uint_param_handle.is_valid()) return;
   // make it a reference for convenience
   cci::cci_param_typed_handle<unsigned int> uint_param_typed_handle =
@@ -66,7 +65,7 @@ void ValueModule::main_action() {
   std::cout << "uint_param has value = " << uint_param_typed_handle.get_cci_value().to_json() << endl;
 
   // get a parameter using the local config API
-  cci::cci_param_handle str_param_handle = mBroker->get_param_handle("Owner.str_param");
+  cci::cci_param_handle str_param_handle = mBroker.get_param_handle("Owner.str_param");
   if (!str_param_handle.is_valid()) return;
   // make it a reference for convenience
   cci::cci_param_typed_handle<std::string> str_param_typed_handle =

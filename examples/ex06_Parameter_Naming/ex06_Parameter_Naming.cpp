@@ -67,18 +67,18 @@ int sc_main(int argc, char *argv[]) {
   sc_core::sc_start();
   SC_REPORT_INFO("sc_main", "End Simulation.");
 
-  cci::cci_broker_if* sc_main_broker =
-          &cci::cci_broker_manager::get_broker(cci::cci_originator("sc_main"));
+  cci::cci_broker_if& sc_main_broker =
+          cci::cci_broker_manager::get_broker(cci::cci_originator("sc_main"));
 
   std::cout << std::endl << "List of parameters:" << std::endl;
-  std::vector<std::string> vec = sc_main_broker->get_param_list();
+  std::vector<std::string> vec = sc_main_broker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
       std::cout << "   " << *iter << std::endl;
   }
 
-  cci::cci_param_handle param_handle = sc_main_broker->get_param_handle(
+  cci::cci_param_handle param_handle = sc_main_broker.get_param_handle(
           "tool.external_param");
   REPORT_INFO("Current value of tool.external_param is "
                       << param_handle.get_cci_value().to_json());
@@ -87,7 +87,7 @@ int sc_main(int argc, char *argv[]) {
   REPORT_INFO("Originator of tool.external_param is "
                       << tool.get_external_param_originator_name());
 
-  param_handle = sc_main_broker->get_param_handle(
+  param_handle = sc_main_broker.get_param_handle(
           "sc_main_param");
   REPORT_INFO("Current value of sc_main_param is "
                       << param_handle.get_cci_value().to_json());

@@ -54,11 +54,9 @@ SC_MODULE(ex11_top_module) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex11_top_module) {
-    // Get handle of the broker responsible for the class/module
-    myTopModBrokerIF =
-        &cci::cci_broker_manager::get_broker();
-
+  SC_CTOR(ex11_top_module):
+            myTopModBrokerIF(cci::cci_broker_manager::get_broker())
+  {
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
 
@@ -68,17 +66,14 @@ SC_MODULE(ex11_top_module) {
     param_owner1 = new ex11_parameter_owner("param_owner1", str1, 1000);
     param_owner2 = new ex11_parameter_owner("param_owner2", str2, 2000);
 
-    // Report if handle returned is NULL
-    assert(myTopModBrokerIF != NULL && "Configuration Broker handle is NULL");
-
     std::string param1_str = "top_mod.param_owner1.clk_freq_Hz";
     std::string param2_str = "top_mod.param_owner2.clock_speed_Hz";
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
-    if (myTopModBrokerIF->param_exists(param1_str)) {
+    if (myTopModBrokerIF.param_exists(param1_str)) {
       cci::cci_param_handle temp =
-              myTopModBrokerIF->get_param_handle(param1_str);
+              myTopModBrokerIF.get_param_handle(param1_str);
       selected_base_param_list.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp.get_name()
@@ -91,9 +86,9 @@ SC_MODULE(ex11_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
-    if (myTopModBrokerIF->param_exists(param2_str)) {
+    if (myTopModBrokerIF.param_exists(param2_str)) {
       cci::cci_param_handle temp =
-              myTopModBrokerIF->get_param_handle(param2_str);
+              myTopModBrokerIF.get_param_handle(param2_str);
       selected_base_param_list.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp.get_name()
@@ -111,7 +106,7 @@ SC_MODULE(ex11_top_module) {
   }
 
  private:
-  cci::cci_broker_if* myTopModBrokerIF;  ///< Declare a CCI configuration broker interface instance
+  cci::cci_broker_if& myTopModBrokerIF;  ///< Declare a CCI configuration broker interface instance
   std::vector<cci::cci_param_handle> selected_base_param_list;  ///< vector storing the searched owner parameters references to CCI parameter handles
 };
 // ex11_top_module

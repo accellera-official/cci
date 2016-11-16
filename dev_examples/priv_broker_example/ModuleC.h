@@ -42,14 +42,14 @@ class ModuleC
 {
 protected:
   /// for secure access by parameters
-  cci::cci_broker_if* m_broker;
+  cci::cci_broker_if& m_broker;
   
 public:
   
   SC_HAS_PROCESS(ModuleC);
 	
   /// Constructor
-  ModuleC(sc_core::sc_module_name name, cci::cci_broker_if* priv_broker);
+  ModuleC(sc_core::sc_module_name name, cci::cci_broker_if& priv_broker);
   
   /// Main action to make tests with parameters.
   void main_action();

@@ -47,13 +47,13 @@ public:
     //   Parameter "ModuleA.int_param" is public
     moduleA_privBroker = new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("ModuleA.int_param"));
     cci::cci_broker_manager::register_broker(moduleA_privBroker, cci::cci_originator(std::string(this->name()) + ".ModuleA"));
-    a = new ModuleA("ModuleA", moduleA_privBroker);
+    a = new ModuleA("ModuleA", *moduleA_privBroker);
     
     // Private broker for Module A2
     //   Parameter "ModuleA2.int_param" is public
     moduleA2_privBroker = new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("ModuleA2.int_param"));
     cci::cci_broker_manager::register_broker(moduleA2_privBroker, cci::cci_originator(std::string(this->name()) + ".ModuleA2"));
-    a2 = new ModuleA("ModuleA2", moduleA2_privBroker);
+    a2 = new ModuleA("ModuleA2", *moduleA2_privBroker);
     
     observer = new ObserverModule("Observer");    
   }

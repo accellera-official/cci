@@ -44,10 +44,9 @@ SC_MODULE(ex05_config_ip) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex05_config_ip) {
-    // Get CCI configuration handle specific for this module
-    m_cci = &cci::cci_broker_manager::get_broker();
-    assert(m_cci != NULL);
+  SC_CTOR(ex05_config_ip):
+            m_cci(cci::cci_broker_manager::get_broker())
+  {
     setup_sim_ip("Attempting to setup config_ip to 10 before IP construction",
                  "10");
   }
@@ -63,18 +62,18 @@ SC_MODULE(ex05_config_ip) {
     XREPORT(msg);
 
     // Check for existance of sim_ip.param_1 param
-    if (m_cci->param_exists("sim_ip.param_1")) {
+    if (m_cci.param_exists("sim_ip.param_1")) {
       XREPORT_ERROR("Instantiate config_ip before simple_ip"
                     " to demonstrate set_initial_cci_value");
     } else {
       XREPORT("Setting up sim_ip.param_1's init-value to " << val);
-      m_cci->set_initial_cci_value("sim_ip.param_1",
+      m_cci.set_initial_cci_value("sim_ip.param_1",
                                    cci::cci_value::from_json(val));
     }
   }
 
  private:
-  cci::cci_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if& m_cci; ///< CCI configuration handle
 };
 // ex05_config_ip
 

@@ -46,15 +46,11 @@ SC_MODULE(ex18_parameter_configurator) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex18_parameter_configurator) {
-    // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF =&cci::cci_broker_manager::get_broker();
-
-    // Report if handle returned is NULL
-    assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
-
+  SC_CTOR(ex18_parameter_configurator):
+            myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
+  {
     // Retrieve the list of all cci-parameters within a model.
-    complete_parameter_list = myCfgrBrokerIF->get_param_list();
+    complete_parameter_list = myCfgrBrokerIF.get_param_list();
   }
 
   /**
@@ -65,16 +61,16 @@ SC_MODULE(ex18_parameter_configurator) {
    */
   void end_of_elaboration(void) {
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
-      if (!myCfgrBrokerIF->is_used(complete_parameter_list[i])) {
+      if (!myCfgrBrokerIF.is_used(complete_parameter_list[i])) {
         unconsumed_parameter_list.push_back(complete_parameter_list[i]);
 
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
                 << complete_parameter_list[i] << "\tis : "
-                << myCfgrBrokerIF->is_used(complete_parameter_list[i]));
+                << myCfgrBrokerIF.is_used(complete_parameter_list[i]));
       } else {
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
                 << complete_parameter_list[i] << "\tis : "
-                << myCfgrBrokerIF->is_used(complete_parameter_list[i]));
+                << myCfgrBrokerIF.is_used(complete_parameter_list[i]));
       }
     }
 
@@ -88,7 +84,7 @@ SC_MODULE(ex18_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if& myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   // std::vector to store the list of the unconsumed parameters
   std::vector<std::string> complete_parameter_list; ///< List of all parameters

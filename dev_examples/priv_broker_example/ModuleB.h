@@ -61,7 +61,7 @@ protected:
   
   /// Points to the broker being responsible for this module; This is needed to be set during construction to get the correct private broker from stack
   /// Alternatively this module could derive from the cci_broker_manager even without having an own private broker - that would allow to use its get_broker() function
-  cci::cci_broker_if* m_broker_accessor;
+  cci::cci_broker_if& m_broker;
   
   ModuleC mC;
 };

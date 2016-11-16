@@ -34,13 +34,11 @@ ModuleB::ModuleB(sc_core::sc_module_name name)
 , uint_param2("uint_param2", 12, cci::cci_broker_manager::get_broker())
 , str_param ("str_param", "This is a test string.", cci::cci_broker_manager::get_broker())
 , bool_param("bool_param", false, cci::cci_broker_manager::get_broker()) // no default value
-, mC("ModuleC", &cci::cci_broker_manager::register_broker(new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")),
+, m_broker(cci::cci_broker_manager::get_broker())
+, mC("ModuleC", cci::cci_broker_manager::register_broker(new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")),
                                                           cci::cci_originator(std::string(this->name()) + ".ModuleC")))
 {
   SC_THREAD(main_action);
-
-  // This needs to be done during construction (NOT within the sc_thread)!
-  m_broker_accessor = &cci::cci_broker_manager::get_broker();
 }
 
 void ModuleB::main_action() {
@@ -49,7 +47,7 @@ void ModuleB::main_action() {
   
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = m_broker_accessor->get_param_list();
+  std::vector<std::string> vec = m_broker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

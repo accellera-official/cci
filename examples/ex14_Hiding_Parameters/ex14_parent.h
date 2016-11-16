@@ -54,7 +54,7 @@ SC_MODULE(ex14_parent) {
    *  @return void
    */
   ex14_parent(sc_core::sc_module_name _name,
-              cci::cci_broker_if* priv_broker)
+              cci::cci_broker_if& priv_broker)
       : sc_core::sc_module(_name),
         parent_BrokerIF(priv_broker),
         child_inst("child_inst"),
@@ -62,41 +62,39 @@ SC_MODULE(ex14_parent) {
         // Here, <broker_inst> is given the reference of the broker declared
         // immediately above PARENT which specifies the list of publicly
         // visible parameters
-        parent_int_param("parent_int_param", 300, *priv_broker),
-        parent_buffer("parent_int_buffer", 350, *priv_broker),
-        child_base_param(cci::cci_originator(*this)) {
-    // Asserts if the returned broker handle is NULL
-    assert(parent_BrokerIF != NULL
-           && "Returned broker handle for 'parent' is NULL");
+        parent_int_param("parent_int_param", 300, priv_broker),
+        parent_buffer("parent_int_buffer", 350, priv_broker),
+        child_base_param(cci::cci_originator(*this))
+  {
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
             << parent_int_param.get_name() << "\tParameter Value : "
             << parent_int_param.get_value());
 
-    if (parent_BrokerIF != NULL) {
-      std::string child_param_path(name());
-      child_param_path.append(".child_inst.priv_int_param");
+    std::string child_param_path(name());
+    child_param_path.append(".child_inst.priv_int_param");
 
-      if (parent_BrokerIF->param_exists(child_param_path)) {
-        child_base_param = parent_BrokerIF->get_param_handle(child_param_path);
+    if (parent_BrokerIF.param_exists(child_param_path)) {
+      child_base_param = parent_BrokerIF.get_param_handle(child_param_path);
 
-        assert(child_base_param.is_valid()
-               && "Returned broker handle for 'priv_int_param' of 'child'"
-               " is NULL");
+      assert(child_base_param.is_valid()
+             && "Returned broker handle for 'priv_int_param' of 'child'"
+             " is NULL");
 
-        // Register 'POST_WRITE' callback to change child's cci-parameter
-        // Configurators writes to 'parent_buffer' cci-parameter (registered
-        // to the default global broker). Changes to the 'parent_buffer' will
-        // be reflected on to the 'priv_int_param' of child as well
-        cci::cci_param_post_write_callback_untyped untyped_post_write_cb(
-                        sc_bind(&ex14_parent::untyped_post_write_callback, this, sc_unnamed::_1,child_base_param));
+      // Register 'POST_WRITE' callback to change child's cci-parameter
+      // Configurators writes to 'parent_buffer' cci-parameter (registered
+      // to the default global broker). Changes to the 'parent_buffer' will
+     // be reflected on to the 'priv_int_param' of child as well
+      cci::cci_param_post_write_callback_untyped untyped_post_write_cb(
+                      sc_bind(&ex14_parent::untyped_post_write_callback,
+                              this, sc_unnamed::_1,child_base_param));
 
-        parent_post_write_cb = parent_buffer.register_post_write_callback(untyped_post_write_cb);
+      parent_post_write_cb =
+              parent_buffer.register_post_write_callback(untyped_post_write_cb);
 
-      } else {
-        XREPORT("[PARENT C_TOR] : Desired cci-parameter of 'child' module is"
-                " not available");
-      }
+    } else {
+      XREPORT("[PARENT C_TOR] : Desired cci-parameter of 'child' module is"
+            " not available");
     }
 
     // Declaration of SC_THREAD
@@ -134,7 +132,7 @@ SC_MODULE(ex14_parent) {
       wait(5.0, sc_core::SC_NS);
 
       std::vector<std::string> parent_param_list =
-          parent_BrokerIF->get_param_list();
+          parent_BrokerIF.get_param_list();
 
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to the 'parent' module");
@@ -148,7 +146,7 @@ SC_MODULE(ex14_parent) {
   }
 
  private:
-  cci::cci_broker_if* parent_BrokerIF; ///< Configuration Broker for TOP_MODULE
+  cci::cci_broker_if& parent_BrokerIF; ///< Configuration Broker for TOP_MODULE
 
   ex14_child child_inst;  ///< Owner Module instantiation
 

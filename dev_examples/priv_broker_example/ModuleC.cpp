@@ -26,10 +26,10 @@
 #include "ModuleC.h"
 #include <systemc.h>
 
-ModuleC::ModuleC(sc_core::sc_module_name name, cci::cci_broker_if* priv_broker)
+ModuleC::ModuleC(sc_core::sc_module_name name, cci::cci_broker_if& priv_broker)
 : sc_core::sc_module(name)
 , m_broker(priv_broker)
-, priv_param ("priv_param", "this is private information", *m_broker)
+, priv_param ("priv_param", "this is private information", m_broker)
 { 
   SC_THREAD(main_action);
 }
@@ -42,7 +42,7 @@ void ModuleC::main_action() {
   
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = m_broker->get_param_list();
+  std::vector<std::string> vec = m_broker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

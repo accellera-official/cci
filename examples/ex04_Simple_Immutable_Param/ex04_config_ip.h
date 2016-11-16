@@ -41,10 +41,9 @@ SC_MODULE(ex04_config_ip) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex04_config_ip) {
-    // Get CCI configuration handle specific for this module
-    m_cci = &cci::cci_broker_manager::get_broker();
-    assert(m_cci != NULL);
+  SC_CTOR(ex04_config_ip):
+            m_cci(cci::cci_broker_manager::get_broker())
+  {
     SC_THREAD(execute);
 
     setup_sim_ip("Attempting to setup config_ip to 100 before IP construction",
@@ -62,12 +61,12 @@ SC_MODULE(ex04_config_ip) {
   void setup_sim_ip(const char *msg, const char *key, const char *val) {
     XREPORT(msg);
 
-    if (m_cci->param_exists(key)) {
+    if (m_cci.param_exists(key)) {
       XREPORT_ERROR("Instantiate config_ip ahead of simple_ip"
                     " to demonstrate this example");
     } else {
       XREPORT("Set init-value of " << key << " to " << val);
-      m_cci->set_initial_cci_value(key, cci::cci_value::from_json(val));
+      m_cci.set_initial_cci_value(key, cci::cci_value::from_json(val));
     }
   }
 
@@ -79,9 +78,9 @@ SC_MODULE(ex04_config_ip) {
   void execute() {
     wait(10, sc_core::SC_NS);
 
-    if (m_cci->param_exists("sim_ip.param_2")) {
+    if (m_cci.param_exists("sim_ip.param_2")) {
       cci::cci_param_handle param_2 =
-        m_cci->get_param_handle("sim_ip.param_2");
+        m_cci.get_param_handle("sim_ip.param_2");
       if (!param_2.is_valid()) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2'!");
       } else {
@@ -99,7 +98,7 @@ SC_MODULE(ex04_config_ip) {
   }
 
  private:
-  cci::cci_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_if& m_cci; ///< CCI configuration handle
 };
 // ex04_config_ip
 

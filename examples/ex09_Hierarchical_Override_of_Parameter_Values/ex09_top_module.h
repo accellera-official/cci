@@ -54,17 +54,12 @@ SC_MODULE(ex09_top_module) {
    */
   SC_CTOR(ex09_top_module)
       : n_initiators("number_of_initiators", 0),
-        n_targets("number_of_targets", 0) {
+        n_targets("number_of_targets", 0),
+        myDefaultBroker(cci::cci_broker_manager::get_broker())
+  {
     std::stringstream ss;
 
     XREPORT("[TOP_MODULE C_TOR] -- [TOP MODULE CONSTRUCTOR BEGINS HERE]");
-
-    // Get handle of the default broker
-    myDefaultBroker = &cci::cci_broker_manager::get_broker();
-
-    // Assert if broker handle returned is NULL
-    assert(myDefaultBroker != NULL
-           && "Default broker accessed by TOP_MODULE is NULL");
 
     XREPORT("[TOP_MODULE C_TOR] :  Number of initiators : "
             << n_initiators.get_value());
@@ -73,18 +68,18 @@ SC_MODULE(ex09_top_module) {
 
     // Set and lock the number of initiators in Router Table
     // to value passed from 'sc_main'
-    myDefaultBroker->set_initial_cci_value(
+    myDefaultBroker.set_initial_cci_value(
         "top_module_inst.RouterInstance.r_initiators",
         n_initiators.get_cci_value());
-    myDefaultBroker->lock_initial_value(
+    myDefaultBroker.lock_initial_value(
         "top_module_inst.RouterInstance.r_initiators");
 
     // Set and lock the number of targets in Router Table
     // to value passed from 'sc_main'
-    myDefaultBroker->set_initial_cci_value(
+    myDefaultBroker.set_initial_cci_value(
         "top_module_inst.RouterInstance.r_targets",
         n_targets.get_cci_value());
-    myDefaultBroker->lock_initial_value(
+    myDefaultBroker.lock_initial_value(
         "top_module_inst.RouterInstance.r_targets");
 
     // Declaring and defining router module
@@ -95,9 +90,9 @@ SC_MODULE(ex09_top_module) {
     // Top_Module begins construction of the model hierarchy from here
     // ----------------------------------------------------------------
 
-    if (myDefaultBroker->param_exists(
+    if (myDefaultBroker.param_exists(
         "top_module_inst.RouterInstance.addr_limit")) {
-      cci::cci_param_handle r_addr_limit = myDefaultBroker->get_param_handle(
+      cci::cci_param_handle r_addr_limit = myDefaultBroker.get_param_handle(
               "top_module_inst.RouterInstance.addr_limit");
       r_addr_max = atoi(
               (r_addr_limit.get_cci_value().to_json()).c_str());
@@ -115,7 +110,7 @@ SC_MODULE(ex09_top_module) {
                initiatorName);
 
 	  snprintf(initiatorName, sizeof(initiatorName), "\"initiator_%d\"", i);
-      myDefaultBroker->set_initial_cci_value(stringMisc, cci::cci_value::from_json(initiatorName));
+      myDefaultBroker.set_initial_cci_value(stringMisc, cci::cci_value::from_json(initiatorName));
 	  snprintf(initiatorName, sizeof(initiatorName), "initiator_%d", i);
       initiatorList.push_back(new ex09_initiator(initiatorName));
 
@@ -136,7 +131,7 @@ SC_MODULE(ex09_top_module) {
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.target_ID", name(),
                targetName);
 	  snprintf(targetName, sizeof(targetName), "\"target_%d\"", i);
-      myDefaultBroker->set_initial_cci_value(stringMisc, cci::cci_value::from_json(targetName));
+      myDefaultBroker.set_initial_cci_value(stringMisc, cci::cci_value::from_json(targetName));
 	  snprintf(targetName, sizeof(targetName), "target_%d", i);
 
       // Set initial value for maximum target size(memory)
@@ -146,7 +141,7 @@ SC_MODULE(ex09_top_module) {
       ss.str("");
       ss << targetSize;
 
-      myDefaultBroker->set_initial_cci_value(stringMisc, cci::cci_value::from_json(ss.str()));
+      myDefaultBroker.set_initial_cci_value(stringMisc, cci::cci_value::from_json(ss.str()));
       targetList.push_back(new ex09_target(targetName));
 
       // Binding Router to target
@@ -164,7 +159,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting fields of target_" << i);
-        myDefaultBroker->set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
+        myDefaultBroker.set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -177,11 +172,11 @@ SC_MODULE(ex09_top_module) {
 
       snprintf(targetBaseAddr, sizeof(targetBaseAddr), "%s.target_%d.s_base_addr",
                name(), i);
-      myDefaultBroker->set_initial_cci_value(targetBaseAddr, cci::cci_value::from_json(ss.str()));
+      myDefaultBroker.set_initial_cci_value(targetBaseAddr, cci::cci_value::from_json(ss.str()));
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of target_" << i);
-        myDefaultBroker->set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
+        myDefaultBroker.set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -194,7 +189,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting end addr of target_" << i);
-        myDefaultBroker->set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
+        myDefaultBroker.set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -220,7 +215,7 @@ SC_MODULE(ex09_top_module) {
   cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> n_initiators; ///< Number of initiators to be instantiated
   cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> n_targets;  ///< Number of targets to be instantiated
 
-  cci::cci_broker_if* myDefaultBroker; ///< Configuration broker instance
+  cci::cci_broker_if& myDefaultBroker; ///< Configuration broker instance
 
   ex09_router* routerInstance;  ///< Declaration of a router pointer
 
