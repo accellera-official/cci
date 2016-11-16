@@ -50,7 +50,7 @@ cci_broker_manager::get_parent_broker(const cci_originator &originator)
     if (!broker) {
         if(!strcmp(parent_originator.name(),
                    __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
-            return create_global_cnf_broker().create_broker_handle(originator);
+            return cci_get_global_broker().create_broker_handle(originator);
         } else {
             broker = &get_parent_broker(parent_originator).
                     create_broker_handle(parent_originator);

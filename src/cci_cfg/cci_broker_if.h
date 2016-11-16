@@ -289,18 +289,16 @@ public:
 
 };
 
-/// Creates or returns the one non-private global config broker provided by the broker implementation
-/// Called by the header function get_broker, NEVER call this as a user!
+/// Creates or returns the one non-private global broker provided by
+/// the broker implementation. Called by the header function
+/// @see cci_broker_manager::get_broker, NEVER call this as a user!
 /**
- * This returns the raw broker, not a handle, thus this
- * shall not be returned directy to the user!
+ * This returns the raw global broker, not a handle, thus this
+ * shall not be returned directly to the user!
  *
- * The implemementation shall register the global broker with the broker registry
- * cci_broker_registry::registry() !
- *
- * @return The one non-private global config broker (not wrapped with a handle)
+ * @return The one non-private global broker (not wrapped with a handle)
  */
-cci_broker_if &create_global_cnf_broker();
+cci_broker_if &cci_get_global_broker();
 
 CCI_CLOSE_NAMESPACE_
 
