@@ -81,14 +81,14 @@ private:
 SC_MODULE(C1)
 {
     SC_CTOR(C1):
-        brokerC1(&cci_broker_manager::get_broker()),
+        brokerC1(cci_broker_manager::get_broker()),
         privateBrokerD1(new cci::gs_cci_private_broker_handle(
                 "A.B.C1.D1.privateBroker",
                 *this,
                 std::vector<std::string>()))
     {
 
-        BROKER_HIERARCHY_CURRENT_BROKER_PRINT_((*brokerC1));
+        BROKER_HIERARCHY_CURRENT_BROKER_PRINT_(brokerC1);
 
         cci_broker_manager::register_broker(privateBrokerD1,
                                     cci_originator(
@@ -102,7 +102,7 @@ SC_MODULE(C1)
     }
 
 private:
-    cci_broker_if* brokerC1;
+    cci_broker_if& brokerC1;
     cci_broker_if* privateBrokerD1;
 
 public:
