@@ -60,7 +60,7 @@ int sc_main(int argc, char *argv[]) {
   ex06_config_ip cfg_ip("cfg_ip");
   cci::cci_param<std::string> sc_main_param("sc_main_param", "value",
                                             "sc_main parameter",
-                                            cci::CCI_RELATIVE_NAME,
+                                            cci::CCI_ABSOLUTE_NAME,
                                             cci::cci_originator("sc_main"));
 
   SC_REPORT_INFO("sc_main", "Begin Simulation.");
