@@ -50,7 +50,7 @@ public:
   SC_HAS_PROCESS(ModuleA);
 	
   /// Constructor
-  ModuleA(sc_core::sc_module_name name, cci::cci_broker_if&);
+  ModuleA(sc_core::sc_module_name name);
   // Important: never use a private_broker_manager anywhere else than as constructor argument!!!
   
   /// Main action to make tests with parameters.

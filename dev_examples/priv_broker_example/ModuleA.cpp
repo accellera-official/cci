@@ -27,14 +27,14 @@
 #include <systemc.h>
 
 // within this contructor the private broker stack is valid containing the priv_broker broker as top
-ModuleA::ModuleA(sc_core::sc_module_name name, cci::cci_broker_if& priv_broker)
+ModuleA::ModuleA(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, m_broker(priv_broker)
-, int_param ("int_param", 50, m_broker )
-, uint_param("uint_param", 12000, m_broker )
-, uint_param2("uint_param2", 12, m_broker )
-, str_param ("str_param", "This is a test string.", m_broker)
-, bool_param("bool_param", false, m_broker)
+, m_broker(cci::cci_broker_manager::get_broker())
+, int_param ("int_param", 50)
+, uint_param("uint_param", 12000)
+, uint_param2("uint_param2", 12)
+, str_param ("str_param", "This is a test string.")
+, bool_param("bool_param", false)
 , m_modB("ModuleB")
 {
   SC_THREAD(main_action);
