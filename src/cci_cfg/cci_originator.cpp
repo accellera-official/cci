@@ -27,12 +27,18 @@ CCI_OPEN_NAMESPACE_
 cci_originator::cci_originator(const std::string& originator_name)
         : m_originator_obj(current_originator_object()),
           m_originator_str(new std::string(originator_name)) {
+    if(!strcmp(originator_name.c_str(), __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
+        m_originator_obj = NULL;
+    }
     check_is_valid();
 }
 
 cci_originator::cci_originator(const char* originator_name)
         : m_originator_obj(current_originator_object()),
           m_originator_str(new std::string(originator_name)) {
+    if(!strcmp(originator_name, __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
+        m_originator_obj = NULL;
+    }
     check_is_valid();
 }
 
@@ -54,9 +60,7 @@ cci_originator cci_originator::get_parent_originator() const {
             return cci_originator(*parent_object);
         }
     }
-    cci_originator invalid_originator(__CCI_UNKNOWN_ORIGINATOR_STRING__);
-    invalid_originator.m_originator_obj = NULL;
-    return invalid_originator;
+    return cci_originator(__CCI_UNKNOWN_ORIGINATOR_STRING__);
 }
 
 const char* cci_originator::name() const {
