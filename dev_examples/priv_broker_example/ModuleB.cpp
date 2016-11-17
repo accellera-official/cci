@@ -33,7 +33,7 @@ ModuleB::ModuleB(sc_core::sc_module_name name)
 , uint_param("uint_param", 12000)
 , uint_param2("uint_param2", 12)
 , str_param ("str_param", "This is a test string.")
-, bool_param("bool_param", false) // no default value
+, bool_param("bool_param", false)
 , m_broker(cci::cci_broker_manager::get_broker())
 , mC("ModuleC", cci::cci_broker_manager::register_broker(new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")),
                                                           cci::cci_originator(std::string(this->name()) + ".ModuleC")))
