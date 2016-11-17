@@ -59,10 +59,9 @@ cci_broker_manager::get_parent_broker(const cci_originator &originator)
 }
 
 cci_broker_if&
-cci_broker_manager::register_broker(cci_broker_if* broker,
-                                    const cci_originator &originator)
+cci_broker_manager::register_broker(cci_broker_if* broker)
 {
-    m_brokers[originator] = broker;
+    m_brokers[cci_originator()] = broker;
     return *broker;
 }
 

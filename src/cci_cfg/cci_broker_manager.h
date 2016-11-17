@@ -48,17 +48,15 @@ public:
 
     /// Register a broker handle in the broker hierarchy
     /**
-     * This can be used to register a private broker handle for a specific
-     * module in the hierarchy.
+     * This can be used to register a private broker handle in the current
+     * hierarchy.
      *
-     * In case a broker is already registered at the specified originator, it
-     * will overwrite it.
+     * In case a broker is already registered at the current hierarchy, an
+     * error will be generated.
      *
      * @param broker Broker handle to register
-     * @param originator Originator the broker handle will point to
      */
-    static cci_broker_if &register_broker(cci_broker_if* broker,
-                                          const cci_originator &originator);
+    static cci_broker_if &register_broker(cci_broker_if* broker);
 
 protected:
     /// Returns a handle to the parent broker
