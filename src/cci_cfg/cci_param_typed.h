@@ -1040,11 +1040,12 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
     if(!init_value.is_null()) {                                                \
         m_value = init_value.get<T>();                                         \
         m_is_initial_value = true;                                             \
-        const cci_originator* init_value_originator =                          \
+        cci_originator init_value_originator =                                 \
             broker.get_latest_write_originator(get_name());                    \
-        if(init_value_originator) {                                            \
+        if(strcmp(init_value_originator.name(),                                \
+                  __CCI_UNKNOWN_ORIGINATOR_STRING__)) {                        \
             cci_param_untyped::update_latest_write_originator(                 \
-                    *init_value_originator);                                   \
+                    init_value_originator);                                    \
         }                                                                      \
     }                                                                          \
     broker.add_param(this);                                                    \

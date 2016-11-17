@@ -47,12 +47,12 @@ ObserverModule::~ObserverModule() {
 void ObserverModule::main_action() {
   cout << "----------------------------" << endl;
 
-  const cci::cci_originator* orig = mBroker.get_latest_write_originator("Owner.int_param");
-  assert (orig && "Originator must not be NULL here!");
+  cci::cci_originator orig = mBroker.get_latest_write_originator("Owner.int_param");
+  assert (!orig.is_unknown());
   if (mBroker.get_param_handle("Owner.int_param").is_valid()) {
-    DEMO_DUMP(name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
+    DEMO_DUMP(name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig.name());
   } else {
-    DEMO_DUMP(name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig->name());
+    DEMO_DUMP(name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig.name());
   }
   
   DEMO_DUMP(name(), "register for new parameter callbacks");
@@ -124,11 +124,11 @@ void ObserverModule::main_action() {
   DEMO_DUMP(name(), "latest write originator of parameter '"<< p.get_name() << "': " << p.get_latest_write_originator().name());
   
   orig = mBroker.get_latest_write_originator(p.get_name());
-  assert (orig && "Originator must not be NULL here!");
+  assert (!orig.is_unknown());
   if (mBroker.get_param_handle(p.get_name()).is_valid()) {
-    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param "<<p.get_name()<<" (from broker): " << orig->name());
+    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param "<<p.get_name()<<" (from broker): " << orig.name());
   } else {
-    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param "<<p.get_name()<<" (from broker): " << orig->name());
+    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param "<<p.get_name()<<" (from broker): " << orig.name());
   }
   
 }

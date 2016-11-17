@@ -45,12 +45,12 @@ ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
     cout << "Owner.int_param exists (implicit or explicit)" << endl;
   else
     SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT exists!");
-  const cci::cci_originator* orig = mBroker.get_latest_write_originator("Owner.int_param");
-  assert (orig && "Originator must not be NULL here!");
+  cci::cci_originator orig = mBroker.get_latest_write_originator("Owner.int_param");
+  assert (!orig.is_unknown());
   if (mBroker.get_param_handle("Owner.int_param").is_valid()) {
-    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
+    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig.name());
   } else {
-    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig->name());
+    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig.name());
   }
 }
 

@@ -119,7 +119,7 @@ public:
      * @param parname  Name of an implicit or explicit parameter.
      * @return Originator pointer; NULL if there was not yet any write
      */
-    virtual const cci_originator *
+    virtual cci_originator
     get_latest_write_originator(const std::string &parname) const = 0;
 
     /// Lock a parameter's init value.
