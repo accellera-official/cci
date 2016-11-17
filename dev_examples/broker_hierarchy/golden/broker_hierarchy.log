@@ -9,8 +9,8 @@ Broker is private ? false
 
 Module name: A.B.C1
 Parent module name: A.B
-Broker name: DEFAULT_BROKER
-Broker is private ? false
+Broker name: A.B.C2.privateBroker
+Broker is private ? true
 
 Module name: A.B.C1.D1
 Parent module name: A.B.C1

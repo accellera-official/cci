@@ -87,28 +87,14 @@ cci_originator &cci_originator::operator=(cci_originator copy) {
 }
 
 bool cci_originator::operator==( const cci_originator& originator ) const {
-    return ((this->get_object())
-                && (originator.get_object())
-                && this->get_object() == originator.get_object())
-           || (((this->get_object())
-                && (originator.string_name())
-                && !std::strcmp(this->get_object()->name(),
-                                originator.string_name())))
-           || (((originator.get_object())
-                && (this->string_name())
-                && !std::strcmp(this->string_name(),
-                                originator.get_object()->name())))
-           || ((originator.string_name())
-                && (this->string_name())
-                && ((!std::strcmp(this->string_name(),
-                                  originator.string_name()))));
+    if(this->get_object() && originator.get_object()) {
+        return this->get_object() == originator.get_object();
+    }
+    return !std::strcmp(name(), originator.name());
 }
 
 bool cci_originator::operator<(const cci_originator& originator) const {
-    return std::string(this->string_name() ? this->string_name() :
-                       this->get_object()->name())
-           < std::string(originator.string_name() ? originator.string_name() :
-                         originator.get_object()->name());
+    return std::strcmp(name(), originator.name()) < 0;
 }
 
 sc_core::sc_object *cci_originator::current_originator_object() {

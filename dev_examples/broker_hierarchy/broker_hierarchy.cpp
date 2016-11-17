@@ -22,15 +22,15 @@
  * @author Guillaume Delbergue, GreenSocs / Ericsson
  * @brief  Broker hierarchy example
  *
- *             A (Public Broker)
- *             |
- *             B (Public Broker)
- *             |
- *    ---------+---------
- *   /                   \
- *  C1 (Public Broker)   C2 (Private Broker)
- *  |                    |
- *  D1 (Private Broker)  D2 (Private Broker by inheritance)
+ *                      A (Public Broker)
+ *                      |
+ *                      B (Public Broker)
+ *                      |
+ *    ------------------+------------------
+ *   /                                     \
+ *  C1 (Private Broker 1 by inheritance)   C2 (Private Broker 1)
+ *  |                                      |
+ *  D1 (Private Broker 2)                  D2 (Private Broker 1 by inheritance)
  *
 */
 
@@ -90,15 +90,14 @@ SC_MODULE(C1)
 
         BROKER_HIERARCHY_CURRENT_BROKER_PRINT_(brokerC1);
 
-        cci_broker_manager::register_broker(privateBrokerD1,
-                                    cci_originator(
-                                            std::string(name()) + ".D1"));
+        cci_broker_manager::register_broker(privateBrokerD1);
 
         moduleD1 = new D1("D1");
     }
 
     ~C1() {
         delete moduleD1;
+        delete privateBrokerD1;
     }
 
 private:
@@ -135,9 +134,15 @@ public:
 SC_MODULE(B)
 {
     SC_CTOR(B):
-        brokerB(cci_broker_manager::get_broker())
+        brokerB(cci_broker_manager::get_broker()),
+        privateBrokerC2(new cci::gs_cci_private_broker_handle(
+                "A.B.C2.privateBroker",
+                *this,
+                std::vector<std::string>()))
     {
         BROKER_HIERARCHY_CURRENT_BROKER_PRINT_(brokerB);
+
+        cci_broker_manager::register_broker(privateBrokerC2);
 
         moduleC1 = new C1("C1");
         moduleC2 = new C2("C2");
@@ -146,10 +151,12 @@ SC_MODULE(B)
     ~B() {
         delete moduleC1;
         delete moduleC2;
+        delete privateBrokerC2;
     }
 
 private:
     cci_broker_if& brokerB;
+    cci_broker_if* privateBrokerC2;
 
 public:
     C1* moduleC1;
@@ -160,18 +167,11 @@ public:
 SC_MODULE(A)
 {
     SC_CTOR(A):
-        brokerA(cci_broker_manager::get_broker()),
-        privateBrokerC2(new cci::gs_cci_private_broker_handle(
-                            "A.B.C2.privateBroker",
-                            *this,
-                            std::vector<std::string>()))
+        brokerA(cci_broker_manager::get_broker())
     {
         std::cout << "Module name: " << this->name() << std::endl;
         std::cout << "Broker name: " << brokerA.name() << std::endl
                   << std::endl;
-
-        cci_broker_manager::register_broker(privateBrokerC2,
-                                            cci_originator("A.B.C2"));
 
         moduleB = new B("B");
     }
@@ -183,7 +183,6 @@ SC_MODULE(A)
 private:
     B* moduleB;
     cci_broker_if& brokerA;
-    cci_broker_if* privateBrokerC2;
 };
 
 int sc_main(int, char*[])

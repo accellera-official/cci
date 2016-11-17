@@ -52,7 +52,7 @@ public:
      *
      * @param originator_name string name of the originator
      */
-    explicit cci_originator(const std::string& originator_name);
+    cci_originator(const std::string& originator_name);
 
     /// Constructor with an originator (char *) name
     /**
