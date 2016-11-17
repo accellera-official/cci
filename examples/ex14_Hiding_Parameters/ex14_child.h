@@ -52,11 +52,9 @@ SC_MODULE(ex14_child) {
   SC_CTOR(ex14_child)
       : child_BrokerIF(cci::cci_broker_manager::get_broker()),
         priv_int_param("priv_int_param",
-                       100,
-                       cci::cci_broker_manager::get_broker()),
+                       100),
         pub_int_param("pub_int_param",
-                      150,
-                      cci::cci_broker_manager::get_broker())
+                      150)
   {
     XREPORT("[CHILD C_TOR] : Is Private Broker? : " << std::boolalpha
             << child_BrokerIF.is_private_broker());
