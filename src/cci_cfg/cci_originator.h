@@ -122,6 +122,12 @@ public:
      */
     void swap(cci_originator& that);
 
+    /// Returns the validity of the current originator
+    /**
+     * @return true if the originator is unknown, otherwise false.
+     */
+    bool is_unknown() const;
+
 protected:
 
     /// Return the current originator object pointer

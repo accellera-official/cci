@@ -27,7 +27,7 @@ CCI_OPEN_NAMESPACE_
 cci_originator::cci_originator(const std::string& originator_name)
         : m_originator_obj(current_originator_object()),
           m_originator_str(new std::string(originator_name)) {
-    if(!strcmp(originator_name.c_str(), __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
+    if(is_unknown()) {
         m_originator_obj = NULL;
     }
     check_is_valid();
@@ -36,7 +36,7 @@ cci_originator::cci_originator(const std::string& originator_name)
 cci_originator::cci_originator(const char* originator_name)
         : m_originator_obj(current_originator_object()),
           m_originator_str(new std::string(originator_name)) {
-    if(!strcmp(originator_name, __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
+    if(is_unknown()) {
         m_originator_obj = NULL;
     }
     check_is_valid();
@@ -110,6 +110,15 @@ void cci_originator::check_is_valid() const {
         CCI_REPORT_ERROR("cci_originator/check_is_valid",
                          "It is forbidden to build an originator without "
                          "information (no SystemC hierarchy or empty name)!");
+    }
+}
+
+bool cci_originator::is_unknown() const {
+    if(m_originator_str
+       && (!m_originator_str->compare(__CCI_UNKNOWN_ORIGINATOR_STRING__))) {
+        return true;
+    } else {
+        return false;
     }
 }
 

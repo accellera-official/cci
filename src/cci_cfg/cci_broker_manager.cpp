@@ -48,8 +48,7 @@ cci_broker_manager::get_parent_broker(const cci_originator &originator)
     // Return handle to the broker found for the parent originator
     cci_broker_if*& broker = m_brokers[parent_originator];
     if (!broker) {
-        if(!strcmp(parent_originator.name(),
-                   __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
+        if(parent_originator.is_unknown()) {
             return cci_get_global_broker().create_broker_handle(originator);
         } else {
             broker = &get_parent_broker(parent_originator).
