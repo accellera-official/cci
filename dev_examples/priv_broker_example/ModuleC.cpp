@@ -26,11 +26,11 @@
 #include "ModuleC.h"
 #include <systemc.h>
 
-ModuleC::ModuleC(sc_core::sc_module_name name, cci::cci_broker_if& priv_broker)
+ModuleC::ModuleC(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, m_broker(priv_broker)
-, priv_param ("priv_param", "this is private information", m_broker)
-{ 
+, m_broker(cci::cci_broker_manager::get_broker())
+, priv_param ("priv_param", "this is private information")
+{
   SC_THREAD(main_action);
 }
 

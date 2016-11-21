@@ -1,27 +1,27 @@
 SystemC Simulation
 
-Warning: (W534) name already exists: Top (sc_module)
+Warning: (W534) name already exists: Top.SubTopA (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top is already used in the SystemC hierarchy, using Top_0 instead
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA is already used in the SystemC hierarchy, using Top.SubTopA_0 instead
 In file: <removed by verify.pl>
 
-Warning: (W534) name already exists: Top.ModuleA.ModuleB (sc_module)
+Warning: (W534) name already exists: Top.SubTopA.ModuleA.ModuleB.SubModuleB (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.ModuleA.ModuleB is already used in the SystemC hierarchy, using Top.ModuleA.ModuleB_0 instead
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA.ModuleA.ModuleB.SubModuleB is already used in the SystemC hierarchy, using Top.SubTopA.ModuleA.ModuleB.SubModuleB_0 instead
 In file: <removed by verify.pl>
 
-Warning: (W534) name already exists: Top (sc_module)
+Warning: (W534) name already exists: Top.SubTopA2 (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top is already used in the SystemC hierarchy, using Top_1 instead
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA2 is already used in the SystemC hierarchy, using Top.SubTopA2_0 instead
 In file: <removed by verify.pl>
 
-Warning: (W534) name already exists: Top.ModuleA2.ModuleB (sc_module)
+Warning: (W534) name already exists: Top.SubTopA2.ModuleA2.ModuleB.SubModuleB (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.ModuleA2.ModuleB is already used in the SystemC hierarchy, using Top.ModuleA2.ModuleB_0 instead
+Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA2.ModuleA2.ModuleB.SubModuleB is already used in the SystemC hierarchy, using Top.SubTopA2.ModuleA2.ModuleB.SubModuleB_0 instead
 In file: <removed by verify.pl>
 
 ------ sc_start() ----------------
@@ -30,107 +30,107 @@ In file: <removed by verify.pl>
 
 
 **** Parameter list (visible in Top.Observer): 
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------
 
 
-**** Parameter list (visible in Top.ModuleA.ModuleB.ModuleC): 
-   Top.ModuleA.ModuleB.ModuleC.priv_param
-   Top.ModuleA.ModuleB.bool_param
-   Top.ModuleA.ModuleB.int_param
-   Top.ModuleA.ModuleB.str_param
-   Top.ModuleA.ModuleB.uint_param
-   Top.ModuleA.ModuleB.uint_param2
-   Top.ModuleA.bool_param
-   Top.ModuleA.str_param
-   Top.ModuleA.uint_param
-   Top.ModuleA.uint_param2
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+**** Parameter list (visible in Top.SubTopA.ModuleA.ModuleB.SubModuleB.ModuleC):
+   Top.SubTopA.ModuleA.ModuleB.SubModuleB.ModuleC.priv_param
+   Top.SubTopA.ModuleA.ModuleB.bool_param
+   Top.SubTopA.ModuleA.ModuleB.int_param
+   Top.SubTopA.ModuleA.ModuleB.str_param
+   Top.SubTopA.ModuleA.ModuleB.uint_param
+   Top.SubTopA.ModuleA.ModuleB.uint_param2
+   Top.SubTopA.ModuleA.bool_param
+   Top.SubTopA.ModuleA.str_param
+   Top.SubTopA.ModuleA.uint_param
+   Top.SubTopA.ModuleA.uint_param2
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------
 
-**** Parameter list (visible in Top.ModuleA2): 
-   Top.ModuleA2.ModuleB.bool_param
-   Top.ModuleA2.ModuleB.int_param
-   Top.ModuleA2.ModuleB.str_param
-   Top.ModuleA2.ModuleB.uint_param
-   Top.ModuleA2.ModuleB.uint_param2
-   Top.ModuleA2.bool_param
-   Top.ModuleA2.str_param
-   Top.ModuleA2.uint_param
-   Top.ModuleA2.uint_param2
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+**** Parameter list (visible in Top.SubTopA2.ModuleA2):
+   Top.SubTopA2.ModuleA2.ModuleB.bool_param
+   Top.SubTopA2.ModuleA2.ModuleB.int_param
+   Top.SubTopA2.ModuleA2.ModuleB.str_param
+   Top.SubTopA2.ModuleA2.ModuleB.uint_param
+   Top.SubTopA2.ModuleA2.ModuleB.uint_param2
+   Top.SubTopA2.ModuleA2.bool_param
+   Top.SubTopA2.ModuleA2.str_param
+   Top.SubTopA2.ModuleA2.uint_param
+   Top.SubTopA2.ModuleA2.uint_param2
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------
 
-**** Parameter list (visible in Top.ModuleA2.ModuleB): 
-   Top.ModuleA2.ModuleB.bool_param
-   Top.ModuleA2.ModuleB.int_param
-   Top.ModuleA2.ModuleB.str_param
-   Top.ModuleA2.ModuleB.uint_param
-   Top.ModuleA2.ModuleB.uint_param2
-   Top.ModuleA2.bool_param
-   Top.ModuleA2.str_param
-   Top.ModuleA2.uint_param
-   Top.ModuleA2.uint_param2
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+**** Parameter list (visible in Top.SubTopA2.ModuleA2.ModuleB):
+   Top.SubTopA2.ModuleA2.ModuleB.bool_param
+   Top.SubTopA2.ModuleA2.ModuleB.int_param
+   Top.SubTopA2.ModuleA2.ModuleB.str_param
+   Top.SubTopA2.ModuleA2.ModuleB.uint_param
+   Top.SubTopA2.ModuleA2.ModuleB.uint_param2
+   Top.SubTopA2.ModuleA2.bool_param
+   Top.SubTopA2.ModuleA2.str_param
+   Top.SubTopA2.ModuleA2.uint_param
+   Top.SubTopA2.ModuleA2.uint_param2
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------
 
-**** Parameter list (visible in Top.ModuleA2.ModuleB.ModuleC): 
-   Top.ModuleA2.ModuleB.ModuleC.priv_param
-   Top.ModuleA2.ModuleB.bool_param
-   Top.ModuleA2.ModuleB.int_param
-   Top.ModuleA2.ModuleB.str_param
-   Top.ModuleA2.ModuleB.uint_param
-   Top.ModuleA2.ModuleB.uint_param2
-   Top.ModuleA2.bool_param
-   Top.ModuleA2.str_param
-   Top.ModuleA2.uint_param
-   Top.ModuleA2.uint_param2
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+**** Parameter list (visible in Top.SubTopA2.ModuleA2.ModuleB.SubModuleB.ModuleC):
+   Top.SubTopA2.ModuleA2.ModuleB.SubModuleB.ModuleC.priv_param
+   Top.SubTopA2.ModuleA2.ModuleB.bool_param
+   Top.SubTopA2.ModuleA2.ModuleB.int_param
+   Top.SubTopA2.ModuleA2.ModuleB.str_param
+   Top.SubTopA2.ModuleA2.ModuleB.uint_param
+   Top.SubTopA2.ModuleA2.ModuleB.uint_param2
+   Top.SubTopA2.ModuleA2.bool_param
+   Top.SubTopA2.ModuleA2.str_param
+   Top.SubTopA2.ModuleA2.uint_param
+   Top.SubTopA2.ModuleA2.uint_param2
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------
 
-**** Parameter list (visible in Top.ModuleA): 
-   Top.ModuleA.ModuleB.bool_param
-   Top.ModuleA.ModuleB.int_param
-   Top.ModuleA.ModuleB.str_param
-   Top.ModuleA.ModuleB.uint_param
-   Top.ModuleA.ModuleB.uint_param2
-   Top.ModuleA.bool_param
-   Top.ModuleA.str_param
-   Top.ModuleA.uint_param
-   Top.ModuleA.uint_param2
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+**** Parameter list (visible in Top.SubTopA.ModuleA):
+   Top.SubTopA.ModuleA.ModuleB.bool_param
+   Top.SubTopA.ModuleA.ModuleB.int_param
+   Top.SubTopA.ModuleA.ModuleB.str_param
+   Top.SubTopA.ModuleA.ModuleB.uint_param
+   Top.SubTopA.ModuleA.ModuleB.uint_param2
+   Top.SubTopA.ModuleA.bool_param
+   Top.SubTopA.ModuleA.str_param
+   Top.SubTopA.ModuleA.uint_param
+   Top.SubTopA.ModuleA.uint_param2
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------
 
-**** Parameter list (visible in Top.ModuleA.ModuleB): 
-   Top.ModuleA.ModuleB.bool_param
-   Top.ModuleA.ModuleB.int_param
-   Top.ModuleA.ModuleB.str_param
-   Top.ModuleA.ModuleB.uint_param
-   Top.ModuleA.ModuleB.uint_param2
-   Top.ModuleA.bool_param
-   Top.ModuleA.str_param
-   Top.ModuleA.uint_param
-   Top.ModuleA.uint_param2
-   Top.ModuleA.int_param
-   Top.ModuleA2.int_param
+**** Parameter list (visible in Top.SubTopA.ModuleA.ModuleB):
+   Top.SubTopA.ModuleA.ModuleB.bool_param
+   Top.SubTopA.ModuleA.ModuleB.int_param
+   Top.SubTopA.ModuleA.ModuleB.str_param
+   Top.SubTopA.ModuleA.ModuleB.uint_param
+   Top.SubTopA.ModuleA.ModuleB.uint_param2
+   Top.SubTopA.ModuleA.bool_param
+   Top.SubTopA.ModuleA.str_param
+   Top.SubTopA.ModuleA.uint_param
+   Top.SubTopA.ModuleA.uint_param2
+   Top.SubTopA.ModuleA.int_param
+   Top.SubTopA2.ModuleA2.int_param
 
 
 ----------------------------

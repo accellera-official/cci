@@ -25,7 +25,6 @@
 
 #include "ModuleB.h"
 #include <systemc.h>
-#include <boost/assign/list_of.hpp>
 
 ModuleB::ModuleB(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
@@ -35,8 +34,7 @@ ModuleB::ModuleB(sc_core::sc_module_name name)
 , str_param ("str_param", "This is a test string.")
 , bool_param("bool_param", false)
 , m_broker(cci::cci_broker_manager::get_broker())
-, mC("ModuleC", cci::cci_broker_manager::register_broker(new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")),
-                                                          cci::cci_originator(std::string(this->name()) + ".ModuleC")))
+, mSubB("SubModuleB")
 {
   SC_THREAD(main_action);
 }
@@ -57,4 +55,17 @@ void ModuleB::main_action() {
   
   std::cout << "----------------------------" << std::endl;
 
+}
+
+SubModuleB::SubModuleB(sc_core::sc_module_name name) {
+  m_priv_broker = new cci::gs_cci_private_broker_handle(*this,
+                                                        boost::assign::list_of(
+                                                                "int_param"));
+  cci::cci_broker_manager::register_broker(m_priv_broker);
+  m_module_c = new ModuleC("ModuleC");
+}
+
+SubModuleB::~SubModuleB() {
+  delete m_module_c;
+  delete m_priv_broker;
 }

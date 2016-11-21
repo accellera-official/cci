@@ -49,7 +49,7 @@ public:
   SC_HAS_PROCESS(ModuleC);
 	
   /// Constructor
-  ModuleC(sc_core::sc_module_name name, cci::cci_broker_if& priv_broker);
+  ModuleC(sc_core::sc_module_name name);
   
   /// Main action to make tests with parameters.
   void main_action();
