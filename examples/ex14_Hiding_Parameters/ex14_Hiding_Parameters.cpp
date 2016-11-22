@@ -36,13 +36,9 @@
 #include "ex14_parent.h"
 #include "ex14_configurator.h"
 
-#include "gs_cci_cnf_private_broker_handle.h"
-
 /**
  *  @class  ex14_top
- *  @brief  This module creates the parent and configurator modules as well as
- *          the private broker responsible for the parent module and all
- *          parameters of the parent and the child modules.
+ *  @brief  This module creates the parent and configurator modules
  */
 SC_MODULE(ex14_top) {
  public:
@@ -52,38 +48,11 @@ SC_MODULE(ex14_top) {
    *  @return void
    */
   SC_CTOR(ex14_top)
-      // Register the cci-parameters of the PARENT & CHILD modules to the
-      // PRIVATE BROKER & GLOBAL BROKER
-      // 1. Instantiate a broker immediately above the 'desired' module
-      // cci::gs_cci_private_broker_handle(sc_core::sc_module& owner,
-      // std::vector<std::string> public_parameters)
-      // 2. Feed this broker's instance to the 'desired' module
-      // parent_inst(new parent("parent_inst", privBroker))
-      : privBroker(
-            new cci::gs_cci_private_broker_handle(
-                *this,
-                boost::assign::list_of("parent_inst.parent_int_buffer")(
-                    "parent_inst.child_inst.pub_int_param"))),
-        // Broker instantiated is passed as an argument to the parent module
-        parent_inst(new ex14_parent("parent_inst",
-            cci::cci_broker_manager::register_broker(privBroker,
-                cci::cci_originator(
-                    std::string(this->name()) + ".parent_inst")))),
+      : parent_inst("parent_inst"),
         param_cfgr("param_cfgr") {}
 
-  /**
-   *  @fn     ~ex14_top()
-   *  @brief  The class destructor
-   *  @return void
-   */
-  ~ex14_top() {
-    delete parent_inst;
-    delete privBroker;
-  }
-
  protected:
-  cci::cci_broker_if* privBroker;  ///< Broker that hides the parameters not passed to it as argument
-  ex14_parent* parent_inst; ///< Parent module pointer
+  ex14_parent parent_inst; ///< Parent module pointer
   ex14_configurator param_cfgr; ///< Configurator module instance
 };
 /// ex14_top
