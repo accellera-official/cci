@@ -37,6 +37,38 @@
 #include "ex14_configurator.h"
 
 /**
+ *  @class  ex14_private
+ *  @brief  This module creates a module hierarchy with a private broker
+ */
+SC_MODULE(ex14_private) {
+public:
+    /**
+     *  @fn     ex14_private
+     *  @brief  The class constructor
+     *  @return void
+     */
+    SC_CTOR(ex14_private)
+    {
+      m_priv_broker = &cci::cci_broker_manager::register_broker(
+              new cci::gs_cci_private_broker_handle(*this,
+                            boost::assign::list_of(
+                                    "parent_inst.parent_int_buffer")
+                                    ("parent_inst.child_inst.pub_int_param")));
+      m_parent_inst = new ex14_parent("parent_inst");
+    }
+
+    ~ex14_private() {
+      delete m_parent_inst;
+      delete m_priv_broker;
+    }
+
+protected:
+    cci::cci_broker_if* m_priv_broker; ///< Broker that hides the parameters not passed to it as argument
+    ex14_parent* m_parent_inst; ///< Parent module pointer
+};
+/// ex14_top
+
+/**
  *  @class  ex14_top
  *  @brief  This module creates the parent and configurator modules
  */
@@ -47,13 +79,14 @@ SC_MODULE(ex14_top) {
    *  @brief The class constructor
    *  @return void
    */
-  SC_CTOR(ex14_top)
-      : parent_inst("parent_inst"),
-        param_cfgr("param_cfgr") {}
+  SC_CTOR(ex14_top):
+            m_private("private"),
+            m_param_cfgr("param_cfgr")
+  {}
 
  protected:
-  ex14_parent parent_inst; ///< Parent module pointer
-  ex14_configurator param_cfgr; ///< Configurator module instance
+  ex14_private m_private; ///< Private subtop module
+  ex14_configurator m_param_cfgr; ///< Configurator module instance pointer
 };
 /// ex14_top
 

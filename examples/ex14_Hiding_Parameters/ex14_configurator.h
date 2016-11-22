@@ -51,21 +51,22 @@ SC_MODULE(ex14_configurator) {
       myCfgrBrokerIF(cci::cci_broker_manager::get_broker()),
       parent_base_param(cci::cci_originator(*this))
   {
-    if (myCfgrBrokerIF.param_exists("Top.parent_inst.parent_int_buffer")) {
+    std::string parameterName(
+            "Top.private.parent_inst.parent_int_buffer");
+    if (myCfgrBrokerIF.param_exists(parameterName)) {
       // Get handle of the parent_module's cci-parameter
-      parent_base_param = myCfgrBrokerIF.get_param_handle(
-          "Top.parent_inst.parent_int_buffer");
+      parent_base_param = myCfgrBrokerIF.get_param_handle(parameterName);
 
       // Assert if the handle returned is NULL
       assert(parent_base_param.is_valid()
-             && "Returned handle of parent_module's cci-parameter is NULL");
+             && "Returned handle of parent_module's cci-parameter is not valid");
 
       XREPORT("[CFGR] : Parameter Name : "
               << parent_base_param.get_name() << "\tParameter Value : "
               << parent_base_param.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR] : Parameter by name"
-              " 'Top.parent_module.parent_int_buffer' doesn't exist");
+              " " << parameterName << " doesn't exist");
     }
 
     // Declare SC_THREAD

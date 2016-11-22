@@ -40,7 +40,7 @@
 
 /**
  *  @class  ex14_parent
- *  @brief  The parent module manages its own private broker
+ *  @brief  The parent module
  */
 SC_MODULE(ex14_parent) {
  public:
@@ -54,17 +54,10 @@ SC_MODULE(ex14_parent) {
    */
   ex14_parent(sc_core::sc_module_name _name)
       : sc_core::sc_module(_name),
-        m_priv_broker(cci::cci_broker_manager::register_broker(
-                new cci::gs_cci_private_broker_handle(*this,
-                     boost::assign::list_of("parent_int_buffer")
-                             ("child_inst.pub_int_param")))),
+        m_broker(cci::cci_broker_manager::get_broker()),
         child_inst("child_inst"),
-        // Registering 'parameters' to the broker
-        // Here, <broker_inst> is given the reference of the broker declared
-        // immediately above PARENT which specifies the list of publicly
-        // visible parameters
-        parent_int_param("parent_int_param", 300, m_priv_broker),
-        parent_buffer("parent_int_buffer", 350, m_priv_broker),
+        parent_int_param("parent_int_param", 300),
+        parent_buffer("parent_int_buffer", 350),
         child_base_param(cci::cci_originator(*this))
   {
 
@@ -75,12 +68,12 @@ SC_MODULE(ex14_parent) {
     std::string child_param_path(name());
     child_param_path.append(".child_inst.priv_int_param");
 
-    if (m_priv_broker.param_exists(child_param_path)) {
-      child_base_param = m_priv_broker.get_param_handle(child_param_path);
+    if (m_broker.param_exists(child_param_path)) {
+      child_base_param = m_broker.get_param_handle(child_param_path);
 
       assert(child_base_param.is_valid()
              && "Returned broker handle for 'priv_int_param' of 'child'"
-             " is NULL");
+             " is not valid");
 
       // Register 'POST_WRITE' callback to change child's cci-parameter
       // Configurators writes to 'parent_buffer' cci-parameter (registered
@@ -133,7 +126,7 @@ SC_MODULE(ex14_parent) {
       wait(5.0, sc_core::SC_NS);
 
       std::vector<std::string> parent_param_list =
-              m_priv_broker.get_param_list();
+              m_broker.get_param_list();
 
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to the 'parent' module");
@@ -147,7 +140,7 @@ SC_MODULE(ex14_parent) {
   }
 
  private:
-  cci::cci_broker_if& m_priv_broker; ///< Broker that hides the parameters not passed to it as argument
+  cci::cci_broker_if& m_broker;
 
   ex14_child child_inst;  ///< Owner Module instantiation
 
