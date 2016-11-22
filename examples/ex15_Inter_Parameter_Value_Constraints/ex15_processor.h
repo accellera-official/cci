@@ -54,47 +54,39 @@ SC_MODULE(ex15_processor) {
   SC_CTOR(ex15_processor)
       : addr_lines_module("addr_lines_mod"),
         memory_block_module("memory_block"),
+        processor_BrokerIF(cci::cci_broker_manager::get_broker()),
         addr_lines_base(cci::cci_originator(*this)),
-        mem_size_base(cci::cci_originator(*this)) {
-    // Get reference of the broker responsible for the module
-    processor_BrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-
-    assert(processor_BrokerIF != NULL
-           && "Broker's Handle for the 'processor' module is returned NULL");
-
+        mem_size_base(cci::cci_originator(*this))
+  {
     // Get handle of the 'no_of_addr_lines' cci-parameter of
     // 'address_lines_register'
-    if (processor_BrokerIF != NULL) {
-      std::string param_path(name());
-      param_path.append(".addr_lines_mod.curr_addr_lines");
+    std::string param_path(name());
+    param_path.append(".addr_lines_mod.curr_addr_lines");
 
-      if (processor_BrokerIF->param_exists(param_path)) {
-        addr_lines_base = processor_BrokerIF->get_param_handle(param_path);
+    if (processor_BrokerIF.param_exists(param_path)) {
+      addr_lines_base = processor_BrokerIF.get_param_handle(param_path);
 
-        assert(addr_lines_base.is_valid()
-               && "Returned handle of 'no_of_addr_lines' cci-parameter"
-               " is NULL");
-      } else {
-        XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
-                << "\tdoesn't not exists");
-      }
+      assert(addr_lines_base.is_valid()
+             && "Returned handle of 'no_of_addr_lines' cci-parameter"
+             " is NULL");
+    } else {
+      XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
+              << "\tdoesn't not exists");
     }
 
     // Get handle of the 'mem_size' cci-parameter of 'memory_block'
-    if (processor_BrokerIF != NULL) {
-      std::string param_path(name());
-      param_path.append(".memory_block.mem_size");
+    param_path = name();
+    param_path.append(".memory_block.mem_size");
 
-      if (processor_BrokerIF->param_exists(param_path)) {
-        mem_size_base = processor_BrokerIF->get_param_handle(param_path);
+    if (processor_BrokerIF.param_exists(param_path)) {
+      mem_size_base = processor_BrokerIF.get_param_handle(param_path);
 
-        assert(mem_size_base.is_valid()
-               && "Returned handle of 'memory_block_size' cci-parameter"
-               " is NULL");
-      } else {
-        XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
-                << "\tdoesn't not exists");
-      }
+      assert(mem_size_base.is_valid()
+             && "Returned handle of 'memory_block_size' cci-parameter"
+             " is NULL");
+    } else {
+      XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
+              << "\tdoesn't not exists");
     }
 
     // Checks for the condition whether the default total number of the
@@ -194,7 +186,7 @@ SC_MODULE(ex15_processor) {
   ex15_address_lines_register addr_lines_module;  ///< Declare address line register
   ex15_memory_block memory_block_module;  ///< Memory block module
 
-  cci::cci_broker_if* processor_BrokerIF;  ///< Pointer to the broker interface
+  cci::cci_broker_if& processor_BrokerIF;  ///< Pointer to the broker interface
 
   int total_addr_lines; ///< The total number of address lines
   int mem_block_size; ///< The size of the memory block

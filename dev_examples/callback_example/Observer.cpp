@@ -27,11 +27,11 @@
 #include <systemc.h>
 
 Observer::Observer(const char* name)
-: mBroker(&cci::cci_broker_manager::get_current_broker(cci::cci_originator("OBSERVER")))
+: mBroker(cci::cci_broker_manager::get_broker(cci::cci_originator("OBSERVER")))
 , mName(name)
 { 
   DEMO_DUMP(mName.c_str(), "register for new parameter callbacks");
-  mCallbacks.push_back( mBroker->register_create_callback(
+  mCallbacks.push_back( mBroker.register_create_callback(
           sc_bind(&Observer::config_new_param_callback,this,sc_unnamed::_1),
           cci::cci_originator("OBSERVER")));
 }
@@ -53,7 +53,7 @@ void Observer::config_str_post_write_callback(const cci::cci_param_write_event<>
 /// Callback function with string signature announcing new parameters.
 void Observer::config_new_param_callback(const cci::cci_param_untyped_handle& param_handle) {
   DEMO_DUMP(name(), "***** New parameter callback: '" << param_handle.get_name() << "'");
-  cci::cci_param_handle p = mBroker->get_param_handle(param_handle.get_name());
+  cci::cci_param_handle p = mBroker.get_param_handle(param_handle.get_name());
   assert(p.is_valid() && "This new param should already be available!");
   std::string str = p.get_cci_value().to_json();
   DEMO_DUMP(name(), "   value="<<str);

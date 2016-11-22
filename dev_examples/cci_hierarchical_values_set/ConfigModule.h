@@ -40,11 +40,9 @@ public:
 
   SC_HAS_PROCESS(ConfigModule);
 
-  ConfigModule(sc_core::sc_module_name name)
+  ConfigModule(sc_core::sc_module_name name):
+          m_cci(cci::cci_broker_manager::get_broker())
   {
-    m_cci = &cci::cci_broker_manager::get_current_broker(
-            cci::cci_originator(*this));
-    assert(m_cci != NULL);
     SC_THREAD(execute);
   };
 
@@ -57,15 +55,15 @@ public:
     std::cout << std::endl << "**** Parameter list and values: @ "<<sc_core::sc_time_stamp() << std::endl;
 
     // To get the all parameters
-    std::vector<std::string> vec_all = m_cci->get_param_list();
+    std::vector<std::string> vec_all = m_cci.get_param_list();
     // To get parameter with pattern (*.log_level)
 	/// @todo replace pattern based search (not part of standard) with predicate once available.
-    std::vector<std::string> vec_ll = m_cci->get_param_list(tar_param);
+    std::vector<std::string> vec_ll = m_cci.get_param_list(tar_param);
     std::vector<std::string>::iterator it;
 
     for (it = vec_all.begin() ; it < vec_all.end(); it++) {
       std::cout<<*it<<" = ";
-      std::cout<<m_cci->get_cci_value(*it).to_json();
+      std::cout<<m_cci.get_cci_value(*it).to_json();
       std::cout<<std::endl;
     }
 
@@ -75,7 +73,7 @@ public:
 
 
     for (it = vec_ll.begin() ; it < vec_ll.end(); it++) {
-        (m_cci->get_param_handle(*it)).set_cci_value(tar_value);
+        (m_cci.get_param_handle(*it)).set_cci_value(tar_value);
     }
 
     wait(20,sc_core::SC_NS);
@@ -84,7 +82,7 @@ public:
 
     for (it = vec_all.begin() ; it < vec_all.end(); it++) {
       std::cout<<*it<<" = ";
-      std::cout<<m_cci->get_cci_value(*it).to_json();
+      std::cout<<m_cci.get_cci_value(*it).to_json();
       std::cout<<std::endl;
     }
 
@@ -93,7 +91,7 @@ public:
   ~ConfigModule(){};
 
 private:
-  cci::cci_broker_if *m_cci;
+  cci::cci_broker_if& m_cci;
 
 };
 

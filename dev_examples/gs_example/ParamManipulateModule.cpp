@@ -28,29 +28,29 @@
 
 
 ParamManipulateModule::ParamManipulateModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
+: sc_core::sc_module(name),
+  mBroker(cci::cci_broker_manager::get_broker())
 { 
   // get the config broker which is responsible for this module
-  mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   SC_THREAD(main_action);
 
   // demonstrate setting of an initial value
-  mBroker->set_initial_cci_value("Owner.int_param",
+  mBroker.set_initial_cci_value("Owner.int_param",
                                  cci::cci_value::from_json("10"));
   // demonstrate waring issued by a second initial value
-  mBroker->set_initial_cci_value("Owner.int_param",
+  mBroker.set_initial_cci_value("Owner.int_param",
                                  cci::cci_value::from_json("11"));
   // demonstrate testing for existence
-  if (mBroker->param_exists("Owner.int_param"))
+  if (mBroker.param_exists("Owner.int_param"))
     cout << "Owner.int_param exists (implicit or explicit)" << endl;
   else
     SC_REPORT_WARNING(name, "ERROR: Owner.int_param NOT exists!");
-  const cci::cci_originator* orig = mBroker->get_latest_write_originator("Owner.int_param");
-  assert (orig && "Originator must not be NULL here!");
-  if (mBroker->get_param_handle("Owner.int_param").is_valid()) {
-    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig->name());
+  cci::cci_originator orig = mBroker.get_latest_write_originator("Owner.int_param");
+  assert (!orig.is_unknown());
+  if (mBroker.get_param_handle("Owner.int_param").is_valid()) {
+    DEMO_DUMP(this->name(), "Write originator for EXPLICIT param Owner.int_param (from broker): " << orig.name());
   } else {
-    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig->name());
+    DEMO_DUMP(this->name(), "Write originator for IMPLICIT param Owner.int_param (from broker): " << orig.name());
   }
 }
 
@@ -62,14 +62,14 @@ void ParamManipulateModule::main_action() {
   cout << "----------------------------" << endl;
   // get a parameter using the local config API
   cci::cci_param_handle int_param =
-          mBroker->get_param_handle("Owner.int_param");
+          mBroker.get_param_handle("Owner.int_param");
   if (!int_param.is_valid()) return;
   // make it a reference for convenience
   cci::cci_param_typed_handle<int> int_param_p = cci::cci_param_typed_handle<int>(int_param);
 
   // get a parameter using the local config API
   cci::cci_param_handle uint_param =
-          mBroker->get_param_handle("Owner.uint_param");
+          mBroker.get_param_handle("Owner.uint_param");
   if (!uint_param.is_valid()) return;
   // make it a reference for convenience
   cci::cci_param_typed_handle<unsigned int> uint_param_p = cci::cci_param_typed_handle<unsigned int>(uint_param);

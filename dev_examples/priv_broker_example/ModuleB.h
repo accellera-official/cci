@@ -30,6 +30,25 @@
 #include "ex_globals.h"
 #include "cci_configuration"
 #include "ModuleC.h"
+#include <boost/assign/list_of.hpp>
+
+/// Module which owns private broker for the Module C.
+class SubModuleB
+        : public sc_core::sc_module
+{
+public:
+    SC_HAS_PROCESS(SubModuleB);
+
+    /// Constructor
+    SubModuleB(sc_core::sc_module_name name);
+
+    /// Destructor
+    ~SubModuleB();
+
+protected:
+    ModuleC* m_module_c;
+    cci::cci_broker_if* m_priv_broker;
+};
 
 /// Module which owns some cci parameters.
 class ModuleB
@@ -42,7 +61,7 @@ public:
 	
   /// Constructor
   ModuleB(sc_core::sc_module_name name);
-  
+
   /// Main action to make tests with parameters.
   void main_action();
   
@@ -61,9 +80,9 @@ protected:
   
   /// Points to the broker being responsible for this module; This is needed to be set during construction to get the correct private broker from stack
   /// Alternatively this module could derive from the cci_broker_manager even without having an own private broker - that would allow to use its get_broker() function
-  cci::cci_broker_if* m_broker_accessor;
+  cci::cci_broker_if& m_broker;
   
-  ModuleC mC;
+  SubModuleB mSubB;
 };
 
 

@@ -45,18 +45,13 @@ SC_MODULE(ex13_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex13_parameter_configurator):
-      int_param(cci::cci_originator(*this)) {
-    // Getting handle of the default broker for the class/sc_module
-    myConfigBroker =
-        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-
-    // Assert if broker handle returned is NULL
-    assert(myConfigBroker != NULL && "Broker handle returned is NULL");
-
-    if (myConfigBroker->param_exists("param_owner.mutable_int_param")) {
+      int_param(cci::cci_originator(*this)),
+      myConfigBroker(cci::cci_broker_manager::get_broker())
+  {
+    if (myConfigBroker.param_exists("param_owner.mutable_int_param")) {
       // Getting handle for the integer parameter of onwer module
       // by the configurator
-      int_param = myConfigBroker->get_param_handle("param_owner.mutable_int_param");
+      int_param = myConfigBroker.get_param_handle("param_owner.mutable_int_param");
 
       assert(int_param.is_valid() && "Base parameter handle returned NULL");
     } else {
@@ -167,7 +162,7 @@ SC_MODULE(ex13_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if* myConfigBroker;  ///< CCI configuration broker interface instance
+  cci::cci_broker_if& myConfigBroker;  ///< CCI configuration broker interface instance
   cci::cci_param_handle int_param;  ///< CCI parameter handle to access the actual owner's parameter
 
   char* paramName;  ///< The parameter name

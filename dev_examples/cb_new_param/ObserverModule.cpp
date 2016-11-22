@@ -27,10 +27,10 @@
 #include <systemc.h>
 
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
+: sc_core::sc_module(name),
+  mApi(cci::cci_broker_manager::get_broker())
 { 
   // get the config API which is responsible for this module
-  mApi = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
   SC_THREAD(main_action);
 }
 
@@ -52,21 +52,21 @@ void ObserverModule::main_action() {
   DEMO_DUMP(name(), "Registering for new parameter callbacks");
   cci::cci_param_create_callback_handle cb_new_pa;
 
-  cb_new_pa = mApi->register_create_callback(
+  cb_new_pa = mApi.register_create_callback(
           sc_bind(&ObserverModule::config_new_param_callback,this,sc_unnamed::_1),
           cci::cci_originator(*this));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
 
   // ******** register for parameter change callbacks ***************
   DEMO_DUMP(name(), "Registering for Owner.int_param post_write callbacks");
-  cci::cci_param_handle p = mApi->get_param_handle("Owner.int_param");
+  cci::cci_param_handle p = mApi.get_param_handle("Owner.int_param");
   assert(p.is_valid());
   cci::cci_callback_untyped_handle cb1, cb3;
 
   cb1 = p.register_post_write_callback(&ObserverModule::config_callback,this);
  
   DEMO_DUMP(name(), "Registering for Owner.uint_param post_write callbacks");
-  cci::cci_param_handle p2 = mApi->get_param_handle("Owner.uint_param");
+  cci::cci_param_handle p2 = mApi.get_param_handle("Owner.uint_param");
   assert(p2.is_valid());
 
   cb3 = p2.register_post_write_callback(&ObserverModule::config_callback,this);

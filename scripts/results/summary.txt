@@ -4,6 +4,7 @@
 -------------------------------------------------------------------------------
  Tests that passed :
 -------------------------------------------------------------------------------
+dev_examples/broker_hierarchy/broker_hierarchy.cpp
 dev_examples/callback_example/callback_example.f
 dev_examples/callback_standalone/callback_standalone.cpp
 dev_examples/cb_new_param/cb_new_param.f
@@ -42,7 +43,7 @@ examples/ex22_Search_Predicate/ex22_Search_Predicate.cpp
  Tests that failed :
 -------------------------------------------------------------------------------
 
-Total passed : 33
+Total passed : 34
 Total failed : 0
 
    GUT METER : 100 %

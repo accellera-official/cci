@@ -47,22 +47,17 @@ SC_MODULE(ex07_parameter_configurer) {
    */
   SC_CTOR(ex07_parameter_configurer)
       : int_param(cci::cci_originator(*this)),
-        str_param(cci::cci_originator(*this)), check(0) {
-    // Get the broker responsible for this module
-    // using 'get_current_broker' API
-    myBrokerInterface = &cci::cci_broker_manager::get_current_broker(
-        cci::cci_originator(*this));
-
-    // Assert if broker handle returned is NULL
-    assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");
-
+        str_param(cci::cci_originator(*this)),
+        check(0),
+        myBrokerInterface(cci::cci_broker_manager::get_broker())
+  {
     // Check for the broker type (default or private)
     // using 'is_private_broker()' API
-    if (myBrokerInterface->is_private_broker())
+    if (myBrokerInterface.is_private_broker())
       // Access broker's name using 'name()'
-      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name());
+      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface.name());
     else
-      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name()
+      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface.name()
               << " - is not a private broker.");
 
     int_param_str = "param_owner.mutable_int_param";
@@ -72,8 +67,8 @@ SC_MODULE(ex07_parameter_configurer) {
     strParamExists = false;
 
     // Broker interface checks for the existance of a (int type) parameter
-    if (myBrokerInterface->param_exists(int_param_str)) {
-      int_param = myBrokerInterface->get_param_handle(int_param_str);
+    if (myBrokerInterface.param_exists(int_param_str)) {
+      int_param = myBrokerInterface.get_param_handle(int_param_str);
 
       assert(int_param.is_valid()
              && "Integer CCI Parameter Handle is not valid");
@@ -87,10 +82,10 @@ SC_MODULE(ex07_parameter_configurer) {
 
     // Broker interface checks for existance of a (std::string type)
     // parameter using 'param_exists' API
-    if (myBrokerInterface->param_exists(string_param_str)) {
+    if (myBrokerInterface.param_exists(string_param_str)) {
       // If parameter exists, get handle of the parameter using
       // 'get_param' API
-      str_param = myBrokerInterface->get_param_handle(string_param_str);
+      str_param = myBrokerInterface.get_param_handle(string_param_str);
 
       // Report if parameter handle is returned NULL
       assert(str_param.is_valid()
@@ -316,7 +311,7 @@ SC_MODULE(ex07_parameter_configurer) {
   }
 
  private:
-  cci::cci_broker_if* myBrokerInterface; //!< CCI configuration broker instance
+  cci::cci_broker_if& myBrokerInterface; //!< CCI configuration broker instance
 
   std::string int_param_str;  //!< For storing hierarchical path of std::string type cci-parameter
   std::string string_param_str; //!< For storing hierarchical path of integer type cci-parameter

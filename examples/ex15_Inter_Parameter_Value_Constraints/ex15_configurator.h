@@ -46,22 +46,18 @@ SC_MODULE(ex15_configurator) {
    *  @return void
    */
   SC_CTOR(ex15_configurator):
+      myCfgrBrokerIF(cci::cci_broker_manager::get_broker()),
       addr_lines_base(cci::cci_originator(*this)),
-      mem_size_base(cci::cci_originator(*this)) {
-    // Get handle of the broker responsible for the class/module
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-
-    // Report if handle returned is NULL
-    assert(myCfgrBrokerIF != NULL && "Configuration Broker handle is NULL");
-
+      mem_size_base(cci::cci_originator(*this))
+  {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "processor.addr_lines_mod.curr_addr_lines";
     std::string cfgr_param_str2 = "processor.memory_block.mem_size";
 
     // Check for the existence of 'curr_addr_lines' cci_parameter
     // of ADDRESS_LINES_REGISTER
-    if (myCfgrBrokerIF->param_exists(cfgr_param_str1)) {
-      addr_lines_base = myCfgrBrokerIF->get_param_handle(cfgr_param_str1);
+    if (myCfgrBrokerIF.param_exists(cfgr_param_str1)) {
+      addr_lines_base = myCfgrBrokerIF.get_param_handle(cfgr_param_str1);
 
       assert(addr_lines_base.is_valid()
              && "Handle of 'curr_addr_lines' parameter returned is NULL");
@@ -71,8 +67,8 @@ SC_MODULE(ex15_configurator) {
     }
 
     // Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
-    if (myCfgrBrokerIF->param_exists(cfgr_param_str2)) {
-      mem_size_base = myCfgrBrokerIF->get_param_handle(cfgr_param_str2);
+    if (myCfgrBrokerIF.param_exists(cfgr_param_str2)) {
+      mem_size_base = myCfgrBrokerIF.get_param_handle(cfgr_param_str2);
 
       assert(mem_size_base.is_valid()
              && "Handle of 'mem_size' parameter returned is NULL");
@@ -116,7 +112,7 @@ SC_MODULE(ex15_configurator) {
   }
 
  private:
-  cci::cci_broker_if* myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if& myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   /// CCI base parameters
   cci::cci_param_handle addr_lines_base;  ///< Handle to the base of the address lines

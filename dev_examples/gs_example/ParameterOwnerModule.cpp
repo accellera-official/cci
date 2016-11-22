@@ -31,8 +31,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cci_broker_if* mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-  assert(mBroker != NULL && "get_cnf_broker_instance returned is NULL");
+  cci::cci_broker_if& mBroker = cci::cci_broker_manager::get_broker();
 
   // demonstrate is_default_value
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;
@@ -89,7 +88,7 @@ void ParameterOwnerModule::main_action() {
 
   // show a parameter list
   cout << endl << "**** Parameter list: " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = mBroker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {

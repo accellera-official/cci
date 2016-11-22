@@ -58,30 +58,27 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_originator sc_main_originator("sc_main_originator");
 
   // Get reference/handle of the default global broker
-  cci::cci_broker_if* myMainBrokerIF =
-      &cci::cci_broker_manager::get_current_broker(sc_main_originator);
-
-  // Assert if the returned broker handle is NULL
-  assert(myMainBrokerIF != NULL && "SC_MAIN_BROKER_IF handle is returned NULL");
+  cci::cci_broker_if& myMainBrokerIF =
+      cci::cci_broker_manager::get_broker(sc_main_originator);
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'integer type"
                  " parameter'");
-  myMainBrokerIF->set_initial_cci_value("param_owner.int_param",
+  myMainBrokerIF.set_initial_cci_value("param_owner.int_param",
                                         cci::cci_value::from_json("10"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'float type"
                  " parameter'");
-  myMainBrokerIF->set_initial_cci_value("param_owner.float_param",
+  myMainBrokerIF.set_initial_cci_value("param_owner.float_param",
                                         cci::cci_value::from_json("11.11"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'string type"
                  " parameter'");
-  myMainBrokerIF->set_initial_cci_value("param_owner.string_param",
+  myMainBrokerIF.set_initial_cci_value("param_owner.string_param",
     cci::cci_value::from_json("Used_parameter"));
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'double type"
                  " parameter'");
-  myMainBrokerIF->set_initial_cci_value("param_owner.double_param",
+  myMainBrokerIF.set_initial_cci_value("param_owner.double_param",
     cci::cci_value::from_json("100.123456789"));
 #endif
 

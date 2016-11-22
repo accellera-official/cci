@@ -34,8 +34,7 @@ void ParameterOwnerModule::main_action() {
   DEMO_DUMP(name(), "Executing main_action");
 
   // get the config API which is responsible for this module
-  cci::cci_broker_if* mApi = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-  assert(mApi != NULL && "get_cnf_broker_instance returned is NULL");
+  cci::cci_broker_if& mApi = cci::cci_broker_manager::get_broker();
   
   // create a local parameter
   DEMO_DUMP(name(), "- Creating uchar_param parameter");
@@ -51,7 +50,7 @@ void ParameterOwnerModule::main_action() {
   uint_param2 = 2;
 
   // show a parameter list
-  std::vector<std::string> vec = mApi->get_param_list();
+  std::vector<std::string> vec = mApi.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   ss_show << "- List of all parameters:" << endl;

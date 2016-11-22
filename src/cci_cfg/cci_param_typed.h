@@ -1040,11 +1040,12 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
     if(!init_value.is_null()) {                                                \
         m_value = init_value.get<T>();                                         \
         m_is_initial_value = true;                                             \
-        const cci_originator* init_value_originator =                          \
+        cci_originator init_value_originator =                                 \
             broker.get_latest_write_originator(get_name());                    \
-        if(init_value_originator) {                                            \
+        if(strcmp(init_value_originator.name(),                                \
+                  __CCI_UNKNOWN_ORIGINATOR_STRING__)) {                        \
             cci_param_untyped::update_latest_write_originator(                 \
-                    *init_value_originator);                                   \
+                    init_value_originator);                                    \
         }                                                                      \
     }                                                                          \
     broker.add_param(this);                                                    \
@@ -1058,7 +1059,7 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name,
                             const std::string& desc,
                             cci_name_type name_type,
                             const cci_originator& originator),
-                            cci_broker_manager::get_current_broker(
+                            cci_broker_manager::get_broker(
                                 originator))
 
 /// Constructor with (local/hierarchical) name, default value, description,
@@ -1068,7 +1069,7 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
                                       const std::string& desc,
                                       cci_name_type name_type,
                                       const cci_originator& originator),
-                                      cci_broker_manager::get_current_broker(
+                                      cci_broker_manager::get_broker(
                                           originator))
 
 /// Constructor with (local/hierarchical) name, default value, private broker,

@@ -29,50 +29,45 @@
 #include "ModuleA.h"
 #include "ObserverModule.h"
 
+class SubTop
+: public sc_core::sc_module
+{
+public:
+    SC_HAS_PROCESS(SubTop);
+    SubTop(sc_core::sc_module_name name, const std::string& module_A_name) {
+        m_priv_broker = new cci::gs_cci_private_broker_handle(*this,
+                  boost::assign::list_of(module_A_name + ".int_param"));
+        cci::cci_broker_manager::register_broker(m_priv_broker);
+        m_module_a = new ModuleA(module_A_name.c_str());
+    }
+
+    ~SubTop() {
+        delete m_module_a;
+        delete m_priv_broker;
+    }
+
+protected:
+    ModuleA* m_module_a;
+    cci::cci_broker_if* m_priv_broker;
+};
+
 class Top
 : public sc_core::sc_module
 {
-  
 public:
-  
   SC_HAS_PROCESS(Top);
-  Top(sc_core::sc_module_name name) {
-    
-    // Note: This would also be possible:
-    // Private broker for Modules A and A2
-    //   Parameters "ModuleA.int_param" and "ModuleA2.int_param" are public
-    //top_privBroker = new cci::gs_cci_private_broker_accessor(*this, boost::assign::list_of("ModuleA.int_param")("ModuleA2.int_param"), cci::cci_originator(*this));
-    
-    // Private broker for Module A
-    //   Parameter "ModuleA.int_param" is public
-    moduleA_privBroker = new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("ModuleA.int_param"));
-    a = new ModuleA("ModuleA", moduleA_privBroker);
-    
-    // Private broker for Module A2
-    //   Parameter "ModuleA2.int_param" is public
-    moduleA2_privBroker = new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("ModuleA2.int_param"));
-    a2 = new ModuleA("ModuleA2", moduleA2_privBroker);
-    
-    observer = new ObserverModule("Observer");    
-  }
-  
-  ~Top() {
-    delete observer;
-    delete a2;
-    delete moduleA2_privBroker;
-    delete a;
-    delete moduleA_privBroker;
+  Top(sc_core::sc_module_name name):
+          m_subtop_a("SubTopA", "ModuleA"),
+          m_subtop_a2("SubTopA2", "ModuleA2"),
+          m_observer("Observer")
+  {
+
   }
   
 protected:
-  
-  ModuleA* a;
-  ModuleA* a2;
-  ObserverModule* observer;
-  
-  cci::cci_broker_if* moduleA_privBroker;
-  cci::cci_broker_if* moduleA2_privBroker;
-  
+  SubTop m_subtop_a;
+  SubTop m_subtop_a2;
+  ObserverModule m_observer;
 };
 
 

@@ -74,12 +74,12 @@ cci_param_user_data_type::cci_param_user_data_type(
       lock_flag(false),
       callback_flag(false),
       l_password(NULL),
-      description("")
+      description(""),
+      m_broker(cci::cci_broker_manager::get_broker())
 {
   nam = _name;
   /*Register created parameter into global broker*/
-  m_broker_handle = &cci::cci_broker_manager::get_current_broker(cci::cci_originator());
-  m_broker_handle->add_param(this);
+  m_broker.add_param(this);
 
   /* DO some hack for cci_value */
 }

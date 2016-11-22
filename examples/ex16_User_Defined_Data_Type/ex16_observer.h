@@ -46,35 +46,25 @@ class ex16_observer {
    *  @return void
    */
   ex16_observer():
-      obsv_udt_base(cci::cci_originator("ex16_observer")) {
-    // Instantiate a cci_originator in order to get hold of the
-    // configuration broker interface
-    cci::cci_originator observerOriginator("observerOriginator");
-
-    // Get the broker responsible for this module using
-    // 'get_current_broker' API
-    observerBrokerIF =
-        &cci::cci_broker_manager::get_current_broker(observerOriginator);
-
-    // Assert if broker handle returned is NULL
-    assert(observerBrokerIF != NULL
-           && "Observer Broker Handle Returned is NULL");
-
+      observerBrokerIF(cci::cci_broker_manager::get_broker(
+              cci::cci_originator("observerOriginator"))),
+      obsv_udt_base(cci::cci_originator("ex16_observer"))
+  {
     // Check for the broker type (default or private) using
     // 'is_private_broker()' API
-    if (observerBrokerIF->is_private_broker()) {
+    if (observerBrokerIF.is_private_broker()) {
       // Access broker's name using 'name()'
       std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : "
-                << observerBrokerIF->name() << endl;
+                << observerBrokerIF.name() << endl;
     } else {
       std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : "
-                << observerBrokerIF->name() << " - is not a private broker."
+                << observerBrokerIF.name() << " - is not a private broker."
                 << endl;
     }
 
     // Gets the reference to the 'udt' type cci-parameter of OWNER module
     obsv_udt_base =
-        observerBrokerIF->get_param_handle("param_owner.User_data_type_param");
+        observerBrokerIF.get_param_handle("param_owner.User_data_type_param");
 
     assert(obsv_udt_base.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
@@ -144,7 +134,7 @@ class ex16_observer {
   }
 
  private:
-  cci::cci_broker_if* observerBrokerIF;  ///< CCI configuration broker instance
+  cci::cci_broker_if& observerBrokerIF;  ///< CCI configuration broker instance
 
   cci::cci_param_handle obsv_udt_base;  ///< Declare CCI param handle for int type cci-parameter
 

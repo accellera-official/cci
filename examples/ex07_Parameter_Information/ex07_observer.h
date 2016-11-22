@@ -42,33 +42,26 @@ SC_MODULE(ex07_observer) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex07_observer) {
+  SC_CTOR(ex07_observer):
+            observerBrokerIF(cci::cci_broker_manager::get_broker())
+  {
     // Instantiate a cci_originator in order to get hold
     // of the configuration broker interface
     cci::cci_originator observerOriginator("observerOriginator");
 
-    // Get the broker responsible for this module using
-    // 'get_current_broker' API
-    observerBrokerIF = &cci::cci_broker_manager::get_current_broker(
-        observerOriginator);
-
-    // Assert if broker handle returned is NULL
-    assert(observerBrokerIF != NULL
-           && "Observer Broker Handle Returned is NULL");
-
     // Check for the broker type (default or private) using
     // 'is_private_broker()' API
-    if (observerBrokerIF->is_private_broker()) {
+    if (observerBrokerIF.is_private_broker()) {
       /// Access broker's name using 'name()'
-      XREPORT("[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF->name());
+      XREPORT("[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF.name());
     } else {
-      XREPORT("[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF->name()
+      XREPORT("[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF.name()
               << "- is not a private broker.");
     }
 
     // Gets the reference to the 'int' type cci-parameter of OWNER module
    cci::cci_param_handle obsv_int_base =
-           observerBrokerIF->get_param_handle("param_owner.mutable_int_param");
+           observerBrokerIF.get_param_handle("param_owner.mutable_int_param");
 
     assert(obsv_int_base.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
@@ -119,7 +112,7 @@ SC_MODULE(ex07_observer) {
   }
 
  private:
-  cci::cci_broker_if* observerBrokerIF;  //!< Configuration broker instance
+  cci::cci_broker_if& observerBrokerIF;  //!< Configuration broker instance
 
   cci::cci_callback_untyped_handle int_pre_read_cb; //!< 'pre_read' callback handle for int type cci-param
   cci::cci_callback_untyped_handle int_pre_write_cb;  //!< 'pre_write' callback handle for int type cci-param

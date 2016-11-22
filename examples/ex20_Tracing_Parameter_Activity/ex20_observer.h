@@ -47,20 +47,13 @@ class ex20_observer {
    *  @return void
    */
   ex20_observer():
-      observer_base(cci::cci_originator("ex20_observer")) {
-    // Create an instance of the cci_originator
-    cci::cci_originator observer_originator("observer");
-
-    // Get handle of the broker responsible for the class/module
-    Observer_BrokerIF =
-        &cci::cci_broker_manager::get_current_broker(observer_originator);
-
-    // Report if handle returned is NULL
-    assert(Observer_BrokerIF != NULL && "Configuration Broker handle is NULL");
-
+      Observer_BrokerIF(cci::cci_broker_manager::get_broker(
+              cci::cci_originator("observer"))),
+      observer_base(cci::cci_originator("ex20_observer"))
+  {
     // Registering callback for the creation of the pointer to the
     // cci_parameter of the owner module
-    Observer_BrokerIF->register_create_callback(
+    Observer_BrokerIF.register_create_callback(
             sc_bind(&ex20_observer::config_new_param_callback,this,sc_unnamed::_1),
             cci::cci_originator("ex20_observer"));
   }
@@ -87,7 +80,7 @@ class ex20_observer {
                  " of newly created cci_parameter" << std::endl;
 
     // Get reference of newly created cci-parameters
-    observer_base = Observer_BrokerIF->get_param_handle(param_handle.get_name());
+    observer_base = Observer_BrokerIF.get_param_handle(param_handle.get_name());
 
     // Assert if reference of the cci-parameter returned is NULL
     assert(observer_base.is_valid()
@@ -160,7 +153,7 @@ class ex20_observer {
   }
 
  private:
-  cci::cci_broker_if* Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_if& Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
 
   cci::cci_param_handle observer_base;  ///< Handle of Owner's CCI Parameter (integer type)
 

@@ -41,8 +41,6 @@ public:
   SC_HAS_PROCESS(ObserverModule);
   ObserverModule(sc_core::sc_module_name name);
   
-  ~ObserverModule();
-  
   /// Main action to make tests with parameters.
   void main_action();
 
@@ -54,7 +52,7 @@ public:
 
 protected:
   /// Pointer the the module's configuration broker
-  cci::cci_broker_if* mBroker;
+  cci::cci_broker_if& mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
   std::vector<cci::cci_callback_untyped_handle> mCallbacks;
