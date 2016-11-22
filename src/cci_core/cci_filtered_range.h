@@ -62,6 +62,7 @@ private:
         typedef typename BaseIterator:: reference reference;
 
         cci_iterator():
+                m_current(container_iterator()),
                 m_fr(NULL)
         {};
 
@@ -75,9 +76,6 @@ private:
                 m_current(it),
                 m_fr(fr)
         {};
-
-        typedef typename BaseIterator::reference bit_reference;
-        typedef typename BaseIterator::pointer bit_pointer;
 
     public:
         cci_iterator& operator--() {
@@ -102,19 +100,11 @@ private:
             return ret;
         }
 
-        bit_reference operator*() {
+        reference operator*() const {
             return *m_current;
         }
 
-        const_reference operator*() const {
-            return *m_current;
-        }
-
-        bit_pointer operator->() {
-            return &(*m_current);
-        }
-
-        const_pointer operator->() const {
+        pointer operator->() const {
             return &(*m_current);
         }
 
@@ -123,7 +113,7 @@ private:
         }
 
         bool operator!=(const cci_iterator& it) const {
-            return !(operator==(it));
+            return !(*this == it);
         }
 
     private:
@@ -196,7 +186,7 @@ public:
     }
 
     reverse_iterator rbegin() {
-        return reverse_iterator(m_container.end(), this);
+        return reverse_iterator(iterator(m_container.end(), this));
     }
 
     const_reverse_iterator rbegin() const {
@@ -204,11 +194,11 @@ public:
     }
 
     const_reverse_iterator crbegin() const {
-        return const_reverse_iterator(m_container.end(), this);
+        return const_reverse_iterator(const_iterator(m_container.end(), this));
     }
 
     reverse_iterator rend() {
-        return reverse_iterator(m_begin.m_current, this);
+        return reverse_iterator(iterator(m_begin.m_current, this));
     }
 
     const_reverse_iterator rend() const {
@@ -216,17 +206,14 @@ public:
     }
 
     const_reverse_iterator crend() const {
-        return const_reverse_iterator(m_begin.m_current, this);
+        return const_reverse_iterator(const_iterator(m_begin.m_current, this));
     }
 
 public:
     void init() {
-        iterator it = m_begin;
-        iterator it_end(m_container.end());
-        if ((it != it_end) && (!m_pred(*it))) {
-            ++it;
+        if ((m_begin != end()) && (!m_pred(*m_begin))) {
+            ++m_begin; // Internally call increment() to setup the invariant
         }
-        m_begin = it;
     }
 
     Predicate m_pred;
