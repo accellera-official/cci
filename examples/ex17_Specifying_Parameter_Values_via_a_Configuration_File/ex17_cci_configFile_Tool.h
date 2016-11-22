@@ -42,7 +42,7 @@
 namespace cci {
 
 #define CONFIG_FILE_TOOL_BUFSIZE 1024
-#define TRACENAME "/ASI/CCI/CONFIG_FILE_TOOL"
+#define TRACENAME "/Accellera/CCI_examples/CONFIG_FILE_TOOL"
 
 enum gc_config_parse_result {
   parse_result_ignore = 0,

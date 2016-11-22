@@ -19,12 +19,12 @@ int_param set value = 99 (shall fail)
   REJECT VALUE CHANGE!!
 
 
-Observer: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Value rejected by callback.
+Observer: Caught Error: /Accellera/CCI/SET_PARAM_FAILED: Value rejected by callback.
 In file: <removed by verify.pl>
 In process: Observer.main_action @ 0 s
 int_param has value = 11
 param list:
-MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 param2 top.arbitrary.param top.arbitrary.top_param3 top.param1
+MutabilityOwner.elab_time_int_param MutabilityOwner.immutable_int_param MutabilityOwner.mutable_int_param Owner.bool_param Owner.int_param Owner.str_param Owner.uint_param Owner.uint_param2 param2 top.arbitrary.param top.arbitrary.top_param3 top.param1 
 
 ----------------------------
 Owner: uint_param get_default_value()=12000
@@ -49,17 +49,17 @@ MutabilityOwner:  mutable_int_param=150
 MutabilityOwner:  lock mutable_int_param
 MutabilityOwner:    set mutable_int_param should fail
 
-MutabilityOwner: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Parameter locked.
+MutabilityOwner: Caught Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter locked.
 In file: <removed by verify.pl>
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:  mutable_int_param=150
 MutabilityOwner:    set mutable_int_param with wrong key
 
-MutabilityOwner: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Wrong key.
+MutabilityOwner: Caught Error: /Accellera/CCI/SET_PARAM_FAILED: Wrong key.
 In file: <removed by verify.pl>
 In process: MutabilityOwner.main_action @ 0 s
 
-MutabilityOwner: Caught Error: /ASI/CCI/SET_PARAM_FAILED: Wrong key.
+MutabilityOwner: Caught Error: /Accellera/CCI/SET_PARAM_FAILED: Wrong key.
 In file: <removed by verify.pl>
 In process: MutabilityOwner.main_action @ 0 s
 MutabilityOwner:    set mutable_int_param with key - should succeed

@@ -3,22 +3,22 @@ SystemC Simulation
 Warning: (W534) name already exists: Top.private (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.private is already used in the SystemC hierarchy, using Top.private_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: Top.private is already used in the SystemC hierarchy, using Top.private_0 instead
 In file: <removed by verify.pl>
 
 Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Is Private Broker? : true
 
-Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.private.parent_inst.child_inst.priv_int_param    Parameter Value : 100
+Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.private.parent_inst.child_inst.priv_int_param	Parameter Value : 100
 
-Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.private.parent_inst.child_inst.pub_int_param Parameter Value : 150
+Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.private.parent_inst.child_inst.pub_int_param	Parameter Value : 150
 
-Info: Top.private.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.private.parent_inst.parent_int_param Parameter Value : 300
+Info: Top.private.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.private.parent_inst.parent_int_param	Parameter Value : 300
 
-Info: Top.private.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.private.parent_inst.parent_int_buffer    Parameter Value : 350
+Info: Top.private.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.private.parent_inst.parent_int_buffer	Parameter Value : 350
 
-Info: Top.param_cfgr: @0 s, [CFGR] : Parameter Name : Top.private.parent_inst.parent_int_buffer Parameter Value : 350
+Info: Top.param_cfgr: @0 s, [CFGR] : Parameter Name : Top.private.parent_inst.parent_int_buffer	Parameter Value : 350
 
-Info: Top.private.parent_inst.child_inst: @0 s, @ 0 s   Visible parameters to 'child' module
+Info: Top.private.parent_inst.child_inst: @0 s, @ 0 s	Visible parameters to 'child' module
 
 Info: Top.private.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.private.parent_inst.child_inst.priv_int_param
 
@@ -28,7 +28,7 @@ Info: Top.private.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.p
 
 Info: Top.private.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.private.parent_inst.parent_int_buffer
 
-Info: Top.private.parent_inst: @5 ns, @ 5 ns    Visible parameters to the 'parent' module
+Info: Top.private.parent_inst: @5 ns, @ 5 ns	Visible parameters to the 'parent' module
 
 Info: Top.private.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.private.parent_inst.child_inst.priv_int_param
 
@@ -38,7 +38,7 @@ Info: Top.private.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.private.pa
 
 Info: Top.private.parent_inst: @5 ns, [PARENT] : Parameter Name : Top.private.parent_inst.parent_int_buffer
 
-Info: Top.param_cfgr: @15 ns, @ 15 ns   Visible parameters to the 'configurator' module
+Info: Top.param_cfgr: @15 ns, @ 15 ns	Visible parameters to the 'configurator' module
 
 Info: Top.param_cfgr: @15 ns, [CFGR] : Parameter Name : Top.private.parent_inst.child_inst.pub_int_param
 
@@ -48,10 +48,10 @@ Info: Top.param_cfgr: @20 ns, @ 20 ns
 
 Info: Top.param_cfgr: @20 ns, [CFGR] : Change the value of the 'parent_int_buffer' to '1000'
 
-Info: Top.private.parent_inst: @20 ns, [PARENT - post_write_cb] : Parameter Name : Top.private.parent_inst.parent_int_buffer    Parameter Value : 1000
+Info: Top.private.parent_inst: @20 ns, [PARENT - post_write_cb] : Parameter Name : Top.private.parent_inst.parent_int_buffer	Parameter Value : 1000
 
-Info: Top.param_cfgr: @20 ns, [CFGR] : Parameter Name : Top.private.parent_inst.parent_int_buffer   Parameter Value : 1000
+Info: Top.param_cfgr: @20 ns, [CFGR] : Parameter Name : Top.private.parent_inst.parent_int_buffer	Parameter Value : 1000
 
 Info: Top.private.parent_inst.child_inst: @25 ns, @ 25 ns
 
-Info: Top.private.parent_inst.child_inst: @25 ns, [CHILD] : Parameter Name : Top.private.parent_inst.child_inst.priv_int_param  Parameter Value : 1000
+Info: Top.private.parent_inst.child_inst: @25 ns, [CHILD] : Parameter Name : Top.private.parent_inst.child_inst.priv_int_param	Parameter Value : 1000

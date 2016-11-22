@@ -20,7 +20,7 @@ Info: sc_main: Begin Simulation.
 
 Info: srch_ip: @0 s, execute: Original list
 
-Warning: /ASI/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
+Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
 In file: <removed by verify.pl>
 In process: srch_ip.execute @ 0 s
 sim_ip.bool_param = true
@@ -34,7 +34,7 @@ sim_ip.uint_param = 4277006349
 
 Info: srch_ip: @0 s, execute: Integers only
 
-Warning: /ASI/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
+Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
 In file: <removed by verify.pl>
 In process: srch_ip.execute @ 0 s
 sim_ip.char_param = 65
@@ -44,14 +44,14 @@ sim_ip.uint_param = 4277006349
 
 Info: srch_ip: @0 s, execute: String only
 
-Warning: /ASI/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
+Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
 In file: <removed by verify.pl>
 In process: srch_ip.execute @ 0 s
 sim_ip.string_param = "C++ String"
 
 Info: srch_ip: @0 s, execute: Numbers greater than or equal to 3 and smaller than 85 only
 
-Warning: /ASI/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
+Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
 In file: <removed by verify.pl>
 In process: srch_ip.execute @ 0 s
 sim_ip.char_param = 65
@@ -59,7 +59,7 @@ sim_ip.float_param = 3.140000104904175
 
 Info: srch_ip: @0 s, execute: Parameter name contains at least 't' only
 
-Warning: /ASI/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
+Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
 In file: <removed by verify.pl>
 In process: srch_ip.execute @ 0 s
 sim_ip.float_param = 3.140000104904175

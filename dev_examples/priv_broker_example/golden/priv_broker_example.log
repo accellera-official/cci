@@ -3,25 +3,25 @@ SystemC Simulation
 Warning: (W534) name already exists: Top.SubTopA (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA is already used in the SystemC hierarchy, using Top.SubTopA_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: Top.SubTopA is already used in the SystemC hierarchy, using Top.SubTopA_0 instead
 In file: <removed by verify.pl>
 
 Warning: (W534) name already exists: Top.SubTopA.ModuleA.ModuleB.SubModuleB (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA.ModuleA.ModuleB.SubModuleB is already used in the SystemC hierarchy, using Top.SubTopA.ModuleA.ModuleB.SubModuleB_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: Top.SubTopA.ModuleA.ModuleB.SubModuleB is already used in the SystemC hierarchy, using Top.SubTopA.ModuleA.ModuleB.SubModuleB_0 instead
 In file: <removed by verify.pl>
 
 Warning: (W534) name already exists: Top.SubTopA2 (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA2 is already used in the SystemC hierarchy, using Top.SubTopA2_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: Top.SubTopA2 is already used in the SystemC hierarchy, using Top.SubTopA2_0 instead
 In file: <removed by verify.pl>
 
 Warning: (W534) name already exists: Top.SubTopA2.ModuleA2.ModuleB.SubModuleB (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: Top.SubTopA2.ModuleA2.ModuleB.SubModuleB is already used in the SystemC hierarchy, using Top.SubTopA2.ModuleA2.ModuleB.SubModuleB_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: Top.SubTopA2.ModuleA2.ModuleB.SubModuleB is already used in the SystemC hierarchy, using Top.SubTopA2.ModuleA2.ModuleB.SubModuleB_0 instead
 In file: <removed by verify.pl>
 
 ------ sc_start() ----------------
@@ -37,7 +37,7 @@ In file: <removed by verify.pl>
 ----------------------------
 
 
-**** Parameter list (visible in Top.SubTopA.ModuleA.ModuleB.SubModuleB.ModuleC):
+**** Parameter list (visible in Top.SubTopA.ModuleA.ModuleB.SubModuleB.ModuleC): 
    Top.SubTopA.ModuleA.ModuleB.SubModuleB.ModuleC.priv_param
    Top.SubTopA.ModuleA.ModuleB.bool_param
    Top.SubTopA.ModuleA.ModuleB.int_param
@@ -54,7 +54,7 @@ In file: <removed by verify.pl>
 
 ----------------------------
 
-**** Parameter list (visible in Top.SubTopA2.ModuleA2):
+**** Parameter list (visible in Top.SubTopA2.ModuleA2): 
    Top.SubTopA2.ModuleA2.ModuleB.bool_param
    Top.SubTopA2.ModuleA2.ModuleB.int_param
    Top.SubTopA2.ModuleA2.ModuleB.str_param
@@ -70,7 +70,7 @@ In file: <removed by verify.pl>
 
 ----------------------------
 
-**** Parameter list (visible in Top.SubTopA2.ModuleA2.ModuleB):
+**** Parameter list (visible in Top.SubTopA2.ModuleA2.ModuleB): 
    Top.SubTopA2.ModuleA2.ModuleB.bool_param
    Top.SubTopA2.ModuleA2.ModuleB.int_param
    Top.SubTopA2.ModuleA2.ModuleB.str_param
@@ -86,7 +86,7 @@ In file: <removed by verify.pl>
 
 ----------------------------
 
-**** Parameter list (visible in Top.SubTopA2.ModuleA2.ModuleB.SubModuleB.ModuleC):
+**** Parameter list (visible in Top.SubTopA2.ModuleA2.ModuleB.SubModuleB.ModuleC): 
    Top.SubTopA2.ModuleA2.ModuleB.SubModuleB.ModuleC.priv_param
    Top.SubTopA2.ModuleA2.ModuleB.bool_param
    Top.SubTopA2.ModuleA2.ModuleB.int_param
@@ -103,7 +103,7 @@ In file: <removed by verify.pl>
 
 ----------------------------
 
-**** Parameter list (visible in Top.SubTopA.ModuleA):
+**** Parameter list (visible in Top.SubTopA.ModuleA): 
    Top.SubTopA.ModuleA.ModuleB.bool_param
    Top.SubTopA.ModuleA.ModuleB.int_param
    Top.SubTopA.ModuleA.ModuleB.str_param
@@ -119,7 +119,7 @@ In file: <removed by verify.pl>
 
 ----------------------------
 
-**** Parameter list (visible in Top.SubTopA.ModuleA.ModuleB):
+**** Parameter list (visible in Top.SubTopA.ModuleA.ModuleB): 
    Top.SubTopA.ModuleA.ModuleB.bool_param
    Top.SubTopA.ModuleA.ModuleB.int_param
    Top.SubTopA.ModuleA.ModuleB.str_param

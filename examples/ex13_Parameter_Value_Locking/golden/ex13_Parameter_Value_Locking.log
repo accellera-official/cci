@@ -12,7 +12,7 @@ Info: param_owner: @0 s, [OWNER] : Try to set parameter value to 1 from 0
 
 Info: param_owner: @0 s, [OWNER] : param_owner	Failed to set parameter value to 1 from 0.
 
-Info: param_owner: @0 s, [OWNER] : Caught Exception : Error: /ASI/CCI/SET_PARAM_FAILED: Parameter locked.
+Info: param_owner: @0 s, [OWNER] : Caught Exception : Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter locked.
 In file: <removed by verify.pl>
 In process: param_owner.run_owner @ 0 s
 
@@ -56,7 +56,7 @@ Info: param_cfgr: @7 ns, [CFGR] : Parameter locking status : 1	Value : 3
 
 Info: param_cfgr: @7 ns, [CFGR] : Set parameter value to '4'
 
-Info: param_cfgr: @7 ns, [CFGR] : Caught Exception : Error: /ASI/CCI/SET_PARAM_FAILED: Parameter locked.
+Info: param_cfgr: @7 ns, [CFGR] : Caught Exception : Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter locked.
 In file: <removed by verify.pl>
 In process: param_cfgr.run_mutable_cfgr @ 7 ns
 
