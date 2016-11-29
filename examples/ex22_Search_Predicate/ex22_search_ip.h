@@ -21,7 +21,6 @@
 #define EXAMPLES_EX22_SEARCH_PREDICATE_EX22_SEARCH_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -85,10 +84,10 @@ public:
     void execute() {
 
         XREPORT("execute: Original list");
-        std::vector <cci::cci_param_untyped_handle> param_list =
+        std::vector <cci::cci_param_untyped_handle> param_list_handle =
                 m_cci.get_param_handles();
         for (std::vector<cci::cci_param_untyped_handle>::iterator it =
-                param_list.begin(); it != param_list.end(); ++it) {
+                param_list_handle.begin(); it != param_list_handle.end(); ++it) {
             std::cout << (*it).get_name() << " = ";
             std::cout << (*it).get_cci_value();
             std::cout << std::endl;
@@ -97,13 +96,13 @@ public:
         XREPORT("execute: Integers only");
         cci::cci_param_predicate pred_it(
                 &ex22_search_ip::integer_type_predicate);
-        cci::cci_param_filter_iterator integer_only_pfi =
+        cci::cci_param_filter_iterator integer_only_pfi_handle =
                 m_cci.get_param_handles(pred_it);
-        for ( ; integer_only_pfi != integer_only_pfi.end();
-                ++integer_only_pfi) {
-            if((*integer_only_pfi).is_valid()) {
-                std::cout << (*integer_only_pfi).get_name() << " = ";
-                std::cout << (*integer_only_pfi).get_cci_value();
+        for ( ; integer_only_pfi_handle != integer_only_pfi_handle.end();
+                ++integer_only_pfi_handle) {
+            if((*integer_only_pfi_handle).is_valid()) {
+                std::cout << (*integer_only_pfi_handle).get_name() << " = ";
+                std::cout << (*integer_only_pfi_handle).get_cci_value();
                 std::cout << std::endl;
             }
         }
@@ -111,12 +110,12 @@ public:
         XREPORT("execute: String only");
         cci::cci_param_predicate pred_st(
                 &ex22_search_ip::string_type_predicate);
-        cci::cci_param_filter_iterator string_only_pfi =
+        cci::cci_param_filter_iterator string_only_pfi_handle =
                 m_cci.get_param_handles(pred_st);
-        for ( ; string_only_pfi != string_only_pfi.end(); ++string_only_pfi) {
-            if ((*string_only_pfi).is_valid()) {
-                std::cout << (*string_only_pfi).get_name() << " = ";
-                std::cout << (*string_only_pfi).get_cci_value();
+        for ( ; string_only_pfi_handle != string_only_pfi_handle.end(); ++string_only_pfi_handle) {
+            if ((*string_only_pfi_handle).is_valid()) {
+                std::cout << (*string_only_pfi_handle).get_name() << " = ";
+                std::cout << (*string_only_pfi_handle).get_cci_value();
                 std::cout << std::endl;
             }
         }
@@ -126,26 +125,26 @@ public:
         cci::cci_param_predicate pred_vir(sc_bind(
             &ex22_search_ip::value_in_range_predicate, this,
                     sc_unnamed::_1, 3, 85));
-        cci::cci_param_filter_iterator value_in_range_pfi =
+        cci::cci_param_filter_iterator value_in_range_pfi_handle =
                 m_cci.get_param_handles(pred_vir);
-        while(value_in_range_pfi != value_in_range_pfi.end()) {
-            std::cout << (*value_in_range_pfi).get_name() << " = ";
-            std::cout << (*value_in_range_pfi).get_cci_value();
+        while(value_in_range_pfi_handle != value_in_range_pfi_handle.end()) {
+            std::cout << (*value_in_range_pfi_handle).get_name() << " = ";
+            std::cout << (*value_in_range_pfi_handle).get_cci_value();
             std::cout << std::endl;
-            ++value_in_range_pfi;
+            ++value_in_range_pfi_handle;
         }
 
         XREPORT("execute: Parameter name contains at least 't' only");
         cci::cci_param_predicate pred_ncc(sc_bind(
             &ex22_search_ip::name_contains_character_predicate, this,
                     sc_unnamed::_1, 't'));
-        cci::cci_param_filter_iterator letter_pfi =
+        cci::cci_param_filter_iterator letter_pfi_handle =
                 m_cci.get_param_handles(pred_ncc);
-        while(letter_pfi != letter_pfi.end()) {
-            std::cout << (*letter_pfi).get_name() << " = ";
-            std::cout << (*letter_pfi).get_cci_value();
+        while(letter_pfi_handle != letter_pfi_handle.end()) {
+            std::cout << (*letter_pfi_handle).get_name() << " = ";
+            std::cout << (*letter_pfi_handle).get_cci_value();
             std::cout << std::endl;
-            ++letter_pfi;
+            ++letter_pfi_handle;
         }
     }
 
