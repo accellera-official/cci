@@ -18,49 +18,43 @@
  ****************************************************************************/
 
 /**
- * @file   cci_hierarchical_values_set/ParentModule.h
+ * @file   ex23_simple_ip.h
  * @author Lei Liang, Ericsson
  */
 
-#ifndef __PARENTMODULE_H__
-#define __PARENTMODULE_H__
+#ifndef EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_SIMPLE_IP_H_
+#define EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_SIMPLE_IP_H_
 
-
-#include <systemc>
 #include <cci_configuration>
-#include "ChildModule.h"
+#include "xreport.hpp"
+#include "ex23_sub_simple_ip.h"
 
-#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
-#define SC_INCLUDE_DYNAMIC_PROCESSES
-#endif
-
-class ParentModule
-: public sc_core::sc_module
-{
-
-public:
-
-  SC_HAS_PROCESS(ChildModule);
-
-  ParentModule(sc_core::sc_module_name name):
-    log_level("log_level", 0),
-    mParam1("mParam1", 0),
-    mParam2("mParam2", 0),
-    mChild("ChildModule")
-  {
-
-  };
-
-  ~ParentModule(){};
-
-  cci::cci_param<int> log_level;
-  cci::cci_param<int> mParam1;
-  cci::cci_param<int> mParam2;
+/**
+ *  @class  ex23_simple_ip
+ *  @brief  This ex23_simple_ip class owns three CCI params with one named
+ *          'log_level' and a sub module instantiated from ex23_sub_simple_ip.
+ */
+SC_MODULE(ex23_simple_ip) {
+    /**
+     *  @fn     void ex23_simple_ip()
+     *  @brief  class constructor
+     *  @return void
+     */
+    SC_CTOR(ex23_simple_ip)
+    : log_level("log_level", 0)
+    , int_param1("int_param1", 0)
+    , int_param2("int_param2", 0)
+    , sub_ip("sub_ip") {
+    }
 
 private:
+    /// Parameters of int types
+    cci::cci_param<int> log_level; ///the target log_level to be updated
+    cci::cci_param<int> int_param1;///int parameter to demo hierarchical params
+    cci::cci_param<int> int_param2;///int parameter to demo hierarchical params
 
-  ChildModule mChild;
+    ex23_sub_simple_ip sub_ip;     ///the sub ip module which contains log_level
 };
 
 
-#endif
+#endif //EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_SIMPLE_IP_H_

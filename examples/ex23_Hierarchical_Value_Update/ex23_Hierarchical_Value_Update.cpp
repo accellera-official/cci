@@ -23,22 +23,24 @@
  * @brief  Simple example for setting hierarchical values
  */
 
-#include <systemc>
-#include <cci_configuration>
+#include "ex23_simple_ip.h"
+#include "ex23_config_ip.h"
 
-#include "ParentModule.h"
-#include "ConfigModule.h"
-
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  Testbench for the CCI ex22_Search_Predicate example
+ *  @param  argc  An integer for the number of input arguments
+ *  @param  argv  A list of the input arguments
+ *  @return an integer representing whether the execution was successful
+ */
 int sc_main(int argc, char *argv[]) {
+    ex23_simple_ip sim_ip("sim_ip");
+    ex23_config_ip srch_ip("cfg_ip");
 
+    SC_REPORT_INFO("sc_main", "Begin Simulation.");
+    sc_core::sc_start();
+    SC_REPORT_INFO("sc_main", "End Simulation.");
 
-  ParentModule     sim_ip   ("sim_ip");
-  ConfigModule     cfg_ip   ("cfg_ip");
-  
-  std::cout << std::endl << "------ sc_start() ----------------" << std::endl << std::endl;
-  sc_core::sc_start(); 
-  std::cout << std::endl << "------ sc_start() returned -------" << std::endl << std::endl;
-  
-  return EXIT_SUCCESS; 
-  
+    return EXIT_SUCCESS;
 }
+

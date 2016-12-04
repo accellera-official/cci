@@ -18,82 +18,111 @@
  ****************************************************************************/
 
 /**
- * @file   cci_hierarchical_values_set/ConfigModule.h
+ * @file   ex23_config_ip.h
+ * @brief  Configure simple_ip's log_level parameters
  * @author Lei Liang, Ericsson
  */
-#ifndef __CONFIGMODULE_H__
-#define __CONFIGMODULE_H__
+#ifndef EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_CONFIG_IP_H_
+#define EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_CONFIG_IP_H_
 
-
-#include <systemc>
 #include <cci_configuration>
+#include "xreport.hpp"
 
-#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
-#define SC_INCLUDE_DYNAMIC_PROCESSES
-#endif
-
-class ConfigModule
-: public sc_core::sc_module
-{
-
+/**
+ *  @class  ex23_config_ip
+ *  @brief  The config_ip class, which set sim_ip's(itself and its sub_ip)
+ *          parameter with the name "log_level" from 0 to 500
+ */
+SC_MODULE(ex23_config_ip) {
 public:
-
-  SC_HAS_PROCESS(ConfigModule);
-
-  ConfigModule(sc_core::sc_module_name name):
-          m_cci(cci::cci_broker_manager::get_broker())
-  {
-    SC_THREAD(execute);
-  };
-
-  void execute() {
-    const std::string tar_param = "*.log_level";
-
-    // Target value for all log_level
-    cci::cci_value tar_value(500);;
-
-    std::cout << std::endl << "**** Parameter list and values: @ "<<sc_core::sc_time_stamp() << std::endl;
-
-    // To get the all parameters
-    std::vector<std::string> vec_all = m_cci.get_param_list();
-    // To get parameter with pattern (*.log_level)
-	/// @todo replace pattern based search (not part of standard) with predicate once available.
-    std::vector<std::string> vec_ll = m_cci.get_param_list(tar_param);
-    std::vector<std::string>::iterator it;
-
-    for (it = vec_all.begin() ; it < vec_all.end(); it++) {
-      std::cout<<*it<<" = ";
-      std::cout<<m_cci.get_cci_value(*it).to_json();
-      std::cout<<std::endl;
+    /**
+     *  @fn     void ex23_config_ip
+     *  @brief  The constructor for the class
+     *  @return void
+     */
+    SC_CTOR(ex23_config_ip):
+        m_cci(cci::cci_broker_manager::get_current_broker(
+                cci::cci_originator(*this)))
+    {
+        SC_THREAD(execute);
     }
 
-    wait(10,sc_core::SC_NS);
-
-    std::cout << std::endl << "**** Set all log_level to 500: @ "<<sc_core::sc_time_stamp() << std::endl;
-
-
-    for (it = vec_ll.begin() ; it < vec_ll.end(); it++) {
-        (m_cci.get_param_handle(*it)).set_cci_value(tar_value);
+    static bool
+    string_type_predicate(const cci::cci_param_untyped_handle handle)
+    {
+        return (handle.get_name().substr(handle.get_name().rfind(".")+1)
+                =="log_level");
     }
 
-    wait(20,sc_core::SC_NS);
+    /**
+     *  @fn     void execute()
+     *  @brief  The main function which update all "log_level" parameters of
+     *          sim_ip(itself and its sub_ip)
+     *  @return void
+     */
+    void execute() {
+        const std::string tar_param = "*.log_level";
 
-    std::cout << std::endl << "**** Parameter list and values: @ "<<sc_core::sc_time_stamp() << std::endl;
+        // Target value for all log_level
+        cci::cci_value tar_value(500);
 
-    for (it = vec_all.begin() ; it < vec_all.end(); it++) {
-      std::cout<<*it<<" = ";
-      std::cout<<m_cci.get_cci_value(*it).to_json();
-      std::cout<<std::endl;
+        XREPORT("execute: List all parameters inside simple_ip");
+
+        std::vector <cci::cci_param_untyped_handle> param_list =
+                m_cci.get_param_handles();
+
+        for (std::vector<cci::cci_param_untyped_handle>::iterator it =
+                param_list.begin(); it != param_list.end(); ++it) {
+            std::cout << (*it).get_name() << " = ";
+            std::cout << (*it).get_cci_value();
+            std::cout << std::endl;
+        }
+
+        XREPORT("execute: List all 'log_level' parameter inside simple_ip");
+
+        cci::cci_param_predicate pred_it(
+                &ex23_config_ip::string_type_predicate);
+
+        cci::cci_param_filter_iterator integer_only_pfi =
+                m_cci.get_param_handles(pred_it);
+
+        for ( ; integer_only_pfi != integer_only_pfi.end();
+                ++integer_only_pfi) {
+            if((*integer_only_pfi).is_valid()) {
+                std::cout << (*integer_only_pfi).get_name() << " = ";
+                std::cout << (*integer_only_pfi).get_cci_value();
+                std::cout << std::endl;
+            }
+        }
+
+        XREPORT("execute: Update all 'log_Level' parameters' value to 500");
+
+        integer_only_pfi = integer_only_pfi.begin();
+
+        for ( ; integer_only_pfi != integer_only_pfi.end();
+                ++integer_only_pfi) {
+            if((*integer_only_pfi).is_valid()) {
+                (*integer_only_pfi).set_cci_value(tar_value);
+            }
+        }
+
+        XREPORT("execute: List all 'log_Level' parameter inside simple_ip");
+
+        integer_only_pfi = integer_only_pfi.begin();
+
+        for ( ; integer_only_pfi != integer_only_pfi.end();
+                ++integer_only_pfi) {
+            if((*integer_only_pfi).is_valid()) {
+                std::cout << (*integer_only_pfi).get_name() << " = ";
+                std::cout << (*integer_only_pfi).get_cci_value();
+                std::cout << std::endl;
+            }
+        }
     }
-
-  }
-
-  ~ConfigModule(){};
 
 private:
-  cci::cci_broker_if& m_cci;
-
+    cci::cci_broker_if& m_cci; ///< CCI configuration handle
 };
 
 
-#endif
+#endif //EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_CONFIG_IP_H_
