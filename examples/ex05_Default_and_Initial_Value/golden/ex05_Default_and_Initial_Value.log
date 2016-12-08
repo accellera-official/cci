@@ -10,8 +10,10 @@ Info: sim_ip: @0 s, @Ctor: Value of sim_ip.param_2 is 2 (Default value Specified
 
 Info: sc_main: Begin Simulation.
 
+Info: cfg_ip: @0 s, execute: [EXTERNAL] Current value of sim_ip.param_1 is 5
+
 Info: sc_main: End Simulation.
 
-Info: sim_ip: @Dtor: Value of sim_ip.param_1 is 10
+Info: sim_ip: @Dtor: Value of sim_ip.param_1 is 5
 
 Info: sim_ip: @Dtor: Value of sim_ip.param_2 is 2
