@@ -1,2 +1,2 @@
-cci_value_example/ParameterOwnerModule.cpp
-cci_value_example/testbench.cpp
+cci_value_param_example/ParameterOwnerModule.cpp
+cci_value_param_example/testbench.cpp
