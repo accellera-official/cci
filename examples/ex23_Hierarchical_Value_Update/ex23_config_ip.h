@@ -41,8 +41,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex23_config_ip):
-        m_cci(cci::cci_broker_manager::get_broker(
-                cci::cci_originator(*this)))
+        m_cci(cci::cci_broker_manager::get_broker())
     {
         SC_THREAD(execute);
     }
@@ -97,7 +96,7 @@ public:
 
         XREPORT("execute: Update all 'log_Level' parameters' value to 500");
 
-        integer_only_pfi = integer_only_pfi.begin();
+        integer_only_pfi.reset();
 
         for ( ; integer_only_pfi != integer_only_pfi.end();
                 ++integer_only_pfi) {
@@ -108,7 +107,7 @@ public:
 
         XREPORT("execute: List all 'log_Level' parameter inside simple_ip");
 
-        integer_only_pfi = integer_only_pfi.begin();
+        integer_only_pfi.reset();
 
         for ( ; integer_only_pfi != integer_only_pfi.end();
                 ++integer_only_pfi) {
