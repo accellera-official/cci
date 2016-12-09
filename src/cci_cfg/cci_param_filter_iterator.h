@@ -114,6 +114,10 @@ public:
         return m_end;
     }
 
+    void reset() {
+        m_current = m_begin;
+    }
+
 private:
     void init() {
         if ((m_current != m_end) && (!m_pred(*(m_current)))) {
