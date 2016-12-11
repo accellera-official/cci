@@ -77,41 +77,41 @@ public:
 
         XREPORT("execute: List all 'log_level' parameter inside simple_ip");
 
-        cci::cci_param_predicate pred_it(
+        cci::cci_param_predicate pred_log_level(
                 &ex23_config_ip::log_level_param_predicate);
 
-        cci::cci_param_filter_iterator integer_only_pfi =
-                m_cci.get_param_handles(pred_it);
+        cci::cci_param_filter_iterator log_level_pfi =
+                m_cci.get_param_handles(pred_log_level);
 
-        for ( ; integer_only_pfi != integer_only_pfi.end();
-                ++integer_only_pfi) {
-            if((*integer_only_pfi).is_valid()) {
-                std::cout << (*integer_only_pfi).get_name() << " = ";
-                std::cout << (*integer_only_pfi).get_cci_value();
+        for ( ; log_level_pfi != log_level_pfi.end();
+                ++log_level_pfi) {
+            if((*log_level_pfi).is_valid()) {
+                std::cout << (*log_level_pfi).get_name() << " = ";
+                std::cout << (*log_level_pfi).get_cci_value();
                 std::cout << std::endl;
             }
         }
 
         XREPORT("execute: Update all 'log_Level' parameters' value to 500");
 
-        integer_only_pfi.reset();
+        log_level_pfi.reset();
 
-        for ( ; integer_only_pfi != integer_only_pfi.end();
-                ++integer_only_pfi) {
-            if((*integer_only_pfi).is_valid()) {
-                (*integer_only_pfi).set_cci_value(target_value);
+        for ( ; log_level_pfi != log_level_pfi.end();
+                ++log_level_pfi) {
+            if((*log_level_pfi).is_valid()) {
+                (*log_level_pfi).set_cci_value(target_value);
             }
         }
 
         XREPORT("execute: List all 'log_Level' parameter inside simple_ip");
 
-        integer_only_pfi.reset();
+        log_level_pfi.reset();
 
-        for ( ; integer_only_pfi != integer_only_pfi.end();
-                ++integer_only_pfi) {
-            if((*integer_only_pfi).is_valid()) {
-                std::cout << (*integer_only_pfi).get_name() << " = ";
-                std::cout << (*integer_only_pfi).get_cci_value();
+        for ( ; log_level_pfi != log_level_pfi.end();
+                ++log_level_pfi) {
+            if((*log_level_pfi).is_valid()) {
+                std::cout << (*log_level_pfi).get_name() << " = ";
+                std::cout << (*log_level_pfi).get_cci_value();
                 std::cout << std::endl;
             }
         }
