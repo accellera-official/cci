@@ -47,7 +47,7 @@ public:
     }
 
     static bool
-    string_type_predicate(const cci::cci_param_untyped_handle handle)
+    log_level_param_predicate(const cci::cci_param_untyped_handle handle)
     {
         return (handle.get_name().substr(handle.get_name().rfind(".")+1)
                 =="log_level");
@@ -60,10 +60,8 @@ public:
      *  @return void
      */
     void execute() {
-        const std::string tar_param = "*.log_level";
-
-        // Target value for all log_level
-        cci::cci_value tar_value(500);
+        // Target value for all log_level params
+        cci::cci_value target_value(500);
 
         XREPORT("execute: List all parameters inside simple_ip");
 
@@ -80,7 +78,7 @@ public:
         XREPORT("execute: List all 'log_level' parameter inside simple_ip");
 
         cci::cci_param_predicate pred_it(
-                &ex23_config_ip::string_type_predicate);
+                &ex23_config_ip::log_level_param_predicate);
 
         cci::cci_param_filter_iterator integer_only_pfi =
                 m_cci.get_param_handles(pred_it);
@@ -101,7 +99,7 @@ public:
         for ( ; integer_only_pfi != integer_only_pfi.end();
                 ++integer_only_pfi) {
             if((*integer_only_pfi).is_valid()) {
-                (*integer_only_pfi).set_cci_value(tar_value);
+                (*integer_only_pfi).set_cci_value(target_value);
             }
         }
 
