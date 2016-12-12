@@ -23,16 +23,19 @@
 #include <string>
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_core/cci_core_types.h"
-#include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_value.h"
-
-class cci_param_if;
+#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_mutable_types.h"
+#include "cci_param_callbacks.h"
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
  */
 
 CCI_OPEN_NAMESPACE_
+
+// Forward declaration
+class cci_param_if;
 
 // Convenient name
 #define cci_param_handle cci_param_untyped_handle

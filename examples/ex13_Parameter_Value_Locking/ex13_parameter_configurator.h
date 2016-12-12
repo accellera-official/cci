@@ -162,7 +162,7 @@ SC_MODULE(ex13_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if& myConfigBroker;  ///< CCI configuration broker interface instance
+  cci::cci_broker_handle myConfigBroker;  ///< CCI configuration broker interface instance
   cci::cci_param_handle int_param;  ///< CCI parameter handle to access the actual owner's parameter
 
   char* paramName;  ///< The parameter name

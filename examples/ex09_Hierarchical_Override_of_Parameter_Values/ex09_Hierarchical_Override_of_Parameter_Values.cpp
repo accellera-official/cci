@@ -49,7 +49,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_originator myOriginator(myString);
 
   // Get handle to the default broker
-  cci::cci_broker_if& myGlobalBroker =
+  cci::cci_broker_handle myGlobalBroker =
       cci::cci_broker_manager::get_broker(myOriginator);
 
   SC_REPORT_INFO("sc_main",

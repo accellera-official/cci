@@ -32,8 +32,7 @@ Observer::Observer(const char* name)
 { 
   DEMO_DUMP(mName.c_str(), "register for new parameter callbacks");
   mCallbacks.push_back( mBroker.register_create_callback(
-          sc_bind(&Observer::config_new_param_callback,this,sc_unnamed::_1),
-          cci::cci_originator("OBSERVER")));
+          sc_bind(&Observer::config_new_param_callback,this,sc_unnamed::_1)));
 }
 
 Observer::~Observer() {

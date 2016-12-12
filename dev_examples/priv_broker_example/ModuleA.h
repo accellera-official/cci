@@ -33,7 +33,7 @@
 #ifndef SC_INCLUDE_DYNAMIC_PROCESSES
   #define SC_INCLUDE_DYNAMIC_PROCESSES
 #endif
-#include "gs_cci_cnf_private_broker_handle.h"
+#include "gs_cci_cnf_private_broker.h"
 
 #include "ModuleB.h"
 
@@ -43,7 +43,7 @@ class ModuleA
 {
 protected:
   /// for secure access by parameters
-  cci::cci_broker_if& m_broker;
+  cci::cci_broker_handle m_broker;
 
 public:
   

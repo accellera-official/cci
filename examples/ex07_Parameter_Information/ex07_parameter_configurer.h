@@ -311,7 +311,7 @@ SC_MODULE(ex07_parameter_configurer) {
   }
 
  private:
-  cci::cci_broker_if& myBrokerInterface; //!< CCI configuration broker instance
+  cci::cci_broker_handle myBrokerInterface; //!< CCI configuration broker instance
 
   std::string int_param_str;  //!< For storing hierarchical path of std::string type cci-parameter
   std::string string_param_str; //!< For storing hierarchical path of integer type cci-parameter

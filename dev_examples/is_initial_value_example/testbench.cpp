@@ -44,7 +44,7 @@ protected:
 
 /// Shows a parameter list with information about value, explicit/implicit status and is_initial_value status
 void show_param_list() {
-  static cci::cci_broker_if& mBroker =
+  static cci::cci_broker_handle mBroker =
           cci::cci_broker_manager::get_broker(
                   cci::cci_originator("PARAM_LIST"));
 
@@ -71,7 +71,7 @@ void show_param_list() {
 /// Testbench for the CCI development example testing the is_initial_value functionality
 int sc_main(int argc, char *argv[]) {
   
-  cci::cci_broker_if& mBroker = cci::cci_broker_manager::get_broker(
+  cci::cci_broker_handle mBroker = cci::cci_broker_manager::get_broker(
           cci::cci_originator("SCMAIN"));
   
   mBroker.set_initial_cci_value("params.int_param_with_initial_value",

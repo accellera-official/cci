@@ -109,7 +109,7 @@ SC_MODULE(ex14_configurator) {
   }
 
  private:
-  cci::cci_broker_if& myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
+  cci::cci_broker_handle myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
   cci::cci_param_handle parent_base_param;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator

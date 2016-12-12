@@ -134,7 +134,7 @@ class ex16_observer {
   }
 
  private:
-  cci::cci_broker_if& observerBrokerIF;  ///< CCI configuration broker instance
+  cci::cci_broker_handle observerBrokerIF;  ///< CCI configuration broker instance
 
   cci::cci_param_handle obsv_udt_base;  ///< Declare CCI param handle for int type cci-parameter
 

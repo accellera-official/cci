@@ -34,7 +34,7 @@ void ParameterOwnerModule::main_action() {
   DEMO_DUMP(name(), "Executing main_action");
 
   // get the config API which is responsible for this module
-  cci::cci_broker_if& mApi = cci::cci_broker_manager::get_broker();
+  cci::cci_broker_handle mApi = cci::cci_broker_manager::get_broker();
   
   // create a local parameter
   DEMO_DUMP(name(), "- Creating uchar_param parameter");

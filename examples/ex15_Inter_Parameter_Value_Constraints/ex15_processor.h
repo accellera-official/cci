@@ -186,7 +186,7 @@ SC_MODULE(ex15_processor) {
   ex15_address_lines_register addr_lines_module;  ///< Declare address line register
   ex15_memory_block memory_block_module;  ///< Memory block module
 
-  cci::cci_broker_if& processor_BrokerIF;  ///< Pointer to the broker interface
+  cci::cci_broker_handle processor_BrokerIF;  ///< Pointer to the broker interface
 
   int total_addr_lines; ///< The total number of address lines
   int mem_block_size; ///< The size of the memory block

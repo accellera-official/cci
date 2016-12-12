@@ -36,7 +36,7 @@
 
 #include "ex14_child.h"
 #include "xreport.hpp"
-#include "gs_cci_cnf_private_broker_handle.h"
+#include "gs_cci_cnf_private_broker.h"
 
 /**
  *  @class  ex14_parent
@@ -140,7 +140,7 @@ SC_MODULE(ex14_parent) {
   }
 
  private:
-  cci::cci_broker_if& m_broker;
+  cci::cci_broker_handle m_broker;
 
   ex14_child child_inst;  ///< Owner Module instantiation
 

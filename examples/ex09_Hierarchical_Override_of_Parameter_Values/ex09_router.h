@@ -170,7 +170,7 @@ SC_MODULE(ex09_router) {
   cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
   cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> r_targets; ///< target ID assigned by the top_module upon instantiation
   cci::cci_param<unsigned int, cci::CCI_MUTABLE_PARAM> addr_limit;  ///< Router Addressing Range
-  cci::cci_broker_if& myBrokerForRouter; ///< CCI configuration broker
+  cci::cci_broker_handle myBrokerForRouter; ///< CCI configuration broker
 
   /// Router Table contents holding targets related information
   std::vector<cci::cci_param<unsigned int,

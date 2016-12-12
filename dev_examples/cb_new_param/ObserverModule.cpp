@@ -53,8 +53,9 @@ void ObserverModule::main_action() {
   cci::cci_param_create_callback_handle cb_new_pa;
 
   cb_new_pa = mApi.register_create_callback(
-          sc_bind(&ObserverModule::config_new_param_callback,this,sc_unnamed::_1),
-          cci::cci_originator(*this));
+          sc_bind(&ObserverModule::config_new_param_callback,
+                  this,
+                  sc_unnamed::_1));
   mCallbacks.push_back(cb_new_pa);// This will not be deleted after end of main_action()
 
   // ******** register for parameter change callbacks ***************

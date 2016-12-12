@@ -127,7 +127,7 @@ SC_MODULE(ex16_parameter_configurer) {
   }
 
  private:
-  cci::cci_broker_if& myBrokerInterface; ///< CCI configuration broker instance
+  cci::cci_broker_handle myBrokerInterface; ///< CCI configuration broker instance
 
   std::string udt_param_str;  ///< std::string types for storing parameters hierarchical paths
 

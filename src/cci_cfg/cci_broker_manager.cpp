@@ -17,59 +17,65 @@
 
  ****************************************************************************/
 
+#include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_param_typed.h"
-#include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
 
-std::map<cci_originator, cci_broker_if *> cci_broker_manager::m_brokers;
+std::map<cci_originator, cci_broker_handle> cci_broker_manager::m_brokers;
 
-cci_broker_if&
+cci_broker_handle
 cci_broker_manager::get_broker(const cci_originator &originator)
 {
-    cci_broker_if* broker = m_brokers[originator];
-    if (!broker) {
-        broker = &get_parent_broker(originator).
-                create_broker_handle(originator);
+    std::map<cci_originator, cci_broker_handle>::iterator it =
+            m_brokers.find(originator);
+    if(it != m_brokers.end()) {
+        return it->second;
+    } else {
+        return get_parent_broker(originator).create_broker_handle(originator);
     }
-    return *broker;
 }
 
-cci_broker_if&
+cci_broker_handle
 cci_broker_manager::get_parent_broker(const cci_originator &originator)
 {
     // Get parent originator
     cci_originator parent_originator = originator.get_parent_originator();
 
     // Return handle to the broker found for the parent originator
-    cci_broker_if* broker = m_brokers[parent_originator];
-    if (!broker) {
+    std::map<cci_originator, cci_broker_handle>::iterator it =
+            m_brokers.find(parent_originator);
+    if(it != m_brokers.end()) {
+        return it->second;
+    } else {
         if(parent_originator.is_unknown()) {
             return cci_get_global_broker().create_broker_handle(originator);
         } else {
-            broker = &get_parent_broker(parent_originator).
+            return get_parent_broker(parent_originator).
                     create_broker_handle(parent_originator);
         }
     }
-    return *broker;
 }
 
 cci_broker_if&
-cci_broker_manager::register_broker(cci_broker_if* broker)
+cci_broker_manager::register_broker(cci_broker_if& broker)
 {
     cci_originator originator;
-    cci_broker_if*& current_broker = m_brokers[originator];
-    if (!current_broker) {
-        current_broker = broker;
-    } else {
+    std::map<cci_originator, cci_broker_handle>::iterator it =
+            m_brokers.find(originator);
+    if(it != m_brokers.end()) {
         CCI_REPORT_ERROR("cci_broker_manager/register_broker",
                          "A broker is already registered in the current"
                                  " hierarchy.");
+    } else {
+        cci_broker_handle broker_handle =
+                broker.create_broker_handle(originator);
+        m_brokers.insert(std::make_pair(originator, broker_handle));
     }
 
-    return *broker;
+    return broker;
 }
 
 CCI_CLOSE_NAMESPACE_

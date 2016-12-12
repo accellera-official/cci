@@ -112,7 +112,7 @@ SC_MODULE(ex15_configurator) {
   }
 
  private:
-  cci::cci_broker_if& myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   /// CCI base parameters
   cci::cci_param_handle addr_lines_base;  ///< Handle to the base of the address lines

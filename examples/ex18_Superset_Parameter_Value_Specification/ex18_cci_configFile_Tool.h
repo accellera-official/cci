@@ -327,7 +327,7 @@ class ex18_cci_configFile_Tool {
  protected:
   cci::cci_originator mToolOriginator; ///< This tool's originator information
 
-  cci::cci_broker_if& mApi;  ///< Config API which is used by this tool
+  cci::cci_broker_handle mApi;  ///< Config API which is used by this tool
 
   std::string m_name; ///< Name of this object, given by constructor
 

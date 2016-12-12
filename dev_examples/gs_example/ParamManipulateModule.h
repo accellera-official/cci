@@ -45,7 +45,7 @@ public:
 
 protected:
   /// Pointer the the module's configuration broker
-  cci::cci_broker_if& mBroker;
+  cci::cci_broker_handle mBroker;
 
 };
 

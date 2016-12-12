@@ -54,8 +54,9 @@ class ex20_observer {
     // Registering callback for the creation of the pointer to the
     // cci_parameter of the owner module
     Observer_BrokerIF.register_create_callback(
-            sc_bind(&ex20_observer::config_new_param_callback,this,sc_unnamed::_1),
-            cci::cci_originator("ex20_observer"));
+            sc_bind(&ex20_observer::config_new_param_callback,
+                    this,
+                    sc_unnamed::_1));
   }
 
   /**
@@ -153,7 +154,7 @@ class ex20_observer {
   }
 
  private:
-  cci::cci_broker_if& Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
 
   cci::cci_param_handle observer_base;  ///< Handle of Owner's CCI Parameter (integer type)
 

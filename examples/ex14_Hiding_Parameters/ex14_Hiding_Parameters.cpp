@@ -35,6 +35,7 @@
 
 #include "ex14_parent.h"
 #include "ex14_configurator.h"
+#include "gs_cci_cnf_private_broker.h"
 
 /**
  *  @class  ex14_private
@@ -49,11 +50,10 @@ public:
      */
     SC_CTOR(ex14_private)
     {
-      m_priv_broker = &cci::cci_broker_manager::register_broker(
-              new cci::gs_cci_private_broker_handle(*this,
-                            boost::assign::list_of(
-                                    "parent_inst.parent_int_buffer")
-                                    ("parent_inst.child_inst.pub_int_param")));
+      m_priv_broker = &cci::cci_broker_manager::register_broker(*(
+              new cci::gs_cci_private_broker(*this, boost::assign::list_of(
+                                                "parent_inst.parent_int_buffer")
+                                   ("parent_inst.child_inst.pub_int_param"))));
       m_parent_inst = new ex14_parent("parent_inst");
     }
 

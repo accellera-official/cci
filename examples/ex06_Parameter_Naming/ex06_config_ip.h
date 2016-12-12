@@ -160,7 +160,7 @@ SC_MODULE(ex06_config_ip) {
   }
 
  private:
-  cci::cci_broker_if& m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_cci; ///< CCI configuration handle
 };
 // ex06_config_ip
 

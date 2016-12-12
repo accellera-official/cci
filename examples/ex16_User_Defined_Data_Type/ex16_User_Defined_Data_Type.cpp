@@ -47,7 +47,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_originator myOriginator(myOrgStr);
 
   // Get handle of the broker using the originator
-  cci::cci_broker_if& globalBroker =
+  cci::cci_broker_handle globalBroker =
       cci::cci_broker_manager::get_broker(myOriginator);
 
   // Set initial value to the 'int_param' of 'parameter_owner' class before

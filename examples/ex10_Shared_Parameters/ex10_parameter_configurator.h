@@ -102,7 +102,7 @@ SC_MODULE(ex10_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if& myCfgrBrokerIF;      ///< cci configuration broker interface instance
+  cci::cci_broker_handle myCfgrBrokerIF;      ///< cci configuration broker interface instance
   cci::cci_param_handle cfgr_param;        ///< CCI base parameter handle
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
