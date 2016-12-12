@@ -62,7 +62,7 @@ private:
         typedef typename BaseIterator:: reference reference;
 
         cci_iterator():
-                m_current(container_iterator()),
+                m_current(),
                 m_fr(NULL)
         {};
 
