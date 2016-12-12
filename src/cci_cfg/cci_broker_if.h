@@ -41,9 +41,11 @@ class cci_broker_manager;
 typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
         cci_param_range;
 
+/// CCI value with parameter name pair type
+typedef std::pair<std::string, cci_value> cci_name_value_pair;
+
 /// CCI initial value filter iterator type
-typedef cci_filtered_range<std::pair<std::string, cci_value>,
-                           cci_initial_value_predicate>
+typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
         cci_initial_value_range;
 
 /// CCI configuration broker interface.
@@ -124,7 +126,7 @@ public:
      *
      * @return           Vector of unconsumed parameter's initial value.
      */
-    virtual std::vector< std::pair<std::string, cci_value> >
+    virtual std::vector<cci_name_value_pair>
     get_unconsumed_initial_values() = 0;
 
     /// Get unconsumed initial values with a user-defined predicate callback
