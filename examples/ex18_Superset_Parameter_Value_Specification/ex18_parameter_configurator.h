@@ -62,8 +62,6 @@ SC_MODULE(ex18_parameter_configurator) {
   void end_of_elaboration(void) {
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
       if (!myCfgrBrokerIF.is_used(complete_parameter_list[i].get_name())) {
-        unconsumed_parameter_list.push_back(complete_parameter_list[i]);
-
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
                 << complete_parameter_list[i].get_name() << "\tis : "
                 << myCfgrBrokerIF.is_used(
@@ -79,9 +77,10 @@ SC_MODULE(ex18_parameter_configurator) {
     XREPORT("@ " << sc_time_stamp());
     XREPORT("[CFGR] : List of all unconsumed parameters in the model");
 
+    unconsumed_parameter_list = myCfgrBrokerIF.get_unconsumed_initial_values();
     for (unsigned int i = 0; i < unconsumed_parameter_list.size(); i++) {
       XREPORT("[CFGR] : Unconsumed Parameter Name : "
-              << unconsumed_parameter_list[i].get_name());
+              << (unconsumed_parameter_list[i]).first);
     }
   }
 
@@ -90,7 +89,7 @@ SC_MODULE(ex18_parameter_configurator) {
 
   // std::vector to store the list of the unconsumed parameters
   std::vector<cci::cci_param_untyped_handle> complete_parameter_list; ///< List of all parameters
-  std::vector<cci::cci_param_untyped_handle> unconsumed_parameter_list; ///< List of parameters unconsumed
+  std::vector<cci::cci_name_value_pair> unconsumed_parameter_list; ///< List of parameters unconsumed
 };
 // ex18_parameter_configurator
 

@@ -8,10 +8,6 @@ Info: param_cfgr: @0 s, [CFGR within EOE] : 'used status' of cci-parameter : par
 
 Info: param_cfgr: @0 s, [CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_2	is : 1
 
-Info: param_cfgr: @0 s, [CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_3	is : 0
-
-Info: param_cfgr: @0 s, [CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_4	is : 0
-
 Info: param_cfgr: @0 s, @ 0 s
 
 Info: param_cfgr: @0 s, [CFGR] : List of all unconsumed parameters in the model
