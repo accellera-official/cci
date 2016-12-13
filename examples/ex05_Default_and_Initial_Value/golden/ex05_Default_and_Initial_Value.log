@@ -4,11 +4,31 @@ Info: cfg_ip: @0 s, Attempting to setup config_ip to 10 before IP construction
 
 Info: cfg_ip: @0 s, Setting up sim_ip.param_1's init-value to 10
 
+Info: cfg_ip: @0 s, Setting up cfg_ip.param_implicit_3's init-value to 3
+
 Info: sim_ip: @0 s, @Ctor: Value of sim_ip.param_1 is 10 (Default value Specified: 1)
 
 Info: sim_ip: @0 s, @Ctor: Value of sim_ip.param_2 is 2 (Default value Specified: 2)
 
 Info: sc_main: Begin Simulation.
+
+Info: sim_ip: @0 s, Setting up param_implicit_1's init-value to 1
+
+Info: sim_ip: @0 s, Setting up foo.bar.baz.param_implicit_2's init-value to 2
+
+Info: sim_ip: @0 s, Unconsumed initial cci values:
+cfg_ip.param_implicit_3
+foo.bar.baz.param_implicit_2
+param_implicit_1
+
+Info: sim_ip: @0 s, Ignore unconsumed values cfg_ip.*
+
+Info: sim_ip: @0 s, Unconsumed initial cci values result:
+foo.bar.baz.param_implicit_2
+param_implicit_1
+
+Info: sim_ip: @0 s, Unconsumed initial cci values with value = 2:
+foo.bar.baz.param_implicit_2
 
 Info: sc_main: End Simulation.
 
