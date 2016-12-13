@@ -3,10 +3,6 @@ SystemC Simulation
 Info: sc_main: Begin Simulation.
 
 Info: cfg_ip: @0 s, execute: List all parameters inside simple_ip
-
-Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
-In file: <removed by verify.pl>
-In process: cfg_ip.execute @ 0 s
 sim_ip.int_param1 = 0
 sim_ip.int_param2 = 0
 sim_ip.log_level = 0
@@ -15,10 +11,6 @@ sim_ip.sub_ip.int_param2 = 0
 sim_ip.sub_ip.log_level = 0
 
 Info: cfg_ip: @0 s, execute: List all 'log_level' parameter inside simple_ip
-
-Warning: /Accellera/CCI/gs_cci_cnf_broker/get_param_list: pattern limited to GreenConfig capabilities
-In file: <removed by verify.pl>
-In process: cfg_ip.execute @ 0 s
 sim_ip.log_level = 0
 sim_ip.sub_ip.log_level = 0
 

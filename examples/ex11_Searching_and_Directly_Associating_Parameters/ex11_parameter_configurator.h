@@ -38,8 +38,7 @@
 /**
  *  @class  ex11_parameter_configurator
  *  @brief  The configurator module searches for the owner parameters using the
- *          get_param API. Implementation using 'get_param_list' API is ignored though
- *          the parameters are being searched as per the string pattern provided.
+ *          get_param API.
  */
 SC_MODULE(ex11_parameter_configurator) {
  public:

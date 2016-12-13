@@ -129,13 +129,6 @@ cci_param_untyped_handle cci_broker_handle::get_param_handle(
 {
     return m_orig_broker.get_param_handle(parname, m_originator);
 }
-
-const std::vector<std::string> cci_broker_handle::get_param_list(
-        const std::string &pattern)
-{
-    return m_orig_broker.get_param_list(pattern);
-}
-
 bool cci_broker_handle::param_exists(const std::string &parname)
 {
     return m_orig_broker.param_exists(parname);
@@ -144,11 +137,6 @@ bool cci_broker_handle::param_exists(const std::string &parname)
 bool cci_broker_handle::is_used(const std::string &parname)
 {
     return m_orig_broker.is_used(parname);
-}
-
-const std::vector <std::string> cci_broker_handle::get_param_list()
-{
-    return m_orig_broker.get_param_list();
 }
 
 void cci_broker_handle::add_param(cci_param_if *par)

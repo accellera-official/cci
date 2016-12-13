@@ -37,7 +37,7 @@
 /**
  *  @class  ex18_parameter_configurator
  *  @brief  The configurator class illustrates way of retrieving cci-parameters
- *          list within a cci-model by using the 'get_param_list()' API.
+ *          list within a cci-model by using the 'get_param_handles()' API.
  */
 SC_MODULE(ex18_parameter_configurator) {
  public:
@@ -50,7 +50,7 @@ SC_MODULE(ex18_parameter_configurator) {
             myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
   {
     // Retrieve the list of all cci-parameters within a model.
-    complete_parameter_list = myCfgrBrokerIF.get_param_list();
+    complete_parameter_list = myCfgrBrokerIF.get_param_handles();
   }
 
   /**
@@ -61,16 +61,18 @@ SC_MODULE(ex18_parameter_configurator) {
    */
   void end_of_elaboration(void) {
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
-      if (!myCfgrBrokerIF.is_used(complete_parameter_list[i])) {
+      if (!myCfgrBrokerIF.is_used(complete_parameter_list[i].get_name())) {
         unconsumed_parameter_list.push_back(complete_parameter_list[i]);
 
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
-                << complete_parameter_list[i] << "\tis : "
-                << myCfgrBrokerIF.is_used(complete_parameter_list[i]));
+                << complete_parameter_list[i].get_name() << "\tis : "
+                << myCfgrBrokerIF.is_used(
+                        complete_parameter_list[i].get_name()));
       } else {
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
-                << complete_parameter_list[i] << "\tis : "
-                << myCfgrBrokerIF.is_used(complete_parameter_list[i]));
+                << complete_parameter_list[i].get_name() << "\tis : "
+                << myCfgrBrokerIF.is_used(
+                        complete_parameter_list[i].get_name()));
       }
     }
 
@@ -79,7 +81,7 @@ SC_MODULE(ex18_parameter_configurator) {
 
     for (unsigned int i = 0; i < unconsumed_parameter_list.size(); i++) {
       XREPORT("[CFGR] : Unconsumed Parameter Name : "
-              << unconsumed_parameter_list[i]);
+              << unconsumed_parameter_list[i].get_name());
     }
   }
 
@@ -87,8 +89,8 @@ SC_MODULE(ex18_parameter_configurator) {
   cci::cci_broker_handle myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   // std::vector to store the list of the unconsumed parameters
-  std::vector<std::string> complete_parameter_list; ///< List of all parameters
-  std::vector<std::string> unconsumed_parameter_list; ///< List of parameters unconsumed
+  std::vector<cci::cci_param_untyped_handle> complete_parameter_list; ///< List of all parameters
+  std::vector<cci::cci_param_untyped_handle> unconsumed_parameter_list; ///< List of parameters unconsumed
 };
 // ex18_parameter_configurator
 

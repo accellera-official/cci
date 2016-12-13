@@ -125,14 +125,15 @@ SC_MODULE(ex14_parent) {
     while (1) {
       wait(5.0, sc_core::SC_NS);
 
-      std::vector<std::string> parent_param_list =
-              m_broker.get_param_list();
+      std::vector<cci::cci_param_untyped_handle> parent_param_list =
+              m_broker.get_param_handles();
 
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to the 'parent' module");
 
       for (unsigned int i = 0; i < parent_param_list.size(); i++) {
-        XREPORT("[PARENT] : Parameter Name : " << parent_param_list[i]);
+        XREPORT("[PARENT] : Parameter Name : "
+                        << parent_param_list[i].get_name());
       }
 
       wait(30.0, sc_core::SC_NS);
