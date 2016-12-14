@@ -64,7 +64,7 @@ cci_originator cci_originator::get_parent_originator() const {
 }
 
 const char* cci_originator::name() const {
-    static const char default_name[](__CCI_UNKNOWN_ORIGINATOR_STRING__);
+    static const char* default_name = __CCI_UNKNOWN_ORIGINATOR_STRING__;
     if (m_originator_obj) {
         return m_originator_obj->name();
     } else if(m_originator_str) {
