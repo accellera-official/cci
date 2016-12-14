@@ -23,7 +23,7 @@
 #include "cci_cfg/cci_broker_callbacks.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_value.h"
-#include "cci_cfg/cci_param_filter_iterator.h"
+#include "cci_core/cci_filtered_range.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -36,6 +36,17 @@ class cci_param_typed_handle;
 
 // forward declaration for friend class
 class cci_broker_manager;
+
+/// CCI parameter filter iterator type
+typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
+        cci_param_range;
+
+/// CCI value with parameter name pair type
+typedef std::pair<std::string, cci_value> cci_name_value_pair;
+
+/// CCI initial value filter iterator type
+typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
+        cci_initial_value_range;
 
 /// CCI configuration broker interface.
 /**
@@ -107,6 +118,38 @@ public:
      */
     virtual const cci::cci_value
     get_initial_cci_value(const std::string &parname) = 0;
+
+    /// Get unconsumed initial values
+    /**
+     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created.
+     *
+     * @return           Vector of unconsumed parameter's initial value.
+     */
+    virtual std::vector<cci_name_value_pair>
+    get_unconsumed_initial_values() = 0;
+
+    /// Get unconsumed initial values with a user-defined predicate callback
+    /**
+     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created.
+     *
+     * @param pred       Callback to filter unconsumed initial values.
+     * @return           Vector of unconsumed parameter's initial value.
+     */
+    virtual cci_initial_value_range get_unconsumed_initial_values(
+            const cci_initial_value_predicate &pred) = 0;
+
+    /// Ignore unconsumed initial values
+    /**
+     * Filtering of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created. This method
+     * affects future calls to @see get_unconsumed_initial_values().
+     *
+     * @param pred       Callback to ignore unconsumed initial values.
+     */
+    virtual void ignore_unconsumed_initial_values(
+            const cci_initial_value_predicate &pred) = 0;
 
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
@@ -243,11 +286,6 @@ public:
      */
     virtual void remove_param(cci_param_if *par) = 0;
 
-public:
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////    Optional functions   //////////////////////////// //
-    // TODO: Optional Config broker functions to be discussed
-
     /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
     /**
      * pattern @see get_param_list
@@ -268,7 +306,7 @@ public:
      * @param pred Callback to filter parameters
      * @return cci_iterable Iterable parameters
      */
-    virtual cci_param_filter_iterator
+    virtual cci_param_range
     get_param_handles(cci_param_predicate& pred) = 0;
 
     /// Convenience function to get a typed parameter handle.

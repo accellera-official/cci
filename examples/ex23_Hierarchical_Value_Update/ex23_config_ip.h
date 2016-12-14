@@ -80,38 +80,40 @@ public:
         cci::cci_param_predicate pred_log_level(
                 &ex23_config_ip::log_level_param_predicate);
 
-        cci::cci_param_filter_iterator log_level_pfi =
+        cci::cci_param_range log_level_filtered_range =
                 m_cci.get_param_handles(pred_log_level);
 
-        for ( ; log_level_pfi != log_level_pfi.end();
-                ++log_level_pfi) {
-            if((*log_level_pfi).is_valid()) {
-                std::cout << (*log_level_pfi).get_name() << " = ";
-                std::cout << (*log_level_pfi).get_cci_value();
+        for (cci::cci_param_range::iterator it =
+                log_level_filtered_range.begin();
+                it != log_level_filtered_range.end();
+                ++it) {
+            if((*it).is_valid()) {
+                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
         }
 
         XREPORT("execute: Update all 'log_Level' parameters' value to 500");
 
-        log_level_pfi.reset();
-
-        for ( ; log_level_pfi != log_level_pfi.end();
-                ++log_level_pfi) {
-            if((*log_level_pfi).is_valid()) {
-                (*log_level_pfi).set_cci_value(target_value);
+        for (cci::cci_param_range::iterator it =
+                log_level_filtered_range.begin();
+                it != log_level_filtered_range.end();
+                ++it) {
+            if((*it).is_valid()) {
+                (*it).set_cci_value(target_value);
             }
         }
 
         XREPORT("execute: List all 'log_Level' parameter inside simple_ip");
 
-        log_level_pfi.reset();
-
-        for ( ; log_level_pfi != log_level_pfi.end();
-                ++log_level_pfi) {
-            if((*log_level_pfi).is_valid()) {
-                std::cout << (*log_level_pfi).get_name() << " = ";
-                std::cout << (*log_level_pfi).get_cci_value();
+        for (cci::cci_param_range::iterator it =
+                log_level_filtered_range.begin();
+                it != log_level_filtered_range.end();
+                ++it) {
+            if((*it).is_valid()) {
+                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
         }

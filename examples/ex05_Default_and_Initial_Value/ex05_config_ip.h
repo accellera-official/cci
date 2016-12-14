@@ -71,6 +71,10 @@ SC_MODULE(ex05_config_ip) {
       m_cci.set_initial_cci_value("sim_ip.param_1",
                                    cci::cci_value::from_json(val));
     }
+
+    XREPORT("Setting up cfg_ip.param_implicit_3's init-value to 3");
+    m_cci.set_initial_cci_value("cfg_ip.param_implicit_3",
+                                cci::cci_value(3));
   }
 
 
