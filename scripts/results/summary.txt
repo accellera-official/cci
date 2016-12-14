@@ -4,17 +4,13 @@
 -------------------------------------------------------------------------------
  Tests that passed :
 -------------------------------------------------------------------------------
+dev_examples/broker_get_originator/broker_get_originator.cpp
 dev_examples/broker_hierarchy/broker_hierarchy.cpp
-dev_examples/callback_example/callback_example.f
 dev_examples/callback_standalone/callback_standalone.cpp
-dev_examples/cb_new_param/cb_new_param.f
-dev_examples/cci_hierarchical_values_set/cci_hierarchical_values_set.f
-dev_examples/cci_value_example/cci_value_example.f
-dev_examples/cci_value_simple/cci_value_simple.cpp
-dev_examples/compare_example/testbench.cpp
-dev_examples/gs_example/gs_example.f
-dev_examples/gs_example_diff_impl/gs_example_diff_impl.f
-dev_examples/is_initial_value_example/testbench.cpp
+dev_examples/cci_value_api_example/cci_value_api_example.cpp
+dev_examples/cci_value_param_example/cci_value_param_example.f
+dev_examples/param_impl_diff_compare/param_impl_diff_compare.f
+dev_examples/param_type_diff_compare/testbench.cpp
 dev_examples/priv_broker_example/priv_broker_example.f
 examples/ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
 examples/ex02_Fully_Supported_Data_Type_Param/ex02_Fully_Supported_Data_Type_Param.cpp
@@ -38,12 +34,13 @@ examples/ex19_Api_and_Parameter_Implementations_from_Different_Providers/ex19_Ap
 examples/ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
 examples/ex21_Param_Destruction_Resurrection/ex21_Param_Destruction_Resurrection.cpp
 examples/ex22_Search_Predicate/ex22_Search_Predicate.cpp
+examples/ex23_Hierarchical_Value_Update/ex23_Hierarchical_Value_Update.cpp
 
 -------------------------------------------------------------------------------
  Tests that failed :
 -------------------------------------------------------------------------------
 
-Total passed : 34
+Total passed : 31
 Total failed : 0
 
    GUT METER : 100 %

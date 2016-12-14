@@ -49,6 +49,7 @@ SC_MODULE(ex05_config_ip) {
   {
     setup_sim_ip("Attempting to setup config_ip to 10 before IP construction",
                  "10");
+    SC_THREAD(execute);
   }
 
   /**
@@ -74,6 +75,33 @@ SC_MODULE(ex05_config_ip) {
     XREPORT("Setting up cfg_ip.param_implicit_3's init-value to 3");
     m_cci.set_initial_cci_value("cfg_ip.param_implicit_3",
                                 cci::cci_value(3));
+  }
+
+
+  /**
+   *  @fn     void execute()
+   *  @brief  Configure the value of "sim_ip.param_1" parameter
+   *  @return void
+   */
+  void execute() {
+    const std::string int_param_name = "sim_ip.param_1";
+
+    // Set Initial value after construction is treated as normal value update
+    m_cci.set_initial_cci_value(int_param_name,cci::cci_value(5));
+
+    // Check for existance of the param
+    if (m_cci.param_exists(int_param_name)) {
+      // Get handle to the param
+      cci::cci_param_handle int_param = m_cci.get_param_handle(int_param_name);
+      assert(int_param.is_valid());
+
+      // Display new value
+      std::string new_value = int_param.get_cci_value().to_json();
+      XREPORT("execute: [EXTERNAL] Current value of "
+              << int_param.get_name() << " is " << new_value);
+    } else {
+      XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
+    }
   }
 
  private:
