@@ -91,7 +91,7 @@ public:
   ~ConfigModule(){};
 
 private:
-  cci::cci_broker_if& m_cci;
+  cci::cci_broker_handle m_cci;
 
 };
 

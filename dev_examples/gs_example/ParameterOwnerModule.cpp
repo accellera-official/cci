@@ -31,7 +31,7 @@ void ParameterOwnerModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cci_broker_if& mBroker = cci::cci_broker_manager::get_broker();
+  cci::cci_broker_handle mBroker = cci::cci_broker_manager::get_broker();
 
   // demonstrate is_default_value
   cout << name() << ": uint_param get_default_value()=" << (dec) << uint_param.get_default_value()<<endl;

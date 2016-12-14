@@ -20,11 +20,13 @@
 #ifndef CCI_CCI_BROKER_MANAGER_H_INCLUDED_
 #define CCI_CCI_BROKER_MANAGER_H_INCLUDED_
 
-#include "cci_cfg/cci_broker_if.h"
+#include "cci_cfg/cci_broker_handle.h"
 
 #include <map>
 
 CCI_OPEN_NAMESPACE_
+
+class cci_broker_if;
 
 /// Class managing broker hierarchy
 
@@ -43,7 +45,7 @@ public:
      * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_if &get_broker(
+    static cci_broker_handle get_broker(
             const cci_originator &originator = cci_originator());
 
     /// Register a broker handle in the broker hierarchy
@@ -56,7 +58,7 @@ public:
      *
      * @param broker Broker handle to register
      */
-    static cci_broker_if &register_broker(cci_broker_if* broker);
+    static cci_broker_if& register_broker(cci_broker_if& broker);
 
 protected:
     /// Returns a handle to the parent broker
@@ -70,12 +72,12 @@ protected:
      * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_if &get_parent_broker(
+    static cci_broker_handle get_parent_broker(
             const cci_originator &originator = cci_originator());
 
 private:
     /// Public broker hierarchy
-    static std::map<cci_originator, cci_broker_if*> m_brokers;
+    static std::map<cci_originator, cci_broker_handle> m_brokers;
 };
 
 

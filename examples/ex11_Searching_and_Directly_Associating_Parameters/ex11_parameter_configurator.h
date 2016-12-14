@@ -145,7 +145,7 @@ SC_MODULE(ex11_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if& myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
 
   // CCI base parameters
   cci::cci_param_handle cfgr_param1;  ///< CCI base parameter

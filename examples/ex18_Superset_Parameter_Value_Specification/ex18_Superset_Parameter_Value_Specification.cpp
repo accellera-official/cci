@@ -58,7 +58,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_originator sc_main_originator("sc_main_originator");
 
   // Get reference/handle of the default global broker
-  cci::cci_broker_if& myMainBrokerIF =
+  cci::cci_broker_handle myMainBrokerIF =
       cci::cci_broker_manager::get_broker(sc_main_originator);
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'integer type"

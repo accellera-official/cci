@@ -30,7 +30,7 @@ void ParameterOwnerMutabilityModule::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the config broker which is responsible for this module
-  cci::cci_broker_if& mBroker = cci::cci_broker_manager::get_broker();
+  cci::cci_broker_handle mBroker = cci::cci_broker_manager::get_broker();
 
   // ************************************************************************
   // **** demonstrate mutable parameter being made temporarily immutable 

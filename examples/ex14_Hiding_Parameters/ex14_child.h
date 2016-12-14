@@ -101,7 +101,7 @@ SC_MODULE(ex14_child) {
   }
 
  private:
-  cci::cci_broker_if& child_BrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_handle child_BrokerIF;  ///< Declare a configuration broker
 
   // Declare instances of mutable CCI parameters of type 'int'
   cci::cci_param<int> priv_int_param;  ///< private int CCI parameter

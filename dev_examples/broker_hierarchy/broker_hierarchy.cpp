@@ -37,7 +37,7 @@
 #include <cci_configuration>
 
 // Private broker
-#include "gs_cci_cnf_private_broker_handle.h"
+#include "gs_cci_cnf_private_broker.h"
 
 using namespace sc_core;
 using namespace cci;
@@ -60,7 +60,7 @@ SC_MODULE(D1)
     }
 
 private:
-    cci_broker_if& brokerD1;
+    cci_broker_handle brokerD1;
 };
 
 /// Module D2
@@ -73,7 +73,7 @@ SC_MODULE(D2)
     }
 
 private:
-    cci_broker_if& brokerD2;
+    cci_broker_handle brokerD2;
 };
 
 
@@ -82,7 +82,7 @@ SC_MODULE(C1)
 {
     SC_CTOR(C1):
         brokerC1(cci_broker_manager::get_broker()),
-        privateBrokerD1(new cci::gs_cci_private_broker_handle(
+        privateBrokerD1(new cci::gs_cci_private_broker(
                 "A.B.C1.D1.privateBroker",
                 *this,
                 std::vector<std::string>()))
@@ -90,7 +90,7 @@ SC_MODULE(C1)
 
         BROKER_HIERARCHY_CURRENT_BROKER_PRINT_(brokerC1);
 
-        cci_broker_manager::register_broker(privateBrokerD1);
+        cci_broker_manager::register_broker(*privateBrokerD1);
 
         moduleD1 = new D1("D1");
     }
@@ -101,7 +101,7 @@ SC_MODULE(C1)
     }
 
 private:
-    cci_broker_if& brokerC1;
+    cci_broker_handle brokerC1;
     cci_broker_if* privateBrokerD1;
 
 public:
@@ -124,7 +124,7 @@ SC_MODULE(C2)
     }
 
 private:
-    cci_broker_if& brokerC2;
+    cci_broker_handle brokerC2;
 
 public:
     D2* moduleD2;
@@ -135,14 +135,14 @@ SC_MODULE(B)
 {
     SC_CTOR(B):
         brokerB(cci_broker_manager::get_broker()),
-        privateBrokerC2(new cci::gs_cci_private_broker_handle(
+        privateBrokerC2(new cci::gs_cci_private_broker(
                 "A.B.C2.privateBroker",
                 *this,
                 std::vector<std::string>()))
     {
         BROKER_HIERARCHY_CURRENT_BROKER_PRINT_(brokerB);
 
-        cci_broker_manager::register_broker(privateBrokerC2);
+        cci_broker_manager::register_broker(*privateBrokerC2);
 
         moduleC1 = new C1("C1");
         moduleC2 = new C2("C2");
@@ -155,7 +155,7 @@ SC_MODULE(B)
     }
 
 private:
-    cci_broker_if& brokerB;
+    cci_broker_handle brokerB;
     cci_broker_if* privateBrokerC2;
 
 public:
@@ -182,7 +182,7 @@ SC_MODULE(A)
 
 private:
     B* moduleB;
-    cci_broker_if& brokerA;
+    cci_broker_handle brokerA;
 };
 
 int sc_main(int, char*[])

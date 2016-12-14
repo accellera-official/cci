@@ -35,9 +35,9 @@ class SubTop
 public:
     SC_HAS_PROCESS(SubTop);
     SubTop(sc_core::sc_module_name name, const std::string& module_A_name) {
-        m_priv_broker = new cci::gs_cci_private_broker_handle(*this,
+        m_priv_broker = new cci::gs_cci_private_broker(*this,
                   boost::assign::list_of(module_A_name + ".int_param"));
-        cci::cci_broker_manager::register_broker(m_priv_broker);
+        cci::cci_broker_manager::register_broker(*m_priv_broker);
         m_module_a = new ModuleA(module_A_name.c_str());
     }
 

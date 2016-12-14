@@ -215,7 +215,7 @@ SC_MODULE(ex09_top_module) {
   cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> n_initiators; ///< Number of initiators to be instantiated
   cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> n_targets;  ///< Number of targets to be instantiated
 
-  cci::cci_broker_if& myDefaultBroker; ///< Configuration broker instance
+  cci::cci_broker_handle myDefaultBroker; ///< Configuration broker instance
 
   ex09_router* routerInstance;  ///< Declaration of a router pointer
 

@@ -421,6 +421,11 @@ void cci_param_user_data_type::remove_param_handle(
   // Not implemented
 }
 
+cci::cci_originator cci_param_user_data_type::get_originator() const
+{
+  return cci::cci_originator();
+}
+
 cci::cci_callback_untyped_handle
 cci_param_user_data_type::register_pre_write_callback
 (const cci::cci_callback_untyped_handle &cb,const cci::cci_originator &orig)

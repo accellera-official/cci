@@ -77,8 +77,7 @@ SC_MODULE(ex05_simple_ip) {
   }
 
   void execute() {
-      cci::cci_broker_if& broker = cci::cci_broker_manager::get_broker(
-              cci::cci_originator(*this));
+      cci::cci_broker_handle broker = cci::cci_broker_manager::get_broker();
 
       XREPORT("Setting up param_implicit_1's init-value to 1");
       broker.set_initial_cci_value("param_implicit_1",

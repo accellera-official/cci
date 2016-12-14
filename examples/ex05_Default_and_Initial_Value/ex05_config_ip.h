@@ -77,7 +77,7 @@ SC_MODULE(ex05_config_ip) {
   }
 
  private:
-  cci::cci_broker_if& m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_cci; ///< CCI configuration handle
 };
 // ex05_config_ip
 

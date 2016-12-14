@@ -105,7 +105,7 @@ SC_MODULE(ex11_param_value_sync) {
   }
 
  private:
-  cci::cci_broker_if& ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
   std::vector<cci::cci_callback_untyped_handle> post_write_cb_vec; ///< Callback Adaptor Objects
   std::vector<cci::cci_param_handle> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI parameter handles
 };

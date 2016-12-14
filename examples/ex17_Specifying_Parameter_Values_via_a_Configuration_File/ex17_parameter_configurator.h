@@ -113,7 +113,7 @@ SC_MODULE(ex17_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_if& myCfgrBrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declare a configuration broker
 
   // Declare cci_base_param for each of the owner's cci-parameters
   cci::cci_param_handle int_param;  ///< Parameter handle to an int parameter

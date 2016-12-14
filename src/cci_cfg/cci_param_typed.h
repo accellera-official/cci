@@ -500,7 +500,7 @@ public:
      * @param originator Originator of the parameter
      */
     cci_param_typed(const std::string& name, const value_type& default_value,
-                    cci_broker_if& private_broker,
+                    cci_broker_handle private_broker,
                     const std::string& desc = "",
                     cci_name_type name_type = CCI_RELATIVE_NAME,
                     const cci_originator& originator = cci_originator());
@@ -517,7 +517,7 @@ public:
      * @param originator Originator of the parameter
      */
     cci_param_typed(const std::string& name, const cci_value& default_value,
-                    cci_broker_if& private_broker,
+                    cci_broker_handle private_broker,
                     const std::string& desc = "",
                     cci_name_type name_type = CCI_RELATIVE_NAME,
                     const cci_originator& originator = cci_originator());
@@ -1021,7 +1021,7 @@ void cci_param_typed<T, TM>::destroy()
 #define CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL(signature, broker)                \
 template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
-: cci_param_untyped(name, name_type, &broker, desc, originator),               \
+: cci_param_untyped(name, name_type, broker, desc, originator),                \
   m_value(default_value.get<T>()),                                             \
   m_default_value(default_value.get<T>())                                      \
 {                                                                              \
@@ -1032,7 +1032,7 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
 #define CCI_PARAM_CONSTRUCTOR_IMPL(signature, broker)                          \
 template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
-: cci_param_untyped(name, name_type, &broker, desc, originator),               \
+: cci_param_untyped(name, name_type, broker, desc, originator),                \
   m_value(default_value),                                                      \
   m_default_value(default_value)                                               \
 {                                                                              \
@@ -1076,7 +1076,7 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
 /// description, name type and originator.
 CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name,
                             const value_type& default_value,
-                            cci_broker_if& private_broker,
+                            cci_broker_handle private_broker,
                             const std::string& desc,
                             cci_name_type name_type,
                             const cci_originator& originator),
@@ -1086,7 +1086,7 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name,
 /// description, name type and originator.
 CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
                                       const cci_value& default_value,
-                                      cci_broker_if& private_broker,
+                                      cci_broker_handle private_broker,
                                       const std::string& desc,
                                       cci_name_type name_type,
                                       const cci_originator& originator),

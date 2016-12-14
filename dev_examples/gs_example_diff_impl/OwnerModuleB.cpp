@@ -31,7 +31,7 @@ void OwnerModuleB::main_action() {
   std::cout << "----------------------------" << std::endl;
 
   // get the broker which is responsible for this module
-  cci::cci_broker_if& mBroker = cci::cci_broker_manager::get_broker();
+  cci::cci_broker_handle mBroker = cci::cci_broker_manager::get_broker();
   
   std::cout << "----------------------------" << std::endl;
 

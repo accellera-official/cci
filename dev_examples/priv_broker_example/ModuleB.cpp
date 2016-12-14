@@ -58,10 +58,10 @@ void ModuleB::main_action() {
 }
 
 SubModuleB::SubModuleB(sc_core::sc_module_name name) {
-  m_priv_broker = new cci::gs_cci_private_broker_handle(*this,
-                                                        boost::assign::list_of(
-                                                                "int_param"));
-  cci::cci_broker_manager::register_broker(m_priv_broker);
+  m_priv_broker = new cci::gs_cci_private_broker(*this,
+                                                 boost::assign::list_of(
+                                                         "int_param"));
+  cci::cci_broker_manager::register_broker(*m_priv_broker);
   m_module_c = new ModuleC("ModuleC");
 }
 

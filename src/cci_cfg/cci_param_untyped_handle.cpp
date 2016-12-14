@@ -25,6 +25,7 @@
 #include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_report_handler.h"
 #include "cci_core/cci_name_gen.h"
+#include "cci_cfg/cci_param_if.h"
 
 CCI_OPEN_NAMESPACE_
 

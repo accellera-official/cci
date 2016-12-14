@@ -22,14 +22,14 @@
  */
 
 #include "cci_param_untyped.h"
-#include "cci_broker_if.h"
+#include "cci_broker_handle.h"
 #include "cci_core/cci_name_gen.h"
 
 CCI_OPEN_NAMESPACE_
 
 cci_param_untyped::cci_param_untyped(const std::string& name,
                                      cci_name_type name_type,
-                                     cci_broker_if* broker_handle,
+                                     cci_broker_handle broker_handle,
                                      const std::string& desc,
                                      const cci_originator& originator)
 : m_is_default_value(true), m_is_initial_value(false),
@@ -59,7 +59,7 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
     std::string unique_name = std::string(cci_gen_unique_name(m_name.c_str()));
     if (unique_name != m_name
         && (sc_core::sc_hierarchical_name_exists(m_name.c_str())
-            || broker_handle->param_exists(m_name))) {
+            || broker_handle.param_exists(m_name))) {
         m_name = unique_name;
     }
 }
@@ -67,7 +67,7 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
 cci_param_untyped::~cci_param_untyped()
 {
     if(m_init_called) {
-        m_broker_handle->remove_param(this);
+        m_broker_handle.remove_param(this);
         for (std::vector<cci_param_untyped_handle*>::iterator
                      it = m_param_handles.begin();
              it != m_param_handles.end(); it++) {

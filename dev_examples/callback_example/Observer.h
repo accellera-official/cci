@@ -57,7 +57,7 @@ public:
 protected:
   
   /// Pointer the the module's configuration broker
-  cci::cci_broker_if& mBroker;
+  cci::cci_broker_handle mBroker;
   
   /// Vector of callbacks to keep them outside the local scope of main_action
   std::vector<cci::cci_callback_untyped_handle> mCallbacks;

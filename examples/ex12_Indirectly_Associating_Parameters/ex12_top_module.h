@@ -106,7 +106,7 @@ SC_MODULE(ex12_top_module) {
   }
 
  private:
-  cci::cci_broker_if& myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
   std::vector<cci::cci_param_handle> selectedBaseParamList; ///< Selected cci_param_handle list (selection done by top_module)
 };
 // ex12_top_module

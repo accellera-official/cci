@@ -112,7 +112,7 @@ SC_MODULE(ex07_observer) {
   }
 
  private:
-  cci::cci_broker_if& observerBrokerIF;  //!< Configuration broker instance
+  cci::cci_broker_handle observerBrokerIF;  //!< Configuration broker instance
 
   cci::cci_callback_untyped_handle int_pre_read_cb; //!< 'pre_read' callback handle for int type cci-param
   cci::cci_callback_untyped_handle int_pre_write_cb;  //!< 'pre_write' callback handle for int type cci-param
