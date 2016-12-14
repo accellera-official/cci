@@ -47,6 +47,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex20_Tracing_Parameter_Acti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex21_Param_Destruction_Resurrection", "examples\ex21_Param_Destruction_Resurrection.vcxproj", "{42FB62CC-029F-4379-9245-DD8C1C76AA19}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex00_Key_Concepts", "examples\ex00_Key_Concepts.vcxproj", "{5984B293-5315-42EF-8412-61E2C1C1E4A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -239,6 +241,13 @@ Global
 		{42FB62CC-029F-4379-9245-DD8C1C76AA19}.Release|Win32.Build.0 = Release|Win32
 		{42FB62CC-029F-4379-9245-DD8C1C76AA19}.Release|x64.ActiveCfg = Release|x64
 		{42FB62CC-029F-4379-9245-DD8C1C76AA19}.Release|x64.Build.0 = Release|x64
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Debug|Win32.Build.0 = Debug|Win32
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Debug|x64.ActiveCfg = Debug|x64
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Debug|x64.Build.0 = Debug|x64
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Release|Win32.ActiveCfg = Release|Win32
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Release|Win32.Build.0 = Release|Win32
+		{5984B293-5315-42EF-8412-61E2C1C1E4A4}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
