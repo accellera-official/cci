@@ -43,12 +43,9 @@ SC_MODULE(ex08_config_ip) {
    *  @brief  The class constructor
    *  @return void
    */
-  SC_CTOR(ex08_config_ip) {
-    // Get CCI configuration handle specific for this module
-    m_cci = &cci::cci_broker_manager::get_current_broker(
-        cci::cci_originator(*this));
-    assert(m_cci != NULL);
-  }
+  SC_CTOR(ex08_config_ip):
+            m_cci(cci::cci_broker_manager::get_broker())
+  {}
 
   /**
    *  @fn     void end_of_elaboration()
@@ -61,9 +58,9 @@ SC_MODULE(ex08_config_ip) {
     const std::string param_2_name = "sim_ip.param_2";
 
     // Check for existance of the param_1
-    if (m_cci->param_exists(param_1_name)) {
+    if (m_cci.param_exists(param_1_name)) {
       // Get handle to the param
-      cci::cci_param_handle param_1 = m_cci->get_param_handle(param_1_name);
+      cci::cci_param_handle param_1 = m_cci.get_param_handle(param_1_name);
       assert(param_1.is_valid());
 
       // Update the param's value
@@ -81,9 +78,9 @@ SC_MODULE(ex08_config_ip) {
     }
 
     // Check for existence of param_2
-    if (m_cci->param_exists(param_2_name)) {
+    if (m_cci.param_exists(param_2_name)) {
       // Get handle to the param
-      cci::cci_param_handle param_2 = m_cci->get_param_handle(param_2_name);
+      cci::cci_param_handle param_2 = m_cci.get_param_handle(param_2_name);
       assert(param_2.is_valid());
 
       // Update the param's value
@@ -114,7 +111,7 @@ SC_MODULE(ex08_config_ip) {
   }
 
  private:
-  cci::cci_broker_if *m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_cci; ///< CCI configuration handle
 };
 // ex08_config_ip
 

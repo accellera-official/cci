@@ -92,7 +92,7 @@ Info: sc_main: Current value of sc_main_param is "value"
 
 Info: sc_main: Originator of sc_main_param handle is sc_main
 
-Info: sc_main: Originator of sc_main_param is unknow
+Info: sc_main: Originator of sc_main_param is sc_main
 
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 50
 

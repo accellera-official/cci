@@ -42,7 +42,7 @@
 namespace cci {
 
 #define CONFIG_FILE_TOOL_BUFSIZE 1024
-#define TRACENAME "/ASI/CCI/CONFIG_FILE_TOOL"
+#define TRACENAME "/Accellera/CCI_examples/CONFIG_FILE_TOOL"
 
 enum gc_config_parse_result {
   parse_result_ignore = 0,
@@ -81,10 +81,9 @@ class ex17_cci_configFile_Tool {
    *  @return void
    */
   explicit ex17_cci_configFile_Tool(const char* name)
-      : mToolOriginator(name) {
-    // get responsible broker
-    mApi = &cci::cci_broker_manager::get_current_broker(mToolOriginator);
-  }
+      : mToolOriginator(name),
+        mApi(cci::cci_broker_manager::get_broker(mToolOriginator))
+  {}
 
   /**
    *  @fn     ~ex17_cci_configFile_Tool()
@@ -122,8 +121,9 @@ class ex17_cci_configFile_Tool {
         it != cnf_set.get_config_map().end(); it++) {
       std::cout << "ConfigFile_Api: Applying initial value of param '"
                 << it->first << "' to '" << it->second << "'" << std::endl;
-      mApi->set_initial_cci_value(it->first.c_str(),
-                                  cci::cci_value::from_json(it->second.c_str()));
+      mApi.set_initial_cci_value(it->first.c_str(),
+                                  cci::cci_value::from_json(
+                                          it->second.c_str()));
     }
   }
 
@@ -321,7 +321,7 @@ class ex17_cci_configFile_Tool {
  protected:
   cci::cci_originator mToolOriginator; ///< This tool's originator information
 
-  cci::cci_broker_if* mApi;  ///< Config API which is used by this tool
+  cci::cci_broker_handle mApi;  ///< Config API which is used by this tool
 
   std::string m_name; ///< Name of this object, given by constructor
 

@@ -25,6 +25,7 @@
 #include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_report_handler.h"
 #include "cci_core/cci_name_gen.h"
+#include "cci_cfg/cci_param_if.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -68,7 +69,7 @@ cci_param_untyped_handle& cci_param_untyped_handle::operator=(
     m_orig_param = param_handle.m_orig_param;
     m_orig_param_name = param_handle.m_orig_param_name;
 
-    if(is_valid()) {
+    if((this != &param_handle) && is_valid()) {
         m_orig_param->add_param_handle(this);
     }
     return *this;
@@ -288,7 +289,7 @@ void cci_param_untyped_handle::check_is_valid(bool report_error) const
     if(!is_valid()) {
         if(m_orig_param_name) {
             cci_param_handle param_handle =
-                    cci_broker_manager::get_current_broker(m_originator).
+                    cci_broker_manager::get_broker(m_originator).
                             get_param_handle(m_orig_param_name);
             if(!param_handle.is_valid()) {
                 invalid_error = true;

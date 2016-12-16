@@ -1,3 +1,0 @@
-callback_example/Observer.cpp
-callback_example/ParameterOwnerModule.cpp
-callback_example/testbench.cpp

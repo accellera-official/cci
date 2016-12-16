@@ -48,32 +48,25 @@ SC_MODULE(ex14_configurator) {
    *  @return void
    */
   SC_CTOR(ex14_configurator):
-      parent_base_param(cci::cci_originator(*this)) {
-  // Gets the reference of a DEFAULT GLOBAL BROKER
-    myCfgrBrokerIF = &cci::cci_broker_manager::get_current_broker(
-        cci::cci_originator(*this));
+      myCfgrBrokerIF(cci::cci_broker_manager::get_broker()),
+      parent_base_param(cci::cci_originator(*this))
+  {
+    std::string parameterName(
+            "Top.private.parent_inst.parent_int_buffer");
+    if (myCfgrBrokerIF.param_exists(parameterName)) {
+      // Get handle of the parent_module's cci-parameter
+      parent_base_param = myCfgrBrokerIF.get_param_handle(parameterName);
 
-    // Asserts if the returned broker handle is NULL
-    assert(myCfgrBrokerIF != NULL
-           && "Returned default broker handle for 'configurator' is NULL");
+      // Assert if the handle returned is NULL
+      assert(parent_base_param.is_valid()
+             && "Returned handle of parent_module's cci-parameter is not valid");
 
-    if (myCfgrBrokerIF != NULL) {
-      if (myCfgrBrokerIF->param_exists("Top.parent_inst.parent_int_buffer")) {
-        // Get handle of the parent_module's cci-parameter
-        parent_base_param = myCfgrBrokerIF->get_param_handle(
-            "Top.parent_inst.parent_int_buffer");
-
-        // Assert if the handle returned is NULL
-        assert(parent_base_param.is_valid()
-               && "Returned handle of parent_module's cci-parameter is NULL");
-
-        XREPORT("[CFGR] : Parameter Name : "
-                << parent_base_param.get_name() << "\tParameter Value : "
-                << parent_base_param.get_cci_value().to_json());
-      } else {
-        XREPORT("[CFGR] : Parameter by name"
-                " 'Top.parent_module.parent_int_buffer' doesn't exist");
-      }
+      XREPORT("[CFGR] : Parameter Name : "
+              << parent_base_param.get_name() << "\tParameter Value : "
+              << parent_base_param.get_cci_value().to_json());
+    } else {
+      XREPORT("[CFGR] : Parameter by name"
+              " " << parameterName << " doesn't exist");
     }
 
     // Declare SC_THREAD
@@ -88,7 +81,7 @@ SC_MODULE(ex14_configurator) {
   void run_cfgr(void) {
     while (1) {
       std::vector<std::string> cfgr_param_list =
-          myCfgrBrokerIF->get_param_list();
+          myCfgrBrokerIF.get_param_list();
 
       wait(15.0, sc_core::SC_NS);
 
@@ -116,7 +109,7 @@ SC_MODULE(ex14_configurator) {
   }
 
  private:
-  cci::cci_broker_if* myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
+  cci::cci_broker_handle myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
   cci::cci_param_handle parent_base_param;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator

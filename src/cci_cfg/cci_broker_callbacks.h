@@ -22,6 +22,7 @@
 
 #include "cci_core/cci_callback.h"
 #include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_value.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -42,6 +43,22 @@ typedef cci_callback<const cci_param_untyped_handle& >
 /// Parameter destruction callback handle
 typedef cci_callback_typed_handle<const cci_param_untyped_handle& >
   cci_param_destroy_callback_handle;
+
+/// Parameter predicate
+typedef cci_callback<const cci_param_untyped_handle&, bool >
+        cci_param_predicate;
+
+/// Parameter predicate handle
+typedef cci_callback_typed_handle<const cci_param_untyped_handle&, bool >
+        cci_param_predicate_handle;
+
+/// Initial value predicate
+typedef cci_callback<const std::pair<std::string, cci_value>&, bool >
+        cci_initial_value_predicate;
+
+/// Initial value predicate handle
+typedef cci_callback_typed_handle<const std::pair<std::string, cci_value>&,
+        bool > cci_initial_value_predicate_handle;
 
 /* ------------------------------------------------------------------------ */
 

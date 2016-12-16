@@ -55,11 +55,8 @@ SC_MODULE(ex11_param_value_sync) {
   ex11_param_value_sync(sc_core::sc_module_name _name,
                         std::vector<cci::cci_param_handle> BaseParamList)
       // Define an originator in order to get hold of the default broker
-      : ValueSyncOriginator("ValueSyncOriginator") {
-    // Get handle of the broker responsible for the class/module
-    ValueSyncBrokerIF =
-        &cci::cci_broker_manager::get_current_broker(ValueSyncOriginator);
-
+      : ValueSyncBrokerIF(cci::cci_broker_manager::get_broker())
+  {
     // Copy the list of selected base parameters to a local std::vector
     returnBaseParamList = BaseParamList;
 
@@ -108,8 +105,7 @@ SC_MODULE(ex11_param_value_sync) {
   }
 
  private:
-  cci::cci_originator ValueSyncOriginator; ///< Declaring a CCI originator
-  cci::cci_broker_if* ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
   std::vector<cci::cci_callback_untyped_handle> post_write_cb_vec; ///< Callback Adaptor Objects
   std::vector<cci::cci_param_handle> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI parameter handles
 };

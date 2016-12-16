@@ -27,22 +27,11 @@
 #include <systemc.h>
 
 ObserverModule::ObserverModule(sc_core::sc_module_name name)
-: sc_core::sc_module(name)
-{ 
-  // get the config broker which is responsible for this module
-  mBroker = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
+: sc_core::sc_module(name),
+  mBroker(cci::cci_broker_manager::get_broker())
+{
   SC_THREAD(main_action);
 }
-
-
-ObserverModule::~ObserverModule() {
-  // unregister all callbacks (this is optional, callbacks get unregistered if all references are deleted)
-//  std::vector<cci::cci_callback_untyped_handle>::iterator iter;
-//  for (iter = mCallbacks.begin(); iter != mCallbacks.end(); iter++) {
-//    iter->unregister_at_parameter();
-//  }
-}
-
 
 void ObserverModule::main_action() {
 
@@ -50,7 +39,7 @@ void ObserverModule::main_action() {
 
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker->get_param_list();
+  std::vector<std::string> vec = mBroker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
@@ -62,7 +51,6 @@ void ObserverModule::main_action() {
   std::cout << std::endl;
 
 }
-
 
 /// Callback function with default signature showing changes.
 void ObserverModule::config_callback(const cci::cci_param_write_event<> & ev) {

@@ -3,13 +3,13 @@ SystemC Simulation
 Warning: (W534) name already exists: sim_ip.sub_ip (sc_module)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: sim_ip.sub_ip is already used in the SystemC hierarchy, using sim_ip.sub_ip_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: sim_ip.sub_ip is already used in the SystemC hierarchy, using sim_ip.sub_ip_0 instead
 In file: <removed by verify.pl>
 
 Warning: (W534) name already exists: sim_ip.int_param_ip (external name)
 In file: <removed by verify.pl>
 
-Warning: /ASI/CCI/cci_name_gen/gen_unique_name: sim_ip.int_param_ip is already used in the SystemC hierarchy, using sim_ip.int_param_ip_0 instead
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: sim_ip.int_param_ip is already used in the SystemC hierarchy, using sim_ip.int_param_ip_0 instead
 In file: <removed by verify.pl>
 
 Info: sim_ip: @0 s, Ctor: Name of bool_param is sim_ip.sub_ip_0
@@ -93,7 +93,7 @@ Info: sc_main: Current value of sc_main_param is "value"
 
 Info: sc_main: Originator of sc_main_param handle is sc_main
 
-Info: sc_main: Originator of sc_main_param is unknow
+Info: sc_main: Originator of sc_main_param is sc_main
 
 Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 50
 

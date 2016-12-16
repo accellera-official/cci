@@ -24,7 +24,7 @@ Info: sim_ip: Info: @Run: param_1 = 100 (expected)
 
 Info: sim_ip: @10 ns, @Run: Assign new value (10) to sim_ip.param_1
 
-Warning: sim_ip: @10 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+Warning: sim_ip: @10 ns, Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter is immutable.
 In file: <removed by verify.pl>
 In process: sim_ip.execute @ 10 ns
 In file: <removed by verify.pl>
@@ -36,7 +36,7 @@ Info: simple_ip::execute: Testing UC-2
 
 Info: cfg_ip: @20 ns, Attempting to set value of 'sim_ip.param_2' to 200
 
-Warning: cfg_ip: @20 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+Warning: cfg_ip: @20 ns, Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter is immutable.
 In file: <removed by verify.pl>
 In process: cfg_ip.execute @ 20 ns
 In file: <removed by verify.pl>
@@ -46,7 +46,7 @@ Info: sim_ip: Info: @Run: param_2 = 2 (expected)
 
 Info: sim_ip: @30 ns, @Run: Assign new value (20) to sim_ip.param_2
 
-Warning: sim_ip: @30 ns, Error: /ASI/CCI/SET_PARAM_FAILED: Parameter is immutable.
+Warning: sim_ip: @30 ns, Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter is immutable.
 In file: <removed by verify.pl>
 In process: sim_ip.execute @ 30 ns
 In file: <removed by verify.pl>

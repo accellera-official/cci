@@ -23,6 +23,7 @@
 #include "cci_cfg/cci_broker_callbacks.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_value.h"
+#include "cci_core/cci_filtered_range.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -35,6 +36,18 @@ class cci_param_typed_handle;
 
 // forward declaration for friend class
 class cci_broker_manager;
+class cci_broker_handle;
+
+/// CCI parameter filter iterator type
+typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
+        cci_param_range;
+
+/// CCI value with parameter name pair type
+typedef std::pair<std::string, cci_value> cci_name_value_pair;
+
+/// CCI initial value filter iterator type
+typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
+        cci_initial_value_range;
 
 /// CCI configuration broker interface.
 /**
@@ -43,34 +56,30 @@ class cci_broker_manager;
  *
  * This always returns not the owner's parameter objects but parameter handle wrappers.
  */
-class cci_broker_if : public cci_broker_callback_if {
-protected:
-    friend class cci_broker_manager;
+class cci_broker_if : public cci_broker_callback_if
+{
+public:
+    friend class cci_broker_handle;
 
-    /// Creates or returns existing responsible handle for this broker for the given originator
+    /// Destructor
+    virtual ~cci_broker_if() {};
+
+    /// Creates or returns existing responsible handle for this broker for the
+    /// given originator
     /**
-     * This is called by the broker manager when the static search functions shall return a broker handle.
-     * It is possible (but "senseless") to call this as a user. Returned instances shall be deleted together
+     * This is called by the broker manager when the static search functions
+     * shall return a broker handle. It is possible (but "senseless") to call
+     * this as a user. Returned instances shall be deleted together
      * with the original broker.
      *
      * It is ok to nest calls with the same originator.
      *
-     * @param originator   Originator for which the broker handle shall be returned
+     * @param originator   Originator for which the broker handle shall be
+     *                     returned
      * @return Broker handle
      */
-    virtual cci_broker_if &
-    create_broker_handle(const cci_originator &originator) = 0;
-
-    /// If this is a handle, returns the originator this broker handle is responsible for, otherwise returns NULL
-    /**
-     * @return Originator pointer in the case this is a handle; NULL if this is a raw broker
-     */
-    virtual const cci_originator *get_originator() const = 0;
-
-public:
-
-    /// Destructor
-    virtual ~cci_broker_if() {};
+    virtual cci_broker_handle create_broker_handle(
+            const cci_originator &originator = cci_originator()) = 0;
 
     /// Name of this broker
     /**
@@ -91,12 +100,17 @@ public:
      * If called for an explicit parameter this is a usual set, including not
      * setting the is_initial_value state to true!
      *
-     * @exception        cci::cci_report::set_param_failed Setting parameter object failed
+     * @exception        cci::cci_report::set_param_failed Setting parameter
+     *                   object failed
      * @param parname    Full hierarchical parameter name.
-     * @param cci_value  cci::cci_value representation of the init value the parameter has to be set to.
+     * @param cci_value  cci::cci_value representation of the init value the
+     *                   parameter has to be set to.
+     * @param originator originator reference to the originator
+     *                   (not applicable in case of broker handle)
      */
     virtual void set_initial_cci_value(const std::string &parname,
-                                       const cci::cci_value &cci_value) = 0;
+                                       const cci::cci_value &cci_value,
+                                       const cci_originator& originator) = 0;
 
     /// Get a parameter's init value.
     /**
@@ -106,6 +120,38 @@ public:
      */
     virtual const cci::cci_value
     get_initial_cci_value(const std::string &parname) = 0;
+
+    /// Get unconsumed initial values
+    /**
+     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created.
+     *
+     * @return           Vector of unconsumed parameter's initial value.
+     */
+    virtual std::vector<cci_name_value_pair>
+    get_unconsumed_initial_values() = 0;
+
+    /// Get unconsumed initial values with a user-defined predicate callback
+    /**
+     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created.
+     *
+     * @param pred       Callback to filter unconsumed initial values.
+     * @return           Vector of unconsumed parameter's initial value.
+     */
+    virtual cci_initial_value_range get_unconsumed_initial_values(
+            const cci_initial_value_predicate &pred) = 0;
+
+    /// Ignore unconsumed initial values
+    /**
+     * Filtering of unconsumed values. An unconsumed value is an "initial" value
+     * supplied to a broker for which no parameter is ever created. This method
+     * affects future calls to @see get_unconsumed_initial_values().
+     *
+     * @param pred       Callback to ignore unconsumed initial values.
+     */
+    virtual void ignore_unconsumed_initial_values(
+            const cci_initial_value_predicate &pred) = 0;
 
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
@@ -118,7 +164,7 @@ public:
      * @param parname  Name of an implicit or explicit parameter.
      * @return Originator pointer; NULL if there was not yet any write
      */
-    virtual const cci_originator *
+    virtual cci_originator
     get_latest_write_originator(const std::string &parname) const = 0;
 
     /// Lock a parameter's init value.
@@ -160,16 +206,17 @@ public:
     virtual const cci::cci_value
     get_cci_value_keep_unused(const std::string &parname) const = 0;
 
-    /// Get a parameter handle pointer. (TODO: maybe drop this because of Many-to-one Mapping, this returns only one (which one?))
+    /// Get a parameter handle.
     /**
      * This returns not the owner's parameter object but a handle.
      *
-     * @param   parname   Full hierarchical parameter name.
-     * @return  Pointer to the parameter handle object (NULL if not existing).
-     *          @todo return a vector/iterator over param objects, because there might be more than one
+     * @param   parname    Full hierarchical parameter name.
+     * @param   originator Reference to the originator
+     * @return  Parameter handle object (invalid if not existing).
      */
     virtual cci_param_untyped_handle
-    get_param_handle(const std::string &parname) = 0;
+    get_param_handle(const std::string &parname,
+                     const cci_originator& originator) = 0;
 
     /// Return a list of all parameters (implicit and explicit) for the given scope (matching the pattern)
     /**
@@ -219,33 +266,33 @@ public:
     /// Adds a parameter to the registry.
     /**
      * Note: addPar (and all related methods) must not call any of the
-     *       pure virtual functions in cci_param_untyped_handle because this method
-     *       may be called by the cci_param_untyped_handle constructor.
+     *       pure virtual functions in cci_param_untyped_handle because
+     *       this method may be called by the cci_param_untyped_handle
+     *       constructor.
      *
      * Note: This function shall never been called for any parameter handle
      *       objects but only for "real" parameter objects.
      *
-     * @exception cci::cci_report::add_param_failed Adding parameter object failed
+     * @exception cci::cci_report::add_param_failed Adding parameter object
+     *            failed
      * @param par Parameter (including name and value).
      */
     virtual void add_param(cci_param_if *par) = 0;
 
-    /// Removes a parameter from the registry. May only be called by the parameter destructor, must not be called by anone else.
+    /// Removes a parameter from the registry. May only be called by the
+    /// parameter destructor, must not be called by anone else.
     /**
-     * It should be ensured this is not being called from elsewhere than the parameter destructor (e.g. by user).
+     * It should be ensured this is not being called from elsewhere than the
+     * parameter destructor (e.g. by user).
      *
      * Note: This function shall never been called for any parameter handle
      *       objects but only for "real" parameter objects.
      *
-     * @exception cci::cci_report::remove_param_failed Remove parameter object failed
+     * @exception cci::cci_report::remove_param_failed Remove parameter object
+     *            failed
      * @param par Parameter pointer.
      */
     virtual void remove_param(cci_param_if *par) = 0;
-
-public:
-    // //////////////////////////////////////////////////////////////////// //
-    // ///////////////    Optional functions   //////////////////////////// //
-    // TODO: Optional Config broker functions to be discussed
 
     /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
     /**
@@ -260,38 +307,35 @@ public:
      * @return Vector with parameter handles.
      */
     virtual const std::vector <cci_param_untyped_handle>
-    get_param_handles(const std::string &pattern = "") = 0;
+    get_param_handles(const std::string &pattern = "",
+                      const cci_originator& originator = cci_originator()) = 0;
 
-    /// Convenience function to get a typed parameter handle.
+    /// Search parameters with a user-defined predicate callback
     /**
-     * @param   parname   Full hierarchical parameter name.
-     * @return  Parameter handle (invalid if not existing or the type is not correct)
+     * @param pred Callback to filter parameters
+     * @return cci_iterable Iterable parameters
      */
-    template<class T>
-    cci_param_typed_handle<T> get_cci_param_handle(const std::string &parname) {
-        return cci_param_typed_handle<T>(get_param_handle(parname));
-    }
+    virtual cci_param_range
+    get_param_handles(cci_param_predicate& pred,
+                      const cci_originator& originator) = 0;
 
     ///If this broker is a private broker (or handle)
     /**
      * @return If this broker is a private broker
      */
     virtual bool is_private_broker() const = 0;
-
 };
 
-/// Creates or returns the one non-private global config broker provided by the broker implementation
-/// Called by the header function get_current_broker, NEVER call this as a user!
+/// Creates or returns the one non-private global broker provided by
+/// the broker implementation. Called by the header function
+/// @see cci_broker_manager::get_broker, NEVER call this as a user!
 /**
- * This returns the raw broker, not a handle, thus this
- * shall not be returned directy to the user!
+ * This returns the raw global broker, not a handle, thus this
+ * shall not be returned directly to the user!
  *
- * The implemementation shall register the global broker with the broker registry
- * cci_broker_registry::registry() !
- *
- * @return The one non-private global config broker (not wrapped with a handle)
+ * @return The one non-private global broker (not wrapped with a handle)
  */
-cci_broker_if &create_global_cnf_broker();
+cci_broker_if &cci_get_global_broker();
 
 CCI_CLOSE_NAMESPACE_
 

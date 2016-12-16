@@ -49,6 +49,7 @@ SC_MODULE(ex05_simple_ip) {
             << " (Default value Specified: 1)");
     XREPORT("@Ctor: Value of " << param_2.get_name() << " is " << param_2
             << " (Default value Specified: 2)");
+    SC_THREAD(execute);
   }
 
   /**
@@ -61,6 +62,66 @@ SC_MODULE(ex05_simple_ip) {
                   << param_1);
     XREPORT_PLAIN("@Dtor: Value of " << param_2.get_name() << " is "
                   << param_2);
+  }
+
+  static bool cfg_ip_initial_cci_value_predicate(
+          const std::pair<std::string, cci::cci_value>& initial_cci_value)
+  {
+    return (initial_cci_value.first.substr(0, 7) == "cfg_ip.");
+  }
+
+  static bool initial_cci_value_2_predicate(
+          const std::pair<std::string, cci::cci_value>& initial_cci_value)
+  {
+    return (initial_cci_value.second == cci::cci_value(2));
+  }
+
+  void execute() {
+      cci::cci_broker_handle broker = cci::cci_broker_manager::get_broker();
+
+      XREPORT("Setting up param_implicit_1's init-value to 1");
+      broker.set_initial_cci_value("param_implicit_1",
+                                   cci::cci_value(1));
+
+      XREPORT("Setting up foo.bar.baz.param_implicit_2's init-value to 2");
+      broker.set_initial_cci_value("foo.bar.baz.param_implicit_2",
+                                   cci::cci_value(2));
+
+      XREPORT("Unconsumed initial cci values:");
+      std::vector<std::pair<std::string, cci::cci_value> >
+              unconsumed_initial_cci_values =
+              broker.get_unconsumed_initial_values();
+      for(std::vector<std::pair<std::string, cci::cci_value> >::iterator it =
+              unconsumed_initial_cci_values.begin();
+          it != unconsumed_initial_cci_values.end(); ++it) {
+          std::cout << it->first << std::endl;
+      }
+
+      XREPORT("Ignore unconsumed values cfg_ip.*");
+      broker.ignore_unconsumed_initial_values(
+              &ex05_simple_ip::cfg_ip_initial_cci_value_predicate);
+
+      XREPORT("Unconsumed initial cci values result:");
+      std::vector<std::pair<std::string, cci::cci_value> >
+              unconsumed_initial_cci_values_without_cfg_ip =
+              broker.get_unconsumed_initial_values();
+      for(std::vector<std::pair<std::string, cci::cci_value> >::iterator it =
+              unconsumed_initial_cci_values_without_cfg_ip.begin();
+          it != unconsumed_initial_cci_values_without_cfg_ip.end(); ++it) {
+          std::cout << it->first << std::endl;
+      }
+
+      XREPORT("Unconsumed initial cci values with value = 2:");
+      cci::cci_initial_value_predicate pred_val(
+              &ex05_simple_ip::initial_cci_value_2_predicate);
+      cci::cci_initial_value_range init_filtered_range =
+              broker.get_unconsumed_initial_values(pred_val);
+      for(cci::cci_initial_value_range::iterator it =
+              init_filtered_range.begin();
+          it != init_filtered_range.end();
+          ++it) {
+          std::cout << (*it).first << std::endl;
+      }
   }
 
  private:

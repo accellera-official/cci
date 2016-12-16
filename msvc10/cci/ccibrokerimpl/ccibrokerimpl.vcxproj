@@ -140,19 +140,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\packages\gs_broker\gs_cci_broker.cpp" />
     <ClCompile Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker.cpp" />
-    <ClCompile Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle.cpp" />
-    <ClCompile Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle_handler.cpp" />
     <ClCompile Include="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker.cpp" />
-    <ClCompile Include="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_handle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_broker.h" />
     <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker.h" />
-    <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle.h" />
-    <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker_handle_handler.h" />
     <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_cnf_broker_if.h" />
     <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker.h" />
-    <ClInclude Include="..\..\..\packages\gs_broker\gs_cci_cnf_private_broker_handle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
