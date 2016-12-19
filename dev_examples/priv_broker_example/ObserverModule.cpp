@@ -39,11 +39,11 @@ void ObserverModule::main_action() {
 
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = mBroker.get_param_list();
-  std::vector<std::string>::iterator iter;
+  std::vector<cci::cci_param_untyped_handle> vec = mBroker.get_param_handles();
+  std::vector<cci::cci_param_untyped_handle>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
-    ss_show << "   " << *iter << std::endl;
+    ss_show << "   " << iter->get_name() << std::endl;
   }
   std::cout << ss_show.str() << std::endl<<std::endl;
   

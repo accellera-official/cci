@@ -78,15 +78,16 @@ SC_MODULE(ex14_child) {
    */
   void run_child(void) {
     // List of cci_parameters directly visible to the outside world
-    std::vector<std::string> child_param_list =
-        child_BrokerIF.get_param_list();
+    std::vector<cci::cci_param_untyped_handle> child_param_list =
+        child_BrokerIF.get_param_handles();
 
     while (1) {
       XREPORT("@ " << sc_core::sc_time_stamp()
               << "\tVisible parameters to 'child' module");
 
       for (unsigned int i = 0; i < child_param_list.size(); i++) {
-        XREPORT("[CHILD] : Parameter Name : " << child_param_list[i]);
+        XREPORT("[CHILD] : Parameter Name : "
+                        << child_param_list[i].get_name());
       }
 
       wait(25.0, sc_core::SC_NS);

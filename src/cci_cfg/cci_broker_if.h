@@ -218,21 +218,6 @@ public:
     get_param_handle(const std::string &parname,
                      const cci_originator& originator) = 0;
 
-    /// Return a list of all parameters (implicit and explicit) for the given scope (matching the pattern)
-    /**
-     * TODO:
-     * e.g.
-     * - parameters of the specified module, pattern = module_name, e.g. "mymod.mysubmod";
-     * - pattern = module_name+'.*' to include the parameters of the childs, e.g. "mymod.mysubmod.*"
-     * - pattern = '*'.param_name to get all parameters with the name, e.g. "*.cache_size"
-     * - pattern = '*'.hierarchical.param_name to get all parameters with the name, e.g. "*.mysubmod.cache_size"
-     *
-     * @param pattern Specifies the parameters to be returned.
-     * @return Vector with full hierarchical parameter names.
-     */
-    virtual const std::vector <std::string>
-    get_param_list(const std::string &pattern) = 0;
-
     /// Checks whether a parameter exists (implicit or explicit).
     /**
      * @param parname  Full hierarchical parameter name.
@@ -250,15 +235,6 @@ public:
      * @return If the parameter is or has been used.
      */
     virtual bool is_used(const std::string &parname) = 0;
-
-    // //////////////////////////////////////////////////////////////////// //
-    // ////////////////   Get Parameter List   //////////////////////////// //
-
-    /// Returns a list of all parameters existing (implicit and explicit) in the registry.
-    /**
-     * @return Vector with full hierarchical parameter names.
-     */
-    virtual const std::vector <std::string> get_param_list() = 0;
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
@@ -296,7 +272,12 @@ public:
 
     /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
     /**
-     * pattern @see get_param_list
+     * TODO:
+     * pattern e.g.
+     * - parameters of the specified module, pattern = module_name, e.g. "mymod.mysubmod";
+     * - pattern = module_name+'.*' to include the parameters of the childs, e.g. "mymod.mysubmod.*"
+     * - pattern = '*'.param_name to get all parameters with the name, e.g. "*.cache_size"
+     * - pattern = '*'.hierarchical.param_name to get all parameters with the name, e.g. "*.mysubmod.cache_size"
      * + (in the case the Many-to-one Mapping should work):
      *   pattern = full_param_name to get all param objects/handles (PH/PO) being mapped to the NVP
      * @todo use iterator instead of vector?

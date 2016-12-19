@@ -80,8 +80,8 @@ SC_MODULE(ex14_configurator) {
    */
   void run_cfgr(void) {
     while (1) {
-      std::vector<std::string> cfgr_param_list =
-          myCfgrBrokerIF.get_param_list();
+      std::vector<cci::cci_param_untyped_handle> cfgr_param_list =
+              myCfgrBrokerIF.get_param_handles();
 
       wait(15.0, sc_core::SC_NS);
 
@@ -89,7 +89,7 @@ SC_MODULE(ex14_configurator) {
               << "\tVisible parameters to the 'configurator' module");
 
       for (unsigned int i = 0; i < cfgr_param_list.size(); i++) {
-        XREPORT("[CFGR] : Parameter Name : " << cfgr_param_list[i]);
+        XREPORT("[CFGR] : Parameter Name : " << cfgr_param_list[i].get_name());
       }
 
       wait(5.0, sc_core::SC_NS);

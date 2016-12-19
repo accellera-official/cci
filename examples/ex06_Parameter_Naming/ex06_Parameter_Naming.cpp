@@ -71,11 +71,12 @@ int sc_main(int argc, char *argv[]) {
           cci::cci_broker_manager::get_broker(cci::cci_originator("sc_main"));
 
   std::cout << std::endl << "List of parameters:" << std::endl;
-  std::vector<std::string> vec = sc_main_broker.get_param_list();
-  std::vector<std::string>::iterator iter;
+  std::vector<cci::cci_param_untyped_handle> vec =
+          sc_main_broker.get_param_handles();
+  std::vector<cci::cci_param_untyped_handle>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
-      std::cout << "   " << *iter << std::endl;
+      std::cout << "   " << iter->get_name() << std::endl;
   }
 
   cci::cci_param_handle param_handle = sc_main_broker.get_param_handle(
