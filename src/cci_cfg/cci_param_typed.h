@@ -555,12 +555,16 @@ private:
     {
         if (TM == CCI_ELABORATION_TIME_PARAM) {
             if(!isScElabPhase()) {
-                cci_report_handler::set_param_failed(
-                    "Attempt to set elaboration parameter during simulation.");
+				std::stringstream ss;
+				ss << "Attempt to set elaboration parameter ("
+				   << get_name() << ") during simulation.";
+				cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
                 return false;
             }
         } else if (TM == CCI_IMMUTABLE_PARAM) {
-            cci_report_handler::set_param_failed("Parameter is immutable.");
+			std::stringstream ss;
+			ss << "Parameter (" << get_name() << ") is immutable.";
+			cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
             return false;
         }
         return true;
@@ -576,12 +580,12 @@ private:
 
         if(!check_pwd) {
             if (cci_param_untyped::is_locked()) {
-                cci_report_handler::set_param_failed("Parameter locked.");
+                cci_report_handler::set_param_failed("Parameter locked.", __FILE__, __LINE__);
                 return;
             }
         } else {
             if (pwd != m_lock_pwd) {
-                cci_report_handler::set_param_failed("Wrong key.");
+                cci_report_handler::set_param_failed("Wrong key.", __FILE__, __LINE__);
                 return;
             }
         }
@@ -605,7 +609,7 @@ private:
                 }
             }
             if (!actual_write_result) {
-                cci_report_handler::set_param_failed("Bad value.");
+                cci_report_handler::set_param_failed("Bad value.", __FILE__, __LINE__);
                 return;
             } else {
                 // Write callback(s)
@@ -653,7 +657,7 @@ private:
 
                 // Write denied
                 cci_report_handler::set_param_failed(
-                        "Value rejected by callback.");
+                        "Value rejected by callback.", __FILE__, __LINE__);
                 result = false;
             }
         }
