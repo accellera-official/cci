@@ -21,7 +21,6 @@
 #define EXAMPLES_EX22_SEARCH_PREDICATE_EX22_SEARCH_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -85,10 +84,10 @@ public:
     void execute() {
 
         XREPORT("execute: Original list");
-        std::vector <cci::cci_param_untyped_handle> param_list =
+        std::vector <cci::cci_param_untyped_handle> param_list_handle =
                 m_cci.get_param_handles();
         for (std::vector<cci::cci_param_untyped_handle>::iterator it =
-                param_list.begin(); it != param_list.end(); ++it) {
+                param_list_handle.begin(); it != param_list_handle.end(); ++it) {
             std::cout << (*it).get_name() << " = ";
             std::cout << (*it).get_cci_value();
             std::cout << std::endl;

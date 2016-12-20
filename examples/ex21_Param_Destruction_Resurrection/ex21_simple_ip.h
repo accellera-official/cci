@@ -37,7 +37,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex21_simple_ip)
-    // Initialize int_param_ptr with 0
+    // Initialize int_param_ptr with 10
     : int_param_ptr(new cci::cci_param<int>("int_param", 10)) {
         SC_THREAD(execute);
         XREPORT("Ctor: Default value of " << int_param_ptr->get_name() << " is "
