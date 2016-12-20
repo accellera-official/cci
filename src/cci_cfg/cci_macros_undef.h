@@ -42,6 +42,5 @@
 // that the client can remove all macros except the debugging ones
 #undef CCI_CNF_DUMP
 #undef CCI_PARAM_DUMP
-#undef CCI_SHOW_BROKER_STACK
 
 #endif

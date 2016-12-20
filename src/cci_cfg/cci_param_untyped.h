@@ -31,10 +31,9 @@
 #include "cci_core/cci_core_types.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_broker_handle.h"
 
 CCI_OPEN_NAMESPACE_
-
-class cci_broker_if;
 
 // CCI Configuration parameter base class
 /**
@@ -536,7 +535,7 @@ public:
 protected:
     /// Constructor to create new parameter with given originator.
     cci_param_untyped(const std::string& name, cci_name_type name_type,
-                      cci_broker_if* broker_handle, const std::string& desc,
+                      cci_broker_handle broker_handle, const std::string& desc,
                       const cci_originator& originator);
 
     ///@name Initialization and Destructions methods
@@ -576,7 +575,7 @@ protected:
     void* m_lock_pwd;
 
     /// Broker handle
-    cci_broker_if* m_broker_handle;
+    cci_broker_handle m_broker_handle;
 
     /// Stores the originator of the latest successful write access
     mutable cci_originator m_value_originator;

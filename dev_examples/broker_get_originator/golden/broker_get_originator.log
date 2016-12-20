@@ -1,0 +1,8 @@
+SystemC Simulation
+
+Info: sc_main: Begin Simulation.
+execute: [EXTERNAL] Write originator for param sim_ip.int_param (from broker): sim_ip
+execute: [EXTERNAL] Set value of sim_ip.int_param to 2
+execute: [EXTERNAL] Write originator for param sim_ip.int_param (from broker): cfg_ip
+
+Info: sc_main: End Simulation.

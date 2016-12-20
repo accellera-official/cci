@@ -30,8 +30,10 @@
 #include "ex_globals.h"
 #include "cci_configuration"
 
-#define SC_INCLUDE_DYNAMIC_PROCESSES
-#include "gs_cci_cnf_private_broker_handle.h"
+#ifndef SC_INCLUDE_DYNAMIC_PROCESSES
+  #define SC_INCLUDE_DYNAMIC_PROCESSES
+#endif
+#include "gs_cci_cnf_private_broker.h"
 
 
 /// Module which owns some very private cci parameters.
@@ -40,17 +42,14 @@ class ModuleC
 {
 protected:
   /// for secure access by parameters
-  cci::cci_broker_if* m_broker;
+  cci::cci_broker_handle m_broker;
   
 public:
   
   SC_HAS_PROCESS(ModuleC);
 	
   /// Constructor
-  ModuleC(sc_core::sc_module_name name, cci::cci_broker_manager priv_broker);
-  
-  /// Destructor
-  ~ModuleC();
+  ModuleC(sc_core::sc_module_name name);
   
   /// Main action to make tests with parameters.
   void main_action();

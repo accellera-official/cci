@@ -56,11 +56,9 @@ SC_MODULE(ex12_top_module) {
    *  @fn     ex12_top_module
    *  @brief  The class constructor
    */
-  SC_CTOR(ex12_top_module) {
-    // Get handle of the broker responsible for the class/module
-    myTopModBrokerIF =
-        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-
+  SC_CTOR(ex12_top_module):
+            myTopModBrokerIF(cci::cci_broker_manager::get_broker())
+  {
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
 
@@ -70,16 +68,13 @@ SC_MODULE(ex12_top_module) {
     param_owner1 = new ex12_parameter_owner("param_owner1", str1, 1);
     param_owner2 = new ex12_parameter_owner("param_owner2", str2, 2);
 
-    // Report if handle returned is NULL
-    assert(myTopModBrokerIF != NULL && "Configuration Broker handle is NULL");
-
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
     std::string param1_str = "top_mod.param_owner1.clk_freq_Hz";
     std::string param2_str = "top_mod.param_owner2.clock_speed_KHz";
 
-    if (myTopModBrokerIF->param_exists(param1_str)) {
-      cci::cci_param_handle temp = myTopModBrokerIF->get_param_handle(param1_str);
+    if (myTopModBrokerIF.param_exists(param1_str)) {
+      cci::cci_param_handle temp = myTopModBrokerIF.get_param_handle(param1_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -92,8 +87,8 @@ SC_MODULE(ex12_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_param_handle
-    if (myTopModBrokerIF->param_exists(param2_str)) {
-      cci::cci_param_handle temp = myTopModBrokerIF->get_param_handle(param2_str);
+    if (myTopModBrokerIF.param_exists(param2_str)) {
+      cci::cci_param_handle temp = myTopModBrokerIF.get_param_handle(param2_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -111,7 +106,7 @@ SC_MODULE(ex12_top_module) {
   }
 
  private:
-  cci::cci_broker_if* myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
   std::vector<cci::cci_param_handle> selectedBaseParamList; ///< Selected cci_param_handle list (selection done by top_module)
 };
 // ex12_top_module

@@ -21,7 +21,6 @@
 #define CCI_CFG_CCI_PARAM_CALLBACKS_H_INCLUDED_
 
 #include "cci_core/cci_callback.h"
-#include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_value_traits.h"
 
@@ -32,6 +31,7 @@ struct cci_param_write_event;
 
 /// Forward declaration
 class cci_param_untyped_handle;
+class cci_originator;
 
 /// Payload for type-independent pre write and post write callbacks
 template<>

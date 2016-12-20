@@ -42,8 +42,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex22_search_ip):
-        m_cci(cci::cci_broker_manager::get_current_broker(
-                cci::cci_originator(*this)))
+        m_cci(cci::cci_broker_manager::get_broker())
     {
         SC_THREAD(execute);
     }
@@ -98,13 +97,15 @@ public:
         XREPORT("execute: Integers only");
         cci::cci_param_predicate pred_it(
                 &ex22_search_ip::integer_type_predicate);
-        cci::cci_param_filter_iterator integer_only_pfi =
+        cci::cci_param_range integer_only_filtered_range =
                 m_cci.get_param_handles(pred_it);
-        for ( ; integer_only_pfi != integer_only_pfi.end();
-                ++integer_only_pfi) {
-            if((*integer_only_pfi).is_valid()) {
-                std::cout << (*integer_only_pfi).get_name() << " = ";
-                std::cout << (*integer_only_pfi).get_cci_value();
+        for (cci::cci_param_range::iterator it =
+                integer_only_filtered_range.begin();
+             it != integer_only_filtered_range.end();
+             ++it) {
+            if((*it).is_valid()) {
+                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
         }
@@ -112,12 +113,15 @@ public:
         XREPORT("execute: String only");
         cci::cci_param_predicate pred_st(
                 &ex22_search_ip::string_type_predicate);
-        cci::cci_param_filter_iterator string_only_pfi =
+        cci::cci_param_range string_only_filtered_range =
                 m_cci.get_param_handles(pred_st);
-        for ( ; string_only_pfi != string_only_pfi.end(); ++string_only_pfi) {
-            if ((*string_only_pfi).is_valid()) {
-                std::cout << (*string_only_pfi).get_name() << " = ";
-                std::cout << (*string_only_pfi).get_cci_value();
+        for (cci::cci_param_range::iterator it =
+                string_only_filtered_range.begin();
+             it != string_only_filtered_range.end();
+             ++it) {
+            if ((*it).is_valid()) {
+                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
         }
@@ -127,31 +131,35 @@ public:
         cci::cci_param_predicate pred_vir(sc_bind(
             &ex22_search_ip::value_in_range_predicate, this,
                     sc_unnamed::_1, 3, 85));
-        cci::cci_param_filter_iterator value_in_range_pfi =
+        cci::cci_param_range value_in_range_filtered_range =
                 m_cci.get_param_handles(pred_vir);
-        while(value_in_range_pfi != value_in_range_pfi.end()) {
-            std::cout << (*value_in_range_pfi).get_name() << " = ";
-            std::cout << (*value_in_range_pfi).get_cci_value();
+        cci::cci_param_range::iterator value_in_range_it =
+                value_in_range_filtered_range.begin();
+        while(value_in_range_it != value_in_range_filtered_range.end()) {
+            std::cout << (*value_in_range_it).get_name() << " = ";
+            std::cout << (*value_in_range_it).get_cci_value();
             std::cout << std::endl;
-            ++value_in_range_pfi;
+            ++value_in_range_it;
         }
 
         XREPORT("execute: Parameter name contains at least 't' only");
         cci::cci_param_predicate pred_ncc(sc_bind(
             &ex22_search_ip::name_contains_character_predicate, this,
                     sc_unnamed::_1, 't'));
-        cci::cci_param_filter_iterator letter_pfi =
+        cci::cci_param_range letter_filtered_range =
                 m_cci.get_param_handles(pred_ncc);
-        while(letter_pfi != letter_pfi.end()) {
-            std::cout << (*letter_pfi).get_name() << " = ";
-            std::cout << (*letter_pfi).get_cci_value();
+        cci::cci_param_range::iterator letter_pfi_it =
+                letter_filtered_range.begin();
+        while(letter_pfi_it != letter_filtered_range.end()) {
+            std::cout << (*letter_pfi_it).get_name() << " = ";
+            std::cout << (*letter_pfi_it).get_cci_value();
             std::cout << std::endl;
-            ++letter_pfi;
+            ++letter_pfi_it;
         }
     }
 
 private:
-    cci::cci_broker_if& m_cci; ///< CCI configuration handle
+    cci::cci_broker_handle m_cci; ///< CCI configuration handle
 };
 // ex22_search_ip
 

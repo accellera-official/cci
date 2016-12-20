@@ -1,3 +1,0 @@
-cb_new_param/ObserverModule.cpp
-cb_new_param/ParameterOwnerModule.cpp
-cb_new_param/testbench.cpp

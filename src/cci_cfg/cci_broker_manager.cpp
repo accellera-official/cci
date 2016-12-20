@@ -17,86 +17,65 @@
 
  ****************************************************************************/
 
-#include "cci_cfg/cci_debug.h"
+#include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_param_typed.h"
-#include "cci_cfg/cci_broker_manager.h"
-#include "cci_cfg/cci_broker_stack.h"
 #include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
 
+std::map<cci_originator, cci_broker_handle> cci_broker_manager::m_brokers;
 
-// Implementation cci_broker_manager
-
-// static get function
-cci_broker_if& cci_broker_manager::get_current_broker(const cci_originator& originator) {
-  if (std::string(originator.name()).empty()) {
-#ifdef CCI_CNF_VERBOSE
-    CCI_REPORT_INFO("cci_broker_manager/get_current_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
-#endif
-  }
-  if (cci_broker_stack::stack().size() > 0) {
-    return cci_broker_stack::stack().top()->create_broker_handle(originator);
-  }
-  // else return global broker
-  else {
-    return cci::create_global_cnf_broker().create_broker_handle(originator);
-  }
-}
-
-// static get function
-cci_broker_if& cci_broker_manager::get_current_parent_broker(const cci_originator& originator) {
-  if (std::string(originator.name()).empty()) {
-#ifdef CCI_CNF_VERBOSE
-    CCI_REPORT_INFO("cci_broker_manager/get_current_parent_broker", "It is recommended not to get a broker without originator information (NULL pointer or empty string)!");
-#endif
-  }
-  if (cci_broker_stack::stack().size() > 1) {
-    return cci_broker_stack::stack().second_top()->create_broker_handle(originator);
-  }
-  // else return global broker
-  else {
-    return cci::create_global_cnf_broker().create_broker_handle(originator);
-  }
-}
-
-/*cci_broker_manager::cci_broker_manager(const cci_broker_manager&) {
-  assert(false && "Not allowed to copy manager!");
-}*/
-
-cci_broker_manager::cci_broker_manager(cci_broker_if* broker)
+cci_broker_handle
+cci_broker_manager::get_broker(const cci_originator &originator)
 {
-  // Set m_broker either to own private broker or the one responsible upwards the hierarchy
-  if (broker) {
-    //CCI_CNF_DUMP("Broker manager with private broker (\""<< broker->name() <<"\")");
-    // push to broker stack
-    cci_broker_stack::stack().push(broker);
-    if (broker->get_originator()) {
-      m_broker = &broker->create_broker_handle(*broker->get_originator());
+    std::map<cci_originator, cci_broker_handle>::iterator it =
+            m_brokers.find(originator);
+    if(it != m_brokers.end()) {
+        return it->second;
     } else {
-      std::cout << "The private broker (\""<<broker->name()<<"\") given to this broker manager IS NOT a handle." << std::endl;
-      CCI_REPORT_INFO("cci_broker_manager/cci_broker_manager", "It is recommended to provide a broker handle to the broker manager!");
-      m_broker = &broker->create_broker_handle(cci_originator("unknown broker manager")); // TODO: what string is reasonable here?
+        return get_parent_broker(originator).create_broker_handle(originator);
     }
-  } else {
-	m_broker = NULL;
-    assert(false && "no private broker error");
-    // cci_report_handler::TODO("no private broker!");
-  }
 }
 
-cci_broker_manager::~cci_broker_manager() {
-  // pop private broker from broker stack
-  cci_broker_stack::stack().pop();
+cci_broker_handle
+cci_broker_manager::get_parent_broker(const cci_originator &originator)
+{
+    // Get parent originator
+    cci_originator parent_originator = originator.get_parent_originator();
+
+    // Return handle to the broker found for the parent originator
+    std::map<cci_originator, cci_broker_handle>::iterator it =
+            m_brokers.find(parent_originator);
+    if(it != m_brokers.end()) {
+        return it->second;
+    } else {
+        if(parent_originator.is_unknown()) {
+            return cci_get_global_broker().create_broker_handle(originator);
+        } else {
+            return get_parent_broker(parent_originator).
+                    create_broker_handle(parent_originator);
+        }
+    }
 }
 
-cci_broker_manager::operator cci_broker_if&() {
-  return *m_broker;
-}
+cci_broker_if&
+cci_broker_manager::register_broker(cci_broker_if& broker)
+{
+    cci_originator originator;
+    std::map<cci_originator, cci_broker_handle>::iterator it =
+            m_brokers.find(originator);
+    if(it != m_brokers.end()) {
+        CCI_REPORT_ERROR("cci_broker_manager/register_broker",
+                         "A broker is already registered in the current"
+                                 " hierarchy.");
+    } else {
+        cci_broker_handle broker_handle =
+                broker.create_broker_handle(originator);
+        m_brokers.insert(std::make_pair(originator, broker_handle));
+    }
 
-cci_broker_manager::operator cci_broker_if*() {
-  return m_broker;
+    return broker;
 }
 
 CCI_CLOSE_NAMESPACE_

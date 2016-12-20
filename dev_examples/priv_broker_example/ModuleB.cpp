@@ -25,21 +25,18 @@
 
 #include "ModuleB.h"
 #include <systemc.h>
-#include <boost/assign/list_of.hpp>
 
 ModuleB::ModuleB(sc_core::sc_module_name name)
 : sc_core::sc_module(name)
-, int_param ("int_param", 50, cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this)) )
-, uint_param("uint_param", 12000, cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this)))
-, uint_param2("uint_param2", 12, cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this)))
-, str_param ("str_param", "This is a test string.", cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this)))
-, bool_param("bool_param", false, cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this))) // no default value
-, mC("ModuleC", new cci::gs_cci_private_broker_handle(*this, boost::assign::list_of("int_param")))
-{ 
+, int_param ("int_param", 50)
+, uint_param("uint_param", 12000)
+, uint_param2("uint_param2", 12)
+, str_param ("str_param", "This is a test string.")
+, bool_param("bool_param", false)
+, m_broker(cci::cci_broker_manager::get_broker())
+, mSubB("SubModuleB")
+{
   SC_THREAD(main_action);
-
-  // This needs to be done during construction (NOT within the sc_thread)!
-  m_broker_accessor = &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
 }
 
 void ModuleB::main_action() {
@@ -48,7 +45,7 @@ void ModuleB::main_action() {
   
   // show a parameter list
   cout << endl << "**** Parameter list (visible in "<<name()<<"): " << endl;
-  std::vector<std::string> vec = m_broker_accessor->get_param_list();
+  std::vector<std::string> vec = m_broker.get_param_list();
   std::vector<std::string>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
@@ -58,4 +55,17 @@ void ModuleB::main_action() {
   
   std::cout << "----------------------------" << std::endl;
 
+}
+
+SubModuleB::SubModuleB(sc_core::sc_module_name name) {
+  m_priv_broker = new cci::gs_cci_private_broker(*this,
+                                                 boost::assign::list_of(
+                                                         "int_param"));
+  cci::cci_broker_manager::register_broker(*m_priv_broker);
+  m_module_c = new ModuleC("ModuleC");
+}
+
+SubModuleB::~SubModuleB() {
+  delete m_module_c;
+  delete m_priv_broker;
 }

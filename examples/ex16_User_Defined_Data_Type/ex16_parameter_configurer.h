@@ -48,31 +48,25 @@ SC_MODULE(ex16_parameter_configurer) {
    *  @return void
    */
   SC_CTOR(ex16_parameter_configurer):
-      udt_param(cci::cci_originator(*this)) {
-    // Get the broker responsible for this module using
-    // 'get_current_broker' API
-    myBrokerInterface =
-        &cci::cci_broker_manager::get_current_broker(cci::cci_originator(*this));
-
-    // Assert if broker handle returned is NULL
-    assert(myBrokerInterface != NULL && "Broker Handle Returned is NULL");
-
+      myBrokerInterface(cci::cci_broker_manager::get_broker()),
+      udt_param(cci::cci_originator(*this))
+  {
     // Check for the broker type (default or private) using
     // 'is_private_broker()' API
-    if (myBrokerInterface->is_private_broker()) {
+    if (myBrokerInterface.is_private_broker()) {
       // Access broker's name using 'name()'
-      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface->name());
+      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface.name());
     } else {
       XREPORT("[CFGR C_TOR] : Broker Type : "
-              << myBrokerInterface->name() << " - is not a private broker.");
+              << myBrokerInterface.name() << " - is not a private broker.");
     }
 
     udt_param_str = "param_owner.User_data_type_param";
 
     // Check the existence of the user-defined data type cci-parameter
-    if (myBrokerInterface->param_exists(udt_param_str)) {
+    if (myBrokerInterface.param_exists(udt_param_str)) {
       // If parameter exists, get handle of the parameter using 'get_param' API
-      udt_param = myBrokerInterface->get_param_handle(udt_param_str);
+      udt_param = myBrokerInterface.get_param_handle(udt_param_str);
 
       // Report if parameter handle is returned NULL
       assert(udt_param.is_valid()
@@ -133,7 +127,7 @@ SC_MODULE(ex16_parameter_configurer) {
   }
 
  private:
-  cci::cci_broker_if* myBrokerInterface; ///< CCI configuration broker instance
+  cci::cci_broker_handle myBrokerInterface; ///< CCI configuration broker instance
 
   std::string udt_param_str;  ///< std::string types for storing parameters hierarchical paths
 

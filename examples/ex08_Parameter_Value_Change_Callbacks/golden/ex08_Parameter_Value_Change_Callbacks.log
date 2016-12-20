@@ -24,7 +24,7 @@ Info: cfg_ip: @0 s, config_ip::end_of_elaboration: [EXTERNAL] Set value of sim_i
 
 Info: sim_ip: @0 s, reject_pre_write_callback: Rejecting Value change on sim_ip.param_2 (2 -> 20) by cfg_ip
 
-Warning: cfg_ip: @0 s, Caught exception: Error: /ASI/CCI/SET_PARAM_FAILED: Value rejected by callback.
+Warning: cfg_ip: @0 s, Caught exception: Error: /Accellera/CCI/SET_PARAM_FAILED: Value rejected by callback.
 In file: <removed by verify.pl>
 In file: <removed by verify.pl>
 

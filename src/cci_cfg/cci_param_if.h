@@ -113,6 +113,9 @@ public:
     ///@name Miscellaneous
     ///@{
 
+    /// @copydoc cci_param_untyped::get_originator
+    virtual cci_originator get_originator() const = 0;
+
     /// @copydoc cci_param_untyped::get_latest_write_originator
     virtual const cci_originator &get_latest_write_originator() const = 0;
 
