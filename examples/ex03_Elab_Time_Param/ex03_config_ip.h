@@ -69,12 +69,8 @@ SC_MODULE(ex03_config_ip) {
       sc_assert(struc_param_handle.is_valid());
 
       // Update the structure_param value to 3 (invalid)
-      try {
-        XREPORT("execute: [EXTERNAL] Set value of "<< struc_param_name<< " to 3");
-        struc_param_handle.set_cci_value(cci::cci_value::from_json("3"));
-      }catch(std::exception &x) {
-        XREPORT_WARNING(x.what());
-      }
+	  XREPORT("execute: [EXTERNAL] Set value of " << struc_param_name << " to 3");
+      struc_param_handle.set_cci_value(cci::cci_value::from_json("3"));
 
       // Display new value
       std::string new_value = struc_param_handle.get_cci_value().to_json();
