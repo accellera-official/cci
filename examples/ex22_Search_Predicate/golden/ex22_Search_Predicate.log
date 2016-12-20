@@ -1,0 +1,50 @@
+SystemC Simulation
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.bool_param is 1
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.char_param is A
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uchar_param is U
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int_param is -1
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uint_param is 0xfeedf00d
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.float_param is 3.14
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.double_param is 2.714
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.string_param is C++ String
+
+Info: sc_main: Begin Simulation.
+
+Info: srch_ip: @0 s, execute: Original list
+sim_ip.bool_param = true
+sim_ip.char_param = 65
+sim_ip.double_param = 2.714
+sim_ip.float_param = 3.140000104904175
+sim_ip.int_param = -1
+sim_ip.string_param = "C++ String"
+sim_ip.uchar_param = 85
+sim_ip.uint_param = 4277006349
+
+Info: srch_ip: @0 s, execute: Integers only
+sim_ip.char_param = 65
+sim_ip.int_param = -1
+sim_ip.uchar_param = 85
+sim_ip.uint_param = 4277006349
+
+Info: srch_ip: @0 s, execute: String only
+sim_ip.string_param = "C++ String"
+
+Info: srch_ip: @0 s, execute: Numbers greater than or equal to 3 and smaller than 85 only
+sim_ip.char_param = 65
+sim_ip.float_param = 3.140000104904175
+
+Info: srch_ip: @0 s, execute: Parameter name contains at least 't' only
+sim_ip.float_param = 3.140000104904175
+sim_ip.int_param = -1
+sim_ip.string_param = "C++ String"
+sim_ip.uint_param = 4277006349
+
+Info: sc_main: End Simulation.

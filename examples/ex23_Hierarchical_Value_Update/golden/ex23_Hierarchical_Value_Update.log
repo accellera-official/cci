@@ -1,0 +1,23 @@
+SystemC Simulation
+
+Info: sc_main: Begin Simulation.
+
+Info: cfg_ip: @0 s, execute: List all parameters inside simple_ip
+sim_ip.int_param1 = 0
+sim_ip.int_param2 = 0
+sim_ip.log_level = 0
+sim_ip.sub_ip.int_param1 = 0
+sim_ip.sub_ip.int_param2 = 0
+sim_ip.sub_ip.log_level = 0
+
+Info: cfg_ip: @0 s, execute: List all 'log_level' parameter inside simple_ip
+sim_ip.log_level = 0
+sim_ip.sub_ip.log_level = 0
+
+Info: cfg_ip: @0 s, execute: Update all 'log_Level' parameters' value to 500
+
+Info: cfg_ip: @0 s, execute: List all 'log_Level' parameter inside simple_ip
+sim_ip.log_level = 500
+sim_ip.sub_ip.log_level = 500
+
+Info: sc_main: End Simulation.
