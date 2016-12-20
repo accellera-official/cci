@@ -26,9 +26,9 @@
 #ifndef EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_CONFIG_IP_H_
 #define EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_CONFIG_IP_H_
 
-#include <cci_configuration>
-#include <cassert>
 #include "xreport.hpp"
+#include <cci_configuration>
+using cci::cci_value;
 
 /**
  *  @class  ex04_config_ip
@@ -41,8 +41,9 @@ SC_MODULE(ex04_config_ip) {
    *  @brief  The class constructor
    *  @return void
    */
+
   SC_CTOR(ex04_config_ip):
-            m_cci(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {
     SC_THREAD(execute);
 
@@ -51,24 +52,27 @@ SC_MODULE(ex04_config_ip) {
   }
 
   /**
-   *  @fn     void setup_sim_ip(const char* msg, const char* key, const char* val)
+   *  @fn     void setup_sim_ip(const char* msg, const char* param_name, const char* val)
    *  @brief  Function to setup the simulation
    *  @param  msg A message to be printed regarding the setup
-   *  @param  key The parameter key to lookup and modify
-   *  @param  val The value to assign to the parameter referenced by key
+   *  @param  param_name The parameter name to lookup and modify
+   *  @param  val The value to assign to the parameter referenced by param_name
    *  @return void
    */
-  void setup_sim_ip(const char *msg, const char *key, const char *val) {
+
+  void setup_sim_ip(const char *msg, const char *param_name, const char *val) {
     XREPORT(msg);
 
-    if (m_cci.param_exists(key)) {
+    if (m_broker.param_exists(param_name)) {
       XREPORT_ERROR("Instantiate config_ip ahead of simple_ip"
                     " to demonstrate this example");
     } else {
-      XREPORT("Set init-value of " << key << " to " << val);
-      m_cci.set_initial_cci_value(key, cci::cci_value::from_json(val));
+      XREPORT("Set init-value of " << param_name << " to " << val);
+      m_broker.set_initial_cci_value(param_name, cci_value::from_json(val));
+
     }
   }
+
 
   /**
    *  @fn     void execute()
@@ -76,17 +80,19 @@ SC_MODULE(ex04_config_ip) {
    *  @return void
    */
   void execute() {
-    wait(10, sc_core::SC_NS);
+	// Wait for 20ns to allow config_ip to update parameter value
+    wait(20, sc_core::SC_NS);
 
-    if (m_cci.param_exists("sim_ip.param_2")) {
-      cci::cci_param_handle param_2 =
-        m_cci.get_param_handle("sim_ip.param_2");
-      if (!param_2.is_valid()) {
+   // Check for existence of the structure_param
+    if (m_broker.param_exists("sim_ip.param_2")) {
+      cci::cci_param_handle param_2_handle =
+        m_broker.get_param_handle("sim_ip.param_2");
+      if (!param_2_handle.is_valid()) {
         XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2'!");
       } else {
         try {
           XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
-          param_2.set_cci_value(cci::cci_value::from_json("200"));
+          param_2_handle.set_cci_value(cci_value(200));
         } catch (std::exception &x) {
           XREPORT_WARNING(x.what());
         }
@@ -98,7 +104,7 @@ SC_MODULE(ex04_config_ip) {
   }
 
  private:
-  cci::cci_broker_handle m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 // ex04_config_ip
 

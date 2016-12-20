@@ -27,7 +27,6 @@
 #define EXAMPLES_EX01_SIMPLE_INT_PARAM_EX01_CONFIG_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -42,8 +41,10 @@ SC_MODULE(ex01_config_ip) {
    *  @brief  The constructor for the class.
    *  @return void
    */
-  SC_CTOR(ex01_config_ip):
-            m_cci(cci::cci_broker_manager::get_broker())
+
+SC_CTOR(ex01_config_ip):
+    // Get CCI configuration handle specific for this module
+   m_broker(cci::cci_broker_manager::get_broker())
   {
     SC_THREAD(execute);
   }
@@ -60,27 +61,28 @@ SC_MODULE(ex01_config_ip) {
     // Wait for a while to update param value
     wait(20, sc_core::SC_NS);
 
-    // Check for existance of the param
-    if (m_cci.param_exists(int_param_name)) {
+    // Check for existence of the param
+    if (m_broker.param_exists(int_param_name)) {
+
       // Get handle to the param
-      cci::cci_param_handle int_param = m_cci.get_param_handle(int_param_name);
-      assert(int_param.is_valid());
+      cci::cci_param_handle int_param_handle = m_broker.get_param_handle(int_param_name);
+      sc_assert(int_param_handle.is_valid());
 
       // Update the param's value to 2
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 2");
-      int_param.set_cci_value(cci::cci_value::from_json("2"));
+      int_param_handle.set_cci_value(cci::cci_value::from_json("2"));
 
       // Display new value
-      std::string new_value = int_param.get_cci_value().to_json();
+      std::string new_value = int_param_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param.get_name() << " is " << new_value);
+              << int_param_handle.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
     }
   }
 
  private:
-  cci::cci_broker_handle m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 // ex01_config_ip
 

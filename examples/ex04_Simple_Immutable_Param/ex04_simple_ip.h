@@ -26,8 +26,9 @@
 #ifndef EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_SIMPLE_IP_H_
 #define EXAMPLES_EX04_SIMPLE_IMMUTABLE_PARAM_EX04_SIMPLE_IP_H_
 
-#include <cci_configuration>
 #include "xreport.hpp"
+#include <cci_configuration>
+using cci::cci_value;
 
 /**
  *  @class  ex04_simple_ip
@@ -59,22 +60,21 @@ SC_MODULE(ex04_simple_ip) {
   }
 
   /**
-   *  @fn     void expect(const char* phase, const char* key, const int val, const int exp)
+   *  @fn     void expect(const char* phase, const char* param_name, const int val, const int exp)
    *  @brief  Compares the expected value with the actual value
    *  @param  phase Current phase
-   *  @param  key Parameter key used to lookup the parameter
+   *  @param  param_name The name of the parameter
    *  @param  val The value of the parameter
    *  @param  exp The expected value of the parameter
    *  @return void
    */
-  //! @note remove this function after the CCI implementation is in place
-  void expect(const char* phase, const char *key, const int val,
+  void expect(const char* phase, const char *param_name, const int val,
               const int exp) {
     if (val != exp) {
-      XREPORT_PLAIN("Warning: " << phase << key << " Expected to have value = "
-                    << exp << " but has " << val << ". TBD?");
+      XREPORT_PLAIN("Warning: " << phase << param_name << " Expected to have value = "
+                    << exp << " but has " << val << "(not expected)");
     } else {
-      XREPORT_PLAIN("Info: " << phase << key << " = " << val << " (expected)");
+      XREPORT_PLAIN("Info: " << phase << param_name << " = " << val << " (expected)");
     }
   }
 
@@ -84,25 +84,39 @@ SC_MODULE(ex04_simple_ip) {
    *  @return void
    */
   void execute() {
-    wait(20, sc_core::SC_NS);
+	//UC-1: Attempt to change the parameter at run time
+	XREPORT_INFO("execute method is testing Use Case 1");
+
+	// Wait for 10ns to allow simple_ip to update param_1 value
+    wait(10, sc_core::SC_NS);
 
     // Display current value of bufsiz
     expect("@Run: ", "param_1", static_cast<int>(param_1), 100);
-    expect("@Run: ", "param_2", static_cast<int>(param_2), 2);
 
     // Attempt to set new value (10) to param_1
     try {
       XREPORT("@Run: Assign new value (10) to " << param_1.get_name());
-      param_1.set_cci_value(cci::cci_value::from_json("10"));
+      param_1.set_cci_value(cci_value(10));
     } catch (std::exception &x) {
       XREPORT_WARNING(x.what());
     }
     expect("@Run: ", "param_1", static_cast<int>(param_1), 100);
 
+	//UC-2: Precedence of initial value over default value of the parameter
+	XREPORT_INFO("execute method is testing Use Case 2");
+
+	// Wait for 11ns to allow config_ip to update param_2 value
+	wait(11, sc_core::SC_NS);
+
+	expect("@Run: ", "param_2", static_cast<int>(param_2), 2);
+
+	// Wait for 9ns to allow simple_ip to update param_2 value
+	wait(9, sc_core::SC_NS);
+
     // Attempt to set new value (20) to param_2
     try {
       XREPORT("@Run: Assign new value (20) to " << param_2.get_name());
-      param_2.set_cci_value(cci::cci_value::from_json("20"));
+      param_2.set_cci_value(cci_value(20));
     } catch (std::exception &x) {
       XREPORT_WARNING(x.what());
     }

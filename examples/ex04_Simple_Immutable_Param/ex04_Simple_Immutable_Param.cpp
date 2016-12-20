@@ -25,6 +25,10 @@
 
 #include "ex04_simple_ip.h"
 #include "ex04_config_ip.h"
+using sc_core::sc_report_handler;
+using sc_core::SC_LOG;
+using sc_core::SC_DISPLAY;
+using sc_core::SC_ERROR;
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -37,6 +41,9 @@
 int sc_main(int argc, char *argv[]) {
   ex04_config_ip cfg_ip("cfg_ip");
   ex04_simple_ip sim_ip("sim_ip");
+
+  // Inhibit simulation abort for expected errors
+  sc_report_handler::set_actions("/Accellera/CCI/SET_PARAM_FAILED", SC_ERROR, SC_LOG | SC_DISPLAY);
 
   SC_REPORT_INFO("sc_main", "Begin Simulation");
   sc_core::sc_start();
