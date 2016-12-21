@@ -64,7 +64,7 @@ Running the examples
 
   4.1) To run a specific example, say ex1_simple_int_param, do:
 +------------------------------------------------+
-    % ../scripts/verify.pl ex1_simple_int_param
+    % ../scripts/verify.pl ex01_Simple_Int_Param
 +------------------------------------------------+
 
   4.2) To run all examples, do:
@@ -74,12 +74,6 @@ Running the examples
  
 5) The build and run logs are placed in the run/ folder; reference logs are
    provided in the scripts/run/ folder.
-
-6*) For CCI WG members only, dev_examples can be included in the regression testing by:
-+-----------------------------------------------+
-    % unsetenv SYSTEMC_TEST
-    %../scripts/verify.pl dev_examples examples
-+-----------------------------------------------+
 
 Note
 -------
