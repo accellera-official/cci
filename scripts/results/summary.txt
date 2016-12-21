@@ -4,14 +4,6 @@
 -------------------------------------------------------------------------------
  Tests that passed :
 -------------------------------------------------------------------------------
-dev_examples/broker_get_originator/broker_get_originator.cpp
-dev_examples/broker_hierarchy/broker_hierarchy.cpp
-dev_examples/callback_standalone/callback_standalone.cpp
-dev_examples/cci_value_api_example/cci_value_api_example.cpp
-dev_examples/cci_value_param_example/cci_value_param_example.f
-dev_examples/param_impl_diff_compare/param_impl_diff_compare.f
-dev_examples/param_type_diff_compare/testbench.cpp
-dev_examples/priv_broker_example/priv_broker_example.f
 examples/ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
 examples/ex02_Fully_Supported_Data_Type_Param/ex02_Fully_Supported_Data_Type_Param.cpp
 examples/ex03_Elab_Time_Param/ex03_Elab_Time_Param.cpp
@@ -40,7 +32,7 @@ examples/ex23_Hierarchical_Value_Update/ex23_Hierarchical_Value_Update.cpp
  Tests that failed :
 -------------------------------------------------------------------------------
 
-Total passed : 31
+Total passed : 23
 Total failed : 0
 
    GUT METER : 100 %
