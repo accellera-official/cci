@@ -61,7 +61,7 @@ $ cd run
 Step 3. Build/Run the examples.
 
 [To build/run all the examples]
-$ ../verify.pl .
+$ ../verify.pl examples
 
 [To build/run a specific example]
 $ ../verify.pl ex01_Simple_Int_Param

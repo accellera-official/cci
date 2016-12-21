@@ -69,7 +69,7 @@ Running the examples
 
   4.2) To run all examples, do:
 +-----------------------------------------------+
-    % ../scripts/verify.pl .
+    % ../scripts/verify.pl examples
 +------------------------------------------------+
  
 5) The build and run logs are placed in the run/ folder; reference logs are
