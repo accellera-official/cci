@@ -1,3 +1,0 @@
-param_impl_diff_compare/OwnerModuleA.cpp
-param_impl_diff_compare/OwnerModuleB.cpp
-param_impl_diff_compare/testbench.cpp
