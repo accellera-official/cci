@@ -45,7 +45,6 @@ src/       :  CCI interface files, only include <cci_configuration> in user code
 packages/  :  external packages, namely rapidjson
     greencontrol/ : GreenSocs configuration implementation
     gs_broker/    : GreenSocs broker wrapper
-dev_examples/ :  developer examples (i.e. test cases)
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)
 msvc10/    :  Microsoft Visual Studio project files

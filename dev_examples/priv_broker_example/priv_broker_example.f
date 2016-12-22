@@ -1,5 +1,0 @@
-priv_broker_example/ModuleA.cpp
-priv_broker_example/ModuleB.cpp
-priv_broker_example/ModuleC.cpp
-priv_broker_example/ObserverModule.cpp
-priv_broker_example/testbench.cpp

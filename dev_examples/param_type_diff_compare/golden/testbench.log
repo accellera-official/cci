@@ -1,5 +1,0 @@
-SystemC Simulation
-int_param_mutable2 == int_param_mutable: false
-int_param_elab == int_param_mutable: false
-int_param_elab == int_param_immutable: true
-int_param_elab != int_param_immutable: false

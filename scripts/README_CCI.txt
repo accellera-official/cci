@@ -61,18 +61,13 @@ $ cd run
 Step 3. Build/Run the examples.
 
 [To build/run all the examples]
-$ ../verify.pl .
+$ ../verify.pl examples
 
 [To build/run a specific example]
-$ ../verify.pl ex1_simple_int_param
+$ ../verify.pl ex01_Simple_Int_Param
 
 [Do not clean up temporary files and directories (in current dir)]
-$ ../verify.pl -no-cleanup ex1_simple_int_param
-
-[FOR CCI WG MEMBERS: TO ADD DEV_EXAMPLES TO THE REGRESSION]
-$ unset SYSTEMC_TEST
-$ ../verify.pl -I $CCI_HOME/examples/common/inc dev_examples examples
-$ ../verify.pl -I $CCI_HOME/examples/common/inc dev_examples/priv_broker_example
+$ ../verify.pl -no-cleanup ex01_Simple_Int_Param
 
 Testing
 -------
