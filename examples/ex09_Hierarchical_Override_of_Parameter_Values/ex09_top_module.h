@@ -91,10 +91,11 @@ SC_MODULE(ex09_top_module) {
 
     if (m_broker.param_exists(
         "top_module_inst.RouterInstance.addr_limit")) {
-      cci::cci_param_handle r_addr_limit = m_broker.get_param_handle(
+      cci::cci_param_handle r_addr_limit_handle =
+          m_broker.get_param_handle(
               "top_module_inst.RouterInstance.addr_limit");
       r_addr_max = atoi(
-              (r_addr_limit.get_cci_value().to_json()).c_str());
+              (r_addr_limit_handle.get_cci_value().to_json()).c_str());
 
       XREPORT("[TOP_MODULE C_TOR] : Router's maximum addressable limit : "
               << r_addr_max);

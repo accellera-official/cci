@@ -44,15 +44,15 @@ SC_MODULE(ex13_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex13_parameter_configurator):
-      int_param(cci::cci_originator(*this)),
+      int_param_handle(cci::cci_originator(*this)),
       m_broker(cci::cci_broker_manager::get_broker())
   {
     if (m_broker.param_exists("param_owner.mutable_int_param")) {
       // Getting handle for the integer parameter of onwer module
       // by the configurator
-      int_param = m_broker.get_param_handle("param_owner.mutable_int_param");
+      int_param_handle = m_broker.get_param_handle("param_owner.mutable_int_param");
 
-      sc_assert(int_param.is_valid() && "Base parameter handle returned NULL");
+      sc_assert(int_param_handle.is_valid() && "Base parameter handle returned NULL");
     } else {
       XREPORT("[CFGR C_TOR] : int_param not found");
     }
@@ -76,48 +76,48 @@ SC_MODULE(ex13_parameter_configurator) {
       // is always recommended to check the locking status of the parameter
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       // 'locked' API returns TRUE when a parameter is in LOCKED STATE and
       // FALSE when in UNLOCKED STATE
-      if (int_param.is_locked()) {
+      if (int_param_handle.is_locked()) {
         XREPORT("[CFGR] :  Cannot assign new value to the parameter as it"
                 " is already locked!!");
       } else {
-        int_param.set_cci_value(cci::cci_value::from_json("2"));
+        int_param_handle.set_cci_value(cci::cci_value(2));
       }
 
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
       XREPORT("[CFGR] : Parameter is not locked!! Assign a new value '3'"
               " to it");
-      int_param.set_cci_value(cci::cci_value::from_json("3"));
+      int_param_handle.set_cci_value(cci::cci_value(3));
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       // Demonstrating 'lock' API to lock a parameter without a password
       XREPORT("[CFGR] : Lock parameter without password");
-      int_param.lock();
+      int_param_handle.lock();
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       // Demonstrating 'unlock' API to lock a parameter without a password
       XREPORT("[CFGR] : Unlock parameter without password");
-      int_param.unlock();
+      int_param_handle.unlock();
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       // Demonstrating 'lock' API to lock a parameter with a password
       // 'Lock' API returns TRUE if parameter is locked successfully and
@@ -125,7 +125,7 @@ SC_MODULE(ex13_parameter_configurator) {
       psswd = NULL;
       XREPORT("[CFGR] : Lock with password");
 
-      if (int_param.lock(&psswd)) {
+      if (int_param_handle.lock(&psswd)) {
         XREPORT("[CFGR] : Parameter locked with password (password not known"
                 " to OWNER)");
       } else {
@@ -133,28 +133,28 @@ SC_MODULE(ex13_parameter_configurator) {
       }
 
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       try {
         XREPORT("[CFGR] : Set parameter value to '4'");
-        int_param.set_cci_value(cci::cci_value::from_json("4"));
+        int_param_handle.set_cci_value(cci::cci_value(4));
       } catch (sc_core::sc_report exception) {
         XREPORT("[CFGR] : Caught Exception : " << exception.what());
       }
 
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       // 'Unlock' API returns TRUE if parameter is unlocked successfully and
       // FALSE if it could not be unlocked. Demonstrating unlocking with the
       // right password
       XREPORT("[CFGR] : Now, unlock with the correct password");
-      int_param.unlock(&psswd);
+      int_param_handle.unlock(&psswd);
       XREPORT("[CFGR] : Parameter locking status : "
-              << int_param.is_locked() << "\tValue : "
-              << int_param.get_cci_value().to_json());
+              << int_param_handle.is_locked() << "\tValue : "
+              << int_param_handle.get_cci_value().to_json());
 
       wait(50.0, sc_core::SC_NS);
     }
@@ -162,7 +162,7 @@ SC_MODULE(ex13_parameter_configurator) {
 
  private:
   cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle
-  cci::cci_param_handle int_param;  ///< CCI parameter handle to access the actual owner's parameter
+  cci::cci_param_handle int_param_handle;  ///< CCI parameter handle to access the actual owner's parameter
 
   char* paramName;  ///< The parameter name
 

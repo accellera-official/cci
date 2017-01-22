@@ -47,7 +47,7 @@ class ex16_observer {
   ex16_observer():
       m_broker(cci::cci_broker_manager::get_broker(
               cci::cci_originator("observerOriginator"))),
-      obsv_udt_base(cci::cci_originator("ex16_observer"))
+      obsv_udt_base_handle(cci::cci_originator("ex16_observer"))
   {
     // Check for the broker type (default or private) using
     // 'is_private_broker()' API
@@ -62,24 +62,24 @@ class ex16_observer {
     }
 
     // Gets the reference to the 'udt' type cci-parameter of OWNER module
-    obsv_udt_base =
+    obsv_udt_base_handle =
         m_broker.get_param_handle("param_owner.User_data_type_param");
 
-    sc_assert(obsv_udt_base.is_valid()
+    sc_assert(obsv_udt_base_handle.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
 
     // Observer registering 'PRE_READ', 'PRE_WRITE' & 'POST_WRITE' callbacks
     // on the UDT parameter to monitor all actions on it
-    udt_pre_read_cb = obsv_udt_base.register_pre_read_callback(
+    udt_pre_read_cb = obsv_udt_base_handle.register_pre_read_callback(
         &ex16_observer::untyped_pre_read_callback,this);
 
-    udt_post_read_cb = obsv_udt_base.register_post_read_callback(
+    udt_post_read_cb = obsv_udt_base_handle.register_post_read_callback(
         &ex16_observer::untyped_post_read_callback,this);
 
-    udt_pre_write_cb = obsv_udt_base.register_pre_write_callback(
+    udt_pre_write_cb = obsv_udt_base_handle.register_pre_write_callback(
         &ex16_observer::untyped_pre_write_callback,this);
 
-    udt_post_write_cb = obsv_udt_base.register_post_write_callback(
+    udt_post_write_cb = obsv_udt_base_handle.register_post_write_callback(
         &ex16_observer::untyped_post_write_callback,this);
   }
 
@@ -135,7 +135,7 @@ class ex16_observer {
  private:
   cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle
 
-  cci::cci_param_handle obsv_udt_base;  ///< Declare CCI param handle for int type cci-parameter
+  cci::cci_param_handle obsv_udt_base_handle;  ///< Declare CCI param handle for int type cci-parameter
 
   // Callback handle Objects for 'int' type parameter
   cci::cci_callback_untyped_handle udt_pre_read_cb;   ///< Callback handle object for pre-read

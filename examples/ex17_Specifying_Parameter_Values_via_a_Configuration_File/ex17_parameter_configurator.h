@@ -43,7 +43,7 @@ SC_MODULE(ex17_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex17_parameter_configurator):
-      int_param(cci::cci_originator(*this)),
+      int_param_handle(cci::cci_originator(*this)),
       float_param(cci::cci_originator(*this)),
       str_param(cci::cci_originator(*this)),
       myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
@@ -52,10 +52,10 @@ SC_MODULE(ex17_parameter_configurator) {
     if (myCfgrBrokerIF.param_exists("param_owner.mutable_int_param")) {
       XREPORT("[CFGR C_TOR] : Integer parameter exists");
 
-      int_param =
+      int_param_handle =
               myCfgrBrokerIF.get_param_handle("param_owner.mutable_int_param");
 
-      sc_assert(int_param.is_valid() && "Parameter Handle is NULL");
+      sc_assert(int_param_handle.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Integer parameter doesn't exists.");
     }
@@ -99,7 +99,7 @@ SC_MODULE(ex17_parameter_configurator) {
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Set integer parameter value to '20'"
               " using cci_base_parameter");
-      int_param.set_cci_value(cci::cci_value::from_json("20"));
+      int_param_handle.set_cci_value(cci::cci_value(20));
 
       // Set value to the 'string' parameter of the owner module
       XREPORT("[CFGR] : Set string  parameter value to 'configure'"
@@ -114,7 +114,7 @@ SC_MODULE(ex17_parameter_configurator) {
   cci::cci_broker_handle myCfgrBrokerIF;  ///< Declare a configuration broker
 
   // Declare cci_base_param for each of the owner's cci-parameters
-  cci::cci_param_handle int_param;  ///< Parameter handle to an int parameter
+  cci::cci_param_handle int_param_handle;  ///< Parameter handle to an int parameter
   cci::cci_param_handle float_param;  ///< Parameter handle to a float parameter
   cci::cci_param_handle str_param;  ///< Parameter handle to a string parameter
 };

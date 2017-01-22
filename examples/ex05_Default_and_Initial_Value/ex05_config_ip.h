@@ -61,7 +61,7 @@ SC_MODULE(ex05_config_ip) {
   void setup_sim_ip(const char *msg, const char *val) {
     XREPORT(msg);
 
-    // Check for existance of sim_ip.param_1 param
+    // Check for existence of sim_ip.param_1 param
     if (m_broker.param_exists("sim_ip.param_1")) {
       XREPORT_ERROR("Instantiate config_ip before simple_ip"
                     " to demonstrate set_initial_cci_value");
@@ -88,16 +88,17 @@ SC_MODULE(ex05_config_ip) {
     // Set Initial value after construction is treated as normal value update
     m_broker.set_initial_cci_value(int_param_name,cci::cci_value(5));
 
-    // Check for existance of the param
+    // Check for existence of the param
     if (m_broker.param_exists(int_param_name)) {
       // Get handle to the param
-      cci::cci_param_handle int_param = m_broker.get_param_handle(int_param_name);
-      sc_assert(int_param.is_valid());
+      cci::cci_param_handle int_param_handle =
+          m_broker.get_param_handle(int_param_name);
+      sc_assert(int_param_handle.is_valid());
 
       // Display new value
-      std::string new_value = int_param.get_cci_value().to_json();
+      std::string new_value = int_param_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param.get_name() << " is " << new_value);
+              << int_param_handle.get_name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
     }

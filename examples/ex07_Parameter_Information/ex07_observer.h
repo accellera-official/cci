@@ -59,19 +59,19 @@ SC_MODULE(ex07_observer) {
     }
 
     // Gets the reference to the 'int' type cci-parameter of OWNER module
-   cci::cci_param_handle obsv_int_base =
+   cci::cci_param_handle obsv_int_base_handle =
            m_broker.get_param_handle("param_owner.mutable_int_param");
 
-    sc_assert(obsv_int_base.is_valid()
+    sc_assert(obsv_int_base_handle.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
 
     // Observer registering PRE_READ, PRE_WRITE & POST_WRITE callbacks
     // on the integer parameter to monitor all actions on it
-    int_pre_read_cb = obsv_int_base.register_pre_read_callback(
+    int_pre_read_cb = obsv_int_base_handle.register_pre_read_callback(
             &ex07_observer::pre_read_callback, this, cci::cci_untyped_tag());
-    int_pre_write_cb = obsv_int_base.register_pre_write_callback(
+    int_pre_write_cb = obsv_int_base_handle.register_pre_write_callback(
             &ex07_observer::pre_write_callback, this, cci::cci_untyped_tag());
-    int_post_write_cb = obsv_int_base.register_post_write_callback(
+    int_post_write_cb = obsv_int_base_handle.register_post_write_callback(
             &ex07_observer::post_write_callback, this, cci::cci_untyped_tag());
   }
 

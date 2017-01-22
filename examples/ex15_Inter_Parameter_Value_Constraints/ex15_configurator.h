@@ -46,8 +46,8 @@ SC_MODULE(ex15_configurator) {
    */
   SC_CTOR(ex15_configurator):
       m_broker(cci::cci_broker_manager::get_broker()),
-      addr_lines_base(cci::cci_originator(*this)),
-      mem_size_base(cci::cci_originator(*this))
+      child_base_param_handle(cci::cci_originator(*this)),
+      mem_size_base_handle(cci::cci_originator(*this))
   {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "processor.addr_lines_mod.curr_addr_lines";
@@ -56,9 +56,9 @@ SC_MODULE(ex15_configurator) {
     // Check for the existence of 'curr_addr_lines' cci_parameter
     // of ADDRESS_LINES_REGISTER
     if (m_broker.param_exists(cfgr_param_str1)) {
-      addr_lines_base = m_broker.get_param_handle(cfgr_param_str1);
+        child_base_param_handle = m_broker.get_param_handle(cfgr_param_str1);
 
-      sc_assert(addr_lines_base.is_valid()
+      sc_assert(child_base_param_handle.is_valid()
              && "Handle of 'curr_addr_lines' parameter returned is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
@@ -67,9 +67,9 @@ SC_MODULE(ex15_configurator) {
 
     // Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
     if (m_broker.param_exists(cfgr_param_str2)) {
-      mem_size_base = m_broker.get_param_handle(cfgr_param_str2);
+      mem_size_base_handle = m_broker.get_param_handle(cfgr_param_str2);
 
-      sc_assert(mem_size_base.is_valid()
+      sc_assert(mem_size_base_handle.is_valid()
              && "Handle of 'mem_size' parameter returned is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str2
@@ -90,21 +90,21 @@ SC_MODULE(ex15_configurator) {
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Changing the 'mem_size' to 640");
-      mem_size_base.set_cci_value(cci::cci_value::from_json("640"));
+      mem_size_base_handle.set_cci_value(cci::cci_value(640));
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Modify the 'curr_addr_lines' to 10");
-      addr_lines_base.set_cci_value(cci::cci_value::from_json("10"));
+      child_base_param_handle.set_cci_value(cci::cci_value(10));
 
       wait(5.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
 
       XREPORT("[CFGR] : Changing the 'mem_size' to 800");
-      mem_size_base.set_cci_value(cci::cci_value::from_json("800"));
+      mem_size_base_handle.set_cci_value(cci::cci_value(800));
 
       wait(5.0, sc_core::SC_NS);
     }
@@ -114,8 +114,8 @@ SC_MODULE(ex15_configurator) {
   cci::cci_broker_handle m_broker;  ///< Declaring a CCI configuration broker handle
 
   /// CCI base parameters
-  cci::cci_param_handle addr_lines_base;  ///< Handle to the base of the address lines
-  cci::cci_param_handle mem_size_base;  ///< Handle to the base mem size
+  cci::cci_param_handle child_base_param_handle;  ///< Handle to the base of the address lines
+  cci::cci_param_handle mem_size_base_handle;  ///< Handle to the base mem size
 };
 // ex15_configurator
 

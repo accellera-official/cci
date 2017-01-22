@@ -45,8 +45,8 @@ SC_MODULE(ex07_parameter_configurer) {
    *  @return void
    */
   SC_CTOR(ex07_parameter_configurer)
-      : int_param(cci::cci_originator(*this)),
-        str_param(cci::cci_originator(*this)),
+      : int_param_handle(cci::cci_originator(*this)),
+        str_param_handle(cci::cci_originator(*this)),
         check(0),
         m_broker(cci::cci_broker_manager::get_broker())
   {
@@ -65,11 +65,11 @@ SC_MODULE(ex07_parameter_configurer) {
     intParamExists = false;
     strParamExists = false;
 
-    // Broker interface checks for the existance of a (int type) parameter
+    // Broker interface checks for the existence of a (int type) parameter
     if (m_broker.param_exists(int_param_str)) {
-      int_param = m_broker.get_param_handle(int_param_str);
+      int_param_handle = m_broker.get_param_handle(int_param_str);
 
-      sc_assert(int_param.is_valid()
+      sc_assert(int_param_handle.is_valid()
              && "Integer CCI Parameter Handle is not valid");
 
       intParamExists = true;
@@ -79,15 +79,15 @@ SC_MODULE(ex07_parameter_configurer) {
       intParamExists = false;
     }
 
-    // Broker interface checks for existance of a (std::string type)
+    // Broker interface checks for existence of a (std::string type)
     // parameter using 'param_exists' API
     if (m_broker.param_exists(string_param_str)) {
       // If parameter exists, get handle of the parameter using
       // 'get_param' API
-      str_param = m_broker.get_param_handle(string_param_str);
+      str_param_handle = m_broker.get_param_handle(string_param_str);
 
       // Report if parameter handle is returned NULL
-      sc_assert(str_param.is_valid()
+      sc_assert(str_param_handle.is_valid()
              && "String CCI Parameter Handle is not vlaid");
 
       strParamExists = true;
@@ -102,17 +102,17 @@ SC_MODULE(ex07_parameter_configurer) {
 
     // Check if string type cci-parameter has any initial value using
     // 'is_initial_value' API
-    if (str_param.is_initial_value()) {
-      XREPORT("[CFGR C_TOR] : " << str_param.get_name()
+    if (str_param_handle.is_initial_value()) {
+      XREPORT("[CFGR C_TOR] : " << str_param_handle.get_name()
               << "\tInitial Value : "
-              << str_param.get_cci_value().get_string());
+              << str_param_handle.get_cci_value().get_string());
     } else {
       XREPORT_ERROR("[CFGR] : No initial value set for "
-                    << str_param.get_name());
+                    << str_param_handle.get_name());
     }
 
     XREPORT("[CFGR C_TOR] : Is initial value ?\t" << std::boolalpha
-            << str_param.is_initial_value());
+            << str_param_handle.is_initial_value());
 
     SC_THREAD(execute);
   }
@@ -130,16 +130,16 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Access parameter's default value status using
         // 'is_default_value()' API
-        if (int_param.is_default_value()) {
-          XREPORT("[CFGR] : " << int_param.get_name()
+        if (int_param_handle.is_default_value()) {
+          XREPORT("[CFGR] : " << int_param_handle.get_name()
                   << " default value hasn't been modified.");
           XREPORT("[CFGR] : Is Default Value ? " << "\tReturned status : "
-                  << std::boolalpha << int_param.is_default_value());
+                  << std::boolalpha << int_param_handle.is_default_value());
         } else {
-          XREPORT("[CFGR] : " << int_param.get_name()
+          XREPORT("[CFGR] : " << int_param_handle.get_name()
                   << " default value has been modified.");
           XREPORT("[CFGR] : Is Default Value ? " << "\tReturned status : "
-                  << std::boolalpha << int_param.is_default_value());
+                  << std::boolalpha << int_param_handle.is_default_value());
         }
 
         wait(2.0, sc_core::SC_NS);
@@ -149,51 +149,51 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Access parameter's default value status using
         // 'is_default_value()' API
-        if (!int_param.is_default_value()) {
-          XREPORT("[CFGR] : " << int_param.get_name()
+        if (!int_param_handle.is_default_value()) {
+          XREPORT("[CFGR] : " << int_param_handle.get_name()
                   << " value has been modified.");
           XREPORT("[CFGR] : Is Default Value ? " << "\tReturned status : "
-                  << std::boolalpha << int_param.is_default_value());
+                  << std::boolalpha << int_param_handle.is_default_value());
         }
 
-        if (str_param.is_default_value()) {
-          XREPORT("[CFGR] : " << str_param.get_name()
+        if (str_param_handle.is_default_value()) {
+          XREPORT("[CFGR] : " << str_param_handle.get_name()
                   << " value hasn't been modified");
           XREPORT("[CFGR -> Retrieve] : Parameter name  : "
-                  << str_param.get_name());
+                  << str_param_handle.get_name());
           XREPORT("[CFGR -> Retrieve] : Parameter value : "
-                  << str_param.get_cci_value().get_string());
+                  << str_param_handle.get_cci_value().get_string());
         } else {
-          XREPORT("[CFGR] : " << str_param.get_name() << " New Value : "
-                  << str_param.get_cci_value().get_string());
+          XREPORT("[CFGR] : " << str_param_handle.get_name() << " New Value : "
+                  << str_param_handle.get_cci_value().get_string());
         }
 
         wait(2.0, sc_core::SC_NS);
 
         // Access parameter's name using 'get_name()' API
         XREPORT("[CFGR -> Retrieve] Parameter's name : "
-                << int_param.get_name());
+                << int_param_handle.get_name());
 
         // Access parameter's value using 'json_serialize' API
         XREPORT("[CFGR -> Retrieve] Parameter's value : "
-                << int_param.get_cci_value().to_json());
+                << int_param_handle.get_cci_value().to_json());
 
         // Access parameter's description using 'get_description()'
         XREPORT("[CFGR -> Retrieve] Parameter's desc : "
-                << int_param.get_description());
+                << int_param_handle.get_description());
 
         // Access parameter's metadata using 'get_metadata()'
         XREPORT("[CFGR -> Retrieve] Parameter's metadata : "
-                        << int_param.get_metadata());
+                        << int_param_handle.get_metadata());
 
         wait(2.0, sc_core::SC_NS);
 
         XREPORT("@ " << sc_core::sc_time_stamp());
-        XREPORT("[CFGR -> Set] :  " << int_param.get_name()
+        XREPORT("[CFGR -> Set] :  " << int_param_handle.get_name()
                 << " value to 10");
 
         // Set parameter's value using 'json_deserialize' API
-        int_param.set_cci_value(cci::cci_value::from_json("10"));
+        int_param_handle.set_cci_value(cci::cci_value(10));
 
         wait(4.0, sc_core::SC_NS);
 
@@ -201,15 +201,15 @@ SC_MODULE(ex07_parameter_configurer) {
 
         // Access parameter's name using 'get_name()' API
         XREPORT("[CFGR -> Retrieve] : Parameter name : "
-                << int_param.get_name());
+                << int_param_handle.get_name());
 
         // Access parameter's value using 'json_serialize' API
         XREPORT("[CFGR -> Retrieve] : Parameter value: "
-                << int_param.get_cci_value().to_json());
+                << int_param_handle.get_cci_value().to_json());
 
         // Access parameter's description using 'get_description()'
         XREPORT("[CFGR -> Retrieve] : Parameter desc : "
-                << int_param.get_description());
+                << int_param_handle.get_description());
 
         wait(2.0, sc_core::SC_NS);
 
@@ -224,13 +224,13 @@ SC_MODULE(ex07_parameter_configurer) {
           XREPORT("[CFGR] : Checking locked status of parameter");
 
           // Try accessing and modify value after locking
-          lock_status = int_param.is_locked();
+          lock_status = int_param_handle.is_locked();
 
           if (lock_status) {
-            XREPORT("[CFGR] : " << int_param.get_name()
+            XREPORT("[CFGR] : " << int_param_handle.get_name()
                     << " is in locked state!!");
           } else {
-            XREPORT("[CFGR] : " << int_param.get_name()
+            XREPORT("[CFGR] : " << int_param_handle.get_name()
                     << " is in unlocked state!!");
           }
 
@@ -238,11 +238,11 @@ SC_MODULE(ex07_parameter_configurer) {
 
           if (check == 1) {
             // Demonstration of parameter locking using password
-            int_param.lock(&lock_passwd);
+            int_param_handle.lock(&lock_passwd);
             XREPORT("[CFGR] : Parameter locked using password");
           } else if (check == 2) {
             // Demonstration of parameter unlocking using password
-            int_param.unlock(&lock_passwd);
+            int_param_handle.unlock(&lock_passwd);
             XREPORT("[CFGR] : Parameter unlocked using password");
           }
 
@@ -255,17 +255,17 @@ SC_MODULE(ex07_parameter_configurer) {
                 << "\tdemonstrating 'set_value()' for string-type param using"
                 " cci_value");
         XREPORT("[CFGR] : Parameter Description : "
-                << str_param.get_description());
+                << str_param_handle.get_description());
 
         cci::cci_value str_value("Hello_New_String");
 
         // Query basic type of a parameter using 'get_basic_type()' API
         XREPORT("[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : "
-                << str_param.get_basic_type());
+                << str_param_handle.get_basic_type());
 
         // Set a (std::string) parameter's value using
         // 'set_value' API with cci_value
-        str_param.set_cci_value(str_value);
+        str_param_handle.set_cci_value(str_value);
 
         wait(2.0, sc_core::SC_NS);
 
@@ -275,7 +275,7 @@ SC_MODULE(ex07_parameter_configurer) {
         // Get the latest write originator for the write value to
         // the string type cci-parameter
         const cci::cci_originator& str_originator =
-                str_param.get_latest_write_originator();
+                str_param_handle.get_latest_write_originator();
         XREPORT("[CFGR] : Originator for the latest write on string"
                 " type cci-parameter : " << str_originator.name());
 
@@ -284,12 +284,12 @@ SC_MODULE(ex07_parameter_configurer) {
                 " using cci_value");
         XREPORT("[CFGR] : 'Retrieve1' using 'json_serialize' and"
                 " 'Retrieve2' using 'get_value()'");
-        XREPORT("[CFGR -> Retrieve1] : " << str_param.get_name()
-                << " value is " << str_param.get_cci_value().to_json());
+        XREPORT("[CFGR -> Retrieve1] : " << str_param_handle.get_name()
+                << " value is " << str_param_handle.get_cci_value().to_json());
 
         // Query a (std::string) parameter's value by using
         // 'get_value()'API with cci_value
-        cci::cci_value rx_value = str_param.get_cci_value();
+        cci::cci_value rx_value = str_param_handle.get_cci_value();
 
         /**
          *  @par Based on the type returned by 'get_basic_type()', query value of cci_value.
@@ -315,8 +315,8 @@ SC_MODULE(ex07_parameter_configurer) {
   std::string int_param_str;  //!< For storing hierarchical path of std::string type cci-parameter
   std::string string_param_str; //!< For storing hierarchical path of integer type cci-parameter
 
-  cci::cci_param_handle int_param;  ///< cci_base parameter
-  cci::cci_param_handle str_param;  ///< cci_base parameter
+  cci::cci_param_handle int_param_handle;  ///< cci_base parameter
+  cci::cci_param_handle str_param_handle;  ///< cci_base parameter
 
   // Few Local parameters
   bool intParamExists;  ///< variable for whether parameter exists

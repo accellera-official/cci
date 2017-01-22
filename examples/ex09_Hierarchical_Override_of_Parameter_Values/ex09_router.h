@@ -66,7 +66,7 @@ SC_MODULE(ex09_router) {
         r_targets("r_targets", 0),
         addr_limit("addr_max", 64),
         m_broker(cci::cci_broker_manager::get_broker()),
-        base(cci::cci_originator(*this)),
+        base_handle(cci::cci_originator(*this)),
         addrSize(0)
   {
     XREPORT("[ROUTER C_TOR] ----- [ROUTER CONSTRUCTOR BEGINS HERE] ------");
@@ -121,8 +121,8 @@ SC_MODULE(ex09_router) {
                "top_module_inst.target_%d.s_base_addr", i);
 
       if (m_broker.param_exists(stringName)) {
-        base = m_broker.get_param_handle(stringName);
-        sc_assert(base.is_valid()
+        base_handle = m_broker.get_param_handle(stringName);
+        sc_assert(base_handle.is_valid()
                && "target Base Address Handle returned is NULL");
       }
 	  std::stringstream row_ss;
@@ -130,7 +130,7 @@ SC_MODULE(ex09_router) {
 		     << " | " << std::setw(10) << std::hex << std::showbase << r_addr_start[i]->get_value()
 		     << " | " << std::setw(10) << r_addr_end[i]->get_value()
 		     << " | " << std::setw(10)
-             << base.get_cci_value().to_json() << " |";
+             << base_handle.get_cci_value().to_json() << " |";
 	XREPORT(row_ss.str().c_str());
     XREPORT("-----------------------------------------------------");
     }
@@ -179,7 +179,7 @@ SC_MODULE(ex09_router) {
   std::vector<cci::cci_param<unsigned int,
                                   cci::CCI_ELABORATION_TIME_PARAM> *> r_addr_end;  ///< Router table end address
 
-  cci::cci_param_handle base; ///< CCI base parameter for target base address
+  cci::cci_param_handle base_handle; ///< CCI base parameter handle for target base address
 
   int addrSize;
   char stringName[50];

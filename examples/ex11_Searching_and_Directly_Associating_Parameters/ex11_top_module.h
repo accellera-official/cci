@@ -71,13 +71,13 @@ SC_MODULE(ex11_top_module) {
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
     if (m_broker.param_exists(param1_str)) {
-      cci::cci_param_handle temp =
+      cci::cci_param_handle temp_handle =
               m_broker.get_param_handle(param1_str);
-      selected_base_param_list.push_back(temp);
+      selected_base_param_list.push_back(temp_handle);
 
-      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp.get_name()
+      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
               << "\tParameter Value : "
-              << temp.get_cci_value().to_json());
+              << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
               << "\tnot found.");
@@ -86,13 +86,13 @@ SC_MODULE(ex11_top_module) {
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
     if (m_broker.param_exists(param2_str)) {
-      cci::cci_param_handle temp =
+      cci::cci_param_handle temp_handle =
               m_broker.get_param_handle(param2_str);
-      selected_base_param_list.push_back(temp);
+      selected_base_param_list.push_back(temp_handle);
 
-      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp.get_name()
+      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
               << "\tParameter Value : "
-              << temp.get_cci_value().to_json());
+              << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
               << "\tnot found.");
