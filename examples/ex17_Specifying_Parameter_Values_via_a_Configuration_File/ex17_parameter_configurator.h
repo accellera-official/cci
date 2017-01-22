@@ -29,8 +29,6 @@
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
-
 #include "xreport.hpp"
 
 /**
@@ -57,7 +55,7 @@ SC_MODULE(ex17_parameter_configurator) {
       int_param =
               myCfgrBrokerIF.get_param_handle("param_owner.mutable_int_param");
 
-      assert(int_param.is_valid() && "Parameter Handle is NULL");
+      sc_assert(int_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Integer parameter doesn't exists.");
     }
@@ -69,7 +67,7 @@ SC_MODULE(ex17_parameter_configurator) {
       float_param =
               myCfgrBrokerIF.get_param_handle("param_owner.mutable_float_param");
 
-      assert(float_param.is_valid() && "Parameter Handle is NULL");
+      sc_assert(float_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Float parameter doesn't exists.");
     }
@@ -81,7 +79,7 @@ SC_MODULE(ex17_parameter_configurator) {
       str_param =
               myCfgrBrokerIF.get_param_handle("param_owner.mutable_string_param");
 
-      assert(str_param.is_valid() && "Parameter Handle is NULL");
+      sc_assert(str_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : String parameter doesn't exists.");
     }

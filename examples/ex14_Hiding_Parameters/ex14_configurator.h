@@ -28,7 +28,6 @@
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <string>
 
@@ -48,17 +47,17 @@ SC_MODULE(ex14_configurator) {
    *  @return void
    */
   SC_CTOR(ex14_configurator):
-      myCfgrBrokerIF(cci::cci_broker_manager::get_broker()),
+      m_broker(cci::cci_broker_manager::get_broker()),
       parent_base_param(cci::cci_originator(*this))
   {
     std::string parameterName(
             "Top.private.parent_inst.parent_int_buffer");
-    if (myCfgrBrokerIF.param_exists(parameterName)) {
+    if (m_broker.param_exists(parameterName)) {
       // Get handle of the parent_module's cci-parameter
-      parent_base_param = myCfgrBrokerIF.get_param_handle(parameterName);
+      parent_base_param = m_broker.get_param_handle(parameterName);
 
       // Assert if the handle returned is NULL
-      assert(parent_base_param.is_valid()
+      sc_assert(parent_base_param.is_valid()
              && "Returned handle of parent_module's cci-parameter is not valid");
 
       XREPORT("[CFGR] : Parameter Name : "
@@ -81,7 +80,7 @@ SC_MODULE(ex14_configurator) {
   void run_cfgr(void) {
     while (1) {
       std::vector<cci::cci_param_untyped_handle> cfgr_param_list =
-              myCfgrBrokerIF.get_param_handles();
+              m_broker.get_param_handles();
 
       wait(15.0, sc_core::SC_NS);
 
@@ -109,7 +108,7 @@ SC_MODULE(ex14_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;  ///< Configuration Broker for TOP_MODULE
+  cci::cci_broker_handle m_broker;  ///< Configuration Broker handle for TOP_MODULE
   cci::cci_param_handle parent_base_param;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator

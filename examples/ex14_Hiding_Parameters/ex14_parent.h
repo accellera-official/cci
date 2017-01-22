@@ -30,7 +30,6 @@
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_PARENT_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include <vector>
 
@@ -71,7 +70,7 @@ SC_MODULE(ex14_parent) {
     if (m_broker.param_exists(child_param_path)) {
       child_base_param = m_broker.get_param_handle(child_param_path);
 
-      assert(child_base_param.is_valid()
+      sc_assert(child_base_param.is_valid()
              && "Returned broker handle for 'priv_int_param' of 'child'"
              " is not valid");
 

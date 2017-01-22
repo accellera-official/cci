@@ -28,7 +28,6 @@
 #define EXAMPLES_EX18_SUPERSET_PARAMETER_VALUE_SPECIFICATION_EX18_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <string>
 
@@ -47,10 +46,10 @@ SC_MODULE(ex18_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex18_parameter_configurator):
-            myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {
     // Retrieve the list of all cci-parameters within a model.
-    complete_parameter_list = myCfgrBrokerIF.get_param_handles();
+    complete_parameter_list = m_broker.get_param_handles();
   }
 
   /**
@@ -61,15 +60,15 @@ SC_MODULE(ex18_parameter_configurator) {
    */
   void end_of_elaboration(void) {
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
-      if (!myCfgrBrokerIF.is_used(complete_parameter_list[i].get_name())) {
+      if (!m_broker.is_used(complete_parameter_list[i].get_name())) {
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
                 << complete_parameter_list[i].get_name() << "\tis : "
-                << myCfgrBrokerIF.is_used(
+                << m_broker.is_used(
                         complete_parameter_list[i].get_name()));
       } else {
         XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
                 << complete_parameter_list[i].get_name() << "\tis : "
-                << myCfgrBrokerIF.is_used(
+                << m_broker.is_used(
                         complete_parameter_list[i].get_name()));
       }
     }
@@ -77,7 +76,7 @@ SC_MODULE(ex18_parameter_configurator) {
     XREPORT("@ " << sc_time_stamp());
     XREPORT("[CFGR] : List of all unconsumed parameters in the model");
 
-    unconsumed_parameter_list = myCfgrBrokerIF.get_unconsumed_initial_values();
+    unconsumed_parameter_list = m_broker.get_unconsumed_initial_values();
     for (unsigned int i = 0; i < unconsumed_parameter_list.size(); i++) {
       XREPORT("[CFGR] : Unconsumed Parameter Name : "
               << (unconsumed_parameter_list[i]).first);
@@ -85,7 +84,7 @@ SC_MODULE(ex18_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker;  ///< Declaring a CCI configuration broker handle
 
   // std::vector to store the list of the unconsumed parameters
   std::vector<cci::cci_param_untyped_handle> complete_parameter_list; ///< List of all parameters

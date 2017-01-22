@@ -30,7 +30,6 @@
 #define EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_TOP_MODULE_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <sstream>
 #include <string>
@@ -57,7 +56,7 @@ SC_MODULE(ex12_top_module) {
    *  @brief  The class constructor
    */
   SC_CTOR(ex12_top_module):
-            myTopModBrokerIF(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
@@ -73,8 +72,8 @@ SC_MODULE(ex12_top_module) {
     std::string param1_str = "top_mod.param_owner1.clk_freq_Hz";
     std::string param2_str = "top_mod.param_owner2.clock_speed_KHz";
 
-    if (myTopModBrokerIF.param_exists(param1_str)) {
-      cci::cci_param_handle temp = myTopModBrokerIF.get_param_handle(param1_str);
+    if (m_broker.param_exists(param1_str)) {
+      cci::cci_param_handle temp = m_broker.get_param_handle(param1_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -87,8 +86,8 @@ SC_MODULE(ex12_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_param_handle
-    if (myTopModBrokerIF.param_exists(param2_str)) {
-      cci::cci_param_handle temp = myTopModBrokerIF.get_param_handle(param2_str);
+    if (m_broker.param_exists(param2_str)) {
+      cci::cci_param_handle temp = m_broker.get_param_handle(param2_str);
       selectedBaseParamList.push_back(temp);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -106,7 +105,7 @@ SC_MODULE(ex12_top_module) {
   }
 
  private:
-  cci::cci_broker_handle myTopModBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker;  ///< Declaring a CCI configuration broker handle
   std::vector<cci::cci_param_handle> selectedBaseParamList; ///< Selected cci_param_handle list (selection done by top_module)
 };
 // ex12_top_module

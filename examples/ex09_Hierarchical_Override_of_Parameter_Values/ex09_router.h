@@ -36,7 +36,6 @@
 
 #include <cci_configuration>
 #include <tlm>
-#include <cassert>
 #include <vector>
 #include <sstream>
 #include <iomanip>
@@ -66,7 +65,7 @@ SC_MODULE(ex09_router) {
         r_initiators("r_initiators", 0),
         r_targets("r_targets", 0),
         addr_limit("addr_max", 64),
-        myBrokerForRouter(cci::cci_broker_manager::get_broker()),
+        m_broker(cci::cci_broker_manager::get_broker()),
         base(cci::cci_originator(*this)),
         addrSize(0)
   {
@@ -121,9 +120,9 @@ SC_MODULE(ex09_router) {
       snprintf(stringName, sizeof(stringName),
                "top_module_inst.target_%d.s_base_addr", i);
 
-      if (myBrokerForRouter.param_exists(stringName)) {
-        base = myBrokerForRouter.get_param_handle(stringName);
-        assert(base.is_valid()
+      if (m_broker.param_exists(stringName)) {
+        base = m_broker.get_param_handle(stringName);
+        sc_assert(base.is_valid()
                && "target Base Address Handle returned is NULL");
       }
 	  std::stringstream row_ss;
@@ -170,7 +169,7 @@ SC_MODULE(ex09_router) {
   cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
   cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> r_targets; ///< target ID assigned by the top_module upon instantiation
   cci::cci_param<unsigned int, cci::CCI_MUTABLE_PARAM> addr_limit;  ///< Router Addressing Range
-  cci::cci_broker_handle myBrokerForRouter; ///< CCI configuration broker
+  cci::cci_broker_handle m_broker; ///< CCI configuration broker handle
 
   /// Router Table contents holding targets related information
   std::vector<cci::cci_param<unsigned int,

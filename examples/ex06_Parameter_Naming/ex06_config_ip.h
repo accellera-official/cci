@@ -28,7 +28,6 @@
 #define EXAMPLES_EX06_PARAMETER_NAMING_EX06_CONFIG_IP_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "xreport.hpp"
 
@@ -44,7 +43,7 @@ SC_MODULE(ex06_config_ip) {
    *  @return void
    */
   SC_CTOR(ex06_config_ip):
-            m_cci(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {
     SC_THREAD(execute);
   }
@@ -65,11 +64,11 @@ SC_MODULE(ex06_config_ip) {
     wait(20, sc_core::SC_NS);
 
     // Check for existance of the param
-    if (m_cci.param_exists(sim_ip_int_param_ip_name)) {
+    if (m_broker.param_exists(sim_ip_int_param_ip_name)) {
       // Get handle to the param
       cci::cci_param_handle int_param =
-          m_cci.get_param_handle(sim_ip_int_param_ip_name);
-      assert(int_param.is_valid());
+          m_broker.get_param_handle(sim_ip_int_param_ip_name);
+      sc_assert(int_param.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
@@ -89,11 +88,11 @@ SC_MODULE(ex06_config_ip) {
     }
 
     // Check the auto generated parameter name due to name collision
-    if (m_cci.param_exists(sim_ip_int_param_ip_name_0)) {
+    if (m_broker.param_exists(sim_ip_int_param_ip_name_0)) {
       // Get handle to the param
       cci::cci_param_handle int_param_ip =
-          m_cci.get_param_handle(sim_ip_int_param_ip_name_0);
-      assert(int_param_ip.is_valid());
+          m_broker.get_param_handle(sim_ip_int_param_ip_name_0);
+      sc_assert(int_param_ip.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
@@ -113,11 +112,11 @@ SC_MODULE(ex06_config_ip) {
     }
 
     // Check for existance of the param
-    if (m_cci.param_exists(sc_main_int_param_top_name)) {
+    if (m_broker.param_exists(sc_main_int_param_top_name)) {
       // Get handle to the param
       cci::cci_param_handle sc_main_int_param_top =
-          m_cci.get_param_handle(sc_main_int_param_top_name);
-      assert(sc_main_int_param_top.is_valid());
+          m_broker.get_param_handle(sc_main_int_param_top_name);
+      sc_assert(sc_main_int_param_top.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of "
@@ -137,10 +136,10 @@ SC_MODULE(ex06_config_ip) {
     }
 
     // Check for existance of the param
-    if (m_cci.param_exists(int_param_custom_name)) {
+    if (m_broker.param_exists(int_param_custom_name)) {
       // Get handle to the param
-      cci::cci_param_handle int_param_custom = m_cci.get_param_handle(int_param_custom_name);
-      assert(int_param_custom.is_valid());
+      cci::cci_param_handle int_param_custom = m_broker.get_param_handle(int_param_custom_name);
+      sc_assert(int_param_custom.is_valid());
 
       // Update the param's value
       XREPORT("execute: [EXTERNAL] Current value of " << int_param_custom_name
@@ -160,7 +159,7 @@ SC_MODULE(ex06_config_ip) {
   }
 
  private:
-  cci::cci_broker_handle m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 // ex06_config_ip
 

@@ -29,7 +29,6 @@
 #define EXAMPLES_EX13_PARAMETER_VALUE_LOCKING_EX13_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include "xreport.hpp"
 
 /**
@@ -46,14 +45,14 @@ SC_MODULE(ex13_parameter_configurator) {
    */
   SC_CTOR(ex13_parameter_configurator):
       int_param(cci::cci_originator(*this)),
-      myConfigBroker(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_broker_manager::get_broker())
   {
-    if (myConfigBroker.param_exists("param_owner.mutable_int_param")) {
+    if (m_broker.param_exists("param_owner.mutable_int_param")) {
       // Getting handle for the integer parameter of onwer module
       // by the configurator
-      int_param = myConfigBroker.get_param_handle("param_owner.mutable_int_param");
+      int_param = m_broker.get_param_handle("param_owner.mutable_int_param");
 
-      assert(int_param.is_valid() && "Base parameter handle returned NULL");
+      sc_assert(int_param.is_valid() && "Base parameter handle returned NULL");
     } else {
       XREPORT("[CFGR C_TOR] : int_param not found");
     }
@@ -162,7 +161,7 @@ SC_MODULE(ex13_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myConfigBroker;  ///< CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle
   cci::cci_param_handle int_param;  ///< CCI parameter handle to access the actual owner's parameter
 
   char* paramName;  ///< The parameter name

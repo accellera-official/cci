@@ -256,7 +256,7 @@ cci_originator cci_param_untyped::get_originator() const
 
 void cci_param_untyped::init()
 {
-    assert(m_init_called == false && "init() function called more than once!");
+    sc_assert(m_init_called == false && "init() function called more than once!");
     m_init_called = true;
 }
 

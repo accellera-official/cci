@@ -18,7 +18,6 @@
  ****************************************************************************/
 
 #include <sstream>
-#include <cassert>
 #include <cstring>
 
 #include "cci_core/cci_name_gen.h"

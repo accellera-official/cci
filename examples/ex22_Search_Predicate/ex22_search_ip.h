@@ -41,7 +41,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex22_search_ip):
-        m_cci(cci::cci_broker_manager::get_broker())
+        m_broker(cci::cci_broker_manager::get_broker())
     {
         SC_THREAD(execute);
     }
@@ -85,7 +85,7 @@ public:
 
         XREPORT("execute: Original list");
         std::vector <cci::cci_param_untyped_handle> param_list_handle =
-                m_cci.get_param_handles();
+                m_broker.get_param_handles();
         for (std::vector<cci::cci_param_untyped_handle>::iterator it =
                 param_list_handle.begin(); it != param_list_handle.end(); ++it) {
             std::cout << (*it).get_name() << " = ";
@@ -97,7 +97,7 @@ public:
         cci::cci_param_predicate pred_it(
                 &ex22_search_ip::integer_type_predicate);
         cci::cci_param_range integer_only_filtered_range =
-                m_cci.get_param_handles(pred_it);
+                m_broker.get_param_handles(pred_it);
         for (cci::cci_param_range::iterator it =
                 integer_only_filtered_range.begin();
              it != integer_only_filtered_range.end();
@@ -113,7 +113,7 @@ public:
         cci::cci_param_predicate pred_st(
                 &ex22_search_ip::string_type_predicate);
         cci::cci_param_range string_only_filtered_range =
-                m_cci.get_param_handles(pred_st);
+                m_broker.get_param_handles(pred_st);
         for (cci::cci_param_range::iterator it =
                 string_only_filtered_range.begin();
              it != string_only_filtered_range.end();
@@ -131,7 +131,7 @@ public:
             &ex22_search_ip::value_in_range_predicate, this,
                     sc_unnamed::_1, 3, 85));
         cci::cci_param_range value_in_range_filtered_range =
-                m_cci.get_param_handles(pred_vir);
+                m_broker.get_param_handles(pred_vir);
         cci::cci_param_range::iterator value_in_range_it =
                 value_in_range_filtered_range.begin();
         while(value_in_range_it != value_in_range_filtered_range.end()) {
@@ -146,7 +146,7 @@ public:
             &ex22_search_ip::name_contains_character_predicate, this,
                     sc_unnamed::_1, 't'));
         cci::cci_param_range letter_filtered_range =
-                m_cci.get_param_handles(pred_ncc);
+                m_broker.get_param_handles(pred_ncc);
         cci::cci_param_range::iterator letter_pfi_it =
                 letter_filtered_range.begin();
         while(letter_pfi_it != letter_filtered_range.end()) {
@@ -158,7 +158,7 @@ public:
     }
 
 private:
-    cci::cci_broker_handle m_cci; ///< CCI configuration handle
+    cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 // ex22_search_ip
 

@@ -27,7 +27,6 @@
 #define EXAMPLES_EX08_PARAMETER_VALUE_CHANGE_CALLBACKS_EX08_CONFIG_IP_H_
 
 #include <sstream>
-#include <cassert>
 #include <string>
 #include "cci_configuration"
 #include "xreport.hpp"
@@ -44,7 +43,7 @@ SC_MODULE(ex08_config_ip) {
    *  @return void
    */
   SC_CTOR(ex08_config_ip):
-            m_cci(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {}
 
   /**
@@ -58,10 +57,10 @@ SC_MODULE(ex08_config_ip) {
     const std::string param_2_name = "sim_ip.param_2";
 
     // Check for existance of the param_1
-    if (m_cci.param_exists(param_1_name)) {
+    if (m_broker.param_exists(param_1_name)) {
       // Get handle to the param
-      cci::cci_param_handle param_1 = m_cci.get_param_handle(param_1_name);
-      assert(param_1.is_valid());
+      cci::cci_param_handle param_1 = m_broker.get_param_handle(param_1_name);
+      sc_assert(param_1.is_valid());
 
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
@@ -78,10 +77,10 @@ SC_MODULE(ex08_config_ip) {
     }
 
     // Check for existence of param_2
-    if (m_cci.param_exists(param_2_name)) {
+    if (m_broker.param_exists(param_2_name)) {
       // Get handle to the param
-      cci::cci_param_handle param_2 = m_cci.get_param_handle(param_2_name);
-      assert(param_2.is_valid());
+      cci::cci_param_handle param_2 = m_broker.get_param_handle(param_2_name);
+      sc_assert(param_2.is_valid());
 
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
@@ -111,7 +110,7 @@ SC_MODULE(ex08_config_ip) {
   }
 
  private:
-  cci::cci_broker_handle m_cci; ///< CCI configuration handle
+  cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 // ex08_config_ip
 

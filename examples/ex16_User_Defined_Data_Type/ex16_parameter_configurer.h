@@ -30,7 +30,6 @@
 #define EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_PARAMETER_CONFIGURER_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 
 #include "xreport.hpp"
@@ -48,43 +47,43 @@ SC_MODULE(ex16_parameter_configurer) {
    *  @return void
    */
   SC_CTOR(ex16_parameter_configurer):
-      myBrokerInterface(cci::cci_broker_manager::get_broker()),
+      m_broker(cci::cci_broker_manager::get_broker()),
       udt_param(cci::cci_originator(*this))
   {
     // Check for the broker type (default or private) using
     // 'is_private_broker()' API
-    if (myBrokerInterface.is_private_broker()) {
+    if (m_broker.is_private_broker()) {
       // Access broker's name using 'name()'
-      XREPORT("[CFGR C_TOR] : Broker Type : " << myBrokerInterface.name());
+      XREPORT("[CFGR C_TOR] : Broker Type : " << m_broker.name());
     } else {
       XREPORT("[CFGR C_TOR] : Broker Type : "
-              << myBrokerInterface.name() << " - is not a private broker.");
+              << m_broker.name() << " - is not a private broker.");
     }
 
     udt_param_str = "param_owner.User_data_type_param";
 
     // Check the existence of the user-defined data type cci-parameter
-    if (myBrokerInterface.param_exists(udt_param_str)) {
+    if (m_broker.param_exists(udt_param_str)) {
       // If parameter exists, get handle of the parameter using 'get_param' API
-      udt_param = myBrokerInterface.get_param_handle(udt_param_str);
+      udt_param = m_broker.get_param_handle(udt_param_str);
 
       // Report if parameter handle is returned NULL
-      assert(udt_param.is_valid()
+      sc_assert(udt_param.is_valid()
              && "User define data type CCI Parameter Handle returned NULL");
     } else {
       XREPORT("[CFGR C_TOR] : User define datatype  parameter does not exist");
     }
 
     // Registering SC_THREAD process
-    SC_THREAD(run_accessor);
+    SC_THREAD(execute);
   }
 
   /**
-   *  @fn     void run_accessor(void)
-   *  @brief  Accessor function to access the CCI parameters
+   *  @fn     void execute(void)
+   *  @brief  Main function to access the CCI parameters
    *  @return void
    */
-  void run_accessor(void) {
+  void execute(void) {
     while (1) {
       wait(4.0, SC_NS);
 
@@ -127,7 +126,7 @@ SC_MODULE(ex16_parameter_configurer) {
   }
 
  private:
-  cci::cci_broker_handle myBrokerInterface; ///< CCI configuration broker instance
+  cci::cci_broker_handle m_broker; ///< CCI configuration broker handle instance
 
   std::string udt_param_str;  ///< std::string types for storing parameters hierarchical paths
 

@@ -42,15 +42,3 @@ Author : PVS Phaneendra
 
 1.  Appended the code for checking the value originator information
 
-
-TODO List :
-==========
-
-1.  To illustrate use of "is_initial_value()" API 
-     
-    Currently, encountering the following issues : 
-      
-      a. getting warnings when running the executable, and 
-      
-      b. the returned status value of "is_initial_value()" API is always FALSE.  Looking to present a scenario when returned value is TRUE 
-  

@@ -28,7 +28,6 @@
 #define EXAMPLES_EX20_TRACING_PARAMETER_ACTIVITY_EX20_OBSERVER_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 
 #include "xreport.hpp"
@@ -47,13 +46,13 @@ class ex20_observer {
    *  @return void
    */
   ex20_observer():
-      Observer_BrokerIF(cci::cci_broker_manager::get_broker(
+      m_broker(cci::cci_broker_manager::get_broker(
               cci::cci_originator("observer"))),
       observer_base(cci::cci_originator("ex20_observer"))
   {
     // Registering callback for the creation of the pointer to the
     // cci_parameter of the owner module
-    Observer_BrokerIF.register_create_callback(
+    m_broker.register_create_callback(
             sc_bind(&ex20_observer::config_new_param_callback,
                     this,
                     sc_unnamed::_1));
@@ -65,7 +64,6 @@ class ex20_observer {
    *  @return void
    */
   ~ex20_observer() {
-    //@TODO
   }
 
   /**
@@ -81,10 +79,10 @@ class ex20_observer {
                  " of newly created cci_parameter" << std::endl;
 
     // Get reference of newly created cci-parameters
-    observer_base = Observer_BrokerIF.get_param_handle(param_handle.get_name());
+    observer_base = m_broker.get_param_handle(param_handle.get_name());
 
     // Assert if reference of the cci-parameter returned is NULL
-    assert(observer_base.is_valid()
+    sc_assert(observer_base.is_valid()
            && "Reference for the requested cci-parameter is NULL");
 
     std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Name : "
@@ -154,7 +152,7 @@ class ex20_observer {
   }
 
  private:
-  cci::cci_broker_handle Observer_BrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker; ///< Declaring a CCI configuration broker handle
 
   cci::cci_param_handle observer_base;  ///< Handle of Owner's CCI Parameter (integer type)
 

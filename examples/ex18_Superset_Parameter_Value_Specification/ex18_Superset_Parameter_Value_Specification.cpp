@@ -28,7 +28,6 @@
 
 #include <cci_configuration>
 #include <systemc.h>
-#include <cassert>
 #include <string>
 
 #include "ex18_cci_configFile_Tool.h"

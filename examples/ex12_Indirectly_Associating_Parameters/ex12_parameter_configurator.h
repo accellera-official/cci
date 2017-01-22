@@ -30,7 +30,6 @@
 #define EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <string>
 #include "xreport.hpp"
@@ -38,7 +37,7 @@
 /**
  *  @class  ex12_parameter_configurator
  *  @brief  The configurator module searches for owner parameters using the
- *          'get_param_handle' API. The 'get_param_list' API is resulting in warnings.
+ *          'get_param_handle' API.
  */
 SC_MODULE(ex12_parameter_configurator) {
  public:
@@ -49,17 +48,17 @@ SC_MODULE(ex12_parameter_configurator) {
   SC_CTOR(ex12_parameter_configurator):
       cfgr_param1(cci::cci_originator(*this)),
       cfgr_param2(cci::cci_originator(*this)),
-      myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_broker_manager::get_broker())
   {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "top_mod.param_owner1.clk_freq_Hz";
     std::string cfgr_param_str2 = "top_mod.param_owner2.clock_speed_KHz";
 
     // Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
-    if (myCfgrBrokerIF.param_exists(cfgr_param_str1)) {
-      cfgr_param1 = myCfgrBrokerIF.get_param_handle(cfgr_param_str1);
+    if (m_broker.param_exists(cfgr_param_str1)) {
+      cfgr_param1 = m_broker.get_param_handle(cfgr_param_str1);
 
-      assert(cfgr_param1.is_valid()
+      sc_assert(cfgr_param1.is_valid()
              && "Configuration parameter returned is NULL");
 
       XREPORT("[CFGR C_TOR] : Parameter Name : "
@@ -71,10 +70,10 @@ SC_MODULE(ex12_parameter_configurator) {
     }
 
     // Check for 'clock_speed_Hz' cci_parameter of owner module 2
-    if (myCfgrBrokerIF.param_exists(cfgr_param_str2)) {
-      cfgr_param2 = myCfgrBrokerIF.get_param_handle(cfgr_param_str2);
+    if (m_broker.param_exists(cfgr_param_str2)) {
+      cfgr_param2 = m_broker.get_param_handle(cfgr_param_str2);
 
-      assert(cfgr_param2.is_valid()
+      sc_assert(cfgr_param2.is_valid()
              && "Configuration parameter returned is NULL");
 
       XREPORT("[CFGR C_TOR] : Parameter Name : "
@@ -144,7 +143,7 @@ SC_MODULE(ex12_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker;    ///< Declaring a CCI configuration broker handle
   cci::cci_param_handle cfgr_param1;  ///< CCI parameter handle
   cci::cci_param_handle cfgr_param2;  ///< CCI parameter handle
 };

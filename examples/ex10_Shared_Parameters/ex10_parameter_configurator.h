@@ -28,7 +28,6 @@
 #define EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include "xreport.hpp"
 
 /**
@@ -44,17 +43,17 @@ SC_MODULE(ex10_parameter_configurator) {
    */
   SC_CTOR(ex10_parameter_configurator):
       cfgr_param(cci::cci_originator(*this)),
-      myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_broker_manager::get_broker())
   {
     // Checks the parameter exists using name-based look-up
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_int_param")) {
+    if (m_broker.param_exists("param_owner.mutable_int_param")) {
       XREPORT("[CFGR C_TOR] : Parameter exists");
 
       // Get handle of the owner parameter
-      cfgr_param = myCfgrBrokerIF.get_param_handle("param_owner.mutable_int_param");
+      cfgr_param = m_broker.get_param_handle("param_owner.mutable_int_param");
 
       // Assert if the owner parameter handle returned is NULL
-      assert(cfgr_param.is_valid() && "Parameter Handle is NULL");
+      sc_assert(cfgr_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter doesn't exists.");
     }
@@ -102,7 +101,7 @@ SC_MODULE(ex10_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;      ///< cci configuration broker interface instance
+  cci::cci_broker_handle m_broker;         ///< cci configuration broker handle
   cci::cci_param_handle cfgr_param;        ///< CCI base parameter handle
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };

@@ -29,7 +29,6 @@
 
 #include <math.h>
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 
 #include "ex15_address_lines_register.h"
@@ -54,7 +53,7 @@ SC_MODULE(ex15_processor) {
   SC_CTOR(ex15_processor)
       : addr_lines_module("addr_lines_mod"),
         memory_block_module("memory_block"),
-        processor_BrokerIF(cci::cci_broker_manager::get_broker()),
+        m_broker(cci::cci_broker_manager::get_broker()),
         addr_lines_base(cci::cci_originator(*this)),
         mem_size_base(cci::cci_originator(*this))
   {
@@ -63,10 +62,10 @@ SC_MODULE(ex15_processor) {
     std::string param_path(name());
     param_path.append(".addr_lines_mod.curr_addr_lines");
 
-    if (processor_BrokerIF.param_exists(param_path)) {
-      addr_lines_base = processor_BrokerIF.get_param_handle(param_path);
+    if (m_broker.param_exists(param_path)) {
+      addr_lines_base = m_broker.get_param_handle(param_path);
 
-      assert(addr_lines_base.is_valid()
+      sc_assert(addr_lines_base.is_valid()
              && "Returned handle of 'no_of_addr_lines' cci-parameter"
              " is NULL");
     } else {
@@ -78,10 +77,10 @@ SC_MODULE(ex15_processor) {
     param_path = name();
     param_path.append(".memory_block.mem_size");
 
-    if (processor_BrokerIF.param_exists(param_path)) {
-      mem_size_base = processor_BrokerIF.get_param_handle(param_path);
+    if (m_broker.param_exists(param_path)) {
+      mem_size_base = m_broker.get_param_handle(param_path);
 
-      assert(mem_size_base.is_valid()
+      sc_assert(mem_size_base.is_valid()
              && "Returned handle of 'memory_block_size' cci-parameter"
              " is NULL");
     } else {
@@ -186,7 +185,7 @@ SC_MODULE(ex15_processor) {
   ex15_address_lines_register addr_lines_module;  ///< Declare address line register
   ex15_memory_block memory_block_module;  ///< Memory block module
 
-  cci::cci_broker_handle processor_BrokerIF;  ///< Pointer to the broker interface
+  cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle
 
   int total_addr_lines; ///< The total number of address lines
   int mem_block_size; ///< The size of the memory block

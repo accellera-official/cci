@@ -32,7 +32,6 @@
  */
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include "ex09_top_module.h"
 
