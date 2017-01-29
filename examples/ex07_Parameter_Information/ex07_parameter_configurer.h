@@ -174,9 +174,9 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve] Parameter's name : "
                 << int_param_handle.get_name());
 
-        // Access parameter's value using 'json_serialize' API
+        // Access parameter's value using 'get_cci_value()' API
         XREPORT("[CFGR -> Retrieve] Parameter's value : "
-                << int_param_handle.get_cci_value().to_json());
+                << int_param_handle.get_cci_value());
 
         // Access parameter's description using 'get_description()'
         XREPORT("[CFGR -> Retrieve] Parameter's desc : "
@@ -192,7 +192,7 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Set] :  " << int_param_handle.get_name()
                 << " value to 10");
 
-        // Set parameter's value using 'json_deserialize' API
+        // Set parameter's value using 'set_cci_value' API
         int_param_handle.set_cci_value(cci::cci_value(10));
 
         wait(4.0, sc_core::SC_NS);
@@ -203,9 +203,9 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR -> Retrieve] : Parameter name : "
                 << int_param_handle.get_name());
 
-        // Access parameter's value using 'json_serialize' API
+        // Access parameter's value using 'get_cci_value()' API
         XREPORT("[CFGR -> Retrieve] : Parameter value: "
-                << int_param_handle.get_cci_value().to_json());
+                << int_param_handle.get_cci_value());
 
         // Access parameter's description using 'get_description()'
         XREPORT("[CFGR -> Retrieve] : Parameter desc : "
@@ -257,11 +257,11 @@ SC_MODULE(ex07_parameter_configurer) {
         XREPORT("[CFGR] : Parameter Description : "
                 << str_param_handle.get_description());
 
-        cci::cci_value str_value("Hello_New_String");
-
         // Query basic type of a parameter using 'get_basic_type()' API
         XREPORT("[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : "
                 << str_param_handle.get_basic_type());
+
+        cci::cci_value str_value("Hello_New_String");
 
         // Set a (std::string) parameter's value using
         // 'set_value' API with cci_value
