@@ -100,7 +100,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   }
 
   // Infrastructure created within the example for example illustration
-  SC_REPORT_INFO("sc_main", "[MAIN] : parameter_container module declares two"
+  SC_REPORT_INFO("sc_main", "[MAIN] : parameter_owner module declares two"
                  " cci type parameters.");
   SC_REPORT_INFO("sc_main", "One is of 'Integer type' and the other is of"
                  " 'String type'");
