@@ -27,6 +27,7 @@
 #include "cci_cfg/rapidjson.h"
 
 #include <algorithm> // std::swap
+#include <sstream> //std::stringstream
 
 CCI_OPEN_NAMESPACE_
 
