@@ -27,8 +27,19 @@
 CCI_OPEN_NAMESPACE_
 
 #if CCI_SYSTEMC_VERSION_CODE_ < CCI_VERSION_HELPER_(2,3,2)
-/// CCI unique names map used when SystemC < 2.3.2
-std::map<std::string, std::pair<int, cci_name_state> > cci_unique_names;
+enum cci_name_state {
+    cci_name_free,
+    cci_name_used
+};
+
+std::map<std::string, std::pair<int, cci_name_state> >&
+cci_get_cci_unique_names()
+{
+    /// CCI unique names map used when SystemC < 2.3.2
+    static std::map<std::string, std::pair<int, cci_name_state> >
+            cci_unique_names;
+    return cci_unique_names;
+}
 #endif
 
 #define CCI_NAME_CONFLICT_WITH_SYSTEMC_WARNING_(old_name, new_name)            \
@@ -55,7 +66,7 @@ const char* cci_gen_unique_name(const char *name)
     bool systemc_conflict = false;
     std::pair<std::map<std::string,
             std::pair<int, cci_name_state> >::iterator, bool> ret;
-    ret = cci_unique_names.insert(std::pair<std::string,
+    ret = cci_get_cci_unique_names().insert(std::pair<std::string,
                                   std::pair<int, cci_name_state> >(name,
                     std::make_pair(0, cci_name_used)));
     if(sc_core::sc_find_object(name)) {
@@ -69,9 +80,9 @@ const char* cci_gen_unique_name(const char *name)
         if (systemc_conflict) {
             CCI_NAME_CONFLICT_WITH_SYSTEMC_WARNING_(name, new_name.str());
         }
-        return cci_unique_names.find(new_name.str())->first.c_str();
+        return cci_get_cci_unique_names().find(new_name.str())->first.c_str();
     }
-    return cci_unique_names.find(name)->first.c_str();
+    return cci_get_cci_unique_names().find(name)->first.c_str();
 #endif
 }
 
@@ -81,8 +92,8 @@ const char* cci_get_name(const char *name)
     return sc_core::sc_get_hierarchical_name(name);
 #else
     std::map<std::string, std::pair<int, cci_name_state> >::iterator
-            it = cci_unique_names.find(name);
-    if (it != cci_unique_names.end()) {
+            it = cci_get_cci_unique_names().find(name);
+    if (it != cci_get_cci_unique_names().end()) {
         return it->first.c_str();
     } else {
         return NULL;
@@ -96,8 +107,8 @@ bool cci_unregister_name(const char *name)
     return sc_core::sc_unregister_hierarchical_name(name);
 #else
     std::map<std::string, std::pair<int, cci_name_state> >::iterator
-            it = cci_unique_names.find(name);
-    if (it != cci_unique_names.end()) {
+            it = cci_get_cci_unique_names().find(name);
+    if (it != cci_get_cci_unique_names().end()) {
         it->second.second = cci_name_free;
         return true;
     } else {

@@ -53,16 +53,6 @@ const char* cci_get_name(const char* name);
  */
 bool cci_unregister_name(const char* name);
 
-#if CCI_SYSTEMC_VERSION_CODE_ < CCI_VERSION_HELPER_(2,3,2)
-enum cci_name_state {
-    cci_name_free,
-    cci_name_used
-};
-
-/// CCI unique names map used when SystemC < 2.3.2
-extern std::map<std::string, std::pair<int, cci_name_state> > cci_unique_names;
-#endif
-
 CCI_CLOSE_NAMESPACE_
 
 #endif
