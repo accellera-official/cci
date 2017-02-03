@@ -155,12 +155,9 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_callbacks.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_callbacks.hpp" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_datatypes.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_debug.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_mutable_types.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_originator.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_callbacks.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_if.h" />
@@ -174,7 +171,9 @@
     <ClInclude Include="..\..\..\src\cci_cfg\rapidjson.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_callback.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_callback_impl.h" />
-    <ClInclude Include="..\..\..\src\cci_core\cci_config.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_cmnhdr.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_core_types.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_filtered_range.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_meta.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_name_gen.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_version.h" />

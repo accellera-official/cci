@@ -25,6 +25,8 @@
 #include "cci_cfg/cci_report_handler.h"
 #include "cci_cfg/cci_broker_manager.h"
 
+#include <sstream> //std::stringstream
+
 /**
  * @author Enrico Galli, Intel
  * @author Guillaume Delbergue, GreenSocs / Ericsson
