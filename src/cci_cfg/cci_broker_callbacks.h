@@ -22,7 +22,7 @@
 
 #include "cci_core/cci_callback.h"
 #include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_value.h"
+#include "cci_core/cci_value.h"
 
 CCI_OPEN_NAMESPACE_
 

@@ -31,7 +31,7 @@
 #define CCI_CCI_VALUE_TRAITS_H_INCLUDED_
 
 #include "cci_core/systemc.h"
-#include "cci_cfg/cci_value.h"
+#include "cci_core/cci_value.h"
 
 #include <cstring> // std::strncpy
 

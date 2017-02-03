@@ -22,9 +22,9 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-#include "cci_cfg/cci_value.h"
+#include "cci_core/cci_value.h"
+#include "cci_core/rapidjson.h"
 #include "cci_cfg/cci_report_handler.h"
-#include "cci_cfg/rapidjson.h"
 
 #include <algorithm> // std::swap
 #include <sstream> //std::stringstream

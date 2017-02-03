@@ -21,8 +21,8 @@
 #define CCI_CFG_CCI_PARAM_CALLBACKS_H_INCLUDED_
 
 #include "cci_core/cci_callback.h"
-#include "cci_cfg/cci_value.h"
-#include "cci_cfg/cci_value_traits.h"
+#include "cci_core/cci_value.h"
+#include "cci_core/cci_value_traits.h"
 
 CCI_OPEN_NAMESPACE_
 

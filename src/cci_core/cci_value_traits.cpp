@@ -17,7 +17,7 @@
 
  ****************************************************************************/
 
-#include "cci_cfg/cci_value_traits.h"
+#include "cci_core/cci_value_traits.h"
 
 /**
  * @file   cci_value_traits.cpp
