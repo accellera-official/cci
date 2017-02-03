@@ -304,7 +304,6 @@ struct cci_value_traits< sc_dt::sc_int<N> >
   : cci_value_traits< sc_dt::sc_int_base >
 {
   typedef sc_dt::sc_int<N> type;
-  /// @todo add bounds checks
 };
 
 template<int N>
@@ -312,7 +311,6 @@ struct cci_value_traits< sc_dt::sc_uint<N> >
   : cci_value_traits< sc_dt::sc_uint_base >
 {
   typedef sc_dt::sc_uint<N> type;
-  /// @todo add bounds checks
 };
 
 template<int N>
@@ -320,7 +318,6 @@ struct cci_value_traits< sc_dt::sc_bigint<N> >
   : cci_value_traits< sc_dt::sc_signed >
 {
   typedef sc_dt::sc_bigint<N> type;
-  /// @todo add bounds checks
 };
 
 template<int N>
@@ -328,7 +325,6 @@ struct cci_value_traits< sc_dt::sc_biguint<N> >
   : cci_value_traits< sc_dt::sc_unsigned >
 {
   typedef sc_dt::sc_biguint<N> type;
-  /// @todo add bounds checks
 };
 
 template<int N>
@@ -336,7 +332,6 @@ struct cci_value_traits< sc_dt::sc_bv<N> >
   : cci_value_traits< sc_dt::sc_bv_base >
 {
   typedef sc_dt::sc_bv<N> type;
-  /// @todo add bounds checks
 };
 
 template<int N>
@@ -344,7 +339,6 @@ struct cci_value_traits< sc_dt::sc_lv<N> >
   : cci_value_traits< sc_dt::sc_lv_base >
 {
   typedef sc_dt::sc_lv<N> type;
-  /// @todo add bounds checks
 };
 
 CCI_CLOSE_NAMESPACE_
@@ -368,7 +362,6 @@ struct cci_value_traits< sc_dt::sc_fixed<W,I,Q,O,N> >
   : cci_value_traits< sc_dt::sc_fix >
 {
   typedef sc_dt::sc_fixed<W,I,Q,O,N> type;
-  /// @todo add bounds checks
 };
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
@@ -376,7 +369,6 @@ struct cci_value_traits< sc_dt::sc_fixed_fast<W,I,Q,O,N> >
   : cci_value_traits< sc_dt::sc_fix_fast >
 {
   typedef sc_dt::sc_fixed_fast<W,I,Q,O,N> type;
-  /// @todo add bounds checks
 };
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
@@ -384,7 +376,6 @@ struct cci_value_traits< sc_dt::sc_ufixed<W,I,Q,O,N> >
   : cci_value_traits< sc_dt::sc_ufix >
 {
   typedef sc_dt::sc_ufixed<W,I,Q,O,N> type;
-  /// @todo add bounds checks
 };
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
@@ -392,7 +383,6 @@ struct cci_value_traits< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
   : cci_value_traits< sc_dt::sc_ufix_fast >
 {
   typedef sc_dt::sc_ufixed_fast<W,I,Q,O,N> type;
-  /// @todo add bounds checks
 };
 
 CCI_CLOSE_NAMESPACE_
