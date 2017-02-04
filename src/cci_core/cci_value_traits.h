@@ -120,16 +120,16 @@ struct cci_value_traits_disabled
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 
 // ---------------------------------------------------------------------------
-// disabled implementation as a safety guard
+// disallowed implementation as a safety guard
 
-template<typename T> struct cci_value_traits<T*>        { /* disabled */ };
+template<typename T> struct cci_value_traits<T*>        { /* disallowed */ };
 
-template<> struct cci_value_traits<cci_value>           { /* disabled */ };
-template<> struct cci_value_traits<cci_value_cref>      { /* disabled */ };
-template<> struct cci_value_traits<cci_value_ref>       { /* disabled */ };
-template<> struct cci_value_traits<cci_value_list>      { /* disabled */ };
-template<> struct cci_value_traits<cci_value_list_cref> { /* disabled */ };
-template<> struct cci_value_traits<cci_value_list_ref>  { /* disabled */ };
+template<> struct cci_value_traits<cci_value>           { /* disallowed */ };
+template<> struct cci_value_traits<cci_value_cref>      { /* disallowed */ };
+template<> struct cci_value_traits<cci_value_ref>       { /* disallowed */ };
+template<> struct cci_value_traits<cci_value_list>      { /* disallowed */ };
+template<> struct cci_value_traits<cci_value_list_cref> { /* disallowed */ };
+template<> struct cci_value_traits<cci_value_list_ref>  { /* disallowed */ };
 
 // ---------------------------------------------------------------------------
 /// helper to convert compatible types (implementation artefact)
