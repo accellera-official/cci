@@ -741,10 +741,6 @@ public:
   cci_value()
     : cci_value_ref(), own_pimpl_() {}
 
-  /// constructor from basic type
-  explicit
-  cci_value( cci_data_type ); ///< @todo drop this?
-
   /// constructor from arbitrary cci_value_converter enabled value
   template<typename T>
   explicit
