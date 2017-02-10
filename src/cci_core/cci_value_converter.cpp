@@ -17,10 +17,10 @@
 
  ****************************************************************************/
 
-#include "cci_core/cci_value_traits.h"
+#include "cci_core/cci_value_converter.h"
 
 /**
- * @file   cci_value_traits.cpp
+ * @file   cci_value_converter.cpp
  * @brief  conversions from and to a @ref cci_value (common types)
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
@@ -29,11 +29,11 @@ CCI_OPEN_NAMESPACE_
 
 #define DEFINE_PACK_( Type )                                                  \
   template<> bool                                                             \
-  cci_value_traits<Type>::pack( cci_value::reference dst, type const & src )
+  cci_value_converter<Type>::pack( cci_value::reference dst, type const & src )
 
 #define DEFINE_UNPACK_(Type)                                                  \
   template<> bool                                                             \
-  cci_value_traits<Type>::unpack( type & dst, cci_value::const_reference src )
+  cci_value_converter<Type>::unpack( type & dst, cci_value::const_reference src )
 
 // ----------------------------------------------------------------------------
 // C++ builtin types

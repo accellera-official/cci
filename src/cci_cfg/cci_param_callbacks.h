@@ -22,7 +22,7 @@
 
 #include "cci_core/cci_callback.h"
 #include "cci_core/cci_value.h"
-#include "cci_core/cci_value_traits.h"
+#include "cci_core/cci_value_converter.h"
 
 CCI_OPEN_NAMESPACE_
 

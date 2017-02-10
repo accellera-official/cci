@@ -27,8 +27,8 @@
 #endif
 #endif // CCI_EXTERN_
 
-#ifndef CCI_CCI_VALUE_TRAITS_H_INCLUDED_
-#define CCI_CCI_VALUE_TRAITS_H_INCLUDED_
+#ifndef CCI_cci_value_converter_H_INCLUDED_
+#define CCI_cci_value_converter_H_INCLUDED_
 
 #include "cci_core/systemc.h"
 #include "cci_core/cci_value.h"
@@ -36,7 +36,7 @@
 #include <cstring> // std::strncpy
 
 /**
- * @file   cci_value_traits.h
+ * @file   cci_value_converter.h
  * @brief  conversions from and to a @ref cci_value
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
@@ -44,7 +44,7 @@
 CCI_OPEN_NAMESPACE_
 
 /**
- * @class cci_value_traits
+ * @class cci_value_converter
  * @brief traits class for cci_value conversions
  * @tparam T C++ datatype to convert to/from @ref cci_value
  *
@@ -64,13 +64,13 @@ CCI_OPEN_NAMESPACE_
  * struct my_int { int value; };
  *
  * template<> bool
- * cci_value_traits<my_int>::pack( cci_value::reference dst, type const & src )
+ * cci_value_converter<my_int>::pack( cci_value::reference dst, type const & src )
  * {
  *    dst.set_int( src.value );
  *    return true;
  * }
  * template<> bool
- * cci_value_traits<my_int>::unpack( type & dst, cci_value::const_reference src )
+ * cci_value_converter<my_int>::unpack( type & dst, cci_value::const_reference src )
  * {
  *    if( ! src.is_int() ) return false;
  *    dst.value  = src.get_int();
@@ -79,10 +79,10 @@ CCI_OPEN_NAMESPACE_
  * @endcode
  *
  * To @em disable conversion support for a given type, you can refer
- * to the helper template @ref cci_value_traits_disabled.
+ * to the helper template @ref cci_value_converter_disabled.
  */
 template<typename T>
-struct cci_value_traits
+struct cci_value_converter
 {
   typedef T type; ///< common type alias
   /// convert from \ref type value to a \ref cci_value
@@ -98,19 +98,19 @@ struct cci_value_traits
  *
  * In order to disable the conversion from/to a cci_value for a given type
  * @c T during @em run-time, you can simply inherit from this helper in
- * the specialization of cci_value_traits:
+ * the specialization of cci_value_converter:
  * @code
  * struct my_type { ... };
  * template<>
- * struct cci_value_traits<my_type>
- *   : cci_value_traits_disabled<my_type> {};
+ * struct cci_value_converter<my_type>
+ *   : cci_value_converter_disabled<my_type> {};
  * @endcode
  *
  * \note In order to disable support for a given type at @em compile-time,
- *       the specialization of cci_value_traits can be left empty.
+ *       the specialization of cci_value_converter can be left empty.
  */
 template< typename T >
-struct cci_value_traits_disabled
+struct cci_value_converter_disabled
 {
   typedef T type;
   static bool pack( cci_value::reference, T const & ) { return false; }
@@ -122,22 +122,22 @@ struct cci_value_traits_disabled
 // ---------------------------------------------------------------------------
 // disallowed implementation as a safety guard
 
-template<typename T> struct cci_value_traits<T*>        { /* disallowed */ };
+template<typename T> struct cci_value_converter<T*>        { /* disallowed */ };
 
-template<> struct cci_value_traits<cci_value>           { /* disallowed */ };
-template<> struct cci_value_traits<cci_value_cref>      { /* disallowed */ };
-template<> struct cci_value_traits<cci_value_ref>       { /* disallowed */ };
-template<> struct cci_value_traits<cci_value_list>      { /* disallowed */ };
-template<> struct cci_value_traits<cci_value_list_cref> { /* disallowed */ };
-template<> struct cci_value_traits<cci_value_list_ref>  { /* disallowed */ };
+template<> struct cci_value_converter<cci_value>           { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_cref>      { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_ref>       { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_list>      { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_list_cref> { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_list_ref>  { /* disallowed */ };
 
 // ---------------------------------------------------------------------------
 /// helper to convert compatible types (implementation artefact)
 template< typename T, typename U >
-struct cci_value_traits_convert
+struct cci_value_delegate_converter
 {
   typedef T type;
-  typedef cci_value_traits<U> traits_type;
+  typedef cci_value_converter<U> traits_type;
 
   static bool pack( cci_value::reference dst, type const & src )
   {
@@ -157,31 +157,31 @@ struct cci_value_traits_convert
 // --------------------------------------------------------------------------
 // C++ builtin types
 
-// default instantiations (in cci_value_traits.cpp)
-CCI_EXTERN_ template struct cci_value_traits<bool>;
-CCI_EXTERN_ template struct cci_value_traits<int>;
-CCI_EXTERN_ template struct cci_value_traits<int64>;
-CCI_EXTERN_ template struct cci_value_traits<unsigned>;
-CCI_EXTERN_ template struct cci_value_traits<uint64>;
-CCI_EXTERN_ template struct cci_value_traits<double>;
-CCI_EXTERN_ template struct cci_value_traits<std::string>;
+// default instantiations (in cci_value_converter.cpp)
+CCI_EXTERN_ template struct cci_value_converter<bool>;
+CCI_EXTERN_ template struct cci_value_converter<int>;
+CCI_EXTERN_ template struct cci_value_converter<int64>;
+CCI_EXTERN_ template struct cci_value_converter<unsigned>;
+CCI_EXTERN_ template struct cci_value_converter<uint64>;
+CCI_EXTERN_ template struct cci_value_converter<double>;
+CCI_EXTERN_ template struct cci_value_converter<std::string>;
 
 // related numerical types
 // (without range checks for now)
 
-#define CCI_VALUE_TRAITS_DERIVED_( UnderlyingType, SpecializedType ) \
+#define cci_value_converter_DERIVED_( UnderlyingType, SpecializedType ) \
   template<> \
-  struct cci_value_traits<SpecializedType> \
-    : cci_value_traits_convert<SpecializedType, UnderlyingType > {}
+  struct cci_value_converter<SpecializedType> \
+    : cci_value_delegate_converter<SpecializedType, UnderlyingType > {}
 
-CCI_VALUE_TRAITS_DERIVED_( int, char );
-CCI_VALUE_TRAITS_DERIVED_( int, signed char );
-CCI_VALUE_TRAITS_DERIVED_( int, short );
-CCI_VALUE_TRAITS_DERIVED_( unsigned, unsigned char );
-CCI_VALUE_TRAITS_DERIVED_( unsigned, unsigned short );
-CCI_VALUE_TRAITS_DERIVED_( int64, long );
-CCI_VALUE_TRAITS_DERIVED_( uint64, unsigned long );
-CCI_VALUE_TRAITS_DERIVED_( double, float );
+cci_value_converter_DERIVED_( int, char );
+cci_value_converter_DERIVED_( int, signed char );
+cci_value_converter_DERIVED_( int, short );
+cci_value_converter_DERIVED_( unsigned, unsigned char );
+cci_value_converter_DERIVED_( unsigned, unsigned short );
+cci_value_converter_DERIVED_( int64, long );
+cci_value_converter_DERIVED_( uint64, unsigned long );
+cci_value_converter_DERIVED_( double, float );
 
 ///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
@@ -189,7 +189,7 @@ CCI_VALUE_TRAITS_DERIVED_( double, float );
 // C++ string literals
 
 template<int N>
-struct cci_value_traits<char[N]>
+struct cci_value_converter<char[N]>
 {
   typedef char type[N]; ///< common type alias
   static bool pack( cci_value::reference dst, type const & src )
@@ -218,7 +218,7 @@ struct cci_value_traits<char[N]>
 // C++ arrays
 
 template<typename T, int N>
-struct cci_value_traits<T[N]>
+struct cci_value_converter<T[N]>
 {
   typedef T type[N]; ///< common type alias
   static bool pack( cci_value::reference dst, type const & src )
@@ -245,7 +245,7 @@ struct cci_value_traits<T[N]>
 };
 
 template<typename T, int N>
-struct cci_value_traits<const T[N]> : cci_value_traits<T[N]>
+struct cci_value_converter<const T[N]> : cci_value_converter<T[N]>
 {
   typedef const T type[N]; ///< common type alias
   // deliberately not implemented
@@ -256,7 +256,7 @@ struct cci_value_traits<const T[N]> : cci_value_traits<T[N]>
 // std::vector<T, Alloc>
 
 template< typename T, typename Alloc >
-struct cci_value_traits< std::vector<T,Alloc> >
+struct cci_value_converter< std::vector<T,Alloc> >
 {
   typedef std::vector<T,Alloc> type; ///< common type alias
   static bool pack( cci_value::reference dst, type const & src )
@@ -289,107 +289,107 @@ struct cci_value_traits< std::vector<T,Alloc> >
 // ----------------------------------------------------------------------------
 // SystemC builtin types
 
-// default instantiations (in cci_value_traits.cpp)
-CCI_EXTERN_ template struct cci_value_traits<sc_core::sc_time>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_logic>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_int_base>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_uint_base>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_signed>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_unsigned>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_bv_base>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_lv_base>;
+// default instantiations (in cci_value_converter.cpp)
+CCI_EXTERN_ template struct cci_value_converter<sc_core::sc_time>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_logic>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_int_base>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_uint_base>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_signed>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_unsigned>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_bv_base>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_lv_base>;
 
 template<int N>
-struct cci_value_traits< sc_dt::sc_int<N> >
-  : cci_value_traits< sc_dt::sc_int_base >
+struct cci_value_converter< sc_dt::sc_int<N> >
+  : cci_value_converter< sc_dt::sc_int_base >
 {
   typedef sc_dt::sc_int<N> type;
 };
 
 template<int N>
-struct cci_value_traits< sc_dt::sc_uint<N> >
-  : cci_value_traits< sc_dt::sc_uint_base >
+struct cci_value_converter< sc_dt::sc_uint<N> >
+  : cci_value_converter< sc_dt::sc_uint_base >
 {
   typedef sc_dt::sc_uint<N> type;
 };
 
 template<int N>
-struct cci_value_traits< sc_dt::sc_bigint<N> >
-  : cci_value_traits< sc_dt::sc_signed >
+struct cci_value_converter< sc_dt::sc_bigint<N> >
+  : cci_value_converter< sc_dt::sc_signed >
 {
   typedef sc_dt::sc_bigint<N> type;
 };
 
 template<int N>
-struct cci_value_traits< sc_dt::sc_biguint<N> >
-  : cci_value_traits< sc_dt::sc_unsigned >
+struct cci_value_converter< sc_dt::sc_biguint<N> >
+  : cci_value_converter< sc_dt::sc_unsigned >
 {
   typedef sc_dt::sc_biguint<N> type;
 };
 
 template<int N>
-struct cci_value_traits< sc_dt::sc_bv<N> >
-  : cci_value_traits< sc_dt::sc_bv_base >
+struct cci_value_converter< sc_dt::sc_bv<N> >
+  : cci_value_converter< sc_dt::sc_bv_base >
 {
   typedef sc_dt::sc_bv<N> type;
 };
 
 template<int N>
-struct cci_value_traits< sc_dt::sc_lv<N> >
-  : cci_value_traits< sc_dt::sc_lv_base >
+struct cci_value_converter< sc_dt::sc_lv<N> >
+  : cci_value_converter< sc_dt::sc_lv_base >
 {
   typedef sc_dt::sc_lv<N> type;
 };
 
 CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CCI_VALUE_TRAITS_H_INCLUDED_
+#endif // CCI_cci_value_converter_H_INCLUDED_
 
 ///@todo add support for SystemC fixpoint types
-#if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_)
-#define CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
+#if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_cci_value_converter_H_INCLUDED_FX_)
+#define CCI_CNF_cci_value_converter_H_INCLUDED_FX_
 CCI_OPEN_NAMESPACE_
 
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fxval>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fxval_fast>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fix>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_fix_fast>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_ufix>;
-CCI_EXTERN_ template struct cci_value_traits<sc_dt::sc_ufix_fast>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fxval>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fxval_fast>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fix>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fix_fast>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_ufix>;
+CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_ufix_fast>;
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
-struct cci_value_traits< sc_dt::sc_fixed<W,I,Q,O,N> >
-  : cci_value_traits< sc_dt::sc_fix >
+struct cci_value_converter< sc_dt::sc_fixed<W,I,Q,O,N> >
+  : cci_value_converter< sc_dt::sc_fix >
 {
   typedef sc_dt::sc_fixed<W,I,Q,O,N> type;
 };
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
-struct cci_value_traits< sc_dt::sc_fixed_fast<W,I,Q,O,N> >
-  : cci_value_traits< sc_dt::sc_fix_fast >
+struct cci_value_converter< sc_dt::sc_fixed_fast<W,I,Q,O,N> >
+  : cci_value_converter< sc_dt::sc_fix_fast >
 {
   typedef sc_dt::sc_fixed_fast<W,I,Q,O,N> type;
 };
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
-struct cci_value_traits< sc_dt::sc_ufixed<W,I,Q,O,N> >
-  : cci_value_traits< sc_dt::sc_ufix >
+struct cci_value_converter< sc_dt::sc_ufixed<W,I,Q,O,N> >
+  : cci_value_converter< sc_dt::sc_ufix >
 {
   typedef sc_dt::sc_ufixed<W,I,Q,O,N> type;
 };
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
-struct cci_value_traits< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
-  : cci_value_traits< sc_dt::sc_ufix_fast >
+struct cci_value_converter< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
+  : cci_value_converter< sc_dt::sc_ufix_fast >
 {
   typedef sc_dt::sc_ufixed_fast<W,I,Q,O,N> type;
 };
 
 CCI_CLOSE_NAMESPACE_
-#endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_TRAITS_H_INCLUDED_FX_
+#endif // SC_INCLUDE_FX && ! CCI_CNF_cci_value_converter_H_INCLUDED_FX_
 
-#ifdef CCI_VALUE_TRAITS_DERIVED_
-#undef CCI_VALUE_TRAITS_DERIVED_
+#ifdef cci_value_converter_DERIVED_
+#undef cci_value_converter_DERIVED_
 #endif
 
 #ifdef CCI_EXTERN_
