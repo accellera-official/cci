@@ -46,14 +46,14 @@ SC_MODULE(ex17_parameter_configurator) {
       int_param_handle(cci::cci_originator(*this)),
       float_param(cci::cci_originator(*this)),
       str_param(cci::cci_originator(*this)),
-      myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_broker_manager::get_broker())
   {
     // Get handle of the 'int_param' cci-parameter
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_int_param")) {
+    if (m_broker.param_exists("param_owner.mutable_int_param")) {
       XREPORT("[CFGR C_TOR] : Integer parameter exists");
 
       int_param_handle =
-              myCfgrBrokerIF.get_param_handle("param_owner.mutable_int_param");
+              m_broker.get_param_handle("param_owner.mutable_int_param");
 
       sc_assert(int_param_handle.is_valid() && "Parameter Handle is NULL");
     } else {
@@ -61,11 +61,11 @@ SC_MODULE(ex17_parameter_configurator) {
     }
 
     // Get handle of the 'float_param' cci-parameter
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_float_param")) {
+    if (m_broker.param_exists("param_owner.mutable_float_param")) {
       XREPORT("[CFGR C_TOR] : Float parameter exists");
 
       float_param =
-              myCfgrBrokerIF.get_param_handle("param_owner.mutable_float_param");
+              m_broker.get_param_handle("param_owner.mutable_float_param");
 
       sc_assert(float_param.is_valid() && "Parameter Handle is NULL");
     } else {
@@ -73,11 +73,11 @@ SC_MODULE(ex17_parameter_configurator) {
     }
 
     // Get handle of the 'string_param' cci-parameter
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_string_param")) {
+    if (m_broker.param_exists("param_owner.mutable_string_param")) {
       XREPORT("[CFGR C_TOR] : String parameter exists");
 
       str_param =
-              myCfgrBrokerIF.get_param_handle("param_owner.mutable_string_param");
+              m_broker.get_param_handle("param_owner.mutable_string_param");
 
       sc_assert(str_param.is_valid() && "Parameter Handle is NULL");
     } else {
@@ -111,7 +111,7 @@ SC_MODULE(ex17_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_handle m_broker;  ///< Declare a configuration broker
 
   // Declare cci_base_param for each of the owner's cci-parameters
   cci::cci_param_handle int_param_handle;  ///< Parameter handle to an int parameter
