@@ -1,3 +1,4 @@
+
 /*****************************************************************************
 
   Licensed to Accellera Systems Initiative Inc. (Accellera) under one or
@@ -173,6 +174,9 @@ public:
 
     /// Initialize.
     virtual void init() = 0;
+
+    /// Reset
+    virtual void reset() = 0;
 
     /// @copydoc cci_param_typed::destroy
     virtual void destroy() = 0;

@@ -237,6 +237,9 @@ public:
      */
     void invalidate(bool remove = false);
 
+    /// Reset the parameter to the intial value
+    void reset();
+
     /// Assigns parameter untyped handle a new value from another legacy
     /// parameter untyped handle
     /**
