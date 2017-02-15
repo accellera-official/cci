@@ -55,9 +55,6 @@ CCI_OPEN_NAMESPACE_
     /// Get current cci_value
     const cci_value get_cci_value(const std::string &parname);
     
-    const cci_value get_cci_value_keep_unused(
-            const std::string &parname) const;
-
     /// return a handle with which to access a parameter
     cci_param_untyped_handle get_param_handle(const std::string &parname,
                                               const cci_originator& originator);

@@ -118,12 +118,6 @@ const cci::cci_value cci_broker_handle::get_cci_value(
     return m_orig_broker.get_cci_value(parname);
 }
 
-const cci::cci_value cci_broker_handle::get_cci_value_keep_unused(
-        const std::string &parname) const
-{
-    return m_orig_broker.get_cci_value_keep_unused(parname);
-}
-
 cci_param_untyped_handle cci_broker_handle::get_param_handle(
         const std::string &parname)
 {

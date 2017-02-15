@@ -188,24 +188,12 @@ public:
      * This accesses the parameter's NVP and works
      * for implicit and explicit parameters.
      *
-     * See cci_broker_if::get_cci_value_keep_unused to do the same without impacting the used status.
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  CCI value of the parameter
      */
     virtual const cci::cci_value get_cci_value(const std::string &parname) = 0;
-
-    /// Get a parameter's value (like cci_broker_if::get_cci_value), but not impacting the used status
-    /**
-     * This is to be used only by tools, e.g. functional coverage tools.
-     *
-     * @see get_cci_value
-     * @param parname  Full hierarchical name of the parameter whose value should be returned.
-     * @return  CCI value of the parameter
-     */
-    virtual const cci::cci_value
-    get_cci_value_keep_unused(const std::string &parname) const = 0;
-
+    
     /// Get a parameter handle.
     /**
      * This returns not the owner's parameter object but a handle.

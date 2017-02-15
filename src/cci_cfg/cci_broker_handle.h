@@ -93,10 +93,6 @@ public:
     /// @copydoc cci_broker_if::get_cci_value
     const cci::cci_value get_cci_value(const std::string &parname);
 
-    /// @copydoc cci_broker_if::get_cci_value_keep_unused
-    const cci::cci_value
-    get_cci_value_keep_unused(const std::string &parname) const;
-
     /// @copydoc cci_broker_if::get_param_handle
     cci_param_untyped_handle get_param_handle(const std::string &parname);
 

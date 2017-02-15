@@ -77,12 +77,7 @@ void cci_cfg_private_broker::lock_initial_value(const std::string &parname)
 
 const cci_value cci_cfg_private_broker::get_cci_value(const std::string &parname)
 {
-  return cci_cfg_private_broker::get_cci_value_keep_unused(parname);
-}
-
-const cci_value cci_cfg_private_broker::get_cci_value_keep_unused(const std::string &parname) const
-{
-  CHOOSEFUNCTION(get_cci_value_keep_unused, parname,  _parname);
+  CHOOSEFUNCTION(get_cci_value, parname,  _parname);
 }
 
 bool cci_cfg_private_broker::param_exists(const std::string &parname)
