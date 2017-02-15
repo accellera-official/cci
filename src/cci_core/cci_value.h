@@ -111,7 +111,7 @@ protected:
 
 public:
 
-  /** @name type queries */
+  /** @name Type queries */
   ///@{
   cci_value_datum_category  basic_type() const;
   bool is_null()    const;
@@ -138,7 +138,7 @@ public:
   bool is_list()    const;
   //@}
 
-  /** @name value queries */
+  /** @name Get basic value */
   //@{
 
   /// get boolean value
@@ -159,7 +159,7 @@ public:
   //@}
 
   /**
-   * @name complex value queries
+   * @name Get complex value
    * These functions return (constant) references to the complex value types
    * that can be stored in a cci_value (strings, lists, maps).
    */
@@ -169,7 +169,7 @@ public:
   cci_value_map_cref    get_map()  const;
   //@}
 
-  /** @name arbitrary type value queries */
+  /** @name Get arbitrarily typed value */
   //@{
   /// try to get a value of a @ref cci_value_converter enabled type
   template<typename T>
@@ -236,7 +236,7 @@ public:
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
-  /** @name set value functions
+  /** @name Set basic value
    *
    * The various @c set_* functions update the represented value
    * (and its @ref basic_type()) accordingly.
@@ -246,13 +246,6 @@ public:
    * which is especially convenient for complex values like lists and maps.
    */
   ///@{
-
-  /// set value to cci_value_converter enabled type
-  template<typename T>
-  cci_value_ref set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
-  /// try to set value to cci_value_converter enabled type
-  template<typename T>
-  bool          try_set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
 
   /// set value to @c null
   cci_value_ref set_null();
@@ -286,11 +279,12 @@ public:
   cci_value_map_ref    set_map();
   ///@}
 
-  /** @name complex value queries
+  /** @name Get complex value
    *
    * The functions return a reference to a (mutable) @ref cci_value object
    * of the corresponding complex value type (string, list, map).
    */
+
   ///@{
   using base_type::get_string;
   cci_value_string_ref get_string();
@@ -300,6 +294,16 @@ public:
 
   using base_type::get_map;
   cci_value_map_ref  get_map();
+  ///@}
+
+  /** @name Set arbitrarily typed value */
+  //@{
+  /// set value to cci_value_converter enabled type
+  template<typename T>
+  cci_value_ref set(T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T));
+  /// try to set value to cci_value_converter enabled type
+  template<typename T>
+  bool          try_set(T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T));
   ///@}
 
 protected:
@@ -779,7 +783,7 @@ public:
 
   ~cci_value();
 
-  /** @name set value functions
+  /** @name Set value functions
    * \see cci_value_ref
    */
   //@{
