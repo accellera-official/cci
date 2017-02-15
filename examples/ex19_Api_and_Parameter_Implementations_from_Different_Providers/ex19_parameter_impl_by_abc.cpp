@@ -175,10 +175,10 @@ const void* cci_param_user_data_type::get_raw_default_value() const {
  *  @brief  Function to retrive the basic type of the parameter
  *  @return The basic type.
  */
-cci::cci_data_type cci_param_user_data_type::get_basic_type() const {
+cci::cci_param_data_category cci_param_user_data_type::get_basic_type() const {
   std::cout << "Function cci_param_user_data_type::get_basic_type Called " << std::endl;
 
-  return cci::CCI_LIST_DATA;
+  return cci::CCI_LIST_PARAM;
 }
 
 /**

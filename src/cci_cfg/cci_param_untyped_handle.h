@@ -197,7 +197,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_typed::get_basic_type
-    cci_data_type get_basic_type() const;
+    cci_param_data_category get_basic_type() const;
 
     /// @copydoc cci_param_untyped::get_name
     const std::string& get_name() const;

@@ -127,7 +127,7 @@ struct cci_param_user_data_type
    *  @brief  Function to retrive the basic type of the parameter
    *  @return The basic type.
    */
-  cci::cci_data_type get_basic_type() const;
+  cci::cci_param_data_category get_basic_type() const;
 
   /**
    *  @fn     void set_cci_value(const cci::cci_value& val)

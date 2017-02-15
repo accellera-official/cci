@@ -51,6 +51,27 @@ class cci_value_map_ref;
 
 template<typename T> struct cci_value_converter;
 
+/**
+*  Enumeration for basic data types, whose rough getting and setting is
+*  supported by base class directly
+*/
+enum cci_value_datum_category {
+	/// Indicates that there is no data
+	CCI_NULL_DATUM = 0,
+	/// A boolean valued component of data
+	CCI_BOOL_DATUM,
+	/// An integer number component of data
+	CCI_NUMBER_DATUM,
+	/// A real number number component of data
+	CCI_REAL_DATUM,
+	/// A string component of data
+	CCI_STRING_DATUM,
+	/// A list component of data
+	CCI_LIST_DATUM,
+	/// A component of data that doesn't fit the other categories
+	CCI_OTHER_DATUM
+};
+
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 #define cci_value_converter_(Type) \
   typename cci_value_converter<Type>::type
@@ -92,7 +113,7 @@ public:
 
   /** @name type queries */
   ///@{
-  cci_data_type  basic_type() const;
+  cci_value_datum_category  basic_type() const;
   bool is_null()    const;
 
   bool is_bool()    const;

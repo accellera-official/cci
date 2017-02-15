@@ -80,33 +80,33 @@ operator == ( cci_value_cref const & left, cci_value_cref const & right )
   return DEREF(left) == DEREF(right);
 }
 
-cci_data_type
+cci_value_datum_category
 cci_value_cref::basic_type() const
 {
   if( !THIS )
-    return CCI_UNAVAILABLE_DATA;
+    return CCI_NULL_DATUM;
 
   switch(THIS->GetType())
   {
   case rapidjson::kFalseType:
   case rapidjson::kTrueType:
-    return CCI_BOOL_DATA;
+    return CCI_BOOL_DATUM;
 
   case rapidjson::kNumberType:
-    return THIS->IsDouble() ? CCI_REAL_DATA : CCI_NUMBER_DATA;
+    return THIS->IsDouble() ? CCI_REAL_DATUM : CCI_NUMBER_DATUM;
 
   case rapidjson::kStringType:
-    return CCI_STRING_DATA;
+    return CCI_STRING_DATUM;
 
   case rapidjson::kArrayType:
-    return CCI_LIST_DATA;
+    return CCI_LIST_DATUM;
 
   case rapidjson::kObjectType:
-    return CCI_OTHER_DATA;
+    return CCI_OTHER_DATUM;
 
   case rapidjson::kNullType:
   default:
-    return CCI_UNAVAILABLE_DATA;
+    return CCI_NULL_DATUM;
   }
 }
 
