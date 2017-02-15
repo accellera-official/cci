@@ -926,7 +926,7 @@ sub prepare_environment
     push( @rt_cci_includes, "$rt_cci_home/packages" );
 
     $rt_cci_ldpath   = $rt_cci_home;
-    @rt_cci_ldlibs   = ( 'cciapi', 'ccibrokerimpl', 'cciapi' );
+    @rt_cci_ldlibs   = ( 'cciapi' );
     # -- /CCI
 
     # Set compiler and compiler flags
