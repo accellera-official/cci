@@ -25,7 +25,6 @@
  */
 #include <systemc>
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 
 #include "ex07_parameter_owner.h"
@@ -84,7 +83,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
   // Perform comparisons across mutability classes.  Access params directly
   // for convenience (generally we would look them up via broker).
-  if (pc.mutab_str_param.get_value() == pc.immutab_str_param.get_value()) { // TODO
+  if (pc.mutab_str_param.get_value() == pc.immutab_str_param.get_value()) {
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'immutable' type String"
                    " parameters - VALUES MATCH");
   } else {
@@ -92,7 +91,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
                    " parameters - VALUES DO NOT MATCH");
   }
 
-  if (pc.mutab_str_param.get_value() == pc.elab_str_param.get_value()) { // TODO
+  if (pc.mutab_str_param.get_value() == pc.elab_str_param.get_value()) {
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
                    " String - VALUES MATCH");
   } else {
@@ -101,7 +100,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   }
 
   // Infrastructure created within the example for example illustration
-  SC_REPORT_INFO("sc_main", "[MAIN] : parameter_container module declares two"
+  SC_REPORT_INFO("sc_main", "[MAIN] : parameter_owner module declares two"
                  " cci type parameters.");
   SC_REPORT_INFO("sc_main", "One is of 'Integer type' and the other is of"
                  " 'String type'");

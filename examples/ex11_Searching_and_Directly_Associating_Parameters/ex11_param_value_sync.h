@@ -31,7 +31,6 @@
 #define EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_PARAM_VALUE_SYNC_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <sstream>
 #include "xreport.hpp"
@@ -55,7 +54,7 @@ SC_MODULE(ex11_param_value_sync) {
   ex11_param_value_sync(sc_core::sc_module_name _name,
                         std::vector<cci::cci_param_handle> BaseParamList)
       // Define an originator in order to get hold of the default broker
-      : ValueSyncBrokerIF(cci::cci_broker_manager::get_broker())
+      : m_broker(cci::cci_broker_manager::get_broker())
   {
     // Copy the list of selected base parameters to a local std::vector
     returnBaseParamList = BaseParamList;
@@ -105,7 +104,7 @@ SC_MODULE(ex11_param_value_sync) {
   }
 
  private:
-  cci::cci_broker_handle ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker; ///< Declaring a CCI configuration broker handle
   std::vector<cci::cci_callback_untyped_handle> post_write_cb_vec; ///< Callback Adaptor Objects
   std::vector<cci::cci_param_handle> returnBaseParamList; ///< std::vector storing the searched owner parameters references to CCI parameter handles
 };

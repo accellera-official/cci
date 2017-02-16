@@ -30,7 +30,6 @@
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_PARENT_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 #include <vector>
 
@@ -58,7 +57,7 @@ SC_MODULE(ex14_parent) {
         child_inst("child_inst"),
         parent_int_param("parent_int_param", 300),
         parent_buffer("parent_int_buffer", 350),
-        child_base_param(cci::cci_originator(*this))
+        child_base_param_handle(cci::cci_originator(*this))
   {
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
@@ -69,9 +68,9 @@ SC_MODULE(ex14_parent) {
     child_param_path.append(".child_inst.priv_int_param");
 
     if (m_broker.param_exists(child_param_path)) {
-      child_base_param = m_broker.get_param_handle(child_param_path);
+      child_base_param_handle = m_broker.get_param_handle(child_param_path);
 
-      assert(child_base_param.is_valid()
+      sc_assert(child_base_param_handle.is_valid()
              && "Returned broker handle for 'priv_int_param' of 'child'"
              " is not valid");
 
@@ -81,7 +80,7 @@ SC_MODULE(ex14_parent) {
      // be reflected on to the 'priv_int_param' of child as well
       cci::cci_param_post_write_callback_untyped untyped_post_write_cb(
                       sc_bind(&ex14_parent::untyped_post_write_callback,
-                              this, sc_unnamed::_1,child_base_param));
+                              this, sc_unnamed::_1,child_base_param_handle));
 
       parent_post_write_cb =
               parent_buffer.register_post_write_callback(untyped_post_write_cb);
@@ -150,7 +149,7 @@ SC_MODULE(ex14_parent) {
   cci::cci_param<int> parent_buffer; ///< CCI int parameter for a buffer
 
   /// Declare cci_base_param pointers
-  cci::cci_param_handle child_base_param; ///< Handle to the child
+  cci::cci_param_handle child_base_param_handle; ///< Handle to the child
 
   /// Callback handle
   cci::cci_callback_untyped_handle parent_post_write_cb;  /// callback handle

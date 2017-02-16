@@ -30,8 +30,6 @@
 #define EXAMPLES_EX19_API_AND_PARAMETER_IMPLEMENTATIONS_FROM_DIFFERENT_PROVIDERS_EX19_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
-
 #include "xreport.hpp"
 
 /**
@@ -49,38 +47,38 @@ SC_MODULE(ex19_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex19_parameter_configurator)
-      : myCfgrBrokerIF(cci::cci_broker_manager::get_broker()),
-        cfgr_param(cci::cci_originator(*this)),
-        cfgr_user_param(cci::cci_originator(*this)),
+      : m_broker(cci::cci_broker_manager::get_broker()),
+        cfgr_param_handle(cci::cci_originator(*this)),
+        cfgr_user_param_handle(cci::cci_originator(*this)),
         cfgr_shared_param(0)
   {
 
     // Checks the parameter exists using name-based look-up
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_int_param")) {
+    if (m_broker.param_exists("param_owner.mutable_int_param")) {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_int_param exists");
 
       // Get handle of the owner parameter
-      cfgr_param =
-              myCfgrBrokerIF.get_param_handle("param_owner.mutable_int_param");
+      cfgr_param_handle =
+              m_broker.get_param_handle("param_owner.mutable_int_param");
 
       // Assert if the owner parameter handle returned is NULL
-      assert(cfgr_param.is_valid()
+      sc_assert(cfgr_param_handle.is_valid()
              && "Parameter Handle for param_owner.mutable_int_param is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_int_param"
               " doesn't exists.");
     }
 
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_udtype_param")) {
+    if (m_broker.param_exists("param_owner.mutable_udtype_param")) {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_udtype_param"
               " exists");
 
       // Get handle of the owner parameter
-      cfgr_user_param =
-          myCfgrBrokerIF.get_param_handle("param_owner.mutable_udtype_param");
+      cfgr_user_param_handle =
+          m_broker.get_param_handle("param_owner.mutable_udtype_param");
 
       // Assert if the owner parameter handle returned is NULL
-      assert(cfgr_param.is_valid()
+      sc_assert(cfgr_param_handle.is_valid()
              && "Parameter param_owner.mutable_udtype_param  Handle is NULL");
 
       XREPORT("[CFGR C_TOR] : Got param_owner.mutable_udtype_param ");
@@ -89,22 +87,22 @@ SC_MODULE(ex19_parameter_configurator) {
               " doesn't exists.");
       XREPORT("Try Again with mutable_udtype_param ");
 
-      if (myCfgrBrokerIF.param_exists("mutable_udtype_param")) {
+      if (m_broker.param_exists("mutable_udtype_param")) {
         XREPORT("Got Now with mutable_udtype_param");
       } else {
         XREPORT("Try again now directly with param_owner.mutable_udtype_param");
-        cfgr_user_param =
-            myCfgrBrokerIF.get_param_handle("param_owner.mutable_udtype_param");
+        cfgr_user_param_handle =
+            m_broker.get_param_handle("param_owner.mutable_udtype_param");
 
-        if (cfgr_user_param.is_valid()) {
+        if (cfgr_user_param_handle.is_valid()) {
           XREPORT("Fail to get directly with param_owner.mutable_udtype_param");
 
           XREPORT("Try again now directly with mutable_udtype_param");
-          cfgr_user_param =
-                  myCfgrBrokerIF.get_param_handle("mutable_udtype_param");
+          cfgr_user_param_handle =
+                  m_broker.get_param_handle("mutable_udtype_param");
         }
 
-        if (cfgr_user_param.is_valid()) {
+        if (cfgr_user_param_handle.is_valid()) {
           XREPORT("It will always Fail :(");
         }
       }
@@ -113,7 +111,7 @@ SC_MODULE(ex19_parameter_configurator) {
     // Set parameter value using cci_base_parameter object
     XREPORT("[CFGR C_TOR] : Set parameter value to 10 using"
             " cci_base_parameter");
-    cfgr_param.set_cci_value(cci::cci_value::from_json("10"));
+    cfgr_param_handle.set_cci_value(cci::cci_value(10));
 
     /// Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);
@@ -132,14 +130,14 @@ SC_MODULE(ex19_parameter_configurator) {
 
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[CFGR] : Parameter Value   : " << cfgr_shared_param->get_value());
-      if (cfgr_user_param.is_valid()) {
+      if (cfgr_user_param_handle.is_valid()) {
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
-                << cfgr_user_param.get_cci_value().to_json());
+                << cfgr_user_param_handle.get_cci_value().to_json());
 
-        cfgr_user_param.set_cci_value(cci::cci_value::from_json("EXP"));
+        cfgr_user_param_handle.set_cci_value(cci::cci_value::from_json("EXP"));
 
         XREPORT("[CFGR] : Get :Parameter Value[User data type]   : "
-                << cfgr_user_param.get_cci_value().to_json());
+                << cfgr_user_param_handle.get_cci_value().to_json());
       }
 
       wait(5.0, sc_core::SC_NS);
@@ -165,11 +163,11 @@ SC_MODULE(ex19_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;  ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker;  ///< Declaring a CCI configuration broker handle
 
   // Declaring a CCI base parameter pointer
-  cci::cci_param_handle cfgr_param; ///< Handle to a cci parameter
-  cci::cci_param_handle cfgr_user_param;  ///< Handle to a cci parameter that is accessible by the user
+  cci::cci_param_handle cfgr_param_handle; ///< Handle to a cci parameter
+  cci::cci_param_handle cfgr_user_param_handle;  ///< Handle to a cci parameter that is accessible by the user
 
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };

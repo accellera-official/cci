@@ -82,7 +82,7 @@ class ex18_cci_configFile_Tool {
      */
   explicit ex18_cci_configFile_Tool(const char* name)
       : mToolOriginator(name),
-        mApi(cci::cci_broker_manager::get_broker(mToolOriginator))
+        m_broker(cci::cci_broker_manager::get_broker(mToolOriginator))
   {}
 
   /**
@@ -121,7 +121,7 @@ class ex18_cci_configFile_Tool {
          it != cnf_set.get_config_map().end(); it++) {
       std::cout << "ConfigFile_Api: Applying initial value of param '"
                 << it->first << "' to '" << it->second << "'" << std::endl;
-      mApi.set_initial_cci_value(it->first.c_str(),
+      m_broker.set_initial_cci_value(it->first.c_str(),
                                   cci::cci_value::from_json(it->second.c_str()));
     }
   }
@@ -327,7 +327,7 @@ class ex18_cci_configFile_Tool {
  protected:
   cci::cci_originator mToolOriginator; ///< This tool's originator information
 
-  cci::cci_broker_handle mApi;  ///< Config API which is used by this tool
+  cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle instance
 
   std::string m_name; ///< Name of this object, given by constructor
 

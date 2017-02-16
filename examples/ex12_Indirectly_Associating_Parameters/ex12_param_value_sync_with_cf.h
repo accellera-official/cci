@@ -31,7 +31,6 @@
 #define EXAMPLES_EX12_INDIRECTLY_ASSOCIATING_PARAMETERS_EX12_PARAM_VALUE_SYNC_WITH_CF_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <sstream>
 #include <string>
@@ -56,7 +55,7 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
   ex12_param_value_sync_with_cf(sc_core::sc_module_name _name,
       std::vector<cci::cci_param_handle> BaseParamList)
       // Define an originator in order to get hold of the default broker
-      : ValueSyncBrokerIF(cci::cci_broker_manager::get_broker())
+      : m_broker(cci::cci_broker_manager::get_broker())
   {
     // Copy the list of selected base parameters to a local std::vector
     returnBaseParamList = BaseParamList;
@@ -172,7 +171,7 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
   }
 
  private:
-  cci::cci_broker_handle ValueSyncBrokerIF; ///< Declaring a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker; ///< Declaring a CCI configuration broker handle
   std::vector<cci::cci_callback_untyped_handle> post_write_cb_vec; ///< Callback Adaptor Objects
   std::vector<cci::cci_param_handle> returnBaseParamList; ///< vector storing the owner param references to CCI parameter handles
 };

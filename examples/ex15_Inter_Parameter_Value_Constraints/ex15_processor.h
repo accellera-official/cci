@@ -29,7 +29,6 @@
 
 #include <math.h>
 #include <cci_configuration>
-#include <cassert>
 #include <string>
 
 #include "ex15_address_lines_register.h"
@@ -54,19 +53,19 @@ SC_MODULE(ex15_processor) {
   SC_CTOR(ex15_processor)
       : addr_lines_module("addr_lines_mod"),
         memory_block_module("memory_block"),
-        processor_BrokerIF(cci::cci_broker_manager::get_broker()),
-        addr_lines_base(cci::cci_originator(*this)),
-        mem_size_base(cci::cci_originator(*this))
+        m_broker(cci::cci_broker_manager::get_broker()),
+        addr_lines_base_handle(cci::cci_originator(*this)),
+        mem_size_base_handle(cci::cci_originator(*this))
   {
     // Get handle of the 'no_of_addr_lines' cci-parameter of
     // 'address_lines_register'
     std::string param_path(name());
     param_path.append(".addr_lines_mod.curr_addr_lines");
 
-    if (processor_BrokerIF.param_exists(param_path)) {
-      addr_lines_base = processor_BrokerIF.get_param_handle(param_path);
+    if (m_broker.param_exists(param_path)) {
+      addr_lines_base_handle = m_broker.get_param_handle(param_path);
 
-      assert(addr_lines_base.is_valid()
+      sc_assert(addr_lines_base_handle.is_valid()
              && "Returned handle of 'no_of_addr_lines' cci-parameter"
              " is NULL");
     } else {
@@ -78,10 +77,10 @@ SC_MODULE(ex15_processor) {
     param_path = name();
     param_path.append(".memory_block.mem_size");
 
-    if (processor_BrokerIF.param_exists(param_path)) {
-      mem_size_base = processor_BrokerIF.get_param_handle(param_path);
+    if (m_broker.param_exists(param_path)) {
+      mem_size_base_handle = m_broker.get_param_handle(param_path);
 
-      assert(mem_size_base.is_valid()
+      sc_assert(mem_size_base_handle.is_valid()
              && "Returned handle of 'memory_block_size' cci-parameter"
              " is NULL");
     } else {
@@ -92,20 +91,20 @@ SC_MODULE(ex15_processor) {
     // Checks for the condition whether the default total number of the
     // address lines can address the default address location
     total_addr_lines =
-            atoi(addr_lines_base.get_cci_value().to_json().c_str());
+            atoi(addr_lines_base_handle.get_cci_value().to_json().c_str());
     mem_block_size =
-            atoi(mem_size_base.get_cci_value().to_json().c_str());
+            atoi(mem_size_base_handle.get_cci_value().to_json().c_str());
     TestCondition(total_addr_lines, mem_block_size);
 
     // Registering 'POST_WRITE' callbacks on the cci-parameters of the
     // two register modules
-    addr_lines_post_wr_cb = addr_lines_base.register_post_write_callback(
+    addr_lines_post_wr_cb = addr_lines_base_handle.register_post_write_callback(
         sc_bind(&ex15_processor::addr_lines_post_wr_cb_func,
-        this, sc_unnamed::_1, mem_size_base));
+        this, sc_unnamed::_1, mem_size_base_handle));
 
-    mem_block_post_wr_cb = mem_size_base.register_post_write_callback(
+    mem_block_post_wr_cb = mem_size_base_handle.register_post_write_callback(
         sc_bind(&ex15_processor::mem_block_post_wr_cb_func,
-        this, sc_unnamed::_1, addr_lines_base));
+        this, sc_unnamed::_1, addr_lines_base_handle));
   }
 
   /**
@@ -186,14 +185,14 @@ SC_MODULE(ex15_processor) {
   ex15_address_lines_register addr_lines_module;  ///< Declare address line register
   ex15_memory_block memory_block_module;  ///< Memory block module
 
-  cci::cci_broker_handle processor_BrokerIF;  ///< Pointer to the broker interface
+  cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle
 
   int total_addr_lines; ///< The total number of address lines
   int mem_block_size; ///< The size of the memory block
 
   // CCI Base parameter pointer
-  cci::cci_param_handle addr_lines_base;  ///< Handle to the address lines
-  cci::cci_param_handle mem_size_base;  ///< Handle to the base of the memory size
+  cci::cci_param_handle addr_lines_base_handle;  ///< Handle to the address lines
+  cci::cci_param_handle mem_size_base_handle;  ///< Handle to the base of the memory size
 
   // Callback Adaptor Objects
   cci::cci_callback_untyped_handle addr_lines_post_wr_cb; ///< Address lines callback adapter object

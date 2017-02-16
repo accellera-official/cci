@@ -85,7 +85,6 @@ public:
     /**
      * Shall be a system-wide unique broker name.
      * Broker handles shall return their underlying broker's name.
-     * Accessors can be distinguished using their originator information.
      *
      * @return broker name
      */

@@ -36,7 +36,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex21_config_ip):
-            m_cci(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
     {
         SC_THREAD(execute);
     }
@@ -54,9 +54,9 @@ public:
         wait(20, sc_core::SC_NS);
 
         // Check for existence of the param
-        if (m_cci.param_exists(int_param_name)) {
+        if (m_broker.param_exists(int_param_name)) {
             // Get handle to the param
-            cci::cci_param_handle int_param_handle = m_cci.get_param_handle(
+            cci::cci_param_handle int_param_handle = m_broker.get_param_handle(
                     int_param_name);
             sc_assert(int_param_handle.is_valid());
 
@@ -105,7 +105,7 @@ public:
     }
 
 private:
-    cci::cci_broker_handle m_cci; ///< CCI configuration handle
+    cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 // ex21_config_ip
 

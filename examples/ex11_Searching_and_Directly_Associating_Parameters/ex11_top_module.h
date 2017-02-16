@@ -29,7 +29,6 @@
 #define EXAMPLES_EX11_SEARCHING_AND_DIRECTLY_ASSOCIATING_PARAMETERS_EX11_TOP_MODULE_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <string>
 
@@ -55,7 +54,7 @@ SC_MODULE(ex11_top_module) {
    *  @return void
    */
   SC_CTOR(ex11_top_module):
-            myTopModBrokerIF(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
@@ -71,14 +70,14 @@ SC_MODULE(ex11_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
-    if (myTopModBrokerIF.param_exists(param1_str)) {
-      cci::cci_param_handle temp =
-              myTopModBrokerIF.get_param_handle(param1_str);
-      selected_base_param_list.push_back(temp);
+    if (m_broker.param_exists(param1_str)) {
+      cci::cci_param_handle temp_handle =
+              m_broker.get_param_handle(param1_str);
+      selected_base_param_list.push_back(temp_handle);
 
-      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp.get_name()
+      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
               << "\tParameter Value : "
-              << temp.get_cci_value().to_json());
+              << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
               << "\tnot found.");
@@ -86,14 +85,14 @@ SC_MODULE(ex11_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
-    if (myTopModBrokerIF.param_exists(param2_str)) {
-      cci::cci_param_handle temp =
-              myTopModBrokerIF.get_param_handle(param2_str);
-      selected_base_param_list.push_back(temp);
+    if (m_broker.param_exists(param2_str)) {
+      cci::cci_param_handle temp_handle =
+              m_broker.get_param_handle(param2_str);
+      selected_base_param_list.push_back(temp_handle);
 
-      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp.get_name()
+      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
               << "\tParameter Value : "
-              << temp.get_cci_value().to_json());
+              << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
               << "\tnot found.");
@@ -106,7 +105,7 @@ SC_MODULE(ex11_top_module) {
   }
 
  private:
-  cci::cci_broker_handle myTopModBrokerIF;  ///< Declare a CCI configuration broker interface instance
+  cci::cci_broker_handle m_broker;  ///< Declare a CCI configuration broker handle
   std::vector<cci::cci_param_handle> selected_base_param_list;  ///< vector storing the searched owner parameters references to CCI parameter handles
 };
 // ex11_top_module

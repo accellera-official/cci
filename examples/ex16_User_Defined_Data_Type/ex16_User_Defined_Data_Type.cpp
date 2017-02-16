@@ -27,7 +27,6 @@
 
 #include <cci_configuration>
 #include <systemc.h>
-#include <cassert>
 #include <string>
 
 #include "ex16_parameter_owner.h"
