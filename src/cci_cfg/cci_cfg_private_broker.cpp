@@ -33,14 +33,11 @@ CCI_OPEN_NAMESPACE_
   if (expose.find(parname) != expose.end()) {                           \
     if (!is_global_broker()) {                                          \
       cci_broker_handle p=cci_broker_manager::get_parent_broker(m_originator); \
-      std::string _parname=m_originator.name() + std::string(".") + parname; \
       return p.method(__VA_ARGS__);                                     \
     } else {                                                            \
-      std::string _parname=parname;                                     \
       return cci_cfg_broker::method(__VA_ARGS__ ORIGINATOR);            \
     }                                                                   \
   } else {                                                              \
-    std::string _parname=parname;                                       \
     return cci_cfg_broker::method(__VA_ARGS__ ORIGINATOR);             \
   }                                                                     \
   
@@ -62,32 +59,32 @@ cci_broker_handle cci_cfg_private_broker::create_broker_handle(const cci_origina
 
 cci_originator cci_cfg_private_broker::get_latest_write_originator(const std::string &parname) const
 {
-  CHOOSEFUNCTION(get_latest_write_originator, parname,  _parname);
+  CHOOSEFUNCTION(get_latest_write_originator, parname,  parname);
 }
 
 const cci_value cci_cfg_private_broker::get_initial_cci_value(const std::string &parname)
 {
-CHOOSEFUNCTION(get_initial_cci_value, parname,  _parname);
+CHOOSEFUNCTION(get_initial_cci_value, parname,  parname);
 }
 
 void cci_cfg_private_broker::lock_initial_value(const std::string &parname)
 {
-  CHOOSEFUNCTION(lock_initial_value, parname,  _parname);
+  CHOOSEFUNCTION(lock_initial_value, parname,  parname);
 }
 
 const cci_value cci_cfg_private_broker::get_cci_value(const std::string &parname)
 {
-  CHOOSEFUNCTION(get_cci_value, parname,  _parname);
+  CHOOSEFUNCTION(get_cci_value, parname,  parname);
 }
 
 bool cci_cfg_private_broker::param_exists(const std::string &parname)
 {
-  CHOOSEFUNCTION(param_exists, parname,  _parname);
+  CHOOSEFUNCTION(param_exists, parname,  parname);
 }
 
 bool cci_cfg_private_broker::is_used(const std::string &parname)
 {
-  CHOOSEFUNCTION(is_used, parname,  _parname);
+  CHOOSEFUNCTION(is_used, parname,  parname);
 }
 
 void cci_cfg_private_broker::add_param(cci_param_if* par) {
@@ -107,13 +104,13 @@ void cci_cfg_private_broker::set_initial_cci_value(
   const cci_value &cci_value,
   const cci_originator& originator)
 {
-  CHOOSEFUNCTION(set_initial_cci_value, parname,  _parname, cci_value);
+  CHOOSEFUNCTION(set_initial_cci_value, parname,  parname, cci_value);
 }
 cci_param_untyped_handle cci_cfg_private_broker::get_param_handle(
         const std::string &parname,
         const cci_originator& originator)
 {
-  CHOOSEFUNCTION(get_param_handle, parname,  _parname);
+  CHOOSEFUNCTION(get_param_handle, parname,  parname);
 }
 
 

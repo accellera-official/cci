@@ -201,7 +201,7 @@ cci_param_untyped_handle cci_cfg_broker::get_param_handle(
       if (parent.name() == name()) {
         return cci_param_untyped_handle(originator);
       } else {
-        return parent.get_param_handle(m_originator.name() + std::string(".") + parname);
+        return parent.get_param_handle(parname);
       }
     }
   }
