@@ -110,7 +110,7 @@ public:
 
     /// @copydoc cci_broker_if::get_param_handles(const std::string&)
     const std::vector <cci_param_untyped_handle>
-    get_param_handles(const std::string &pattern = "");
+    get_param_handles();
 
     /// @copydoc cci_broker_if::get_param_handles(cci_param_predicate&)
     cci_param_range

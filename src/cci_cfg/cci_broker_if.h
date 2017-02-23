@@ -258,17 +258,8 @@ public:
      */
     virtual void remove_param(cci_param_if *par) = 0;
 
-    /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
+    /// Return a list of all (explicit) parameter handles in the given scope
     /**
-     * TODO:
-     * pattern e.g.
-     * - parameters of the specified module, pattern = module_name, e.g. "mymod.mysubmod";
-     * - pattern = module_name+'.*' to include the parameters of the childs, e.g. "mymod.mysubmod.*"
-     * - pattern = '*'.param_name to get all parameters with the name, e.g. "*.cache_size"
-     * - pattern = '*'.hierarchical.param_name to get all parameters with the name, e.g. "*.mysubmod.cache_size"
-     * + (in the case the Many-to-one Mapping should work):
-     *   pattern = full_param_name to get all param objects/handles (PH/PO) being mapped to the NVP
-     * @todo use iterator instead of vector?
      *
      * This returns not the owner's parameter objects but handles.
      *
@@ -276,8 +267,7 @@ public:
      * @return Vector with parameter handles.
      */
     virtual const std::vector <cci_param_untyped_handle>
-    get_param_handles(const std::string &pattern = "",
-                      const cci_originator& originator = cci_originator()) = 0;
+    get_param_handles(const cci_originator& originator = cci_originator()) = 0;
 
     /// Search parameters with a user-defined predicate callback
     /**

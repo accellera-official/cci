@@ -66,7 +66,6 @@ CCI_OPEN_NAMESPACE_
                                               const cci_originator& originator);
 
     const std::vector<cci_param_untyped_handle> get_param_handles(
-            const std::string& pattern,
             const cci_originator& originator);
 
     cci_param_range get_param_handles(cci_param_predicate& pred,

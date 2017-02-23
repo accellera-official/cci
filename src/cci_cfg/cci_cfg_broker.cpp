@@ -28,8 +28,6 @@
 #include "cci_cfg_broker.h"
 #include "cci_core/cci_name_gen.h"
 #include "cci_cfg/cci_report_handler.h"
-#include <regex>
-
 
 CCI_OPEN_NAMESPACE_
 
@@ -348,16 +346,12 @@ void cci_cfg_broker::remove_param(cci_param_if* par) {
 }
 
 const std::vector<cci_param_untyped_handle>
-cci_cfg_broker::get_param_handles(const std::string& pattern,
-                                          const cci_originator& originator) {
+cci_cfg_broker::get_param_handles(const cci_originator& originator) {
   std::vector<cci_param_untyped_handle> param_handles;
-  std::regex txt_regex(pattern);
   std::map<std::string,cci_param_if*>::const_iterator it;
   for (it=m_param_registry.begin(); it != m_param_registry.end(); ++it) {
     cci_param_if* p = it->second;
-    if (pattern=="" || std::regex_match(p->get_name(), txt_regex)) {
-      param_handles.push_back(get_param_handle(*p, originator));
-    }
+    param_handles.push_back(get_param_handle(*p, originator));
   }
   return param_handles;
 }
@@ -366,7 +360,7 @@ cci_param_range cci_cfg_broker::get_param_handles(
         cci_param_predicate& pred,
         const cci_originator& originator) {
   return cci_param_range(pred,
-        get_param_handles("", originator));
+        get_param_handles(originator));
 }
 
 
