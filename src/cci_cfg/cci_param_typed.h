@@ -1116,19 +1116,18 @@ cci_param_typed<T, TM>::cci_param_typed(cci_param_typed<T, TM>& copy,
 template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::reset() 
 {
-    cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
-
-    if(!init_value.is_null()) {
-        m_value = init_value.get<T>();
-        m_is_initial_value = true;
-        cci_originator init_value_originator =
-            m_broker_handle.get_latest_write_originator(get_name());
-        if(strcmp(init_value_originator.name(),
-                  __CCI_UNKNOWN_ORIGINATOR_STRING__)) {
-            cci_param_untyped::update_latest_write_originator(
-                    init_value_originator);
-        }
-    }
+  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
+  
+  if(!init_value.is_null()) {
+    m_value = init_value.get<T>();
+    m_is_default_value = false;
+    m_is_initial_value = true;
+  } else {
+    m_value = get_default_value();
+    m_is_default_value = true;
+    m_is_initial_value = false;
+  }
+  update_latest_write_originator(get_originator());
 }
 
 CCI_CLOSE_NAMESPACE_
