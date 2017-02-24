@@ -66,6 +66,13 @@ void cci_cfg_broker::set_initial_cci_value(
       m_used_value_registry.find(parname);
     if (iter != m_used_value_registry.end() ) {
       m_used_value_registry[parname]=cci_value; // kiss a zombee
+      if (sc_core::sc_get_status()==sc_core::SC_ELABORATION) {
+        // In this special case, we permit direct writes to existing params
+        cci_param_if* p = get_orig_param(parname);
+        if (p) {
+          p->set_cci_value(cci_value);
+        }
+      }
     } else {
       m_unused_value_registry[parname] = cci_value;
     }
