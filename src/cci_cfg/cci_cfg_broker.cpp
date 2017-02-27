@@ -129,7 +129,7 @@ const cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname
 {
   {
     std::map<std::string,cci_value>::const_iterator iter =
-          m_used_value_registry.find(parname);
+      m_used_value_registry.find(parname);
     if (iter != m_used_value_registry.end() ) {
       return iter->second;
     }
@@ -324,8 +324,8 @@ void cci_cfg_broker::add_param(cci_param_if* par) {
   std::map<std::string,cci_value>::const_iterator iter =
     m_unused_value_registry.find(par->get_name());
   if (iter != m_unused_value_registry.end()  ) {
-    m_unused_value_registry.erase(iter);
     m_used_value_registry.insert(std::make_pair(iter->first, iter->second));
+    m_unused_value_registry.erase(iter);
   }
   // Create callbacks
   for (unsigned i = 0; i < m_create_callbacks.size(); ++i) {
