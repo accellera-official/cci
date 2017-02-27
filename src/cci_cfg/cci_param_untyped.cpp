@@ -104,12 +104,15 @@ cci_value_map cci_param_untyped::get_metadata() const
 
 bool cci_param_untyped::is_default_value()
 {
-    return m_is_default_value;
+//  return m_is_default_value;
+  return get_default_cci_value() == get_cci_value();
 }
 
-bool cci_param_untyped::is_initial_value() const
+bool cci_param_untyped::is_initial_value()
 {
-    return m_is_initial_value;
+//    return m_is_initial_value;
+  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
+  return init_value == get_cci_value();
 }
 
 const cci_originator& cci_param_untyped::get_latest_write_originator() const

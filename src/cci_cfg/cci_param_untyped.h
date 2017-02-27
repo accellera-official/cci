@@ -122,7 +122,7 @@ public:
      * @return fase if no initial value was supplied or the parameter's value has
      *         changed; otherwise, true
      */
-    virtual bool is_initial_value() const;
+    virtual bool is_initial_value();
 
     ///@}
 

@@ -248,6 +248,12 @@ public:
      */
     cci_value get_default_cci_value() const;
 
+    /// @copydoc cci_param_untyped::is_default_value()
+    bool is_default_value();
+
+    /// @copydoc cci_param_untyped::is_initial_value()
+    bool is_initial_value();
+
     ///@}
 
     /// @name Post write callback handling
@@ -958,6 +964,23 @@ cci_value cci_param_typed<T, TM>::get_cci_value(
 template <typename T, cci_param_mutable_type TM>
 cci_value cci_param_typed<T, TM>::get_default_cci_value() const {
     return cci_value(m_default_value);
+}
+
+template <typename T, cci_param_mutable_type TM>
+bool cci_param_typed<T, TM>::is_default_value() {
+//  return m_is_default_value;
+  return m_default_value == m_value;
+}
+
+template <typename T, cci_param_mutable_type TM>
+bool cci_param_typed<T, TM>::is_initial_value() {
+//  return m_is_initial_value;
+  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
+  if(!init_value.is_null()) {
+    return init_value.get<T>() == m_value;
+  } else {
+    return false;
+  }
 }
 
 // Callbacks
