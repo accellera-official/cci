@@ -880,8 +880,9 @@ const void* cci_param_typed<T, TM>::get_raw_value(
         const cci_originator &originator) const
 {
     pre_read_callback(m_value, originator);
+    const void *v=static_cast<const void*>(&m_value);
     post_read_callback(m_value, originator);
-    return static_cast<const void*>(&m_value);
+    return v;
 }
 
 template <typename T, cci_param_mutable_type TM>
