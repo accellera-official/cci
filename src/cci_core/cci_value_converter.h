@@ -27,8 +27,8 @@
 #endif
 #endif // CCI_EXTERN_
 
-#ifndef CCI_cci_value_converter_H_INCLUDED_
-#define CCI_cci_value_converter_H_INCLUDED_
+#ifndef CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
+#define CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
 
 #include "cci_core/systemc.h"
 #include "cci_core/cci_value.h"
@@ -169,19 +169,19 @@ CCI_EXTERN_ template struct cci_value_converter<std::string>;
 // related numerical types
 // (without range checks for now)
 
-#define cci_value_converter_DERIVED_( UnderlyingType, SpecializedType ) \
+#define CCI_VALUE_CONVERTER_DERIVED_( UnderlyingType, SpecializedType ) \
   template<> \
   struct cci_value_converter<SpecializedType> \
     : cci_value_delegate_converter<SpecializedType, UnderlyingType > {}
 
-cci_value_converter_DERIVED_( int, char );
-cci_value_converter_DERIVED_( int, signed char );
-cci_value_converter_DERIVED_( int, short );
-cci_value_converter_DERIVED_( unsigned, unsigned char );
-cci_value_converter_DERIVED_( unsigned, unsigned short );
-cci_value_converter_DERIVED_( int64, long );
-cci_value_converter_DERIVED_( uint64, unsigned long );
-cci_value_converter_DERIVED_( double, float );
+CCI_VALUE_CONVERTER_DERIVED_( int, char );
+CCI_VALUE_CONVERTER_DERIVED_( int, signed char );
+CCI_VALUE_CONVERTER_DERIVED_( int, short );
+CCI_VALUE_CONVERTER_DERIVED_( unsigned, unsigned char );
+CCI_VALUE_CONVERTER_DERIVED_( unsigned, unsigned short );
+CCI_VALUE_CONVERTER_DERIVED_( int64, long );
+CCI_VALUE_CONVERTER_DERIVED_( uint64, unsigned long );
+CCI_VALUE_CONVERTER_DERIVED_( double, float );
 
 ///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
@@ -343,11 +343,11 @@ struct cci_value_converter< sc_dt::sc_lv<N> >
 
 CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_cci_value_converter_H_INCLUDED_
+#endif // CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
 
 ///@todo add support for SystemC fixpoint types
-#if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_cci_value_converter_H_INCLUDED_FX_)
-#define CCI_CNF_cci_value_converter_H_INCLUDED_FX_
+#if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_)
+#define CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
 CCI_OPEN_NAMESPACE_
 
 CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fxval>;
@@ -386,10 +386,10 @@ struct cci_value_converter< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
 };
 
 CCI_CLOSE_NAMESPACE_
-#endif // SC_INCLUDE_FX && ! CCI_CNF_cci_value_converter_H_INCLUDED_FX_
+#endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
 
-#ifdef cci_value_converter_DERIVED_
-#undef cci_value_converter_DERIVED_
+#ifdef CCI_VALUE_CONVERTER_DERIVED_
+#undef CCI_VALUE_CONVERTER_DERIVED_
 #endif
 
 #ifdef CCI_EXTERN_
