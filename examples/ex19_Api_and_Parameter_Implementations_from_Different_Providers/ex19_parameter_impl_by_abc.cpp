@@ -171,12 +171,12 @@ const void* cci_param_user_data_type::get_raw_default_value() const {
 // Virtual function in cci_base_param_impl_if
 
 /**
- *  @fn     const cci::cci_data_type cci_param_user_data_type::get_basic_type() const
+ *  @fn     const cci::cci_data_type cci_param_user_data_type::get_data_category() const
  *  @brief  Function to retrive the basic type of the parameter
  *  @return The basic type.
  */
-cci::cci_param_data_category cci_param_user_data_type::get_basic_type() const {
-  std::cout << "Function cci_param_user_data_type::get_basic_type Called " << std::endl;
+cci::cci_param_data_category cci_param_user_data_type::get_data_category() const {
+  std::cout << "Function cci_param_user_data_type::get_data_category Called " << std::endl;
 
   return cci::CCI_LIST_PARAM;
 }

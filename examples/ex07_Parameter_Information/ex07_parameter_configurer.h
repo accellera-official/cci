@@ -260,9 +260,9 @@ SC_MODULE(ex07_parameter_configurer) {
 
         cci::cci_value str_value("Hello_New_String");
 
-        // Query basic type of a parameter using 'get_basic_type()' API
-        XREPORT("[CFGR -> Set] : Get Basic Type using 'get_basic_type()' : "
-                << str_param.get_basic_type());
+        // Query basic type of a parameter using 'get_data_category()' API
+        XREPORT("[CFGR -> Set] : Get Basic Type using 'get_data_category()' : "
+                << str_param.get_data_category());
 
         // Set a (std::string) parameter's value using
         // 'set_value' API with cci_value
@@ -293,7 +293,7 @@ SC_MODULE(ex07_parameter_configurer) {
         cci::cci_value rx_value = str_param.get_cci_value();
 
         /**
-         *  @par Based on the type returned by 'get_basic_type()', query value of cci_value.
+         *  @par Based on the type returned by 'get_data_category()', query value of cci_value.
          *  @par
          *  If basic parameter type is 'std::string', use 'get_string()' API with cci_value
          *  @par

@@ -123,11 +123,11 @@ struct cci_param_user_data_type
   // Virtual function in cci_base_param_impl_if
 
   /**
-   *  @fn     const cci::cci_data_type get_basic_type() const
+   *  @fn     const cci::cci_data_type get_data_category() const
    *  @brief  Function to retrive the basic type of the parameter
    *  @return The basic type.
    */
-  cci::cci_param_data_category get_basic_type() const;
+  cci::cci_param_data_category get_data_category() const;
 
   /**
    *  @fn     void set_cci_value(const cci::cci_value& val)
