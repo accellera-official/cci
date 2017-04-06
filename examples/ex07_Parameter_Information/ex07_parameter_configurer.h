@@ -260,9 +260,10 @@ SC_MODULE(ex07_parameter_configurer) {
 
         cci::cci_value str_value("Hello_New_String");
 
-        // Query basic type of a parameter using 'get_data_category()' API
-        XREPORT("[CFGR -> Set] : Get Basic Type using 'get_data_category()' : "
-                << str_param.get_data_category());
+        // Query data category of a parameter using 'get_data_category()' API
+        XREPORT("[CFGR -> Set] : Get Data Category using 'get_data_category()' : "
+                << ((str_param.get_data_category() == cci::CCI_STRING_PARAM) ? 
+                    "CCI_STRING_PARAM" : "**UNEXPECTED CATEGORY **"));
 
         // Set a (std::string) parameter's value using
         // 'set_value' API with cci_value

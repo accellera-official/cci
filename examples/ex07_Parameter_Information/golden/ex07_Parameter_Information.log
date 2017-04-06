@@ -118,7 +118,7 @@ Info: param_cfgr: @22 ns, @ 22 ns	demonstrating 'set_value()' for string-type pa
 
 Info: param_cfgr: @22 ns, [CFGR] : Parameter Description : This is a mutable type string parameter
 
-Info: param_cfgr: @22 ns, [CFGR -> Set] : Get Basic Type using 'get_basic_type()' : 3
+Info: param_cfgr: @22 ns, [CFGR -> Set] : Get Data Category using 'get_data_category()' : CCI_STRING_PARAM
 
 Info: param_cfgr: @24 ns, @ 24 ns demonstrating 'get_latest_write_originator' API
 
