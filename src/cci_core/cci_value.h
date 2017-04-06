@@ -75,10 +75,10 @@ enum cci_value_datum_category {
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 #define CCI_VALUE_CONVERTER_(Type) \
   typename cci_value_converter<Type>::type
-#define CCI_VALUE_CONVERTER_ENABLED_(Type) \
+#define CCI_VALUE_CHECKED_CONVERTER_(Type) \
   CCI_VALUE_CONVERTER_(Type) *
-#define CCI_VALUE_ENABLE_IF_TRAITS_(Type) \
-  CCI_VALUE_CONVERTER_ENABLED_(Type) = 0
+#define CCI_VALUE_REQUIRES_CONVERTER_(Type) \
+  CCI_VALUE_CHECKED_CONVERTER_(Type) = 0
 ///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
 /// @ref cci_value comparisons
@@ -173,7 +173,7 @@ public:
   //@{
   /// try to get a value of a @ref cci_value_converter enabled type
   template<typename T>
-  bool try_get( T& dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) ) const;
+  bool try_get( T& dst, CCI_VALUE_REQUIRES_CONVERTER_(T) ) const;
   /// get a value of a @ref cci_value_converter enabled type
   template<typename T>
   CCI_VALUE_CONVERTER_(T) get() const;
@@ -197,7 +197,7 @@ private:
 
 template<typename T>
 bool
-cci_value_cref::try_get( T& dst, CCI_VALUE_CONVERTER_ENABLED_(T) ) const
+cci_value_cref::try_get( T& dst, CCI_VALUE_CHECKED_CONVERTER_(T) ) const
 {
   typedef cci_value_converter<T> traits;
   return traits::unpack( dst, *this );
@@ -300,10 +300,10 @@ public:
   //@{
   /// set value to cci_value_converter enabled type
   template<typename T>
-  cci_value_ref set(T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T));
+  cci_value_ref set(T const & dst, CCI_VALUE_REQUIRES_CONVERTER_(T));
   /// try to set value to cci_value_converter enabled type
   template<typename T>
-  bool          try_set(T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T));
+  bool          try_set(T const & dst, CCI_VALUE_REQUIRES_CONVERTER_(T));
   ///@}
 
 protected:
@@ -317,7 +317,7 @@ cci_value_ref::operator=( const this_type & that )
 
 template<typename T>
 bool
-cci_value_ref::try_set( T const & src, CCI_VALUE_CONVERTER_ENABLED_(T) )
+cci_value_ref::try_set( T const & src, CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   typedef cci_value_converter<T> traits;
   return traits::pack( *this, src );
@@ -325,7 +325,7 @@ cci_value_ref::try_set( T const & src, CCI_VALUE_CONVERTER_ENABLED_(T) )
 
 template<typename T>
 cci_value_ref
-cci_value_ref::set( T const& src, CCI_VALUE_CONVERTER_ENABLED_(T) )
+cci_value_ref::set( T const& src, CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   if( !try_set(src) ) {
     report_error("conversion to cci_value failed", __FILE__, __LINE__);
@@ -552,7 +552,7 @@ public:
   this_type push_back( const_reference v );
   /// append arbitrary cci_value_converter enabled value
   template<typename T>
-  this_type push_back( const T & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  this_type push_back( const T & v, CCI_VALUE_REQUIRES_CONVERTER_(T) );
 
   //@}
 
@@ -690,11 +690,11 @@ public:
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( const char* key, const T & value
-                      , CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+                      , CCI_VALUE_REQUIRES_CONVERTER_(T) );
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( std::string const & key, const T & value
-                      , CCI_VALUE_ENABLE_IF_TRAITS_(T) )
+                      , CCI_VALUE_REQUIRES_CONVERTER_(T) )
     { return push_entry<T>( key.c_str(), value ); }
   ///@}
 
@@ -769,7 +769,7 @@ public:
   /// constructor from arbitrary cci_value_converter enabled value
   template<typename T>
   explicit
-  cci_value( T const & src, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  cci_value( T const & src, CCI_VALUE_REQUIRES_CONVERTER_(T) );
 
   cci_value( this_type const & that );
   cci_value( const_reference that );
@@ -789,7 +789,7 @@ public:
   //@{
   /// set to arbitrary cci_value_converter enabled value
   template< typename T >
-  reference  set( T const & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) )
+  reference  set( T const & v, CCI_VALUE_REQUIRES_CONVERTER_(T) )
     { init(); return reference::set(v); }
 
   /// set boolean value
@@ -848,7 +848,7 @@ private:
 };
 
 template<typename T>
-cci_value::cci_value( T const & v, CCI_VALUE_CONVERTER_ENABLED_(T) )
+cci_value::cci_value( T const & v, CCI_VALUE_CHECKED_CONVERTER_(T) )
   : cci_value_ref(), own_pimpl_()
 {
   do_init();
@@ -898,7 +898,7 @@ cci_value::from_json( std::string const & json )
 
 template<typename T>
 cci_value_list_ref::this_type
-cci_value_list_ref::push_back( const T& value, CCI_VALUE_CONVERTER_ENABLED_(T) )
+cci_value_list_ref::push_back( const T& value, CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   cci_value v(value);
   return push_back( const_reference(v) );
@@ -907,7 +907,7 @@ cci_value_list_ref::push_back( const T& value, CCI_VALUE_CONVERTER_ENABLED_(T) )
 template<typename T>
 cci_value_map_ref
 cci_value_map_ref::push_entry( const char* key, const T& value
-                             , CCI_VALUE_CONVERTER_ENABLED_(T) )
+                             , CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   cci_value v(value);
   return push_entry( key, const_reference(v) );
@@ -1044,7 +1044,7 @@ cci_value_map::operator=( this_type const & that )
 CCI_CLOSE_NAMESPACE_
 
 #undef CCI_VALUE_CONVERTER_
-#undef CCI_VALUE_CONVERTER_ENABLED_
-#undef CCI_VALUE_ENABLE_IF_TRAITS_
+#undef CCI_VALUE_CHECKED_CONVERTER_
+#undef CCI_VALUE_REQUIRES_CONVERTER_
 
 #endif // CCI_CCI_VALUE_H_INCLUDED_
