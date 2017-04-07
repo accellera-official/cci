@@ -80,8 +80,8 @@ operator == ( cci_value_cref const & left, cci_value_cref const & right )
   return DEREF(left) == DEREF(right);
 }
 
-cci_value_datum_category
-cci_value_cref::basic_type() const
+cci_value_category
+cci_value_cref::category() const
 {
   if( !THIS )
     return CCI_NULL_DATUM;

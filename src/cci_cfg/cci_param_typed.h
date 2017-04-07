@@ -896,7 +896,7 @@ bool cci_param_typed<T, TM>::equals(const cci_param_if& rhs) const
 template <typename T, cci_param_mutable_type TM>
 cci_param_data_category cci_param_typed<T, TM>::get_data_category() const
 {
-	switch (get_cci_value().basic_type())
+	switch (get_cci_value().category())
 	{
     case CCI_BOOL_DATUM:
         return CCI_BOOL_PARAM;

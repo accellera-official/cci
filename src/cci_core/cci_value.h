@@ -52,10 +52,10 @@ class cci_value_map_ref;
 template<typename T> struct cci_value_converter;
 
 /**
-*  Enumeration for basic data types, whose rough getting and setting is
+*  Enumeration for data type categories, whose rough getting and setting is
 *  supported by base class directly
 */
-enum cci_value_datum_category {
+enum cci_value_category {
 	/// Indicates that there is no data
 	CCI_NULL_DATUM = 0,
 	/// A boolean valued component of data
@@ -113,7 +113,7 @@ public:
 
   /** @name Type queries */
   ///@{
-  cci_value_datum_category  basic_type() const;
+  cci_value_category category() const;
   bool is_null()    const;
 
   bool is_bool()    const;
@@ -239,7 +239,7 @@ public:
   /** @name Set basic value
    *
    * The various @c set_* functions update the represented value
-   * (and its @ref basic_type()) accordingly.
+   * (and its @ref category()) accordingly.
    *
    * These functions provide a "fluent interface" by returning a reference
    * to the surrounding variant object.  This enables chained function calls,
