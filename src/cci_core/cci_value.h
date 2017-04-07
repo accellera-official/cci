@@ -57,19 +57,19 @@ template<typename T> struct cci_value_converter;
 */
 enum cci_value_category {
 	/// Indicates that there is no data
-	CCI_NULL_DATUM = 0,
+	CCI_NULL_VALUE = 0,
 	/// A boolean valued component of data
-	CCI_BOOL_DATUM,
+	CCI_BOOL_VALUE,
 	/// An integer number component of data
-	CCI_NUMBER_DATUM,
+	CCI_NUMBER_VALUE,
 	/// A real number number component of data
-	CCI_REAL_DATUM,
+	CCI_REAL_VALUE,
 	/// A string component of data
-	CCI_STRING_DATUM,
+	CCI_STRING_VALUE,
 	/// A list component of data
-	CCI_LIST_DATUM,
+	CCI_LIST_VALUE,
 	/// A component of data that doesn't fit the other categories
-	CCI_OTHER_DATUM
+	CCI_OTHER_VALUE
 };
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN

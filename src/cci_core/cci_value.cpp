@@ -84,29 +84,29 @@ cci_value_category
 cci_value_cref::category() const
 {
   if( !THIS )
-    return CCI_NULL_DATUM;
+    return CCI_NULL_VALUE;
 
   switch(THIS->GetType())
   {
   case rapidjson::kFalseType:
   case rapidjson::kTrueType:
-    return CCI_BOOL_DATUM;
+    return CCI_BOOL_VALUE;
 
   case rapidjson::kNumberType:
-    return THIS->IsDouble() ? CCI_REAL_DATUM : CCI_NUMBER_DATUM;
+    return THIS->IsDouble() ? CCI_REAL_VALUE : CCI_NUMBER_VALUE;
 
   case rapidjson::kStringType:
-    return CCI_STRING_DATUM;
+    return CCI_STRING_VALUE;
 
   case rapidjson::kArrayType:
-    return CCI_LIST_DATUM;
+    return CCI_LIST_VALUE;
 
   case rapidjson::kObjectType:
-    return CCI_OTHER_DATUM;
+    return CCI_OTHER_VALUE;
 
   case rapidjson::kNullType:
   default:
-    return CCI_NULL_DATUM;
+    return CCI_NULL_VALUE;
   }
 }
 

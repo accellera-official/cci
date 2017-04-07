@@ -898,18 +898,18 @@ cci_param_data_category cci_param_typed<T, TM>::get_data_category() const
 {
 	switch (get_cci_value().category())
 	{
-    case CCI_BOOL_DATUM:
+    case CCI_BOOL_VALUE:
         return CCI_BOOL_PARAM;
-	case CCI_NUMBER_DATUM:
+	case CCI_NUMBER_VALUE:
 		return CCI_NUMBER_PARAM;
-	case CCI_REAL_DATUM:
+	case CCI_REAL_VALUE:
 		return CCI_REAL_PARAM;
-	case CCI_STRING_DATUM:
+	case CCI_STRING_VALUE:
 		return CCI_STRING_PARAM;
-	case CCI_LIST_DATUM:
+	case CCI_LIST_VALUE:
 		return CCI_LIST_PARAM;
-	case CCI_NULL_DATUM:
-	case CCI_OTHER_DATUM:
+	case CCI_NULL_VALUE:
+	case CCI_OTHER_VALUE:
     default:
 		return CCI_OTHER_PARAM;
 	}
