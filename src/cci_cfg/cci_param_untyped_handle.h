@@ -23,7 +23,7 @@
 #include <string>
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_core/cci_core_types.h"
-#include "cci_cfg/cci_value.h"
+#include "cci_core/cci_value.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_mutable_types.h"
 #include "cci_param_callbacks.h"
@@ -196,8 +196,8 @@ public:
     ///@name Query parameter type and name
     ///@{
 
-    /// @copydoc cci_param_typed::get_basic_type
-    cci_data_type get_basic_type() const;
+    /// @copydoc cci_param_typed::get_data_category
+    cci_param_data_category get_data_category() const;
 
     /// @copydoc cci_param_untyped::get_name
     const std::string& get_name() const;

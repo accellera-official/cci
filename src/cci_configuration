@@ -25,14 +25,14 @@
 #include "cci_core/cci_version.h"
 #include "cci_core/cci_name_gen.h"
 #include "cci_core/cci_core_types.h"
+#include "cci_core/cci_value.h"
+#include "cci_core/cci_value_converter.h"
 
 // CCI config includes
 
 #include "cci_cfg/cci_mutable_types.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_broker_manager.h"
-#include "cci_cfg/cci_value.h"
-#include "cci_cfg/cci_value_traits.h"
 #include "cci_cfg/cci_param_typed.h"
 #include "cci_cfg/cci_param_typed_handle.h"
 #include "cci_cfg/cci_macros_undef.h"

@@ -22,7 +22,7 @@
 
 #include "cci_cfg/cci_broker_callbacks.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
-#include "cci_cfg/cci_value.h"
+#include "cci_core/cci_value.h"
 #include "cci_core/cci_filtered_range.h"
 
 CCI_OPEN_NAMESPACE_

@@ -183,7 +183,7 @@ public:
     /**
      * @return Type
      */
-    cci_data_type get_basic_type() const;
+    cci_param_data_category get_data_category() const;
 
     /// Returns the type information of the parameter
     /**
@@ -894,9 +894,25 @@ bool cci_param_typed<T, TM>::equals(const cci_param_if& rhs) const
 }
 
 template <typename T, cci_param_mutable_type TM>
-cci_data_type cci_param_typed<T, TM>::get_basic_type() const
+cci_param_data_category cci_param_typed<T, TM>::get_data_category() const
 {
-    return get_cci_value().basic_type();
+	switch (get_cci_value().category())
+	{
+    case CCI_BOOL_VALUE:
+        return CCI_BOOL_PARAM;
+	case CCI_NUMBER_VALUE:
+		return CCI_NUMBER_PARAM;
+	case CCI_REAL_VALUE:
+		return CCI_REAL_PARAM;
+	case CCI_STRING_VALUE:
+		return CCI_STRING_PARAM;
+	case CCI_LIST_VALUE:
+		return CCI_LIST_PARAM;
+	case CCI_NULL_VALUE:
+	case CCI_OTHER_VALUE:
+    default:
+		return CCI_OTHER_PARAM;
+	}
 }
 
 template <typename T, cci_param_mutable_type TM>

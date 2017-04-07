@@ -36,7 +36,7 @@ enum cci_param_mutable_type {
     /// Elaboration Time Parameter (Mutable up to end_of_elaboration)
     CCI_ELABORATION_TIME_PARAM,
     /// Vendor specific/other Parameter type
-    CCI_OTHER_PARAM
+    CCI_OTHER_MUTABILITY
 };
 
 CCI_CLOSE_NAMESPACE_
