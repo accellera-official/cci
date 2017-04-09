@@ -15,7 +15,7 @@ CCI_OPEN_NAMESPACE_
   /// (Non-private) broker implementation
   /**
    * 
-   * Global default Broker Implementation
+   * Default Broker declaration
    * See cci_broker_if for details of the implemented API.
    * 
    */
