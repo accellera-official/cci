@@ -122,11 +122,11 @@ CCI_OPEN_NAMESPACE_
     // boolean above)
     std::set<std::string> locked;
 
-    std::string m_name;
 
     /// Map to save the latest write originator for implicit param sets
     /// Typedef for internal implicit param originator map
     std::map<std::string, cci_originator> m_implicit_originator_map;
+    std::string m_name;
 
     template<class T>
     struct callback_obj {

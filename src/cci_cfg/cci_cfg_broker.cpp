@@ -33,8 +33,8 @@ CCI_OPEN_NAMESPACE_
 
 
 cci_cfg_broker::cci_cfg_broker(const std::string& name)
-    :         m_originator(cci_originator(m_name)),
-  m_name(cci_gen_unique_name(name.c_str()))
+   :  m_originator(cci_originator(m_name)),
+      m_name(cci_gen_unique_name(name.c_str()))
 { 
   sc_assert (name.length() > 0 && "Name must not be empty");
 }
