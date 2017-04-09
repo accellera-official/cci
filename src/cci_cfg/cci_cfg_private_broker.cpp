@@ -22,8 +22,8 @@
  */
 
 
-#include "cci_param_if.h"
-#include "cci_cfg_private_broker.h"
+#include "cci_cfg/cci_param_if.h"
+#include "cci_cfg/cci_cfg_private_broker.h"
 #include "cci_core/cci_name_gen.h"
 
 
@@ -45,7 +45,7 @@ CCI_OPEN_NAMESPACE_
 cci_cfg_private_broker::cci_cfg_private_broker(const std::string& name)
     : cci_cfg_broker(name)
 { 
-  assert (name.length() > 0 && "Name must not be empty");
+  sc_assert (name.length() > 0 && "Name must not be empty");
 }
 
 cci_cfg_private_broker::~cci_cfg_private_broker()

@@ -21,8 +21,8 @@
  * @author Guillaume Delbergue, GreenSocs / Ericsson
  */
 
-#include "cci_param_untyped.h"
-#include "cci_broker_handle.h"
+#include "cci_cfg/cci_param_untyped.h"
+#include "cci_cfg/cci_broker_handle.h"
 #include "cci_core/cci_name_gen.h"
 
 CCI_OPEN_NAMESPACE_
@@ -259,7 +259,7 @@ cci_originator cci_param_untyped::get_originator() const
 
 void cci_param_untyped::init()
 {
-    assert(m_init_called == false && "init() function called more than once!");
+    sc_assert(m_init_called == false && "init() function called more than once!");
     m_init_called = true;
 }
 

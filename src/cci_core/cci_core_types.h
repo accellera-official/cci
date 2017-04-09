@@ -59,3 +59,4 @@ enum cci_name_type {
 CCI_CLOSE_NAMESPACE_
 
 #endif
+

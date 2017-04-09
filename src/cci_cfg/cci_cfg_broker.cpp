@@ -22,10 +22,10 @@
  */
 
 
-#include "cci_broker_if.h"
-#include "cci_broker_manager.h"
-#include "cci_param_if.h"
-#include "cci_cfg_broker.h"
+#include "cci_cfg/cci_broker_if.h"
+#include "cci_cfg/cci_broker_manager.h"
+#include "cci_cfg/cci_param_if.h"
+#include "cci_cfg/cci_cfg_broker.h"
 #include "cci_core/cci_name_gen.h"
 #include "cci_cfg/cci_report_handler.h"
 
@@ -36,7 +36,7 @@ cci_cfg_broker::cci_cfg_broker(const std::string& name)
     :         m_originator(cci_originator(m_name)),
   m_name(cci_gen_unique_name(name.c_str()))
 { 
-  assert (name.length() > 0 && "Name must not be empty");
+  sc_assert (name.length() > 0 && "Name must not be empty");
 }
 
 cci_cfg_broker::~cci_cfg_broker()
@@ -174,7 +174,7 @@ cci_param_if* cci_cfg_broker::get_orig_param(
           m_param_registry.find(parname);
   if( iter != m_param_registry.end() ) {
     cci_param_if* ret = iter->second;
-    assert(ret != NULL && "This param shall be a cci_param_if!");
+    sc_assert(ret != NULL && "This param shall be a cci_param_if!");
     return ret;
   }
   else return NULL;
@@ -316,10 +316,10 @@ bool cci_cfg_broker::has_callbacks() const {
 }
 
 void cci_cfg_broker::add_param(cci_param_if* par) {
-  assert(par != NULL && "Unable to add a NULL parameter");
+  sc_assert(par != NULL && "Unable to add a NULL parameter");
   bool new_element = m_param_registry.insert(
           std::pair<std::string, cci_param_if*>(par->get_name(), par)).second;
-  assert(new_element && "The same parameter had been added twice!!");
+  sc_assert(new_element && "The same parameter had been added twice!!");
 
   std::map<std::string,cci_value>::const_iterator iter =
     m_unused_value_registry.find(par->get_name());
@@ -335,7 +335,7 @@ void cci_cfg_broker::add_param(cci_param_if* par) {
 }
 
 void cci_cfg_broker::remove_param(cci_param_if* par) {
-  assert(par != NULL && "Unable to remove a NULL parameter");
+  sc_assert(par != NULL && "Unable to remove a NULL parameter");
   m_param_registry.erase(par->get_name());
 
   std::map<std::string,cci_value>::const_iterator iter =
@@ -376,7 +376,7 @@ cci_param_untyped_handle cci_cfg_broker::get_param_handle(
         const cci_originator& originator) const {
     cci_param_untyped_handle param_handle = orig_param.create_param_handle(
             originator);
-    assert(param_handle.is_valid());
+    sc_assert(param_handle.is_valid());
     return param_handle;
 }
 

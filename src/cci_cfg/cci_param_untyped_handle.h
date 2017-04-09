@@ -26,7 +26,7 @@
 #include "cci_cfg/cci_value.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_mutable_types.h"
-#include "cci_param_callbacks.h"
+#include "cci_cfg/cci_param_callbacks.h"
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
