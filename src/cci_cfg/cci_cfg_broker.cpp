@@ -76,7 +76,7 @@ void cci_cfg_broker::set_initial_cci_value(
     } else {
       m_unused_value_registry[parname] = cci_value;
     }
-    m_implicit_originator_map.insert(
+    m_initial_value_originator_map.insert(
             std::pair<std::string, cci::cci_originator>(parname, originator));
   }
 }
@@ -117,8 +117,8 @@ cci_originator cci_cfg_broker::get_latest_write_originator(const std::string &pa
       return p->get_latest_write_originator();
   }
   std::map<std::string, cci_originator>::const_iterator it;
-  it = m_implicit_originator_map.find(parname);
-  if (it != m_implicit_originator_map.end()) {
+  it = m_initial_value_originator_map.find(parname);
+  if (it != m_initial_value_originator_map.end()) {
     return it->second;
   }
   // if the param doesn't exist, we should return 'unkown_originator'
