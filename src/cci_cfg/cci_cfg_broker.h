@@ -29,7 +29,7 @@ CCI_OPEN_NAMESPACE_
             const std::string &parname) const;
 
     /// Constructor
-    cci_cfg_broker(const std::string& name);
+    explicit cci_cfg_broker(const std::string& name);
 
     /// Destructor
     ~cci_cfg_broker();
