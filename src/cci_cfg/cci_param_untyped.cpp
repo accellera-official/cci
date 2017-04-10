@@ -111,6 +111,7 @@ bool cci_param_untyped::is_default_value() const
 bool cci_param_untyped::is_initial_value() const
 {
 //    return m_is_initial_value;
+  if (!m_broker_handle.param_exists(get_name())) return false;
   cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
   return init_value == get_cci_value();
 }
