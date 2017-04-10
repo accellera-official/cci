@@ -1014,10 +1014,12 @@ bool cci_param_typed<T, TM>::is_initial_value() {
 //  return m_is_initial_value;
   cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
   if(!init_value.is_null()) {
-    return init_value.get<T>() == m_value;
-  } else {
-    return false;
+    T i=init_value.try_get<T>();
+    if (i) {
+      return i == m_value;
+    }
   }
+  return false;
 }
 
 template <typename T, cci_param_mutable_type TM>

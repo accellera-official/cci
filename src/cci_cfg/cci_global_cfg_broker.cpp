@@ -4,7 +4,7 @@ CCI_OPEN_NAMESPACE_
 
 /// Internal pointer to the one global default fallback broker instance 
 /// used in the case the appropriate broker is not known (or is this one)
-cci_broker_if* singleton_broker = new cci_cfg_broker(__CCI_DEFAULT_BROKER_STRING__);
+cci_broker_if* singleton_broker = NULL;
 // We could send this name through cci_gen_unique_name, but if it's not unique,
 // somebody is playing games, and we should fail anyway!
 
@@ -19,6 +19,8 @@ cci_broker_if* singleton_broker = new cci_cfg_broker(__CCI_DEFAULT_BROKER_STRING
  * handle)
  */
 cci_broker_if& cci_get_global_broker() {
+  if (!singleton_broker)
+    singleton_broker = new cci_cfg_broker(__CCI_DEFAULT_BROKER_STRING__);
   return *singleton_broker;
 }
 
