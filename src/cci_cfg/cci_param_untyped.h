@@ -108,7 +108,10 @@ public:
      * @return false if the parameter received an initial value or its value has
      *         changed; otherwise, true
      */
-    virtual bool is_default_value() const;
+    virtual bool is_default_value() const =0; // note this is pure virtual here,
+                                              // as the function isn't possible
+                                              // without a typed instance (to
+                                              // have a defualt value).
 
 
     /// Indicates that the parameter received an initial value that has not since been modified.

@@ -102,12 +102,6 @@ cci_value_map cci_param_untyped::get_metadata() const
     return metadata;
 }
 
-bool cci_param_untyped::is_default_value() const
-{
-//  return m_is_default_value;
-  return get_default_cci_value() == get_cci_value();
-}
-
 bool cci_param_untyped::is_initial_value() const
 {
 //    return m_is_initial_value;

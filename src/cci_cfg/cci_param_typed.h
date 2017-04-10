@@ -249,10 +249,10 @@ public:
     cci_value get_default_cci_value() const;
 
     /// @copydoc cci_param_untyped::is_default_value()
-    bool is_default_value();
+    bool is_default_value() const;
 
     /// @copydoc cci_param_untyped::is_initial_value()
-    bool is_initial_value();
+    bool is_initial_value() const;
 
     /// @copydoc cci_param_untyped::lock(void * pwd)
     bool lock(void* pwd = NULL);
@@ -1004,18 +1004,20 @@ cci_value cci_param_typed<T, TM>::get_default_cci_value() const {
 }
 
 template <typename T, cci_param_mutable_type TM>
-bool cci_param_typed<T, TM>::is_default_value() {
+bool cci_param_typed<T, TM>::is_default_value() const
+{
 //  return m_is_default_value;
   return m_default_value == m_value;
 }
 
 template <typename T, cci_param_mutable_type TM>
-bool cci_param_typed<T, TM>::is_initial_value() {
+bool cci_param_typed<T, TM>::is_initial_value() const
+{
 //  return m_is_initial_value;
   cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
   if(!init_value.is_null()) {
-    T i=init_value.try_get<T>();
-    if (i) {
+    T i;
+    if (init_value.try_get<T>(i)) {
       return i == m_value;
     }
   }
