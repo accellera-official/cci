@@ -142,7 +142,9 @@ cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname) cons
     }
   }
 // If there is nothing in the database, return NULL.
-  return cci_value::from_json("null");
+  cci_value n;
+  n.set_null();
+  return n;
 }
 
 void cci_cfg_broker::lock_initial_value(const std::string &parname)
