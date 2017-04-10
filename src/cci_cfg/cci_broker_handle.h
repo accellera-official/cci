@@ -73,11 +73,11 @@ public:
     cci::cci_value get_initial_cci_value(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::get_unconsumed_initial_values()
-    std::vector<cci_name_value_pair> get_unconsumed_initial_values();
+    std::vector<cci_name_value_pair> get_unconsumed_initial_values() const;
 
     /// @copydoc cci_broker_if::get_unconsumed_initial_values(const cci_initial_value_predicate&)
     cci_initial_value_range get_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred);
+            const cci_initial_value_predicate &pred) const;
 
     /// @copydoc cci_broker_if::ignore_unconsumed_initial_values
     void ignore_unconsumed_initial_values(
@@ -91,16 +91,16 @@ public:
     void lock_initial_value(const std::string &parname);
 
     /// @copydoc cci_broker_if::get_cci_value
-    const cci::cci_value get_cci_value(const std::string &parname);
+    cci::cci_value get_cci_value(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::get_param_handle
-    cci_param_untyped_handle get_param_handle(const std::string &parname);
+    cci_param_untyped_handle get_param_handle(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::param_exists
-    bool param_exists(const std::string &parname);
+    bool param_exists(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::is_used
-    bool is_used(const std::string &parname);
+    bool is_used(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::add_param
     void add_param(cci_param_if *par);
@@ -110,11 +110,11 @@ public:
 
     /// @copydoc cci_broker_if::get_param_handles(const std::string&)
     const std::vector <cci_param_untyped_handle>
-    get_param_handles();
+    get_param_handles() const;
 
     /// @copydoc cci_broker_if::get_param_handles(cci_param_predicate&)
     cci_param_range
-    get_param_handles(cci_param_predicate& pred);
+    get_param_handles(cci_param_predicate& pred) const;
 
     /// @copydoc cci_broker_if::is_private_broker
     bool is_private_broker() const;
