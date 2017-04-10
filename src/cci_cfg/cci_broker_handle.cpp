@@ -77,8 +77,8 @@ void cci_broker_handle::set_initial_cci_value(
                                          m_originator);
 }
 
-const cci::cci_value cci_broker_handle::get_initial_cci_value(
-        const std::string &parname)
+cci::cci_value cci_broker_handle::get_initial_cci_value(
+        const std::string &parname) const
 {
     return m_orig_broker.get_initial_cci_value(parname);
 }

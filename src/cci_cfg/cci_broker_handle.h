@@ -70,7 +70,7 @@ public:
                                const cci::cci_value &cci_value);
 
     /// @copydoc cci_broker_if::get_initial_cci_value
-    const cci::cci_value get_initial_cci_value(const std::string &parname);
+    cci::cci_value get_initial_cci_value(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::get_unconsumed_initial_values()
     std::vector<cci_name_value_pair> get_unconsumed_initial_values();

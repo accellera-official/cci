@@ -108,7 +108,7 @@ public:
      * @return false if the parameter received an initial value or its value has
      *         changed; otherwise, true
      */
-    virtual bool is_default_value();
+    virtual bool is_default_value() const;
 
 
     /// Indicates that the parameter received an initial value that has not since been modified.
@@ -122,7 +122,7 @@ public:
      * @return fase if no initial value was supplied or the parameter's value has
      *         changed; otherwise, true
      */
-    virtual bool is_initial_value();
+    virtual bool is_initial_value() const;
 
     ///@}
 
@@ -139,7 +139,7 @@ public:
      * The originator is updated on successful calls to the following functions:
      * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
      */
-    const cci_originator& get_latest_write_originator() const;
+    cci_originator& get_latest_write_originator() const;
 
     ///@}
 
