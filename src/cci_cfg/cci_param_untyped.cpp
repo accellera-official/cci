@@ -32,11 +32,10 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
                                      cci_broker_handle broker_handle,
                                      const std::string& desc,
                                      const cci_originator& originator)
-: m_is_default_value(true), m_is_initial_value(false),
-  m_description(desc), m_init_called(false), m_locked(false),
-  m_lock_pwd(NULL), m_broker_handle(broker_handle),
-  m_value_originator(originator),
-  m_originator(originator)
+    : m_description(desc), m_init_called(false), m_locked(false),
+      m_lock_pwd(NULL), m_broker_handle(broker_handle),
+      m_value_originator(originator),
+      m_originator(originator)
 {
     if(name_type == CCI_ABSOLUTE_NAME) {
         m_name = name;
@@ -104,7 +103,6 @@ cci_value_map cci_param_untyped::get_metadata() const
 
 bool cci_param_untyped::is_initial_value() const
 {
-//    return m_is_initial_value;
   if (!m_broker_handle.param_exists(get_name())) return false;
   cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
   return init_value == get_cci_value();

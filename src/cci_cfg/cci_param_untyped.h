@@ -553,12 +553,6 @@ protected:
     void update_latest_write_originator(const cci_originator& originator) const;
 
 protected:
-    /// Is default value
-    mutable bool m_is_default_value;
-
-    /// Is initial value
-    mutable bool m_is_initial_value;
-
     /// Name
     std::string m_name;
 

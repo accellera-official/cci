@@ -706,10 +706,6 @@ private:
         if(m_post_write_callbacks.oncall) return;
         else m_post_write_callbacks.oncall=true;
 
-        // Disable default value and initial value on first write
-        m_is_initial_value = false;
-        m_is_default_value = false;
-
         // Write callbacks
         for (unsigned i = 0; i < m_post_write_callbacks.vec.size(); ++i) {
             typename cci_param_post_write_callback_handle<value_type>::type
@@ -1006,14 +1002,12 @@ cci_value cci_param_typed<T, TM>::get_default_cci_value() const {
 template <typename T, cci_param_mutable_type TM>
 bool cci_param_typed<T, TM>::is_default_value() const
 {
-//  return m_is_default_value;
   return m_default_value == m_value;
 }
 
 template <typename T, cci_param_mutable_type TM>
 bool cci_param_typed<T, TM>::is_initial_value() const
 {
-//  return m_is_initial_value;
   cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
   if(!init_value.is_null()) {
     T i;
@@ -1132,7 +1126,6 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
     cci_value init_value = broker.get_initial_cci_value(get_name());           \
     if(!init_value.is_null()) {                                                \
         m_value = init_value.get<T>();                                         \
-        m_is_initial_value = true;                                             \
         cci_originator init_value_originator =                                 \
             broker.get_latest_write_originator(get_name());                    \
         if(strcmp(init_value_originator.name(),                                \
@@ -1203,12 +1196,8 @@ void cci_param_typed<T, TM>::reset()
   
   if(!init_value.is_null()) {
     m_value = init_value.get<T>();
-    m_is_default_value = false;
-    m_is_initial_value = true;
   } else {
     m_value = get_default_value();
-    m_is_default_value = true;
-    m_is_initial_value = false;
   }
   update_latest_write_originator(get_originator());
 }
