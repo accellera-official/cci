@@ -81,10 +81,10 @@ void cci_cfg_broker::set_initial_cci_value(
   }
 }
 
-std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_initial_values()
+std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_initial_values() const
 {
   std::vector<cci_name_value_pair> unconsumed_initial_cci_values;
-  std::map<std::string, cci_value>::iterator iter;
+  std::map<std::string, cci_value>::const_iterator iter;
   for( iter = m_unused_value_registry.begin(); iter != m_unused_value_registry.end(); ++iter ) {
     unconsumed_initial_cci_values.push_back(std::make_pair(iter->first, iter->second));
   }
@@ -92,7 +92,7 @@ std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_initial_values()
 }
 
 cci_initial_value_range cci_cfg_broker::get_unconsumed_initial_values(
-        const cci_initial_value_predicate &pred)
+        const cci_initial_value_predicate &pred) const
 {
   return cci_initial_value_range(pred, get_unconsumed_initial_values());
 }
@@ -125,7 +125,7 @@ cci_originator cci_cfg_broker::get_latest_write_originator(const std::string &pa
   return cci_originator(__CCI_UNKNOWN_ORIGINATOR_STRING__);
 }
 
-const cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname)
+cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname) const
 {
   {
     std::map<std::string,cci_value>::const_iterator iter =
@@ -151,7 +151,7 @@ void cci_cfg_broker::lock_initial_value(const std::string &parname)
   locked.insert(parname);
 }
 
-const cci_value cci_cfg_broker::get_cci_value(const std::string &parname)
+cci_value cci_cfg_broker::get_cci_value(const std::string &parname) const
 {
   cci_param_if* p = get_orig_param(parname);
   if(p) {
@@ -192,7 +192,7 @@ cci_param_if* cci_cfg_broker::get_orig_param(
 
 cci_param_untyped_handle cci_cfg_broker::get_param_handle(
         const std::string &parname,
-        const cci_originator& originator)
+        const cci_originator& originator) const
 {
   cci_param_if* orig_param = get_orig_param(parname);
   if (orig_param) {
@@ -212,10 +212,10 @@ cci_param_untyped_handle cci_cfg_broker::get_param_handle(
   }
 }
 
-bool cci_cfg_broker::param_exists(const std::string &parname)
+bool cci_cfg_broker::param_exists(const std::string &parname) const
 {
   {
-    std::map<std::string,cci_param_if*>::iterator iter =
+    std::map<std::string,cci_param_if*>::const_iterator iter =
       m_param_registry.find(parname);
     if( iter != m_param_registry.end() ) {
       return true;
@@ -231,8 +231,9 @@ bool cci_cfg_broker::param_exists(const std::string &parname)
   return false;
 }
 
-bool cci_cfg_broker::is_used(const std::string &parname) {
-  std::map<std::string,cci_param_if*>::iterator iter =
+bool cci_cfg_broker::is_used(const std::string &parname) const
+{
+  std::map<std::string,cci_param_if*>::const_iterator iter =
           m_param_registry.find(parname);  
   if(iter != m_param_registry.end() ) {
     return true;
@@ -352,8 +353,9 @@ void cci_cfg_broker::remove_param(cci_param_if* par) {
   }
 }
 
-const std::vector<cci_param_untyped_handle>
-cci_cfg_broker::get_param_handles(const cci_originator& originator) {
+std::vector<cci_param_untyped_handle>
+cci_cfg_broker::get_param_handles(const cci_originator& originator) const
+{
   std::vector<cci_param_untyped_handle> param_handles;
   std::map<std::string,cci_param_if*>::const_iterator it;
   for (it=m_param_registry.begin(); it != m_param_registry.end(); ++it) {
@@ -365,7 +367,8 @@ cci_cfg_broker::get_param_handles(const cci_originator& originator) {
 
 cci_param_range cci_cfg_broker::get_param_handles(
         cci_param_predicate& pred,
-        const cci_originator& originator) {
+        const cci_originator& originator) const
+{
   return cci_param_range(pred,
         get_param_handles(originator));
 }
@@ -373,7 +376,8 @@ cci_param_range cci_cfg_broker::get_param_handles(
 
 cci_param_untyped_handle cci_cfg_broker::get_param_handle(
         cci_param_if& orig_param,
-        const cci_originator& originator) const {
+        const cci_originator& originator) const
+{
     cci_param_untyped_handle param_handle = orig_param.create_param_handle(
             originator);
     sc_assert(param_handle.is_valid());

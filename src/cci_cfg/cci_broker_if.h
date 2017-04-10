@@ -118,8 +118,8 @@ public:
      * @param parname    Full hierarchical parameter name.
      * @return           CCI value of the parameter's initial value. Empty value is returned when parameter is not existing or its initial value is not existing
      */
-    virtual const cci::cci_value
-    get_initial_cci_value(const std::string &parname) = 0;
+    virtual cci::cci_value
+    get_initial_cci_value(const std::string &parname) const = 0;
 
     /// Get unconsumed initial values
     /**
@@ -128,8 +128,7 @@ public:
      *
      * @return           Vector of unconsumed parameter's initial value.
      */
-    virtual std::vector<cci_name_value_pair>
-    get_unconsumed_initial_values() = 0;
+    virtual std::vector<cci_name_value_pair> get_unconsumed_initial_values() const = 0;
 
     /// Get unconsumed initial values with a user-defined predicate callback
     /**
@@ -140,7 +139,7 @@ public:
      * @return           Vector of unconsumed parameter's initial value.
      */
     virtual cci_initial_value_range get_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred) = 0;
+            const cci_initial_value_predicate &pred) const = 0;
 
     /// Ignore unconsumed initial values
     /**
@@ -192,7 +191,7 @@ public:
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  CCI value of the parameter
      */
-    virtual const cci::cci_value get_cci_value(const std::string &parname) = 0;
+    virtual cci::cci_value get_cci_value(const std::string &parname) const = 0;
     
     /// Get a parameter handle.
     /**
@@ -204,14 +203,14 @@ public:
      */
     virtual cci_param_untyped_handle
     get_param_handle(const std::string &parname,
-                     const cci_originator& originator) = 0;
+                     const cci_originator& originator) const = 0;
 
     /// Checks whether a parameter exists (implicit or explicit).
     /**
      * @param parname  Full hierarchical parameter name.
      * @return Whether the parameter < parname > exists in the registry.
      */
-    virtual bool param_exists(const std::string &parname) = 0;
+    virtual bool param_exists(const std::string &parname) const = 0;
 
     /// Returns if the parameter has ever been used.
     /**
@@ -222,7 +221,7 @@ public:
      * @param parname  Full hierarchical parameter name.
      * @return If the parameter is or has been used.
      */
-    virtual bool is_used(const std::string &parname) = 0;
+    virtual bool is_used(const std::string &parname) const = 0;
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
@@ -266,8 +265,8 @@ public:
      * @param pattern Specifies the parameters to be returned.
      * @return Vector with parameter handles.
      */
-    virtual const std::vector <cci_param_untyped_handle>
-    get_param_handles(const cci_originator& originator = cci_originator()) = 0;
+    virtual std::vector <cci_param_untyped_handle>
+    get_param_handles(const cci_originator& originator = cci_originator()) const = 0;
 
     /// Search parameters with a user-defined predicate callback
     /**
@@ -276,7 +275,7 @@ public:
      */
     virtual cci_param_range
     get_param_handles(cci_param_predicate& pred,
-                      const cci_originator& originator) = 0;
+                      const cci_originator& originator) const = 0;
 
     ///If this broker is a private broker (or handle)
     /**

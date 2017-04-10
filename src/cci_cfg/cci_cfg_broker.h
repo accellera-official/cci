@@ -23,11 +23,11 @@ CCI_OPEN_NAMESPACE_
   {
   public:
     cci_broker_handle create_broker_handle(
-            const cci_originator& originator);
+      const cci_originator& originator);
 
     cci_originator get_latest_write_originator(
-            const std::string &parname) const;
-
+      const std::string &parname) const;
+    
     /// Constructor
     explicit cci_cfg_broker(const std::string& name);
 
@@ -38,42 +38,44 @@ CCI_OPEN_NAMESPACE_
     const std::string &name() const;
 
     /// Return the name of the broker
-    const cci_value get_initial_cci_value(const std::string &parname);
+    cci_value get_initial_cci_value(const std::string &parname) const;
 
    /// Return the name of the broker
-    void set_initial_cci_value(const std::string &parname,
-                               const cci_value &cci_value,
-                               const cci_originator& originator);
+    void set_initial_cci_value(
+      const std::string &parname,
+      const cci_value &cci_value,
+      const cci_originator& originator);
 
     /// Lock parameter
     void lock_initial_value(const std::string &parname);
 
     /// Get a full list of unconsumed initial values.
-    std::vector<cci_name_value_pair> get_unconsumed_initial_values();
+    std::vector<cci_name_value_pair> get_unconsumed_initial_values() const;
 
     /// get vector of initial values
     cci_initial_value_range get_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred);
+      const cci_initial_value_predicate &pred) const;
 
     void ignore_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred);
+      const cci_initial_value_predicate &pred);
 
     /// Get current cci_value
-    const cci_value get_cci_value(const std::string &parname);
+    cci_value get_cci_value(const std::string &parname) const;
     
     /// return a handle with which to access a parameter
-    cci_param_untyped_handle get_param_handle(const std::string &parname,
-                                              const cci_originator& originator);
+    cci_param_untyped_handle get_param_handle(
+      const std::string &parname,
+      const cci_originator& originator) const;
 
-    const std::vector<cci_param_untyped_handle> get_param_handles(
-            const cci_originator& originator);
+    std::vector<cci_param_untyped_handle> get_param_handles(
+      const cci_originator& originator) const;
 
     cci_param_range get_param_handles(cci_param_predicate& pred,
-                                      const cci_originator& originator);
+                                      const cci_originator& originator) const;
     
-    bool param_exists(const std::string &parname);
+    bool param_exists(const std::string &parname) const;
     
-    bool is_used(const std::string &parname);
+    bool is_used(const std::string &parname) const;
 
     void add_param(cci_param_if* par);
 

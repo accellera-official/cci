@@ -42,7 +42,7 @@ CCI_OPEN_NAMESPACE_
     ~cci_cfg_private_broker();
 
     /// Return the name of the broker
-    const cci_value get_initial_cci_value(const std::string &parname);
+    cci_value get_initial_cci_value(const std::string &parname) const;
 
    /// Return the name of the broker
     void set_initial_cci_value(const std::string &parname,
@@ -53,15 +53,15 @@ CCI_OPEN_NAMESPACE_
     void lock_initial_value(const std::string &parname);
 
     /// Get current cci_value
-    const cci_value get_cci_value(const std::string &parname);
+    cci_value get_cci_value(const std::string &parname) const;
     
     /// return a handle with which to access a parameter
     cci_param_untyped_handle get_param_handle(const std::string &parname,
-                                              const cci_originator& originator);
+                                              const cci_originator& originator) const;
 
-    bool param_exists(const std::string &parname);
+    bool param_exists(const std::string &parname) const;
     
-    bool is_used(const std::string &parname);
+    bool is_used(const std::string &parname) const;
 
     void add_param(cci_param_if* par);
 
