@@ -32,7 +32,7 @@ CCI_OPEN_NAMESPACE_
 #define CHOOSEFUNCTION(method, parname, ...)                        \
   if (expose.find(parname) != expose.end()) {                           \
     if (!is_global_broker()) {                                          \
-      cci_broker_handle p=cci_broker_manager::get_parent_broker(m_originator); \
+      cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator()); \
       return p.method(__VA_ARGS__);                                     \
     } else {                                                            \
       return cci_cfg_broker::method(__VA_ARGS__ ORIGINATOR);            \

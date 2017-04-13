@@ -20,8 +20,7 @@ CCI_OPEN_NAMESPACE_
    * 
    */
   class cci_cfg_private_broker :
-    public cci_cfg_broker,
-    public cci_broker_manager
+public cci_cfg_broker
   {
   public:
 // a set of perameters that should be exposed up the broker stack
