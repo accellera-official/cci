@@ -108,7 +108,7 @@ bool cci_param_untyped::is_initial_value() const
   return init_value == get_cci_value();
 }
 
-cci_originator& cci_param_untyped::get_latest_write_originator() const
+const cci_originator& cci_param_untyped::get_latest_write_originator() const
 {
     return m_value_originator;
 }

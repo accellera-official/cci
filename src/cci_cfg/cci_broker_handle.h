@@ -70,7 +70,7 @@ public:
                                const cci::cci_value &cci_value);
 
     /// @copydoc cci_broker_if::get_initial_cci_value
-    cci::cci_value get_initial_cci_value(const std::string &parname) const;
+    cci_value get_initial_cci_value(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::get_unconsumed_initial_values()
     std::vector<cci_name_value_pair> get_unconsumed_initial_values() const;
@@ -109,8 +109,7 @@ public:
     void remove_param(cci_param_if *par);
 
     /// @copydoc cci_broker_if::get_param_handles(const std::string&)
-    const std::vector <cci_param_untyped_handle>
-    get_param_handles() const;
+    std::vector <cci_param_untyped_handle> get_param_handles() const;
 
     /// @copydoc cci_broker_if::get_param_handles(cci_param_predicate&)
     cci_param_range

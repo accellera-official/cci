@@ -142,7 +142,7 @@ void cci_broker_handle::remove_param(cci_param_if *par)
     m_orig_broker.remove_param(par);
 }
 
-const std::vector <cci_param_untyped_handle> cci_broker_handle::get_param_handles() const
+std::vector <cci_param_untyped_handle> cci_broker_handle::get_param_handles() const
 {
     return m_orig_broker.get_param_handles(m_originator);
 }

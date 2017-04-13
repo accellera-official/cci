@@ -142,9 +142,7 @@ cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname) cons
     }
   }
 // If there is nothing in the database, return NULL.
-  cci_value n;
-  n.set_null();
-  return n;
+  return cci_value();
 }
 
 void cci_cfg_broker::lock_initial_value(const std::string &parname)
@@ -237,11 +235,7 @@ bool cci_cfg_broker::is_used(const std::string &parname) const
 {
   std::map<std::string,cci_param_if*>::const_iterator iter =
           m_param_registry.find(parname);  
-  if(iter != m_param_registry.end() ) {
-    return true;
-  } else {
-    return false;
-  }
+  return (iter != m_param_registry.end() );
 }
 
 cci_param_create_callback_handle
