@@ -77,6 +77,8 @@ CCI_OPEN_NAMESPACE_
     
     bool is_used(const std::string &parname) const;
 
+    bool has_initial_value(const std::string &parname) const;
+
     void add_param(cci_param_if* par);
 
     void remove_param(cci_param_if* par);

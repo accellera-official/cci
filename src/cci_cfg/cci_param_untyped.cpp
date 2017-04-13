@@ -103,7 +103,7 @@ cci_value_map cci_param_untyped::get_metadata() const
 
 bool cci_param_untyped::is_initial_value() const
 {
-  if (!m_broker_handle.param_exists(get_name())) return false;
+  if (!m_broker_handle.has_initial_value(get_name())) return false;
   cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
   return init_value == get_cci_value();
 }

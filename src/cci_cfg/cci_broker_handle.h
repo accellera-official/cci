@@ -102,6 +102,9 @@ public:
     /// @copydoc cci_broker_if::is_used
     bool is_used(const std::string &parname) const;
 
+    /// @copydoc cci_broker_if::has_initial_value
+    bool has_initial_value(const std::string &parname) const;
+
     /// @copydoc cci_broker_if::add_param
     void add_param(cci_param_if *par);
 

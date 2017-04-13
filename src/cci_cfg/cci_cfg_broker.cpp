@@ -238,6 +238,25 @@ bool cci_cfg_broker::is_used(const std::string &parname) const
   return (iter != m_param_registry.end() );
 }
 
+bool cci_cfg_broker::has_initial_value(const std::string &parname) const
+{
+  {
+    std::map<std::string,cci_value>::const_iterator iter =
+      m_used_value_registry.find(parname);
+    if (iter != m_used_value_registry.end() ) {
+      return true;
+    }
+  }
+  {
+    std::map<std::string,cci_value>::const_iterator iter =
+      m_unused_value_registry.find(parname);
+    if (iter != m_unused_value_registry.end() ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 cci_param_create_callback_handle
 cci_cfg_broker::register_create_callback(
         const cci_param_create_callback &cb,

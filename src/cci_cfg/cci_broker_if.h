@@ -223,6 +223,13 @@ public:
      */
     virtual bool is_used(const std::string &parname) const = 0;
 
+    /// Returns if the parameter has an initial value
+    /**
+     * @param parname  Full hierarchical parameter name.
+     * @return If the parameter has an initial value set
+     */
+    virtual bool has_initial_value(const std::string &parname) const = 0;
+
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
 

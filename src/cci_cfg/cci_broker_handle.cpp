@@ -132,6 +132,11 @@ bool cci_broker_handle::is_used(const std::string &parname) const
     return m_orig_broker.is_used(parname);
 }
 
+bool cci_broker_handle::has_initial_value(const std::string &parname) const
+{
+    return m_orig_broker.has_initial_value(parname);
+}
+
 void cci_broker_handle::add_param(cci_param_if *par)
 {
     m_orig_broker.add_param(par);
