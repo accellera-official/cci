@@ -202,8 +202,8 @@ std::ostream& operator<<( std::ostream& os, cci_value_cref const& v )
   if( v.is_null() ) {
     os << "null";
   } else {
-    rapidjson::StdOutputStream wos(os);
-    rapidjson::Writer<rapidjson::StdOutputStream> writer(wos);
+    rapidjson::OStreamWrapper wos(os);
+    rapidjson::Writer<rapidjson::OStreamWrapper> writer(wos);
     DEREF(v).Accept( writer );
   }
   return os;
@@ -314,7 +314,7 @@ std::istream& operator>>( std::istream& is, cci_value_ref v )
 {
   sc_assert( PIMPL(v) );
   json_document d;
-  rapidjson::StdInputStream wis(is);
+  rapidjson::IStreamWrapper wis(is);
 
   d.ParseStream< rapidjson::kParseStopWhenDoneFlag >( wis );
   // VALUE_ASSERT( !d.HasParseError(), "cci_value stream extraction failed" );
