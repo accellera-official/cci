@@ -31,6 +31,8 @@
 
 CCI_OPEN_NAMESPACE_
 
+namespace /* anonymous */ {
+
 typedef rapidjson::CrtAllocator allocator_type;
 typedef rapidjson::UTF8<>       encoding_type;
 typedef rapidjson::GenericValue<encoding_type, allocator_type>    json_value;
@@ -43,6 +45,36 @@ typedef json_value impl_type;
 // helper to convert to wrapper implementation
 static inline impl_type* impl_cast(void* p)
   { return static_cast<impl_type*>(p); }
+
+// simple memory pool for impl wrapper objects (non-deallocating)
+//  - this pool handles the "top-level" objects only
+//  - RapidJSON allocation is still done via a plain malloc/free allocator
+struct impl_pool
+{
+  static impl_type* allocate()
+  {
+    impl_type* ret = free_list_;
+    if (free_list_ != NULL) {
+      free_list_ = *reinterpret_cast<impl_type**>(free_list_);
+      new (ret) impl_type(); // initialize JSON object (placement new)
+    } else {
+      ret = new impl_type();
+    }
+    return ret;
+  }
+
+  static void deallocate(impl_type* elem) {
+    if (elem == NULL) return; // delete NULL is no-op
+    elem->~impl_type();       // release internal memory (not pooled)
+     *reinterpret_cast<impl_type**>(elem) = free_list_;
+    free_list_ = elem;
+  }
+private:
+  static impl_type* free_list_;
+};
+impl_type* impl_pool::free_list_;
+
+} // anonymous namespace
 
 #define PIMPL( x ) \
   (impl_cast((x).pimpl_))
@@ -505,14 +537,14 @@ cci_value_map_ref::push_entry( const char * key
   Kind::do_init()                                      \
   {                                                    \
     sc_assert( !own_pimpl_ );                          \
-    pimpl_ = own_pimpl_ = new impl_type();             \
+    pimpl_ = own_pimpl_ = impl_pool::allocate();       \
     WRAPPER_DO_INIT_( Kind );                          \
     return THIS;                                       \
   }                                                    \
                                                        \
   Kind::~Kind()                                        \
   {                                                    \
-    delete impl_cast(own_pimpl_);                      \
+    impl_pool::deallocate(impl_cast(own_pimpl_));      \
   }
 
 DEFINE_WRAPPER_(cci_value)
