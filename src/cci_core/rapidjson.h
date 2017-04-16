@@ -56,6 +56,9 @@
 #define RAPIDJSON_PARSE_DEFAULT_FLAGS \
   ::RAPIDJSON_NAMESPACE::kParseFullPrecisionFlag
 
+// don't use explicit member iterator class
+#define RAPIDJSON_NOMEMBERITERATORCLASS 1
+
 RAPIDJSON_NAMESPACE_BEGIN
 
 struct AssertException

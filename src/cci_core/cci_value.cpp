@@ -36,12 +36,17 @@ namespace /* anonymous */ {
 typedef rapidjson::CrtAllocator allocator_type;
 typedef rapidjson::UTF8<>       encoding_type;
 typedef rapidjson::GenericValue<encoding_type, allocator_type>    json_value;
+typedef rapidjson::GenericMember<encoding_type, allocator_type>   json_member;
 typedef rapidjson::GenericDocument<encoding_type, allocator_type> json_document;
+
+typedef json_value::ValueIterator   json_value_iter;
+typedef json_value::MemberIterator  json_member_iter;
 
 static allocator_type json_allocator;
 
 // wrapper implementation is simply a RapidJSON value
 typedef json_value impl_type;
+
 // helper to convert to wrapper implementation
 static inline impl_type* impl_cast(void* p)
   { return static_cast<impl_type*>(p); }
@@ -397,6 +402,69 @@ cci_value_string_ref::swap(this_type & that)
 }
 
 // ----------------------------------------------------------------------------
+// cci_value_list/map::(const_)iterator
+
+namespace detail {
+
+struct value_iterator_list_tag {};
+struct value_iterator_map_tag {};
+
+template<typename T> struct value_iterator_tag;
+template<> struct value_iterator_tag<cci_value_cref> : value_iterator_list_tag {};
+template<> struct value_iterator_tag<cci_value_ref>  : value_iterator_list_tag {};
+template<> struct value_iterator_tag<cci_value_map_elem_cref> : value_iterator_map_tag {};
+template<> struct value_iterator_tag<cci_value_map_elem_ref>  : value_iterator_map_tag {};
+
+template<typename T>
+struct value_iterator_impl_json
+{
+  typedef void* impl_type; // type-punned pointer for now
+  typedef std::ptrdiff_t difference_type;
+
+  static impl_type advance(impl_type it, difference_type n, value_iterator_list_tag)
+    { return static_cast<json_value_iter>(it) + n; }
+
+  static impl_type advance(impl_type it, difference_type n, value_iterator_map_tag)
+    { return static_cast<json_member_iter>(it) + n; }
+
+  static difference_type distance(impl_type a, impl_type b, value_iterator_list_tag)
+    { return static_cast<json_value_iter>(b) - static_cast<json_value_iter>(a); }
+
+  static difference_type distance(impl_type a, impl_type b, value_iterator_map_tag)
+    { return static_cast<json_member_iter>(b) - static_cast<json_member_iter>(a); }
+};
+
+template<typename T>
+typename value_iterator_impl<T>::impl_type
+value_iterator_impl<T>::advance(difference_type n) const
+  { return value_iterator_impl_json<T>::advance( impl_, n, value_iterator_tag<T>() ); }
+
+template<typename T>
+int value_iterator_impl<T>::compare(impl_type other_impl) const
+{
+  // comparing internal pointers is sufficient here
+  if (impl_ < other_impl) return -1;
+  if (impl_ > other_impl) return 1;
+  return 0;
+}
+
+template<typename T>
+typename value_iterator_impl<T>::difference_type
+value_iterator_impl<T>::distance(impl_type that_impl) const
+  { return value_iterator_impl_json<T>::distance( that_impl, impl_, value_iterator_tag<T>() ); }
+
+template class value_iterator_impl<cci_value_cref>;
+template class value_iterator_impl<cci_value_ref>;
+template class value_iterator_impl<cci_value_map_elem_cref>;
+template class value_iterator_impl<cci_value_map_elem_ref>;
+} // namespace detail
+
+template class cci_value_iterator<cci_value_cref>;
+template class cci_value_iterator<cci_value_ref>;
+template class cci_value_iterator<cci_value_map_elem_cref>;
+template class cci_value_iterator<cci_value_map_elem_ref>;
+
+// ----------------------------------------------------------------------------
 // cci_value_list_cref
 
 cci_value_list_cref::size_type
@@ -410,6 +478,14 @@ cci_value_list_cref::capacity() const
 cci_value_cref
 cci_value_list_cref::operator[]( size_type index ) const
   { return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] ); }
+
+cci_value_list_cref::const_iterator
+cci_value_list_cref::cbegin() const
+  { return const_iterator(THIS->Begin()); }
+
+cci_value_list_cref::const_iterator
+cci_value_list_cref::cend() const
+  { return const_iterator(THIS->End()); }
 
 // ----------------------------------------------------------------------------
 // cci_value_list_ref
@@ -446,8 +522,80 @@ cci_value_list_ref::push_back( const_reference value )
   return *this;
 }
 
+cci_value_list_ref::iterator
+cci_value_list_ref::begin()
+  { return iterator(THIS->Begin()); }
+
+cci_value_list_ref::iterator
+cci_value_list_ref::end()
+  { return iterator(THIS->End()); }
+
+cci_value_list_ref::iterator
+cci_value_list_ref::insert( const_iterator pos, const_reference value )
+{
+  return insert(pos, 1u, value);
+}
+
+cci_value_list_ref::iterator
+cci_value_list_ref::insert( const_iterator pos, size_type count, const_reference value )
+{
+  // RapidJSON doesn't support Insert, yet
+  json_value_iter json_pos = static_cast<json_value_iter>(pos.raw());
+  size_type       offset   = json_pos - THIS->Begin();
+
+  VALUE_ASSERT( offset < THIS->Size(), "invalid insertion position" );
+
+  if (!count) // nothing to insert
+    return iterator(json_pos);
+
+  json_value new_val(rapidjson::kArrayType);
+  new_val.Reserve(static_cast<rapidjson::SizeType>(size() + count), json_allocator);
+
+  json_value_iter it = THIS->Begin();
+  while ( it != json_pos ) // move prefix values into new array
+    new_val.PushBack(*it++, json_allocator);
+
+  while( count-- > 0u ) { // copy values at new position
+    json_value v;
+    if( PIMPL(value) )
+      v.CopyFrom( DEREF(value), json_allocator );
+    new_val.PushBack( v, json_allocator );
+  }
+
+  while ( it != THIS->End() ) // move suffix values into new array
+    new_val.PushBack(*it++, json_allocator);
+
+  THIS->Swap( new_val ); // update current value
+  return iterator(THIS->Begin() + offset); // iterator to first inserted element
+}
+
+cci_value_list_ref::iterator
+cci_value_list_ref::erase(const_iterator pos)
+{
+  json_value_iter json_pos = static_cast<json_value_iter>(pos.raw());
+  return iterator( THIS->Erase(json_pos) );
+}
+
+cci_value_list_ref::iterator
+cci_value_list_ref::erase(const_iterator first, const_iterator last)
+{
+  json_value_iter json_first = static_cast<json_value_iter>(first.raw());
+  json_value_iter json_last  = static_cast<json_value_iter>(last.raw());
+  return iterator( THIS->Erase(json_first, json_last) );
+}
+
+void
+cci_value_list_ref::pop_back()
+  { THIS->PopBack(); }
+
 // ----------------------------------------------------------------------------
 // cci_value_map_cref
+
+cci_value_map_elem_cref::cci_value_map_elem_cref(void* raw)
+  : key  ( &static_cast<json_member*>(raw)->name )
+  , value( &static_cast<json_member*>(raw)->value )
+  , pimpl_(raw)
+{}
 
 cci_value_map_cref::size_type
 cci_value_map_cref::size() const
@@ -471,8 +619,22 @@ cci_value_map_cref::do_lookup( const char* key, size_type keylen
   return const_cast<json_value*>(&it->value);
 }
 
+cci_value_map_cref::const_iterator
+cci_value_map_cref::cbegin() const
+  { return const_iterator(THIS->MemberBegin()); }
+
+cci_value_map_cref::const_iterator
+cci_value_map_cref::cend() const
+  { return const_iterator(THIS->MemberEnd()); }
+
 // ----------------------------------------------------------------------------
 // cci_value_map_ref
+
+cci_value_map_elem_ref::cci_value_map_elem_ref(void* raw)
+  : key  ( &static_cast<json_member*>(raw)->name )
+  , value( &static_cast<json_member*>(raw)->value )
+  , pimpl_(raw)
+{}
 
 void
 cci_value_map_ref::swap(this_type & that)
@@ -498,6 +660,49 @@ cci_value_map_ref::do_push( const char * key, size_type keylen
     v.CopyFrom( DEREF(value), json_allocator );
   THIS->AddMember( k, v, json_allocator );
   return *this;
+}
+
+cci_value_map_ref::iterator
+cci_value_map_ref::begin()
+  { return iterator(THIS->MemberBegin()); }
+
+cci_value_map_ref::iterator
+cci_value_map_ref::end()
+  { return iterator(THIS->MemberEnd()); }
+
+cci_value_map_ref::size_type
+cci_value_map_ref::do_erase(const char* key, size_type keylen)
+{
+  json_value json_key(rapidjson::StringRef(key, keylen));
+  size_type  count = 0;
+  for( json_member_iter it = THIS->FindMember(json_key);
+       it != THIS->MemberEnd(); it = THIS->FindMember(json_key) )
+  {
+    THIS->EraseMember(it);
+    count++;
+  }
+  return count;
+}
+
+cci_value_map_ref::iterator
+cci_value_map_ref::erase(const_iterator pos)
+{
+  json_member_iter json_pos = static_cast<json_member_iter>(pos.raw());
+  return iterator( THIS->EraseMember(json_pos) );
+}
+
+cci_value_map_ref::iterator
+cci_value_map_ref::erase(const_iterator first, const_iterator last)
+{
+  json_member_iter json_first = static_cast<json_member_iter>(first.raw());
+  json_member_iter json_last  = static_cast<json_member_iter>(last.raw());
+  return iterator( THIS->EraseMember(json_first, json_last) );
+}
+
+cci_value_map_ref::iterator
+cci_value_map_ref::do_find(const char* key, size_type keylen) const
+{
+  return iterator(THIS->FindMember(rapidjson::StringRef(key, keylen)));
 }
 
 // ----------------------------------------------------------------------------

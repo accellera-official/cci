@@ -21,6 +21,7 @@
 #define CCI_CCI_VALUE_H_INCLUDED_
 
 #include "cci_core/cci_core_types.h"
+#include "cci_core/cci_value_iterator.h"
 #include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
 #include <cstring> // std::strlen
@@ -48,6 +49,8 @@ class cci_value_list_ref;
 class cci_value_map;
 class cci_value_map_cref;
 class cci_value_map_ref;
+class cci_value_map_elem_ref;
+class cci_value_map_elem_cref;
 
 template<typename T> struct cci_value_converter;
 
@@ -100,6 +103,8 @@ class cci_value_cref
   friend class cci_value_list_ref;
   friend class cci_value_map_cref;
   friend class cci_value_map_ref;
+  friend class cci_value_map_elem_cref;
+  template<typename U> friend class detail::value_iterator_impl;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
   friend std::ostream& operator<<( std::ostream&, cci_value_cref const & );
 
@@ -110,6 +115,9 @@ protected:
     : pimpl_(i) {}
 
 public:
+  typedef cci_value      value_type;
+  typedef cci_value_cref const_reference;
+  typedef cci_value_ref  reference;
 
   /** @name Type queries */
   ///@{
@@ -231,6 +239,8 @@ class cci_value_ref
   friend class cci_value_string_ref;
   friend class cci_value_list_ref;
   friend class cci_value_map_ref;
+  friend class cci_value_map_elem_ref;
+  template<typename U> friend class detail::value_iterator_impl;
   friend std::istream& operator>>( std::istream&, cci_value_ref );
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
@@ -365,6 +375,8 @@ class cci_value_string_cref
   : public cci_value_cref
 {
   friend class cci_value_cref;
+  friend class cci_value_map_elem_cref;
+  friend class cci_value_map_elem_ref;
   typedef cci_value_cref        base_type;
   typedef cci_value_string_cref this_type;
 
@@ -486,6 +498,16 @@ cci_value_ref::set_string(std::string const & s)
 
 // --------------------------------------------------------------------------
 
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+// iterator implementations in cci_value.cpp
+namespace detail {
+extern template class value_iterator_impl<cci_value_ref>;
+extern template class value_iterator_impl<cci_value_cref>;
+} // namespace detail
+extern template class cci_value_iterator<cci_value_cref>;
+extern template class cci_value_iterator<cci_value_ref>;
+///@endcond
+
 /// reference to constant cci_value list value
 class cci_value_list_cref
   : public cci_value_cref
@@ -499,9 +521,11 @@ protected:
     : base_type(i) {}
 
 public:
-  typedef size_t         size_type;
-  typedef cci_value_cref const_reference;
-  typedef cci_value_ref  reference;
+  typedef size_t size_type;
+  typedef cci_value_iterator<reference>         iterator;
+  typedef cci_value_iterator<const_reference>   const_iterator;
+  typedef std::reverse_iterator<iterator>       reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
   /** @name list queries */
   //@{
@@ -517,8 +541,33 @@ public:
   const_reference operator[]( size_type index ) const;
   const_reference at( size_type index ) const
     { return (*this)[index]; }
+  const_reference front() const
+    { return (*this)[0]; }
+
+  const_reference back() const
+    { return (*this)[size() - 1]; }
   //@}
 
+  /** @name (constant) iterator interface */
+  //@{
+  const_iterator cbegin() const;
+  const_iterator cend() const;
+
+  const_iterator begin() const
+    { return cbegin(); }
+  const_iterator end() const
+    { return cend(); }
+
+  const_reverse_iterator rbegin() const
+    { return crbegin(); }
+  const_reverse_iterator rend() const
+    { return crend(); }
+
+  const_reverse_iterator crbegin() const
+    { return const_reverse_iterator(cend()); }
+  const_reverse_iterator crend() const
+    { return const_reverse_iterator(cbegin()); }
+  //@}
 private:
   // exclude non-list value functions
   using base_type::get_bool;
@@ -570,8 +619,32 @@ public:
   using base_type::at;
   reference at( size_type index )
     { return (*this)[index]; }
+
+  using base_type::front;
+  reference front()
+    { return (*this)[0]; }
+
+  using base_type::back;
+  reference back()
+    { return (*this)[size() - 1]; }
   //@}
 
+  /** @name (mutable) iterator interface */
+  //@{
+  using base_type::begin;
+  iterator begin();
+
+  using base_type::end;
+  iterator end();
+
+  using base_type::rbegin;
+  reverse_iterator rbegin()
+    { return reverse_iterator(end()); }
+
+  using base_type::rend;
+  reverse_iterator rend()
+    { return reverse_iterator(begin()); }
+  //@}
 
   /** @name push new elements to the end of the list */
   //@{
@@ -585,10 +658,23 @@ public:
                      , CCI_VALUE_REQUIRES_CONVERTER_(T)
 #endif // CCI_DOXYGEN_IS_RUNNING
                      );
-
   //@}
 
-  // TODO: add iterator interface
+  /** @name insert elements into the list */
+  //@{
+  iterator insert( const_iterator pos, const_reference value );
+  iterator insert( const_iterator pos, size_type count, const_reference value );
+  template< class InputIt > // TODO: not implemented, yet
+  iterator insert( const_iterator pos, InputIt first, InputIt last );
+  //@}
+
+  /** @name erase elements from the list */
+  //@{
+  iterator erase( const_iterator pos );
+  iterator erase( const_iterator first, const_iterator last );
+
+  void pop_back();
+  //@}
 };
 
 inline cci_value_list_ref
@@ -609,6 +695,65 @@ cci_value_ref::get_list()
 
 // --------------------------------------------------------------------------
 
+/// reference to a constant cci_value map element
+class cci_value_map_elem_cref
+{
+  template<typename U> friend class detail::value_iterator_impl;
+  typedef detail::value_ptr<cci_value_map_elem_cref> proxy_ptr;
+
+  typedef void value_type; // TODO: add  explicit value_type 
+public:
+  typedef cci_value_map_elem_cref const_reference;
+  typedef cci_value_map_elem_ref  reference;
+
+  /// constant reference to the element's key
+  cci_value_string_cref key;
+  /// constant reference to the element's value
+  cci_value_cref        value;
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
+protected:
+  typedef void* impl_type; // use type-punned pointer for now
+  impl_type pimpl_;
+  cci_value_map_elem_cref(impl_type i = NULL);
+};
+
+/// reference to a mutable cci_value map element
+class cci_value_map_elem_ref
+{
+  template<typename U> friend class detail::value_iterator_impl;
+  typedef detail::value_ptr<cci_value_map_elem_ref> proxy_ptr;
+  typedef void value_type; // TODO: add  explicit value_type 
+public:
+  typedef cci_value_map_elem_cref const_reference;
+  typedef cci_value_map_elem_ref  reference;
+
+  /// constant reference to the element's key
+  cci_value_string_cref key;
+  /// mutable reference to the element's value
+  cci_value_ref         value;
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
+protected:
+  typedef void* impl_type; // use type-punned pointer for now
+  impl_type pimpl_;
+  cci_value_map_elem_ref(impl_type i = NULL);
+};
+
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+// iterator implementations in cci_value.cpp
+namespace detail {
+extern template class value_iterator_impl<cci_value_map_elem_cref>;
+extern template class value_iterator_impl<cci_value_map_elem_ref>;
+} // namespace detail
+extern template class cci_value_iterator<cci_value_map_elem_cref>;
+extern template class cci_value_iterator<cci_value_map_elem_ref>;
+///@endcond
+
 /// reference to constant cci_value map
 class cci_value_map_cref
   : public cci_value_cref
@@ -622,9 +767,11 @@ protected:
     : base_type(i) {}
 
 public:
-  typedef size_t         size_type;
-  typedef cci_value_cref const_reference;
-  typedef cci_value_ref  reference;
+  typedef size_t size_type;
+  typedef cci_value_iterator<cci_value_map_elem_ref>  iterator;
+  typedef cci_value_iterator<cci_value_map_elem_cref> const_iterator;
+  typedef std::reverse_iterator<iterator>             reverse_iterator;
+  typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
   /** @name map queries */
   //@{
@@ -657,7 +804,26 @@ public:
     { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
   ///@}
 
-  // TODO: add iterator interface
+  /** @name (constant) iterator interface */
+  //@{
+  const_iterator cbegin() const;
+  const_iterator cend() const;
+
+  const_iterator begin() const
+    { return cbegin(); }
+  const_iterator end() const
+    { return cend(); }
+
+  const_reverse_iterator rbegin() const
+    { return crbegin(); }
+  const_reverse_iterator rend() const
+    { return crend(); }
+
+  const_reverse_iterator crbegin() const
+    { return const_reverse_iterator(cend()); }
+  const_reverse_iterator crend() const
+    { return const_reverse_iterator(cbegin()); }
+  //@}
 
 protected:
   impl_type do_lookup( const char* key, size_type keylen
@@ -710,6 +876,23 @@ public:
     { return reference( do_lookup( key.c_str(), key.length() ) ); }
   //@}
 
+  /** @name (mutable) iterator interface */
+  //@{
+  using base_type::begin;
+  iterator begin();
+
+  using base_type::end;
+  iterator end();
+
+  using base_type::rbegin;
+  reverse_iterator rbegin()
+    { return reverse_iterator(end()); }
+
+  using base_type::rend;
+  reverse_iterator rend()
+    { return reverse_iterator(begin()); }
+  //@}
+
   ///@name map element addition
   //@{
   /// add value obtained from a constant cci_value reference
@@ -739,12 +922,39 @@ public:
     { return do_push( key.c_str(), key.length(), value ); }
   //@}
 
-  // TODO: add iterator interface
+  /** @name find elements in the map
+   *
+   * These overloads return an iterator (or const_iterator) pointing
+   * to an element in the map and \ref end() otherwise.
+   */
+  //@{
+  iterator find( const char* key )
+    { return do_find( key, std::strlen(key) ); }
+  iterator find( const std::string& key )
+    { return do_find( key.c_str(), key.length() ); }
+  const_iterator find( const char* key ) const
+    { return do_find( key, std::strlen(key) ); }
+  const_iterator find( const std::string& key ) const
+    { return do_find( key.c_str(), key.length() ); }
+  //@}
+
+  /** @name erase elements from the map */
+  //@{
+  size_type erase( const char* key )
+    { return do_erase( key, std::strlen(key) ); }
+  size_type erase( const std::string& key )
+    { return do_erase( key.c_str(), key.length() ); }
+
+  iterator erase( const_iterator pos );
+  iterator erase( const_iterator first, const_iterator last );
+  //@}
 
 private:
   template<typename T>
   this_type do_push(const char* key, size_type keylen, const T& value);
   this_type do_push(const char* key, size_type keylen, const_reference value);
+  size_type do_erase(const char* key, size_type keylen);
+  iterator  do_find(const char* key, size_type keylen) const;
 };
 
 inline cci_value_map_ref
