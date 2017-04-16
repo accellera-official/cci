@@ -41,6 +41,7 @@ template<typename T> struct cci_typed_tag : cci_tag<T> {};
 /// Tag alias for an untyped tag
 typedef cci_tag<void> cci_untyped_tag;
 
+///@cond CCI_HIDDEN_FROM_DOXYGEN
 namespace detail {
 
 using sc_boost::enable_if;
@@ -67,6 +68,7 @@ template<typename T> struct remove_reference { typedef T type; };
 template<typename T> struct remove_reference<T&> { typedef T type; };
 
 } // namespace detail
+///@endcond
 CCI_CLOSE_NAMESPACE_
 
 #endif // CCI_CORE_CCI_META_H_INCLUDED_

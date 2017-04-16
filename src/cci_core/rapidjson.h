@@ -102,6 +102,6 @@ RAPIDJSON_NAMESPACE_END
 #include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/writer.h"
 
-///@endcond CCI_HIDDEN_FROM_DOXYGEN
+///@endcond
 
 #endif // CCI_RAPIDJSON_H_INCLUDED_

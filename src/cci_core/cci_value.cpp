@@ -76,6 +76,7 @@ impl_type* impl_pool::free_list_;
 
 } // anonymous namespace
 
+///@cond CCI_HIDDEN_FROM_DOXYGEN
 #define PIMPL( x ) \
   (impl_cast((x).pimpl_))
 
@@ -90,6 +91,7 @@ impl_type* impl_pool::free_list_;
     cci_report_handler::cci_value_failure \
       ( Msg "\n Condition: " #Cond, __FILE__, __LINE__ ); \
   } while( false )
+///@endcond
 
 // ----------------------------------------------------------------------------
 // cci_value_cref
@@ -395,6 +397,10 @@ cci_value_list_cref::size_type
 cci_value_list_cref::size() const
   { return THIS->Size(); }
 
+cci_value_list_cref::size_type
+cci_value_list_cref::capacity() const
+  { return THIS->Capacity(); }
+
 cci_value_cref
 cci_value_list_cref::operator[]( size_type index ) const
   { return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] ); }
@@ -414,12 +420,6 @@ cci_value_list_ref::clear()
 {
   THIS->Clear();
   return *this;
-}
-
-cci_value_list_ref::size_type
-cci_value_list_ref::capacity() const
-{
-  return THIS->Capacity();
 }
 
 cci_value_list_ref
@@ -447,7 +447,7 @@ cci_value_map_cref::size_type
 cci_value_map_cref::size() const
   { return THIS->MemberCount(); }
 
-cci_value_cref::impl*
+cci_value_cref::impl_type
 cci_value_map_cref::do_lookup( const char* key, size_type keylen
                              , bool allow_fail /* = false */     ) const
 {
@@ -483,10 +483,10 @@ cci_value_map_ref::clear()
 }
 
 cci_value_map_ref
-cci_value_map_ref::push_entry( const char * key
-                             , cci_value::const_reference const & value )
+cci_value_map_ref::do_push( const char * key, size_type keylen
+                          , cci_value::const_reference value )
 {
-  json_value k( key, json_allocator );
+  json_value k( key, keylen, json_allocator );
   json_value v;
   if( PIMPL(value) )
     v.CopyFrom( DEREF(value), json_allocator );
@@ -533,7 +533,7 @@ cci_value_map_ref::push_entry( const char * key
     swap( own_pimpl_, that.own_pimpl_ );               \
   }                                                    \
                                                        \
-  Kind::impl*                                          \
+  Kind::impl_type                                      \
   Kind::do_init()                                      \
   {                                                    \
     sc_assert( !own_pimpl_ );                          \

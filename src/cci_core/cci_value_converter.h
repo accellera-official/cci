@@ -183,7 +183,7 @@ CCI_VALUE_CONVERTER_DERIVED_( int64, long );
 CCI_VALUE_CONVERTER_DERIVED_( uint64, unsigned long );
 CCI_VALUE_CONVERTER_DERIVED_( double, float );
 
-///@endcond CCI_HIDDEN_FROM_DOXYGEN
+///@endcond
 
 // ----------------------------------------------------------------------------
 // C++ string literals
