@@ -264,8 +264,11 @@ protected:
     : cci_value_cref(i) {}
 
 public:
+
   /// exchange contents with another cci_value
   void swap( this_type& that );
+  friend void swap(this_type a, this_type b) { a.swap(b); }
+
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
@@ -474,6 +477,7 @@ protected:
 
 public:
   /// exchange contents with another string value
+  friend void swap(this_type a, this_type b) { a.swap(b); }
   void swap( this_type& that );
 
   /** @name assign string contents */
@@ -566,6 +570,7 @@ public:
   const_reference operator[]( size_type index ) const;
   const_reference at( size_type index ) const
     { return (*this)[index]; }
+
   const_reference front() const
     { return (*this)[0]; }
 
@@ -634,6 +639,7 @@ public:
 
   /// exchange contents with another list value
   void swap( this_type& );
+  friend void swap(this_type a, this_type b) { a.swap(b); }
 
   /// reserve space in underlying storage
   this_type reserve( size_type );
@@ -901,6 +907,7 @@ public:
   this_type operator=( base_type const& );
   this_type operator=( this_type const& );
   void swap( this_type& );
+  friend void swap(this_type a, this_type b) { a.swap(b); }
 
   /// clear map entries
   this_type clear();
@@ -1078,9 +1085,9 @@ public:
   this_type& operator=( this_type const & );
   this_type& operator=( const_reference );
 
+  friend void swap(this_type& a, this_type& b) { a.swap(b); }
+  void swap( reference that ) { init(); reference::swap( that ); }
   void swap( cci_value & that );
-  void swap( reference that )
-    { init(); reference::swap( that ); }
 
   ~cci_value();
 
@@ -1265,9 +1272,10 @@ public:
 
   this_type& operator=( this_type const & );
   this_type& operator=( const_reference );
+
+  friend void swap(this_type& a, this_type& b) { a.swap(b); }
+  void swap( reference that ) { reference::swap( that ); }
   void swap( this_type & );
-  void swap( reference that )
-    { reference::swap( that ); }
 
   ~cci_value_list();
 
@@ -1275,6 +1283,7 @@ public:
   const cci_value_list * operator&() const { return this; }
   ///@copydoc cci_value_cref::operator&
   cci_value_list * operator&() { return this; }
+
 private:
   impl_type do_init();
   impl_type own_pimpl_;
@@ -1332,9 +1341,10 @@ public:
 
   this_type& operator=( this_type const& );
   this_type& operator=( const_reference );
+
+  friend void swap(this_type& a, this_type& b) { a.swap(b); }
+  void swap( reference that ) { reference::swap( that ); }
   void swap( this_type & );
-  void swap( reference that )
-    { reference::swap( that ); }
 
   ~cci_value_map();
 
