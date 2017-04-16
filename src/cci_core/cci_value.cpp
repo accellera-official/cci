@@ -108,8 +108,11 @@ operator == ( cci_value_cref const & left, cci_value_cref const & right )
   if( PIMPL(left) == PIMPL(right) )
     return true;
 
-  if( !PIMPL(left) || !PIMPL(right) )
-    return false;
+  if( !PIMPL(left) || !PIMPL(right) ) { // only one is set
+    // equal, if both are conceptually null
+    return ( PIMPL(left)  && DEREF(left).IsNull() )
+        || ( PIMPL(right) && DEREF(right).IsNull() ) ;
+  }
 
   return DEREF(left) == DEREF(right);
 }
