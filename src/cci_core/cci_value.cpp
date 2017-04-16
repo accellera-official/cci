@@ -261,7 +261,7 @@ cci_value_ref::operator=( const cci_value_cref &that )
 {
   if( that.is_null() )
     set_null();
-  else {
+  else if (THIS != PIMPL(that) ) {
     sc_assert( THIS );
     THIS->CopyFrom( DEREF(that), json_allocator );
   }
