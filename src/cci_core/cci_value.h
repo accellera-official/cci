@@ -110,6 +110,7 @@ class cci_value_cref
 
 protected:
   typedef void* impl_type; // use type-punned pointer for now
+  typedef detail::value_ptr<cci_value_cref> proxy_ptr;
 
   explicit cci_value_cref(impl_type i = NULL)
     : pimpl_(i) {}
@@ -195,6 +196,18 @@ public:
   /// convert value to JSON
   std::string to_json() const;
 
+  /** @brief overloaded addressof operator
+   *
+   * The \c addressof operator is replaced in the reference proxy classes
+   * \c cci_value_*ref to avoid taking an address of a (usually)
+   * temporary object.
+   *
+   * All reference objects provide the replacement, only the top-level
+   * objects (cci_value, cci_value_list, cci_value_map) provide default
+   * \c addressof semantics again.
+   */
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
 protected:
   void
   report_error( const char* msg
@@ -245,6 +258,7 @@ class cci_value_ref
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
+  typedef detail::value_ptr<this_type> proxy_ptr;
 protected:
   explicit cci_value_ref(impl_type i = NULL)
     : cci_value_cref(i) {}
@@ -333,6 +347,8 @@ public:
               );
   ///@}
 
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 protected:
   /// try to set the value from a JSON-encoded string
   bool json_deserialize( std::string const& );
@@ -379,6 +395,7 @@ class cci_value_string_cref
   friend class cci_value_map_elem_ref;
   typedef cci_value_cref        base_type;
   typedef cci_value_string_cref this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_string_cref(impl_type i = NULL)
@@ -413,6 +430,9 @@ public:
     { return b == a; }
   //@}
 
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
 private:
   // exclude non-string value functions
   using base_type::get_bool;
@@ -446,6 +466,7 @@ class cci_value_string_ref
   friend class cci_value_ref;
   typedef cci_value_string_cref base_type;
   typedef cci_value_string_ref  this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_string_ref(impl_type i = NULL)
@@ -462,6 +483,9 @@ public:
   this_type operator=( const char * s );
   this_type operator=( std::string const & s );
   //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 };
 
 inline cci_value_string_ref
@@ -515,6 +539,7 @@ class cci_value_list_cref
   friend class cci_value_cref;
   typedef cci_value_cref      base_type;
   typedef cci_value_list_cref this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_list_cref(impl_type i = NULL)
@@ -568,6 +593,10 @@ public:
   const_reverse_iterator crend() const
     { return const_reverse_iterator(cbegin()); }
   //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
 private:
   // exclude non-list value functions
   using base_type::get_bool;
@@ -593,6 +622,7 @@ class cci_value_list_ref
   friend class cci_value_ref;
   typedef cci_value_list_cref base_type;
   typedef cci_value_list_ref  this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_list_ref(impl_type i = NULL)
@@ -675,6 +705,9 @@ public:
 
   void pop_back();
   //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 };
 
 inline cci_value_list_ref
@@ -761,6 +794,7 @@ class cci_value_map_cref
   friend class cci_value_cref;
   typedef cci_value_cref     base_type;
   typedef cci_value_map_cref this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_map_cref(impl_type i = NULL)
@@ -825,6 +859,9 @@ public:
     { return const_reverse_iterator(cbegin()); }
   //@}
 
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
 protected:
   impl_type do_lookup( const char* key, size_type keylen
                   , bool allow_fail = false           ) const;
@@ -854,6 +891,7 @@ class cci_value_map_ref
   friend class cci_value_ref;
   typedef cci_value_map_cref base_type;
   typedef cci_value_map_ref  this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 protected:
   explicit cci_value_map_ref(impl_type i = NULL)
     : base_type(i) {}
@@ -948,6 +986,9 @@ public:
   iterator erase( const_iterator pos );
   iterator erase( const_iterator first, const_iterator last );
   //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
 private:
   template<typename T>
@@ -1113,6 +1154,11 @@ public:
     { v.init(); return is >> reference(v); }
   //@}
 
+  /// @copydoc cci_value_cref::operator&
+  const cci_value * operator&() const { return this; }
+  /// @copydoc cci_value_cref::operator&
+  cci_value * operator&() { return this; }
+
 private:
   impl_type init();
   impl_type do_init();
@@ -1225,6 +1271,10 @@ public:
 
   ~cci_value_list();
 
+  ///@copydoc cci_value_cref::operator&
+  const cci_value_list * operator&() const { return this; }
+  ///@copydoc cci_value_cref::operator&
+  cci_value_list * operator&() { return this; }
 private:
   impl_type do_init();
   impl_type own_pimpl_;
@@ -1287,6 +1337,11 @@ public:
     { reference::swap( that ); }
 
   ~cci_value_map();
+
+  /// @copydoc cci_value_cref::operator&
+  const cci_value_map * operator&() const { return this; }
+  /// @copydoc cci_value_cref::operator&
+  cci_value_map * operator&() { return this; }
 
 private:
   impl_type do_init();
