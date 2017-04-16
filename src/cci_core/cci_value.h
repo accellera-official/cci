@@ -360,23 +360,11 @@ cci_value_ref::set( T const& src
 
 // --------------------------------------------------------------------------
 
-/** @name cci_value string comparisons */
-///@{
-bool operator==( const char *, cci_value_string_cref const & );
-bool operator==( cci_value_string_cref const &, const char * );
-bool operator==( std::string const &, cci_value_string_cref const & );
-bool operator==( cci_value_string_cref const &, std::string const & );
-///@}
-
 /// reference to constant cci_value string value
 class cci_value_string_cref
   : public cci_value_cref
 {
   friend class cci_value_cref;
-  friend bool operator==( const char *, cci_value_string_cref const & );
-  friend bool operator==( cci_value_string_cref const &, const char * );
-  friend bool operator==( std::string const &, cci_value_string_cref const & );
-  friend bool operator==( cci_value_string_cref const &, std::string const & );
   typedef cci_value_cref        base_type;
   typedef cci_value_string_cref this_type;
 
@@ -400,6 +388,18 @@ public:
   /// character access by index
   char operator[]( size_type index ) const
     { return c_str()[index]; }
+
+  /** @name string equality comparisons */
+  //@{
+  bool operator==(cci_value_string_cref const &) const;
+  bool operator==(const char* s) const;
+  bool operator==(std::string const & ) const;
+
+  friend bool operator==( const char * a, cci_value_string_cref const & b)
+    { return b == a; }
+  friend bool operator==( std::string const & a, cci_value_string_cref const & b )
+    { return b == a; }
+  //@}
 
 private:
   // exclude non-string value functions

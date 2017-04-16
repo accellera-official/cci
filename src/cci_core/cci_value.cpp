@@ -374,14 +374,17 @@ const char*
 cci_value_string_cref::c_str() const
   { return THIS->GetString(); }
 
-bool operator==( cci_value_string_cref const & left, const char * right )
-  { return !right ? false : DEREF(left) == right; }
-bool operator==( cci_value_string_cref const & left, std::string const & right )
-  { return DEREF(left) == rapidjson::StringRef( right.c_str(), right.size() ); }
-bool operator==( const char * left, cci_value_string_cref const & right )
-  { return !left ? false : DEREF(right) == left; }
-bool operator==( std::string const & left, cci_value_string_cref const & right )
-  { return DEREF(right) == rapidjson::StringRef( left.c_str(), left.size() ); }
+bool
+cci_value_string_cref::operator==( cci_value_string_cref const & s ) const
+  { return *THIS == DEREF(s); }
+
+bool
+cci_value_string_cref::operator==( const char * s ) const
+  { return !s ? false : *THIS == s; }
+
+bool
+cci_value_string_cref::operator==( const std::string& s ) const
+  { return *THIS == rapidjson::StringRef( s.c_str(), s.size() ); }
 
 // ----------------------------------------------------------------------------
 // cci_value_string_ref
