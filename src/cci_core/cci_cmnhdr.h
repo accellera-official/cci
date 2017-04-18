@@ -41,6 +41,32 @@
 
 /* ------------------------------------------------------------------------ */
 
+// Selected C++ standard baseline, supported values are
+//   199711L (C++03, ISO/IEC 14882:1998, 14882:2003)
+//   201103L (C++11, ISO/IEC 14882:2011)
+//   201402L (C++14, ISO/IEC 14882:2014)
+#ifndef CCI_CPLUSPLUS
+# ifdef SC_CPLUSPLUS // as defined by SystemC >= 2.3.2
+#   define CCI_CPLUSPLUS SC_CPLUSPLUS
+# else // copy deduction from SystemC 2.3.2
+#   ifdef _MSC_VER // don't rely on __cplusplus for MSVC
+#     if _MSC_VER < 1800   // MSVC'2010 and earlier, assume C++03
+#       define CCI_CPLUSPLUS 199711L
+#     elif _MSC_VER < 1900 // MSVC'2013, assume C++11
+#       define CCI_CPLUSPLUS 201103L
+#     elif _MSC_VER < 2000 // MSVC'2015/2017, assume C++14
+#       define CCI_CPLUSPLUS 201402L
+#     else // more recent MSVC versions, assume C++14
+#       define CCI_CPLUSPLUS 201402L
+#     endif
+#   else
+#     define CCI_CPLUSPLUS __cplusplus
+#   endif
+# endif
+#endif // CCI_CPLUSPLUS
+
+/* ------------------------------------------------------------------------ */
+
 // Macros to check if certain C++ features are supported
 #ifndef __has_feature        // Optional of course.
 # define __has_feature(x) 0  // Compatibility with non-clang compilers.
