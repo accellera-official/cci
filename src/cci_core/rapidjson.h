@@ -75,6 +75,9 @@ RAPIDJSON_NAMESPACE_END
 #ifdef __GNUC__
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF( pedantic ) // ignore pedantic errors
+#if CCI_CPLUSPLUS >= 201103L
+RAPIDJSON_DIAG_OFF( terminate ) // ignore throwing assertions
+#endif
 #endif
 
 // throw exception by default
