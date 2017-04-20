@@ -26,8 +26,8 @@
  *
  * \note The contents of this file are entirely implementation-defined.
  */
-#ifndef CCI_CORE_CCI_CONFIG_H_INCLUDED_
-#define CCI_CORE_CCI_CONFIG_H_INCLUDED_
+#ifndef CCI_CORE_CCI_CMNHDR_H_INCLUDED_
+#define CCI_CORE_CCI_CMNHDR_H_INCLUDED_
 
 #ifndef CCI_NAMESPACE
 /// Namespace for Accellera Configuration, Control & Inspection (CCI) standard
@@ -94,4 +94,13 @@
 # define CCI_FORWARD_(Type,Obj) Obj
 #endif // CCI_HAS_CXX_RVALUE_REFS
 
-#endif // CCI_CORE_CCI_CONFIG_H_INCLUDED_
+/* ------------------------------------------------------------------------ */
+// Extern templates (supported by all major compilers even before C++11)
+
+#if defined(__GNUC__) && CCI_CPLUSPLUS < 201103L
+# define CCI_TPLEXTERN_ __extension__ extern
+#else
+# define CCI_TPLEXTERN_ extern
+#endif
+
+#endif // CCI_CORE_CCI_CMNHDR_H_INCLUDED_
