@@ -529,11 +529,11 @@ cci_value_ref::set_string(std::string const & s)
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 // iterator implementations in cci_value.cpp
 namespace detail {
-extern template class value_iterator_impl<cci_value_ref>;
-extern template class value_iterator_impl<cci_value_cref>;
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_ref>;
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_cref>;
 } // namespace detail
-extern template class cci_value_iterator<cci_value_cref>;
-extern template class cci_value_iterator<cci_value_ref>;
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_cref>;
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_ref>;
 ///@endcond
 
 /// reference to constant cci_value list value
@@ -764,7 +764,7 @@ class cci_value_map_elem_ref
 {
   template<typename U> friend class detail::value_iterator_impl;
   typedef detail::value_ptr<cci_value_map_elem_ref> proxy_ptr;
-  typedef void value_type; // TODO: add  explicit value_type 
+  typedef void value_type; // TODO: add  explicit value_type
 public:
   typedef cci_value_map_elem_cref const_reference;
   typedef cci_value_map_elem_ref  reference;
@@ -786,11 +786,11 @@ protected:
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 // iterator implementations in cci_value.cpp
 namespace detail {
-extern template class value_iterator_impl<cci_value_map_elem_cref>;
-extern template class value_iterator_impl<cci_value_map_elem_ref>;
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_map_elem_cref>;
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_map_elem_ref>;
 } // namespace detail
-extern template class cci_value_iterator<cci_value_map_elem_cref>;
-extern template class cci_value_iterator<cci_value_map_elem_ref>;
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_map_elem_cref>;
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_map_elem_ref>;
 ///@endcond
 
 /// reference to constant cci_value map
@@ -870,7 +870,7 @@ public:
 
 protected:
   impl_type do_lookup( const char* key, size_type keylen
-                  , bool allow_fail = false           ) const;
+                     , bool allow_fail = false ) const;
 
 private:
   // exclude non-map value functions
