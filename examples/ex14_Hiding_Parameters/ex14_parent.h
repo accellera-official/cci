@@ -35,7 +35,6 @@
 
 #include "ex14_child.h"
 #include "xreport.hpp"
-#include "gs_cci_cnf_private_broker.h"
 
 /**
  *  @class  ex14_parent

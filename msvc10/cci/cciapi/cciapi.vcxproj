@@ -140,6 +140,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_handle.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_global_cfg_broker.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
@@ -155,6 +158,8 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.h" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_mutable_types.h" />

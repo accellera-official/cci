@@ -262,6 +262,12 @@ void cci_param_untyped_handle::init()
     m_orig_param->init();
 }
 
+void cci_param_untyped_handle::reset()
+{
+  check_is_valid();
+  m_orig_param->reset();
+}
+
 void cci_param_untyped_handle::destroy()
 {
     check_is_valid();

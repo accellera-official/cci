@@ -21,8 +21,8 @@
  * @author Guillaume Delbergue, GreenSocs / Ericsson
  */
 
-#include "cci_param_untyped.h"
-#include "cci_broker_handle.h"
+#include "cci_cfg/cci_param_untyped.h"
+#include "cci_cfg/cci_broker_handle.h"
 #include "cci_core/cci_name_gen.h"
 
 CCI_OPEN_NAMESPACE_
@@ -32,11 +32,10 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
                                      cci_broker_handle broker_handle,
                                      const std::string& desc,
                                      const cci_originator& originator)
-: m_is_default_value(true), m_is_initial_value(false),
-  m_description(desc), m_init_called(false), m_locked(false),
-  m_lock_pwd(NULL), m_broker_handle(broker_handle),
-  m_value_originator(originator),
-  m_originator(originator)
+    : m_description(desc), m_init_called(false), m_locked(false),
+      m_lock_pwd(NULL), m_broker_handle(broker_handle),
+      m_value_originator(originator),
+      m_originator(originator)
 {
     if(name_type == CCI_ABSOLUTE_NAME) {
         m_name = name;
@@ -102,14 +101,11 @@ cci_value_map cci_param_untyped::get_metadata() const
     return metadata;
 }
 
-bool cci_param_untyped::is_default_value()
-{
-    return m_is_default_value;
-}
-
 bool cci_param_untyped::is_initial_value() const
 {
-    return m_is_initial_value;
+  if (!m_broker_handle.has_initial_value(get_name())) return false;
+  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
+  return init_value == get_cci_value();
 }
 
 const cci_originator& cci_param_untyped::get_latest_write_originator() const
