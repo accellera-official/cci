@@ -108,7 +108,10 @@ public:
      * @return false if the parameter received an initial value or its value has
      *         changed; otherwise, true
      */
-    virtual bool is_default_value();
+    virtual bool is_default_value() const =0; // note this is pure virtual here,
+                                              // as the function isn't possible
+                                              // without a typed instance (to
+                                              // have a defualt value).
 
 
     /// Indicates that the parameter received an initial value that has not since been modified.
@@ -550,12 +553,6 @@ protected:
     void update_latest_write_originator(const cci_originator& originator) const;
 
 protected:
-    /// Is default value
-    mutable bool m_is_default_value;
-
-    /// Is initial value
-    mutable bool m_is_initial_value;
-
     /// Name
     std::string m_name;
 
@@ -621,10 +618,10 @@ protected:
 
     callback_obj_vector<pre_read_callback_obj_t> m_post_read_callbacks;
 
-private:
-
     /// Originator of the parameter
     const cci_originator m_originator;
+
+private:
 
     /// Parameter handles
     std::vector<cci_param_untyped_handle*> m_param_handles;

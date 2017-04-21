@@ -26,7 +26,7 @@
 #include "cci_core/cci_value.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_mutable_types.h"
-#include "cci_param_callbacks.h"
+#include "cci_cfg/cci_param_callbacks.h"
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
@@ -236,6 +236,9 @@ public:
      *        parameter before to invalidate. Otherwise, just invalidate.
      */
     void invalidate(bool remove = false);
+
+    /// Reset the parameter to the intial value
+    void reset();
 
     /// Assigns parameter untyped handle a new value from another legacy
     /// parameter untyped handle

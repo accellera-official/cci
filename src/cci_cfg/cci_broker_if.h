@@ -117,8 +117,8 @@ public:
      * @param parname    Full hierarchical parameter name.
      * @return           CCI value of the parameter's initial value. Empty value is returned when parameter is not existing or its initial value is not existing
      */
-    virtual const cci::cci_value
-    get_initial_cci_value(const std::string &parname) = 0;
+    virtual cci::cci_value
+    get_initial_cci_value(const std::string &parname) const = 0;
 
     /// Get unconsumed initial values
     /**
@@ -127,8 +127,7 @@ public:
      *
      * @return           Vector of unconsumed parameter's initial value.
      */
-    virtual std::vector<cci_name_value_pair>
-    get_unconsumed_initial_values() = 0;
+    virtual std::vector<cci_name_value_pair> get_unconsumed_initial_values() const = 0;
 
     /// Get unconsumed initial values with a user-defined predicate callback
     /**
@@ -139,7 +138,7 @@ public:
      * @return           Vector of unconsumed parameter's initial value.
      */
     virtual cci_initial_value_range get_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred) = 0;
+            const cci_initial_value_predicate &pred) const = 0;
 
     /// Ignore unconsumed initial values
     /**
@@ -187,24 +186,12 @@ public:
      * This accesses the parameter's NVP and works
      * for implicit and explicit parameters.
      *
-     * See cci_broker_if::get_cci_value_keep_unused to do the same without impacting the used status.
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
      * @return  CCI value of the parameter
      */
-    virtual const cci::cci_value get_cci_value(const std::string &parname) = 0;
-
-    /// Get a parameter's value (like cci_broker_if::get_cci_value), but not impacting the used status
-    /**
-     * This is to be used only by tools, e.g. functional coverage tools.
-     *
-     * @see get_cci_value
-     * @param parname  Full hierarchical name of the parameter whose value should be returned.
-     * @return  CCI value of the parameter
-     */
-    virtual const cci::cci_value
-    get_cci_value_keep_unused(const std::string &parname) const = 0;
-
+    virtual cci::cci_value get_cci_value(const std::string &parname) const = 0;
+    
     /// Get a parameter handle.
     /**
      * This returns not the owner's parameter object but a handle.
@@ -215,14 +202,14 @@ public:
      */
     virtual cci_param_untyped_handle
     get_param_handle(const std::string &parname,
-                     const cci_originator& originator) = 0;
+                     const cci_originator& originator) const = 0;
 
     /// Checks whether a parameter exists (implicit or explicit).
     /**
      * @param parname  Full hierarchical parameter name.
      * @return Whether the parameter < parname > exists in the registry.
      */
-    virtual bool param_exists(const std::string &parname) = 0;
+    virtual bool param_exists(const std::string &parname) const = 0;
 
     /// Returns if the parameter has ever been used.
     /**
@@ -233,7 +220,14 @@ public:
      * @param parname  Full hierarchical parameter name.
      * @return If the parameter is or has been used.
      */
-    virtual bool is_used(const std::string &parname) = 0;
+    virtual bool is_used(const std::string &parname) const = 0;
+
+    /// Returns if the parameter has an initial value
+    /**
+     * @param parname  Full hierarchical parameter name.
+     * @return If the parameter has an initial value set
+     */
+    virtual bool has_initial_value(const std::string &parname) const = 0;
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //
@@ -269,26 +263,16 @@ public:
      */
     virtual void remove_param(cci_param_if *par) = 0;
 
-    /// Return a list of all (explicit) parameter handles in the given scope (matching the pattern)
+    /// Return a list of all (explicit) parameter handles in the given scope
     /**
-     * TODO:
-     * pattern e.g.
-     * - parameters of the specified module, pattern = module_name, e.g. "mymod.mysubmod";
-     * - pattern = module_name+'.*' to include the parameters of the childs, e.g. "mymod.mysubmod.*"
-     * - pattern = '*'.param_name to get all parameters with the name, e.g. "*.cache_size"
-     * - pattern = '*'.hierarchical.param_name to get all parameters with the name, e.g. "*.mysubmod.cache_size"
-     * + (in the case the Many-to-one Mapping should work):
-     *   pattern = full_param_name to get all param objects/handles (PH/PO) being mapped to the NVP
-     * @todo use iterator instead of vector?
      *
      * This returns not the owner's parameter objects but handles.
      *
      * @param pattern Specifies the parameters to be returned.
      * @return Vector with parameter handles.
      */
-    virtual const std::vector <cci_param_untyped_handle>
-    get_param_handles(const std::string &pattern = "",
-                      const cci_originator& originator = cci_originator()) = 0;
+    virtual std::vector <cci_param_untyped_handle>
+    get_param_handles(const cci_originator& originator = cci_originator()) const = 0;
 
     /// Search parameters with a user-defined predicate callback
     /**
@@ -297,7 +281,7 @@ public:
      */
     virtual cci_param_range
     get_param_handles(cci_param_predicate& pred,
-                      const cci_originator& originator) = 0;
+                      const cci_originator& originator) const = 0;
 
     ///If this broker is a private broker (or handle)
     /**
