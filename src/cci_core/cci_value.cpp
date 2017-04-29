@@ -784,15 +784,14 @@ std::string
 cci_value_cref::to_json() const
 {
   std::string dst;
-  rapidjson::StringBuffer buf;
-  rapidjson::Writer <rapidjson::StringBuffer> writer(buf);
+  rapidjson::StringOutputStream str(dst);
+  rapidjson::Writer<rapidjson::StringOutputStream> writer(str);
   if (!THIS) {
     writer.Null();
   } else {
     THIS->Accept(writer);
   }
   VALUE_ASSERT(writer.IsComplete(), "incomplete JSON sequence");
-  dst.assign(buf.GetString(), buf.GetSize());
   return dst;
 }
 

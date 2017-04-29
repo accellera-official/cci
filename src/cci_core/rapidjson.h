@@ -98,6 +98,24 @@ struct ParseException
      : std::runtime_error(msg), ParseResult(code,offset) {}
 };
 
+struct StringOutputStream
+{
+  typedef char Ch;
+
+  explicit StringOutputStream(std::string& s) : s_(s) {}
+
+  void   Put(Ch c)    { s_.push_back(c); }
+  void   Clear()      { s_.clear(); }
+  void   Flush()      { return; }
+  size_t Size() const { return s_.length(); }
+
+  friend void PutReserve(StringOutputStream &stream, size_t count)
+    { stream.s_.reserve(stream.Size() + count); }
+
+private:
+  std::string& s_;
+};
+
 RAPIDJSON_NAMESPACE_END
 
 #include "rapidjson/document.h"
