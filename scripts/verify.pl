@@ -919,14 +919,13 @@ sub prepare_environment
     $rt_boost_home   = &get_boost_home;
     $rt_cci_home     = &get_cci_home;
 
-    my @cci_path = ( "$rt_cci_home/src",
-                     "$rt_cci_home/packages/gs_broker" );
+    my @cci_path = ( "$rt_cci_home/src" );
 
     @rt_cci_includes = @cci_path;
     push( @rt_cci_includes, "$rt_cci_home/packages" );
 
     $rt_cci_ldpath   = $rt_cci_home;
-    @rt_cci_ldlibs   = ( 'cciapi', 'ccibrokerimpl', 'cciapi' );
+    @rt_cci_ldlibs   = ( 'cciapi' );
     # -- /CCI
 
     # Set compiler and compiler flags

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cciapi", "cciapi\cciapi.vcxproj", "{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ccibrokerimpl", "ccibrokerimpl\ccibrokerimpl.vcxproj", "{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex01_Simple_Int_Param", "examples\ex01_Simple_Int_Param.vcxproj", "{44CEA44A-B08F-49ED-9ED5-B64D16E97EF1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex02_Fully_Supported_Data_Type_Param", "examples\ex02_Fully_Supported_Data_Type_Param.vcxproj", "{BAF4ABE8-CA1E-45BC-A989-810E00DB45F9}"
@@ -65,14 +63,6 @@ Global
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}.Release|Win32.Build.0 = Release|Win32
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}.Release|x64.ActiveCfg = Release|x64
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}.Release|x64.Build.0 = Release|x64
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Debug|Win32.Build.0 = Debug|Win32
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Debug|x64.ActiveCfg = Debug|x64
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Debug|x64.Build.0 = Debug|x64
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Release|Win32.ActiveCfg = Release|Win32
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Release|Win32.Build.0 = Release|Win32
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Release|x64.ActiveCfg = Release|x64
-		{2FA266B4-E1A0-40AA-BBB0-D5387A4D696F}.Release|x64.Build.0 = Release|x64
 		{44CEA44A-B08F-49ED-9ED5-B64D16E97EF1}.Debug|Win32.ActiveCfg = Debug|Win32
 		{44CEA44A-B08F-49ED-9ED5-B64D16E97EF1}.Debug|Win32.Build.0 = Debug|Win32
 		{44CEA44A-B08F-49ED-9ED5-B64D16E97EF1}.Debug|x64.ActiveCfg = Debug|x64

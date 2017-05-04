@@ -48,7 +48,7 @@ Running the examples
 # export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
 --
 
-2) Ensure that you build the 2 CCI libs before attempting to build the examples.
+2) Ensure that you build the CCI lib before attempting to build the examples.
 
 3) Create a directory called run/ in your CCI_HOME folder, and 'cd' into it.
 +------------------------------------------------+

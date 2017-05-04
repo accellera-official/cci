@@ -21,9 +21,8 @@ Introduction
 
 This README gives step-by-step instructions for
 
-  1. building proof-of-concept (PoC) libraries
+  1. building proof-of-concept (PoC) library
     - api
-    - packages/gs_broker
   
   2. running existing regression in a Windows environment
     - Cygwin or MSYS + MSVC
@@ -103,9 +102,8 @@ How to build the two PoC libraries
      - File -> Open -> Project/Solution
         - From your CCI home -> msvcXX -> cci -> cci.sln
           (with `msvcXX' matching your MSVC version as of Step 0)
-     - Under the `cci.sln' solution, you can see two MSVC projects:
+     - Under the `cci.sln' solution, you can see the following MSVC project:
        - cciapi
-       - ccibrokerimpl
 
   2. Update property sheet
 
