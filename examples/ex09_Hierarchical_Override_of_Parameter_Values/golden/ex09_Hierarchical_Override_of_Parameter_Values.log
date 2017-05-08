@@ -4,9 +4,6 @@ Info: sc_main: [MAIN] : Setting initial value of the number of initiators to 2
 
 Info: sc_main: [MAIN] : Setting initial value of the number of initiators to 1
 
-Warning: ConfigDatabase: setInitValue: Parameter already exists as implicit parameter. Do not set the initial value twice!
-In file: <removed by verify.pl>
-
 Info: sc_main: [MAIN] : Setting initial value of the number of targets to 4
 
 Info: sc_main: [MAIN] : Set and lock Router Table target_1 contents
@@ -73,26 +70,17 @@ Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_1
 
-Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
-In file: <removed by verify.pl>
-
-Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed.
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed (parameter locked).
 In file: <removed by verify.pl>
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of target_1
 
-Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
-In file: <removed by verify.pl>
-
-Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed.
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed (parameter locked).
 In file: <removed by verify.pl>
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_1
 
-Warning: DEFAULT_BROKER_0: setInitValue: ... setting failed because init value is locked!
-In file: <removed by verify.pl>
-
-Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed.
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting initial value failed (parameter locked).
 In file: <removed by verify.pl>
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_2

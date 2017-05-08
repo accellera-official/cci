@@ -172,7 +172,8 @@ SC_MODULE(ex09_top_module) {
 
       snprintf(targetBaseAddr, sizeof(targetBaseAddr), "%s.target_%d.s_base_addr",
                name(), i);
-      myDefaultBroker.set_initial_cci_value(targetBaseAddr, cci::cci_value::from_json(ss.str()));
+      cci::cci_param_untyped_handle h=myDefaultBroker.get_param_handle(targetBaseAddr);
+      h.set_cci_value(cci::cci_value::from_json(ss.str()));
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of target_" << i);
