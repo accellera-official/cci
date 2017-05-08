@@ -34,7 +34,6 @@
 
 #include <cci_configuration>
 #include <systemc.h>
-#include <greencontrol/config.h>
 #include <string>
 #include <iostream>
 
@@ -132,7 +131,7 @@ std::istream& operator >>(std::istream& is, route_table_ut& ud)
 }
 
 //!< Provide parameter vendor implementation support for user-defined data type
-typedef gs::cnf::gs_param<route_table_ut> user_data_type;
+typedef cci::cci_param<route_table_ut> user_data_type;
 
 
 inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
