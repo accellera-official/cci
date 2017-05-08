@@ -163,5 +163,19 @@ cci_param_untyped_handle cci_cfg_private_broker::get_param_handle(
 }
 
 
+std::vector<cci_param_untyped_handle>
+cci_cfg_private_broker::get_param_handles(const cci_originator& originator) const
+{
+  cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
+
+  std::vector<cci_param_untyped_handle> p_param_handles=p.get_param_handles();
+  std::vector<cci_param_untyped_handle> param_handles=cci_cfg_broker::get_param_handles(originator);
+  // this is likely to be more efficient the other way round, but it keeps
+  // things consistent and means the local (mre useful) params will be at the
+  // head of the list.
+  param_handles.insert(param_handles.end(),p_param_handles.begin(), p_param_handles.end());
+  return param_handles;
+}
+
 
 CCI_CLOSE_NAMESPACE_

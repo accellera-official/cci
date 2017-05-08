@@ -61,6 +61,10 @@ public cci_cfg_broker
     cci_param_untyped_handle get_param_handle(const std::string &parname,
                                               const cci_originator& originator) const;
 
+    /// return a list of all the params that the originator can see from either
+    /// the private broker, or from up the broker stack.
+    std::vector<cci_param_untyped_handle> get_param_handles(const cci_originator& originator) const;
+
     bool param_exists(const std::string &parname) const;
     
     bool is_used(const std::string &parname) const;
