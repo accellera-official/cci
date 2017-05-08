@@ -26,6 +26,9 @@ public cci_cfg_broker
 // a set of perameters that should be exposed up the broker stack
     std::set<std::string> expose;
 
+  private:
+    bool sendToParent(const std::string &parname) const;
+
   public:
 
     cci_broker_handle create_broker_handle(
