@@ -196,8 +196,16 @@ struct cci_param_user_data_type
    *  @brief  Function to return true if the value if still the default
    *  @return True of false depending on whether the value is still the default or not
    */
-  bool is_default_value();
+  bool is_default_value() const;
 
+  /**
+   *  @fn     void reset
+   *  @brief  reset the param to the default/initial value
+   *  @return none
+   */
+  void reset();
+
+  
   /**
    *  @fn     bool is_invalid_value()
    *  @brief  Function to determine whether the value in the parameter is valid

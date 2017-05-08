@@ -266,10 +266,20 @@ cci::cci_value_map cci_param_user_data_type::get_metadata() const {
  *  @brief  Function to return true if the value if still the default
  *  @return True of false depending on whether the value is still the default or not
  */
-bool cci_param_user_data_type::is_default_value() {
+bool cci_param_user_data_type::is_default_value() const {
   std::cout << "Function cci_param_user_data_type::is_default_value Called " << std::endl;
 
   return default_flag;
+}
+
+/**
+ *  @fn     void reset
+ *  @brief  Reset
+ *  @return none
+ */
+void cci_param_user_data_type::reset() {
+  std::cout << "Function cci_param_user_data_type::reset Called " << std::endl;
+  // left to the interested reader
 }
 
 /**
