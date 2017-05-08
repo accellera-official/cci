@@ -58,11 +58,7 @@ Info: param_cfgr: @2 ns, [CFGR] : param_owner.mutable_int_param value has been m
 
 Info: param_cfgr: @2 ns, [CFGR] : Is Default Value ? 	Returned status : false
 
-Info: param_cfgr: @2 ns, [CFGR] : param_owner.mutable_string_param value hasn't been modified
-
-Info: param_cfgr: @2 ns, [CFGR -> Retrieve] : Parameter name  : param_owner.mutable_string_param
-
-Info: param_cfgr: @2 ns, [CFGR -> Retrieve] : Parameter value : Initialized within sc_main
+Info: param_cfgr: @2 ns, [CFGR] : param_owner.mutable_string_param New Value : Initialized within sc_main
 
 Info: param_cfgr: @4 ns, [CFGR -> Retrieve] Parameter's name : param_owner.mutable_int_param
 
