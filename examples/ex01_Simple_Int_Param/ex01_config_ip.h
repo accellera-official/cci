@@ -70,7 +70,7 @@ SC_CTOR(ex01_config_ip):
 
       // Update the param's value to 2
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 2");
-      int_param_handle.set_cci_value(cci::cci_value::from_json("2"));
+      int_param_handle.set_cci_value(cci::cci_value(2));
 
       // Display new value
       std::string new_value = int_param_handle.get_cci_value().to_json();

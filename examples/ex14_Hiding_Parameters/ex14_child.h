@@ -31,7 +31,6 @@
 #define EXAMPLES_EX14_HIDING_PARAMETERS_EX14_CHILD_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include <string>
 
@@ -50,14 +49,14 @@ SC_MODULE(ex14_child) {
    *  @return void
    */
   SC_CTOR(ex14_child)
-      : child_BrokerIF(cci::cci_broker_manager::get_broker()),
+      : m_broker(cci::cci_broker_manager::get_broker()),
         priv_int_param("priv_int_param",
                        100),
         pub_int_param("pub_int_param",
                       150)
   {
     XREPORT("[CHILD C_TOR] : Is Private Broker? : " << std::boolalpha
-            << child_BrokerIF.is_private_broker());
+            << m_broker.is_private_broker());
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
             << priv_int_param.get_name() << "\tParameter Value : "
@@ -79,7 +78,7 @@ SC_MODULE(ex14_child) {
   void run_child(void) {
     // List of cci_parameters directly visible to the outside world
     std::vector<cci::cci_param_untyped_handle> child_param_list =
-        child_BrokerIF.get_param_handles();
+        m_broker.get_param_handles();
 
     while (1) {
       XREPORT("@ " << sc_core::sc_time_stamp()
@@ -102,7 +101,7 @@ SC_MODULE(ex14_child) {
   }
 
  private:
-  cci::cci_broker_handle child_BrokerIF;  ///< Declare a configuration broker
+  cci::cci_broker_handle m_broker;  ///< Declare a configuration broker handle
 
   // Declare instances of mutable CCI parameters of type 'int'
   cci::cci_param<int> priv_int_param;  ///< private int CCI parameter

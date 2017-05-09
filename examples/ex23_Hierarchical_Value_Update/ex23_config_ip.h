@@ -41,7 +41,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex23_config_ip):
-        m_cci(cci::cci_broker_manager::get_broker())
+        m_broker(cci::cci_broker_manager::get_broker())
     {
         SC_THREAD(execute);
     }
@@ -66,7 +66,7 @@ public:
         XREPORT("execute: List all parameters inside simple_ip");
 
         std::vector <cci::cci_param_untyped_handle> param_list =
-                m_cci.get_param_handles();
+                m_broker.get_param_handles();
 
         for (std::vector<cci::cci_param_untyped_handle>::iterator it =
                 param_list.begin(); it != param_list.end(); ++it) {
@@ -81,7 +81,7 @@ public:
                 &ex23_config_ip::log_level_param_predicate);
 
         cci::cci_param_range log_level_filtered_range =
-                m_cci.get_param_handles(pred_log_level);
+                m_broker.get_param_handles(pred_log_level);
 
         for (cci::cci_param_range::iterator it =
                 log_level_filtered_range.begin();
@@ -120,7 +120,7 @@ public:
     }
 
 private:
-    cci::cci_broker_handle m_cci; ///< CCI configuration handle
+    cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
 
 

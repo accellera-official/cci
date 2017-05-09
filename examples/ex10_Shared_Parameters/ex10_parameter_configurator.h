@@ -28,7 +28,6 @@
 #define EXAMPLES_EX10_SHARED_PARAMETERS_EX10_PARAMETER_CONFIGURATOR_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include "xreport.hpp"
 
 /**
@@ -43,18 +42,18 @@ SC_MODULE(ex10_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex10_parameter_configurator):
-      cfgr_param(cci::cci_originator(*this)),
-      myCfgrBrokerIF(cci::cci_broker_manager::get_broker())
+      cfgr_param_handle(cci::cci_originator(*this)),
+      m_broker(cci::cci_broker_manager::get_broker())
   {
     // Checks the parameter exists using name-based look-up
-    if (myCfgrBrokerIF.param_exists("param_owner.mutable_int_param")) {
+    if (m_broker.param_exists("param_owner.mutable_int_param")) {
       XREPORT("[CFGR C_TOR] : Parameter exists");
 
       // Get handle of the owner parameter
-      cfgr_param = myCfgrBrokerIF.get_param_handle("param_owner.mutable_int_param");
+      cfgr_param_handle = m_broker.get_param_handle("param_owner.mutable_int_param");
 
       // Assert if the owner parameter handle returned is NULL
-      assert(cfgr_param.is_valid() && "Parameter Handle is NULL");
+      sc_assert(cfgr_param_handle.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter doesn't exists.");
     }
@@ -62,7 +61,7 @@ SC_MODULE(ex10_parameter_configurator) {
     // Set parameter value using cci_base_parameter object
     XREPORT("[CFGR C_TOR] : Set parameter value to 10"
             " using cci_base_parameter");
-   cfgr_param.set_cci_value(cci::cci_value::from_json("10"));
+   cfgr_param_handle.set_cci_value(cci::cci_value(10));
 
     // Registering SC_THREAD with the SystemC kernel
     SC_THREAD(run_mutable_cfgr);
@@ -102,8 +101,8 @@ SC_MODULE(ex10_parameter_configurator) {
   }
 
  private:
-  cci::cci_broker_handle myCfgrBrokerIF;      ///< cci configuration broker interface instance
-  cci::cci_param_handle cfgr_param;        ///< CCI base parameter handle
+  cci::cci_broker_handle m_broker;         ///< cci configuration broker handle
+  cci::cci_param_handle cfgr_param_handle; ///< CCI base parameter handle
   cci::cci_param<int>* cfgr_shared_param;  ///< Declaring a CCI parameter pointer (which will hold the reference of the owner CCI parameter 'int_param'
 };
 // ex10_parameter_configurator

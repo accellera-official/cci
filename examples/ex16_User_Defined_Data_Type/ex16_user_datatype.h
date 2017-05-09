@@ -141,31 +141,4 @@ inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
 		lhs.s_address == lhs.s_address;
 }
 
-// ----------------------------------------------------------------------------
-// copied from gs_cci_symbols.cpp
-
-// TODO: fixme
-/*#include "cci_params.h"
-
-namespace cci {
-#define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, MUTABILITY_TYPE) \
-  template  cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const PTYPE& val, const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc); \
-  template  cci::cci_param_impl_if*  create_cci_param (cci::cci_param<PTYPE, MUTABILITY_TYPE> *owner_par, const std::string &nam, const cci_value& val,  const bool is_top_level_name, cci_broker_if* broker_accessor, const std::string& desc);
-
-#define CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(PTYPE) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::CCI_MUTABLE_PARAM) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::CCI_IMMUTABLE_PARAM) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::CCI_ELABORATION_TIME_PARAM) \
-  CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM(PTYPE, cci::other_param)
-
-
-CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS(route_table_ut);
-
-#undef CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS
-#undef CCI_IMPL_CREATE_SYMBOLS_FOR_FUNCTIONS_T_TM
-
-}*/ /* namespace cci */
-
-// ----------------------------------------------------------------------------
-
 #endif  // EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_USER_DATATYPE_H_

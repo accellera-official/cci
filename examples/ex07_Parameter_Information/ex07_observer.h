@@ -27,7 +27,6 @@
 #define EXAMPLES_EX07_PARAMETER_INFORMATION_EX07_OBSERVER_H_
 
 #include <cci_configuration>
-#include <cassert>
 #include <vector>
 #include "xreport.hpp"
 
@@ -43,7 +42,7 @@ SC_MODULE(ex07_observer) {
    *  @return void
    */
   SC_CTOR(ex07_observer):
-            observerBrokerIF(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_broker_manager::get_broker())
   {
     // Instantiate a cci_originator in order to get hold
     // of the configuration broker interface
@@ -51,28 +50,28 @@ SC_MODULE(ex07_observer) {
 
     // Check for the broker type (default or private) using
     // 'is_private_broker()' API
-    if (observerBrokerIF.is_private_broker()) {
+    if (m_broker.is_private_broker()) {
       /// Access broker's name using 'name()'
-      XREPORT("[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF.name());
+      XREPORT("[OBSERVER C_TOR] : Broker Type : " << m_broker.name());
     } else {
-      XREPORT("[OBSERVER C_TOR] : Broker Type : " << observerBrokerIF.name()
+      XREPORT("[OBSERVER C_TOR] : Broker Type : " << m_broker.name()
               << "- is not a private broker.");
     }
 
     // Gets the reference to the 'int' type cci-parameter of OWNER module
-   cci::cci_param_handle obsv_int_base =
-           observerBrokerIF.get_param_handle("param_owner.mutable_int_param");
+   cci::cci_param_handle obsv_int_base_handle =
+           m_broker.get_param_handle("param_owner.mutable_int_param");
 
-    assert(obsv_int_base.is_valid()
+    sc_assert(obsv_int_base_handle.is_valid()
            && "Returned Handle of 'integer type' cci-parameter is NULL");
 
     // Observer registering PRE_READ, PRE_WRITE & POST_WRITE callbacks
     // on the integer parameter to monitor all actions on it
-    int_pre_read_cb = obsv_int_base.register_pre_read_callback(
+    int_pre_read_cb = obsv_int_base_handle.register_pre_read_callback(
             &ex07_observer::pre_read_callback, this, cci::cci_untyped_tag());
-    int_pre_write_cb = obsv_int_base.register_pre_write_callback(
+    int_pre_write_cb = obsv_int_base_handle.register_pre_write_callback(
             &ex07_observer::pre_write_callback, this, cci::cci_untyped_tag());
-    int_post_write_cb = obsv_int_base.register_post_write_callback(
+    int_post_write_cb = obsv_int_base_handle.register_post_write_callback(
             &ex07_observer::post_write_callback, this, cci::cci_untyped_tag());
   }
 
@@ -112,7 +111,7 @@ SC_MODULE(ex07_observer) {
   }
 
  private:
-  cci::cci_broker_handle observerBrokerIF;  //!< Configuration broker instance
+  cci::cci_broker_handle m_broker;  //!< Configuration broker handle
 
   cci::cci_callback_untyped_handle int_pre_read_cb; //!< 'pre_read' callback handle for int type cci-param
   cci::cci_callback_untyped_handle int_pre_write_cb;  //!< 'pre_write' callback handle for int type cci-param

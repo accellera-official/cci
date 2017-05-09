@@ -521,7 +521,7 @@ public:
 
     ///@}
 
-    ///@name Accessor methods
+    ///@name Originator query
     ///@{
 
     /// Gets cci_originator of the parameter.
