@@ -25,24 +25,22 @@
 CCI_OPEN_NAMESPACE_
 
 /**
- *  Enumeration for basic data types, whose rough getting and setting is
- *  supported by base class directly
+ *  Enumeration for basic parameter data types, whose rough getting and setting 
+ *  is supported directly.
  */
-enum cci_data_type {
-    /// Default, unknow data types
-    CCI_UNAVAILABLE_DATA = 0,
-    /// Data types that can handle integer numbers
-    CCI_NUMBER_DATA,
-    /// Data types that can handle real numbers
-    CCI_REAL_DATA,
-    /// Data types that can handle bools
-    CCI_BOOL_DATA,
-    /// Data types that can handle strings
-    CCI_STRING_DATA,
-    /// Data types that can handle lists
-    CCI_LIST_DATA,
-    /// Data types that can handle other data types (objects etc.)
-    CCI_OTHER_DATA
+enum cci_param_data_category {
+    /// Boolean valued parameter
+    CCI_BOOL_PARAM,
+    /// Integer number valued parameter
+    CCI_NUMBER_PARAM,
+    /// Real number valued parameter
+    CCI_REAL_PARAM,
+    /// String valued parameter
+    CCI_STRING_PARAM,
+    /// List valued parameter
+    CCI_LIST_PARAM,
+    /// Parameter with values of any other type (objects etc.)
+    CCI_OTHER_PARAM
 };
 
 /**

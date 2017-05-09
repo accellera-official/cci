@@ -22,9 +22,9 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-#include "cci_cfg/cci_value.h"
+#include "cci_core/cci_value.h"
+#include "cci_core/rapidjson.h"
 #include "cci_cfg/cci_report_handler.h"
-#include "cci_cfg/rapidjson.h"
 
 #include <algorithm> // std::swap
 #include <sstream> //std::stringstream
@@ -80,33 +80,33 @@ operator == ( cci_value_cref const & left, cci_value_cref const & right )
   return DEREF(left) == DEREF(right);
 }
 
-cci_data_type
-cci_value_cref::basic_type() const
+cci_value_category
+cci_value_cref::category() const
 {
   if( !THIS )
-    return CCI_UNAVAILABLE_DATA;
+    return CCI_NULL_VALUE;
 
   switch(THIS->GetType())
   {
   case rapidjson::kFalseType:
   case rapidjson::kTrueType:
-    return CCI_BOOL_DATA;
+    return CCI_BOOL_VALUE;
 
   case rapidjson::kNumberType:
-    return THIS->IsDouble() ? CCI_REAL_DATA : CCI_NUMBER_DATA;
+    return THIS->IsDouble() ? CCI_REAL_VALUE : CCI_NUMBER_VALUE;
 
   case rapidjson::kStringType:
-    return CCI_STRING_DATA;
+    return CCI_STRING_VALUE;
 
   case rapidjson::kArrayType:
-    return CCI_LIST_DATA;
+    return CCI_LIST_VALUE;
 
   case rapidjson::kObjectType:
-    return CCI_OTHER_DATA;
+    return CCI_OTHER_VALUE;
 
   case rapidjson::kNullType:
   default:
-    return CCI_UNAVAILABLE_DATA;
+    return CCI_NULL_VALUE;
   }
 }
 

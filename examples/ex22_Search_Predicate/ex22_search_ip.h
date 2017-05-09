@@ -49,21 +49,21 @@ public:
     static bool
     integer_type_predicate(const cci::cci_param_untyped_handle handle)
     {
-        return (handle.get_basic_type() == cci::CCI_NUMBER_DATA);
+        return (handle.get_data_category() == cci::CCI_NUMBER_PARAM);
     }
 
     static bool
     string_type_predicate(const cci::cci_param_untyped_handle handle)
     {
-        return (handle.get_basic_type() == cci::CCI_STRING_DATA);
+        return (handle.get_data_category() == cci::CCI_STRING_PARAM);
     }
 
     bool
     value_in_range_predicate(const cci::cci_param_untyped_handle handle,
                              double greater_eq, double lower)
     {
-        if(handle.get_basic_type() == cci::CCI_REAL_DATA
-           || handle.get_basic_type() == cci::CCI_NUMBER_DATA) {
+        if(handle.get_data_category() == cci::CCI_REAL_PARAM
+           || handle.get_data_category() == cci::CCI_NUMBER_PARAM) {
             return (handle.get_cci_value().get_double() >= greater_eq
                     && handle.get_cci_value().get_double() < lower);
         }

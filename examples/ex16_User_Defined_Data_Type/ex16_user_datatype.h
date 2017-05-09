@@ -78,7 +78,7 @@ struct route_table_ut {
 namespace cci {
 // add support for cci_value and JSON (de)serialization
 template<>
-struct cci_value_traits< route_table_ut >
+struct cci_value_converter< route_table_ut >
 {
   typedef route_table_ut type;
   static bool pack( cci_value::reference dst, type const & src )

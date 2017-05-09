@@ -49,15 +49,36 @@ class cci_value_map;
 class cci_value_map_cref;
 class cci_value_map_ref;
 
-template<typename T> struct cci_value_traits;
+template<typename T> struct cci_value_converter;
+
+/**
+*  Enumeration for data type categories, whose rough getting and setting is
+*  supported by base class directly
+*/
+enum cci_value_category {
+	/// Indicates that there is no data
+	CCI_NULL_VALUE = 0,
+	/// A boolean valued component of data
+	CCI_BOOL_VALUE,
+	/// An integer number component of data
+	CCI_NUMBER_VALUE,
+	/// A real number number component of data
+	CCI_REAL_VALUE,
+	/// A string component of data
+	CCI_STRING_VALUE,
+	/// A list component of data
+	CCI_LIST_VALUE,
+	/// A component of data that doesn't fit the other categories
+	CCI_OTHER_VALUE
+};
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
-#define CCI_VALUE_TRAITS_(Type) \
-  typename cci_value_traits<Type>::type
-#define CCI_VALUE_TRAITS_ENABLED_(Type) \
-  CCI_VALUE_TRAITS_(Type) *
-#define CCI_VALUE_ENABLE_IF_TRAITS_(Type) \
-  CCI_VALUE_TRAITS_ENABLED_(Type) = 0
+#define CCI_VALUE_CONVERTER_(Type) \
+  typename cci_value_converter<Type>::type
+#define CCI_VALUE_CHECKED_CONVERTER_(Type) \
+  CCI_VALUE_CONVERTER_(Type) *
+#define CCI_VALUE_REQUIRES_CONVERTER_(Type) \
+  CCI_VALUE_CHECKED_CONVERTER_(Type) = 0
 ///@endcond CCI_HIDDEN_FROM_DOXYGEN
 
 /// @ref cci_value comparisons
@@ -90,9 +111,9 @@ protected:
 
 public:
 
-  /** @name type queries */
+  /** @name Type queries */
   ///@{
-  cci_data_type  basic_type() const;
+  cci_value_category category() const;
   bool is_null()    const;
 
   bool is_bool()    const;
@@ -117,7 +138,7 @@ public:
   bool is_list()    const;
   //@}
 
-  /** @name value queries */
+  /** @name Get basic value */
   //@{
 
   /// get boolean value
@@ -138,7 +159,7 @@ public:
   //@}
 
   /**
-   * @name complex value queries
+   * @name Get complex value
    * These functions return (constant) references to the complex value types
    * that can be stored in a cci_value (strings, lists, maps).
    */
@@ -148,14 +169,14 @@ public:
   cci_value_map_cref    get_map()  const;
   //@}
 
-  /** @name arbitrary type value queries */
+  /** @name Get arbitrarily typed value */
   //@{
-  /// try to get a value of a @ref cci_value_traits enabled type
+  /// try to get a value of a @ref cci_value_converter enabled type
   template<typename T>
-  bool try_get( T& dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) ) const;
-  /// get a value of a @ref cci_value_traits enabled type
+  bool try_get( T& dst, CCI_VALUE_REQUIRES_CONVERTER_(T) ) const;
+  /// get a value of a @ref cci_value_converter enabled type
   template<typename T>
-  CCI_VALUE_TRAITS_(T) get() const;
+  CCI_VALUE_CONVERTER_(T) get() const;
   //@}
 
   /// convert value to JSON
@@ -176,14 +197,14 @@ private:
 
 template<typename T>
 bool
-cci_value_cref::try_get( T& dst, CCI_VALUE_TRAITS_ENABLED_(T) ) const
+cci_value_cref::try_get( T& dst, CCI_VALUE_CHECKED_CONVERTER_(T) ) const
 {
-  typedef cci_value_traits<T> traits;
+  typedef cci_value_converter<T> traits;
   return traits::unpack( dst, *this );
 }
 
 template<typename T>
-CCI_VALUE_TRAITS_(T) cci_value_cref::get() const
+CCI_VALUE_CONVERTER_(T) cci_value_cref::get() const
 {
   T result;
   if( !try_get(result) ) {
@@ -215,23 +236,16 @@ public:
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
-  /** @name set value functions
+  /** @name Set basic value
    *
    * The various @c set_* functions update the represented value
-   * (and its @ref basic_type()) accordingly.
+   * (and its @ref category()) accordingly.
    *
    * These functions provide a "fluent interface" by returning a reference
    * to the surrounding variant object.  This enables chained function calls,
    * which is especially convenient for complex values like lists and maps.
    */
   ///@{
-
-  /// set value to cci_value_traits enabled type
-  template<typename T>
-  cci_value_ref set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
-  /// try to set value to cci_value_traits enabled type
-  template<typename T>
-  bool          try_set( T const & dst, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
 
   /// set value to @c null
   cci_value_ref set_null();
@@ -265,11 +279,12 @@ public:
   cci_value_map_ref    set_map();
   ///@}
 
-  /** @name complex value queries
+  /** @name Get complex value
    *
    * The functions return a reference to a (mutable) @ref cci_value object
    * of the corresponding complex value type (string, list, map).
    */
+
   ///@{
   using base_type::get_string;
   cci_value_string_ref get_string();
@@ -279,6 +294,16 @@ public:
 
   using base_type::get_map;
   cci_value_map_ref  get_map();
+  ///@}
+
+  /** @name Set arbitrarily typed value */
+  //@{
+  /// set value to cci_value_converter enabled type
+  template<typename T>
+  cci_value_ref set(T const & dst, CCI_VALUE_REQUIRES_CONVERTER_(T));
+  /// try to set value to cci_value_converter enabled type
+  template<typename T>
+  bool          try_set(T const & dst, CCI_VALUE_REQUIRES_CONVERTER_(T));
   ///@}
 
 protected:
@@ -292,15 +317,15 @@ cci_value_ref::operator=( const this_type & that )
 
 template<typename T>
 bool
-cci_value_ref::try_set( T const & src, CCI_VALUE_TRAITS_ENABLED_(T) )
+cci_value_ref::try_set( T const & src, CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
-  typedef cci_value_traits<T> traits;
+  typedef cci_value_converter<T> traits;
   return traits::pack( *this, src );
 }
 
 template<typename T>
 cci_value_ref
-cci_value_ref::set( T const& src, CCI_VALUE_TRAITS_ENABLED_(T) )
+cci_value_ref::set( T const& src, CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   if( !try_set(src) ) {
     report_error("conversion to cci_value failed", __FILE__, __LINE__);
@@ -525,9 +550,9 @@ public:
 
   /// append value obtained from a constant cci_value reference
   this_type push_back( const_reference v );
-  /// append arbitrary cci_value_traits enabled value
+  /// append arbitrary cci_value_converter enabled value
   template<typename T>
-  this_type push_back( const T & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  this_type push_back( const T & v, CCI_VALUE_REQUIRES_CONVERTER_(T) );
 
   //@}
 
@@ -662,14 +687,14 @@ public:
   this_type push_entry( std::string const& key, const_reference const & value )
     { return push_entry( key.c_str(), value ); }
 
-  /// add an arbitrary cci_value_traits enabled value
+  /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( const char* key, const T & value
-                      , CCI_VALUE_ENABLE_IF_TRAITS_(T) );
-  /// add an arbitrary cci_value_traits enabled value
+                      , CCI_VALUE_REQUIRES_CONVERTER_(T) );
+  /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( std::string const & key, const T & value
-                      , CCI_VALUE_ENABLE_IF_TRAITS_(T) )
+                      , CCI_VALUE_REQUIRES_CONVERTER_(T) )
     { return push_entry<T>( key.c_str(), value ); }
   ///@}
 
@@ -709,11 +734,11 @@ cci_value_ref::get_map()
  * specialized variants for strings, lists and maps), with or without constness.
  *
  * Users can add automatic conversions from/to cci_value objects by providing
- * an implementation (or specialisation) of the cci_value_traits class.
+ * an implementation (or specialisation) of the cci_value_converter class.
  * Corresponding specializations for the builtin types, the SystemC data types
  * and some freuquently used standard types are provided by default already.
  *
- * \see cci_value_list, cci_value_map, cci_value_traits
+ * \see cci_value_list, cci_value_map, cci_value_converter
  */
 class cci_value
   : public cci_value_ref
@@ -741,14 +766,10 @@ public:
   cci_value()
     : cci_value_ref(), own_pimpl_() {}
 
-  /// constructor from basic type
-  explicit
-  cci_value( cci_data_type ); ///< @todo drop this?
-
-  /// constructor from arbitrary cci_value_traits enabled value
+  /// constructor from arbitrary cci_value_converter enabled value
   template<typename T>
   explicit
-  cci_value( T const & src, CCI_VALUE_ENABLE_IF_TRAITS_(T) );
+  cci_value( T const & src, CCI_VALUE_REQUIRES_CONVERTER_(T) );
 
   cci_value( this_type const & that );
   cci_value( const_reference that );
@@ -762,13 +783,13 @@ public:
 
   ~cci_value();
 
-  /** @name set value functions
+  /** @name Set value functions
    * \see cci_value_ref
    */
   //@{
-  /// set to arbitrary cci_value_traits enabled value
+  /// set to arbitrary cci_value_converter enabled value
   template< typename T >
-  reference  set( T const & v, CCI_VALUE_ENABLE_IF_TRAITS_(T) )
+  reference  set( T const & v, CCI_VALUE_REQUIRES_CONVERTER_(T) )
     { init(); return reference::set(v); }
 
   /// set boolean value
@@ -827,7 +848,7 @@ private:
 };
 
 template<typename T>
-cci_value::cci_value( T const & v, CCI_VALUE_TRAITS_ENABLED_(T) )
+cci_value::cci_value( T const & v, CCI_VALUE_CHECKED_CONVERTER_(T) )
   : cci_value_ref(), own_pimpl_()
 {
   do_init();
@@ -877,7 +898,7 @@ cci_value::from_json( std::string const & json )
 
 template<typename T>
 cci_value_list_ref::this_type
-cci_value_list_ref::push_back( const T& value, CCI_VALUE_TRAITS_ENABLED_(T) )
+cci_value_list_ref::push_back( const T& value, CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   cci_value v(value);
   return push_back( const_reference(v) );
@@ -886,7 +907,7 @@ cci_value_list_ref::push_back( const T& value, CCI_VALUE_TRAITS_ENABLED_(T) )
 template<typename T>
 cci_value_map_ref
 cci_value_map_ref::push_entry( const char* key, const T& value
-                             , CCI_VALUE_TRAITS_ENABLED_(T) )
+                             , CCI_VALUE_CHECKED_CONVERTER_(T) )
 {
   cci_value v(value);
   return push_entry( key, const_reference(v) );
@@ -1022,8 +1043,8 @@ cci_value_map::operator=( this_type const & that )
 
 CCI_CLOSE_NAMESPACE_
 
-#undef CCI_VALUE_TRAITS_
-#undef CCI_VALUE_TRAITS_ENABLED_
-#undef CCI_VALUE_ENABLE_IF_TRAITS_
+#undef CCI_VALUE_CONVERTER_
+#undef CCI_VALUE_CHECKED_CONVERTER_
+#undef CCI_VALUE_REQUIRES_CONVERTER_
 
 #endif // CCI_CCI_VALUE_H_INCLUDED_

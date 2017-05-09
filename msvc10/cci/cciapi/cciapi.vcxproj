@@ -140,12 +140,15 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_handle.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_global_cfg_broker.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_value.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_value_traits.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_name_gen.cpp" />
+    <ClCompile Include="..\..\..\src\cci_core\cci_value.cpp" />
+    <ClCompile Include="..\..\..\src\cci_core\cci_value_converter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\src\cci_configuration" />
@@ -155,6 +158,8 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.h" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_mutable_types.h" />
@@ -166,9 +171,6 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_report_handler.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_value.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_value_traits.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\rapidjson.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_callback.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_callback_impl.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_cmnhdr.h" />
@@ -176,7 +178,10 @@
     <ClInclude Include="..\..\..\src\cci_core\cci_filtered_range.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_meta.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_name_gen.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_value.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_value_converter.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_version.h" />
+    <ClInclude Include="..\..\..\src\cci_core\rapidjson.h" />
     <ClInclude Include="..\..\..\src\cci_core\systemc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
