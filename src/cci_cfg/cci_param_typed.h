@@ -546,10 +546,6 @@ protected:
 
 private:
 
-    bool fast_read;
-    bool fast_write;
-
-
     /// Constructor to create handles with a giver originator
     cci_param_typed(cci_param_typed<value_type, TM> & copy,
                     const cci_originator& originator);
@@ -640,7 +636,7 @@ private:
             }
         }
 
-        fast_write =
+        cci_param_untyped::fast_write =
            TM != CCI_IMMUTABLE_PARAM &&
            TM != CCI_ELABORATION_TIME_PARAM &&
            !cci_param_untyped::is_locked() &&
@@ -844,7 +840,7 @@ cci_param_typed<T, TM>::operator const T&() const
 template <typename T, cci_param_mutable_type TM>
 const T& cci_param_typed<T, TM>::get_value() const
 {
-  if (fast_read) {
+  if (cci_param_untyped::fast_read) {
     // this is totally safe, there are no callbacks, and the originator is only
     // used by the callbacks
     return m_value;
@@ -860,7 +856,7 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value)
   // do the write (it's not immutable) AND the orriginator (last time) was,
   // indeed, the orriginal m_orriginator. The _only_ way of getting here is from
   // the owner of the param, hence the orriginator must be m_orriginator. 
-  if (fast_write) {
+  if (cci_param_untyped::fast_write) {
     m_value = *static_cast<const value_type*>(value);
   } else {
     set_raw_value(value, get_originator());
@@ -910,7 +906,7 @@ const void* cci_param_typed<T, TM>::get_raw_value(
     const void *v=static_cast<const void*>(&m_value);
     post_read_callback(m_value, originator);
 
-    const_cast<cci_param_typed<T,TM>* >(this)->fast_read =
+    const_cast<cci_param_typed<T,TM>* >(this)->cci_param_untyped::fast_read =
         m_pre_read_callbacks.vec.size()==0 &&
         m_post_read_callbacks.vec.size()==0;
 
@@ -1021,7 +1017,7 @@ bool cci_param_typed<T, TM>::is_initial_value() const
 template <typename T, cci_param_mutable_type TM>
 bool cci_param_typed<T, TM>::lock(void* pwd)
 {
-  fast_write=false;
+  cci_param_untyped::fast_write=false;
   return cci_param_untyped::lock(pwd);
 }
 
@@ -1034,8 +1030,8 @@ cci_param_typed<T, TM>::register_##name##_callback(                            \
         const cci_param_##name##_callback_untyped &cb,                         \
         cci_untyped_tag)                                                       \
 {                                                                              \
-    fast_read=false;                                                           \
-    fast_write=false;                                                          \
+    cci_param_untyped::fast_read=false;                                        \
+    cci_param_untyped::fast_write=false;                                       \
     return cci_param_untyped::register_##name##_callback(cb);                  \
 }                                                                              \
                                                                                \
@@ -1046,8 +1042,8 @@ cci_param_typed<T, TM>::register_##name##_callback(                            \
         cci_param_##name##_callback_untyped::signature (C::*cb), C* obj,       \
         cci_untyped_tag)                                                       \
 {                                                                              \
-    fast_read=false;                                                           \
-    fast_write=false;                                                          \
+    cci_param_untyped::fast_read=false;                                        \
+    cci_param_untyped::fast_write=false;                                       \
     return cci_param_untyped::register_##name##_callback(cb, obj);             \
 }                                                                              \
                                                                                \
@@ -1056,8 +1052,8 @@ cci_callback_untyped_handle                                                    \
 cci_param_typed<T, TM>::register_##name##_callback(                            \
         const cci_param_##name##_callback_typed &cb, cci_typed_tag<T>)         \
 {                                                                              \
-    fast_read=false;                                                           \
-    fast_write=false;                                                          \
+    cci_param_untyped::fast_read=false;                                        \
+    cci_param_untyped::fast_write=false;                                       \
     return cci_param_untyped::register_##name##_callback(cb, get_originator());\
 }                                                                              \
                                                                                \
@@ -1068,8 +1064,8 @@ cci_param_typed<T, TM>::register_##name##_callback(                            \
         typename cci_param_##name##_callback_typed::signature (C::*cb),        \
         C* obj, cci_typed_tag<T>)                                              \
 {                                                                              \
-    fast_read=false;                                                           \
-    fast_write=false;                                                          \
+    cci_param_untyped::fast_read=false;                                        \
+    cci_param_untyped::fast_write=false;                                       \
     return register_##name##_callback(sc_bind(cb, obj, sc_unnamed::_1));       \
 }
 
@@ -1106,9 +1102,7 @@ template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
 : cci_param_untyped(name, name_type, broker, desc, originator),                \
   m_value(default_value.get<T>()),                                             \
-  m_default_value(default_value.get<T>()),                                     \
-  fast_read(false),                                                            \
-  fast_write(false)                                                            \
+  m_default_value(default_value.get<T>())                                     \
 {                                                                              \
     broker.add_param(this);                                                    \
     this->init();                                                              \
@@ -1119,9 +1113,7 @@ template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
 : cci_param_untyped(name, name_type, broker, desc, originator),                \
   m_value(default_value),                                                      \
-  m_default_value(default_value),                                              \
-  fast_read(false),                                                            \
-  fast_write(false)                                                            \
+  m_default_value(default_value)                                               \
 {                                                                              \
     cci_value init_value = broker.get_initial_cci_value(get_name());           \
     if(!init_value.is_null()) {                                                \
