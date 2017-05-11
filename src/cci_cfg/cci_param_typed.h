@@ -33,9 +33,6 @@
  */
 CCI_OPEN_NAMESPACE_
 
-// Convenient name
-#define cci_param cci_param_typed
-
 // Forward declaration
 template<class T>
 class cci_param_typed_handle;
@@ -1204,7 +1201,6 @@ cci_param_typed<T, TM>::cci_param_typed(cci_param_typed<T, TM>& copy,
 : cci_param_untyped(copy, originator)
 {}
 
-
 template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::reset() 
 {
@@ -1217,6 +1213,15 @@ void cci_param_typed<T, TM>::reset()
   }
   update_latest_write_originator(get_originator());
 }
+
+#if CCI_CPLUSPLUS >= 201103L
+/// Convenience shortcut for typed parameters
+template <typename T, cci_param_mutable_type TM = CCI_MUTABLE_PARAM>
+using cci_param = cci_param_typed<T,TM>;
+#else
+/// Convenience macro for typed parameters (on C++03)
+# define cci_param cci_param_typed
+#endif
 
 CCI_CLOSE_NAMESPACE_
 

@@ -103,7 +103,10 @@ public:
   /// construction from a "generalized" callback
   template< typename T >
   cci_callback( const cci_callback<T>& cb
-              , typename detail::enable_if<detail::callback_is_generalized<traits,T> >::type* = NULL )
+#ifndef CCI_DOXYGEN_IS_RUNNING
+              , typename detail::enable_if<detail::callback_is_generalized<traits,T>::value >::type* = NULL
+#endif // CCI_DOXYGEN_IS_RUNNING
+              )
     : m_cb( new detail::callback_generic_adapt<traits>(cb.m_cb) )
   {}
 

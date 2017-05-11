@@ -26,8 +26,8 @@
  *
  * \note The contents of this file are entirely implementation-defined.
  */
-#ifndef CCI_CORE_CCI_CONFIG_H_INCLUDED_
-#define CCI_CORE_CCI_CONFIG_H_INCLUDED_
+#ifndef CCI_CORE_CCI_CMNHDR_H_INCLUDED_
+#define CCI_CORE_CCI_CMNHDR_H_INCLUDED_
 
 #ifndef CCI_NAMESPACE
 /// Namespace for Accellera Configuration, Control & Inspection (CCI) standard
@@ -38,6 +38,32 @@
 # define CCI_OPEN_NAMESPACE_  namespace CCI_NAMESPACE {
 /// Closing a CCI namespace block (internal)
 # define CCI_CLOSE_NAMESPACE_ } /* namespace cci */
+
+/* ------------------------------------------------------------------------ */
+
+// Selected C++ standard baseline, supported values are
+//   199711L (C++03, ISO/IEC 14882:1998, 14882:2003)
+//   201103L (C++11, ISO/IEC 14882:2011)
+//   201402L (C++14, ISO/IEC 14882:2014)
+#ifndef CCI_CPLUSPLUS
+# ifdef SC_CPLUSPLUS // as defined by SystemC >= 2.3.2
+#   define CCI_CPLUSPLUS SC_CPLUSPLUS
+# else // copy deduction from SystemC 2.3.2
+#   ifdef _MSC_VER // don't rely on __cplusplus for MSVC
+#     if _MSC_VER < 1800   // MSVC'2010 and earlier, assume C++03
+#       define CCI_CPLUSPLUS 199711L
+#     elif _MSC_VER < 1900 // MSVC'2013, assume C++11
+#       define CCI_CPLUSPLUS 201103L
+#     elif _MSC_VER < 2000 // MSVC'2015/2017, assume C++14
+#       define CCI_CPLUSPLUS 201402L
+#     else // more recent MSVC versions, assume C++14
+#       define CCI_CPLUSPLUS 201402L
+#     endif
+#   else
+#     define CCI_CPLUSPLUS __cplusplus
+#   endif
+# endif
+#endif // CCI_CPLUSPLUS
 
 /* ------------------------------------------------------------------------ */
 
@@ -68,4 +94,13 @@
 # define CCI_FORWARD_(Type,Obj) Obj
 #endif // CCI_HAS_CXX_RVALUE_REFS
 
-#endif // CCI_CORE_CCI_CONFIG_H_INCLUDED_
+/* ------------------------------------------------------------------------ */
+// Extern templates (supported by all major compilers even before C++11)
+
+#if defined(__GNUC__) && CCI_CPLUSPLUS < 201103L
+# define CCI_TPLEXTERN_ __extension__ extern
+#else
+# define CCI_TPLEXTERN_ extern
+#endif
+
+#endif // CCI_CORE_CCI_CMNHDR_H_INCLUDED_
