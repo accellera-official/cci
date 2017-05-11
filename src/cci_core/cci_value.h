@@ -21,6 +21,7 @@
 #define CCI_CCI_VALUE_H_INCLUDED_
 
 #include "cci_core/cci_core_types.h"
+#include "cci_core/cci_value_iterator.h"
 #include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
 #include <cstring> // std::strlen
@@ -48,6 +49,8 @@ class cci_value_list_ref;
 class cci_value_map;
 class cci_value_map_cref;
 class cci_value_map_ref;
+class cci_value_map_elem_ref;
+class cci_value_map_elem_cref;
 
 template<typename T> struct cci_value_converter;
 
@@ -79,7 +82,7 @@ enum cci_value_category {
   CCI_VALUE_CONVERTER_(Type) *
 #define CCI_VALUE_REQUIRES_CONVERTER_(Type) \
   CCI_VALUE_CHECKED_CONVERTER_(Type) = 0
-///@endcond CCI_HIDDEN_FROM_DOXYGEN
+///@endcond
 
 /// @ref cci_value comparisons
 bool operator==( cci_value_cref const &, cci_value_cref const & );
@@ -100,16 +103,22 @@ class cci_value_cref
   friend class cci_value_list_ref;
   friend class cci_value_map_cref;
   friend class cci_value_map_ref;
+  friend class cci_value_map_elem_cref;
+  template<typename U> friend class detail::value_iterator_impl;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
   friend std::ostream& operator<<( std::ostream&, cci_value_cref const & );
 
 protected:
-  typedef void impl; // use type-punned pointer for now
+  typedef void* impl_type; // use type-punned pointer for now
+  typedef detail::value_ptr<cci_value_cref> proxy_ptr;
 
-  explicit cci_value_cref(impl* i = NULL)
+  explicit cci_value_cref(impl_type i = NULL)
     : pimpl_(i) {}
 
 public:
+  typedef cci_value      value_type;
+  typedef cci_value_cref const_reference;
+  typedef cci_value_ref  reference;
 
   /** @name Type queries */
   ///@{
@@ -142,7 +151,7 @@ public:
   //@{
 
   /// get boolean value
-  bool get_bool()    const;
+  bool get_bool() const;
 
   /// get integer value
   int      get_int()     const;
@@ -173,7 +182,12 @@ public:
   //@{
   /// try to get a value of a @ref cci_value_converter enabled type
   template<typename T>
-  bool try_get( T& dst, CCI_VALUE_REQUIRES_CONVERTER_(T) ) const;
+  bool try_get( T& dst
+#ifndef CCI_DOXYGEN_IS_RUNNING
+              , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+              ) const;
+
   /// get a value of a @ref cci_value_converter enabled type
   template<typename T>
   CCI_VALUE_CONVERTER_(T) get() const;
@@ -182,13 +196,25 @@ public:
   /// convert value to JSON
   std::string to_json() const;
 
+  /** @brief overloaded addressof operator
+   *
+   * The \c addressof operator is replaced in the reference proxy classes
+   * \c cci_value_*ref to avoid taking an address of a (usually)
+   * temporary object.
+   *
+   * All reference objects provide the replacement, only the top-level
+   * objects (cci_value, cci_value_list, cci_value_map) provide default
+   * \c addressof semantics again.
+   */
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
 protected:
   void
   report_error( const char* msg
               , const char* file = NULL, int line = 0 ) const;
 
 protected:
-  impl* pimpl_;
+  impl_type pimpl_;
 
 private:
   /// constant reference, disabled assignment
@@ -197,10 +223,14 @@ private:
 
 template<typename T>
 bool
-cci_value_cref::try_get( T& dst, CCI_VALUE_CHECKED_CONVERTER_(T) ) const
+cci_value_cref::try_get( T& dst
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                       , CCI_VALUE_CHECKED_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                       ) const
 {
-  typedef cci_value_converter<T> traits;
-  return traits::unpack( dst, *this );
+  typedef cci_value_converter<T> conv;
+  return conv::unpack( dst, *this );
 }
 
 template<typename T>
@@ -222,17 +252,23 @@ class cci_value_ref
   friend class cci_value_string_ref;
   friend class cci_value_list_ref;
   friend class cci_value_map_ref;
+  friend class cci_value_map_elem_ref;
+  template<typename U> friend class detail::value_iterator_impl;
   friend std::istream& operator>>( std::istream&, cci_value_ref );
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
+  typedef detail::value_ptr<this_type> proxy_ptr;
 protected:
-  explicit cci_value_ref(impl* i = NULL)
+  explicit cci_value_ref(impl_type i = NULL)
     : cci_value_cref(i) {}
 
 public:
+
   /// exchange contents with another cci_value
   void swap( this_type& that );
+  friend void swap(this_type a, this_type b) { a.swap(b); }
+
   this_type operator=( const base_type& );
   this_type operator=( const this_type& );
 
@@ -300,12 +336,22 @@ public:
   //@{
   /// set value to cci_value_converter enabled type
   template<typename T>
-  cci_value_ref set(T const & dst, CCI_VALUE_REQUIRES_CONVERTER_(T));
+  cci_value_ref set(T const & dst
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                   , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                   );
   /// try to set value to cci_value_converter enabled type
   template<typename T>
-  bool          try_set(T const & dst, CCI_VALUE_REQUIRES_CONVERTER_(T));
+  bool try_set(T const & dst
+#ifndef CCI_DOXYGEN_IS_RUNNING
+              , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+              );
   ///@}
 
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 protected:
   /// try to set the value from a JSON-encoded string
   bool json_deserialize( std::string const& );
@@ -317,15 +363,23 @@ cci_value_ref::operator=( const this_type & that )
 
 template<typename T>
 bool
-cci_value_ref::try_set( T const & src, CCI_VALUE_CHECKED_CONVERTER_(T) )
+cci_value_ref::try_set( T const & src
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                      , CCI_VALUE_CHECKED_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                      )
 {
-  typedef cci_value_converter<T> traits;
-  return traits::pack( *this, src );
+  typedef cci_value_converter<T> conv;
+  return conv::pack( *this, src );
 }
 
 template<typename T>
 cci_value_ref
-cci_value_ref::set( T const& src, CCI_VALUE_CHECKED_CONVERTER_(T) )
+cci_value_ref::set( T const& src
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                  , CCI_VALUE_CHECKED_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                  )
 {
   if( !try_set(src) ) {
     report_error("conversion to cci_value failed", __FILE__, __LINE__);
@@ -335,28 +389,19 @@ cci_value_ref::set( T const& src, CCI_VALUE_CHECKED_CONVERTER_(T) )
 
 // --------------------------------------------------------------------------
 
-/** @name cci_value string comparisons */
-///@{
-bool operator==( const char *, cci_value_string_cref const & );
-bool operator==( cci_value_string_cref const &, const char * );
-bool operator==( std::string const &, cci_value_string_cref const & );
-bool operator==( cci_value_string_cref const &, std::string const & );
-///@}
-
 /// reference to constant cci_value string value
 class cci_value_string_cref
   : public cci_value_cref
 {
   friend class cci_value_cref;
-  friend bool operator==( const char *, cci_value_string_cref const & );
-  friend bool operator==( cci_value_string_cref const &, const char * );
-  friend bool operator==( std::string const &, cci_value_string_cref const & );
-  friend bool operator==( cci_value_string_cref const &, std::string const & );
+  friend class cci_value_map_elem_cref;
+  friend class cci_value_map_elem_ref;
   typedef cci_value_cref        base_type;
   typedef cci_value_string_cref this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
-  explicit cci_value_string_cref(impl* i = NULL)
+  explicit cci_value_string_cref(impl_type i = NULL)
     : base_type(i) {}
 
 public:
@@ -375,6 +420,21 @@ public:
   /// character access by index
   char operator[]( size_type index ) const
     { return c_str()[index]; }
+
+  /** @name string equality comparisons */
+  //@{
+  bool operator==(cci_value_string_cref const &) const;
+  bool operator==(const char* s) const;
+  bool operator==(std::string const & ) const;
+
+  friend bool operator==( const char * a, cci_value_string_cref const & b)
+    { return b == a; }
+  friend bool operator==( std::string const & a, cci_value_string_cref const & b )
+    { return b == a; }
+  //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
 private:
   // exclude non-string value functions
@@ -409,13 +469,15 @@ class cci_value_string_ref
   friend class cci_value_ref;
   typedef cci_value_string_cref base_type;
   typedef cci_value_string_ref  this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
-  explicit cci_value_string_ref(impl* i = NULL)
+  explicit cci_value_string_ref(impl_type i = NULL)
     : base_type(i) {}
 
 public:
   /// exchange contents with another string value
+  friend void swap(this_type a, this_type b) { a.swap(b); }
   void swap( this_type& that );
 
   /** @name assign string contents */
@@ -425,6 +487,9 @@ public:
   this_type operator=( const char * s );
   this_type operator=( std::string const & s );
   //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 };
 
 inline cci_value_string_ref
@@ -461,6 +526,16 @@ cci_value_ref::set_string(std::string const & s)
 
 // --------------------------------------------------------------------------
 
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+// iterator implementations in cci_value.cpp
+namespace detail {
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_ref>;
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_cref>;
+} // namespace detail
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_cref>;
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_ref>;
+///@endcond
+
 /// reference to constant cci_value list value
 class cci_value_list_cref
   : public cci_value_cref
@@ -468,20 +543,26 @@ class cci_value_list_cref
   friend class cci_value_cref;
   typedef cci_value_cref      base_type;
   typedef cci_value_list_cref this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
-  explicit cci_value_list_cref(impl* i = NULL)
+  explicit cci_value_list_cref(impl_type i = NULL)
     : base_type(i) {}
 
 public:
-  typedef size_t         size_type;
-  typedef cci_value_cref const_reference;
-  typedef cci_value_ref  reference;
+  typedef size_t size_type;
+  typedef cci_value_iterator<reference>         iterator;
+  typedef cci_value_iterator<const_reference>   const_iterator;
+  typedef std::reverse_iterator<iterator>       reverse_iterator;
+  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
   /** @name list queries */
   //@{
   bool      empty() const { return size() == 0;  }
+  /// number of elements in the list
   size_type size()  const;
+  /// capacity of underlying storage
+  size_type capacity() const;
   //@}
 
   /** @name (constant) element access by index */
@@ -489,7 +570,37 @@ public:
   const_reference operator[]( size_type index ) const;
   const_reference at( size_type index ) const
     { return (*this)[index]; }
+
+  const_reference front() const
+    { return (*this)[0]; }
+
+  const_reference back() const
+    { return (*this)[size() - 1]; }
   //@}
+
+  /** @name (constant) iterator interface */
+  //@{
+  const_iterator cbegin() const;
+  const_iterator cend() const;
+
+  const_iterator begin() const
+    { return cbegin(); }
+  const_iterator end() const
+    { return cend(); }
+
+  const_reverse_iterator rbegin() const
+    { return crbegin(); }
+  const_reverse_iterator rend() const
+    { return crend(); }
+
+  const_reverse_iterator crbegin() const
+    { return const_reverse_iterator(cend()); }
+  const_reverse_iterator crend() const
+    { return const_reverse_iterator(cbegin()); }
+  //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
 private:
   // exclude non-list value functions
@@ -516,16 +627,22 @@ class cci_value_list_ref
   friend class cci_value_ref;
   typedef cci_value_list_cref base_type;
   typedef cci_value_list_ref  this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
-  explicit cci_value_list_ref(impl* i = NULL)
+  explicit cci_value_list_ref(impl_type i = NULL)
     : base_type(i) {}
 
 public:
   this_type operator=( this_type const& );
   this_type operator=( base_type const& );
+
   /// exchange contents with another list value
   void swap( this_type& );
+  friend void swap(this_type a, this_type b) { a.swap(b); }
+
+  /// reserve space in underlying storage
+  this_type reserve( size_type );
 
   /// clear list elements
   this_type clear();
@@ -538,12 +655,32 @@ public:
   using base_type::at;
   reference at( size_type index )
     { return (*this)[index]; }
+
+  using base_type::front;
+  reference front()
+    { return (*this)[0]; }
+
+  using base_type::back;
+  reference back()
+    { return (*this)[size() - 1]; }
   //@}
 
-  /// capacity of underlying storage
-  size_type capacity() const;
-  /// reserve space in underlying storage
-  this_type reserve( size_type );
+  /** @name (mutable) iterator interface */
+  //@{
+  using base_type::begin;
+  iterator begin();
+
+  using base_type::end;
+  iterator end();
+
+  using base_type::rbegin;
+  reverse_iterator rbegin()
+    { return reverse_iterator(end()); }
+
+  using base_type::rend;
+  reverse_iterator rend()
+    { return reverse_iterator(begin()); }
+  //@}
 
   /** @name push new elements to the end of the list */
   //@{
@@ -552,11 +689,31 @@ public:
   this_type push_back( const_reference v );
   /// append arbitrary cci_value_converter enabled value
   template<typename T>
-  this_type push_back( const T & v, CCI_VALUE_REQUIRES_CONVERTER_(T) );
-
+  this_type push_back( const T & v
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                     , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                     );
   //@}
 
-  // TODO: add iterator interface
+  /** @name insert elements into the list */
+  //@{
+  iterator insert( const_iterator pos, const_reference value );
+  iterator insert( const_iterator pos, size_type count, const_reference value );
+  template< class InputIt > // TODO: not implemented, yet
+  iterator insert( const_iterator pos, InputIt first, InputIt last );
+  //@}
+
+  /** @name erase elements from the list */
+  //@{
+  iterator erase( const_iterator pos );
+  iterator erase( const_iterator first, const_iterator last );
+
+  void pop_back();
+  //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 };
 
 inline cci_value_list_ref
@@ -577,6 +734,65 @@ cci_value_ref::get_list()
 
 // --------------------------------------------------------------------------
 
+/// reference to a constant cci_value map element
+class cci_value_map_elem_cref
+{
+  template<typename U> friend class detail::value_iterator_impl;
+  typedef detail::value_ptr<cci_value_map_elem_cref> proxy_ptr;
+
+  typedef void value_type; // TODO: add  explicit value_type 
+public:
+  typedef cci_value_map_elem_cref const_reference;
+  typedef cci_value_map_elem_ref  reference;
+
+  /// constant reference to the element's key
+  cci_value_string_cref key;
+  /// constant reference to the element's value
+  cci_value_cref        value;
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
+protected:
+  typedef void* impl_type; // use type-punned pointer for now
+  impl_type pimpl_;
+  cci_value_map_elem_cref(impl_type i = NULL);
+};
+
+/// reference to a mutable cci_value map element
+class cci_value_map_elem_ref
+{
+  template<typename U> friend class detail::value_iterator_impl;
+  typedef detail::value_ptr<cci_value_map_elem_ref> proxy_ptr;
+  typedef void value_type; // TODO: add  explicit value_type
+public:
+  typedef cci_value_map_elem_cref const_reference;
+  typedef cci_value_map_elem_ref  reference;
+
+  /// constant reference to the element's key
+  cci_value_string_cref key;
+  /// mutable reference to the element's value
+  cci_value_ref         value;
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
+protected:
+  typedef void* impl_type; // use type-punned pointer for now
+  impl_type pimpl_;
+  cci_value_map_elem_ref(impl_type i = NULL);
+};
+
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+// iterator implementations in cci_value.cpp
+namespace detail {
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_map_elem_cref>;
+CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_map_elem_ref>;
+} // namespace detail
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_map_elem_cref>;
+CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_map_elem_ref>;
+///@endcond
+
 /// reference to constant cci_value map
 class cci_value_map_cref
   : public cci_value_cref
@@ -584,19 +800,23 @@ class cci_value_map_cref
   friend class cci_value_cref;
   typedef cci_value_cref     base_type;
   typedef cci_value_map_cref this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 
 protected:
-  explicit cci_value_map_cref(impl* i = NULL)
+  explicit cci_value_map_cref(impl_type i = NULL)
     : base_type(i) {}
 
 public:
-  typedef size_t         size_type;
-  typedef cci_value_cref const_reference;
-  typedef cci_value_ref  reference;
+  typedef size_t size_type;
+  typedef cci_value_iterator<cci_value_map_elem_ref>  iterator;
+  typedef cci_value_iterator<cci_value_map_elem_cref> const_iterator;
+  typedef std::reverse_iterator<iterator>             reverse_iterator;
+  typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
   /** @name map queries */
   //@{
   bool      empty()    const { return size() == 0;  }
+  /// number of entries in the map
   size_type size()     const;
   //@}
 
@@ -605,14 +825,11 @@ public:
    */
   //@{
   bool has_entry( const char * key ) const
-    { return NULL != do_lookup( key, std::strlen(key)
-                              , /* allow_fail = */ true ); }
-  bool has_entry( cci_value_string_cref key ) const
-    { return NULL != do_lookup( key.c_str(), key.length()
-                              , /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key, std::strlen(key), /* allow_fail = */ true ); }
   bool has_entry( std::string const & key ) const
-    { return NULL != do_lookup( key.c_str(), key.length()
-                              , /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key.c_str(), key.length(), /* allow_fail = */ true ); }
+  bool has_entry( cci_value_string_cref key ) const
+    { return NULL != do_lookup( key.c_str(), key.length(), /* allow_fail = */ true ); }
   //@}
 
   /** @name map element access
@@ -627,11 +844,33 @@ public:
     { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
   ///@}
 
-  // TODO: add iterator interface
+  /** @name (constant) iterator interface */
+  //@{
+  const_iterator cbegin() const;
+  const_iterator cend() const;
+
+  const_iterator begin() const
+    { return cbegin(); }
+  const_iterator end() const
+    { return cend(); }
+
+  const_reverse_iterator rbegin() const
+    { return crbegin(); }
+  const_reverse_iterator rend() const
+    { return crend(); }
+
+  const_reverse_iterator crbegin() const
+    { return const_reverse_iterator(cend()); }
+  const_reverse_iterator crend() const
+    { return const_reverse_iterator(cbegin()); }
+  //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
 protected:
-  impl * do_lookup( const char* key, size_type keylen
-                  , bool allow_fail = false           ) const;
+  impl_type do_lookup( const char* key, size_type keylen
+                     , bool allow_fail = false ) const;
 
 private:
   // exclude non-map value functions
@@ -658,8 +897,9 @@ class cci_value_map_ref
   friend class cci_value_ref;
   typedef cci_value_map_cref base_type;
   typedef cci_value_map_ref  this_type;
+  typedef detail::value_ptr<this_type> proxy_ptr;
 protected:
-  explicit cci_value_map_ref(impl* i = NULL)
+  explicit cci_value_map_ref(impl_type i = NULL)
     : base_type(i) {}
 
 public:
@@ -667,38 +907,102 @@ public:
   this_type operator=( base_type const& );
   this_type operator=( this_type const& );
   void swap( this_type& );
+  friend void swap(this_type a, this_type b) { a.swap(b); }
 
+  /// clear map entries
   this_type clear();
 
-  /** @name map element access */
-  ///@{
+  /** @name (mutable) map element access */
+  //@{
   using base_type::operator[];
   reference operator[]( const char* key )
     { return reference( do_lookup( key, std::strlen(key) ) ); }
   reference operator[]( std::string const& key )
     { return reference( do_lookup( key.c_str(), key.length() ) ); }
-  ///@}
+  //@}
+
+  /** @name (mutable) iterator interface */
+  //@{
+  using base_type::begin;
+  iterator begin();
+
+  using base_type::end;
+  iterator end();
+
+  using base_type::rbegin;
+  reverse_iterator rbegin()
+    { return reverse_iterator(end()); }
+
+  using base_type::rend;
+  reverse_iterator rend()
+    { return reverse_iterator(begin()); }
+  //@}
 
   ///@name map element addition
-  ///@{
+  //@{
   /// add value obtained from a constant cci_value reference
-  this_type push_entry( const char* key, const_reference const & value );
+  this_type push_entry( const char* key, const_reference value )
+    { return do_push( key, std::strlen(key), value ); }
+
   /// add value obtained from a constant cci_value reference
-  this_type push_entry( std::string const& key, const_reference const & value )
-    { return push_entry( key.c_str(), value ); }
+  this_type push_entry( std::string const& key, const_reference value )
+    { return do_push( key.c_str(), key.length(), value ); }
 
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( const char* key, const T & value
-                      , CCI_VALUE_REQUIRES_CONVERTER_(T) );
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                      , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif
+                      )
+    { return do_push( key, std::strlen(key), value ); }
+
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( std::string const & key, const T & value
-                      , CCI_VALUE_REQUIRES_CONVERTER_(T) )
-    { return push_entry<T>( key.c_str(), value ); }
-  ///@}
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                      , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif
+                      )
+    { return do_push( key.c_str(), key.length(), value ); }
+  //@}
 
-  // TODO: add iterator interface
+  /** @name find elements in the map
+   *
+   * These overloads return an iterator (or const_iterator) pointing
+   * to an element in the map and \ref end() otherwise.
+   */
+  //@{
+  iterator find( const char* key )
+    { return do_find( key, std::strlen(key) ); }
+  iterator find( const std::string& key )
+    { return do_find( key.c_str(), key.length() ); }
+  const_iterator find( const char* key ) const
+    { return do_find( key, std::strlen(key) ); }
+  const_iterator find( const std::string& key ) const
+    { return do_find( key.c_str(), key.length() ); }
+  //@}
+
+  /** @name erase elements from the map */
+  //@{
+  size_type erase( const char* key )
+    { return do_erase( key, std::strlen(key) ); }
+  size_type erase( const std::string& key )
+    { return do_erase( key.c_str(), key.length() ); }
+
+  iterator erase( const_iterator pos );
+  iterator erase( const_iterator first, const_iterator last );
+  //@}
+
+  /// @copydoc cci_value_cref::operator&
+  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+
+private:
+  template<typename T>
+  this_type do_push(const char* key, size_type keylen, const T& value);
+  this_type do_push(const char* key, size_type keylen, const_reference value);
+  size_type do_erase(const char* key, size_type keylen);
+  iterator  do_find(const char* key, size_type keylen) const;
 };
 
 inline cci_value_map_ref
@@ -769,7 +1073,11 @@ public:
   /// constructor from arbitrary cci_value_converter enabled value
   template<typename T>
   explicit
-  cci_value( T const & src, CCI_VALUE_REQUIRES_CONVERTER_(T) );
+  cci_value( T const & src
+#ifndef CCI_DOXYGEN_IS_RUNNING
+           , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+           );
 
   cci_value( this_type const & that );
   cci_value( const_reference that );
@@ -777,9 +1085,9 @@ public:
   this_type& operator=( this_type const & );
   this_type& operator=( const_reference );
 
+  friend void swap(this_type& a, this_type& b) { a.swap(b); }
+  void swap( reference that ) { init(); reference::swap( that ); }
   void swap( cci_value & that );
-  void swap( reference that )
-    { init(); reference::swap( that ); }
 
   ~cci_value();
 
@@ -787,42 +1095,58 @@ public:
    * \see cci_value_ref
    */
   //@{
-  /// set to arbitrary cci_value_converter enabled value
+  /// @copydoc cci_value_ref::set
   template< typename T >
-  reference  set( T const & v, CCI_VALUE_REQUIRES_CONVERTER_(T) )
+  reference  set( T const & v
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                , CCI_VALUE_REQUIRES_CONVERTER_(T)
+#endif //  CCI_DOXYGEN_IS_RUNNING
+                )
     { init(); return reference::set(v); }
 
-  /// set boolean value
+  /// @copydoc cci_value_ref::set_null
+  reference set_null()
+    { init(); return reference::set_null(); }
+
+  /// @copydoc cci_value_ref::set_bool
   reference set_bool( bool v )
     { init(); return reference::set_bool(v); }
 
-  /// set integer value
+  /// @copydoc cci_value_ref::set_int
   reference set_int( int v )
     { init(); return reference::set_int(v); }
-  /// set unsigned integer value
+  /// @copydoc cci_value_ref::set_uint
   reference set_uint( unsigned v )
     { init(); return reference::set_uint(v); }
-  /// set 64-bit integer value
+  /// @copydoc cci_value_ref::set_int64
   reference set_int64( int64 v )
     { init(); return reference::set_int64(v); }
-  /// set unsigned 64-bit integer value
+  /// @copydoc cci_value_ref::set_uint64
   reference set_uint64(uint64 v)
     { init(); return reference::set_uint64(v); }
 
-  /// set floating-point value
+  /// @copydoc cci_value_ref::set_double
   reference set_double(double v)
     { init(); return cci_value_ref::set_double(v); }
+  /// @copydoc cci_value_ref::set_number
+  reference set_number( double v )
+    { return set_double(v); }
 
+  /// @copydoc cci_value_ref::set_string(const char*)
   string_reference set_string( const char* s )
     { init(); return reference::set_string(s); }
-  string_reference set_string( const_string_reference s )
-    { init(); return reference::set_string(s); }
+  /// @copydoc cci_value_ref::set_string(const std::string&)
   string_reference set_string( const std::string& s )
     { init(); return reference::set_string(s); }
+  /// @copydoc cci_value_ref::set_string(cci_value_string_cref)
+  string_reference set_string( const_string_reference s )
+    { init(); return reference::set_string(s); }
 
+  /// @copydoc cci_value_ref::set_list
   list_reference set_list()
     { init(); return cci_value_ref::set_list(); }
 
+  /// @copydoc cci_value_ref::set_map
   map_reference set_map()
     { init(); return cci_value_ref::set_map(); }
   //@}
@@ -837,18 +1161,27 @@ public:
     { v.init(); return is >> reference(v); }
   //@}
 
+  /// @copydoc cci_value_cref::operator&
+  const cci_value * operator&() const { return this; }
+  /// @copydoc cci_value_cref::operator&
+  cci_value * operator&() { return this; }
+
 private:
-  impl* init();
-  impl* do_init();
+  impl_type init();
+  impl_type do_init();
 
   bool json_deserialize( std::string const & src )
     { init(); return reference::json_deserialize( src ); }
 
-  impl* own_pimpl_;
+  impl_type own_pimpl_;
 };
 
 template<typename T>
-cci_value::cci_value( T const & v, CCI_VALUE_CHECKED_CONVERTER_(T) )
+cci_value::cci_value( T const & v
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                    , CCI_VALUE_CHECKED_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                    )
   : cci_value_ref(), own_pimpl_()
 {
   do_init();
@@ -875,7 +1208,7 @@ cci_value::operator=( this_type const & that )
   return operator=( const_reference(that) );
 }
 
-inline cci_value::impl*
+inline cci_value::impl_type
 cci_value::init()
 {
   if( !pimpl_ )
@@ -898,7 +1231,11 @@ cci_value::from_json( std::string const & json )
 
 template<typename T>
 cci_value_list_ref::this_type
-cci_value_list_ref::push_back( const T& value, CCI_VALUE_CHECKED_CONVERTER_(T) )
+cci_value_list_ref::push_back( const T& value
+#ifndef CCI_DOXYGEN_IS_RUNNING
+                             , CCI_VALUE_CHECKED_CONVERTER_(T)
+#endif // CCI_DOXYGEN_IS_RUNNING
+                             )
 {
   cci_value v(value);
   return push_back( const_reference(v) );
@@ -906,8 +1243,7 @@ cci_value_list_ref::push_back( const T& value, CCI_VALUE_CHECKED_CONVERTER_(T) )
 
 template<typename T>
 cci_value_map_ref
-cci_value_map_ref::push_entry( const char* key, const T& value
-                             , CCI_VALUE_CHECKED_CONVERTER_(T) )
+cci_value_map_ref::do_push( const char* key, size_type keylen, const T& value )
 {
   cci_value v(value);
   return push_entry( key, const_reference(v) );
@@ -936,15 +1272,21 @@ public:
 
   this_type& operator=( this_type const & );
   this_type& operator=( const_reference );
+
+  friend void swap(this_type& a, this_type& b) { a.swap(b); }
+  void swap( reference that ) { reference::swap( that ); }
   void swap( this_type & );
-  void swap( reference that )
-    { reference::swap( that ); }
 
   ~cci_value_list();
 
+  ///@copydoc cci_value_cref::operator&
+  const cci_value_list * operator&() const { return this; }
+  ///@copydoc cci_value_cref::operator&
+  cci_value_list * operator&() { return this; }
+
 private:
-  impl* do_init();
-  impl* own_pimpl_;
+  impl_type do_init();
+  impl_type own_pimpl_;
 };
 
 inline
@@ -999,15 +1341,21 @@ public:
 
   this_type& operator=( this_type const& );
   this_type& operator=( const_reference );
+
+  friend void swap(this_type& a, this_type& b) { a.swap(b); }
+  void swap( reference that ) { reference::swap( that ); }
   void swap( this_type & );
-  void swap( reference that )
-    { reference::swap( that ); }
 
   ~cci_value_map();
 
+  /// @copydoc cci_value_cref::operator&
+  const cci_value_map * operator&() const { return this; }
+  /// @copydoc cci_value_cref::operator&
+  cci_value_map * operator&() { return this; }
+
 private:
-  impl* do_init();
-  impl* own_pimpl_;
+  impl_type do_init();
+  impl_type own_pimpl_;
 };
 
 inline
