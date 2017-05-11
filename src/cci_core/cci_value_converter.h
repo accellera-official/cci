@@ -16,17 +16,6 @@
   permissions and limitations under the License.
 
  ****************************************************************************/
-
-#ifndef CCI_EXTERN_
-#ifdef _MSC_VER
-# pragma warning(push)
-# pragma warning(disable: 4231) // don't warn about extern templates
-# define CCI_EXTERN_ extern
-#else
-# define CCI_EXTERN_
-#endif
-#endif // CCI_EXTERN_
-
 #ifndef CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
 #define CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
 
@@ -158,13 +147,13 @@ struct cci_value_delegate_converter
 // C++ builtin types
 
 // default instantiations (in cci_value_converter.cpp)
-CCI_EXTERN_ template struct cci_value_converter<bool>;
-CCI_EXTERN_ template struct cci_value_converter<int>;
-CCI_EXTERN_ template struct cci_value_converter<int64>;
-CCI_EXTERN_ template struct cci_value_converter<unsigned>;
-CCI_EXTERN_ template struct cci_value_converter<uint64>;
-CCI_EXTERN_ template struct cci_value_converter<double>;
-CCI_EXTERN_ template struct cci_value_converter<std::string>;
+CCI_TPLEXTERN_ template struct cci_value_converter<bool>;
+CCI_TPLEXTERN_ template struct cci_value_converter<int>;
+CCI_TPLEXTERN_ template struct cci_value_converter<int64>;
+CCI_TPLEXTERN_ template struct cci_value_converter<unsigned>;
+CCI_TPLEXTERN_ template struct cci_value_converter<uint64>;
+CCI_TPLEXTERN_ template struct cci_value_converter<double>;
+CCI_TPLEXTERN_ template struct cci_value_converter<std::string>;
 
 // related numerical types
 // (without range checks for now)
@@ -183,7 +172,8 @@ CCI_VALUE_CONVERTER_DERIVED_( int64, long );
 CCI_VALUE_CONVERTER_DERIVED_( uint64, unsigned long );
 CCI_VALUE_CONVERTER_DERIVED_( double, float );
 
-///@endcond CCI_HIDDEN_FROM_DOXYGEN
+#undef CCI_VALUE_CONVERTER_DERIVED_
+///@endcond
 
 // ----------------------------------------------------------------------------
 // C++ string literals
@@ -290,14 +280,14 @@ struct cci_value_converter< std::vector<T,Alloc> >
 // SystemC builtin types
 
 // default instantiations (in cci_value_converter.cpp)
-CCI_EXTERN_ template struct cci_value_converter<sc_core::sc_time>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_logic>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_int_base>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_uint_base>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_signed>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_unsigned>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_bv_base>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_lv_base>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_core::sc_time>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_logic>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_int_base>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_uint_base>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_signed>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_unsigned>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_bv_base>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_lv_base>;
 
 template<int N>
 struct cci_value_converter< sc_dt::sc_int<N> >
@@ -350,12 +340,12 @@ CCI_CLOSE_NAMESPACE_
 #define CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
 CCI_OPEN_NAMESPACE_
 
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fxval>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fxval_fast>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fix>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_fix_fast>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_ufix>;
-CCI_EXTERN_ template struct cci_value_converter<sc_dt::sc_ufix_fast>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_fxval>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_fxval_fast>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_fix>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_fix_fast>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_ufix>;
+CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_ufix_fast>;
 
 template<int W, int I, sc_dt::sc_q_mode Q, sc_dt::sc_o_mode O, int N >
 struct cci_value_converter< sc_dt::sc_fixed<W,I,Q,O,N> >
@@ -387,14 +377,3 @@ struct cci_value_converter< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
 
 CCI_CLOSE_NAMESPACE_
 #endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
-
-#ifdef CCI_VALUE_CONVERTER_DERIVED_
-#undef CCI_VALUE_CONVERTER_DERIVED_
-#endif
-
-#ifdef CCI_EXTERN_
-# undef CCI_EXTERN_
-# ifdef _MSC_VER
-#  pragma warning(pop)
-# endif
-#endif // CCI_EXTERN_

@@ -37,9 +37,6 @@ CCI_OPEN_NAMESPACE_
 // Forward declaration
 class cci_param_if;
 
-// Convenient name
-#define cci_param_handle cci_param_untyped_handle
-
 // CCI Configuration parameter base class
 /**
 * Type independent base class all cci parameters derive from.
@@ -296,6 +293,9 @@ private:
     /// Original parameter name
     const char* m_orig_param_name;
 };
+
+/// Convenience shortcut for ntyped parameter handles
+typedef cci_param_untyped_handle cci_param_handle ;
 
 CCI_CLOSE_NAMESPACE_
 

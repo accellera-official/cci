@@ -148,7 +148,7 @@ struct cci_param_read_event
 
 /* ------------------------------------------------------------------------ */
 
-#if CCI_HAS_CXX_TEMPLATE_ALIAS
+#if CCI_CPLUSPLUS >= 201103L
 
 /// Parameter pre write callback
 template <typename T = void>
@@ -190,7 +190,7 @@ template <typename T = void>
 using cci_param_post_read_callback_handle
   = cci_callback_typed_handle<const cci_param_read_event<T>&>;
 
-#else // CCI_HAS_CXX_TEMPLATE_ALIAS
+#else // CCI_CPLUSPLUS >= 201103L (no alias templates)
 
 /// Parameter pre write callback
 template <typename T = void>
@@ -232,7 +232,7 @@ template <typename T = void>
 struct cci_param_post_read_callback_handle
         : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
 
-#endif // CCI_HAS_CXX_TEMPLATE_ALIAS_
+#endif // CCI_CPLUSPLUS >= 201103L
 
 /// Untyped parameter write event
 typedef cci_param_write_event<>::type
