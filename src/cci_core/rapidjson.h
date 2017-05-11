@@ -77,6 +77,13 @@ RAPIDJSON_NAMESPACE_END
 
 #include "rapidjson/rapidjson.h"
 
+#ifdef __GNUC__
+RAPIDJSON_DIAG_PUSH
+#if CCI_CPLUSPLUS >= 201103L
+RAPIDJSON_DIAG_OFF( terminate ) // ignore throwing assertions
+#endif
+#endif
+
 // throw exception by default
 #define RAPIDJSON_PARSE_ERROR_EARLY_RETURN( what ) \
   ((void)0)
@@ -123,6 +130,8 @@ RAPIDJSON_NAMESPACE_END
 #include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/writer.h"
 
+#ifdef __GNUC__
+RAPIDJSON_DIAG_POP
+#endif
 ///@endcond
-
 #endif // CCI_RAPIDJSON_H_INCLUDED_

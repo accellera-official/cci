@@ -17,44 +17,30 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_CORE_TYPES_H_INCLUDED_
-#define CCI_CCI_CORE_TYPES_H_INCLUDED_
+/**
+ *  @file   testbench.cpp
+ *  @brief  A testbench that demonstrates how to update the value of a mutable 
+ *          integer parameter.
+ *  @author R. Swaminathan, TI
+ */
 
-#include "cci_cfg/cci_config_macros.h"
-
-CCI_OPEN_NAMESPACE_
+#include "ex24_simple_ip.h"
+#include "ex24_config_ip.h"
 
 /**
- *  Enumeration for basic parameter data types, whose rough getting and setting 
- *  is supported directly.
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  The testbench for the CCI simple_int_param example
+ *  @param  argc  An integer for the number of arguments
+ *  @param  argv  An array with the input arguments
+ *  @return and integer of successful execution
  */
-enum cci_param_data_category {
-    /// Boolean valued parameter
-    CCI_BOOL_PARAM,
-    /// Integer number valued parameter
-    CCI_NUMBER_PARAM,
-    /// Real number valued parameter
-    CCI_REAL_PARAM,
-    /// String valued parameter
-    CCI_STRING_PARAM,
-    /// List valued parameter
-    CCI_LIST_PARAM,
-    /// Parameter with values of any other type (objects etc.)
-    CCI_OTHER_PARAM
-};
+int sc_main(int argc, char *argv[]) {
+  ex24_simple_ip sim_ip("sim_ip");
+  ex24_config_ip cfg_ip("cfg_ip");
 
-/**
- * Enumeration for convenient cci_param_typed constructor.
- * Choose if a param gets a relative or an absolute name.
- */
-enum cci_name_type {
-    /// Relative name
-    CCI_RELATIVE_NAME,
-    /// Absolute name
-    CCI_ABSOLUTE_NAME
-};
+  SC_REPORT_INFO("sc_main", "Begin Simulation.");
+  sc_core::sc_start();
+  SC_REPORT_INFO("sc_main", "End Simulation.");
 
-CCI_CLOSE_NAMESPACE_
-
-#endif
-
+  return EXIT_SUCCESS;
+}

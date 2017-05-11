@@ -30,6 +30,10 @@
 #include <cci_core/systemc.h>
 #include <cci_core/cci_cmnhdr.h>
 
+#if CCI_CPLUSPLUS >= 201103L
+# include <type_traits>
+#endif
+
 CCI_OPEN_NAMESPACE_
 
 /// Typed tag class
@@ -44,11 +48,18 @@ typedef cci_tag<void> cci_untyped_tag;
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 namespace detail {
 
-using sc_boost::enable_if;
-using sc_boost::disable_if;
+#if CCI_CPLUSPLUS >= 201103L
+using std::enable_if;
+using std::integral_constant;
+using std::true_type;
+using std::false_type;
+using std::is_same;
+using std::remove_reference;
 
-/// C++03 implementation of std::void_t
-template<typename T> struct always_void { typedef void type; };
+#else // use Boost/local implementation for type traits
+
+template<bool Cond, typename T = void>
+struct enable_if : sc_boost::enable_if_c<Cond, T> {};
 
 /// A type encoding for an integral value
 template<typename IntegralType, IntegralType V> struct integral_constant
@@ -66,6 +77,11 @@ template<typename T> struct is_same<T,T> : true_type {};
 
 template<typename T> struct remove_reference { typedef T type; };
 template<typename T> struct remove_reference<T&> { typedef T type; };
+
+#endif // CCI_CPLUSPLUS >= 201103L
+
+/// C++03 implementation of std::void_t (from C++17)
+template<typename T> struct always_void { typedef void type; };
 
 } // namespace detail
 ///@endcond

@@ -20,7 +20,7 @@
 #include <cstring>
 
 #include "cci_cfg/cci_originator.h"
-#include "cci_report_handler.h"
+#include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
 

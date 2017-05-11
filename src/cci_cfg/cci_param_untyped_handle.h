@@ -26,7 +26,7 @@
 #include "cci_core/cci_value.h"
 #include "cci_cfg/cci_originator.h"
 #include "cci_cfg/cci_mutable_types.h"
-#include "cci_param_callbacks.h"
+#include "cci_cfg/cci_param_callbacks.h"
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
@@ -36,9 +36,6 @@ CCI_OPEN_NAMESPACE_
 
 // Forward declaration
 class cci_param_if;
-
-// Convenient name
-#define cci_param_handle cci_param_untyped_handle
 
 // CCI Configuration parameter base class
 /**
@@ -237,6 +234,9 @@ public:
      */
     void invalidate(bool remove = false);
 
+    /// Reset the parameter to the intial value
+    void reset();
+
     /// Assigns parameter untyped handle a new value from another legacy
     /// parameter untyped handle
     /**
@@ -293,6 +293,9 @@ private:
     /// Original parameter name
     const char* m_orig_param_name;
 };
+
+/// Convenience shortcut for ntyped parameter handles
+typedef cci_param_untyped_handle cci_param_handle ;
 
 CCI_CLOSE_NAMESPACE_
 
