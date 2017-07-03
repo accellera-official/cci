@@ -69,8 +69,9 @@ cci_param_untyped::~cci_param_untyped()
         m_broker_handle.remove_param(this);
         for (std::vector<cci_param_untyped_handle*>::iterator
                      it = m_param_handles.begin();
-             it != m_param_handles.end(); it++) {
-            (*it)->invalidate();
+             it != m_param_handles.end();) {
+            (*it)->invalidate(false);
+            it=m_param_handles.erase(it);
         }
     }
     if(!m_name.empty()) {

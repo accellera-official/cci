@@ -44,6 +44,11 @@ cci_param_untyped_handle::cci_param_untyped_handle(
 {}
 
 cci_param_untyped_handle::cci_param_untyped_handle(
+  const cci_originator & originator, const std::string& name)
+: m_originator(originator), m_orig_param(NULL), m_orig_param_name(name.c_str())
+{}
+
+cci_param_untyped_handle::cci_param_untyped_handle(
         const cci_param_untyped_handle& param_handle)
         : m_originator(param_handle.m_originator),
           m_orig_param(param_handle.m_orig_param),
@@ -59,6 +64,7 @@ cci_param_untyped_handle::~cci_param_untyped_handle()
     if(is_valid()) {
         m_orig_param->remove_param_handle(this);
     }
+    m_orig_param=NULL;
 }
 
 cci_param_untyped_handle& cci_param_untyped_handle::operator=(
