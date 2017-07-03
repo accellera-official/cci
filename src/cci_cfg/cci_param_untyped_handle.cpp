@@ -70,6 +70,9 @@ cci_param_untyped_handle::~cci_param_untyped_handle()
 cci_param_untyped_handle& cci_param_untyped_handle::operator=(
         const cci_param_untyped_handle& param_handle)
 {
+    if (is_valid()) {
+      m_orig_param->remove_param_handle(this);
+    }
     cci_originator originator(param_handle.m_originator);
     std::swap(m_originator, originator);
     m_orig_param = param_handle.m_orig_param;
@@ -288,8 +291,8 @@ bool cci_param_untyped_handle::is_valid(bool check) const
     return m_orig_param ? true : false;
 }
 
-void cci_param_untyped_handle::invalidate(bool remove) {
-    if(is_valid() && remove) {
+void cci_param_untyped_handle::invalidate() {
+    if(is_valid()) {
         m_orig_param->remove_param_handle(this);
     }
     m_orig_param = NULL;
