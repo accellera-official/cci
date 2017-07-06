@@ -37,6 +37,16 @@ CCI_OPEN_NAMESPACE_
 template<class T>
 class cci_param_typed_handle;
 
+namespace detail {
+/// implementation defined helper to set/reset a boolean flag
+struct scoped_true {
+    explicit scoped_true(bool& ref) : ref_(ref) { ref_ = true; }
+    ~scoped_true() { ref_ = false; }
+private:
+    bool& ref_;
+}; // class scoped_true
+}  // namespace detail
+
 /// Parameter class, internally forwarding calls to the implementation
 /**
  * The implementation is in file cci_param_typed.hpp, which has to be included
@@ -652,44 +662,35 @@ private:
     pre_write_callback(value_type value,
                        const cci_originator &originator) const
     {
+        // Already locked, skip nested invocation
+        if (m_pre_write_callbacks.oncall)
+            return false;
+
         // Lock the tag to prevent nested callback
-        if(m_pre_write_callbacks.oncall) return false;
-        else m_pre_write_callbacks.oncall=true;
+        detail::scoped_true oncall( m_pre_write_callbacks.oncall );
 
         bool result = true;
-
         // Validate write callbacks
         for (unsigned i = 0; i < m_pre_write_callbacks.vec.size(); ++i) {
             typename cci_param_pre_write_callback_handle<value_type>::type
                     typed_pre_write_cb(
                     m_pre_write_callbacks.vec[i].callback);
 
-
             // Prepare parameter handle for callback event
             cci_param_untyped_handle param_handle =
                     create_param_handle(m_pre_write_callbacks.vec[i].originator);
 
             // Write callback payload
-            cci_param_write_event <value_type> ev(m_value,
-                                                  value,
-                                                  originator,
-                                                  param_handle);
+            const cci_param_write_event<value_type>
+              ev(m_value, value, originator, param_handle);
 
-            if (!typed_pre_write_cb.invoke(
-                    static_cast<
-                            const cci_param_write_event <value_type> >(ev))) {
-                // Unlock the tag
-                m_pre_write_callbacks.oncall=false;
-
+            if (!typed_pre_write_cb.invoke(ev)) {
                 // Write denied
                 cci_report_handler::set_param_failed(
                         "Value rejected by callback.", __FILE__, __LINE__);
                 result = false;
             }
         }
-
-        // Unlock the tag
-        m_pre_write_callbacks.oncall=false;
 
         return result;
     }
@@ -699,9 +700,12 @@ private:
                              const value_type& new_value,
                              const cci_originator &originator) const
     {
+        // Already locked, skip nested invocation
+        if (m_post_write_callbacks.oncall)
+            return;
+
         // Lock the tag to prevent nested callback
-        if(m_post_write_callbacks.oncall) return;
-        else m_post_write_callbacks.oncall=true;
+        detail::scoped_true oncall( m_post_write_callbacks.oncall );
 
         // Write callbacks
         for (unsigned i = 0; i < m_post_write_callbacks.vec.size(); ++i) {
@@ -714,26 +718,24 @@ private:
                         m_post_write_callbacks.vec[i].originator);
 
                 // Write callback payload
-                const cci_param_write_event <value_type> ev(old_value,
-                                                            new_value,
-                                                            originator,
-                                                            param_handle);
+                const cci_param_write_event<value_type>
+                  ev(old_value, new_value, originator, param_handle);
 
                 typed_post_write_cb.invoke(ev);
             }
         }
-
-        // Unlock the tag
-        m_post_write_callbacks.oncall=false;
     }
 
     /// Pre read callback
     void pre_read_callback(const value_type& value,
                            const cci_originator &originator) const
     {
+        // Already locked, skip nested invocation
+        if(m_pre_read_callbacks.oncall)
+          return;
+
         // Lock the tag to prevent nested callback
-        if(m_pre_read_callbacks.oncall) return;
-        else m_pre_read_callbacks.oncall=true;
+        detail::scoped_true oncall( m_pre_read_callbacks.oncall );
 
         // Read callbacks
         for (unsigned i = 0; i < m_pre_read_callbacks.vec.size(); ++i) {
@@ -746,25 +748,24 @@ private:
                         m_pre_read_callbacks.vec[i].originator);
 
                 // Read callback payload
-                const cci_param_read_event <value_type> ev(value,
-                                                           originator,
-                                                           param_handle);
+                const cci_param_read_event<value_type>
+                  ev(value, originator, param_handle);
 
                 typed_pre_read_cb.invoke(ev);
             }
         }
-
-        //Unlock the tag
-        m_pre_read_callbacks.oncall=false;
     }
 
-    /// Pre read callback
+    /// Post read callback
     void post_read_callback(const value_type& value,
                             const cci_originator &originator) const
     {
+        // Already locked, skip nested invocation
+        if(m_post_read_callbacks.oncall)
+            return;
+
         // Lock the tag to prevent nested callback
-        if(m_post_read_callbacks.oncall) return;
-        else m_post_read_callbacks.oncall=true;
+        detail::scoped_true oncall( m_post_read_callbacks.oncall );
 
         // Read callbacks
         for (unsigned i = 0; i < m_post_read_callbacks.vec.size(); ++i) {
@@ -777,16 +778,12 @@ private:
                         m_post_read_callbacks.vec[i].originator);
 
                 // Read callback payload
-                const cci_param_read_event <value_type> ev(value,
-                                                           originator,
-                                                           param_handle);
+                const cci_param_read_event<value_type>
+                  ev(value, originator, param_handle);
 
                 typed_pre_read_cb.invoke(ev);
             }
         }
-
-        // Unlock the tag
-        m_post_read_callbacks.oncall=false;
     }
 };
 
