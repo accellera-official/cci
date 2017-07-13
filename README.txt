@@ -27,9 +27,8 @@ available from the WG's Accellera workspace, for more detailed instructions.
     - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.2)
     - TARGET_ARCH (e.g. linux64)
 
-  - build libraries by invoking 'gmake' in the following directories:
+  - build POC library by invoking 'gmake' in the following directory:
     - src
-    - packages/gs_broker
    
   - run individual examples or the full suite
     - follow instructions in examples/README.txt
@@ -43,8 +42,6 @@ Contained Files:
 doc/       :  Some further documentation
 src/       :  CCI interface files, only include <cci_configuration> in user code
 packages/  :  external packages, namely rapidjson
-    greencontrol/ : GreenSocs configuration implementation
-    gs_broker/    : GreenSocs broker wrapper
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)
 msvc10/    :  Microsoft Visual Studio project files
