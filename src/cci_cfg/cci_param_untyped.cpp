@@ -35,7 +35,8 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
     : m_description(desc), m_init_called(false), m_locked(false),
       m_lock_pwd(NULL), m_broker_handle(broker_handle),
       m_value_originator(originator),
-      m_originator(originator)
+      m_originator(originator),
+      fast_read(false),fast_write(false)
 {
     if(name_type == CCI_ABSOLUTE_NAME) {
         m_name = name;
@@ -125,6 +126,8 @@ cci_param_untyped::register_##name##_callback(                                 \
         const cci_callback_untyped_handle &cb,                                 \
         const cci_originator &orig)                                            \
 {                                                                              \
+    fast_read=false;                                                           \
+    fast_write=false;                                                          \
     m_##name##_callbacks.vec.push_back(name##_callback_obj_t(cb, orig));       \
     return cb;                                                                 \
 }                                                                              \

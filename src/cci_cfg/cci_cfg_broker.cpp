@@ -333,7 +333,7 @@ void cci_cfg_broker::add_param(cci_param_if* par) {
           std::pair<std::string, cci_param_if*>(par->get_name(), par)).second;
   sc_assert(new_element && "The same parameter had been added twice!!");
 
-  std::map<std::string,cci_value>::const_iterator iter =
+  std::map<std::string,cci_value>::iterator iter =
     m_unused_value_registry.find(par->get_name());
   if (iter != m_unused_value_registry.end()  ) {
     m_used_value_registry.insert(std::make_pair(iter->first, iter->second));
@@ -350,7 +350,7 @@ void cci_cfg_broker::remove_param(cci_param_if* par) {
   sc_assert(par != NULL && "Unable to remove a NULL parameter");
   m_param_registry.erase(par->get_name());
 
-  std::map<std::string,cci_value>::const_iterator iter =
+  std::map<std::string,cci_value>::iterator iter =
     m_used_value_registry.find(par->get_name());
   if (iter != m_used_value_registry.end()  ) {
     m_unused_value_registry.insert(std::make_pair(iter->first, iter->second));

@@ -85,7 +85,8 @@ SC_MODULE(ex05_config_ip) {
   void execute() {
     const std::string int_param_name = "sim_ip.param_1";
 
-    // Set Initial value after construction is treated as normal value update
+    // Set Initial value after construction is NOT treated as normal value
+    // update, it will update only the initial value registery.
     m_broker.set_initial_cci_value(int_param_name,cci::cci_value(5));
 
     // Check for existence of the param

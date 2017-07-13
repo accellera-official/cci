@@ -625,6 +625,9 @@ private:
 
     /// Parameter handles
     std::vector<cci_param_untyped_handle*> m_param_handles;
+
+protected:
+    bool fast_read, fast_write;
 };
 
 CCI_CLOSE_NAMESPACE_
