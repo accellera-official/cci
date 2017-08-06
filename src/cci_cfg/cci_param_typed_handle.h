@@ -286,7 +286,7 @@ cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle untyp
  : cci_param_untyped_handle(untyped)
 {
     if(is_valid() && typeid(T) != get_type_info()) {
-        invalidate(true);
+        invalidate();
     }
 }
 

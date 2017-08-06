@@ -53,6 +53,10 @@ public:
     /// Constructor to create an invalid param handle with given originator.
     explicit cci_param_untyped_handle(const cci_originator& originator);
 
+    /// Constructor to create an invalid param handle with given originator.
+    cci_param_untyped_handle(const cci_originator& originator,
+                                      const std::string&);
+
     /// Copy constructor
     cci_param_untyped_handle(const cci_param_untyped_handle& param_handle);
 
@@ -229,10 +233,10 @@ public:
 
     /// Invalidate the parameter handle
     /**
-     * @param remove If true, remove the parameter handle from the original
-     *        parameter before to invalidate. Otherwise, just invalidate.
+     *        remove the parameter handle from the original
+     *        parameter before invalidating. Otherwise, just invalidate.
      */
-    void invalidate(bool remove = false);
+    void invalidate();
 
     /// Reset the parameter to the intial value
     void reset();

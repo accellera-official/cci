@@ -196,11 +196,11 @@ cci_param_untyped_handle cci_cfg_broker::get_param_handle(
   } else {
     cci_originator parent_originator = m_originator.get_parent_originator();
     if(parent_originator.is_unknown()) {
-      return cci_param_untyped_handle(originator);
+      return cci_param_untyped_handle(originator, parname);
     } else {
       cci_broker_handle parent=cci_broker_manager::get_broker(parent_originator).create_broker_handle(originator);
       if (parent.name() == name()) {
-        return cci_param_untyped_handle(originator);
+        return cci_param_untyped_handle(originator, parname);
       } else {
         return parent.get_param_handle(parname);
       }
