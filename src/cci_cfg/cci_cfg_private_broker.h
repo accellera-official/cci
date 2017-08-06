@@ -26,6 +26,9 @@ public cci_cfg_broker
 // a set of perameters that should be exposed up the broker stack
     std::set<std::string> expose;
 
+  private:
+    bool sendToParent(const std::string &parname) const;
+
   public:
 
     cci_broker_handle create_broker_handle(
@@ -57,6 +60,10 @@ public cci_cfg_broker
     /// return a handle with which to access a parameter
     cci_param_untyped_handle get_param_handle(const std::string &parname,
                                               const cci_originator& originator) const;
+
+    /// return a list of all the params that the originator can see from either
+    /// the private broker, or from up the broker stack.
+    std::vector<cci_param_untyped_handle> get_param_handles(const cci_originator& originator) const;
 
     bool param_exists(const std::string &parname) const;
     

@@ -50,8 +50,8 @@ public:
     SC_CTOR(ex14_private)
     {
       cci::cci_cfg_private_broker *pbroker=new cci::cci_cfg_private_broker("My Private Broker");
-      pbroker->expose.insert("parent_inst.parent_int_buffer");
-      pbroker->expose.insert("parent_inst.child_inst.pub_int_param");
+      pbroker->expose.insert("Top.private.parent_inst.parent_int_buffer");
+      pbroker->expose.insert("Top.private.parent_inst.child_inst.pub_int_param");
       m_priv_broker = &cci::cci_broker_manager::register_broker(*(pbroker));
 
       m_parent_inst = new ex14_parent("parent_inst");

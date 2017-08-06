@@ -1,11 +1,5 @@
 SystemC Simulation
 
-Warning: (W534) name already exists: Top.private (sc_module)
-In file: <removed by verify.pl>
-
-Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: Top.private is already used in the SystemC hierarchy, using Top.private_0 instead
-In file: <removed by verify.pl>
-
 Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Is Private Broker? : true
 
 Info: Top.private.parent_inst.child_inst: @0 s, [CHILD C_TOR] : Parameter Name   : Top.private.parent_inst.child_inst.priv_int_param	Parameter Value : 100
