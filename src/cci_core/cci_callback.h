@@ -104,10 +104,12 @@ public:
   template< typename T >
   cci_callback( const cci_callback<T>& cb
 #ifndef CCI_DOXYGEN_IS_RUNNING
-              , typename detail::enable_if<detail::callback_is_generalized<traits,T>::value >::type* = NULL
+              , typename cci_impl::enable_if<
+                  cci_impl::callback_is_generalized<traits,T>::value
+                >::type* = NULL
 #endif // CCI_DOXYGEN_IS_RUNNING
               )
-    : m_cb( new detail::callback_generic_adapt<traits>(cb.m_cb) )
+    : m_cb( new cci_impl::callback_generic_adapt<traits>(cb.m_cb) )
   {}
 
   cci_callback& operator=(cci_callback copy)
@@ -121,7 +123,7 @@ public:
     // http://talesofcpp.fusionfenix.com/post-11/true-story-call-me-maybe
   >
   cci_callback( C c )
-    : m_cb( new detail::callback_impl<C,traits>(CCI_MOVE_(c)) )
+    : m_cb( new cci_impl::callback_impl<C,traits>(CCI_MOVE_(c)) )
   {}
 
   void swap(cci_callback& that)
@@ -145,7 +147,7 @@ public:
   }
 
 private:
-  typedef detail::callback_typed_if<traits> impl_if;
+  typedef cci_impl::callback_typed_if<traits> impl_if;
   impl_if* m_cb;
 };
 
@@ -273,14 +275,14 @@ public:
   }
 
 protected:
-  const detail::callback_untyped_if * get() const
+  const cci_impl::callback_untyped_if * get() const
   {
     if (m_cb)
       return m_cb->get();
     return NULL;
   }
 
-  void reset(detail::callback_untyped_if* cb)
+  void reset(cci_impl::callback_untyped_if* cb)
   {
     if (m_cb) m_cb->release();
     m_cb = cb;
@@ -288,7 +290,7 @@ protected:
   }
 
 private:
-  detail::callback_untyped_if * m_cb;
+  cci_impl::callback_untyped_if * m_cb;
 };
 
 /* ------------------------------------------------------------------------ */
@@ -359,7 +361,7 @@ bool
 cci_callback_untyped_handle::valid() const
 {
   typedef cci_callback_traits<ArgType,ResultType> traits;
-  typedef detail::callback_typed_if<traits> if_type;
+  typedef cci_impl::callback_typed_if<traits> if_type;
   return m_cb && dynamic_cast<const if_type*>(m_cb);
 }
 
@@ -368,7 +370,7 @@ ResultType
 cci_callback_untyped_handle::invoke(ArgType arg) const
 {
   typedef cci_callback_traits<ArgType,ResultType> traits;
-  typedef detail::callback_typed_if<traits> if_type;
+  typedef cci_impl::callback_typed_if<traits> if_type;
   const if_type* typed_cb = dynamic_cast<const if_type*>(m_cb);
 
   sc_assert( m_cb );            /// \todo Add proper error handling
@@ -381,7 +383,7 @@ ResultType
 cci_callback_untyped_handle::unchecked_invoke(ArgType arg) const
 {
   typedef cci_callback_traits<ArgType,ResultType> traits;
-  typedef detail::callback_typed_if<traits> if_type;
+  typedef cci_impl::callback_typed_if<traits> if_type;
 
   sc_assert( m_cb );            /// \todo Add proper error handling
   const if_type* typed_cb = static_cast<const if_type*>(m_cb);
@@ -403,8 +405,8 @@ cci_callback_typed_handle<ArgType,ResultType>::
 
   // check, if convertible from a generic handle
   typedef cci_callback_traits<ArgType,ResultType> traits;
-  detail::callback_untyped_if* cb_adapt
-    = detail::callback_generic_adapt<traits>::convert(this->get());
+  cci_impl::callback_untyped_if* cb_adapt
+    = cci_impl::callback_generic_adapt<traits>::convert(this->get());
   this->reset(cb_adapt);
   if (cb_adapt) cb_adapt->release();
 }

@@ -37,7 +37,8 @@ CCI_OPEN_NAMESPACE_
 template<class T>
 class cci_param_typed_handle;
 
-namespace detail {
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+namespace cci_impl {
 /// implementation defined helper to set/reset a boolean flag
 struct scoped_true {
     explicit scoped_true(bool& ref) : ref_(ref) { ref_ = true; }
@@ -45,7 +46,8 @@ struct scoped_true {
 private:
     bool& ref_;
 }; // class scoped_true
-}  // namespace detail
+}  // namespace cci_impl
+///@endcond
 
 /// Parameter class, internally forwarding calls to the implementation
 /**
@@ -663,7 +665,7 @@ private:
             return false;
 
         // Lock the tag to prevent nested callback
-        detail::scoped_true oncall( m_pre_write_callbacks.oncall );
+        cci_impl::scoped_true oncall( m_pre_write_callbacks.oncall );
 
         bool result = true;
         // Validate write callbacks
@@ -701,7 +703,7 @@ private:
             return;
 
         // Lock the tag to prevent nested callback
-        detail::scoped_true oncall( m_post_write_callbacks.oncall );
+        cci_impl::scoped_true oncall( m_post_write_callbacks.oncall );
 
         // Write callbacks
         for (unsigned i = 0; i < m_post_write_callbacks.vec.size(); ++i) {
@@ -731,7 +733,7 @@ private:
           return;
 
         // Lock the tag to prevent nested callback
-        detail::scoped_true oncall( m_pre_read_callbacks.oncall );
+        cci_impl::scoped_true oncall( m_pre_read_callbacks.oncall );
 
         // Read callbacks
         for (unsigned i = 0; i < m_pre_read_callbacks.vec.size(); ++i) {
@@ -761,7 +763,7 @@ private:
             return;
 
         // Lock the tag to prevent nested callback
-        detail::scoped_true oncall( m_post_read_callbacks.oncall );
+        cci_impl::scoped_true oncall( m_post_read_callbacks.oncall );
 
         // Read callbacks
         for (unsigned i = 0; i < m_post_read_callbacks.vec.size(); ++i) {

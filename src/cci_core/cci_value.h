@@ -104,13 +104,13 @@ class cci_value_cref
   friend class cci_value_map_cref;
   friend class cci_value_map_ref;
   friend class cci_value_map_elem_cref;
-  template<typename U> friend class detail::value_iterator_impl;
+  template<typename U> friend class cci_impl::value_iterator_impl;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
   friend std::ostream& operator<<( std::ostream&, cci_value_cref const & );
 
 protected:
   typedef void* impl_type; // use type-punned pointer for now
-  typedef detail::value_ptr<cci_value_cref> proxy_ptr;
+  typedef cci_impl::value_ptr<cci_value_cref> proxy_ptr;
 
   explicit cci_value_cref(impl_type i = NULL)
     : pimpl_(i) {}
@@ -253,12 +253,12 @@ class cci_value_ref
   friend class cci_value_list_ref;
   friend class cci_value_map_ref;
   friend class cci_value_map_elem_ref;
-  template<typename U> friend class detail::value_iterator_impl;
+  template<typename U> friend class cci_impl::value_iterator_impl;
   friend std::istream& operator>>( std::istream&, cci_value_ref );
   typedef cci_value_cref base_type;
   typedef cci_value_ref  this_type;
 
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 protected:
   explicit cci_value_ref(impl_type i = NULL)
     : cci_value_cref(i) {}
@@ -398,7 +398,7 @@ class cci_value_string_cref
   friend class cci_value_map_elem_ref;
   typedef cci_value_cref        base_type;
   typedef cci_value_string_cref this_type;
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_string_cref(impl_type i = NULL)
@@ -469,7 +469,7 @@ class cci_value_string_ref
   friend class cci_value_ref;
   typedef cci_value_string_cref base_type;
   typedef cci_value_string_ref  this_type;
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_string_ref(impl_type i = NULL)
@@ -528,10 +528,10 @@ cci_value_ref::set_string(std::string const & s)
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 // iterator implementations in cci_value.cpp
-namespace detail {
+namespace cci_impl {
 CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_ref>;
 CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_cref>;
-} // namespace detail
+} // namespace cci_impl
 CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_cref>;
 CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_ref>;
 ///@endcond
@@ -543,7 +543,7 @@ class cci_value_list_cref
   friend class cci_value_cref;
   typedef cci_value_cref      base_type;
   typedef cci_value_list_cref this_type;
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_list_cref(impl_type i = NULL)
@@ -627,7 +627,7 @@ class cci_value_list_ref
   friend class cci_value_ref;
   typedef cci_value_list_cref base_type;
   typedef cci_value_list_ref  this_type;
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_list_ref(impl_type i = NULL)
@@ -737,8 +737,8 @@ cci_value_ref::get_list()
 /// reference to a constant cci_value map element
 class cci_value_map_elem_cref
 {
-  template<typename U> friend class detail::value_iterator_impl;
-  typedef detail::value_ptr<cci_value_map_elem_cref> proxy_ptr;
+  template<typename U> friend class cci_impl::value_iterator_impl;
+  typedef cci_impl::value_ptr<cci_value_map_elem_cref> proxy_ptr;
 
   typedef void value_type; // TODO: add  explicit value_type 
 public:
@@ -762,8 +762,8 @@ protected:
 /// reference to a mutable cci_value map element
 class cci_value_map_elem_ref
 {
-  template<typename U> friend class detail::value_iterator_impl;
-  typedef detail::value_ptr<cci_value_map_elem_ref> proxy_ptr;
+  template<typename U> friend class cci_impl::value_iterator_impl;
+  typedef cci_impl::value_ptr<cci_value_map_elem_ref> proxy_ptr;
   typedef void value_type; // TODO: add  explicit value_type
 public:
   typedef cci_value_map_elem_cref const_reference;
@@ -785,10 +785,10 @@ protected:
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 // iterator implementations in cci_value.cpp
-namespace detail {
+namespace cci_impl {
 CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_map_elem_cref>;
 CCI_TPLEXTERN_ template class value_iterator_impl<cci_value_map_elem_ref>;
-} // namespace detail
+} // namespace cci_impl
 CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_map_elem_cref>;
 CCI_TPLEXTERN_ template class cci_value_iterator<cci_value_map_elem_ref>;
 ///@endcond
@@ -800,7 +800,7 @@ class cci_value_map_cref
   friend class cci_value_cref;
   typedef cci_value_cref     base_type;
   typedef cci_value_map_cref this_type;
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 
 protected:
   explicit cci_value_map_cref(impl_type i = NULL)
@@ -897,7 +897,7 @@ class cci_value_map_ref
   friend class cci_value_ref;
   typedef cci_value_map_cref base_type;
   typedef cci_value_map_ref  this_type;
-  typedef detail::value_ptr<this_type> proxy_ptr;
+  typedef cci_impl::value_ptr<this_type> proxy_ptr;
 protected:
   explicit cci_value_map_ref(impl_type i = NULL)
     : base_type(i) {}

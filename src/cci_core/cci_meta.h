@@ -46,7 +46,7 @@ template<typename T> struct cci_typed_tag : cci_tag<T> {};
 typedef cci_tag<void> cci_untyped_tag;
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
-namespace detail {
+namespace cci_impl {
 
 #if CCI_CPLUSPLUS >= 201103L
 using std::enable_if;
@@ -83,7 +83,7 @@ template<typename T> struct remove_reference<T&> { typedef T type; };
 /// C++03 implementation of std::void_t (from C++17)
 template<typename T> struct always_void { typedef void type; };
 
-} // namespace detail
+} // namespace cci_impl
 ///@endcond
 CCI_CLOSE_NAMESPACE_
 
