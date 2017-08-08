@@ -550,7 +550,7 @@ cci_value_list_ref::insert( const_iterator pos, size_type count, const_reference
   json_value_iter json_pos = static_cast<json_value_iter>(pos.raw());
   size_type       offset   = json_pos - THIS->Begin();
 
-  VALUE_ASSERT( offset < THIS->Size(), "invalid insertion position" );
+  VALUE_ASSERT( offset <= THIS->Size(), "invalid insertion position" );
 
   if (!count) // nothing to insert
     return iterator(json_pos);

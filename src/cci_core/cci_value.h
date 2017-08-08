@@ -716,7 +716,7 @@ public:
   //@{
   iterator insert( const_iterator pos, const_reference value );
   iterator insert( const_iterator pos, size_type count, const_reference value );
-  template< class InputIt > // TODO: not implemented, yet
+  template< class InputIt >
   iterator insert( const_iterator pos, InputIt first, InputIt last );
   //@}
 
@@ -1445,6 +1445,16 @@ cci_value_map::operator=( this_type const & that )
 }
 
 // --------------------------------------------------------------------------
+
+template<typename InputIt>
+cci_value_list_ref::iterator
+cci_value_list_ref::insert( const_iterator pos, InputIt first, InputIt last )
+{
+  iterator::difference_type offs = pos - begin();
+  while( first != last )
+    pos = insert( pos, cci_value(*first++) ) + 1;
+  return begin() + offs;
+}
 
 CCI_CLOSE_NAMESPACE_
 
