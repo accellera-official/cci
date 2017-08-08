@@ -637,6 +637,12 @@ cci_value_map_cref::do_lookup( const char* key, size_type keylen
 }
 
 cci_value_map_cref::const_iterator
+cci_value_map_cref::do_find(const char* key, size_type keylen) const
+{
+  return const_iterator(THIS->FindMember(rapidjson::StringRef(key, keylen)));
+}
+
+cci_value_map_cref::const_iterator
 cci_value_map_cref::cbegin() const
   { return const_iterator(THIS->MemberBegin()); }
 
@@ -714,12 +720,6 @@ cci_value_map_ref::erase(const_iterator first, const_iterator last)
   json_member_iter json_first = static_cast<json_member_iter>(first.raw());
   json_member_iter json_last  = static_cast<json_member_iter>(last.raw());
   return iterator( THIS->EraseMember(json_first, json_last) );
-}
-
-cci_value_map_ref::iterator
-cci_value_map_ref::do_find(const char* key, size_type keylen) const
-{
-  return iterator(THIS->FindMember(rapidjson::StringRef(key, keylen)));
 }
 
 // ----------------------------------------------------------------------------

@@ -892,6 +892,20 @@ public:
     { return const_reverse_iterator(cbegin()); }
   //@}
 
+  /** @name find (constant) entries in the map
+   *
+   * These overloads return a const_iterator pointing
+   * to an entry in the map and \ref end() otherwise.
+   *
+   * @see cci_value_map_ref::find
+   */
+  //@{
+  const_iterator find( const char* key ) const
+    { return do_find( key, std::strlen(key) ); }
+  const_iterator find( const std::string& key ) const
+    { return do_find( key.c_str(), key.length() ); }
+  //@}
+
   /// @copydoc cci_value_cref::operator&
   proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
@@ -899,6 +913,7 @@ protected:
   enum lookup_mode { KEY_REQUIRED = 0, KEY_OPTIONAL, KEY_CREATE };
   impl_type do_lookup( const char* key, size_type keylen
                      , lookup_mode mode = KEY_REQUIRED ) const;
+  const_iterator do_find(const char* key, size_type keylen) const;
 
 private:
   // exclude non-map value functions
@@ -983,6 +998,20 @@ public:
     { return reverse_iterator(begin()); }
   //@}
 
+  /** @name find (mutable) elements in the map
+   *
+   * These overloads return an iterator pointing
+   * to an element in the map and \ref end() otherwise.
+   *
+   * @see cci_value_map_cref::find
+   */
+  //@{
+  iterator find( const char* key )
+    { return iterator( do_find( key, std::strlen(key) ).raw() ); }
+  iterator find( const std::string& key )
+    { return iterator( do_find( key.c_str(), key.length() ).raw() ); }
+  //@}
+
   ///@name map element addition
   //@{
   /// add value obtained from a constant cci_value reference
@@ -1012,22 +1041,6 @@ public:
     { return do_push( key.c_str(), key.length(), value ); }
   //@}
 
-  /** @name find elements in the map
-   *
-   * These overloads return an iterator (or const_iterator) pointing
-   * to an element in the map and \ref end() otherwise.
-   */
-  //@{
-  iterator find( const char* key )
-    { return do_find( key, std::strlen(key) ); }
-  iterator find( const std::string& key )
-    { return do_find( key.c_str(), key.length() ); }
-  const_iterator find( const char* key ) const
-    { return do_find( key, std::strlen(key) ); }
-  const_iterator find( const std::string& key ) const
-    { return do_find( key.c_str(), key.length() ); }
-  //@}
-
   /** @name erase elements from the map */
   //@{
   size_type erase( const char* key )
@@ -1047,7 +1060,6 @@ private:
   this_type do_push(const char* key, size_type keylen, const T& value);
   this_type do_push(const char* key, size_type keylen, const_reference value);
   size_type do_erase(const char* key, size_type keylen);
-  iterator  do_find(const char* key, size_type keylen) const;
 };
 
 inline cci_value_map_ref
