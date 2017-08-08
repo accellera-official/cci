@@ -845,22 +845,29 @@ public:
    */
   //@{
   bool has_entry( const char * key ) const
-    { return NULL != do_lookup( key, std::strlen(key), /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key, std::strlen(key), KEY_OPTIONAL ); }
   bool has_entry( std::string const & key ) const
-    { return NULL != do_lookup( key.c_str(), key.length(), /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key.c_str(), key.length(), KEY_OPTIONAL ); }
   bool has_entry( cci_value_string_cref key ) const
-    { return NULL != do_lookup( key.c_str(), key.length(), /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key.c_str(), key.length(), KEY_OPTIONAL ); }
   //@}
 
-  /** @name map element access
-   * Accessing an entry with a given key
+  /** @name (constant) map value access
+   *
+   * Accessing values in a constant map is only possible via the @ref at
+   * functions, which require the existence of an entry with the given key.
+   *
+   * @see has_entry, find, cci_value_map_ref::operator[]
    */
   //@{
-  const_reference operator[]( const char* key ) const
+  /** @brief checked value access
+   *  @note Access is checked, i.e. reports an error
+   *        for value accesses through non-existent keys
+   */
+  const_reference at( const char* key ) const
     { return const_reference( do_lookup( key, std::strlen(key) ) ); }
-  const_reference operator[]( cci_value_string_cref key ) const
-    { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
-  const_reference operator[]( std::string const& key ) const
+  ///@copydoc cci_value_map_cref::at(const char*) const
+  const_reference at( std::string const& key ) const
     { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
   ///@}
 
@@ -889,8 +896,9 @@ public:
   proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
 protected:
+  enum lookup_mode { KEY_REQUIRED = 0, KEY_OPTIONAL, KEY_CREATE };
   impl_type do_lookup( const char* key, size_type keylen
-                     , bool allow_fail = false ) const;
+                     , lookup_mode mode = KEY_REQUIRED ) const;
 
 private:
   // exclude non-map value functions
@@ -932,13 +940,30 @@ public:
   /// clear map entries
   this_type clear();
 
-  /** @name (mutable) map element access */
+  /** @name (mutable) map value access
+   *
+   * Accessing values in a mutable map is possible via @ref at() or
+   * @ref operator[], differing in their behavior for non-existent keys.
+   *
+   * @see has_entry, find, cci_value_map_cref::at
+   */
   //@{
-  using base_type::operator[];
-  reference operator[]( const char* key )
+  using base_type::at;
+  /// @copydoc cci_value_map_cref::at
+  reference at( const char* key )
     { return reference( do_lookup( key, std::strlen(key) ) ); }
-  reference operator[]( std::string const& key )
+  /// @copydoc cci_value_map_cref::at
+  reference at( std::string const& key )
     { return reference( do_lookup( key.c_str(), key.length() ) ); }
+  /** @brief inserting value access
+   *  @note If there is no entry with the requested key, a new entry
+   *        with a @c null value will be created.
+   */
+  reference operator[]( const char* key )
+    { return reference( do_lookup( key, std::strlen(key), KEY_CREATE ) ); }
+  ///@copydoc cci_value_map_ref::operator[](const char*)
+  reference operator[]( std::string const& key )
+    { return reference( do_lookup( key.c_str(), key.length(), KEY_CREATE ) ); }
   //@}
 
   /** @name (mutable) iterator interface */

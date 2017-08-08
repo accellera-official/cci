@@ -610,20 +610,30 @@ cci_value_map_cref::size() const
 
 cci_value_cref::impl_type
 cci_value_map_cref::do_lookup( const char* key, size_type keylen
-                             , bool allow_fail /* = false */     ) const
+                             , lookup_mode mode /* = KEY_REQUIRED */ ) const
 {
   json_value kv( rapidjson::StringRef(key, keylen) );
   json_value::ConstMemberIterator it = THIS->FindMember(kv);
-  if( it == THIS->MemberEnd() )
-  {
-    if( allow_fail ) return NULL;
 
-    std::stringstream ss;
-    ss << "cci_value map has no element with key '" << key << "'";
-    report_error( ss.str().c_str(), __FILE__, __LINE__ );
+  if( it != THIS->MemberEnd() )
+    return const_cast<json_value*>(&it->value);
+
+  if( mode == KEY_OPTIONAL )
     return NULL;
+
+  if( mode == KEY_CREATE )
+  {
+    json_value k( key, keylen, json_allocator );
+    THIS->AddMember( k, json_value().Move(), json_allocator );
+    it = THIS->FindMember(kv);
+    sc_assert( it != THIS->MemberEnd() );
+    return const_cast<json_value*>(&it->value);
   }
-  return const_cast<json_value*>(&it->value);
+
+  std::stringstream ss;
+  ss << "cci_value map has no element with key '" << key << "'";
+  report_error( ss.str().c_str(), __FILE__, __LINE__ );
+  return NULL;
 }
 
 cci_value_map_cref::const_iterator
