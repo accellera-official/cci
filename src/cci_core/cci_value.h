@@ -565,15 +565,26 @@ public:
   size_type capacity() const;
   //@}
 
-  /** @name (constant) element access by index */
+  /** @name (constant) element access by index
+   *  @see cci_value_list_ref::at, cci_value_list_ref::operator[]
+   */
   //@{
+  /** @brief unchecked element access
+   *  @warning Given index is not checked and leads to undefined behavior
+   *           for out-of-bounds accesses
+   */
   const_reference operator[]( size_type index ) const;
-  const_reference at( size_type index ) const
-    { return (*this)[index]; }
+  /** @brief checked element access
+   *  @note Given index is bounds-checked, i.e. reports an error
+   *        for attempted out-of-bounds accesses
+   */
+  const_reference at( size_type index ) const;
 
+  /// return first element in the list
   const_reference front() const
     { return (*this)[0]; }
 
+  /// return last element in the list
   const_reference back() const
     { return (*this)[size() - 1]; }
   //@}
@@ -647,20 +658,25 @@ public:
   /// clear list elements
   this_type clear();
 
-  /** @name (mutable) element access by index */
+  /** @name (mutable) element access by index
+   *  @see cci_value_list_cref::at, cci_value_list_cref::operator[]
+   */
   //@{
   using base_type::operator[];
+  ///@copydoc cci_value_list_cref::operator[]
   reference operator[]( size_type index );
 
   using base_type::at;
-  reference at( size_type index )
-    { return (*this)[index]; }
+  ///@copydoc cci_value_list_cref::at
+  reference at( size_type index );
 
   using base_type::front;
+  ///@copydoc cci_value_list_cref::front
   reference front()
     { return (*this)[0]; }
 
   using base_type::back;
+  ///@copydoc cci_value_list_cref::back
   reference back()
     { return (*this)[size() - 1]; }
   //@}
@@ -727,6 +743,10 @@ cci_value_list_ref::operator=( base_type const & that )
 inline cci_value_list_ref::reference
 cci_value_list_ref::operator[]( size_type index )
   { return reference( base_type::operator[](index).pimpl_ ); }
+
+inline cci_value_list_ref::reference
+cci_value_list_ref::at( size_type index )
+  { return reference( base_type::at(index).pimpl_ ); }
 
 inline cci_value_list_ref
 cci_value_ref::get_list()

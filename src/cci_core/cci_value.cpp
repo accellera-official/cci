@@ -476,6 +476,13 @@ cci_value_list_cref::capacity() const
   { return THIS->Capacity(); }
 
 cci_value_cref
+cci_value_list_cref::at( size_type index ) const
+{
+  VALUE_ASSERT( index < size(), "index out of bounds" );
+  return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] );
+}
+
+cci_value_cref
 cci_value_list_cref::operator[]( size_type index ) const
   { return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] ); }
 
