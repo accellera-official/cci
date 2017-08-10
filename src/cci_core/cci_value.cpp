@@ -254,6 +254,15 @@ std::ostream& operator<<( std::ostream& os, cci_value_cref const& v )
 // ----------------------------------------------------------------------------
 // cci_value_ref
 
+cci_value
+cci_value_ref::move()
+{
+  cci_value ret;
+  ret.init();         // ensure target validity
+  DEREF(ret) = *THIS; // RapidJSON has move semantics upon plain assignment
+  return ret;
+}
+
 void
 cci_value_ref::swap( cci_value_ref& that )
 {
@@ -394,6 +403,16 @@ cci_value_string_cref::operator==( const std::string& s ) const
 // ----------------------------------------------------------------------------
 // cci_value_string_ref
 
+cci_value
+cci_value_string_ref::move()
+{
+  cci_value ret;
+  ret.init();         // ensure target validity
+  DEREF(ret) = *THIS; // RapidJSON has move semantics upon plain assignment
+  THIS->SetString("", 0);
+  return ret;
+}
+
 void
 cci_value_string_ref::swap(this_type & that)
 {
@@ -499,6 +518,16 @@ cci_value_list_cref::cend() const
 // ----------------------------------------------------------------------------
 // cci_value_list_ref
 
+cci_value
+cci_value_list_ref::move()
+{
+  cci_value ret;
+  ret.set_list();
+  DEREF(ret) = *THIS; // RapidJSON has move semantics upon plain assignment
+  THIS->SetArray();
+  return ret;
+}
+
 void
 cci_value_list_ref::swap(this_type & that)
 {
@@ -530,6 +559,18 @@ cci_value_list_ref::push_back( const_reference value )
   THIS->PushBack( v, json_allocator );
   return *this;
 }
+
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+cci_value_list_ref
+cci_value_list_ref::push_back( cci_value&& value )
+{
+  json_value v;
+  if( PIMPL(value) )
+    v = DEREF(value); // RapidJSON has move semantics upon plain assignment
+  THIS->PushBack( v, json_allocator );
+  return *this;
+}
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
 cci_value_list_ref::iterator
 cci_value_list_ref::begin()
@@ -661,6 +702,16 @@ cci_value_map_elem_ref::cci_value_map_elem_ref(void* raw)
   , pimpl_(raw)
 {}
 
+cci_value
+cci_value_map_ref::move()
+{
+  cci_value ret;
+  ret.set_map();
+  DEREF(ret) = *THIS; // RapidJSON has move semantics upon plain assignment
+  THIS->SetObject();
+  return ret;
+}
+
 void
 cci_value_map_ref::swap(this_type & that)
 {
@@ -686,6 +737,20 @@ cci_value_map_ref::do_push( const char * key, size_type keylen
   THIS->AddMember( k, v, json_allocator );
   return *this;
 }
+
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+cci_value_map_ref
+cci_value_map_ref::do_push( const char * key, size_type keylen
+                          , cci_value&& value )
+{
+  json_value k( key, keylen, json_allocator );
+  json_value v;
+  if( PIMPL(value) )
+    v = DEREF(value); // RapidJSON has move semantics upon plain assignment
+  THIS->AddMember( k, v, json_allocator );
+  return *this;
+}
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
 cci_value_map_ref::iterator
 cci_value_map_ref::begin()
@@ -780,6 +845,91 @@ cci_value_map_ref::erase(const_iterator first, const_iterator last)
 DEFINE_WRAPPER_(cci_value)
 DEFINE_WRAPPER_(cci_value_list)
 DEFINE_WRAPPER_(cci_value_map)
+
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+
+cci_value::cci_value( this_type && that )
+  : cci_value_ref(CCI_MOVE_(that.pimpl_))
+  , own_pimpl_(CCI_MOVE_(that.own_pimpl_))
+{
+  that.pimpl_ = NULL;
+  that.own_pimpl_ = NULL;
+}
+
+cci_value::cci_value( cci_value_list && that )
+  : own_pimpl_()
+{
+  do_init();
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetArray();
+}
+
+cci_value_list::cci_value_list( this_type && that )
+  : own_pimpl_()
+{
+  do_init();
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetArray();
+}
+
+cci_value::cci_value( cci_value_map && that )
+  : own_pimpl_()
+{
+  do_init();
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetObject();
+}
+
+cci_value_map::cci_value_map( this_type && that )
+  : own_pimpl_()
+{
+  do_init();
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetObject();
+}
+
+cci_value& cci_value::operator=( this_type && that )
+{
+  if (own_pimpl_ == that.own_pimpl_) return *this;
+  impl_pool::deallocate(impl_cast(own_pimpl_));
+  pimpl_ = own_pimpl_ = that.own_pimpl_;
+  that.pimpl_ = that.own_pimpl_ = NULL;
+  return *this;
+}
+
+cci_value& cci_value::operator=( cci_value_list && that )
+{
+  init();
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetArray();
+  return *this;
+}
+
+cci_value_list& cci_value_list::operator=(this_type && that)
+{
+  if (own_pimpl_ == that.own_pimpl_) return *this;
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetArray();
+  return *this;
+}
+
+cci_value& cci_value::operator=(cci_value_map && that)
+{
+  init();
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetObject();
+  return *this;
+}
+
+cci_value_map& cci_value_map::operator=(this_type && that)
+{
+  if (own_pimpl_ == that.own_pimpl_) return *this;
+  *THIS = CCI_MOVE_(DEREF(that));
+  DEREF(that).SetObject();
+  return *this;
+}
+
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
 // ----------------------------------------------------------------------------
 // JSON (de)serialize
