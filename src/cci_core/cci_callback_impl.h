@@ -22,7 +22,7 @@
 * \author Philipp A. Hartmann, Intel
 * \brief  Callback implementation classes
 *
-* \note Any classes defined in the \ref cci::detail namespace
+* \note Any classes defined in the \ref cci::cci_impl namespace
 *       are not part of the CCI standard.
 */
 #ifndef CCI_CORE_CCI_CALLBACK_IMPL_H_INCLUDED_
@@ -32,7 +32,8 @@
 #include "cci_core/cci_meta.h"
 
 CCI_OPEN_NAMESPACE_
-namespace detail {
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+namespace cci_impl {
 
 /// implementation-defined helper to define default callback traits
 template<typename ArgType, typename ResultType, typename GenericType = void>
@@ -47,12 +48,12 @@ struct callback_traits
 /// implementation-defined helper to define generalizable callback traits
 template<typename ArgType, typename ResultType>
 class callback_traits<ArgType, ResultType,
-  typename detail::always_void<
-    typename detail::remove_reference<ArgType>::type::generic_type
+  typename cci_impl::always_void<
+    typename cci_impl::remove_reference<ArgType>::type::generic_type
   >::type
 >
 {
-  typedef typename detail::remove_reference<ArgType>::type nonref_argtype;
+  typedef typename cci_impl::remove_reference<ArgType>::type nonref_argtype;
 public:
   typedef ArgType argument_type;
   typedef ResultType result_type;
@@ -63,16 +64,18 @@ public:
   static const bool is_generalizable = true;
 };
 
-} // namespace detail
+} // namespace cci_impl
+///@endcond
 
 /// default callback traits
 template<typename ArgType, typename ResultType>
 struct cci_callback_traits
-  : detail::callback_traits<ArgType, ResultType> {};
+  : cci_impl::callback_traits<ArgType, ResultType> {};
 
 /* ------------------------------------------------------------------------ */
 
-namespace detail {
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+namespace cci_impl {
 
 struct callback_untyped_if
 {
@@ -230,7 +233,8 @@ protected:
   unsigned m_refcnt;
 };
 
-} // namespace detail
+} // namespace cci_impl
+///@endcond
 CCI_CLOSE_NAMESPACE_
 
 #endif // CCI_CORE_CCI_CALLBACK_IMPL_H_INCLUDED_

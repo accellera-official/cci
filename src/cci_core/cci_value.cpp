@@ -31,6 +31,7 @@
 
 CCI_OPEN_NAMESPACE_
 
+///@cond CCI_HIDDEN_FROM_DOXYGEN
 namespace /* anonymous */ {
 
 typedef rapidjson::CrtAllocator allocator_type;
@@ -81,7 +82,6 @@ impl_type* impl_pool::free_list_;
 
 } // anonymous namespace
 
-///@cond CCI_HIDDEN_FROM_DOXYGEN
 #define PIMPL( x ) \
   (impl_cast((x).pimpl_))
 
@@ -404,7 +404,8 @@ cci_value_string_ref::swap(this_type & that)
 // ----------------------------------------------------------------------------
 // cci_value_list/map::(const_)iterator
 
-namespace detail {
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+namespace cci_impl {
 
 struct value_iterator_list_tag {};
 struct value_iterator_map_tag {};
@@ -457,7 +458,8 @@ template class value_iterator_impl<cci_value_cref>;
 template class value_iterator_impl<cci_value_ref>;
 template class value_iterator_impl<cci_value_map_elem_cref>;
 template class value_iterator_impl<cci_value_map_elem_ref>;
-} // namespace detail
+} // namespace cci_impl
+///@endcond
 
 template class cci_value_iterator<cci_value_cref>;
 template class cci_value_iterator<cci_value_ref>;

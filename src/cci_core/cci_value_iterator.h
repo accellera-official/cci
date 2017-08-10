@@ -43,7 +43,7 @@ class cci_value_map_elem_cref;
 template<typename T> class cci_value_iterator;
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
-namespace detail {
+namespace cci_impl {
 
 /// helper class to avoid dangling pointers to cci_value reference objects
 template<typename T> struct value_ptr
@@ -100,7 +100,7 @@ private:
   impl_type  impl_; // underlying iterator,
 };
 
-} // namespace detail
+} // namespace cci_impl
 ///@endcond
 
 /**
@@ -110,9 +110,9 @@ private:
  */
 template<typename T>
 class cci_value_iterator
-  : protected detail::value_iterator_impl<T>
+  : protected cci_impl::value_iterator_impl<T>
 {
-  typedef detail::value_iterator_impl<T> impl;
+  typedef cci_impl::value_iterator_impl<T> impl;
   typedef cci_value_iterator<typename T::const_reference> const_type;
   typedef cci_value_iterator<typename T::reference>       nonconst_type;
 

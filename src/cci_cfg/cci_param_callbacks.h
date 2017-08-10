@@ -86,7 +86,7 @@ struct cci_param_write_event
 
     cci_value old_value;
     cci_value new_value;
-    typename detail::remove_reference<generic_type>::type wrapped_value;
+    typename cci_impl::remove_reference<generic_type>::type wrapped_value;
   }; // struct generic_wrap
 
 }; // cci_param_write_event
@@ -141,7 +141,7 @@ struct cci_param_read_event
         explicit generic_wrap(const type& payload);
 
         cci_value value;
-        typename detail::remove_reference<generic_type>::type wrapped_value;
+        typename cci_impl::remove_reference<generic_type>::type wrapped_value;
     }; // struct generic_wrap
 
 }; // cci_param_read_event
