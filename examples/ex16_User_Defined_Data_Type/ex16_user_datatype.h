@@ -96,11 +96,11 @@ struct cci_value_converter< route_table_ut >
 
     cci_value::const_map_reference m = src.get_map();
     if( m.has_entry("s_address")
-               && m["s_address"].try_get( dst.s_address )
+               && m.at("s_address").try_get( dst.s_address )
      && m.has_entry("d_address")
-               && m["d_address"].try_get( dst.d_address )
+               && m.at("d_address").try_get( dst.d_address )
      && m.has_entry("index")
-               && m["index"].try_get( dst.index ) )
+               && m.at("index").try_get( dst.index ) )
        return true;
 
     return false;

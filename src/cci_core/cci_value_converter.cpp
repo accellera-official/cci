@@ -154,8 +154,8 @@ DEFINE_UNPACK_( sc_core::sc_time )
     cci_value::const_map_reference m = src.get_map();
     if( m.has_entry("value") && m.has_entry("unit") )
     {
-      value = m["value"];
-      unit  = m["unit"];
+      value = m.at("value");
+      unit  = m.at("unit");
     }
   }
 

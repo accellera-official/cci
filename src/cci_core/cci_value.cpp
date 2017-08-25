@@ -478,6 +478,13 @@ cci_value_list_cref::capacity() const
   { return THIS->Capacity(); }
 
 cci_value_cref
+cci_value_list_cref::at( size_type index ) const
+{
+  VALUE_ASSERT( index < size(), "index out of bounds" );
+  return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] );
+}
+
+cci_value_cref
 cci_value_list_cref::operator[]( size_type index ) const
   { return cci_value_cref( &(*THIS)[static_cast<rapidjson::SizeType>(index)] ); }
 
@@ -545,7 +552,7 @@ cci_value_list_ref::insert( const_iterator pos, size_type count, const_reference
   json_value_iter json_pos = static_cast<json_value_iter>(pos.raw());
   size_type       offset   = json_pos - THIS->Begin();
 
-  VALUE_ASSERT( offset < THIS->Size(), "invalid insertion position" );
+  VALUE_ASSERT( offset <= THIS->Size(), "invalid insertion position" );
 
   if (!count) // nothing to insert
     return iterator(json_pos);
@@ -605,20 +612,36 @@ cci_value_map_cref::size() const
 
 cci_value_cref::impl_type
 cci_value_map_cref::do_lookup( const char* key, size_type keylen
-                             , bool allow_fail /* = false */     ) const
+                             , lookup_mode mode /* = KEY_REQUIRED */ ) const
 {
   json_value kv( rapidjson::StringRef(key, keylen) );
   json_value::ConstMemberIterator it = THIS->FindMember(kv);
-  if( it == THIS->MemberEnd() )
-  {
-    if( allow_fail ) return NULL;
 
-    std::stringstream ss;
-    ss << "cci_value map has no element with key '" << key << "'";
-    report_error( ss.str().c_str(), __FILE__, __LINE__ );
+  if( it != THIS->MemberEnd() )
+    return const_cast<json_value*>(&it->value);
+
+  if( mode == KEY_OPTIONAL )
     return NULL;
+
+  if( mode == KEY_CREATE )
+  {
+    json_value k( key, keylen, json_allocator );
+    THIS->AddMember( k, json_value().Move(), json_allocator );
+    it = THIS->FindMember(kv);
+    sc_assert( it != THIS->MemberEnd() );
+    return const_cast<json_value*>(&it->value);
   }
-  return const_cast<json_value*>(&it->value);
+
+  std::stringstream ss;
+  ss << "cci_value map has no element with key '" << key << "'";
+  report_error( ss.str().c_str(), __FILE__, __LINE__ );
+  return NULL;
+}
+
+cci_value_map_cref::const_iterator
+cci_value_map_cref::do_find(const char* key, size_type keylen) const
+{
+  return const_iterator(THIS->FindMember(rapidjson::StringRef(key, keylen)));
 }
 
 cci_value_map_cref::const_iterator
@@ -699,12 +722,6 @@ cci_value_map_ref::erase(const_iterator first, const_iterator last)
   json_member_iter json_first = static_cast<json_member_iter>(first.raw());
   json_member_iter json_last  = static_cast<json_member_iter>(last.raw());
   return iterator( THIS->EraseMember(json_first, json_last) );
-}
-
-cci_value_map_ref::iterator
-cci_value_map_ref::do_find(const char* key, size_type keylen) const
-{
-  return iterator(THIS->FindMember(rapidjson::StringRef(key, keylen)));
 }
 
 // ----------------------------------------------------------------------------

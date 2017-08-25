@@ -565,15 +565,26 @@ public:
   size_type capacity() const;
   //@}
 
-  /** @name (constant) element access by index */
+  /** @name (constant) element access by index
+   *  @see cci_value_list_ref::at, cci_value_list_ref::operator[]
+   */
   //@{
+  /** @brief unchecked element access
+   *  @warning Given index is not checked and leads to undefined behavior
+   *           for out-of-bounds accesses
+   */
   const_reference operator[]( size_type index ) const;
-  const_reference at( size_type index ) const
-    { return (*this)[index]; }
+  /** @brief checked element access
+   *  @note Given index is bounds-checked, i.e. reports an error
+   *        for attempted out-of-bounds accesses
+   */
+  const_reference at( size_type index ) const;
 
+  /// return first element in the list
   const_reference front() const
     { return (*this)[0]; }
 
+  /// return last element in the list
   const_reference back() const
     { return (*this)[size() - 1]; }
   //@}
@@ -647,20 +658,25 @@ public:
   /// clear list elements
   this_type clear();
 
-  /** @name (mutable) element access by index */
+  /** @name (mutable) element access by index
+   *  @see cci_value_list_cref::at, cci_value_list_cref::operator[]
+   */
   //@{
   using base_type::operator[];
+  ///@copydoc cci_value_list_cref::operator[]
   reference operator[]( size_type index );
 
   using base_type::at;
-  reference at( size_type index )
-    { return (*this)[index]; }
+  ///@copydoc cci_value_list_cref::at
+  reference at( size_type index );
 
   using base_type::front;
+  ///@copydoc cci_value_list_cref::front
   reference front()
     { return (*this)[0]; }
 
   using base_type::back;
+  ///@copydoc cci_value_list_cref::back
   reference back()
     { return (*this)[size() - 1]; }
   //@}
@@ -700,7 +716,7 @@ public:
   //@{
   iterator insert( const_iterator pos, const_reference value );
   iterator insert( const_iterator pos, size_type count, const_reference value );
-  template< class InputIt > // TODO: not implemented, yet
+  template< class InputIt >
   iterator insert( const_iterator pos, InputIt first, InputIt last );
   //@}
 
@@ -727,6 +743,10 @@ cci_value_list_ref::operator=( base_type const & that )
 inline cci_value_list_ref::reference
 cci_value_list_ref::operator[]( size_type index )
   { return reference( base_type::operator[](index).pimpl_ ); }
+
+inline cci_value_list_ref::reference
+cci_value_list_ref::at( size_type index )
+  { return reference( base_type::at(index).pimpl_ ); }
 
 inline cci_value_list_ref
 cci_value_ref::get_list()
@@ -825,22 +845,29 @@ public:
    */
   //@{
   bool has_entry( const char * key ) const
-    { return NULL != do_lookup( key, std::strlen(key), /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key, std::strlen(key), KEY_OPTIONAL ); }
   bool has_entry( std::string const & key ) const
-    { return NULL != do_lookup( key.c_str(), key.length(), /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key.c_str(), key.length(), KEY_OPTIONAL ); }
   bool has_entry( cci_value_string_cref key ) const
-    { return NULL != do_lookup( key.c_str(), key.length(), /* allow_fail = */ true ); }
+    { return NULL != do_lookup( key.c_str(), key.length(), KEY_OPTIONAL ); }
   //@}
 
-  /** @name map element access
-   * Accessing an entry with a given key
+  /** @name (constant) map value access
+   *
+   * Accessing values in a constant map is only possible via the @ref at
+   * functions, which require the existence of an entry with the given key.
+   *
+   * @see has_entry, find, cci_value_map_ref::operator[]
    */
   //@{
-  const_reference operator[]( const char* key ) const
+  /** @brief checked value access
+   *  @note Access is checked, i.e. reports an error
+   *        for value accesses through non-existent keys
+   */
+  const_reference at( const char* key ) const
     { return const_reference( do_lookup( key, std::strlen(key) ) ); }
-  const_reference operator[]( cci_value_string_cref key ) const
-    { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
-  const_reference operator[]( std::string const& key ) const
+  ///@copydoc cci_value_map_cref::at(const char*) const
+  const_reference at( std::string const& key ) const
     { return const_reference( do_lookup( key.c_str(), key.length() ) ); }
   ///@}
 
@@ -865,12 +892,28 @@ public:
     { return const_reverse_iterator(cbegin()); }
   //@}
 
+  /** @name find (constant) entries in the map
+   *
+   * These overloads return a const_iterator pointing
+   * to an entry in the map and \ref end() otherwise.
+   *
+   * @see cci_value_map_ref::find
+   */
+  //@{
+  const_iterator find( const char* key ) const
+    { return do_find( key, std::strlen(key) ); }
+  const_iterator find( const std::string& key ) const
+    { return do_find( key.c_str(), key.length() ); }
+  //@}
+
   /// @copydoc cci_value_cref::operator&
   proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
 
 protected:
+  enum lookup_mode { KEY_REQUIRED = 0, KEY_OPTIONAL, KEY_CREATE };
   impl_type do_lookup( const char* key, size_type keylen
-                     , bool allow_fail = false ) const;
+                     , lookup_mode mode = KEY_REQUIRED ) const;
+  const_iterator do_find(const char* key, size_type keylen) const;
 
 private:
   // exclude non-map value functions
@@ -912,13 +955,30 @@ public:
   /// clear map entries
   this_type clear();
 
-  /** @name (mutable) map element access */
+  /** @name (mutable) map value access
+   *
+   * Accessing values in a mutable map is possible via @ref at() or
+   * @ref operator[], differing in their behavior for non-existent keys.
+   *
+   * @see has_entry, find, cci_value_map_cref::at
+   */
   //@{
-  using base_type::operator[];
-  reference operator[]( const char* key )
+  using base_type::at;
+  /// @copydoc cci_value_map_cref::at
+  reference at( const char* key )
     { return reference( do_lookup( key, std::strlen(key) ) ); }
-  reference operator[]( std::string const& key )
+  /// @copydoc cci_value_map_cref::at
+  reference at( std::string const& key )
     { return reference( do_lookup( key.c_str(), key.length() ) ); }
+  /** @brief inserting value access
+   *  @note If there is no entry with the requested key, a new entry
+   *        with a @c null value will be created.
+   */
+  reference operator[]( const char* key )
+    { return reference( do_lookup( key, std::strlen(key), KEY_CREATE ) ); }
+  ///@copydoc cci_value_map_ref::operator[](const char*)
+  reference operator[]( std::string const& key )
+    { return reference( do_lookup( key.c_str(), key.length(), KEY_CREATE ) ); }
   //@}
 
   /** @name (mutable) iterator interface */
@@ -936,6 +996,20 @@ public:
   using base_type::rend;
   reverse_iterator rend()
     { return reverse_iterator(begin()); }
+  //@}
+
+  /** @name find (mutable) elements in the map
+   *
+   * These overloads return an iterator pointing
+   * to an element in the map and \ref end() otherwise.
+   *
+   * @see cci_value_map_cref::find
+   */
+  //@{
+  iterator find( const char* key )
+    { return iterator( do_find( key, std::strlen(key) ).raw() ); }
+  iterator find( const std::string& key )
+    { return iterator( do_find( key.c_str(), key.length() ).raw() ); }
   //@}
 
   ///@name map element addition
@@ -967,22 +1041,6 @@ public:
     { return do_push( key.c_str(), key.length(), value ); }
   //@}
 
-  /** @name find elements in the map
-   *
-   * These overloads return an iterator (or const_iterator) pointing
-   * to an element in the map and \ref end() otherwise.
-   */
-  //@{
-  iterator find( const char* key )
-    { return do_find( key, std::strlen(key) ); }
-  iterator find( const std::string& key )
-    { return do_find( key.c_str(), key.length() ); }
-  const_iterator find( const char* key ) const
-    { return do_find( key, std::strlen(key) ); }
-  const_iterator find( const std::string& key ) const
-    { return do_find( key.c_str(), key.length() ); }
-  //@}
-
   /** @name erase elements from the map */
   //@{
   size_type erase( const char* key )
@@ -1002,7 +1060,6 @@ private:
   this_type do_push(const char* key, size_type keylen, const T& value);
   this_type do_push(const char* key, size_type keylen, const_reference value);
   size_type do_erase(const char* key, size_type keylen);
-  iterator  do_find(const char* key, size_type keylen) const;
 };
 
 inline cci_value_map_ref
@@ -1388,6 +1445,16 @@ cci_value_map::operator=( this_type const & that )
 }
 
 // --------------------------------------------------------------------------
+
+template<typename InputIt>
+cci_value_list_ref::iterator
+cci_value_list_ref::insert( const_iterator pos, InputIt first, InputIt last )
+{
+  iterator::difference_type offs = pos - begin();
+  while( first != last )
+    pos = insert( pos, cci_value(*first++) ) + 1;
+  return begin() + offs;
+}
 
 CCI_CLOSE_NAMESPACE_
 
