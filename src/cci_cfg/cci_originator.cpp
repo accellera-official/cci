@@ -24,49 +24,74 @@
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_report_handler.h"
 
+// TODO: remove after cleanup of cci_config_macros.h
+#ifndef CCI_UNKNOWN_ORIGINATOR_STRING_
+# define CCI_UNKNOWN_ORIGINATOR_STRING_ __CCI_UNKNOWN_ORIGINATOR_STRING__
+#endif
+
 CCI_OPEN_NAMESPACE_
 
 cci_originator::cci_originator(const std::string& originator_name)
-        : m_originator_obj(current_originator_object()),
-          m_originator_str(new std::string(originator_name)) {
-    if(is_unknown()) {
-        m_originator_obj = NULL;
+  : m_originator_obj()
+  , m_originator_str()
+{
+    if (originator_name.length() > 0) {
+        m_originator_obj = current_originator_object();
+        m_originator_str = new std::string(originator_name);
     }
     check_is_valid();
 }
 
 cci_originator::cci_originator(const char* originator_name)
-        : m_originator_obj(current_originator_object()),
-          m_originator_str(new std::string(originator_name)) {
-    if(is_unknown()) {
-        m_originator_obj = NULL;
+  : m_originator_obj()
+  , m_originator_str()
+{
+    if (originator_name && *originator_name) {
+        m_originator_obj = current_originator_object();
+        m_originator_str = new std::string(originator_name);
     }
     check_is_valid();
 }
 
 cci_originator::cci_originator(const cci_originator& originator)
-        : m_originator_obj(originator.m_originator_obj) {
-    m_originator_str = originator.m_originator_str ?
-                       new std::string(*(originator.m_originator_str)) : NULL;
+  : m_originator_obj(originator.m_originator_obj)
+  , m_originator_str()
+{
+    if (originator.m_originator_str)
+        m_originator_str = new std::string(*originator.m_originator_str);
 }
 
-const sc_core::sc_object *cci_originator::get_object() const {
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+cci_originator::cci_originator(cci_originator&& originator)
+  : m_originator_obj(CCI_MOVE_(originator.m_originator_obj))
+  , m_originator_str(CCI_MOVE_(originator.m_originator_str))
+{
+    // invalidate incoming originator
+    originator.m_originator_obj = NULL;
+    originator.m_originator_str = NULL;
+}
+#endif // CCI_HAS_CXX_RVALUE_REFS
+
+const sc_core::sc_object *cci_originator::get_object() const
+{
     return m_originator_obj;
 }
 
-cci_originator cci_originator::get_parent_originator() const {
-    if (m_originator_obj != NULL) {
-        const sc_core::sc_object *parent_object =
-                m_originator_obj->get_parent_object();
-        if (parent_object) {
-            return cci_originator(*parent_object);
-        }
+cci_originator cci_originator::get_parent_originator() const
+{
+  if (m_originator_obj != NULL) {
+    const sc_core::sc_object *parent_object =
+            m_originator_obj->get_parent_object();
+    if (parent_object) {
+        return cci_originator(*parent_object);
     }
-    return cci_originator(__CCI_UNKNOWN_ORIGINATOR_STRING__);
+  }
+  return cci_originator( unknown_tag() );
 }
 
-const char* cci_originator::name() const {
-    static const char* default_name = __CCI_UNKNOWN_ORIGINATOR_STRING__;
+const char* cci_originator::name() const
+{
+    static const char* default_name = CCI_UNKNOWN_ORIGINATOR_STRING_;
     if (m_originator_obj) {
         return m_originator_obj->name();
     } else if(m_originator_str) {
@@ -78,8 +103,7 @@ const char* cci_originator::name() const {
 const char* cci_originator::string_name() const {
     if(m_originator_str)
         return m_originator_str->c_str();
-    else
-        return NULL;
+    return NULL;
 }
 
 void cci_originator::swap(cci_originator& that) {
@@ -87,10 +111,26 @@ void cci_originator::swap(cci_originator& that) {
     std::swap(m_originator_str, that.m_originator_str);
 }
 
-cci_originator &cci_originator::operator=(cci_originator copy) {
+cci_originator &cci_originator::operator=(const cci_originator& originator) {
+    cci_originator copy(originator);
     copy.swap(*this);
     return *this;
 }
+
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+cci_originator& cci_originator::operator=(cci_originator&& originator)
+{
+    // guard delete against self-move, invalidate incoming originator
+    const sc_core::sc_object* orig_obj = CCI_MOVE_(originator.m_originator_obj);
+    const std::string*        orig_str = CCI_MOVE_(originator.m_originator_str);
+    originator.m_originator_obj = NULL;
+    originator.m_originator_str = NULL;
+    delete m_originator_str;
+    m_originator_obj = CCI_MOVE_(orig_obj);
+    m_originator_str = CCI_MOVE_(orig_str);
+    return *this;
+}
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
 bool cci_originator::operator==( const cci_originator& originator ) const {
     if(this->get_object() && originator.get_object()) {
@@ -108,20 +148,16 @@ sc_core::sc_object *cci_originator::current_originator_object() {
 }
 
 void cci_originator::check_is_valid() const {
-    if (!m_originator_obj && !m_originator_str) {
+    if (is_unknown()) {
         CCI_REPORT_ERROR("cci_originator/check_is_valid",
                          "It is forbidden to build an originator without "
                          "information (no SystemC hierarchy or empty name)!");
     }
 }
 
-bool cci_originator::is_unknown() const {
-    if(m_originator_str
-       && (!m_originator_str->compare(__CCI_UNKNOWN_ORIGINATOR_STRING__))) {
-        return true;
-    } else {
-        return false;
-    }
+bool cci_originator::is_unknown() const
+{
+    return !m_originator_obj && !m_originator_str;
 }
 
 cci_originator::~cci_originator() {

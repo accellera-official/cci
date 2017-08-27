@@ -160,7 +160,7 @@ public:
      * this returns the explicit parameter's originator information!
      *
      * @param parname  Name of an implicit or explicit parameter.
-     * @return Originator pointer; NULL if there was not yet any write
+     * @return Originator object, if available; unknown originator otherwise
      */
     virtual cci_originator
     get_latest_write_originator(const std::string &parname) const = 0;
@@ -288,6 +288,10 @@ public:
      * @return If this broker is a private broker
      */
     virtual bool is_private_broker() const = 0;
+
+protected:
+    cci_originator unknown_originator() const
+      { return cci_originator( cci_originator::unknown_tag() ); }
 };
 
 /// Creates or returns the one non-private global broker provided by

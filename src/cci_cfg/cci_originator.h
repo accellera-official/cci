@@ -24,6 +24,8 @@
 
 CCI_OPEN_NAMESPACE_
 
+class cci_broker_if;
+
 /// Originator class which is used to track owners, handles and value providers
 /// of parameters.
 /**
@@ -35,6 +37,14 @@ CCI_OPEN_NAMESPACE_
  */
 class cci_originator
 {
+    friend class cci_broker_if;
+
+    struct unknown_tag {};
+
+    /// Internal constructor to create an unknown/invalid originator
+    explicit cci_originator(unknown_tag)
+      : m_originator_obj(), m_originator_str() {}
+
 public:
     /// Default Constructor assumes current module is the originator
     inline cci_originator()
@@ -64,15 +74,17 @@ public:
      */
     explicit cci_originator(const char *originator_name);
 
-    /// Constructor with another originator whose content will be copied
-    /**
-     * @param originator originator whose content will be copied
-     */
-    cci_originator(const cci_originator& originator);
-
     /// Constructor with an sc_object originator
     inline cci_originator(const sc_core::sc_object& originator)
             : m_originator_obj(&originator), m_originator_str(NULL) {}
+
+    /// Copy constructor
+    cci_originator(const cci_originator& originator);
+
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+    /// Move constructor
+    cci_originator(cci_originator&& originator);
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
     /// Destructor
     ~cci_originator();
@@ -91,7 +103,6 @@ public:
 
     /// Returns the name of the current originator
     /**
-     * Might return empty if there is no current originator.
      * Automatically uses the originator object name if the originator is
      * given by object pointer.
      *
@@ -100,11 +111,12 @@ public:
     const char* name() const;
 
     /// Assignment operator overload
-    /**
-     * @param originator Originator to assign. Pass by value is intentional.
-     * @return Assigned originator
-     */
-    cci_originator& operator=( cci_originator originator );
+    cci_originator& operator=( const cci_originator& originator );
+
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+    /// Assignment operator overload
+    cci_originator& operator=( cci_originator&& originator );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
     /// Compare operator overload
     bool operator==( const cci_originator& originator ) const;
@@ -138,13 +150,13 @@ protected:
     /// Returns the string name of the current originator
     const char* string_name() const;
 
+private:
     /// Pointer to the current originator object (priority compared to
     /// name m_originator_str)
     const sc_core::sc_object* m_originator_obj;
 
     /// Name of the current originator
-    std::string* m_originator_str;
-
+    const std::string* m_originator_str;
 };
 
 CCI_CLOSE_NAMESPACE_
