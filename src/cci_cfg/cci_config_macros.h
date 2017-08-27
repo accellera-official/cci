@@ -28,20 +28,24 @@
 // Some default strings - user should define custom ones before including CCI
 // (and before building parameter or broker code since they are used beyond
 // the client API library)
-#ifndef  __CCI_OWNER_ORIGINATOR_STRING__
-#define __CCI_OWNER_ORIGINATOR_STRING__   "OWNER_ORIGINATOR"
+
+#ifndef  CCI_OWNER_ORIGINATOR_STRING_
+# define CCI_OWNER_ORIGINATOR_STRING_   "OWNER_ORIGINATOR"
 #endif
-#ifndef __CCI_DEFAULT_BROKER_STRING__
-#define __CCI_DEFAULT_BROKER_STRING__     "DEFAULT_BROKER"
+#ifndef CCI_DEFAULT_BROKER_STRING_
+# define CCI_DEFAULT_BROKER_STRING_     "DEFAULT_BROKER"
 #endif
-#ifndef __CCI_UNKNOWN_ORIGINATOR_STRING__
-#define __CCI_UNKNOWN_ORIGINATOR_STRING__ "UNKNOWN_ORIGINATOR"
+
+#ifndef CCI_UNKNOWN_ORIGINATOR_STRING_
+# define CCI_UNKNOWN_ORIGINATOR_STRING_ "UNKNOWN_ORIGINATOR"
 #endif
-#ifndef __CCI_SC_REPORT_MSG_TYPE_PREFIX__
-#define __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "/Accellera/CCI/"
+
+#ifndef CCI_SC_REPORT_MSG_TYPE_PREFIX_
+# define CCI_SC_REPORT_MSG_TYPE_PREFIX_ "/Accellera/CCI/"
 #endif
-#ifndef __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__
-#define __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__ __CCI_SC_REPORT_MSG_TYPE_PREFIX__ "CNF/"
+
+#ifndef CCI_CFG_SC_REPORT_MSG_TYPE_PREFIX_
+# define CCI_CFG_SC_REPORT_MSG_TYPE_PREFIX_ CCI_SC_REPORT_MSG_TYPE_PREFIX_ "Config/"
 #endif
 
 #endif //CCI_CCI_CONFIG_MACROS_H_INCLUDED_

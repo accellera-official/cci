@@ -32,11 +32,12 @@
   */
 #ifndef CCI_CNF_SHARE_LIBRARY_MACROS
 
-#undef __CCI_OWNER_ORIGINATOR_STRING__
-#undef __CCI_DEFAULT_BROKER_STRING__
-#undef __CCI_UNKNOWN_ORIGINATOR_STRING__
-#undef __CCI_SC_REPORT_MSG_TYPE_PREFIX__
-#undef __CCI_CNF_SC_REPORT_MSG_TYPE_PREFIX__
+#undef CCI_OWNER_ORIGINATOR_STRING_
+#undef CCI_DEFAULT_BROKER_STRING_
+#undef CCI_UNKNOWN_ORIGINATOR_STRING_
+
+#undef CCI_SC_REPORT_MSG_TYPE_PREFIX_
+#undef CCI_CFG_SC_REPORT_MSG_TYPE_PREFIX_
 
 // May need these debugging macros split out to a separate undef header, so
 // that the client can remove all macros except the debugging ones

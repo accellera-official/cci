@@ -24,11 +24,6 @@
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_report_handler.h"
 
-// TODO: remove after cleanup of cci_config_macros.h
-#ifndef CCI_UNKNOWN_ORIGINATOR_STRING_
-# define CCI_UNKNOWN_ORIGINATOR_STRING_ __CCI_UNKNOWN_ORIGINATOR_STRING__
-#endif
-
 CCI_OPEN_NAMESPACE_
 
 cci_originator::cci_originator(const std::string& originator_name)

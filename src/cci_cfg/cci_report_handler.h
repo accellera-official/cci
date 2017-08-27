@@ -25,90 +25,124 @@
 
 CCI_OPEN_NAMESPACE_
 
-enum cci_param_failure {
+enum cci_param_failure
+{
   CCI_NOT_FAILURE = 0,
+
   CCI_SET_PARAM_FAILURE,
   CCI_GET_PARAM_FAILURE,
   CCI_ADD_PARAM_FAILURE,
   CCI_REMOVE_PARAM_FAILURE,
   CCI_VALUE_FAILURE,
-  CCI_UNDEFINED_FAILURE
+  CCI_UNDEFINED_FAILURE,
+
+  CCI_ANY_FAILURE = CCI_UNDEFINED_FAILURE
 };
 
+/* ------------------------------------------------------------------------ */
 
-class cci_report_handler: public sc_core::sc_report_handler {
-
+class cci_report_handler : public sc_core::sc_report_handler
+{
 public:
-  static void report(sc_core::sc_severity severity, const char* msg_type, const char* msg, const char* file, int line) {
-    std::string cci_msg_type = __CCI_SC_REPORT_MSG_TYPE_PREFIX__;
-    cci_msg_type.append(msg_type);
-    sc_report_handler::report(severity,cci_msg_type.c_str(),msg,file,line);
-  }
+  static void report( sc_core::sc_severity severity
+                    , const char* msg_type, const char* msg
+                    , const char* file, int line);
 
-  //functions that throw a report for each cci_param_failure type 
-  static void set_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
-    report(sc_core::SC_ERROR,"SET_PARAM_FAILED",msg,file,line);
-  }
+  //functions that throw a report for each cci_param_failure type
+  static void
+  set_param_failed(const char* msg="", const char* file=NULL, int line = 0);
 
-  static void get_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
-    report(sc_core::SC_ERROR,"GET_PARAM_FAILED",msg,file,line);
-  }
+  static void
+  get_param_failed(const char* msg="", const char* file=NULL, int line = 0);
 
-  static void add_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
-    report(sc_core::SC_ERROR,"ADD_PARAM_FAILED",msg,file,line);
-  }
+  static void
+  add_param_failed(const char* msg="", const char* file=NULL, int line = 0);
 
-  static void remove_param_failed(const char* msg="", const char* file=NULL, int line = 0) {
-    report(sc_core::SC_ERROR,"REMOVE_PARAM_FAILED",msg,file,line);
-  }
+  static void
+  remove_param_failed(const char* msg="", const char* file=NULL, int line = 0);
 
-  static void cci_value_failure(const char* msg="", const char* file=NULL, int line = 0) {
-    report(sc_core::SC_ERROR,"CCI_VALUE_FAILURE",msg,file,line);
-  }
+  static void
+  cci_value_failure(const char* msg="", const char* file=NULL, int line = 0);
 
   // function to return cci_param_failure that matches thrown (or cached) report
-  static cci_param_failure get_param_failure(const sc_core::sc_report& rpt) {
-    const std::string cci_sc_report_type_prefix =
-            __CCI_SC_REPORT_MSG_TYPE_PREFIX__;
-    std::string failure_type_string = rpt.get_msg_type();
+  static cci_param_failure
+  decode_param_failure(const sc_core::sc_report& rpt);
 
-    if (failure_type_string.compare(0, cci_sc_report_type_prefix.length(),
-                                    cci_sc_report_type_prefix) == 0) {
-      std::string failure_type_string_wp =
-              failure_type_string.substr(cci_sc_report_type_prefix.length(),
-                                         failure_type_string.length());
+}; // class cci_report_handler
 
-      if (failure_type_string_wp == "SET_PARAM_FAILED")
-        return CCI_SET_PARAM_FAILURE;
-      else if (failure_type_string_wp == "GET_PARAM_FAILED")
-        return CCI_GET_PARAM_FAILURE;
-      else if (failure_type_string_wp == "ADD_PARAM_FAILED")
-        return CCI_ADD_PARAM_FAILURE;
-      else if (failure_type_string_wp == "REMOVE_PARAM_FAILED")
-        return CCI_REMOVE_PARAM_FAILURE;
-      else if (failure_type_string_wp == "CCI_VALUE_FAILURE")
-        return CCI_VALUE_FAILURE;
-      else return CCI_UNDEFINED_FAILURE;
-    }
-    else //not a CCI failure report
-      return CCI_NOT_FAILURE;
-  }
+/* ------------------------------------------------------------------------ */
 
-};
+/**
+ * Helper function to handle CCI parameter failure exceptions
+ *
+ * @param expect A cci_param_failure category to handle (default: CCI_ANY_FAILURE)
+ * @return Current cci_param_failure (if matching expect), rethrows otherwise
+ *
+ * This function inspects the currently active exception and compares it against
+ * an expected cci_param_failure value.  If the current exception is @b not
+ * a CCI failure (or doesn't match the expected value), the exception is rethrown.
+ * Otherwise, the decoded param failure is returned.
+ *
+ * @note This function must be called within a @c catch clause, i.e. there has
+ *       to be a currently active exception - usually an @ref sc_core::sc_report
+ *
+ * @b Example
+ * \code
+ * try {
+ *   cci::cci_value val; // null value
+ *   val.get_string();   // invalid cci_value access
+ * } catch (...) {
+ *   cci::cci_param_failure err = cci::cci_handle_exception();
+ *   SC_REPORT_WARNING( "Example/Warning", "Caught CCI param failure");
+ *   sc_assert( err == CCI_VALUE_FAILURE );
+ * }
+ * \endcode
+ *
+ * @see cci_report_handler::decode_param_failure
+ */
+cci_param_failure
+cci_handle_exception(cci_param_failure expect = CCI_ANY_FAILURE);
+
+/* ------------------------------------------------------------------------ */
+// cci_abort - abort simulation after irrecoverable error
+
+#if CCI_CPLUSPLUS >= 201103L && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+// C++11: use standard C++ attribute
+# define CCI_NORETURN_ [[noreturn]]
+#else
+# if defined(_MSC_VER)
+#    define CCI_NORETURN_ __declspec(noreturn)
+# elif defined(__GNUC__) || defined(__MINGW32__) || defined(__clang__)
+#    define CCI_NORETURN_ __attribute__((noreturn))
+# else
+#    define CCI_NORETURN_ /* nothing */
+# endif
+#endif // CCI_NORETURN_
+
+/// abort simulation
+CCI_NORETURN_ void cci_abort();
+
+#undef CCI_NORETURN_
+
+/* ------------------------------------------------------------------------ */
+// CCI report macro helpers
 
 #define CCI_REPORT_INFO(_id, _message) \
-cci_report_handler::report(sc_core::SC_INFO,_id,_message,__FILE__,__LINE__);
+  CCI_NAMESPACE::cci_report_handler::  \
+    report(sc_core::SC_INFO,_id,_message,__FILE__,__LINE__)
 
 #define CCI_REPORT_WARNING(_id, _message) \
-cci_report_handler::report(sc_core::SC_WARNING,_id,_message,__FILE__,__LINE__);
+  CCI_NAMESPACE::cci_report_handler::     \
+    report(sc_core::SC_WARNING,_id,_message,__FILE__,__LINE__)
 
 #define CCI_REPORT_ERROR(_id, _message) \
-cci_report_handler::report(sc_core::SC_ERROR,_id,_message,__FILE__,__LINE__);
+  CCI_NAMESPACE::cci_report_handler::   \
+    report(sc_core::SC_ERROR,_id,_message,__FILE__,__LINE__)
 
 #define CCI_REPORT_FATAL(_id, _message) \
-cci_report_handler::report(sc_core::SC_FATAL,_id,_message,__FILE__,__LINE__);
-
+  CCI_NAMESPACE::cci_report_handler::   \
+    report(sc_core::SC_FATAL,_id,_message,__FILE__,__LINE__)
 
 CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CCI_REPORT_HANDLER_H_INCLUDED_
+#endif // CCI_CFG_CCI_REPORT_HANDLER_H_INCLUDED_
