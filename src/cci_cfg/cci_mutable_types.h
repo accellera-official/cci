@@ -17,10 +17,10 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_MUTABLE_TYPES_H_INCLUDED_
-#define CCI_CCI_MUTABLE_TYPES_H_INCLUDED_
+#ifndef CCI_CFG_CCI_MUTABLE_TYPES_H_INCLUDED_
+#define CCI_CFG_CCI_MUTABLE_TYPES_H_INCLUDED_
 
-#include "cci_cfg/cci_config_macros.h"
+#include "cci_core/cci_cmnhdr.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -41,6 +41,4 @@ enum cci_param_mutable_type {
 
 CCI_CLOSE_NAMESPACE_
 
-#endif
-
-
+#endif // CCI_CFG_CCI_MUTABLE_TYPES_H_INCLUDED_

@@ -20,10 +20,7 @@
 #ifndef CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
 #define CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
 
-#include <map>
-
-#include "cci_cfg/cci_config_macros.h"
-#include "cci_core/systemc.h"
+#include "cci_core/cci_cmnhdr.h"
 
 CCI_OPEN_NAMESPACE_
 

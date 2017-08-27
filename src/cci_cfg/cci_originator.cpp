@@ -17,9 +17,11 @@
 
  ****************************************************************************/
 
+#include "cci_cfg/cci_originator.h"
+
 #include <cstring>
 
-#include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_

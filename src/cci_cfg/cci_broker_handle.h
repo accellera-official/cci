@@ -20,8 +20,6 @@
 #ifndef CCI_CCI_BROKER_HANDLE_H_INCLUDED_
 #define CCI_CCI_BROKER_HANDLE_H_INCLUDED_
 
-#include <string>
-#include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_broker_if.h"
 
 /**
