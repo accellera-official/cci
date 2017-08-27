@@ -69,6 +69,7 @@ cci_broker_manager::register_broker(cci_broker_if& broker)
         CCI_REPORT_ERROR("cci_broker_manager/register_broker",
                          "A broker is already registered in the current"
                                  " hierarchy.");
+        /* abort here, if error is suppressed? */
     } else {
         cci_broker_handle broker_handle =
                 broker.create_broker_handle(originator);

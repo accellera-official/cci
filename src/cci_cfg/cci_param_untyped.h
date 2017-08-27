@@ -551,6 +551,9 @@ protected:
     /// Updates the internal member m_value_originator
     void update_latest_write_originator(const cci_originator& originator) const;
 
+    /// check mutability
+    bool set_cci_value_allowed(cci_param_mutable_type mutability);
+
 protected:
     /// Name
     std::string m_name;

@@ -317,6 +317,7 @@ void cci_param_untyped_handle::check_is_valid(bool report_error) const
         if(report_error && invalid_error) {
             CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
                              "The handled parameter is not valid.");
+            cci_abort(); // cannot recover from here
         }
     }
 }

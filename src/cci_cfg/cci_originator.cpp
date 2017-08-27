@@ -147,6 +147,7 @@ void cci_originator::check_is_valid() const {
         CCI_REPORT_ERROR("cci_originator/check_is_valid",
                          "It is forbidden to build an originator without "
                          "information (no SystemC hierarchy or empty name)!");
+        // may continue, if suppressed
     }
 }
 
