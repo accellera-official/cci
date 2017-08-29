@@ -21,12 +21,13 @@
  * @author GreenSocs
  */
 
+#include "cci_cfg/cci_cfg_broker.h"
 
+#include "cci_core/cci_name_gen.h"
 #include "cci_cfg/cci_broker_if.h"
 #include "cci_cfg/cci_broker_manager.h"
+#include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_param_if.h"
-#include "cci_cfg/cci_cfg_broker.h"
-#include "cci_core/cci_name_gen.h"
 #include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_

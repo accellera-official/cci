@@ -20,7 +20,7 @@
 #ifndef CCI_CCI_CORE_TYPES_H_INCLUDED_
 #define CCI_CCI_CORE_TYPES_H_INCLUDED_
 
-#include "cci_cfg/cci_config_macros.h"
+#include "cci_core/cci_cmnhdr.h"
 
 CCI_OPEN_NAMESPACE_
 

@@ -1,4 +1,5 @@
 #include "cci_cfg/cci_cfg_broker.h"
+#include "cci_cfg/cci_config_macros.h"
 
 CCI_OPEN_NAMESPACE_
 

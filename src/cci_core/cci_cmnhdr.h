@@ -29,6 +29,8 @@
 #ifndef CCI_CORE_CCI_CMNHDR_H_INCLUDED_
 #define CCI_CORE_CCI_CMNHDR_H_INCLUDED_
 
+#include "cci_core/systemc.h"
+
 #ifndef CCI_NAMESPACE
 /// Namespace for Accellera Configuration, Control & Inspection (CCI) standard
 # define CCI_NAMESPACE cci
@@ -45,24 +47,36 @@
 //   199711L (C++03, ISO/IEC 14882:1998, 14882:2003)
 //   201103L (C++11, ISO/IEC 14882:2011)
 //   201402L (C++14, ISO/IEC 14882:2014)
+//   201703L (C++17, N4659: Working Draft, Standard for Programming Language C++)
+//
+// This macro can be used inside the library sources to make certain assumptions
+// on the available features in the underlying C++ implementation.
+//
 #ifndef CCI_CPLUSPLUS
 # ifdef SC_CPLUSPLUS // as defined by SystemC >= 2.3.2
 #   define CCI_CPLUSPLUS SC_CPLUSPLUS
 # else // copy deduction from SystemC 2.3.2
+
 #   ifdef _MSC_VER // don't rely on __cplusplus for MSVC
-#     if _MSC_VER < 1800   // MSVC'2010 and earlier, assume C++03
+    // Instead, we select the C++ standard with reasonable support.
+    // If some features still need to be excluded on specific MSVC
+    // versions, we'll do so at the point of definition.
+
+#     if defined(_MSVC_LANG) // MSVC'2015 Update 3 or later, use compiler setting
+#       define CCI_CPLUSPLUS _MSVC_LANG
+#     elif _MSC_VER < 1800   // MSVC'2010 and earlier, assume C++03
 #       define CCI_CPLUSPLUS 199711L
-#     elif _MSC_VER < 1900 // MSVC'2013, assume C++11
+#     elif _MSC_VER < 1900   // MSVC'2013, assume C++11
 #       define CCI_CPLUSPLUS 201103L
-#     elif _MSC_VER < 2000 // MSVC'2015/2017, assume C++14
-#       define CCI_CPLUSPLUS 201402L
-#     else // more recent MSVC versions, assume C++14
+#     else                   // MSVC'2015 before Update 3, assume C++14
 #       define CCI_CPLUSPLUS 201402L
 #     endif
-#   else
+#   else // not _MSC_VER
+      // use compiler setting
 #     define CCI_CPLUSPLUS __cplusplus
-#   endif
-# endif
+#   endif // not _MSC_VER
+
+# endif // not SC_CPLUSPLUS
 #endif // CCI_CPLUSPLUS
 
 /* ------------------------------------------------------------------------ */
@@ -79,8 +93,7 @@
 // Support for C++ rvalue-references / perfect forwarding
 
 #ifndef CCI_HAS_CXX_RVALUE_REFS
-# if _MSC_VER >= 1600 || defined(__GXX_EXPERIMENTAL_CXX0X__) || \
-     __has_feature(cxx_rvalue_references)
+# if CCI_CPLUSPLUS >= 201103L
 #	 define CCI_HAS_CXX_RVALUE_REFS
 # endif
 #endif // detect: CCI_HAS_CXX_RVALUE_REFS

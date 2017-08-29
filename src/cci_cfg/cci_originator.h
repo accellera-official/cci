@@ -17,11 +17,10 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_ORIGINATOR_H_INCLUDED_
-#define CCI_CCI_ORIGINATOR_H_INCLUDED_
+#ifndef CCI_CFG_CCI_ORIGINATOR_H_INCLUDED_
+#define CCI_CFG_CCI_ORIGINATOR_H_INCLUDED_
 
-#include "cci_core/systemc.h"
-#include "cci_cfg/cci_config_macros.h"
+#include "cci_core/cci_cmnhdr.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -150,6 +149,5 @@ protected:
 
 CCI_CLOSE_NAMESPACE_
 
-
-#endif
+#endif // CCI_CFG_CCI_ORIGINATOR_H_INCLUDED_
 

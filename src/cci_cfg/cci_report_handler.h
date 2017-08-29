@@ -20,10 +20,8 @@
 #ifndef CCI_CCI_REPORT_HANDLER_H_INCLUDED_
 #define CCI_CCI_REPORT_HANDLER_H_INCLUDED_
 
+#include "cci_core/cci_cmnhdr.h"
 #include "cci_cfg/cci_config_macros.h"
-
-#include "cci_core/systemc.h"
-#include <string>
 
 CCI_OPEN_NAMESPACE_
 

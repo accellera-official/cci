@@ -26,7 +26,7 @@
 
 #include <vector>
 
-#include "cci_cfg/cci_config_macros.h"
+#include "cci_core/cci_cmnhdr.h"
 
 CCI_OPEN_NAMESPACE_
 
