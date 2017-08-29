@@ -48,20 +48,21 @@ namespace cci_impl {
 /// helper class to avoid dangling pointers to cci_value reference objects
 template<typename T> struct value_ptr
 {
-  explicit value_ptr(void* r, const T& ref) : raw_(r), ref_(ref) {}
+  typedef T element_type;
+
+  explicit value_ptr(const T& ref) : ref_(ref) {}
 
   T& operator*()  { return ref_; }
   T* operator->() { return ptr(); }
 
-  bool operator==(const value_ptr& that) const { return raw() == that.raw(); }
+  bool operator==(const value_ptr& that) const { return ref_.is_same() == (*that).is_same(); }
   bool operator!=(const value_ptr& that) const { return !(*this == that); }
 
-private:
-  void* raw() const
-    { return raw_; }
-  T* ptr() { return reinterpret_cast<T*>(&reinterpret_cast<unsigned char&>(ref_)); }
+  static value_ptr pointer_to(element_type& elem) { return value_ptr(elem); }
 
-  void* raw_;
+private:
+  // avoid addressof operator
+  T* ptr() { return reinterpret_cast<T*>(&reinterpret_cast<unsigned char&>(ref_)); }
   T ref_; // extend lifetime of reference
 };
 
@@ -90,7 +91,7 @@ protected:
 
   int compare(impl_type) const;
 
-  pointer   ptr()   const { return pointer(raw(),deref()); }
+  pointer   ptr()   const { return pointer(deref()); }
   reference deref() const { return reference(raw()); }
   impl_type raw()   const { return impl_; }
 

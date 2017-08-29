@@ -206,7 +206,10 @@ public:
    * objects (cci_value, cci_value_list, cci_value_map) provide default
    * \c addressof semantics again.
    */
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
+
+  /// Does this reference point to the same value as another reference?
+  bool is_same(cci_value_cref that) const { return pimpl_ == that.pimpl_; }
 
 protected:
   void
@@ -353,7 +356,7 @@ public:
   ///@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 protected:
   /// try to set the value from a JSON-encoded string
   bool json_deserialize( std::string const& );
@@ -436,7 +439,7 @@ public:
   //@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 
 private:
   // exclude non-string value functions
@@ -494,7 +497,7 @@ public:
   //@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 };
 
 inline cci_value_string_ref
@@ -616,7 +619,7 @@ public:
   //@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 
 private:
   // exclude non-list value functions
@@ -740,7 +743,7 @@ public:
   //@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 };
 
 inline cci_value_list_ref
@@ -782,7 +785,10 @@ public:
   cci_value_cref        value;
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
+
+  /// Does this reference point to the same value as another reference?
+  bool is_same(cci_value_map_elem_cref that) const { return pimpl_ == that.pimpl_; }
 
 protected:
   typedef void* impl_type; // use type-punned pointer for now
@@ -806,7 +812,7 @@ public:
   cci_value_ref         value;
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 
 protected:
   typedef void* impl_type; // use type-punned pointer for now
@@ -918,7 +924,7 @@ public:
   //@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 
 protected:
   enum lookup_mode { KEY_REQUIRED = 0, KEY_OPTIONAL, KEY_CREATE };
@@ -1079,7 +1085,7 @@ public:
   //@}
 
   /// @copydoc cci_value_cref::operator&
-  proxy_ptr operator&() const { return proxy_ptr(pimpl_,*this); }
+  proxy_ptr operator&() const { return proxy_ptr(*this); }
 
 private:
   template<typename T>
