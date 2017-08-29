@@ -264,6 +264,8 @@ protected:
     : cci_value_cref(i) {}
 
 public:
+  /// move contents to another value (becomes @c null afterwards)
+  cci_value move();
 
   /// exchange contents with another cci_value
   void swap( this_type& that );
@@ -476,6 +478,9 @@ protected:
     : base_type(i) {}
 
 public:
+  /// move contents to another value (becomes empty string afterwards)
+  cci_value move();
+
   /// exchange contents with another string value
   friend void swap(this_type a, this_type b) { a.swap(b); }
   void swap( this_type& that );
@@ -648,6 +653,9 @@ public:
   this_type operator=( this_type const& );
   this_type operator=( base_type const& );
 
+  /// move contents to another value (becomes empty list afterwards)
+  cci_value move();
+
   /// exchange contents with another list value
   void swap( this_type& );
   friend void swap(this_type a, this_type b) { a.swap(b); }
@@ -700,9 +708,12 @@ public:
 
   /** @name push new elements to the end of the list */
   //@{
-
   /// append value obtained from a constant cci_value reference
   this_type push_back( const_reference v );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  /// append value obtained from temporary cci_value rvalues
+  this_type push_back( cci_value && v );
+#endif // CCI_HAS_CXX_RVALUE_REFS
   /// append arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_back( const T & v
@@ -949,6 +960,11 @@ public:
 
   this_type operator=( base_type const& );
   this_type operator=( this_type const& );
+
+  /// move contents to another value (becomes empty map afterwards)
+  cci_value move();
+
+  /// exchange contents with another map
   void swap( this_type& );
   friend void swap(this_type a, this_type b) { a.swap(b); }
 
@@ -1022,6 +1038,16 @@ public:
   this_type push_entry( std::string const& key, const_reference value )
     { return do_push( key.c_str(), key.length(), value ); }
 
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  /// add value obtained from a temporary cci_value rvalue reference
+  this_type push_entry( const char* key, cci_value&& value )
+    { return do_push( key, std::strlen(key), CCI_MOVE_(value) ); }
+
+  /// add value obtained from a rvalue cci_value rvalue reference
+  this_type push_entry( std::string const& key, cci_value&& value )
+    { return do_push( key.c_str(), key.length(), CCI_MOVE_(value) ); }
+#endif // CCI_HAS_CXX_RVALUE_REFS
+
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
   this_type push_entry( const char* key, const T & value
@@ -1059,6 +1085,9 @@ private:
   template<typename T>
   this_type do_push(const char* key, size_type keylen, const T& value);
   this_type do_push(const char* key, size_type keylen, const_reference value);
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  this_type do_push(const char* key, size_type keylen, cci_value&& value);
+#endif // CCI_HAS_CXX_RVALUE_REFS
   size_type do_erase(const char* key, size_type keylen);
 };
 
@@ -1105,6 +1134,8 @@ class cci_value
   : public cci_value_ref
 {
   typedef cci_value this_type;
+  friend class cci_value_ref;
+  friend class cci_value_string_ref;
 public:
   /// reference to a constant value
   typedef cci_value_cref        const_reference;
@@ -1138,9 +1169,19 @@ public:
 
   cci_value( this_type const & that );
   cci_value( const_reference that );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  cci_value( this_type&& that );
+  cci_value( cci_value_list&& that );
+  cci_value( cci_value_map&& that );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
   this_type& operator=( this_type const & );
   this_type& operator=( const_reference );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  this_type& operator=( this_type&& );
+  this_type& operator=( cci_value_list&& );
+  this_type& operator=( cci_value_map&& );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
   friend void swap(this_type& a, this_type& b) { a.swap(b); }
   void swap( reference that ) { init(); reference::swap( that ); }
@@ -1262,7 +1303,7 @@ cci_value::cci_value( const_reference that )
 inline cci_value &
 cci_value::operator=( this_type const & that )
 {
-  return operator=( const_reference(that) );
+  return *this = const_reference(that);
 }
 
 inline cci_value::impl_type
@@ -1286,6 +1327,15 @@ cci_value::from_json( std::string const & json )
 // The following two functions depend on the completeness of the cci_value
 // class, enforced by some compilers (e.g. Clang).
 
+
+///@cond CCI_HIDDEN_FROM_DOXYGEN
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+# define CCI_VALUE_MOVE_(v) CCI_MOVE_(v)
+#else
+# define CCI_VALUE_MOVE_(v) cci_value::const_reference(v)
+#endif // CCI_HAS_CXX_RVALUE_REFS
+///@endcond
+
 template<typename T>
 cci_value_list_ref::this_type
 cci_value_list_ref::push_back( const T& value
@@ -1295,7 +1345,7 @@ cci_value_list_ref::push_back( const T& value
                              )
 {
   cci_value v(value);
-  return push_back( const_reference(v) );
+  return push_back( CCI_VALUE_MOVE_(v) );
 }
 
 template<typename T>
@@ -1303,7 +1353,7 @@ cci_value_map_ref
 cci_value_map_ref::do_push( const char* key, size_type keylen, const T& value )
 {
   cci_value v(value);
-  return push_entry( key, const_reference(v) );
+  return push_entry( key, CCI_VALUE_MOVE_(v) );
 }
 
 // --------------------------------------------------------------------------
@@ -1317,6 +1367,7 @@ cci_value_map_ref::do_push( const char* key, size_type keylen, const T& value )
 class cci_value_list
   : public cci_value_list_ref
 {
+  friend class cci_value;
   typedef cci_value_list this_type;
 public:
   typedef cci_value_list_cref const_reference;
@@ -1326,9 +1377,15 @@ public:
 
   cci_value_list( this_type const & );
   cci_value_list( const_reference );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  cci_value_list( this_type&& );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
   this_type& operator=( this_type const & );
   this_type& operator=( const_reference );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  this_type& operator=( this_type && );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
   friend void swap(this_type& a, this_type& b) { a.swap(b); }
   void swap( reference that ) { reference::swap( that ); }
@@ -1372,7 +1429,7 @@ cci_value_list::cci_value_list( const_reference that )
 inline cci_value_list &
 cci_value_list::operator=( this_type const & that )
 {
-  return operator=( const_reference(that) );
+  return *this = const_reference(that);
 }
 
 // --------------------------------------------------------------------------
@@ -1386,6 +1443,7 @@ cci_value_list::operator=( this_type const & that )
 class cci_value_map
   : public cci_value_map_ref
 {
+  friend class cci_value;
   typedef cci_value_map this_type;
 public:
   typedef cci_value_map_cref const_reference;
@@ -1395,9 +1453,15 @@ public:
 
   cci_value_map( this_type const & );
   cci_value_map( const_reference );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  cci_value_map( this_type && );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
   this_type& operator=( this_type const& );
   this_type& operator=( const_reference );
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+  this_type& operator=( this_type && );
+#endif // CCI_HAS_CXX_RVALUE_REFS
 
   friend void swap(this_type& a, this_type& b) { a.swap(b); }
   void swap( reference that ) { reference::swap( that ); }
@@ -1441,7 +1505,7 @@ cci_value_map::cci_value_map( const_reference that )
 inline cci_value_map &
 cci_value_map::operator=( this_type const & that )
 {
-  return operator=( const_reference(that) );
+  return *this = const_reference(that);
 }
 
 // --------------------------------------------------------------------------
@@ -1461,5 +1525,6 @@ CCI_CLOSE_NAMESPACE_
 #undef CCI_VALUE_CONVERTER_
 #undef CCI_VALUE_CHECKED_CONVERTER_
 #undef CCI_VALUE_REQUIRES_CONVERTER_
+#undef CCI_VALUE_MOVE_
 
 #endif // CCI_CCI_VALUE_H_INCLUDED_
