@@ -21,7 +21,6 @@
 #define CCI_CCI_REPORT_HANDLER_H_INCLUDED_
 
 #include "cci_core/cci_cmnhdr.h"
-#include "cci_cfg/cci_config_macros.h"
 
 CCI_OPEN_NAMESPACE_
 
