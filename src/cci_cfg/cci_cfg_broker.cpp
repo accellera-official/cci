@@ -119,7 +119,7 @@ cci_originator cci_cfg_broker::get_latest_write_originator(const std::string &pa
     return it->second;
   }
   // if the param doesn't exist, we should return 'unkown_originator'
-  return cci_originator(__CCI_UNKNOWN_ORIGINATOR_STRING__);
+  return cci_broker_if::unknown_originator();
 }
 
 cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname) const
