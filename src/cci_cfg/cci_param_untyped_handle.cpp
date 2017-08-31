@@ -99,7 +99,13 @@ cci_value_map cci_param_untyped_handle::get_metadata() const
 void cci_param_untyped_handle::set_cci_value(const cci_value& val)
 {
     check_is_valid();
-    m_orig_param->set_cci_value(val, m_originator);
+    m_orig_param->set_cci_value(val, NULL, m_originator);
+}
+
+void cci_param_untyped_handle::set_cci_value(const cci_value& val, void *pwd)
+{
+    check_is_valid();
+    m_orig_param->set_cci_value(val, pwd, m_originator);
 }
 
 cci_value cci_param_untyped_handle::get_cci_value() const
@@ -188,13 +194,13 @@ bool cci_param_untyped_handle::has_callbacks() const
     return m_orig_param->has_callbacks();
 }
 
-bool cci_param_untyped_handle::lock(void* pwd)
+bool cci_param_untyped_handle::lock(const void* pwd)
 {
     check_is_valid();
     return m_orig_param->lock(pwd);
 }
 
-bool cci_param_untyped_handle::unlock(void* pwd)
+bool cci_param_untyped_handle::unlock(const void* pwd)
 {
     check_is_valid();
     return m_orig_param->unlock(pwd);

@@ -62,6 +62,9 @@ public:
     /// @copydoc cci_param_untyped_handle::set_cci_value
     virtual void set_cci_value(const cci_value &val) = 0;
 
+    /// @copydoc cci_param_untyped_handle::set_cci_value
+    virtual void set_cci_value(const cci_value &val, const void *pwd) = 0;
+
     /// @copydoc cci_param_typed::get_cci_value
     virtual cci_value get_cci_value() const = 0;
 
@@ -126,10 +129,10 @@ public:
     ///@{
 
     /// @copydoc cci_param_untyped::lock
-    virtual bool lock(void *pwd = NULL) = 0;
+    virtual bool lock(const void *pwd = NULL) = 0;
 
     /// @copydoc cci_param_untyped::unlock
-    virtual bool unlock(void *pwd = NULL) = 0;
+    virtual bool unlock(const void *pwd = NULL) = 0;
 
     /// @copydoc cci_param_untyped::is_locked
     virtual bool is_locked() const = 0;
@@ -188,6 +191,11 @@ public:
     create_param_handle(const cci_originator &originator) const = 0;
 
 private:
+    /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const void*, const cci_originator&)
+    virtual void set_cci_value(const cci_value &val,
+                               const void *pwd,
+                               const cci_originator &originator) = 0;
+
     /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const cci_originator&)
     virtual void set_cci_value(const cci_value &val,
                                const cci_originator &originator) = 0;

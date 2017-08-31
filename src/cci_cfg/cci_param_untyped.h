@@ -492,14 +492,14 @@ public:
      * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
      * @return If the lock was successful.
      */
-    bool lock(void* pwd = NULL);
+    bool lock(const void* pwd = NULL);
 
     /// Unlocking this parameter, optionally with a password if needed.
     /**
      * @param pwd Password to unlock the param (if needed), default = NULL.
      * @return If the parameter is unlocked now.
      */
-    bool unlock(void* pwd = NULL);
+    bool unlock(const void* pwd = NULL);
 
     /// If this parameter is locked.
     /**
@@ -567,11 +567,8 @@ protected:
     /// Initialized
     bool m_init_called;
 
-    /// Locked
-    bool m_locked;
-
     /// Passwort needed to unlock the parameter or override the lock
-    void* m_lock_pwd;
+    const void* m_lock_pwd;
 
     /// Broker handle
     cci_broker_handle m_broker_handle;

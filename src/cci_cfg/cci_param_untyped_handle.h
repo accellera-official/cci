@@ -81,7 +81,12 @@ public:
     ///@{
 
     /// @copydoc cci_param_typed::set_cci_value
+    /// Assuming no passwd (passing NULL for the passwd)
     void set_cci_value(const cci_value& val);
+
+    /// @copydoc cci_param_typed::set_cci_value
+    /// With an explicit passwd
+    void set_cci_value(const cci_value& val, void *pwd);
 
     /// @copydoc cci_param_typed::get_cci_value
     cci_value get_cci_value() const;
@@ -182,10 +187,10 @@ public:
     ///@{
 
     /// @copydoc cci_param_untyped::lock
-    bool lock(void* pwd = NULL);
+    bool lock(const void* pwd = NULL);
 
     /// @copydoc cci_param_untyped::unlock
-    bool unlock(void* pwd = NULL);
+    bool unlock(const void* pwd = NULL);
 
     /// @copydoc cci_param_untyped::is_locked
     bool is_locked() const;
