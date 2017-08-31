@@ -135,7 +135,8 @@ cci_param_failure cci_handle_exception(cci_param_failure expect)
 
 void cci_abort()
 {
-# if CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,3,2)
+// TODO: enable sc_abort call, once feature is merged into upstream SystemC
+# if 0 // CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,3,2)
     sc_core::sc_abort();
 # else
     std::terminate();
