@@ -19,6 +19,7 @@
 
 #include <sstream>
 #include <cstring>
+#include <map>
 
 #include "cci_core/cci_name_gen.h"
 #include "cci_cfg/cci_report_handler.h"
