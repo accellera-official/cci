@@ -396,10 +396,9 @@ cci_param_untyped_handle cci_cfg_broker::get_param_handle(
     return param_handle;
 }
 
-
 bool cci_cfg_broker::is_global_broker() const
 {
-  return  name()  == cci_get_global_broker().name();
+  return  name()  == cci_get_global_broker_name();
 }
 bool cci_cfg_broker::is_private_broker() const
 {

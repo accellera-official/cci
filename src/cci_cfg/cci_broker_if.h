@@ -303,7 +303,8 @@ protected:
  *
  * @return The one non-private global broker (not wrapped with a handle)
  */
-cci_broker_if &cci_get_global_broker();
+cci_broker_handle cci_get_global_broker(const cci_originator& originator);
+const char * cci_get_global_broker_name();
 
 CCI_CLOSE_NAMESPACE_
 

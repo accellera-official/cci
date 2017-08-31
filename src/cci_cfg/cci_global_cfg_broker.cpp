@@ -1,5 +1,6 @@
 #include "cci_cfg/cci_cfg_broker.h"
 #include "cci_cfg/cci_config_macros.h"
+#include "cci_cfg/cci_originator.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -19,10 +20,15 @@ cci_broker_if* singleton_broker = NULL;
  * @return The one non-private global config broker (not wrapped with a
  * handle)
  */
-cci_broker_if& cci_get_global_broker() {
+cci_broker_handle cci_get_global_broker(const cci_originator &originator) {
   if (!singleton_broker)
-    singleton_broker = new cci_cfg_broker(CCI_DEFAULT_BROKER_STRING_);
-  return *singleton_broker;
+    singleton_broker = new cci_cfg_broker(cci_get_global_broker_name());
+  return singleton_broker->create_broker_handle(originator);
+}
+
+const char* cci_get_global_broker_name() 
+{
+  return __CCI_DEFAULT_BROKER_STRING__;
 }
 
 CCI_CLOSE_NAMESPACE_
