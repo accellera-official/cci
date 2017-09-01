@@ -285,9 +285,9 @@ public:
 
     ///If this broker is a private broker (or handle)
     /**
-     * @return If this broker is a private broker
+     * @return If this broker is the global broker
      */
-    virtual bool is_private_broker() const = 0;
+    virtual bool is_global_broker() const = 0;
 
 protected:
     cci_originator unknown_originator() const
@@ -303,7 +303,7 @@ protected:
  *
  * @return The one non-private global broker (not wrapped with a handle)
  */
-cci_broker_if &cci_get_global_broker();
+cci_broker_handle cci_get_global_broker(const cci_originator& originator);
 
 CCI_CLOSE_NAMESPACE_
 

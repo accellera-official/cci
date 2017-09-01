@@ -1,5 +1,6 @@
 #include "cci_cfg/cci_cfg_broker.h"
 #include "cci_cfg/cci_config_macros.h"
+#include "cci_cfg/cci_originator.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -19,10 +20,24 @@ cci_broker_if* singleton_broker = NULL;
  * @return The one non-private global config broker (not wrapped with a
  * handle)
  */
-cci_broker_if& cci_get_global_broker() {
+
+/* Not in a header file, not available to be used*/
+
+/* anonymous */ namespace {
+class cci_cfg_private_global_broker : public cci_cfg_broker
+{
+  friend cci_broker_handle cci::cci_get_global_broker(const cci_originator &);
+  explicit cci_cfg_private_global_broker(const std::string& nm) : cci_cfg_broker(nm) {}
+
+  virtual bool is_global_broker() const {return true; }
+};
+} // anonymous namespace
+
+
+cci_broker_handle cci_get_global_broker(const cci_originator &originator) {
   if (!singleton_broker)
-    singleton_broker = new cci_cfg_broker(CCI_DEFAULT_BROKER_STRING_);
-  return *singleton_broker;
+    singleton_broker = new cci_cfg_private_global_broker(CCI_DEFAULT_BROKER_STRING_);
+  return singleton_broker->create_broker_handle(originator);
 }
 
 CCI_CLOSE_NAMESPACE_

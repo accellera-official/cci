@@ -51,7 +51,7 @@ cci_broker_manager::get_parent_broker(const cci_originator &originator)
         return it->second;
     } else {
         if(parent_originator.is_unknown()) {
-            return cci_get_global_broker().create_broker_handle(originator);
+            return cci_get_global_broker(originator);
         } else {
             return get_parent_broker(parent_originator).
                     create_broker_handle(parent_originator);

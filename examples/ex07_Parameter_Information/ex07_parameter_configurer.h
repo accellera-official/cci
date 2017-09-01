@@ -51,8 +51,8 @@ SC_MODULE(ex07_parameter_configurer) {
         m_broker(cci::cci_broker_manager::get_broker())
   {
     // Check for the broker type (default or private)
-    // using 'is_private_broker()' API
-    if (m_broker.is_private_broker())
+    // using 'is_global_broker()' API
+    if (!m_broker.is_global_broker())
       // Access broker's name using 'name()'
       XREPORT("[CFGR C_TOR] : Broker Type : " << m_broker.name());
     else

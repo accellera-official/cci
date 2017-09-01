@@ -158,9 +158,9 @@ cci_param_range cci_broker_handle::get_param_handles(
     return m_orig_broker.get_param_handles(pred, m_originator);
 }
 
-bool cci_broker_handle::is_private_broker() const
+bool cci_broker_handle::is_global_broker() const
 {
-    return m_orig_broker.is_private_broker();
+    return m_orig_broker.is_global_broker();
 }
 
 cci_param_create_callback_handle cci_broker_handle::register_create_callback(
