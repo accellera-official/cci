@@ -255,6 +255,7 @@ bool cci_param_untyped::has_callbacks() const
 
 bool cci_param_untyped::lock(const void* pwd)
 {
+    if (!pwd) pwd=this;
     if(pwd != m_lock_pwd && m_lock_pwd != NULL) {
         return false;
     } else {
@@ -265,6 +266,7 @@ bool cci_param_untyped::lock(const void* pwd)
 
 bool cci_param_untyped::unlock(const void* pwd)
 {
+    if (!pwd) pwd=this;
     if(pwd == m_lock_pwd) {
         m_lock_pwd = NULL;
         return true;

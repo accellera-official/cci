@@ -185,16 +185,14 @@ cci::cci_param_data_category cci_param_user_data_type::get_data_category() const
  *  @fn     void cci_param_user_data_type::set_value(const cci::cci_value& val)
  *  @brief  Function to set the value of the parameter
  *  @param  val The val to assign to the parameter
+ *  @param  the passwd
+ *  @param  the orriginator
  *  @return void
  */
-void cci_param_user_data_type::set_cci_value(const cci::cci_value& val) {
-  std::cout << "Function cci_param_user_data_type::set_cci_value Called " << std::endl;
-  c_value = val;
-}
 
-void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const cci::cci_originator& originator) {
+void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const void* pwd, const cci::cci_originator& originator) {
   std::cout << "Function cci_param_user_data_type::set_cci_value Called " << std::endl;
-  c_value = val;
+  set_raw_value(&val, pwd, originator);
 }
 
 /**
@@ -355,7 +353,7 @@ bool cci_param_user_data_type::has_callbacks() const {
  *  @param  pwd The password to unlock the paramter
  *  @return True or false on whether the lock was successful
  */
-bool cci_param_user_data_type::lock(void* pwd) {
+bool cci_param_user_data_type::lock(const void* pwd) {
   std::cout << "Function cci_param_user_data_type::lock Called " << std::endl;
   /* Check if already */
   l_password = pwd;
@@ -369,7 +367,7 @@ bool cci_param_user_data_type::lock(void* pwd) {
  *  @param  pwd The password to unlock the parameter
  *  @return True or false depending on whether the parameter was unlocked
  */
-bool cci_param_user_data_type::unlock(void* pwd) {
+bool cci_param_user_data_type::unlock(const void* pwd) {
   std::cout << "Function cci_param_user_data_type::unlock Called " << std::endl;
 
   if (pwd == l_password) {

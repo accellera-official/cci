@@ -582,67 +582,6 @@ private:
     cci_param_typed(cci_param_typed<value_type, TM> & copy,
                     const cci_originator& originator);
 
-    /// Convenient function to set the value via type-punned argument.
-    void set_raw_value(const void* value, const void* pwd,
-                       const cci_originator& originator,
-                       bool check_pwd)
-    {
-        value_type old_value = m_value;
-        value_type new_value = *static_cast<const value_type*>(value);
-
-        if(!check_pwd) {
-            if (cci_param_untyped::is_locked()) {
-                cci_report_handler::set_param_failed("Parameter locked.", __FILE__, __LINE__);
-                return;
-            }
-        } else {
-            if (pwd != m_lock_pwd) {
-                cci_report_handler::set_param_failed("Wrong key.", __FILE__, __LINE__);
-                return;
-            }
-        }
-
-        if (this->set_cci_value_allowed(TM) &&
-            pre_write_callback(new_value, originator))
-        {
-            bool actual_write_result = false;
-            value_type value_typed = *static_cast<const value_type*>(value);
-
-            // Actual write
-            if(!pwd) {
-                m_value = value_typed;
-                actual_write_result = true;
-            } else {
-                if(cci_param_untyped::is_locked() &&
-                   cci_param_untyped::m_lock_pwd == pwd) {
-                    m_value = value_typed;
-                    actual_write_result = true;
-                } else {
-                    actual_write_result = false;
-                }
-            }
-            if (!actual_write_result) {
-                cci_report_handler::set_param_failed("Bad value.", __FILE__, __LINE__);
-                return;
-            } else {
-                // Write callback(s)
-                post_write_callback(old_value, new_value, originator);
-
-                // Update latest write originator
-                update_latest_write_originator(originator);
-            }
-        }
-
-        cci_param_untyped::fast_write =
-           TM != CCI_IMMUTABLE_PARAM &&
-           TM != CCI_ELABORATION_TIME_PARAM &&
-           !cci_param_untyped::is_locked() &&
-           m_pre_write_callbacks.vec.size()==0 &&
-           m_post_write_callbacks.vec.size()==0 &&
-           originator==m_originator;
-
-    }
-
     /// Pre write callback
     bool
     pre_write_callback(value_type value,
@@ -869,7 +808,7 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
   value_type old_value = m_value;
   value_type new_value = *static_cast<const value_type*>(value);
 
-  if(pwd == NULL) {
+  if(!pwd) {
     if (cci_param_untyped::is_locked()) {
       cci_report_handler::set_param_failed("Parameter locked.", __FILE__, __LINE__);
       return;
@@ -880,12 +819,13 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
       return;
     }
   }
-  
-  if (set_cci_value_allowed() && pre_write_callback(new_value,
-                                                    originator)) {
+
+  if (this->set_cci_value_allowed(TM) &&
+      pre_write_callback(new_value, originator))
+  {
     bool actual_write_result = false;
     value_type value_typed = *static_cast<const value_type*>(value);
-    
+
     // Actual write
     if(!pwd) {
       m_value = value_typed;

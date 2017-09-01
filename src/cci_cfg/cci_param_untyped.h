@@ -489,14 +489,17 @@ public:
      * - if the parameter was locked without a password. Then it is locked now with the given password
      * - if the parameter was locked with the given password pwd. Then it is still locked now with the given password.
      *
-     * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL.
+     * @param pwd Password needed to unlock the param, ideally any pointer
+     * address known only by the locking entity. If no key is given
+     * an internal 'key' (unique to the parameter) will be used.
      * @return If the lock was successful.
      */
     bool lock(const void* pwd = NULL);
 
     /// Unlocking this parameter, optionally with a password if needed.
     /**
-     * @param pwd Password to unlock the param (if needed), default = NULL.
+     * @param pwd Password to unlock the param (if needed),
+     * If no key is given an internal 'key' will be used.
      * @return If the parameter is unlocked now.
      */
     bool unlock(const void* pwd = NULL);
