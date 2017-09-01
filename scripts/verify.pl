@@ -920,9 +920,7 @@ sub prepare_environment
     $rt_cci_home     = &get_cci_home;
 
     my @cci_path = ( "$rt_cci_home/src" );
-
     @rt_cci_includes = @cci_path;
-    push( @rt_cci_includes, "$rt_cci_home/packages" );
 
     $rt_cci_ldpath   = $rt_cci_home;
     @rt_cci_ldlibs   = ( 'cciapi' );

@@ -1,13 +1,7 @@
-## root of Git tree
-ifdef CCI_HOME
-GS_CCI_HOME = $(CCI_HOME)
-else
-GS_CCI_HOME?=$(shell cd $(CURDIR)/.. && pwd)
-endif
-
-## set some directories 
-CCI_INC_DIR = $(GS_CCI_HOME)/api
-CCI_LIB_DIR = $(GS_CCI_HOME)/api
+## set some directories
+CCI_HOME   ?= $(patsubst %/,%,$(dir $(CURDIR)))
+CCI_INC_DIR = $(CCI_HOME)/src
+CCI_LIB_DIR = $(CCI_HOME)/lib
 
 ifdef BOOST_HOME
 BOOST = $(BOOST_HOME)
