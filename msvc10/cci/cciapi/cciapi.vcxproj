@@ -145,7 +145,8 @@
     <ClCompile Include="..\..\..\src\cci_cfg\cci_global_cfg_broker.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
+	<ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
+	<ClCompile Include="..\..\..\src\cci_cfg\cci_report_handler.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_name_gen.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_value.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_value_converter.cpp" />
