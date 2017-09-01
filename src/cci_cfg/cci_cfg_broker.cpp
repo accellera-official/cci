@@ -56,26 +56,26 @@ const std::string &cci_cfg_broker::name() const
 
 void cci_cfg_broker::set_initial_cci_value(
         const std::string &parname,
-        const cci_value &cci_value,
+        const cci_value & value,
         const cci_originator& originator)
 {
-      
   if (locked.find(parname) != locked.end()) {
     cci_report_handler::set_param_failed("Setting initial value failed (parameter locked).");
-  } else {
-    std::map<std::string,cci::cci_value>::const_iterator iter =
-      m_used_value_registry.find(parname);
-    if (iter != m_used_value_registry.end() ) {
-      m_used_value_registry[parname]=cci_value; // kiss a zombee
-      /* here, one could build a broker that, e.g. allowed writes to a param
-      during elaboration. We choose not to, the user may reset the value at eoe
-      if they choose*/
-    } else {
-      m_unused_value_registry[parname] = cci_value;
-    }
-    m_initial_value_originator_map.insert(
-            std::pair<std::string, cci::cci_originator>(parname, originator));
+    return;
   }
+
+  std::map<std::string,cci::cci_value>::const_iterator iter =
+    m_used_value_registry.find(parname);
+  if (iter != m_used_value_registry.end() ) {
+    m_used_value_registry[parname]=value; // kiss a zombee
+    /* here, one could build a broker that, e.g. allowed writes to a param
+    during elaboration. We choose not to, the user may reset the value at eoe
+    if they choose*/
+  } else {
+    m_unused_value_registry[parname] = value;
+  }
+  m_initial_value_originator_map.insert(
+          std::pair<std::string, cci::cci_originator>(parname, originator));
 }
 
 std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_initial_values() const
@@ -160,7 +160,7 @@ cci_value cci_cfg_broker::get_cci_value(const std::string &parname) const
       return iter->second;
     }
     cci_report_handler::get_param_failed("Unable to find the parameter to get value");
-    return cci_value::from_json("null");
+    return cci_value();
   }
 }
 

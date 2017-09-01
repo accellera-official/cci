@@ -139,7 +139,7 @@ SC_MODULE(ex13_parameter_configurator) {
       try {
         XREPORT("[CFGR] : Set parameter value to '4'");
         int_param_handle.set_cci_value(cci::cci_value(4));
-      } catch (sc_core::sc_report exception) {
+      } catch (const sc_core::sc_report& exception) {
         XREPORT("[CFGR] : Caught Exception : " << exception.what());
       }
 

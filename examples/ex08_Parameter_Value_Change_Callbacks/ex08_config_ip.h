@@ -92,13 +92,8 @@ SC_MODULE(ex08_config_ip) {
         param_2_handle.set_cci_value(cci::cci_value(20));
       } catch (sc_core::sc_report const &e) {
         // Catch exception, if value-change is rejected and handle it
-        if (cci::CCI_SET_PARAM_FAILURE
-            == cci::cci_report_handler::get_param_failure(e)) {
-          XREPORT_WARNING("Caught exception: " << e.what());
-        } else {
-          // Unidentified exeption. Rethrow
-          throw e;
-        }
+        cci::cci_handle_exception(cci::CCI_SET_PARAM_FAILURE);
+        XREPORT_WARNING("Caught exception: " << e.what());
       }
 
       // Display new value

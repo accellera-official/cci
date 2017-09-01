@@ -559,42 +559,6 @@ private:
     cci_param_typed(cci_param_typed<value_type, TM> & copy,
                     const cci_originator& originator);
 
-    /// Verify kernel phase for elaboration time parameters
-    /**
-     * Before setValue is called for elaboration parameter updates,
-     * this function is called to determine whether the value updates
-     * shall be rejected or not
-     */
-    bool isScElabPhase() {
-        if (sc_core::sc_get_status() & (sc_core::SC_BEFORE_END_OF_ELABORATION |
-                                        sc_core::SC_ELABORATION |
-                                        sc_core::SC_END_OF_ELABORATION)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /// Check whether value update is allowed
-    bool set_cci_value_allowed()
-    {
-        if (TM == CCI_ELABORATION_TIME_PARAM) {
-            if(!isScElabPhase()) {
-				std::stringstream ss;
-				ss << "Attempt to set elaboration parameter ("
-				   << get_name() << ") during simulation.";
-				cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
-                return false;
-            }
-        } else if (TM == CCI_IMMUTABLE_PARAM) {
-			std::stringstream ss;
-			ss << "Parameter (" << get_name() << ") is immutable.";
-			cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
-            return false;
-        }
-        return true;
-    }
-
     /// Convenient function to set the value via type-punned argument.
     void set_raw_value(const void* value, const void* pwd,
                        const cci_originator& originator,
@@ -615,8 +579,9 @@ private:
             }
         }
 
-        if (set_cci_value_allowed() && pre_write_callback(new_value,
-                                                          originator)) {
+        if (this->set_cci_value_allowed(TM) &&
+            pre_write_callback(new_value, originator))
+        {
             bool actual_write_result = false;
             value_type value_typed = *static_cast<const value_type*>(value);
 

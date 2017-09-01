@@ -92,10 +92,11 @@ impl_type* impl_pool::free_list_;
   (PIMPL(*this))
 
 #define VALUE_ASSERT( Cond, Msg ) \
-  do { if( !(Cond) ) \
+  do { if( !(Cond) ) { \
     cci_report_handler::cci_value_failure \
       ( Msg "\n Condition: " #Cond, __FILE__, __LINE__ ); \
-  } while( false )
+    cci_abort(); /* cannot recover from here */ \
+  } } while( false )
 ///@endcond
 
 // ----------------------------------------------------------------------------

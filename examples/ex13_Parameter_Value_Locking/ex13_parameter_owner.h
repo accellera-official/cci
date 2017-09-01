@@ -71,7 +71,7 @@ SC_MODULE(ex13_parameter_owner) {
       try {
         XREPORT("[OWNER] : Try to set parameter value to 1 from 0");
         int_param = 1;
-      } catch (sc_core::sc_report e) {
+      } catch (const sc_core::sc_report& e) {
         XREPORT("[OWNER] : " << name()
                 << "\tFailed to set parameter value to 1 from 0.");
         XREPORT("[OWNER] : Caught Exception : " << e.what());

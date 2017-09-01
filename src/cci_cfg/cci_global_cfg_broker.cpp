@@ -21,7 +21,7 @@ cci_broker_if* singleton_broker = NULL;
  */
 cci_broker_if& cci_get_global_broker() {
   if (!singleton_broker)
-    singleton_broker = new cci_cfg_broker(__CCI_DEFAULT_BROKER_STRING__);
+    singleton_broker = new cci_cfg_broker(CCI_DEFAULT_BROKER_STRING_);
   return *singleton_broker;
 }
 

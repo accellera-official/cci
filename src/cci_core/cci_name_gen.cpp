@@ -49,9 +49,10 @@ cci_get_cci_unique_names()
 
 const char* cci_gen_unique_name(const char *name)
 {
-    if(!name || !std::strlen(name)) {
+    if(!name || !*name) {
         CCI_REPORT_ERROR("cci_name_gen/gen_unique_name",
                          "empty name is not allowed");
+        cci_abort(); // cannot recover from here
     }
 #if CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,3,2)
     if (!sc_core::sc_register_hierarchical_name(name)) {
