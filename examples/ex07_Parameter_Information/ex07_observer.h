@@ -49,8 +49,8 @@ SC_MODULE(ex07_observer) {
     cci::cci_originator observerOriginator("observerOriginator");
 
     // Check for the broker type (default or private) using
-    // 'is_private_broker()' API
-    if (m_broker.is_private_broker()) {
+    // 'is_global_broker()' API
+    if (!m_broker.is_global_broker()) {
       /// Access broker's name using 'name()'
       XREPORT("[OBSERVER C_TOR] : Broker Type : " << m_broker.name());
     } else {

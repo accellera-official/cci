@@ -51,8 +51,8 @@ SC_MODULE(ex16_parameter_configurer) {
       udt_param_handle(cci::cci_originator(*this))
   {
     // Check for the broker type (default or private) using
-    // 'is_private_broker()' API
-    if (m_broker.is_private_broker()) {
+    // 'is_global_broker()' API
+    if (!m_broker.is_global_broker()) {
       // Access broker's name using 'name()'
       XREPORT("[CFGR C_TOR] : Broker Type : " << m_broker.name());
     } else {

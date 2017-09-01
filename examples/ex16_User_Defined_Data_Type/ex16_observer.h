@@ -50,8 +50,8 @@ class ex16_observer {
       obsv_udt_base_handle(cci::cci_originator("ex16_observer"))
   {
     // Check for the broker type (default or private) using
-    // 'is_private_broker()' API
-    if (m_broker.is_private_broker()) {
+    // 'is_global_broker()' API
+    if (!m_broker.is_global_broker()) {
       // Access broker's name using 'name()'
       std::cout << "\n\t[OBSERVER C_TOR] : Broker Type : "
                 << m_broker.name() << endl;

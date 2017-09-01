@@ -116,8 +116,8 @@ public:
     cci_param_range
     get_param_handles(cci_param_predicate& pred) const;
 
-    /// @copydoc cci_broker_if::is_private_broker
-    bool is_private_broker() const;
+    /// @copydoc cci_broker_if::is_globl_broker
+    bool is_global_broker() const;
 
     /// @copydoc cci_broker_callback_if::register_create_callback
     cci_param_create_callback_handle

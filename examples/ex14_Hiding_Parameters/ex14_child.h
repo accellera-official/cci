@@ -56,7 +56,7 @@ SC_MODULE(ex14_child) {
                       150)
   {
     XREPORT("[CHILD C_TOR] : Is Private Broker? : " << std::boolalpha
-            << m_broker.is_private_broker());
+            << !m_broker.is_global_broker());
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
             << priv_int_param.get_name() << "\tParameter Value : "

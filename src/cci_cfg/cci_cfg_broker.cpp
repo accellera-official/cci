@@ -400,9 +400,5 @@ bool cci_cfg_broker::is_global_broker() const
 {
   return false;
 }
-bool cci_cfg_broker::is_private_broker() const
-{
-  return !is_global_broker();
-}
 
 CCI_CLOSE_NAMESPACE_

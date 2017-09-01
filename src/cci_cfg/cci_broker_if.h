@@ -285,9 +285,9 @@ public:
 
     ///If this broker is a private broker (or handle)
     /**
-     * @return If this broker is a private broker
+     * @return If this broker is the global broker
      */
-    virtual bool is_private_broker() const = 0;
+    virtual bool is_global_broker() const = 0;
 
 protected:
     cci_originator unknown_originator() const

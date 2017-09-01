@@ -84,7 +84,6 @@ CCI_OPEN_NAMESPACE_
     void remove_param(cci_param_if* par);
     
     virtual bool is_global_broker() const;
-    virtual bool is_private_broker() const;
 
     cci_param_create_callback_handle
     register_create_callback(const cci_param_create_callback& cb,
