@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-		<AdditionalIncludeDirectories>$(CCI_HOME)\src\;$(CCI_HOME)\examples\common\inc;$(CCI_HOME)\packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		<AdditionalIncludeDirectories>$(CCI_HOME)\src\;$(CCI_HOME)\examples\common\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SYSTEMC_HOME)\$(MSVC)\SystemC\$(PlatformName)\$(ConfigurationName);$(CCI_HOME)\$(MSVC)\cci\libs\$(PlatformName)\$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
