@@ -35,28 +35,19 @@ DEPS := $(OBJS:.o=.d)
 
 ## -----------------------------------------------------------------------------
 
-ifdef GREENCONTROL_HOME
-GREENCONTROL=$(GREENCONTROL_HOME)
-endif
-GREENCONTROL ?= $(GS_CCI_HOME)/packages
+## set some directories
+CCI_HOME ?= $(patsubst %/,%,$(dir $(CURDIR)))
+CCI_DIR  ?= $(CCI_HOME)/src
 
 ifdef RAPIDJSON_HOME
 RAPIDJSON=$(RAPIDJSON_HOME)
 endif
-RAPIDJSON ?= $(GS_CCI_HOME)/packages/rapidjson
+RAPIDJSON ?= $(CCI_HOME)/packages/rapidjson
 
 ifdef SYSTEMC_HOME
 SYSTEMC = $(SYSTEMC_HOME)
 endif
 SYSTEMC ?= /cad/tools/systemc
-
-ifdef CCI_HOME
-GS_CCI_HOME = $(CCI_HOME)
-endif
-GS_CCI_HOME ?= $(shell cd $(CURDIR)/.. && pwd)
-
-## set some directories 
-CCI_DIR ?= $(GS_CCI_HOME)/src
 
 ifdef BOOST_HOME
 BOOST := $(BOOST_HOME)
@@ -69,13 +60,12 @@ INCDIR += -I.
 INCDIR := -I$(CCI_DIR)
 INCDIR += -I$(SYSTEMC)/include
 INCDIR += -I$(RAPIDJSON)/include
-INCDIR += -I$(GREENCONTROL)
 INCDIR += -I$(BOOST)
 
 ## -----------------------------------------------------------------------------
 
 LIB=libcciapi.a
-LIBDIR=$(GS_CCI_HOME)/lib
+LIBDIR=$(CCI_HOME)/lib
 
 all: $(LIBDIR)/$(LIB)
 
