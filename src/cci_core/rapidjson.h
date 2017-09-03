@@ -79,7 +79,7 @@ RAPIDJSON_NAMESPACE_END
 
 #ifdef __GNUC__
 RAPIDJSON_DIAG_PUSH
-#if CCI_CPLUSPLUS >= 201103L
+#if __GNUC__ >= 6
 RAPIDJSON_DIAG_OFF( terminate ) // ignore throwing assertions
 #endif
 #endif
