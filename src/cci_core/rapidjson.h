@@ -29,8 +29,8 @@
  * @note This file is @b not part of the public API!
  */
 
-#ifndef CCI_RAPIDJSON_H_INCLUDED_
-#define CCI_RAPIDJSON_H_INCLUDED_
+#ifndef CCI_CORE_RAPIDJSON_H_INCLUDED_
+#define CCI_CORE_RAPIDJSON_H_INCLUDED_
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 
@@ -43,11 +43,11 @@
 // configure RapidJSON
 
 #define RAPIDJSON_NAMESPACE \
-  CCI_NAMESPACE::rapidjson
+  CCI_NAMESPACE::cci_impl::json
 #define RAPIDJSON_NAMESPACE_BEGIN \
-  CCI_OPEN_NAMESPACE_ namespace rapidjson {
+  CCI_OPEN_NAMESPACE_ namespace cci_impl { namespace json {
 #define RAPIDJSON_NAMESPACE_END \
-  } CCI_CLOSE_NAMESPACE_
+  } } CCI_CLOSE_NAMESPACE_
 
 // enable support for std::string
 #define RAPIDJSON_HAS_STD_STRING 1
@@ -134,4 +134,4 @@ RAPIDJSON_NAMESPACE_END
 RAPIDJSON_DIAG_POP
 #endif
 ///@endcond
-#endif // CCI_RAPIDJSON_H_INCLUDED_
+#endif // CCI_CORE_RAPIDJSON_H_INCLUDED_
