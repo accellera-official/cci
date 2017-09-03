@@ -26,7 +26,7 @@ cci_broker_if* singleton_broker = NULL;
 /* anonymous */ namespace {
 class cci_cfg_private_global_broker : public cci_cfg_broker
 {
-  friend cci_broker_handle cci::cci_get_global_broker(const cci_originator &);
+  friend cci_broker_handle CCI_NAMESPACE::cci_get_global_broker(const cci_originator &);
   explicit cci_cfg_private_global_broker(const std::string& nm) : cci_cfg_broker(nm) {}
 
   virtual bool is_global_broker() const {return true; }

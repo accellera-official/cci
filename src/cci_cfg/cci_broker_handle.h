@@ -65,7 +65,7 @@ public:
 
     /// @copydoc cci_broker_if::set_initial_cci_value
     void set_initial_cci_value(const std::string &parname,
-                               const cci::cci_value &cci_value);
+                               const cci_value &cci_value);
 
     /// @copydoc cci_broker_if::get_initial_cci_value
     cci_value get_initial_cci_value(const std::string &parname) const;
@@ -89,7 +89,7 @@ public:
     void lock_initial_value(const std::string &parname);
 
     /// @copydoc cci_broker_if::get_cci_value
-    cci::cci_value get_cci_value(const std::string &parname) const;
+    cci_value get_cci_value(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::get_param_handle
     cci_param_untyped_handle get_param_handle(const std::string &parname) const;
