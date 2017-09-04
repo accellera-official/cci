@@ -192,7 +192,9 @@ cci::cci_param_data_category cci_param_user_data_type::get_data_category() const
 
 void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const void* pwd, const cci::cci_originator& originator) {
   std::cout << "Function cci_param_user_data_type::set_cci_value Called " << std::endl;
-  set_raw_value(&val, pwd, originator);
+  if (pwd == l_password) {
+    c_value = val;
+  }
 }
 
 /**
