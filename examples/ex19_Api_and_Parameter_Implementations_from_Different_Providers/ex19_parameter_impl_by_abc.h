@@ -130,21 +130,14 @@ struct cci_param_user_data_type
   cci::cci_param_data_category get_data_category() const;
 
   /**
-   *  @fn     void set_cci_value(const cci::cci_value& val)
-   *  @brief  Function to set the value of the parameter using cci_value
-   *  @param  val The val to assign to the parameter
-   *  @return void
-   */
-  void set_cci_value(const cci::cci_value& val);
-
-  /**
    *  @fn     void set_value(const cci::cci_value& val,const cci::cci_originator& originator)
    *  @brief  Function to set the value of the parameter
    *  @param  val The val to assign to the parameter
+   *  @param  the passwd
    *  @param  originator reference to the originator
    *  @return void
    */
-  void set_cci_value(const cci::cci_value& val, const cci::cci_originator& originator);
+  void set_cci_value(const cci::cci_value& val, const void *pwd, const cci::cci_originator& originator);
 
   /**
    *  @fn     cci::cci_value get_cci_value() const
@@ -348,7 +341,7 @@ struct cci_param_user_data_type
    *  @param  pwd The password to unlock the paramter
    *  @return True or false on whether the lock was successful
    */
-  bool lock(void* pwd = NULL);
+  bool lock(const void* pwd = NULL);
 
   /**
    *  @fn     bool unlock(void* pwd = NULL)
@@ -356,7 +349,7 @@ struct cci_param_user_data_type
    *  @param  pwd The password to unlock the parameter
    *  @return True or false depending on whether the parameter was unlocked
    */
-  bool unlock(void* pwd = NULL);
+  bool unlock(const void* pwd = NULL);
 
   /**
    *  @fn     bool is_locked()
@@ -429,7 +422,7 @@ struct cci_param_user_data_type
   bool lock_flag; ///< flag to indicate the value is the initial value
   bool callback_flag; ///< flag to indicate callbacks are registered
   cci::cci_value c_value;  ///< cci_value of the parameter
-  void * l_password;  ///< lock password
+  const void * l_password;  ///< lock password
   std::string description;  ///< parameter description
   std::string nam;  ///< the name of the parameter
   cci::cci_broker_handle m_broker; ///broker pointer used to register parameter

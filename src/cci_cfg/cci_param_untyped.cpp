@@ -35,7 +35,7 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
                                      cci_broker_handle broker_handle,
                                      const std::string& desc,
                                      const cci_originator& originator)
-    : m_description(desc), m_init_called(false), m_locked(false),
+    : m_description(desc), m_init_called(false),
       m_lock_pwd(NULL), m_broker_handle(broker_handle),
       m_value_originator(originator),
       m_originator(originator),
@@ -253,28 +253,30 @@ bool cci_param_untyped::has_callbacks() const
             !m_pre_write_callbacks.vec.empty());
 }
 
-bool cci_param_untyped::lock(void* pwd)
+bool cci_param_untyped::lock(const void* pwd)
 {
-    if(m_locked && pwd != m_lock_pwd && m_lock_pwd != NULL) {
+    if (!pwd) pwd=this;
+    if(pwd != m_lock_pwd && m_lock_pwd != NULL) {
         return false;
     } else {
         m_lock_pwd = pwd;
-        m_locked = true;
         return true;
     }
 }
 
-bool cci_param_untyped::unlock(void* pwd)
+bool cci_param_untyped::unlock(const void* pwd)
 {
+    if (!pwd) pwd=this;
     if(pwd == m_lock_pwd) {
-        m_locked = false;
+        m_lock_pwd = NULL;
+        return true;
     }
-    return !m_locked;
+    return false;
 }
 
 bool cci_param_untyped::is_locked() const
 {
-    return m_locked;
+    return m_lock_pwd != NULL;
 }
 
 const std::string& cci_param_untyped::get_name() const
