@@ -29,6 +29,8 @@
 #include <algorithm> // std::swap
 #include <sstream> //std::stringstream
 
+namespace rapidjson = RAPIDJSON_NAMESPACE;
+
 CCI_OPEN_NAMESPACE_
 
 ///@cond CCI_HIDDEN_FROM_DOXYGEN

@@ -32,7 +32,6 @@
 
 CCI_OPEN_NAMESPACE_
 
-
 cci_cfg_broker::cci_cfg_broker(const std::string& name)
   : m_name(cci_gen_unique_name(name.c_str())),
     m_originator(cci_originator(m_name))
@@ -64,7 +63,7 @@ void cci_cfg_broker::set_initial_cci_value(
     return;
   }
 
-  std::map<std::string,cci::cci_value>::const_iterator iter =
+  std::map<std::string,cci_value>::const_iterator iter =
     m_used_value_registry.find(parname);
   if (iter != m_used_value_registry.end() ) {
     m_used_value_registry[parname]=value; // kiss a zombee
@@ -75,7 +74,7 @@ void cci_cfg_broker::set_initial_cci_value(
     m_unused_value_registry[parname] = value;
   }
   m_initial_value_originator_map.insert(
-          std::pair<std::string, cci::cci_originator>(parname, originator));
+          std::pair<std::string, cci_originator>(parname, originator));
 }
 
 std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_initial_values() const
