@@ -852,8 +852,7 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
   }
 
   cci_param_untyped::fast_write =
-    TM != CCI_IMMUTABLE_PARAM &&
-    TM != CCI_ELABORATION_TIME_PARAM &&
+    TM == CCI_MUTABLE_PARAM &&
     !cci_param_untyped::is_locked() &&
     m_pre_write_callbacks.vec.size()==0 &&
     m_post_write_callbacks.vec.size()==0 &&

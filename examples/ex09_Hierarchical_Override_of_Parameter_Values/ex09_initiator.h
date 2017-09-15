@@ -133,7 +133,16 @@ SC_MODULE(ex09_initiator) {
   }
 
  private:
-  cci::cci_param<std::string, cci::CCI_ELABORATION_TIME_PARAM> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
+  cci::cci_param<std::string, cci::CCI_MUTABLE_PARAM> initiator_ID;  ///< Elab Time Param for assigning initiator ID (initialized by top_module)
+  /**
+   *  @fn     void end_of_elaboration()
+   *  @brief  end of elaboration function to lock structural param
+   *  @return void
+   */
+  void end_of_elaboration() {
+    initiator_ID.lock();
+  }
+
 };
 // ex09_initiator
 

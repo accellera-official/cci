@@ -102,17 +102,17 @@ SC_MODULE(ex09_router) {
     for (int i = 0; i < r_targets; i++) {
       snprintf(targetName, sizeof(targetName), "r_index_%d", i);
       r_target_index.push_back(
-          new cci::cci_param<unsigned int, cci::CCI_ELABORATION_TIME_PARAM>(
+          new cci::cci_param<unsigned int, cci::CCI_IMMUTABLE_PARAM>(
               targetName, i));
 
       snprintf(targetName, sizeof(targetName), "r_sa_%d", i);
       r_addr_start.push_back(
-          new cci::cci_param<unsigned int, cci::CCI_ELABORATION_TIME_PARAM>(
+          new cci::cci_param<unsigned int, cci::CCI_IMMUTABLE_PARAM>(
               targetName, (i * addrSize)));
 
       snprintf(targetName, sizeof(targetName), "r_ea_%d", i);
       r_addr_end.push_back(
-          new cci::cci_param<unsigned int, cci::CCI_ELABORATION_TIME_PARAM>(
+          new cci::cci_param<unsigned int, cci::CCI_IMMUTABLE_PARAM>(
               targetName, ((i + 1) * addrSize - 1)));
     }
 
@@ -166,20 +166,30 @@ SC_MODULE(ex09_router) {
  private:
   /// Demonstrates Model-to-Model Configuration (UC12)
   /// Elaboration Time Parameters for setting up the model hierarcy;
-  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
-  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> r_targets; ///< target ID assigned by the top_module upon instantiation
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM> r_initiators;  ///< initiator ID assigned by the top_module upon instantiation
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM> r_targets; ///< target ID assigned by the top_module upon instantiation
   cci::cci_param<unsigned int, cci::CCI_MUTABLE_PARAM> addr_limit;  ///< Router Addressing Range
   cci::cci_broker_handle m_broker; ///< CCI configuration broker handle
 
   /// Router Table contents holding targets related information
   std::vector<cci::cci_param<unsigned int,
-                                  cci::CCI_ELABORATION_TIME_PARAM> *> r_target_index;  ///< Router table target index
+                                  cci::CCI_IMMUTABLE_PARAM> *> r_target_index;  ///< Router table target index
   std::vector<cci::cci_param<unsigned int,
-                                  cci::CCI_ELABORATION_TIME_PARAM> *> r_addr_start;  ///< Router table start address
+                                  cci::CCI_IMMUTABLE_PARAM> *> r_addr_start;  ///< Router table start address
   std::vector<cci::cci_param<unsigned int,
-                                  cci::CCI_ELABORATION_TIME_PARAM> *> r_addr_end;  ///< Router table end address
+                                  cci::CCI_IMMUTABLE_PARAM> *> r_addr_end;  ///< Router table end address
 
   cci::cci_param_handle base_handle; ///< CCI base parameter handle for target base address
+
+  /**
+   *  @fn     void end_of_elaboration()
+   *  @brief  end of elaboration function to lock structural param
+   *  @return void
+   */
+  void end_of_elaboration() {
+    r_initiators.lock();
+    r_targets.lock();
+  }
 
   int addrSize;
   char stringName[50];

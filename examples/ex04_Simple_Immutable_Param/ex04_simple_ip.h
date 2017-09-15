@@ -132,9 +132,6 @@ SC_MODULE(ex04_simple_ip) {
          case cci::CCI_IMMUTABLE_PARAM:
              return "immutable";
              break;
-         case cci::CCI_ELABORATION_TIME_PARAM:
-             return "elaboration_time_param";
-             break;
          case cci::CCI_OTHER_PARAM:
              return "other_param";
             break;

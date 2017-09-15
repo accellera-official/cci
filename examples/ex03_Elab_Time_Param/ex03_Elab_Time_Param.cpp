@@ -20,9 +20,11 @@
 /**
  *  @file   testbench.cpp
  *  @brief  A testbench that demonstrates possible updates to a elaboration-time 
- *          integer parameter.
+ *          integer parameter, which are subsequently locked.
  *  @detail sim_ip:
- *          1. Instantiates a structure_param with a default value. 
+ *          1. Instantiates a structural param with a default value.
+ *                 (A structural param is a normal mutable param which is
+ *                  locked at the end of elaboration)
  *             a. Updates are made to this param at these simulation points:
  *                - Before end of elaboration (valid)
  *                - After start of simulation (invalid)
