@@ -128,11 +128,21 @@ SC_MODULE(ex09_target) {
   }
 
  private:
-  cci::cci_param<std::string, cci::CCI_ELABORATION_TIME_PARAM> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
+  cci::cci_param<std::string, cci::CCI_MUTABLE_PARAM> target_ID; ///< Elaboration Time Param for assigning target ID (initialized by top_module)
 
-  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM> s_base_addr; ///< Mutable time param for setting target's base addr (initialized by router)
 
   cci::cci_param<unsigned int> s_size; ///< Mutable time parameter for setting target's size (initialized by router);
+
+  /**
+   *  @fn     void end_of_elaboration()
+   *  @brief  end of elaboration function to lock structural param
+   *  @return void
+   */
+  void end_of_elaboration() {
+    target_ID.lock();
+    s_base_addr.lock();
+  }
 
   int* mem;
 };

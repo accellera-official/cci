@@ -6,8 +6,6 @@ Info: sc_main: [MAIN] : Demonstrating 'comparison' between the values of a data 
 
 Info: sc_main: [MAIN] : 'mutable' & 'immutable' type String parameters - VALUES MATCH
 
-Info: sc_main: [MAIN] : 'mutable' & 'elaboration_time' type String - VALUES DO NOT MATCH
-
 Info: sc_main: [MAIN] : parameter_owner module declares two cci type parameters.
 
 Info: sc_main: One is of 'Integer type' and the other is of 'String type'

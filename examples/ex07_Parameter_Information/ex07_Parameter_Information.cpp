@@ -38,12 +38,10 @@ public:
 	ex07_parameter_container(sc_core::sc_module_name name) : sc_module(name)
 	, mutab_str_param("string_mutab_param", "String_Value_A")
 	, immutab_str_param("string_immutab_param", "String_Value_A")
-	, elab_str_param("string_elab_param", "String_Value_B")
 	{}
 
 	cci::cci_param<std::string, cci::CCI_MUTABLE_PARAM> mutab_str_param;
 	cci::cci_param<std::string, cci::CCI_IMMUTABLE_PARAM> immutab_str_param;
-	cci::cci_param<std::string, cci::CCI_ELABORATION_TIME_PARAM> elab_str_param;
 };
 
 /**
@@ -89,14 +87,6 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   } else {
     SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'immutable' type String"
                    " parameters - VALUES DO NOT MATCH");
-  }
-
-  if (pc.mutab_str_param.get_value() == pc.elab_str_param.get_value()) {
-    SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
-                   " String - VALUES MATCH");
-  } else {
-    SC_REPORT_INFO("sc_main", "[MAIN] : 'mutable' & 'elaboration_time' type"
-                   " String - VALUES DO NOT MATCH");
   }
 
   // Infrastructure created within the example for example illustration

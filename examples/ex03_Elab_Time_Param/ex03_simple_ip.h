@@ -80,7 +80,6 @@ SC_MODULE(ex03_simple_ip) {
     }
   }
 
-
   /**
    *  @fn     void execute()
    *  @brief  The main execution block (no real functionality)
@@ -106,8 +105,8 @@ SC_MODULE(ex03_simple_ip) {
       sc_assert(0);
     }
 
-    /// Create an elab-time param after end_of elaboration()
-    cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM>
+    /// Create an immutable param
+    cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM>
       struc_param_post_eoe("struc_param_post_eoe", 0);
     XREPORT("execute: Creating a struc_param_post_eoe after"
             " end_of elaboration(), with a default value:"
@@ -135,7 +134,16 @@ SC_MODULE(ex03_simple_ip) {
   }
 
  private:
-  cci::cci_param<int, cci::CCI_ELABORATION_TIME_PARAM> struc_param; ///< CCI param
+  cci::cci_param<int, cci::CCI_MUTABLE_PARAM> struc_param; ///< CCI param
+  /**
+   *  @fn     void end_of_elaboration()
+   *  @brief  end of elaboration function to lock structural param
+   *  @return void
+   */
+  void end_of_elaboration() {
+    struc_param.lock();
+  }
+
 };
 // ex03_simple_ip
 

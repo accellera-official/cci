@@ -33,8 +33,6 @@ enum cci_param_mutable_type {
     CCI_MUTABLE_PARAM = 0,
     /// Immutable Parameter
     CCI_IMMUTABLE_PARAM,
-    /// Elaboration Time Parameter (Mutable up to end_of_elaboration)
-    CCI_ELABORATION_TIME_PARAM,
     /// Vendor specific/other Parameter type
     CCI_OTHER_MUTABILITY
 };

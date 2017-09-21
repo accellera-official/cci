@@ -120,38 +120,16 @@ void cci_param_untyped::update_latest_write_originator(
     m_value_originator = originator;
 }
 
-static inline bool
-is_systemc_elaboration_phase()
-{
-    return (sc_core::sc_get_status() & (sc_core::SC_BEFORE_END_OF_ELABORATION |
-                                        sc_core::SC_ELABORATION |
-                                        sc_core::SC_END_OF_ELABORATION));
-}
-
 bool
 cci_param_untyped::set_cci_value_allowed(cci_param_mutable_type mutability)
 {
-    switch(mutability)
-    {
-    case CCI_IMMUTABLE_PARAM: {
-        std::stringstream ss;
-        ss << "Parameter (" << get_name() << ") is immutable.";
-        cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
-        return false;
-    }
-    case CCI_ELABORATION_TIME_PARAM:
-        if(!is_systemc_elaboration_phase()) {
-            std::stringstream ss;
-            ss << "Attempt to set elaboration parameter ("
-               << get_name() << ") during simulation.";
-            cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
-            return false;
-        }
-        break;
-    default:
-        break;
-    }
-    return true;
+  if (mutability==CCI_IMMUTABLE_PARAM) {
+    std::stringstream ss;
+    ss << "Parameter (" << get_name() << ") is immutable.";
+    cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
+    return false;
+  }
+  return true;
 }
 
 #define CCI_PARAM_UNTYPED_CALLBACK_IMPL_(name)                                 \
