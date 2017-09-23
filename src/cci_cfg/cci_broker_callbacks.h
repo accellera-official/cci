@@ -21,12 +21,12 @@
 #define CCI_CFG_CCI_BROKER_CALLBACKS_H_INCLUDED_
 
 #include "cci_core/cci_callback.h"
-#include "cci_cfg/cci_originator.h"
 #include "cci_core/cci_value.h"
 
 CCI_OPEN_NAMESPACE_
 
 class cci_param_untyped_handle;
+class cci_originator;
 
 /// Parameter creation callback
 typedef cci_callback<const cci_param_untyped_handle& >

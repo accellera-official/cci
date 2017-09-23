@@ -196,7 +196,7 @@ struct cci_param_user_data_type
    *  @brief  reset the param to the default/initial value
    *  @return none
    */
-  void reset();
+  void reset(const cci::cci_originator&);
 
   
   /**
@@ -372,12 +372,6 @@ struct cci_param_user_data_type
   */
   bool equals(const cci::cci_param_untyped_handle &rhs) const ;
 
-  /// Initialize 
-  void init();
-  
-  /// Destroy
-  void destroy();
-
   /// Add a parameter handle
   void add_param_handle(cci::cci_param_untyped_handle* param_handle);
 
@@ -392,7 +386,7 @@ struct cci_param_user_data_type
    *  @brief  Retrieve the last person to write to the parameter
    *  @return The last person to write to the parameter
    */
-  cci::cci_originator& get_latest_write_originator() const {
+  cci::cci_originator get_latest_write_originator() const {
     static cci::cci_originator originator = cci::cci_originator();
     return originator; /* TODO */
   }
@@ -413,6 +407,12 @@ struct cci_param_user_data_type
   cci_param_user_data_type(const std::string& _name,
                            const user_data_type & _dvalue);
 
+  ~cci_param_user_data_type();
+
+private:
+  virtual void invalidate_all_param_handles();
+
+private:
   // data member
   user_data_type value; ///< The value of the parameter
   user_data_type default_value; ///< The default value for the parameter

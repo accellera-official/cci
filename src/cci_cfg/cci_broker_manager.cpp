@@ -18,8 +18,8 @@
  ****************************************************************************/
 
 #include "cci_cfg/cci_broker_manager.h"
+#include "cci_cfg/cci_broker_if.h"
 #include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_param_typed.h"
 #include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_

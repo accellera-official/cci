@@ -137,7 +137,7 @@ bool cci_param_untyped_handle::is_initial_value() const
     return m_orig_param->is_initial_value();
 }
 
-const cci_originator&
+cci_originator
 cci_param_untyped_handle::get_latest_write_originator() const
 {
     check_is_valid();
@@ -269,22 +269,10 @@ const std::type_info& cci_param_untyped_handle::get_type_info() const
     return m_orig_param->get_type_info();
 }
 
-void cci_param_untyped_handle::init()
-{
-    check_is_valid();
-    m_orig_param->init();
-}
-
 void cci_param_untyped_handle::reset()
 {
   check_is_valid();
-  m_orig_param->reset();
-}
-
-void cci_param_untyped_handle::destroy()
-{
-    check_is_valid();
-    m_orig_param->destroy();
+  m_orig_param->reset(m_originator);
 }
 
 bool cci_param_untyped_handle::is_valid(bool check) const

@@ -116,7 +116,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_untyped::get_latest_write_originator
-    const cci_originator& get_latest_write_originator() const;
+    cci_originator get_latest_write_originator() const;
 
     ///@}
 
@@ -270,15 +270,6 @@ protected:
 
     /// @copydoc cci_param_typed::set_raw_value(const void*, const void*)
     void set_raw_value(const void* vp, const void* pwd);
-
-    ///@name Initialization and Destructions methods
-    ///@{
-
-    /// @copydoc cci_param_untyped::init
-    void init();
-
-    /// @copydoc cci_param_typed::destroy
-    void destroy();
 
     ///@}
 

@@ -138,29 +138,31 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_handle.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_global_cfg_broker.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_if.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp" />
-	<ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
-	<ClCompile Include="..\..\..\src\cci_cfg\cci_report_handler.cpp" />
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_report_handler.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_name_gen.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_value.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_value_converter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\src\cci_configuration" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cci_configuration">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_callbacks.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_handle.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.h" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_types.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_cfg_broker.h" />
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_mutable_types.h" />

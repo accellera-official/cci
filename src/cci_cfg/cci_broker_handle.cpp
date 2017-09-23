@@ -22,6 +22,9 @@
  */
 
 #include "cci_cfg/cci_broker_handle.h"
+
+#include "cci_cfg/cci_broker_if.h"
+#include "cci_cfg/cci_broker_manager.h"
 #include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_

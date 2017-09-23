@@ -20,7 +20,8 @@
 #ifndef CCI_CCI_BROKER_HANDLE_H_INCLUDED_
 #define CCI_CCI_BROKER_HANDLE_H_INCLUDED_
 
-#include "cci_cfg/cci_broker_if.h"
+#include "cci_cfg/cci_broker_types.h"
+#include "cci_cfg/cci_originator.h"
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
@@ -29,7 +30,9 @@
 CCI_OPEN_NAMESPACE_
 
 // Forward declarations
-class cci_param_untyped_handle;
+class cci_param_if;
+class cci_broker_if;
+template<typename T> class cci_param_typed_handle;
 
 // CCI Broker handle class
 /**
@@ -156,6 +159,11 @@ public:
      * @return reference to this object
      */
     cci_broker_handle& operator=(const cci_broker_handle& broker_handle);
+
+private:
+    friend class cci_param_if;
+    cci_broker_if&       ref()       { return m_orig_broker; }
+    const cci_broker_if& ref() const { return m_orig_broker; }
 
 private:
     /// Originator of the broker handle.
