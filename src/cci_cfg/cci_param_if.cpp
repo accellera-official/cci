@@ -38,16 +38,6 @@ void cci_param_if::init( cci_broker_handle broker_handle )
   }
 }
 
-cci_originator cci_param_if::get_originator() const
-{
-  return cci_originator(cci_originator::unknown_tag());
-}
-
-cci_originator cci_param_if::get_latest_write_originator() const
-{
-  return cci_originator(cci_originator::unknown_tag());
-}
-
 void cci_param_if::destroy( cci_broker_handle broker_handle )
 {
   broker_handle.ref().remove_param( this );

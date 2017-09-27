@@ -104,10 +104,10 @@ public:
     //@{
 
     /// @copydoc cci_param_untyped::get_originator
-    virtual cci_originator get_originator() const;
+    virtual cci_originator get_originator() const = 0;
 
     /// @copydoc cci_param_untyped::get_latest_write_originator
-    virtual cci_originator get_latest_write_originator() const;
+    virtual cci_originator get_latest_write_originator() const = 0;
 
     //@}
 
@@ -156,6 +156,10 @@ public:
     virtual void reset(const cci_originator &originator) = 0;
 
 protected:
+    /// helper function, returning an unknown/invalid originator
+    cci_originator unknown_originator() const
+      { return cci_originator( cci_originator::unknown_tag() ); }
+
     /** Extract typed value from a parameter.
      *  @param  rhs parameter to read value from
      *  @pre    rhs.get_type_info() == typeid(T)
