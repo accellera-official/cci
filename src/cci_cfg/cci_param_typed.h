@@ -484,8 +484,6 @@ public:
 
     /// @}
 
-    /// Free resources attached to parameter.
-    void destroy();
 
     /// Creates a parameter handle object holding the originator information
     /// and pointing to the same parameter
@@ -566,8 +564,14 @@ public:
                     const cci_originator& originator = cci_originator());
 
 
-    void reset();
+    void reset()
+      { reset(get_originator()); }
 
+    ///@copydoc cci_param_if::reset
+    virtual void reset(const cci_originator& originator);
+
+    ~cci_param_typed()
+      { destroy(m_broker_handle); }
 
 protected:
     /// Value
@@ -577,10 +581,8 @@ protected:
     value_type m_default_value;
 
 private:
-
-    /// Constructor to create handles with a giver originator
-    cci_param_typed(cci_param_typed<value_type, TM> & copy,
-                    const cci_originator& originator);
+    ///@copydoc cci_param_if::preset_cci_value
+    virtual void preset_cci_value(const cci_value&, const cci_originator&);
 
     /// Pre write callback
     bool
@@ -717,7 +719,7 @@ cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
 cci_param_typed<T, TM>::operator=(const cci_param_typed<T,
         TM>& rhs)
 {
-    set(rhs.get_value());
+    set(rhs.get_value(m_originator));
     return *this;
 }
 
@@ -725,7 +727,7 @@ template <typename T, cci_param_mutable_type TM>
 cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
 cci_param_typed<T, TM>::operator=(const cci_param_if& rhs)
 {
-    set_cci_value(rhs.get_cci_value());
+    set_cci_value(rhs.get_cci_value(m_originator));
     return *this;
 }
 
@@ -805,8 +807,10 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
                                            const void *pwd,
                                            const cci_originator& originator)
 {
-  value_type old_value = m_value;
-  value_type new_value = *static_cast<const value_type*>(value);
+  const value_type& new_value = *static_cast<const value_type*>(value);
+
+  if (!this->set_cci_value_allowed(TM))
+    return;
 
   if(!pwd) {
     if (cci_param_untyped::is_locked()) {
@@ -820,36 +824,18 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
     }
   }
 
-  if (this->set_cci_value_allowed(TM) &&
-      pre_write_callback(new_value, originator))
-  {
-    bool actual_write_result = false;
-    value_type value_typed = *static_cast<const value_type*>(value);
+  if (!pre_write_callback(new_value, originator))
+    return;
 
-    // Actual write
-    if(!pwd) {
-      m_value = value_typed;
-      actual_write_result = true;
-    } else {
-      if(cci_param_untyped::is_locked() &&
-         cci_param_untyped::m_lock_pwd == pwd) {
-        m_value = value_typed;
-        actual_write_result = true;
-      } else {
-        actual_write_result = false;
-      }
-    }
-    if (!actual_write_result) {
-      cci_report_handler::set_param_failed("Bad value.", __FILE__, __LINE__);
-      return;
-    } else {
-      // Write callback(s)
-      post_write_callback(old_value, new_value, originator);
+  // Actual write
+  value_type old_value = m_value;
+  m_value = new_value;
 
-      // Update latest write originator
-      update_latest_write_originator(originator);
-    }
-  }
+  // Write callback(s)
+  post_write_callback(old_value, new_value, originator);
+
+  // Update latest write originator
+  update_latest_write_originator(originator);
 
   cci_param_untyped::fast_write =
     TM == CCI_MUTABLE_PARAM &&
@@ -981,6 +967,26 @@ void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
 }
 
 template <typename T, cci_param_mutable_type TM>
+void cci_param_typed<T, TM>::preset_cci_value(const cci_value& val,
+                                              const cci_originator& originator)
+{
+    value_type old_value = m_value;
+    value_type new_value = val.get<value_type>();
+
+    if (!pre_write_callback(new_value, originator))
+      return;
+
+    // Actual write
+    m_value = new_value;
+
+    // Write callback(s)
+    post_write_callback(old_value, new_value, originator);
+
+    // Update latest write originator
+    update_latest_write_originator(originator);
+}
+
+template <typename T, cci_param_mutable_type TM>
 cci_value cci_param_typed<T, TM>::get_cci_value() const
 {
     return get_cci_value(get_originator());
@@ -1093,12 +1099,6 @@ cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(
         (*(const_cast<cci_param_typed<T,TM>* >(this))),originator);
 }
 
-template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::destroy()
-{
-    delete this;
-}
-
 /// Constructors
 
 #define CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL(signature, broker)                \
@@ -1106,10 +1106,9 @@ template <typename T, cci_param_mutable_type TM>                               \
 cci_param_typed<T, TM>::cci_param_typed signature                              \
 : cci_param_untyped(name, name_type, broker, desc, originator),                \
   m_value(default_value.get<T>()),                                             \
-  m_default_value(default_value.get<T>())                                     \
+  m_default_value(default_value.get<T>())                                      \
 {                                                                              \
-    broker.add_param(this);                                                    \
-    this->init();                                                              \
+    this->init(m_broker_handle);                                               \
 }
 
 #define CCI_PARAM_CONSTRUCTOR_IMPL(signature, broker)                          \
@@ -1119,18 +1118,7 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
   m_value(default_value),                                                      \
   m_default_value(default_value)                                               \
 {                                                                              \
-    cci_value init_value = broker.get_initial_cci_value(get_name());           \
-    if(!init_value.is_null()) {                                                \
-        m_value = init_value.get<T>();                                         \
-        cci_originator init_value_originator =                                 \
-            broker.get_latest_write_originator(get_name());                    \
-        if( !init_value_originator.is_unknown() ) {                            \
-            cci_param_untyped::update_latest_write_originator(                 \
-                    init_value_originator);                                    \
-        }                                                                      \
-    }                                                                          \
-    broker.add_param(this);                                                    \
-    this->init();                                                              \
+    this->init(m_broker_handle);                                               \
 }
 
 /// Constructor with (local/hierarchical) name, default value, description,
@@ -1178,22 +1166,16 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
 #undef CCI_PARAM_TYPED_CALLBACK_IMPL_
 
 template <typename T, cci_param_mutable_type TM>
-cci_param_typed<T, TM>::cci_param_typed(cci_param_typed<T, TM>& copy,
-                                        const cci_originator& originator)
-: cci_param_untyped(copy, originator)
-{}
-
-template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::reset() 
+void cci_param_typed<T, TM>::reset(const cci_originator& originator)
 {
-  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
-  
-  if(!init_value.is_null()) {
-    m_value = init_value.get<T>();
+  const std::string& nm = get_name();
+  if (m_broker_handle.has_initial_value(nm)) {
+    cci_value preset = m_broker_handle.get_initial_cci_value(nm);
+    preset_cci_value(preset, originator);
   } else {
     m_value = get_default_value();
   }
-  update_latest_write_originator(get_originator());
+  update_latest_write_originator(originator);
 }
 
 #if CCI_CPLUSPLUS >= 201103L
@@ -1206,5 +1188,4 @@ using cci_param = cci_param_typed<T,TM>;
 #endif
 
 CCI_CLOSE_NAMESPACE_
-
 #endif //CCI_CNF_CCI_PARAM_H_INCLUDED_

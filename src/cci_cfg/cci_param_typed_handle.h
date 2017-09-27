@@ -20,6 +20,7 @@
 #ifndef CCI_CFG_CCI_PARAM_TYPED_HANDLE_H_INCLUDED_
 #define CCI_CFG_CCI_PARAM_TYPED_HANDLE_H_INCLUDED_
 
+#include "cci_cfg/cci_mutable_types.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
 
 /**
@@ -27,6 +28,8 @@
  */
 
 CCI_OPEN_NAMESPACE_
+
+template<typename T, cci_param_mutable_type TM> class cci_param_typed;
 
 // CCI Configuration parameter handle class
 /**
@@ -187,7 +190,7 @@ cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_para
 template <typename T>
 cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_if& rhs)
 {
-    set_cci_value(rhs.get_cci_value());
+    set_cci_value(rhs.get_cci_value(m_originator));
     return *this;
 }
 

@@ -79,7 +79,7 @@ public:
      * @param value Value of the metadata
      * @param desc Human readable description
      */
-    void add_metadata(const std::string &name, const cci::cci_value &value,
+    void add_metadata(const std::string &name, const cci_value &value,
                       const std::string &desc = "");
 
     /// Return the metadata value
@@ -141,7 +141,7 @@ public:
      * The originator is updated on successful calls to the following functions:
      * set_cci_value(), cci_param_typed::set(), cci_param_typed::operator=()
      */
-    const cci_originator& get_latest_write_originator() const;
+    cci_originator get_latest_write_originator() const;
 
     ///@}
 
@@ -543,14 +543,6 @@ protected:
                       cci_broker_handle broker_handle, const std::string& desc,
                       const cci_originator& originator);
 
-    ///@name Initialization and Destructions methods
-    ///@{
-
-    /// Initialize.
-    void init();
-
-    ///@}
-
     /// Updates the internal member m_value_originator
     void update_latest_write_originator(const cci_originator& originator) const;
 
@@ -566,9 +558,6 @@ protected:
 
     /// Metadata
     cci_value_map metadata;
-
-    /// Initialized
-    bool m_init_called;
 
     /// Passwort needed to unlock the parameter or override the lock
     const void* m_lock_pwd;
@@ -624,6 +613,8 @@ protected:
     const cci_originator m_originator;
 
 private:
+    /// @copydoc cci_param_if::invalidate_all_param_handles
+    virtual void invalidate_all_param_handles();
 
     /// Parameter handles
     std::vector<cci_param_untyped_handle*> m_param_handles;
@@ -633,5 +624,4 @@ protected:
 };
 
 CCI_CLOSE_NAMESPACE_
-  
 #endif // CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_

@@ -17,13 +17,11 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_BROKER_IF_H_INCLUDED_
-#define CCI_CCI_BROKER_IF_H_INCLUDED_
+#ifndef CCI_CFG_CCI_BROKER_IF_H_INCLUDED_
+#define CCI_CFG_CCI_BROKER_IF_H_INCLUDED_
 
-#include "cci_cfg/cci_broker_callbacks.h"
+#include "cci_cfg/cci_broker_types.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
-#include "cci_core/cci_value.h"
-#include "cci_core/cci_filtered_range.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -38,17 +36,6 @@ class cci_param_typed_handle;
 class cci_broker_manager;
 class cci_broker_handle;
 
-/// CCI parameter filter iterator type
-typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
-        cci_param_range;
-
-/// CCI value with parameter name pair type
-typedef std::pair<std::string, cci_value> cci_name_value_pair;
-
-/// CCI initial value filter iterator type
-typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
-        cci_initial_value_range;
-
 /// CCI configuration broker interface.
 /**
  * This can be used by a tool to access the database or parameter objects, set initial values etc.
@@ -56,10 +43,12 @@ typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
  *
  * This always returns not the owner's parameter objects but parameter handle wrappers.
  */
-class cci_broker_if : public cci_broker_callback_if
+class cci_broker_if
+ : public cci_broker_callback_if
 {
 public:
     friend class cci_broker_handle;
+    friend class cci_param_if;
 
     /// Destructor
     virtual ~cci_broker_if() {};
@@ -307,4 +296,4 @@ cci_broker_handle cci_get_global_broker(const cci_originator& originator);
 
 CCI_CLOSE_NAMESPACE_
 
-#endif
+#endif // CCI_CFG_CCI_BROKER_IF_H_INCLUDED_

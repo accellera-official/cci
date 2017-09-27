@@ -151,7 +151,7 @@ cci_value cci_cfg_broker::get_cci_value(const std::string &parname) const
 {
   cci_param_if* p = get_orig_param(parname);
   if(p) {
-    return p->get_cci_value();
+    return p->get_cci_value(m_originator);
   } else {
     std::map<std::string,cci_value>::const_iterator iter =
       m_unused_value_registry.find(parname);

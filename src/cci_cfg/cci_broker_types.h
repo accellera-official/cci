@@ -17,26 +17,32 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_HEADER_INCLUDED_
-#define CCI_CCI_HEADER_INCLUDED_
+#ifndef CCI_CFG_CCI_BROKER_TYPES_H_INCLUDED_
+#define CCI_CFG_CCI_BROKER_TYPES_H_INCLUDED_
 
-// CCI core includes
-
-#include "cci_core/cci_version.h"
-#include "cci_core/cci_name_gen.h"
-#include "cci_core/cci_core_types.h"
 #include "cci_core/cci_value.h"
-#include "cci_core/cci_value_converter.h"
+#include "cci_core/cci_filtered_range.h"
+#include "cci_cfg/cci_broker_callbacks.h"
+//
+#include <string>
+#include <utility> // std::pair
 
-// CCI config includes
+CCI_OPEN_NAMESPACE_
 
-#include "cci_cfg/cci_mutable_types.h"
-#include "cci_cfg/cci_originator.h"
-#include "cci_cfg/cci_broker_handle.h"
-#include "cci_cfg/cci_broker_if.h"
-#include "cci_cfg/cci_broker_manager.h"
-#include "cci_cfg/cci_param_typed.h"
-#include "cci_cfg/cci_param_typed_handle.h"
-#include "cci_cfg/cci_macros_undef.h"
+// forward declaration
+class cci_param_untyped_handle;
 
-#endif // CCI_CCI_HEADER_INCLUDED_
+/// CCI parameter filter iterator type
+typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
+        cci_param_range;
+
+/// CCI value with parameter name pair type
+typedef std::pair<std::string, cci_value> cci_name_value_pair;
+
+/// CCI initial value filter iterator type
+typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
+        cci_initial_value_range;
+
+CCI_CLOSE_NAMESPACE_
+
+#endif // CCI_CFG_CCI_BROKER_TYPES_H_INCLUDED_

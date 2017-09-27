@@ -116,7 +116,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_untyped::get_latest_write_originator
-    const cci_originator& get_latest_write_originator() const;
+    cci_originator get_latest_write_originator() const;
 
     ///@}
 
@@ -206,6 +206,9 @@ public:
     /// @copydoc cci_param_untyped::get_name
     const std::string& get_name() const;
 
+    /// @copydoc cci_param_typed::get_type_info
+    const std::type_info& get_type_info() const;
+
     ///@}
 
     /// @copydoc cci_param_untyped::get_originator
@@ -259,7 +262,6 @@ protected:
     /// @copydoc cci_param_typed::get_raw_value
     const void* get_raw_value() const;
 
-
     /// @copydoc cci_param_typed::get_raw_default_value
     const void* get_raw_default_value() const;
 
@@ -268,18 +270,6 @@ protected:
 
     /// @copydoc cci_param_typed::set_raw_value(const void*, const void*)
     void set_raw_value(const void* vp, const void* pwd);
-
-    /// @copydoc cci_param_typed::get_type_info
-    const std::type_info& get_type_info() const;
-
-    ///@name Initialization and Destructions methods
-    ///@{
-
-    /// @copydoc cci_param_untyped::init
-    void init();
-
-    /// @copydoc cci_param_typed::destroy
-    void destroy();
 
     ///@}
 
@@ -301,7 +291,7 @@ private:
     const char* m_orig_param_name;
 };
 
-/// Convenience shortcut for ntyped parameter handles
+/// Convenience shortcut for untyped parameter handles
 typedef cci_param_untyped_handle cci_param_handle ;
 
 CCI_CLOSE_NAMESPACE_

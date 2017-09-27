@@ -61,24 +61,23 @@ cci_param_untyped_handle::cci_param_untyped_handle(
 
 cci_param_untyped_handle::~cci_param_untyped_handle()
 {
-    if(is_valid()) {
-        m_orig_param->remove_param_handle(this);
-    }
-    m_orig_param=NULL;
+    invalidate();
 }
 
 cci_param_untyped_handle& cci_param_untyped_handle::operator=(
         const cci_param_untyped_handle& param_handle)
 {
+    if (this == &param_handle) return *this;
+
     if (is_valid()) {
       m_orig_param->remove_param_handle(this);
     }
     cci_originator originator(param_handle.m_originator);
     std::swap(m_originator, originator);
-    m_orig_param = param_handle.m_orig_param;
+    m_orig_param      = param_handle.m_orig_param;
     m_orig_param_name = param_handle.m_orig_param_name;
 
-    if((this != &param_handle) && is_valid()) {
+    if(is_valid()) {
         m_orig_param->add_param_handle(this);
     }
     return *this;
@@ -138,7 +137,7 @@ bool cci_param_untyped_handle::is_initial_value() const
     return m_orig_param->is_initial_value();
 }
 
-const cci_originator&
+cci_originator
 cci_param_untyped_handle::get_latest_write_originator() const
 {
     check_is_valid();
@@ -243,8 +242,7 @@ const void* cci_param_untyped_handle::get_raw_default_value() const
 
 void cci_param_untyped_handle::set_raw_value(const void* vp)
 {
-    check_is_valid();
-    m_orig_param->set_raw_value(vp, m_originator);
+    set_raw_value(vp, NULL);
 }
 
 void cci_param_untyped_handle::set_raw_value(const void* vp, const void* pwd)
@@ -271,22 +269,10 @@ const std::type_info& cci_param_untyped_handle::get_type_info() const
     return m_orig_param->get_type_info();
 }
 
-void cci_param_untyped_handle::init()
-{
-    check_is_valid();
-    m_orig_param->init();
-}
-
 void cci_param_untyped_handle::reset()
 {
   check_is_valid();
-  m_orig_param->reset();
-}
-
-void cci_param_untyped_handle::destroy()
-{
-    check_is_valid();
-    m_orig_param->destroy();
+  m_orig_param->reset(m_originator);
 }
 
 bool cci_param_untyped_handle::is_valid(bool check) const
@@ -294,11 +280,11 @@ bool cci_param_untyped_handle::is_valid(bool check) const
     if(check && !m_orig_param) {
         check_is_valid(false);
     }
-    return m_orig_param ? true : false;
+    return m_orig_param != NULL;
 }
 
 void cci_param_untyped_handle::invalidate() {
-    if(is_valid()) {
+    if(m_orig_param) {
         m_orig_param->remove_param_handle(this);
     }
     m_orig_param = NULL;
@@ -306,25 +292,22 @@ void cci_param_untyped_handle::invalidate() {
 
 void cci_param_untyped_handle::check_is_valid(bool report_error) const
 {
-    bool invalid_error = false;
-    if(!is_valid()) {
+    bool invalid_error = !is_valid();
+    if(invalid_error) {
         if(m_orig_param_name) {
             cci_param_handle param_handle =
                     cci_broker_manager::get_broker(m_originator).
                             get_param_handle(m_orig_param_name);
-            if(!param_handle.is_valid()) {
-                invalid_error = true;
-            } else {
-                m_orig_param = param_handle.m_orig_param;
+            if(param_handle.is_valid()) {
+                invalid_error = false;
+                *const_cast<cci_param_handle*>(this) = CCI_MOVE_(param_handle);
             }
-        } else {
-            invalid_error = true;
         }
-        if(report_error && invalid_error) {
-            CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
-                             "The handled parameter is not valid.");
-            cci_abort(); // cannot recover from here
-        }
+    }
+    if(report_error && invalid_error) {
+        CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
+                         "The handled parameter is not valid.");
+        cci_abort(); // cannot recover from here
     }
 }
 

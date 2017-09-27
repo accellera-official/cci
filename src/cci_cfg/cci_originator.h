@@ -25,6 +25,7 @@
 CCI_OPEN_NAMESPACE_
 
 class cci_broker_if;
+class cci_param_if;
 
 /// Originator class which is used to track owners, handles and value providers
 /// of parameters.
@@ -38,6 +39,7 @@ class cci_broker_if;
 class cci_originator
 {
     friend class cci_broker_if;
+    friend class cci_param_if;
 
     struct unknown_tag {};
 

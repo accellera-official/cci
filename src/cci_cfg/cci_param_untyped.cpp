@@ -22,7 +22,10 @@
  */
 
 #include "cci_cfg/cci_param_untyped.h"
+
+#include "cci_cfg/cci_param_if.h"
 #include "cci_cfg/cci_broker_handle.h"
+#include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_report_handler.h"
 #include "cci_core/cci_name_gen.h"
 
@@ -35,11 +38,9 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
                                      cci_broker_handle broker_handle,
                                      const std::string& desc,
                                      const cci_originator& originator)
-    : m_description(desc), m_init_called(false),
-      m_lock_pwd(NULL), m_broker_handle(broker_handle),
-      m_value_originator(originator),
-      m_originator(originator),
-      fast_read(false),fast_write(false)
+    : m_description(desc), m_lock_pwd(NULL),
+      m_broker_handle(broker_handle), m_value_originator(originator),
+      m_originator(originator), fast_read(false),fast_write(false)
 {
     if(name_type == CCI_ABSOLUTE_NAME) {
         m_name = name;
@@ -69,11 +70,10 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
 
 cci_param_untyped::~cci_param_untyped()
 {
-    if(m_init_called) {
-        m_broker_handle.remove_param(this);
-        while( !m_param_handles.empty() )
-          m_param_handles.front()->invalidate(); // removes itself from the list
-    }
+    // should have been invalidated from within typed implementation
+    // (through call to cci_param_if::destroy)
+    sc_assert( m_param_handles.empty() );
+
     if(!m_name.empty()) {
         cci_unregister_name(get_name().c_str());
     }
@@ -104,12 +104,13 @@ cci_value_map cci_param_untyped::get_metadata() const
 
 bool cci_param_untyped::is_initial_value() const
 {
-  if (!m_broker_handle.has_initial_value(get_name())) return false;
-  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
-  return init_value == get_cci_value();
+  const std::string& name = get_name();
+  if (!m_broker_handle.has_initial_value(name)) return false;
+  cci_value init_value = m_broker_handle.get_initial_cci_value(name);
+  return init_value == get_cci_value(m_originator);
 }
 
-const cci_originator& cci_param_untyped::get_latest_write_originator() const
+cci_originator cci_param_untyped::get_latest_write_originator() const
 {
     return m_value_originator;
 }
@@ -267,12 +268,6 @@ cci_originator cci_param_untyped::get_originator() const
     return m_originator;
 }
 
-void cci_param_untyped::init()
-{
-    sc_assert(m_init_called == false && "init() function called more than once!");
-    m_init_called = true;
-}
-
 void cci_param_untyped::add_param_handle(cci_param_untyped_handle* param_handle)
 {
     m_param_handles.push_back(param_handle);
@@ -285,6 +280,13 @@ void cci_param_untyped::remove_param_handle(
                                       m_param_handles.end(),
                                       param_handle),
                           m_param_handles.end());
+}
+
+void
+cci_param_untyped::invalidate_all_param_handles()
+{
+    while( !m_param_handles.empty() )
+        m_param_handles.front()->invalidate(); // removes itself from the list
 }
 
 CCI_CLOSE_NAMESPACE_

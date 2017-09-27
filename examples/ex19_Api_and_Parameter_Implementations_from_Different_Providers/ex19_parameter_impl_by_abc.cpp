@@ -78,10 +78,14 @@ cci_param_user_data_type::cci_param_user_data_type(
       m_broker(cci::cci_broker_manager::get_broker())
 {
   nam = _name;
-  /*Register created parameter into global broker*/
-  m_broker.add_param(this);
+  init(m_broker);
 
   /* DO some hack for cci_value */
+}
+
+cci_param_user_data_type::~cci_param_user_data_type()
+{
+  destroy( m_broker );
 }
 
 // Virtual function in cci_param_impl_if
@@ -277,8 +281,8 @@ bool cci_param_user_data_type::is_default_value() const {
  *  @brief  Reset
  *  @return none
  */
-void cci_param_user_data_type::reset() {
-  std::cout << "Function cci_param_user_data_type::reset Called " << std::endl;
+void cci_param_user_data_type::reset(const cci::cci_originator&) {
+  std::cout << "Function cci_param_user_data_type::reset called " << std::endl;
   // left to the interested reader
 }
 
@@ -391,32 +395,8 @@ bool cci_param_user_data_type::is_locked() const {
 
 bool cci_param_user_data_type::equals(const cci::cci_param_if& rhs) const
 {
-  return rhs.equals(*this);
-}
-
-bool cci_param_user_data_type::equals(const cci::cci_param_untyped_handle &rhs) const
-{
   const cci_param_user_data_type * other = dynamic_cast<const cci_param_user_data_type*>(&rhs);
-  if (other)
-  {
-    return other->get_value()==this->get_value();
-  }
-  return false;
-}
-
-void cci_param_user_data_type::init()
-{
-	cout
-		<< "\n\t[PARAM IMPL] : 'init_cci_param' : For user_data_type With cci::CCI_MUTABLE_PARAM"
-		<< endl;
-}
-
-void cci_param_user_data_type::destroy()
-{
-	cout
-		<< "\n\t[PARAM IMPL] : 'destroy_cci_param' : For user_data_type With cci::CCI_MUTABLE_PARAM"
-		<< endl;
-	delete this;
+  return other && other->get_value()==this->get_value();
 }
 
 void cci_param_user_data_type::add_param_handle(
@@ -427,6 +407,11 @@ void cci_param_user_data_type::add_param_handle(
 
 void cci_param_user_data_type::remove_param_handle(
         cci::cci_param_untyped_handle* param_handle)
+{
+  // Not implemented
+}
+
+void cci_param_user_data_type::invalidate_all_param_handles()
 {
   // Not implemented
 }
