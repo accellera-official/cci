@@ -104,7 +104,7 @@ public:
      * Note: false is returned even if the current value matches the constructor
      * supplied default but has undergone intermediate changes.
      *
-     * @return false if the parameter received an initial value or its value has
+     * @return false if the parameter received a preset value or its value has
      *         changed; otherwise, true
      */
     virtual bool is_default_value() const =0; // note this is pure virtual here,
@@ -113,18 +113,18 @@ public:
                                               // have a defualt value).
 
 
-    /// Indicates that the parameter received an initial value that has not since been modified.
+    /// Indicates that the parameter received a preset value that has not since been modified.
     /**
      * True if the value was supplied using the broker's
-     * set_initial_cci_value function and not subsequently changed.
+     * set_preset_cci_value function and not subsequently changed.
      *
-     * Note: false is returned even if the current value matches the initial
+     * Note: false is returned even if the current value matches the preset
      * value but has undergone intermediate changes.
      *
-     * @return fase if no initial value was supplied or the parameter's value has
+     * @return fase if no preset value was supplied or the parameter's value has
      *         changed; otherwise, true
      */
-    virtual bool is_initial_value() const;
+    virtual bool is_preset_value() const;
 
     ///@}
 

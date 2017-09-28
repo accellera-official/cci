@@ -49,7 +49,7 @@ SC_CTOR(ex24_config_ip):
     SC_THREAD(execute);
 
     XREPORT("Setting up sim_ip.int_param's init-value to 10 ");
-    m_broker.set_initial_cci_value("sim_ip.int_param",
+    m_broker.set_preset_cci_value("sim_ip.int_param",
                                    cci::cci_value::from_json("10"));
   }
 

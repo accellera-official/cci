@@ -19,7 +19,7 @@
 
 /**
  *  @file     main.cpp
- *  @brief    This implementation assigns initial values to a list of cci-parameters
+ *  @brief    This implementation assigns preset values to a list of cci-parameters
  *            (without any knowledge of them being present in the model) and then
  *            instantiates the 'parameter_owner' and 'parameter_configurator' modules
  *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
@@ -37,7 +37,7 @@
 /**
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
  *  @brief  Here, a reference of the global broker is taken with the help of
- *          the originator information and then initial values are assigned to
+ *          the originator information and then preset values are assigned to
  *          a list of cci-parameters.
  *  @param  sc_argc The number of input arguments
  *  @param  sc_argv The list of input arguments
@@ -49,7 +49,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
 
 #if 0
   // In case, if user doesn't want to use the reading from configuration file
-  // approach, here is an alternative that assigns initial values to the
+  // approach, here is an alternative that assigns preset values to the
   // cci-parameters
 
   // Declare cci-originator instance in order to retrieve a reference of the
@@ -60,24 +60,24 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_broker_handle myMainBrokerIF =
       cci::cci_broker_manager::get_broker(sc_main_originator);
 
-  SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'integer type"
+  SC_REPORT_INFO("sc_main", "[MAIN] : Set preset value to 'integer type"
                  " parameter'");
-  myMainBrokerIF.set_initial_cci_value("param_owner.int_param",
+  myMainBrokerIF.set_preset_cci_value("param_owner.int_param",
                                         cci::cci_value(10));
 
-  SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'float type"
+  SC_REPORT_INFO("sc_main", "[MAIN] : Set preset value to 'float type"
                  " parameter'");
-  myMainBrokerIF.set_initial_cci_value("param_owner.float_param",
+  myMainBrokerIF.set_preset_cci_value("param_owner.float_param",
                                         cci::cci_value(11.11));
 
-  SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'string type"
+  SC_REPORT_INFO("sc_main", "[MAIN] : Set preset value to 'string type"
                  " parameter'");
-  myMainBrokerIF.set_initial_cci_value("param_owner.string_param",
+  myMainBrokerIF.set_preset_cci_value("param_owner.string_param",
     cci::cci_value::from_json("Used_parameter"));
 
-  SC_REPORT_INFO("sc_main", "[MAIN] : Set initial value to 'double type"
+  SC_REPORT_INFO("sc_main", "[MAIN] : Set preset value to 'double type"
                  " parameter'");
-  myMainBrokerIF.set_initial_cci_value("param_owner.double_param",
+  myMainBrokerIF.set_preset_cci_value("param_owner.double_param",
     cci::cci_value(100.123456789));
 #endif
 

@@ -38,7 +38,7 @@ class cci_broker_handle;
 
 /// CCI configuration broker interface.
 /**
- * This can be used by a tool to access the database or parameter objects, set initial values etc.
+ * This can be used by a tool to access the database or parameter objects, set preset values etc.
  * or can be used by the model itself to get access to configuration objects etc.
  *
  * This always returns not the owner's parameter objects but parameter handle wrappers.
@@ -86,7 +86,7 @@ public:
     /**
      * The init value has priority to the default value being set by the owner!
      * If called for an explicit parameter this is a usual set, including not
-     * setting the is_initial_value state to true!
+     * setting the is_preset_value state to true!
      *
      * @exception        cci::cci_report::set_param_failed Setting parameter
      *                   object failed
@@ -96,7 +96,7 @@ public:
      * @param originator originator reference to the originator
      *                   (not applicable in case of broker handle)
      */
-    virtual void set_initial_cci_value(const std::string &parname,
+    virtual void set_preset_cci_value(const std::string &parname,
                                        const cci::cci_value &cci_value,
                                        const cci_originator& originator) = 0;
 
@@ -104,41 +104,41 @@ public:
     /**
      *
      * @param parname    Full hierarchical parameter name.
-     * @return           CCI value of the parameter's initial value. Empty value is returned when parameter is not existing or its initial value is not existing
+     * @return           CCI value of the parameter's preset value. Empty value is returned when parameter is not existing or its preset value is not existing
      */
     virtual cci::cci_value
-    get_initial_cci_value(const std::string &parname) const = 0;
+    get_preset_cci_value(const std::string &parname) const = 0;
 
-    /// Get unconsumed initial values
+    /// Get unconsumed preset values
     /**
-     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * Querying of unconsumed values. An unconsumed value is an "preset" value
      * supplied to a broker for which no parameter is ever created.
      *
-     * @return           Vector of unconsumed parameter's initial value.
+     * @return           Vector of unconsumed parameter's preset value.
      */
-    virtual std::vector<cci_name_value_pair> get_unconsumed_initial_values() const = 0;
+    virtual std::vector<cci_name_value_pair> get_unconsumed_preset_values() const = 0;
 
-    /// Get unconsumed initial values with a user-defined predicate callback
+    /// Get unconsumed preset values with a user-defined predicate callback
     /**
-     * Querying of unconsumed values. An unconsumed value is an "initial" value
+     * Querying of unconsumed values. An unconsumed value is an "preset" value
      * supplied to a broker for which no parameter is ever created.
      *
-     * @param pred       Callback to filter unconsumed initial values.
-     * @return           Vector of unconsumed parameter's initial value.
+     * @param pred       Callback to filter unconsumed preset values.
+     * @return           Vector of unconsumed parameter's preset value.
      */
-    virtual cci_initial_value_range get_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred) const = 0;
+    virtual cci_preset_value_range get_unconsumed_preset_values(
+            const cci_preset_value_predicate &pred) const = 0;
 
-    /// Ignore unconsumed initial values
+    /// Ignore unconsumed preset values
     /**
-     * Filtering of unconsumed values. An unconsumed value is an "initial" value
+     * Filtering of unconsumed values. An unconsumed value is an "preset" value
      * supplied to a broker for which no parameter is ever created. This method
-     * affects future calls to @see get_unconsumed_initial_values().
+     * affects future calls to @see get_unconsumed_preset_values().
      *
-     * @param pred       Callback to ignore unconsumed initial values.
+     * @param pred       Callback to ignore unconsumed preset values.
      */
-    virtual void ignore_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred) = 0;
+    virtual void ignore_unconsumed_preset_values(
+            const cci_preset_value_predicate &pred) = 0;
 
     /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
     /**
@@ -161,14 +161,14 @@ public:
      * precendence since a top-level module can prevent the childs from setting
      * init values by locking the init value before creating the subsystem.
      *
-     * Throws (and does not lock) if no initial value is existing
-     * that can be locked or if an initial value is already locked or if the
+     * Throws (and does not lock) if no preset value is existing
+     * that can be locked or if a preset value is already locked or if the
      * parameter is already existing as object (explicit parameter).
      *
      * @exception     cci::cci_report::set_param_failed Locking parameter object failed
      * @param parname Hierarchical parameter name.
      */
-    virtual void lock_initial_value(const std::string &parname) = 0;
+    virtual void lock_preset_value(const std::string &parname) = 0;
 
     /// Get a parameter's value (CCI value representation). Independent of the implicit or explicit status.
     /**
@@ -211,12 +211,12 @@ public:
      */
     virtual bool is_used(const std::string &parname) const = 0;
 
-    /// Returns if the parameter has an initial value
+    /// Returns if the parameter has a preset value
     /**
      * @param parname  Full hierarchical parameter name.
-     * @return If the parameter has an initial value set
+     * @return If the parameter has a preset value set
      */
-    virtual bool has_initial_value(const std::string &parname) const = 0;
+    virtual bool has_preset_value(const std::string &parname) const = 0;
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////////   Registry Functions   ///////////////////////////// //

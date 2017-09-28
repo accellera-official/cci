@@ -39,9 +39,9 @@ typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
 /// CCI value with parameter name pair type
 typedef std::pair<std::string, cci_value> cci_name_value_pair;
 
-/// CCI initial value filter iterator type
-typedef cci_filtered_range<cci_name_value_pair, cci_initial_value_predicate>
-        cci_initial_value_range;
+/// CCI preset value filter iterator type
+typedef cci_filtered_range<cci_name_value_pair, cci_preset_value_predicate>
+        cci_preset_value_range;
 
 CCI_CLOSE_NAMESPACE_
 

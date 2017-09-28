@@ -66,30 +66,30 @@ public:
     /// @copydoc cci_broker_if::name
     const std::string& name() const;
 
-    /// @copydoc cci_broker_if::set_initial_cci_value
-    void set_initial_cci_value(const std::string &parname,
+    /// @copydoc cci_broker_if::set_preset_cci_value
+    void set_preset_cci_value(const std::string &parname,
                                const cci_value &cci_value);
 
-    /// @copydoc cci_broker_if::get_initial_cci_value
-    cci_value get_initial_cci_value(const std::string &parname) const;
+    /// @copydoc cci_broker_if::get_preset_cci_value
+    cci_value get_preset_cci_value(const std::string &parname) const;
 
-    /// @copydoc cci_broker_if::get_unconsumed_initial_values()
-    std::vector<cci_name_value_pair> get_unconsumed_initial_values() const;
+    /// @copydoc cci_broker_if::get_unconsumed_preset_values()
+    std::vector<cci_name_value_pair> get_unconsumed_preset_values() const;
 
-    /// @copydoc cci_broker_if::get_unconsumed_initial_values(const cci_initial_value_predicate&)
-    cci_initial_value_range get_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred) const;
+    /// @copydoc cci_broker_if::get_unconsumed_preset_values(const cci_preset_value_predicate&)
+    cci_preset_value_range get_unconsumed_preset_values(
+            const cci_preset_value_predicate &pred) const;
 
-    /// @copydoc cci_broker_if::ignore_unconsumed_initial_values
-    void ignore_unconsumed_initial_values(
-            const cci_initial_value_predicate &pred);
+    /// @copydoc cci_broker_if::ignore_unconsumed_preset_values
+    void ignore_unconsumed_preset_values(
+            const cci_preset_value_predicate &pred);
 
     /// @copydoc cci_broker_if::get_latest_write_originator
     cci_originator
     get_latest_write_originator(const std::string &parname) const;
 
-    /// @copydoc cci_broker_if::lock_initial_value
-    void lock_initial_value(const std::string &parname);
+    /// @copydoc cci_broker_if::lock_preset_value
+    void lock_preset_value(const std::string &parname);
 
     /// @copydoc cci_broker_if::get_cci_value
     cci_value get_cci_value(const std::string &parname) const;
@@ -103,8 +103,8 @@ public:
     /// @copydoc cci_broker_if::is_used
     bool is_used(const std::string &parname) const;
 
-    /// @copydoc cci_broker_if::has_initial_value
-    bool has_initial_value(const std::string &parname) const;
+    /// @copydoc cci_broker_if::has_preset_value
+    bool has_preset_value(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::add_param
     void add_param(cci_param_if *par);

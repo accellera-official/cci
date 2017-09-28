@@ -66,23 +66,23 @@ cci_originator cci_cfg_private_broker::get_latest_write_originator(const std::st
   }
 }
   
-  cci_value cci_cfg_private_broker::get_initial_cci_value(const std::string &parname) const
+  cci_value cci_cfg_private_broker::get_preset_cci_value(const std::string &parname) const
 {
   if (sendToParent(parname)) {
     cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.get_initial_cci_value(parname);
+    return p.get_preset_cci_value(parname);
   } else {
-    return cci_cfg_broker::get_initial_cci_value(parname);
+    return cci_cfg_broker::get_preset_cci_value(parname);
   }
 }
 
-void cci_cfg_private_broker::lock_initial_value(const std::string &parname)
+void cci_cfg_private_broker::lock_preset_value(const std::string &parname)
 {
   if (sendToParent(parname)) {
     cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.lock_initial_value(parname);
+    return p.lock_preset_value(parname);
   } else {
-    return cci_cfg_broker::lock_initial_value(parname);
+    return cci_cfg_broker::lock_preset_value(parname);
   }
 }
 
@@ -138,16 +138,16 @@ void cci_cfg_private_broker::remove_param(cci_param_if* par) {
 // Functions below here require an orriginator to be passed to the local
 // method variant.
 
-void cci_cfg_private_broker::set_initial_cci_value(
+void cci_cfg_private_broker::set_preset_cci_value(
   const std::string &parname,
   const cci_value &cci_value,
   const cci_originator& originator)
 {
   if (sendToParent(parname)) {
     cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.set_initial_cci_value(parname,cci_value);
+    return p.set_preset_cci_value(parname,cci_value);
   } else {
-    return cci_cfg_broker::set_initial_cci_value(parname,cci_value,originator);
+    return cci_cfg_broker::set_preset_cci_value(parname,cci_value,originator);
   }
 }
 cci_param_untyped_handle cci_cfg_private_broker::get_param_handle(

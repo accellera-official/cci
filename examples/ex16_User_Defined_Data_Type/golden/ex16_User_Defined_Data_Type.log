@@ -1,6 +1,6 @@
 SystemC Simulation
 
-Info: sc_main: [MAIN] : Setting initial value 's_address:256,d_address:512,index:0' to UDT
+Info: sc_main: [MAIN] : Setting preset value 's_address:256,d_address:512,index:0' to UDT
 
 Info: param_owner: @0 s, Prior to 0 s	demonstrating 'get_default_value()'
 

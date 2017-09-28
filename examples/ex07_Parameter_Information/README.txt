@@ -24,7 +24,7 @@ Date : 28th April, 2011
 Author : PVS Phaneendra
 ========================
 
-1.  The initial value for the std::string type cci-parameter is now set within the "sc_main()" before the instantiation of the 
+1.  The preset value for the std::string type cci-parameter is now set within the "sc_main()" before the instantiation of the 
     instantiation of the owner and configurer SC_MODULE(s).  Earlier, the value was set within the constructor of the configurer class.
 
 2.  Re-arranged the code a bit within the configurer class to showcase better handling of the APIs

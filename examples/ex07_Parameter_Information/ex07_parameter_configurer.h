@@ -98,21 +98,21 @@ SC_MODULE(ex07_parameter_configurer) {
     }
 
     XREPORT("Prior to " << sc_core::sc_time_stamp()
-            << "\tdemonstrating 'is_initial_value' API");
+            << "\tdemonstrating 'is_preset_value' API");
 
-    // Check if string type cci-parameter has any initial value using
-    // 'is_initial_value' API
-    if (str_param_handle.is_initial_value()) {
+    // Check if string type cci-parameter has any preset value using
+    // 'is_preset_value' API
+    if (str_param_handle.is_preset_value()) {
       XREPORT("[CFGR C_TOR] : " << str_param_handle.get_name()
-              << "\tInitial Value : "
+              << "\tPreset Value : "
               << str_param_handle.get_cci_value().get_string());
     } else {
-      XREPORT_ERROR("[CFGR] : No initial value set for "
+      XREPORT_ERROR("[CFGR] : No preset value set for "
                     << str_param_handle.get_name());
     }
 
-    XREPORT("[CFGR C_TOR] : Is initial value ?\t" << std::boolalpha
-            << str_param_handle.is_initial_value());
+    XREPORT("[CFGR C_TOR] : Is preset value ?\t" << std::boolalpha
+            << str_param_handle.is_preset_value());
 
     SC_THREAD(execute);
   }

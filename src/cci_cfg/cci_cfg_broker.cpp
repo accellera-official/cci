@@ -53,13 +53,13 @@ const std::string &cci_cfg_broker::name() const
   return m_name;
 }
 
-void cci_cfg_broker::set_initial_cci_value(
+void cci_cfg_broker::set_preset_cci_value(
         const std::string &parname,
         const cci_value & value,
         const cci_originator& originator)
 {
   if (locked.find(parname) != locked.end()) {
-    cci_report_handler::set_param_failed("Setting initial value failed (parameter locked).");
+    cci_report_handler::set_param_failed("Setting preset value failed (parameter locked).");
     return;
   }
 
@@ -73,35 +73,35 @@ void cci_cfg_broker::set_initial_cci_value(
   } else {
     m_unused_value_registry[parname] = value;
   }
-  m_initial_value_originator_map.insert(
+  m_preset_value_originator_map.insert(
           std::pair<std::string, cci_originator>(parname, originator));
 }
 
-std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_initial_values() const
+std::vector<cci_name_value_pair> cci_cfg_broker::get_unconsumed_preset_values() const
 {
-  std::vector<cci_name_value_pair> unconsumed_initial_cci_values;
+  std::vector<cci_name_value_pair> unconsumed_preset_cci_values;
   std::map<std::string, cci_value>::const_iterator iter;
   for( iter = m_unused_value_registry.begin(); iter != m_unused_value_registry.end(); ++iter ) {
-    unconsumed_initial_cci_values.push_back(std::make_pair(iter->first, iter->second));
+    unconsumed_preset_cci_values.push_back(std::make_pair(iter->first, iter->second));
   }
-  return unconsumed_initial_cci_values;
+  return unconsumed_preset_cci_values;
 }
 
-cci_initial_value_range cci_cfg_broker::get_unconsumed_initial_values(
-        const cci_initial_value_predicate &pred) const
+cci_preset_value_range cci_cfg_broker::get_unconsumed_preset_values(
+        const cci_preset_value_predicate &pred) const
 {
-  return cci_initial_value_range(pred, get_unconsumed_initial_values());
+  return cci_preset_value_range(pred, get_unconsumed_preset_values());
 }
 
-void cci_cfg_broker::ignore_unconsumed_initial_values(const cci_initial_value_predicate &pred)
+void cci_cfg_broker::ignore_unconsumed_preset_values(const cci_preset_value_predicate &pred)
 {
   std::vector< std::pair<std::string, cci_value> >
-          unconsumed_initial_cci_values = get_unconsumed_initial_values();
+          unconsumed_preset_cci_values = get_unconsumed_preset_values();
   for(std::vector< std::pair<std::string, cci_value> >::iterator it =
-          unconsumed_initial_cci_values.begin();
-      it != unconsumed_initial_cci_values.end(); it++) {
+          unconsumed_preset_cci_values.begin();
+      it != unconsumed_preset_cci_values.end(); it++) {
     if(pred(*it)) {
-      m_ignored_unconsumed_initial_cci_values.push_back(it->first);
+      m_ignored_unconsumed_preset_cci_values.push_back(it->first);
     }
   }
 }
@@ -113,15 +113,15 @@ cci_originator cci_cfg_broker::get_latest_write_originator(const std::string &pa
       return p->get_latest_write_originator();
   }
   std::map<std::string, cci_originator>::const_iterator it;
-  it = m_initial_value_originator_map.find(parname);
-  if (it != m_initial_value_originator_map.end()) {
+  it = m_preset_value_originator_map.find(parname);
+  if (it != m_preset_value_originator_map.end()) {
     return it->second;
   }
   // if the param doesn't exist, we should return 'unkown_originator'
   return cci_broker_if::unknown_originator();
 }
 
-cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname) const
+cci_value cci_cfg_broker::get_preset_cci_value(const std::string &parname) const
 {
   {
     std::map<std::string,cci_value>::const_iterator iter =
@@ -141,7 +141,7 @@ cci_value cci_cfg_broker::get_initial_cci_value(const std::string &parname) cons
   return cci_value();
 }
 
-void cci_cfg_broker::lock_initial_value(const std::string &parname)
+void cci_cfg_broker::lock_preset_value(const std::string &parname)
 {
   // no error is possible. Even if the parameter does not yet exist.
   locked.insert(parname);
@@ -234,7 +234,7 @@ bool cci_cfg_broker::is_used(const std::string &parname) const
   return (iter != m_param_registry.end() );
 }
 
-bool cci_cfg_broker::has_initial_value(const std::string &parname) const
+bool cci_cfg_broker::has_preset_value(const std::string &parname) const
 {
   {
     std::map<std::string,cci_value>::const_iterator iter =

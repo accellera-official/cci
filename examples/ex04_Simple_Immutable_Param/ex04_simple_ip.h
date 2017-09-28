@@ -102,7 +102,7 @@ SC_MODULE(ex04_simple_ip) {
     }
     expect("@Run: ", "param_1", static_cast<int>(param_1), 100);
 
-	//UC-2: Precedence of initial value over default value of the parameter
+	//UC-2: Precedence of preset value over default value of the parameter
 	XREPORT_INFO("execute method is testing Use Case 2");
 
 	// Wait for 11ns to allow config_ip to update param_2 value

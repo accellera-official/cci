@@ -308,13 +308,13 @@ void cci_param_user_data_type::set_invalid_value() {
 }
 
 /**
- *  @fn     bool is_initial_value() const
- *  @brief  Function to determine if the value is the initial value
- *  @return True or false depending on whether the value is the initial value or not
+ *  @fn     bool is_preset_value() const
+ *  @brief  Function to determine if the value is the preset value
+ *  @return True or false depending on whether the value is the preset value or not
  */
-bool cci_param_user_data_type::is_initial_value() const {
-  std::cout << "Function cci_param_user_data_type::is_initial_value Called " << std::endl;
-  return initial_flag;
+bool cci_param_user_data_type::is_preset_value() const {
+  std::cout << "Function cci_param_user_data_type::is_preset_value Called " << std::endl;
+  return preset_flag;
 }
 
 const std::type_info& cci_param_user_data_type::get_type_info() const {

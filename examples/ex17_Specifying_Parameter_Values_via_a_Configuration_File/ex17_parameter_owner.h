@@ -38,8 +38,8 @@ class ex17_parameter_configurator;
 /**
  *  @class  ex17_parameter_owner
  *  @brief  This sc_module gives default values to all its cci-parameters.
- *          The parameters that are overridden with their initial values
- *          appear with their initial values rather than default values.
+ *          The parameters that are overridden with their preset values
+ *          appear with their preset values rather than default values.
  */
 SC_MODULE(ex17_parameter_owner) {
  public:

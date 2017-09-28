@@ -67,18 +67,18 @@ SC_MODULE(ex09_top_module) {
 
     // Set and lock the number of initiators in Router Table
     // to value passed from 'sc_main'
-    m_broker.set_initial_cci_value(
+    m_broker.set_preset_cci_value(
         "top_module_inst.RouterInstance.r_initiators",
         n_initiators.get_cci_value());
-    m_broker.lock_initial_value(
+    m_broker.lock_preset_value(
         "top_module_inst.RouterInstance.r_initiators");
 
     // Set and lock the number of targets in Router Table
     // to value passed from 'sc_main'
-    m_broker.set_initial_cci_value(
+    m_broker.set_preset_cci_value(
         "top_module_inst.RouterInstance.r_targets",
         n_targets.get_cci_value());
-    m_broker.lock_initial_value(
+    m_broker.lock_preset_value(
         "top_module_inst.RouterInstance.r_targets");
 
     // Declaring and defining router module
@@ -110,7 +110,7 @@ SC_MODULE(ex09_top_module) {
                initiatorName);
 
 	  snprintf(initiatorName, sizeof(initiatorName), "\"initiator_%d\"", i);
-      m_broker.set_initial_cci_value(stringMisc, cci::cci_value::from_json(initiatorName));
+      m_broker.set_preset_cci_value(stringMisc, cci::cci_value::from_json(initiatorName));
 	  snprintf(initiatorName, sizeof(initiatorName), "initiator_%d", i);
       initiatorList.push_back(new ex09_initiator(initiatorName));
 
@@ -131,17 +131,17 @@ SC_MODULE(ex09_top_module) {
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.target_ID", name(),
                targetName);
 	  snprintf(targetName, sizeof(targetName), "\"target_%d\"", i);
-      m_broker.set_initial_cci_value(stringMisc, cci::cci_value::from_json(targetName));
+      m_broker.set_preset_cci_value(stringMisc, cci::cci_value::from_json(targetName));
 	  snprintf(targetName, sizeof(targetName), "target_%d", i);
 
-      // Set initial value for maximum target size(memory)
+      // Set preset value for maximum target size(memory)
       snprintf(stringMisc, sizeof(stringMisc), "%s.%s.s_size", name(),
                targetName);
       ss.clear();
       ss.str("");
       ss << targetSize;
 
-      m_broker.set_initial_cci_value(stringMisc, cci::cci_value::from_json(ss.str()));
+      m_broker.set_preset_cci_value(stringMisc, cci::cci_value::from_json(ss.str()));
       targetList.push_back(new ex09_target(targetName));
 
       // Binding Router to target
@@ -159,7 +159,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting fields of target_" << i);
-        m_broker.set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
+        m_broker.set_preset_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -178,7 +178,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting start addr of target_" << i);
-        m_broker.set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
+        m_broker.set_preset_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -191,7 +191,7 @@ SC_MODULE(ex09_top_module) {
 
       try {
         XREPORT("[TOP_MODULE C_TOR] : Re-setting end addr of target_" << i);
-        m_broker.set_initial_cci_value(targetName, cci::cci_value::from_json(ss.str()));
+        m_broker.set_preset_cci_value(targetName, cci::cci_value::from_json(ss.str()));
       } catch (sc_core::sc_report const & exception) {
         XREPORT("[ROUTER : Caught] : " << exception.what());
       }
@@ -242,7 +242,7 @@ SC_MODULE(ex09_top_module) {
 
 
   int addrValue;  ///< Address Value
-  int targetSize; ///< Maximum target Size (initial value)
+  int targetSize; ///< Maximum target Size (preset value)
   int r_addr_max; ///< Maximum Router Table's memory range
 };
 // ex09_top_module

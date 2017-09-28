@@ -131,10 +131,10 @@ bool cci_param_untyped_handle::is_default_value()
     return m_orig_param->is_default_value();
 }
 
-bool cci_param_untyped_handle::is_initial_value() const
+bool cci_param_untyped_handle::is_preset_value() const
 {
     check_is_valid();
-    return m_orig_param->is_initial_value();
+    return m_orig_param->is_preset_value();
 }
 
 cci_originator

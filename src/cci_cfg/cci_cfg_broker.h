@@ -38,26 +38,26 @@ CCI_OPEN_NAMESPACE_
     const std::string &name() const;
 
     /// Return the name of the broker
-    cci_value get_initial_cci_value(const std::string &parname) const;
+    cci_value get_preset_cci_value(const std::string &parname) const;
 
    /// Return the name of the broker
-    void set_initial_cci_value(
+    void set_preset_cci_value(
       const std::string &parname,
       const cci_value &cci_value,
       const cci_originator& originator);
 
     /// Lock parameter
-    void lock_initial_value(const std::string &parname);
+    void lock_preset_value(const std::string &parname);
 
-    /// Get a full list of unconsumed initial values.
-    std::vector<cci_name_value_pair> get_unconsumed_initial_values() const;
+    /// Get a full list of unconsumed preset values.
+    std::vector<cci_name_value_pair> get_unconsumed_preset_values() const;
 
-    /// get vector of initial values
-    cci_initial_value_range get_unconsumed_initial_values(
-      const cci_initial_value_predicate &pred) const;
+    /// get vector of preset values
+    cci_preset_value_range get_unconsumed_preset_values(
+      const cci_preset_value_predicate &pred) const;
 
-    void ignore_unconsumed_initial_values(
-      const cci_initial_value_predicate &pred);
+    void ignore_unconsumed_preset_values(
+      const cci_preset_value_predicate &pred);
 
     /// Get current cci_value
     cci_value get_cci_value(const std::string &parname) const;
@@ -77,7 +77,7 @@ CCI_OPEN_NAMESPACE_
     
     bool is_used(const std::string &parname) const;
 
-    bool has_initial_value(const std::string &parname) const;
+    bool has_preset_value(const std::string &parname) const;
 
     void add_param(cci_param_if* par);
 
@@ -126,8 +126,8 @@ CCI_OPEN_NAMESPACE_
     // boolean above)
     std::set<std::string> locked;
 
-    /// Map to save the latest write originator when initial values are set
-    std::map<std::string, cci_originator> m_initial_value_originator_map;
+    /// Map to save the latest write originator when preset values are set
+    std::map<std::string, cci_originator> m_preset_value_originator_map;
 
     template<class T>
     struct callback_obj {
@@ -149,8 +149,8 @@ CCI_OPEN_NAMESPACE_
     /// Destroy callbacks
     std::vector<destroy_callback_obj_t> m_destroy_callbacks;
 
-    /// Ignored unconsumed initial cci values
-    std::vector<std::string> m_ignored_unconsumed_initial_cci_values;
+    /// Ignored unconsumed preset cci values
+    std::vector<std::string> m_ignored_unconsumed_preset_cci_values;
   };
 
 CCI_CLOSE_NAMESPACE_

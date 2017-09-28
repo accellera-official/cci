@@ -60,16 +60,16 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_broker_handle globalBroker =
       cci::cci_broker_manager::get_broker(myOriginator);
 
-  // Set initial value to the 'int_param' of 'parameter_owner' class before
+  // Set preset value to the 'int_param' of 'parameter_owner' class before
   // their constructor begins
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Setting 'param_owner.mutable_string_param'"
                  " value to 'Initialized within sc_main()'");
 
-  // Demonstrating use of 'set_initial_cci_value'
-  // API to assign initial value before the
+  // Demonstrating use of 'set_preset_cci_value'
+  // API to assign preset value before the
   // construction of the model hierarchy begins.
-  globalBroker.set_initial_cci_value("param_owner.mutable_string_param",
+  globalBroker.set_preset_cci_value("param_owner.mutable_string_param",
     cci::cci_value::from_json("\"Initialized within sc_main\""));
 
   SC_REPORT_INFO("sc_main",

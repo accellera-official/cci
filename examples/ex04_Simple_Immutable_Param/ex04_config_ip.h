@@ -68,7 +68,7 @@ SC_MODULE(ex04_config_ip) {
                     " to demonstrate this example");
     } else {
       XREPORT("Set init-value of " << param_name << " to " << val);
-      m_broker.set_initial_cci_value(param_name, cci_value::from_json(val));
+      m_broker.set_preset_cci_value(param_name, cci_value::from_json(val));
 
     }
   }
