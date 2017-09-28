@@ -193,7 +193,7 @@ struct cci_param_user_data_type
 
   /**
    *  @fn     void reset
-   *  @brief  reset the param to the default/initial value
+   *  @brief  reset the param to the default/preset value
    *  @return none
    */
   void reset(const cci::cci_originator&);
@@ -214,11 +214,11 @@ struct cci_param_user_data_type
   void set_invalid_value();
 
   /**
-   *  @fn     bool is_initial_value() const
-   *  @brief  Function to determine if the value is the initial value
-   *  @return True or false depending on whether the value is the initial value or not
+   *  @fn     bool is_preset_value() const
+   *  @brief  Function to determine if the value is the preset value
+   *  @return True or false depending on whether the value is the preset value or not
    */
-  bool is_initial_value() const;
+  bool is_preset_value() const;
 
   /**
    *  @fn     std::type_info& get_type_info() const
@@ -418,8 +418,8 @@ private:
   user_data_type default_value; ///< The default value for the parameter
   bool default_flag;  ///< flag to show whether it is default value
   bool invalid_flag;  ///< flag to show value is invalid
-  bool initial_flag;  ///< flag to show value is the initial value
-  bool lock_flag; ///< flag to indicate the value is the initial value
+  bool preset_flag;  ///< flag to show value is the preset value
+  bool lock_flag; ///< flag to indicate the value is the preset value
   bool callback_flag; ///< flag to indicate callbacks are registered
   cci::cci_value c_value;  ///< cci_value of the parameter
   const void * l_password;  ///< lock password

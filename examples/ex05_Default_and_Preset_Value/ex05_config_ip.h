@@ -26,8 +26,8 @@
  *  @author Vishal Goel, Texas Instruments
  */
 
-#ifndef EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_CONFIG_IP_H_
-#define EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_CONFIG_IP_H_
+#ifndef EXAMPLES_EX05_DEFAULT_AND_PRESET_VALUE_EX05_CONFIG_IP_H_
+#define EXAMPLES_EX05_DEFAULT_AND_PRESET_VALUE_EX05_CONFIG_IP_H_
 
 #include <cci_configuration>
 #include "xreport.hpp"
@@ -64,15 +64,15 @@ SC_MODULE(ex05_config_ip) {
     // Check for existence of sim_ip.param_1 param
     if (m_broker.param_exists("sim_ip.param_1")) {
       XREPORT_ERROR("Instantiate config_ip before simple_ip"
-                    " to demonstrate set_initial_cci_value");
+                    " to demonstrate set_preset_cci_value");
     } else {
       XREPORT("Setting up sim_ip.param_1's init-value to " << val);
-      m_broker.set_initial_cci_value("sim_ip.param_1",
+      m_broker.set_preset_cci_value("sim_ip.param_1",
                                    cci::cci_value::from_json(val));
     }
 
     XREPORT("Setting up cfg_ip.param_implicit_3's init-value to 3");
-    m_broker.set_initial_cci_value("cfg_ip.param_implicit_3",
+    m_broker.set_preset_cci_value("cfg_ip.param_implicit_3",
                                 cci::cci_value(3));
   }
 
@@ -85,9 +85,9 @@ SC_MODULE(ex05_config_ip) {
   void execute() {
     const std::string int_param_name = "sim_ip.param_1";
 
-    // Set Initial value after construction is NOT treated as normal value
-    // update, it will update only the initial value registery.
-    m_broker.set_initial_cci_value(int_param_name,cci::cci_value(5));
+    // Set Preset value after construction is NOT treated as normal value
+    // update, it will update only the preset value registery.
+    m_broker.set_preset_cci_value(int_param_name,cci::cci_value(5));
 
     // Check for existence of the param
     if (m_broker.param_exists(int_param_name)) {
@@ -110,4 +110,4 @@ SC_MODULE(ex05_config_ip) {
 };
 // ex05_config_ip
 
-#endif  // EXAMPLES_EX05_DEFAULT_AND_INITIAL_VALUE_EX05_CONFIG_IP_H_
+#endif  // EXAMPLES_EX05_DEFAULT_AND_PRESET_VALUE_EX05_CONFIG_IP_H_

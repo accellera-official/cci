@@ -43,7 +43,7 @@ SC_MODULE(ex07_parameter_owner) {
    *  @return void
    */
   SC_CTOR(ex07_parameter_owner)
-  // Assign initial value to mutable_int_param
+  // Assign preset value to mutable_int_param
       : int_param("mutable_int_param", 0),
         // Assign a name to the string param (Default is not assigned)
         string_param("mutable_string_param", "Default_Value",
@@ -51,13 +51,13 @@ SC_MODULE(ex07_parameter_owner) {
     SC_THREAD(run_thread);
 
     XREPORT("Prior to " << sc_core::sc_time_stamp()
-            << "\tdemonstrating 'is_initial_value' API");
+            << "\tdemonstrating 'is_preset_value' API");
 
     XREPORT("[OWNER] : Parameter : " << int_param.get_name() << "\tValue : "
             << int_param.get_value());
 
-    XREPORT("Is initial value ?\t" << std::boolalpha
-            << int_param.is_initial_value());
+    XREPORT("Is preset value ?\t" << std::boolalpha
+            << int_param.is_preset_value());
 
     XREPORT("Prior to " << sc_core::sc_time_stamp()
             << "\tdemonstrating 'get_default_value()'");

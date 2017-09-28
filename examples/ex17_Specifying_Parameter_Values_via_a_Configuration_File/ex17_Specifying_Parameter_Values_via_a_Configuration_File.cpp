@@ -20,7 +20,7 @@
 /**
  *  @file      main.cpp
  *  @brief     This file reads the inputs (parameter name and parameter value pair)
- *             from the 'Configuration Text File' and assigns the initial values to
+ *             from the 'Configuration Text File' and assigns the preset values to
  *             the corresponding parameters before the construction of the modules begins
  *  @author    P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *             Girish Verma, CircuitSutra Technologies   <girish@circuitsutra.com>
@@ -39,13 +39,13 @@
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
  *  @brief  This function illustrates the way of reading parameters name-value
  *          pair from an external configuration file and then, assigns the
- *          respective initial values to the parameters via the GreenSoCs parser
+ *          respective preset values to the parameters via the GreenSoCs parser
  *  @param  sc_argc The number of input arguments
  *  @param  sc_argv The list of the input arguments
  *  @return An integer representing the execution exit status of the function.
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  // Declare an instance of the cci_configFile_Tool that reads in the initial
+  // Declare an instance of the cci_configFile_Tool that reads in the preset
   // values to be set to a cci-parameter via a configuration file, parses them
   // and sets them to the appropriate parameters
   cci::ex17_cci_configFile_Tool configTool("configFileTool");

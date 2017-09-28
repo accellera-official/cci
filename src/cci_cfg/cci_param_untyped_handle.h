@@ -106,8 +106,8 @@ public:
     virtual bool is_default_value();
 
 
-    /// @copydoc cci_param_untyped::is_initial_value
-    virtual bool is_initial_value() const;
+    /// @copydoc cci_param_untyped::is_preset_value
+    virtual bool is_preset_value() const;
 
     ///@}
 

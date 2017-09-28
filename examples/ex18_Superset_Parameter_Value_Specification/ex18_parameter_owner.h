@@ -20,7 +20,7 @@
 /**
  *  @file     parameter_owner.h
  *  @brief    This class declares few of the cci-parameters which are
- *            initialized with initial values either from the testbench (main.cpp)
+ *            initialized with preset values either from the testbench (main.cpp)
  *            file or the configuration file reader & parser.
  *  @author   P V S Phaneendra, CircuitSutra Technologies   <pvs@circuitsutra.com>
  *  @date     21st July, 2011 (Thursday)
@@ -35,7 +35,7 @@
  *  @class  ex18_parameter_owner
  *  @brief  This SC_MODULE class instantiates two 'integer' type cci-parameters along
  *          with default values.  In this case, both the parameters have been provided
- *          with initial values from the testbench file
+ *          with preset values from the testbench file
  */
 SC_MODULE(ex18_parameter_owner) {
  public:

@@ -49,15 +49,15 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_broker_handle globalBroker =
       cci::cci_broker_manager::get_broker(myOriginator);
 
-  // Set initial value to the 'int_param' of 'parameter_owner' class before
+  // Set preset value to the 'int_param' of 'parameter_owner' class before
   // their constructor begins
-  SC_REPORT_INFO("sc_main", "[MAIN] : Setting initial value"
+  SC_REPORT_INFO("sc_main", "[MAIN] : Setting preset value"
                  " 's_address:256,d_address:512,index:0' to UDT");
 
-  // Demonstrating use of 'set_initial_cci_value' API to assign
-  // initial value before the construction of the model hierarchy begins.
+  // Demonstrating use of 'set_preset_cci_value' API to assign
+  // preset value before the construction of the model hierarchy begins.
   std::string init_str("{\"s_address\":256,\"d_address\":512,\"index\":0}");
-  globalBroker.set_initial_cci_value("param_owner.User_data_type_param", cci::cci_value::from_json(init_str));
+  globalBroker.set_preset_cci_value("param_owner.User_data_type_param", cci::cci_value::from_json(init_str));
 
   // Instantiation of sc_modules
   ex16_parameter_owner param_owner("param_owner");

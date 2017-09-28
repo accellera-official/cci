@@ -21,7 +21,7 @@
  *  @file   testbench.cpp
  *  @brief  A testbench that demonstrates how to use default values and init values 
  *          for a parameter.
- *          Demonstrates relative precedence of default (supplied to parameter constructor) and initial
+ *          Demonstrates relative precedence of default (supplied to parameter constructor) and preset
  *          (via name-based access prior to construction) values.
  *          
  *  @author Vishal Goel, Texas Instruments

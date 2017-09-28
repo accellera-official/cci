@@ -283,8 +283,8 @@ public:
     /// @copydoc cci_param_untyped::is_default_value()
     bool is_default_value() const;
 
-    /// @copydoc cci_param_untyped::is_initial_value()
-    bool is_initial_value() const;
+    /// @copydoc cci_param_untyped::is_preset_value()
+    bool is_preset_value() const;
 
     /// @copydoc cci_param_untyped::lock(void * pwd)
     bool lock(void* pwd = NULL);
@@ -1012,9 +1012,9 @@ bool cci_param_typed<T, TM>::is_default_value() const
 }
 
 template <typename T, cci_param_mutable_type TM>
-bool cci_param_typed<T, TM>::is_initial_value() const
+bool cci_param_typed<T, TM>::is_preset_value() const
 {
-  cci_value init_value = m_broker_handle.get_initial_cci_value(get_name());
+  cci_value init_value = m_broker_handle.get_preset_cci_value(get_name());
   if(!init_value.is_null()) {
     T i;
     if (init_value.try_get<T>(i)) {
@@ -1169,8 +1169,8 @@ template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::reset(const cci_originator& originator)
 {
   const std::string& nm = get_name();
-  if (m_broker_handle.has_initial_value(nm)) {
-    cci_value preset = m_broker_handle.get_initial_cci_value(nm);
+  if (m_broker_handle.has_preset_value(nm)) {
+    cci_value preset = m_broker_handle.get_preset_cci_value(nm);
     preset_cci_value(preset, originator);
   } else {
     m_value = get_default_value();

@@ -18,19 +18,19 @@ Info: sim_ip: @0 s, Setting up param_implicit_1's init-value to 1
 
 Info: sim_ip: @0 s, Setting up foo.bar.baz.param_implicit_2's init-value to 2
 
-Info: sim_ip: @0 s, Unconsumed initial cci values:
+Info: sim_ip: @0 s, Unconsumed preset cci values:
 cfg_ip.param_implicit_3
 foo.bar.baz.param_implicit_2
 param_implicit_1
 
 Info: sim_ip: @0 s, Ignore unconsumed values cfg_ip.*
 
-Info: sim_ip: @0 s, Unconsumed initial cci values result:
+Info: sim_ip: @0 s, Unconsumed preset cci values result:
 cfg_ip.param_implicit_3
 foo.bar.baz.param_implicit_2
 param_implicit_1
 
-Info: sim_ip: @0 s, Unconsumed initial cci values with value = 2:
+Info: sim_ip: @0 s, Unconsumed preset cci values with value = 2:
 foo.bar.baz.param_implicit_2
 
 Info: sc_main: End Simulation.

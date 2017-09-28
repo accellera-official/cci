@@ -1,12 +1,12 @@
 SystemC Simulation
-ConfigFile_Api: Applying initial value of param 'param_owner.mutable_int_param' to '15'
-ConfigFile_Api: Applying initial value of param 'param_owner.mutable_string_param' to '"initial"'
+ConfigFile_Api: Applying preset value of param 'param_owner.mutable_int_param' to '15'
+ConfigFile_Api: Applying preset value of param 'param_owner.mutable_string_param' to '"preset"'
 
 Info: param_owner: @0 s, [OWNER C_TOR] : Int Parameter Value : 15
 
 Info: param_owner: @0 s, [OWNER C_TOR] : Float Parameter Value : 123.45
 
-Info: param_owner: @0 s, [OWNER C_TOR] : String Parameter Value : initial
+Info: param_owner: @0 s, [OWNER C_TOR] : String Parameter Value : preset
 
 Info: param_setter: @0 s, [CFGR C_TOR] : Integer parameter exists
 

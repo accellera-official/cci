@@ -70,37 +70,37 @@ const std::string& cci_broker_handle::name() const
     return m_orig_broker.name();
 }
 
-void cci_broker_handle::set_initial_cci_value(
+void cci_broker_handle::set_preset_cci_value(
   const std::string &parname,
   const cci::cci_value &cci_value)
 {
-    m_orig_broker.set_initial_cci_value(parname,
+    m_orig_broker.set_preset_cci_value(parname,
                                          cci_value,
                                          m_originator);
 }
 
-cci::cci_value cci_broker_handle::get_initial_cci_value(
+cci::cci_value cci_broker_handle::get_preset_cci_value(
   const std::string &parname) const
 {
-    return m_orig_broker.get_initial_cci_value(parname);
+    return m_orig_broker.get_preset_cci_value(parname);
 }
 
 std::vector<cci_name_value_pair>
-cci_broker_handle::get_unconsumed_initial_values() const
+cci_broker_handle::get_unconsumed_preset_values() const
 {
-    return m_orig_broker.get_unconsumed_initial_values();
+    return m_orig_broker.get_unconsumed_preset_values();
 }
 
-cci_initial_value_range cci_broker_handle::get_unconsumed_initial_values(
-  const cci_initial_value_predicate &pred) const
+cci_preset_value_range cci_broker_handle::get_unconsumed_preset_values(
+  const cci_preset_value_predicate &pred) const
 {
-    return m_orig_broker.get_unconsumed_initial_values(pred);
+    return m_orig_broker.get_unconsumed_preset_values(pred);
 }
 
-void cci_broker_handle::ignore_unconsumed_initial_values(
-  const cci_initial_value_predicate &pred)
+void cci_broker_handle::ignore_unconsumed_preset_values(
+  const cci_preset_value_predicate &pred)
 {
-    m_orig_broker.ignore_unconsumed_initial_values(pred);
+    m_orig_broker.ignore_unconsumed_preset_values(pred);
 }
 
 cci_originator cci_broker_handle::get_latest_write_originator(
@@ -109,9 +109,9 @@ cci_originator cci_broker_handle::get_latest_write_originator(
     return m_orig_broker.get_latest_write_originator(parname);
 }
 
-void cci_broker_handle::lock_initial_value(const std::string &parname)
+void cci_broker_handle::lock_preset_value(const std::string &parname)
 {
-    m_orig_broker.lock_initial_value(parname);
+    m_orig_broker.lock_preset_value(parname);
 }
 
 cci::cci_value cci_broker_handle::get_cci_value(
@@ -135,9 +135,9 @@ bool cci_broker_handle::is_used(const std::string &parname) const
     return m_orig_broker.is_used(parname);
 }
 
-bool cci_broker_handle::has_initial_value(const std::string &parname) const
+bool cci_broker_handle::has_preset_value(const std::string &parname) const
 {
-    return m_orig_broker.has_initial_value(parname);
+    return m_orig_broker.has_preset_value(parname);
 }
 
 void cci_broker_handle::add_param(cci_param_if *par)

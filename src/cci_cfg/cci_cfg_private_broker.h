@@ -44,15 +44,15 @@ public cci_cfg_broker
     ~cci_cfg_private_broker();
 
     /// Return the name of the broker
-    cci_value get_initial_cci_value(const std::string &parname) const;
+    cci_value get_preset_cci_value(const std::string &parname) const;
 
    /// Return the name of the broker
-    void set_initial_cci_value(const std::string &parname,
+    void set_preset_cci_value(const std::string &parname,
                                const cci_value &cci_value,
                                const cci_originator& originator);
 
     /// Lock parameter
-    void lock_initial_value(const std::string &parname);
+    void lock_preset_value(const std::string &parname);
 
     /// Get current cci_value
     cci_value get_cci_value(const std::string &parname) const;

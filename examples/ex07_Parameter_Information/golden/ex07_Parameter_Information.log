@@ -12,11 +12,11 @@ Info: sc_main: One is of 'Integer type' and the other is of 'String type'
 
 Info: sc_main: 'Integer type' has 'pre_read', 'pre/post_write' callback registered within the OBSERVER
 
-Info: param_owner: @0 s, Prior to 0 s	demonstrating 'is_initial_value' API
+Info: param_owner: @0 s, Prior to 0 s	demonstrating 'is_preset_value' API
 
 Info: param_owner: @0 s, [OWNER] : Parameter : param_owner.mutable_int_param	Value : 0
 
-Info: param_owner: @0 s, Is initial value ?	false
+Info: param_owner: @0 s, Is preset value ?	false
 
 Info: param_owner: @0 s, Prior to 0 s	demonstrating 'get_default_value()'
 
@@ -28,11 +28,11 @@ Info: param_owner: @0 s, [OWNER -> Set] : Param description - 'This is a mutable
 
 Info: param_cfgr: @0 s, [CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
 
-Info: param_cfgr: @0 s, Prior to 0 s	demonstrating 'is_initial_value' API
+Info: param_cfgr: @0 s, Prior to 0 s	demonstrating 'is_preset_value' API
 
-Info: param_cfgr: @0 s, [CFGR C_TOR] : param_owner.mutable_string_param	Initial Value : Initialized within sc_main
+Info: param_cfgr: @0 s, [CFGR C_TOR] : param_owner.mutable_string_param	Preset Value : Initialized within sc_main
 
-Info: param_cfgr: @0 s, [CFGR C_TOR] : Is initial value ?	true
+Info: param_cfgr: @0 s, [CFGR C_TOR] : Is preset value ?	true
 
 Info: observer: @0 s, [OBSERVER C_TOR] : Broker Type : DEFAULT_BROKER- is not a private broker.
 

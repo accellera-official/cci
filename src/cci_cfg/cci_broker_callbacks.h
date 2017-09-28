@@ -52,13 +52,13 @@ typedef cci_callback<const cci_param_untyped_handle&, bool >
 typedef cci_callback_typed_handle<const cci_param_untyped_handle&, bool >
         cci_param_predicate_handle;
 
-/// Initial value predicate
+/// Preset value predicate
 typedef cci_callback<const std::pair<std::string, cci_value>&, bool >
-        cci_initial_value_predicate;
+        cci_preset_value_predicate;
 
-/// Initial value predicate handle
+/// Preset value predicate handle
 typedef cci_callback_typed_handle<const std::pair<std::string, cci_value>&,
-        bool > cci_initial_value_predicate_handle;
+        bool > cci_preset_value_predicate_handle;
 
 /* ------------------------------------------------------------------------ */
 
