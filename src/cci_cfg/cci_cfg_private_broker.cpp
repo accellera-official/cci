@@ -42,7 +42,8 @@ bool cci_cfg_private_broker::sendToParent(const std::string &parname) const
  * public interface functions
  */
 cci_cfg_private_broker::cci_cfg_private_broker(const std::string& name)
-    : cci_cfg_broker(name)
+  : cci_cfg_broker( _privateonly_, name),
+    m_parent(get_parent_broker(m_originator))
 { 
   sc_assert (name.length() > 0 && "Name must not be empty");
 }
@@ -59,8 +60,7 @@ cci_broker_handle cci_cfg_private_broker::create_broker_handle(const cci_origina
 cci_originator cci_cfg_private_broker::get_latest_write_originator(const std::string &parname) const
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.get_latest_write_originator(parname);
+    return m_parent.get_latest_write_originator(parname);
   } else {
     return cci_cfg_broker::get_latest_write_originator(parname);
   }
@@ -69,8 +69,7 @@ cci_originator cci_cfg_private_broker::get_latest_write_originator(const std::st
   cci_value cci_cfg_private_broker::get_preset_cci_value(const std::string &parname) const
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.get_preset_cci_value(parname);
+    return m_parent.get_preset_cci_value(parname);
   } else {
     return cci_cfg_broker::get_preset_cci_value(parname);
   }
@@ -79,8 +78,7 @@ cci_originator cci_cfg_private_broker::get_latest_write_originator(const std::st
 void cci_cfg_private_broker::lock_preset_value(const std::string &parname)
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.lock_preset_value(parname);
+    return m_parent.lock_preset_value(parname);
   } else {
     return cci_cfg_broker::lock_preset_value(parname);
   }
@@ -89,8 +87,7 @@ void cci_cfg_private_broker::lock_preset_value(const std::string &parname)
 cci_value cci_cfg_private_broker::get_cci_value(const std::string &parname) const
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.get_cci_value(parname);
+    return m_parent.get_cci_value(parname);
   } else {
     return cci_cfg_broker::get_cci_value(parname);
   }
@@ -99,8 +96,7 @@ cci_value cci_cfg_private_broker::get_cci_value(const std::string &parname) cons
 bool cci_cfg_private_broker::param_exists(const std::string &parname) const
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.param_exists(parname);
+    return m_parent.param_exists(parname);
   } else {
     return cci_cfg_broker::param_exists(parname);
   }
@@ -109,8 +105,7 @@ bool cci_cfg_private_broker::param_exists(const std::string &parname) const
 bool cci_cfg_private_broker::is_used(const std::string &parname) const
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.is_used(parname);
+    return m_parent.is_used(parname);
   } else {
     return cci_cfg_broker::is_used(parname);
   }
@@ -119,8 +114,7 @@ bool cci_cfg_private_broker::is_used(const std::string &parname) const
 void cci_cfg_private_broker::add_param(cci_param_if* par)
 {
   if (sendToParent(par->get_name())) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.add_param(par);
+    return m_parent.add_param(par);
   } else {
     return cci_cfg_broker::add_param(par);
   }
@@ -128,8 +122,7 @@ void cci_cfg_private_broker::add_param(cci_param_if* par)
 
 void cci_cfg_private_broker::remove_param(cci_param_if* par) {
  if (sendToParent(par->get_name())) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.remove_param(par);
+    return m_parent.remove_param(par);
   } else {
     return cci_cfg_broker::remove_param(par);
   }
@@ -144,8 +137,7 @@ void cci_cfg_private_broker::set_preset_cci_value(
   const cci_originator& originator)
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.set_preset_cci_value(parname,cci_value);
+    return m_parent.set_preset_cci_value(parname,cci_value);
   } else {
     return cci_cfg_broker::set_preset_cci_value(parname,cci_value,originator);
   }
@@ -155,10 +147,14 @@ cci_param_untyped_handle cci_cfg_private_broker::get_param_handle(
         const cci_originator& originator) const
 {
   if (sendToParent(parname)) {
-    cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-    return p.get_param_handle(parname);
+    return m_parent.get_param_handle(parname);
   } else {
-    return cci_cfg_broker::get_param_handle(parname,originator);
+      cci_param_if* orig_param = get_orig_param(parname);
+      if (orig_param) {
+        return cci_cfg_broker::get_param_handle(*orig_param, originator);
+      } else {
+        return m_parent.get_param_handle(parname);
+      }
   }
 }
 
@@ -166,9 +162,7 @@ cci_param_untyped_handle cci_cfg_private_broker::get_param_handle(
 std::vector<cci_param_untyped_handle>
 cci_cfg_private_broker::get_param_handles(const cci_originator& originator) const
 {
-  cci_broker_handle p=cci_broker_manager::get_broker(m_originator.get_parent_originator());
-
-  std::vector<cci_param_untyped_handle> p_param_handles=p.get_param_handles();
+  std::vector<cci_param_untyped_handle> p_param_handles=m_parent.get_param_handles();
   std::vector<cci_param_untyped_handle> param_handles=cci_cfg_broker::get_param_handles(originator);
   // this is likely to be more efficient the other way round, but it keeps
   // things consistent and means the local (mre useful) params will be at the

@@ -46,7 +46,7 @@ class ex20_observer {
    *  @return void
    */
   ex20_observer():
-      m_broker(cci::cci_broker_manager::get_broker(
+      m_broker(cci::cci_get_global_broker(
               cci::cci_originator("observer"))),
       observer_base_handle(cci::cci_originator("ex20_observer"))
   {

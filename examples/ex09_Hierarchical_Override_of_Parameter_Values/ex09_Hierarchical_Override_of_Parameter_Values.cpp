@@ -43,13 +43,12 @@
  *  @return An integer for the execution status
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  // Instantiating originator to get access to the global broker
-  std::string myString = "sc_main_originator";
-  cci::cci_originator myOriginator(myString);
+
+  cci::cci_originator me=cci::cci_originator("sc_main");
 
   // Get handle to the default broker
   cci::cci_broker_handle myGlobalBroker =
-      cci::cci_broker_manager::get_broker(myOriginator);
+      cci::cci_get_global_broker(me);
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Setting preset value of the number of initiators"

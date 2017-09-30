@@ -35,8 +35,10 @@
 
 class Tool {
 public:
-    Tool(): external_param("tool.external_param", 10, "External parameter",
-                           cci::CCI_RELATIVE_NAME, cci::cci_originator("tool"))
+Tool(): external_param("tool.external_param", 10,
+                       cci::cci_get_global_broker(cci::cci_originator("tool")),
+                       "External parameter",
+                       cci::CCI_RELATIVE_NAME, cci::cci_originator("tool"))
     {}
 
     const std::string get_external_param_originator_name() {
@@ -58,17 +60,20 @@ int sc_main(int argc, char *argv[]) {
   Tool tool;
   ex06_simple_ip sim_ip("sim_ip");
   ex06_config_ip cfg_ip("cfg_ip");
+  cci::cci_originator me=cci::cci_originator("sc_main");
+
   cci::cci_param<std::string> sc_main_param("sc_main_param", "value",
                                             "sc_main parameter",
                                             cci::CCI_ABSOLUTE_NAME,
-                                            cci::cci_originator("sc_main"));
+                                            me
+                                            );
 
   SC_REPORT_INFO("sc_main", "Begin Simulation.");
   sc_core::sc_start();
   SC_REPORT_INFO("sc_main", "End Simulation.");
 
   cci::cci_broker_handle sc_main_broker =
-          cci::cci_broker_manager::get_broker(cci::cci_originator("sc_main"));
+          cci::cci_get_global_broker(me);
 
   std::cout << std::endl << "List of parameters:" << std::endl;
   std::vector<cci::cci_param_untyped_handle> vec =

@@ -52,13 +52,12 @@ public:
  *  @return An interger for the execution status
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  // Creating an originator to access the global broker
-  const std::string myOrgStr = "sc_main_originator";
-  cci::cci_originator myOriginator(myOrgStr);
+
+  cci::cci_originator me=cci::cci_originator("sc_main");
 
   // Get handle of the broker using the originator
   cci::cci_broker_handle globalBroker =
-      cci::cci_broker_manager::get_broker(myOriginator);
+      cci::cci_get_global_broker(me);
 
   // Set preset value to the 'int_param' of 'parameter_owner' class before
   // their constructor begins

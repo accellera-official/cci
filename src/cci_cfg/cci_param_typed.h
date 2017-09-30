@@ -712,6 +712,16 @@ private:
             }
         }
     }
+
+cci_broker_handle find_broker_convenience(const cci_originator &originator)
+    {
+      if (!sc_core::sc_get_current_object()) {
+        return cci_get_global_broker(originator);
+      } else {
+        return cci_broker_manager::get_broker();
+      }
+    }
+
 };
 
 template <typename T, cci_param_mutable_type TM>
@@ -1121,6 +1131,7 @@ cci_param_typed<T, TM>::cci_param_typed signature                              \
     this->init(m_broker_handle);                                               \
 }
 
+
 /// Constructor with (local/hierarchical) name, default value, description,
 /// name type and originator.
 CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name,
@@ -1128,8 +1139,7 @@ CCI_PARAM_CONSTRUCTOR_IMPL((const std::string& name,
                             const std::string& desc,
                             cci_name_type name_type,
                             const cci_originator& originator),
-                            cci_broker_manager::get_broker(
-                                originator))
+                            find_broker_convenience(originator))
 
 /// Constructor with (local/hierarchical) name, default value, description,
 /// name type and originator.
@@ -1138,8 +1148,7 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
                                       const std::string& desc,
                                       cci_name_type name_type,
                                       const cci_originator& originator),
-                                      cci_broker_manager::get_broker(
-                                          originator))
+                                      find_broker_convenience(originator))
 
 /// Constructor with (local/hierarchical) name, default value, private broker,
 /// description, name type and originator.

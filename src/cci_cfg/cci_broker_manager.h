@@ -42,12 +42,10 @@ public:
      * Returns a handle to a private or the global broker.
      * Returns a handle to the global broker if no registered broker.
      *
-     * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_handle get_broker(
-            const cci_originator &originator = cci_originator());
-
+    static cci_broker_handle get_broker();
+  
     /// Register a broker handle in the broker hierarchy
     /**
      * This can be used to register a private broker handle in the current

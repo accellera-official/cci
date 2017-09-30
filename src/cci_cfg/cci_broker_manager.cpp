@@ -27,14 +27,20 @@ CCI_OPEN_NAMESPACE_
 std::map<cci_originator, cci_broker_handle> cci_broker_manager::m_brokers;
 
 cci_broker_handle
-cci_broker_manager::get_broker(const cci_originator &originator)
+cci_broker_manager::get_broker()
 {
+    if (!sc_core::sc_get_current_object()) {
+      CCI_REPORT_ERROR("cci_broker_manager","can not call get_broker() outside of systemc heirarchy");
+    }
+  
+    const cci_originator originator=cci_originator();
+
     std::map<cci_originator, cci_broker_handle>::iterator it =
             m_brokers.find(originator);
     if(it != m_brokers.end()) {
         return it->second;
     } else {
-        return get_parent_broker(originator).create_broker_handle(originator);
+      return get_parent_broker(originator).create_broker_handle(originator);
     }
 }
 
@@ -43,7 +49,6 @@ cci_broker_manager::get_parent_broker(const cci_originator &originator)
 {
     // Get parent originator
     cci_originator parent_originator = originator.get_parent_originator();
-
     // Return handle to the broker found for the parent originator
     std::map<cci_originator, cci_broker_handle>::iterator it =
             m_brokers.find(parent_originator);
@@ -53,8 +58,8 @@ cci_broker_manager::get_parent_broker(const cci_originator &originator)
         if(parent_originator.is_unknown()) {
             return cci_get_global_broker(originator);
         } else {
-            return get_parent_broker(parent_originator).
-                    create_broker_handle(parent_originator);
+          return get_parent_broker(parent_originator);//.
+//                    create_broker_handle(parent_originator);
         }
     }
 }
@@ -63,8 +68,12 @@ cci_broker_if&
 cci_broker_manager::register_broker(cci_broker_if& broker)
 {
     cci_originator originator;
+    if (originator.is_unknown()) {
+        CCI_REPORT_ERROR("cci_broker_manager/register_broker",
+                         "You may not register a global broker");
+    }
     std::map<cci_originator, cci_broker_handle>::iterator it =
-            m_brokers.find(originator);
+            m_brokers.find(originator);    
     if(it != m_brokers.end()) {
         CCI_REPORT_ERROR("cci_broker_manager/register_broker",
                          "A broker is already registered in the current"

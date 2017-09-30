@@ -2,16 +2,20 @@
 #ifndef CCI_CCI_BROKER_H_INCLUDED_
 #define CCI_CCI_BROKER_H_INCLUDED_
 
+#include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_broker_if.h"
 #include "cci_cfg/cci_broker_handle.h"
+#include "cci_cfg/cci_broker_manager.h"
 #include <map>
 #include <set>
+
+
 CCI_OPEN_NAMESPACE_
 
 
 //  class cci_param_untyped_handle;
 //  class cci_param_if;
-  
+
   /// (Non-private) broker implementation
   /**
    * 
@@ -21,13 +25,30 @@ CCI_OPEN_NAMESPACE_
    */
   class cci_cfg_broker: public cci_broker_if
   {
-  public:
+protected:
+    // This broker is specialized and reused a number of ways.
+    // It's "default" imlementation is as a general broker, which could be
+    // instanciated outside the SystemC heirarchy.
+    // The _globalonly tag is used for the singleton instance of a broker (this
+    // is initially brought into existance the first time the global broker is
+    // needed, within, or outside the heirarchy.
+    // The _priviteonly tag is used for the private broker, which must be
+    // instanciated inside the heirarchy.
+    // The tag's are only used for the error checking in the implementation of
+    // the broker.
+
+    struct _privateonly {} _privateonly_;
+    struct _globalonly {} _globalonly_;
+    cci_cfg_broker( _privateonly, const std::string& name);
+    cci_cfg_broker( _globalonly);
+
+public:
     cci_broker_handle create_broker_handle(
       const cci_originator& originator);
 
     cci_originator get_latest_write_originator(
       const std::string &parname) const;
-    
+
     /// Constructor
     explicit cci_cfg_broker(const std::string& name);
 
@@ -151,6 +172,7 @@ CCI_OPEN_NAMESPACE_
 
     /// Ignored unconsumed preset cci values
     std::vector<std::string> m_ignored_unconsumed_preset_cci_values;
+
   };
 
 CCI_CLOSE_NAMESPACE_

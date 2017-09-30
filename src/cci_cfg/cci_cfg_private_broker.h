@@ -27,6 +27,24 @@ public cci_cfg_broker
     std::set<std::string> expose;
 
   private:
+    /// for the public broker, this will be useless, but if people re-use this
+    /// broker, then it will help
+    cci_broker_handle m_parent;
+
+    // convenience function for constructor
+    cci_broker_handle get_parent_broker(const cci_originator &originator)
+    {
+      if (m_name != CCI_DEFAULT_BROKER_STRING_) {
+        if (sc_core::sc_get_current_object()) {
+          return cci_broker_manager::get_broker();
+        } else {
+          return cci_get_global_broker(m_originator);
+        }
+      } else {
+        return cci_broker_handle(*this, originator);
+      }
+    }
+
     bool sendToParent(const std::string &parname) const;
 
   public:

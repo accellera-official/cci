@@ -34,9 +34,28 @@ CCI_OPEN_NAMESPACE_
 
 cci_cfg_broker::cci_cfg_broker(const std::string& name)
   : m_name(cci_gen_unique_name(name.c_str())),
-    m_originator(cci_originator(m_name))
-{ 
+  m_originator(cci_originator(m_name))
+{
   sc_assert (name.length() > 0 && "Name must not be empty");
+  if (sc_core::sc_get_current_object()) {
+    CCI_REPORT_ERROR("cci_cfg_broker","you may not instanciate the default broker in the systemc heirarchy");
+  }
+}
+
+cci_cfg_broker::cci_cfg_broker(_privateonly, const std::string& name)
+  : m_name(cci_gen_unique_name(name.c_str())),
+  m_originator(cci_originator(m_name))
+{
+  sc_assert (name.length() > 0 && "Name must not be empty");
+  if (!sc_core::sc_get_current_object()) {
+    CCI_REPORT_ERROR("cci_cfg_broker","you must instanciate the private broker in the systemc heirarchy");
+  }
+}
+
+cci_cfg_broker::cci_cfg_broker(_globalonly)
+  : m_name(cci_gen_unique_name(CCI_DEFAULT_BROKER_STRING_)),
+  m_originator(cci_originator(m_name))
+{
 }
 
 cci_cfg_broker::~cci_cfg_broker()
@@ -180,10 +199,10 @@ cci_param_if* cci_cfg_broker::get_orig_param(
  * This entire broker can be re-used as a 'greedy' private broker, the broker
  * should remain the same, except for when a model asks for a param handle for a
  * param that this broker has no knowldegd of, at which point it should ask up
- * the broker tree. This case is handled below. The intention is that a well
+ * the broker tree. This case is _NOT_ handled below. The intention is that a well
  * behaved private broker can then 'wrap' this broker, passing 'public' params up
  * the broker tree and bypassing this broker, while this broker will handle all
- * 'private' params
+ * 'private' params. To see the mechanism, see the private broker.
  */
 
 cci_param_untyped_handle cci_cfg_broker::get_param_handle(
@@ -194,17 +213,7 @@ cci_param_untyped_handle cci_cfg_broker::get_param_handle(
   if (orig_param) {
     return get_param_handle(*orig_param, originator);
   } else {
-    cci_originator parent_originator = m_originator.get_parent_originator();
-    if(parent_originator.is_unknown()) {
-      return cci_param_untyped_handle(originator, parname);
-    } else {
-      cci_broker_handle parent=cci_broker_manager::get_broker(parent_originator).create_broker_handle(originator);
-      if (parent.name() == name()) {
-        return cci_param_untyped_handle(originator, parname);
-      } else {
-        return parent.get_param_handle(parname);
-      }
-    }
+    return cci_param_untyped_handle(originator, parname);
   }
 }
 

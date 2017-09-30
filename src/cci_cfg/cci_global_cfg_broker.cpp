@@ -20,6 +20,7 @@
 #include "cci_cfg/cci_cfg_broker.h"
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
 /* anonymous */ namespace {
@@ -27,9 +28,10 @@ CCI_OPEN_NAMESPACE_
 class cci_cfg_private_global_broker : public cci_cfg_broker
 {
   friend cci_broker_handle CCI_NAMESPACE::cci_get_global_broker(const cci_originator &);
-  explicit cci_cfg_private_global_broker(const std::string& nm) : cci_cfg_broker(nm) {}
+  explicit cci_cfg_private_global_broker(const std::string& nm) : cci_cfg_broker(_globalonly_) {}
 
   virtual bool is_global_broker() const { return true; }
+
 };
 
 /// Internal pointer to the one global default fallback broker instance
@@ -45,12 +47,18 @@ static cci_broker_if* singleton_broker = NULL;
  */
 cci_broker_handle cci_get_global_broker(const cci_originator &originator)
 {
-  if (!singleton_broker)
-    // We could send this name through cci_gen_unique_name, but if it's not unique,
-    // somebody is playing games, and we should fail anyway!
+  if (!singleton_broker) {
     singleton_broker = new cci_cfg_private_global_broker(CCI_DEFAULT_BROKER_STRING_);
-
+  } else {
+    // this is a weak test, as you could lie about your originator, but
+    // hopefully it protects errors...
+    if (sc_core::sc_get_current_object() &&
+        (!originator.get_parent_originator().is_unknown())) {
+      CCI_REPORT_ERROR("cci_get_global_broker","You may not request the global broker from within the SystemC heirarchy");
+    }
+  }
   return singleton_broker->create_broker_handle(originator);
 }
+
 
 CCI_CLOSE_NAMESPACE_
