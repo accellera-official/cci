@@ -53,7 +53,7 @@ SC_MODULE(ex26_config_ip) {
 SC_CTOR(ex26_config_ip):
     // Get CCI configuration handle specific for this module
     socket("config_master_socket"),
-    m_broker(cci::cci_broker_manager::get_broker()),
+    m_broker(cci::cci_get_broker()),
     verbose("verbose", false)
   {
     SC_THREAD(execute);

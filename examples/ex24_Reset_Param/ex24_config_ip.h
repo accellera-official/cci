@@ -44,7 +44,7 @@ SC_MODULE(ex24_config_ip) {
 
 SC_CTOR(ex24_config_ip):
     // Get CCI configuration handle specific for this module
-   m_broker(cci::cci_broker_manager::get_broker())
+   m_broker(cci::cci_get_broker())
   {
     SC_THREAD(execute);
 

@@ -46,7 +46,7 @@ SC_MODULE(ex17_parameter_configurator) {
       int_param_handle(cci::cci_originator(*this)),
       float_param(cci::cci_originator(*this)),
       str_param(cci::cci_originator(*this)),
-      m_broker(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_get_broker())
   {
     // Get handle of the 'int_param' cci-parameter
     if (m_broker.param_exists("param_owner.mutable_int_param")) {

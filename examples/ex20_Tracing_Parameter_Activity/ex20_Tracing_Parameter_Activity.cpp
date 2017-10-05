@@ -26,6 +26,7 @@
 
 #include "ex20_observer.h"
 #include "ex20_parameter_owner.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
@@ -35,6 +36,7 @@
  *  @return void
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   // Instantiate the observer class
   ex20_observer observer_inst;
 

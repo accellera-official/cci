@@ -30,6 +30,7 @@
 #include "ex07_parameter_owner.h"
 #include "ex07_parameter_configurer.h"
 #include "ex07_observer.h"
+#include <cci_utils/broker.h>
 
 /// Container (module) of some test parameters.
 class ex07_parameter_container : public sc_core::sc_module
@@ -52,6 +53,7 @@ public:
  *  @return An interger for the execution status
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("DEFAULT_BROKER"));
 
   cci::cci_originator me=cci::cci_originator("sc_main");
 

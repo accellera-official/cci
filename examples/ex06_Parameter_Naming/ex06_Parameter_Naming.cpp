@@ -26,6 +26,7 @@
 
 #include "ex06_simple_ip.h"
 #include "ex06_config_ip.h"
+#include <cci_utils/broker.h>
 
 #define REPORT_INFO(msg_stream) do { \
   std::ostringstream ss; \
@@ -57,6 +58,7 @@ private:
  *  @return An integer representing the execution status of the program
  */
 int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   Tool tool;
   ex06_simple_ip sim_ip("sim_ip");
   ex06_config_ip cfg_ip("cfg_ip");

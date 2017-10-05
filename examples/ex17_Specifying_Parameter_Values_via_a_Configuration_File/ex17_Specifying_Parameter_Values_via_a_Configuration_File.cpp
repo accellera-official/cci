@@ -34,6 +34,7 @@
 #include "ex17_cci_configFile_Tool.h"
 #include "ex17_parameter_owner.h"
 #include "ex17_parameter_configurator.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
@@ -45,6 +46,7 @@
  *  @return An integer representing the execution exit status of the function.
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   // Declare an instance of the cci_configFile_Tool that reads in the preset
   // values to be set to a cci-parameter via a configuration file, parses them
   // and sets them to the appropriate parameters

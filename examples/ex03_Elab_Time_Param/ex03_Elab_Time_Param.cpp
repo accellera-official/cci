@@ -39,6 +39,7 @@
 
 #include "ex03_simple_ip.h"
 #include "ex03_config_ip.h"
+#include <cci_utils/broker.h>
 using sc_core::sc_report_handler;
 using sc_core::SC_LOG;
 using sc_core::SC_DISPLAY;
@@ -52,6 +53,7 @@ using sc_core::SC_ERROR;
  *  @return An integer representing the status of the execution of the function
  */
 int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   ex03_simple_ip sim_ip("sim_ip");
   ex03_config_ip cfg_ip("cfg_ip");
 

@@ -47,7 +47,7 @@ SC_MODULE(ex19_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex19_parameter_configurator)
-      : m_broker(cci::cci_broker_manager::get_broker()),
+      : m_broker(cci::cci_get_broker()),
         cfgr_param_handle(cci::cci_originator(*this)),
         cfgr_user_param_handle(cci::cci_originator(*this)),
         cfgr_shared_param(0)

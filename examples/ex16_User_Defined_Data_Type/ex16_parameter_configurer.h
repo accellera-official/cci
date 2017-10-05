@@ -47,7 +47,7 @@ SC_MODULE(ex16_parameter_configurer) {
    *  @return void
    */
   SC_CTOR(ex16_parameter_configurer):
-      m_broker(cci::cci_broker_manager::get_broker()),
+      m_broker(cci::cci_get_broker()),
       udt_param_handle(cci::cci_originator(*this))
   {
     // Check for the broker type (default or private) using

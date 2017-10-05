@@ -49,7 +49,7 @@ SC_MODULE(ex14_child) {
    *  @return void
    */
   SC_CTOR(ex14_child)
-      : m_broker(cci::cci_broker_manager::get_broker()),
+      : m_broker(cci::cci_get_broker()),
         priv_int_param("priv_int_param",
                        100),
         pub_int_param("pub_int_param",

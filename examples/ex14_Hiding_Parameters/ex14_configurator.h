@@ -47,7 +47,7 @@ SC_MODULE(ex14_configurator) {
    *  @return void
    */
   SC_CTOR(ex14_configurator):
-      m_broker(cci::cci_broker_manager::get_broker()),
+      m_broker(cci::cci_get_broker()),
       parent_base_param_handle(cci::cci_originator(*this))
   {
     std::string parameterName(

@@ -75,7 +75,7 @@ cci_param_user_data_type::cci_param_user_data_type(
       callback_flag(false),
       l_password(NULL),
       description(""),
-      m_broker(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_get_broker())
 {
   nam = _name;
   init(m_broker);

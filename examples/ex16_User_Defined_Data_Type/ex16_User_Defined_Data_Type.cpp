@@ -32,6 +32,7 @@
 #include "ex16_parameter_owner.h"
 #include "ex16_parameter_configurer.h"
 #include "ex16_observer.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
@@ -41,6 +42,7 @@
  *  @return An interger representing the exit status of the function.
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("DEFAULT_BROKER"));
   // Creating an originator to access the global broker
   const std::string myOrgStr = "sc_main_originator";
   cci::cci_originator myOriginator(myOrgStr);

@@ -32,9 +32,9 @@
 
 #include <boost/assign/list_of.hpp>
 #include <cci_configuration>
-#include <cci_cfg/cci_cfg_private_broker.h>
 #include "ex14_parent.h"
 #include "ex14_configurator.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @class  ex14_private
@@ -49,21 +49,19 @@ public:
      */
     SC_CTOR(ex14_private)
     {
-      cci::cci_cfg_private_broker *pbroker=new cci::cci_cfg_private_broker("My Private Broker");
+      cci_utils::broker *pbroker=new cci_utils::broker("My Private Broker");
       pbroker->expose.insert("Top.private.parent_inst.parent_int_buffer");
       pbroker->expose.insert("Top.private.parent_inst.child_inst.pub_int_param");
-      m_priv_broker = &cci::cci_broker_manager::register_broker(*(pbroker));
+      cci::cci_register_broker(*(pbroker));
 
       m_parent_inst = new ex14_parent("parent_inst");
     }
 
     ~ex14_private() {
       delete m_parent_inst;
-      delete m_priv_broker;
     }
 
 protected:
-    cci::cci_broker_if* m_priv_broker; ///< Broker that hides the parameters not passed to it as argument
     ex14_parent* m_parent_inst; ///< Parent module pointer
 };
 /// ex14_top
@@ -95,6 +93,7 @@ SC_MODULE(ex14_top) {
  *  @brief  Main testbench function that instantiates a top module
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   // Instantiate TOP module
   ex14_top Top("Top");
 

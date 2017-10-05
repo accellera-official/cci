@@ -25,6 +25,7 @@
 
 #include "ex02_simple_ip.h"
 #include "ex02_config_ip.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -34,6 +35,7 @@
  *  @return an integer representing whether the execution was successful
  */
 int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   ex02_simple_ip sim_ip("sim_ip");
   ex02_config_ip cfg_ip("cfg_ip");
 

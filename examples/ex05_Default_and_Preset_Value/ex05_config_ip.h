@@ -44,7 +44,7 @@ SC_MODULE(ex05_config_ip) {
    *  @return void
    */
   SC_CTOR(ex05_config_ip):
-            m_broker(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_get_broker())
   {
     setup_sim_ip("Attempting to setup config_ip to 10 before IP construction",
                  "10");

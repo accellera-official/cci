@@ -718,7 +718,7 @@ cci_broker_handle find_broker_convenience(const cci_originator &originator)
       if (!sc_core::sc_get_current_object()) {
         return cci_get_global_broker(originator);
       } else {
-        return cci_broker_manager::get_broker();
+        return cci_get_broker();
       }
     }
 

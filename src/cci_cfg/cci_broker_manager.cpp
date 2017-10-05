@@ -29,49 +29,34 @@ std::map<cci_originator, cci_broker_handle> cci_broker_manager::m_brokers;
 cci_broker_handle
 cci_broker_manager::get_broker()
 {
-    if (!sc_core::sc_get_current_object()) {
-      CCI_REPORT_ERROR("cci_broker_manager","can not call get_broker() outside of systemc heirarchy");
+  const cci_originator top_originator=cci_originator(CCI_BROKER_HANDLE_ORIGINATOR_STRING_);
+  cci_originator originator=top_originator;
+  while (true) {
+    std::map<cci_originator, cci_broker_handle>::iterator it;
+    for (it=m_brokers.begin();it!=m_brokers.end();++it) {
+      if (originator.get_object()==it->first.get_object()) {
+        break;
+      }
     }
-  
-    const cci_originator originator=cci_originator();
-
-    std::map<cci_originator, cci_broker_handle>::iterator it =
-            m_brokers.find(originator);
     if(it != m_brokers.end()) {
-        return it->second;
-    } else {
-      return get_parent_broker(originator).create_broker_handle(originator);
+      return (it->second).create_broker_handle(top_originator);
     }
+
+    if(originator.is_unknown()) {
+      CCI_REPORT_ERROR("cci_broker_manager","No global broker found!");
+      // We will abort at this point, unless the report is caught.
+    }
+    originator = originator.get_parent_originator();
+  }
 }
 
 cci_broker_handle
-cci_broker_manager::get_parent_broker(const cci_originator &originator)
-{
-    // Get parent originator
-    cci_originator parent_originator = originator.get_parent_originator();
-    // Return handle to the broker found for the parent originator
-    std::map<cci_originator, cci_broker_handle>::iterator it =
-            m_brokers.find(parent_originator);
-    if(it != m_brokers.end()) {
-        return it->second;
-    } else {
-        if(parent_originator.is_unknown()) {
-            return cci_get_global_broker(originator);
-        } else {
-          return get_parent_broker(parent_originator);//.
-//                    create_broker_handle(parent_originator);
-        }
-    }
-}
-
-cci_broker_if&
 cci_broker_manager::register_broker(cci_broker_if& broker)
 {
-    cci_originator originator;
-    if (originator.is_unknown()) {
-        CCI_REPORT_ERROR("cci_broker_manager/register_broker",
-                         "You may not register a global broker");
-    }
+    cci_originator originator(CCI_BROKER_ORIGINATOR_STRING_);
+    cci_broker_handle broker_handle =
+      broker.create_broker_handle(originator);
+
     std::map<cci_originator, cci_broker_handle>::iterator it =
             m_brokers.find(originator);    
     if(it != m_brokers.end()) {
@@ -80,12 +65,32 @@ cci_broker_manager::register_broker(cci_broker_if& broker)
                                  " hierarchy.");
         /* abort here, if error is suppressed? */
     } else {
-        cci_broker_handle broker_handle =
-                broker.create_broker_handle(originator);
         m_brokers.insert(std::make_pair(originator, broker_handle));
     }
 
-    return broker;
+    return broker_handle;
+}
+
+
+
+cci_broker_handle cci_get_broker() {
+  return cci_broker_manager::get_broker();
+}
+cci_broker_handle cci_register_broker(cci_broker_if& broker) 
+{
+  return cci_broker_manager::register_broker(broker);
+}
+cci_broker_handle cci_register_broker(cci_broker_if* broker) 
+{
+  return cci_broker_manager::register_broker(broker);
+}
+cci_broker_handle cci_get_global_broker(const cci_originator &originator)
+{
+  if (sc_core::sc_get_current_object() ||
+      (!originator.get_parent_originator().is_unknown())) {
+    CCI_REPORT_ERROR("cci_get_global_broker","You may not request the global broker from within the SystemC heirarchy");
+  }
+  return cci_broker_manager::get_broker().create_broker_handle(originator);
 }
 
 CCI_CLOSE_NAMESPACE_

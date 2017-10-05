@@ -54,7 +54,7 @@ SC_MODULE(ex09_top_module) {
   SC_CTOR(ex09_top_module)
       : n_initiators("number_of_initiators", 0),
         n_targets("number_of_targets", 0),
-        m_broker(cci::cci_broker_manager::get_broker())
+        m_broker(cci::cci_get_broker())
   {
     std::stringstream ss;
 

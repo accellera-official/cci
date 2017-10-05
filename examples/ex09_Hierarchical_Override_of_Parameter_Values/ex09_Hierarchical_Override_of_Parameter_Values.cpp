@@ -34,6 +34,7 @@
 #include <cci_configuration>
 #include <string>
 #include "ex09_top_module.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -43,6 +44,7 @@
  *  @return An integer for the execution status
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
 
   cci::cci_originator me=cci::cci_originator("sc_main");
 

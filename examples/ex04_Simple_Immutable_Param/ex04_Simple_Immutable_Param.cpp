@@ -25,6 +25,7 @@
 
 #include "ex04_simple_ip.h"
 #include "ex04_config_ip.h"
+#include <cci_utils/broker.h>
 using sc_core::sc_report_handler;
 using sc_core::SC_LOG;
 using sc_core::SC_DISPLAY;
@@ -39,6 +40,7 @@ using sc_core::SC_ERROR;
  */
 /// Testbench for the CCI simple immutable parameters example
 int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   ex04_config_ip cfg_ip("cfg_ip");
   ex04_simple_ip sim_ip("sim_ip");
 

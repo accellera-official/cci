@@ -30,6 +30,7 @@
 
 #include "ex05_simple_ip.h"
 #include "ex05_config_ip.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -39,6 +40,7 @@
  *  @return An integer representing the execution status of the function
  */
 int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   ex05_config_ip cfg_ip("cfg_ip");
   ex05_simple_ip sim_ip("sim_ip");
 
