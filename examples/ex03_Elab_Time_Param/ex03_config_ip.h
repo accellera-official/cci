@@ -81,11 +81,11 @@ SC_MODULE(ex03_config_ip) {
                 << " remains unchanged " << new_value);
       } else if ("3" == new_value) {
         XREPORT_WARNING("execute: [EXTERNAL] Value of "
-                        << struc_param_handle.get_name() << " changed to: "
+                        << struc_param_handle.get_name() << " changed to "
                         << new_value);
       } else {
         XREPORT_ERROR("execute: [EXTERNAL] Invalid update to "
-                      << struc_param_handle.get_name() << " value changed to: "
+                      << struc_param_handle.get_name() << " value changed to "
                       << new_value);
         sc_assert(0);
       }

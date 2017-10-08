@@ -71,11 +71,11 @@ SC_MODULE(ex03_simple_ip) {
       XREPORT_ERROR("Before_End_Elab: Value of struc_param"
                     " remains unchanged " << struc_param);
     } else if (1 == struc_param) {
-      XREPORT("Before_End_Elab: Value of struc_param changed to: "
+      XREPORT("Before_End_Elab: Value of struc_param changed to "
               << struc_param);
     } else {
       XREPORT_ERROR("Before_End_Elab: Invalid update to struc_param,"
-                    " value changed to: " << struc_param);
+                    " value changed to " << struc_param);
       sc_assert(0);
     }
   }
@@ -95,40 +95,13 @@ SC_MODULE(ex03_simple_ip) {
 
 
     if (1 == struc_param) {
-      XREPORT("execute: Value of struc_param unchanged: " << struc_param);
+      XREPORT("execute: Value of struc_param unchanged " << struc_param);
     } else if (2 == struc_param) {
-      XREPORT_WARNING("execute: Value of struc_param changed to: "
+      XREPORT_WARNING("execute: Value of struc_param changed to "
                       << struc_param);
     } else {
-      XREPORT_ERROR("execute: Invalid update to struc_param,value changed to: "
+      XREPORT_ERROR("execute: Invalid update to struc_param,value changed to "
                     << struc_param);
-      sc_assert(0);
-    }
-
-    /// Create an immutable param
-    cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM>
-      struc_param_post_eoe("struc_param_post_eoe", 0);
-    XREPORT("execute: Creating a struc_param_post_eoe after"
-            " end_of elaboration(), with a default value:"
-            << struc_param_post_eoe);
-
-    // Wait for 10ns
-    wait(10, sc_core::SC_NS);
-
-    // Update struc_param_post_eoe value to 1 (invalid)
-
-	XREPORT("execute: Set value of struc_param_post_eoe to 1"); 
-	struc_param_post_eoe = 1;
-
-    if (0 == struc_param_post_eoe) {
-      XREPORT("execute: Value of struc_param_post_eoe remains unchanged "
-              << struc_param_post_eoe);
-    } else if (1 == struc_param_post_eoe) {
-      XREPORT_WARNING("execute: Value of struc_param_post_eoe changed to: "
-                      << struc_param_post_eoe);
-    } else {
-      XREPORT_ERROR("execute: Invalid update to struc_param_post_eoe,"
-                    " value changed to: " << struc_param_post_eoe);
       sc_assert(0);
     }
   }
