@@ -24,25 +24,27 @@
 #include "cci_cfg/cci_broker_if.h"
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_report_handler.h"
-
+#include "cci_cfg/cci_param_untyped_handle.h"
 #include <map>
 
 CCI_OPEN_NAMESPACE_
 
 class cci_broker_if;
 
-
-/// Class managing broker hierarchy
-
-
-
-/**
- * To get access to a broker, use static cci_broker_manager::get_broker
- * function.
+///
+/* this is the implementation class for a cci_broker_manager
+ *   it is only required here to enable cci_param_untyped_handle to have access to
+ *  get_broker(originator)
  */
 class cci_broker_manager
 {
-public:
+  friend cci_broker_handle cci_get_broker();
+  friend cci_broker_handle cci_register_broker(cci_broker_if&);
+  friend cci_broker_handle cci_register_broker(cci_broker_if*);
+  friend cci_broker_handle cci_get_global_broker(const cci_originator &);
+  friend class  cci_param_untyped_handle;
+
+private:
     /// Returns a handle to the broker currently on top of broker
     /**
      * Returns a handle to a private or the global broker.
@@ -50,7 +52,7 @@ public:
      *
      * @return Broker (private or global) handle
      */
-    static cci_broker_handle get_broker();
+    static cci_broker_handle get_broker(const cci_originator &originator);
   
     /// Register a broker handle in the broker hierarchy
     /**
@@ -63,8 +65,10 @@ public:
      * @param broker Broker handle to register
      */
     static cci_broker_handle register_broker(cci_broker_if& broker);
+
     static cci_broker_handle register_broker(cci_broker_if* broker) 
     {
+      sc_assert(broker);
       return register_broker(*broker);
     }
 
@@ -74,11 +78,26 @@ private:
 
 };
 
-/// @copydoc cci_broker_manager::get_broker
+/// Returns a handle to the broker currently on top of broker
+/**
+ * Returns a handle to a private or the global broker.
+ * Returns a handle to the global broker if no registered broker.
+ *
+ * @return Broker (private or global) handle
+ */
 cci_broker_handle cci_get_broker();
-/// @copydoc cci_broker_manager::register_broker(cci_broker_if& broker);
+/// Register a broker handle in the broker hierarchy
+/**
+ * This can be used to register a private broker handle in the current
+ * hierarchy.
+ *
+ * In case a broker is already registered at the current hierarchy, an
+ * error will be generated.
+ *
+ * @param broker Broker handle to register
+ */
 cci_broker_handle cci_register_broker(cci_broker_if& broker);
-/// @copydoc cci_broker_manager::register_broker(cci_broker_if& broker);
+/// @copydoc cci_register_broker(cci_broker_if& broker);
 cci_broker_handle cci_register_broker(cci_broker_if* broker);
 
 /**
