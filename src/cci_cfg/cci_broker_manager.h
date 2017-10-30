@@ -24,7 +24,6 @@
 #include "cci_cfg/cci_broker_if.h"
 #include "cci_cfg/cci_config_macros.h"
 #include "cci_cfg/cci_report_handler.h"
-#include "cci_cfg/cci_param_untyped_handle.h"
 #include <map>
 
 CCI_OPEN_NAMESPACE_
@@ -74,7 +73,7 @@ private:
 
 private:
     /// Public broker hierarchy
-    static std::map<cci_originator, cci_broker_handle> m_brokers;
+    static std::map<const sc_core::sc_object*, cci_broker_if*> m_brokers;
 
 };
 

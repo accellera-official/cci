@@ -24,44 +24,45 @@
 
 CCI_OPEN_NAMESPACE_
 
-std::map<cci_originator, cci_broker_handle> cci_broker_manager::m_brokers;
+std::map<const sc_core::sc_object*, cci_broker_if*> cci_broker_manager::m_brokers;
 
 cci_broker_handle
 cci_broker_manager::get_broker(const cci_originator &originator)
 {
-  cci_originator org=originator;
+  const sc_core::sc_object *org=originator.get_object();
   while (true) {
-    std::map<cci_originator, cci_broker_handle>::iterator it =
+    std::map<const sc_core::sc_object*, cci_broker_if*>::iterator it =
             m_brokers.find(org);
     if(it != m_brokers.end()) {
-      cci_broker_handle broker_handle=(it->second).create_broker_handle(originator);
+      cci_broker_handle broker_handle=(it->second)->create_broker_handle(originator);
       return broker_handle;
     }
-    if(org.is_unknown()) {
+    if (!org) {
       CCI_REPORT_ERROR("cci_broker_manager","No global broker found!");
       // We will abort at this point, unless the report is caught.
       cci_abort();
     }
-    org = org.get_parent_originator();
+    org = org->get_parent_object();
   }
 }
 
 cci_broker_handle
 cci_broker_manager::register_broker(cci_broker_if& broker)
 {
-    cci_originator originator(CCI_UNKNOWN_ORIGINATOR_STRING_);
-    cci_broker_handle broker_handle =
-      broker.create_broker_handle(originator);
+  cci_originator originator(CCI_UNKNOWN_ORIGINATOR_STRING_);
+  cci_broker_handle broker_handle =
+    broker.create_broker_handle(originator);
+  const sc_core::sc_object *obj=sc_core::sc_get_current_object();
 
-    std::map<cci_originator, cci_broker_handle>::iterator it =
-            m_brokers.find(originator);
+    std::map<const sc_core::sc_object*, cci_broker_if*>::iterator it =
+            m_brokers.find(obj);
     if(it != m_brokers.end()) {
         CCI_REPORT_ERROR("cci_broker_manager/register_broker",
                          "A broker is already registered in the current"
                                  " hierarchy.");
         /* Our recovery here is to pass back an unregistered handle */
     } else {
-      m_brokers.insert(std::make_pair(originator, broker_handle));
+      m_brokers.insert(std::make_pair(obj, &broker));
     }
 
     return broker_handle;
