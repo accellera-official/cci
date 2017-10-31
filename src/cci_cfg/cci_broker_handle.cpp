@@ -29,26 +29,17 @@
 
 CCI_OPEN_NAMESPACE_
 
-cci_broker_handle::cci_broker_handle(cci_broker_if& orig_broker,
+cci_broker_handle::cci_broker_handle(cci_broker_if& broker,
                                      const cci_originator& originator)
-    : m_originator(originator), m_orig_broker(orig_broker)
+  : m_broker(&broker)
+  , m_originator(originator)
 {
 }
 
-cci_broker_handle::cci_broker_handle(const cci_broker_handle& broker_handle)
-    : m_originator(broker_handle.m_originator),
-      m_orig_broker(broker_handle.m_orig_broker)
+cci_broker_handle
+cci_broker_handle::create_broker_handle(const cci_originator &originator)
 {
-}
-
-cci_broker_handle::~cci_broker_handle()
-{
-}
-
-cci_broker_handle cci_broker_handle::create_broker_handle(
-  const cci_originator &originator)
-{
-    return m_orig_broker.create_broker_handle(originator);
+    return m_broker->create_broker_handle(originator);
 }
 
 cci_originator cci_broker_handle::get_originator() const
@@ -56,148 +47,136 @@ cci_originator cci_broker_handle::get_originator() const
     return m_originator;
 }
 
-cci_broker_handle& cci_broker_handle::operator=(
-  const cci_broker_handle& broker_handle)
-{
-    cci_originator originator(broker_handle.m_originator);
-    std::swap(m_originator, originator);
-    m_orig_broker = broker_handle.m_orig_broker;
-    return *this;
-}
-
 const std::string& cci_broker_handle::name() const
 {
-    return m_orig_broker.name();
+    return m_broker->name();
 }
 
 void cci_broker_handle::set_preset_cci_value(
   const std::string &parname,
   const cci::cci_value &cci_value)
 {
-    m_orig_broker.set_preset_cci_value(parname,
-                                         cci_value,
-                                         m_originator);
+    m_broker->set_preset_cci_value(parname, cci_value, m_originator);
 }
 
 cci::cci_value cci_broker_handle::get_preset_cci_value(
   const std::string &parname) const
 {
-    return m_orig_broker.get_preset_cci_value(parname);
+    return m_broker->get_preset_cci_value(parname);
 }
 
 std::vector<cci_name_value_pair>
 cci_broker_handle::get_unconsumed_preset_values() const
 {
-    return m_orig_broker.get_unconsumed_preset_values();
+    return m_broker->get_unconsumed_preset_values();
 }
 
 cci_preset_value_range cci_broker_handle::get_unconsumed_preset_values(
   const cci_preset_value_predicate &pred) const
 {
-    return m_orig_broker.get_unconsumed_preset_values(pred);
+    return m_broker->get_unconsumed_preset_values(pred);
 }
 
 void cci_broker_handle::ignore_unconsumed_preset_values(
   const cci_preset_value_predicate &pred)
 {
-    m_orig_broker.ignore_unconsumed_preset_values(pred);
+    m_broker->ignore_unconsumed_preset_values(pred);
 }
 
-cci_originator cci_broker_handle::get_latest_write_originator(
-  const std::string &parname) const
+cci_originator
+cci_broker_handle::get_latest_write_originator(const std::string &parname) const
 {
-    return m_orig_broker.get_latest_write_originator(parname);
+    return m_broker->get_latest_write_originator(parname);
 }
 
 void cci_broker_handle::lock_preset_value(const std::string &parname)
 {
-    m_orig_broker.lock_preset_value(parname);
+    m_broker->lock_preset_value(parname);
 }
 
-cci::cci_value cci_broker_handle::get_cci_value(
-  const std::string &parname) const
+cci_value cci_broker_handle::get_cci_value(const std::string &parname) const
 {
-    return m_orig_broker.get_cci_value(parname);
+    return m_broker->get_cci_value(parname);
 }
 
-cci_param_untyped_handle cci_broker_handle::get_param_handle(
-  const std::string &parname) const
+cci_param_untyped_handle
+cci_broker_handle::get_param_handle(const std::string &parname) const
 {
-    return m_orig_broker.get_param_handle(parname, m_originator);
+    return m_broker->get_param_handle(parname, m_originator);
 }
 bool cci_broker_handle::param_exists(const std::string &parname) const
 {
-    return m_orig_broker.param_exists(parname);
+    return m_broker->param_exists(parname);
 }
 
 bool cci_broker_handle::is_used(const std::string &parname) const
 {
-    return m_orig_broker.is_used(parname);
+    return m_broker->is_used(parname);
 }
 
 bool cci_broker_handle::has_preset_value(const std::string &parname) const
 {
-    return m_orig_broker.has_preset_value(parname);
+    return m_broker->has_preset_value(parname);
 }
 
 void cci_broker_handle::add_param(cci_param_if *par)
 {
-    m_orig_broker.add_param(par);
+    m_broker->add_param(par);
 }
 
 void cci_broker_handle::remove_param(cci_param_if *par)
 {
-    m_orig_broker.remove_param(par);
+    m_broker->remove_param(par);
 }
 
 std::vector <cci_param_untyped_handle> cci_broker_handle::get_param_handles() const
 {
-    return m_orig_broker.get_param_handles(m_originator);
+    return m_broker->get_param_handles(m_originator);
 }
 
 cci_param_range cci_broker_handle::get_param_handles(
         cci_param_predicate& pred) const
 {
-    return m_orig_broker.get_param_handles(pred, m_originator);
+    return m_broker->get_param_handles(pred, m_originator);
 }
 
 bool cci_broker_handle::is_global_broker() const
 {
-    return m_orig_broker.is_global_broker();
+    return m_broker->is_global_broker();
 }
 
 cci_param_create_callback_handle cci_broker_handle::register_create_callback(
   const cci_param_create_callback& cb)
 {
-    return m_orig_broker.register_create_callback(cb, m_originator);
+    return m_broker->register_create_callback(cb, m_originator);
 }
 
 bool cci_broker_handle::unregister_create_callback(
   const cci_param_create_callback_handle& cb)
 {
-    return m_orig_broker.unregister_create_callback(cb, m_originator);
+    return m_broker->unregister_create_callback(cb, m_originator);
 }
 
 cci_param_destroy_callback_handle cci_broker_handle::register_destroy_callback(
   const cci_param_destroy_callback& cb)
 {
-    return m_orig_broker.register_destroy_callback(cb, m_originator);
+    return m_broker->register_destroy_callback(cb, m_originator);
 }
 
 bool cci_broker_handle::unregister_destroy_callback(
   const cci_param_destroy_callback_handle& cb)
 {
-    return m_orig_broker.unregister_destroy_callback(cb, m_originator);
+    return m_broker->unregister_destroy_callback(cb, m_originator);
 }
 
 bool cci_broker_handle::unregister_all_callbacks()
 {
-    return m_orig_broker.unregister_all_callbacks(m_originator);
+    return m_broker->unregister_all_callbacks(m_originator);
 }
 
 bool cci_broker_handle::has_callbacks() const
 {
-    return m_orig_broker.has_callbacks();
+    return m_broker->has_callbacks();
 }
 
 CCI_CLOSE_NAMESPACE_
