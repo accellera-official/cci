@@ -23,13 +23,18 @@ available from the WG's Accellera workspace, for more detailed instructions.
 
   - Initialize environment variables
     - CCI_HOME (git root)
-    - BOOST_HOME (Boost include dir)
-    - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.2)
-    - TARGET_ARCH (e.g. linux64)
+    - SYSTEMC_HOME   (top-level, e.g. .../systemc-2.3.2)
 
   - build POC library by invoking 'gmake' in the following directory:
     - src
-   
+
+    Additional flags to pass on the gmake command-line to customize
+    the behavior:
+      V=1       - build in verbose mode     (default: V=0)
+      OPT=-O2   - build with optimization   (default: OPT=-g)
+      CXX       - override compiler         (default: g++)
+      CXXFLAGS  - additional compiler flags (default: empty)
+
   - run individual examples or the full suite
     - follow instructions in examples/README.txt
     - be sure to review the PowerPoint presentation in each example's docs/
