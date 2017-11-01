@@ -33,6 +33,7 @@ template<typename T, cci_param_mutable_type TM> class cci_param_typed;
 
 /**
  * @brief Type-safe parameter handle
+ * @tparam T underlying type of given parameter
  *
  * This class provides a typed handle to access a CCI parameter.
  * In addition to the untyped capabilities, it provides type-safe
@@ -48,7 +49,16 @@ public:
     /// The parameter's value type.
     typedef T value_type;
 
-    /// Constructor to create a typed parameter handle
+    /**
+     * @brief Constructor to create a typed parameter handle
+     * @param untyped Untyped parameter handle to restore type information on
+     * @pre untyped.get_type_info() == typedif(T)
+     *
+     * If the destination type T does not match the underlying type of
+     * the referenced parameter, the resulting handle is invalidated.
+     *
+     * @see cci_param_cast<T>
+     */
     explicit cci_param_typed_handle(cci_param_untyped_handle untyped);
 
 #if CCI_CPLUSPLUS >= 201103L
@@ -236,6 +246,18 @@ cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle untyp
         invalidate();
     }
 }
+
+/**
+ * @brief Recover type information on a parameter handle
+ * @tparam T Assumed underlying type of given parameter
+ * @param untyped Untyped handle to convert to a typed handle
+ * @return typed parameter handle, if types match; an invalid handle otherwise
+ * @see cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle)
+ */
+template <typename T>
+cci_param_typed_handle<T>
+cci_param_cast(const cci_param_untyped_handle& untyped)
+  { return cci_param_typed_handle<T>(untyped); }
 
 #undef CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_
 
