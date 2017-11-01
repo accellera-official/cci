@@ -1,16 +1,10 @@
+#ifndef CCI_UTILS_CONSUMING_BROKER_H_INCLUDED_
+#define CCI_UTILS_CONSUMING_BROKER_H_INCLUDED_
 
-#ifndef CCI_CCI_CONSUMING_BROKER_H_INCLUDED_
-#define CCI_CCI_CONSUMING_BROKER_H_INCLUDED_
-
-//#include "cci_cfg/cci_config_macros.h"
-//#include "cci_cfg/cci_broker_if.h"
-//#include "cci_cfg/cci_broker_handle.h"
-//#include "cci_cfg/cci_broker_manager.h"
 #include <map>
 #include <set>
 #include <cci_configuration>
 
-//using CCI_NAMESPACE;
 
 namespace cci_utils {
 
@@ -19,6 +13,10 @@ namespace cci_utils {
    * 
    * Default Consuming_broker declaration
    * See cci_broker_if for details of the implemented API.
+   *
+   * This broker consumes all parameters, and does not have any mechanism to
+   * pass parameters to a 'global' broker. It is therefore a good candidate for
+   * the global broker.
    * 
    */
   class consuming_broker: public cci::cci_broker_if
@@ -43,10 +41,12 @@ public:
     /// Return the name of the broker
     const std::string &name() const;
 
-    /// Return the name of the broker
+    /// Return the preset value of a parameter
+
+    /// Return the preset value of a parameter (by name)
     cci::cci_value get_preset_cci_value(const std::string &parname) const;
 
-   /// Return the name of the broker
+    /// Set the preset value of a parameter (by name, requires originator)
     void set_preset_cci_value(
       const std::string &parname,
       const cci::cci_value &cci_value,
@@ -58,7 +58,7 @@ public:
     /// Get a full list of unconsumed preset values.
     std::vector<cci::cci_name_value_pair> get_unconsumed_preset_values() const;
 
-    /// get vector of preset values
+    /// get vector of unconsumed preset values
     cci::cci_preset_value_range get_unconsumed_preset_values(
       const cci::cci_preset_value_predicate &pred) const;
 
@@ -123,6 +123,7 @@ public:
     std::string m_name;
     const cci::cci_originator m_originator;    
 
+    // These are used as a database of _preset_ values.
     std::map<std::string, cci::cci_param_if*> m_param_registry;
     std::map<std::string, cci::cci_value> m_unused_value_registry;
     std::map<std::string, cci::cci_value> m_used_value_registry;

@@ -31,7 +31,7 @@ namespace cci_utils {
   
 
 /*
- * private function to determin if we send to the parent broker or not
+ * private function to determine if we send to the parent broker or not
  */
   bool broker::sendToParent(const std::string &parname) const
   {

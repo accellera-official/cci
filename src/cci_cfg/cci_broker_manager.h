@@ -77,7 +77,7 @@ private:
 
 };
 
-/// Returns a handle to the broker currently on top of broker
+/// Returns a handle to the currently responsible broker
 /**
  * Returns a handle to a private or the global broker.
  * Returns a handle to the global broker if no registered broker.
@@ -85,13 +85,13 @@ private:
  * @return Broker (private or global) handle
  */
 cci_broker_handle cci_get_broker();
-/// Register a broker handle in the broker hierarchy
+/// Register a broker for the current location
 /**
  * This can be used to register a private broker handle in the current
- * hierarchy.
+ * location (either within the SystemC object hierarchy or globally).
  *
- * In case a broker is already registered at the current hierarchy, an
- * error will be generated.
+ * In case a different broker has already been registered at the current
+ * location, an error will be generated.
  *
  * @param broker Broker handle to register
  */

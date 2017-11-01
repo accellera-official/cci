@@ -1,8 +1,5 @@
-
-
-
-#ifndef CCI_BROKER_H_INCLUDED_
-#define CCI_BROKER_H_INCLUDED_
+#ifndef CCI_UTILS_BROKER_H_INCLUDED_
+#define CCI_UTILS_BROKER_H_INCLUDED_
 
 #include "cci_utils/consuming_broker.h"
 #include "cci_cfg/cci_broker_manager.h"
@@ -11,9 +8,6 @@
 namespace cci_utils 
 {
 
-//  class cci_param_untyped_handle;
-//  class cci_param_if;
-  
   /// (Non-private) broker implementation
   /**
    * 
@@ -62,10 +56,10 @@ namespace cci_utils
     /// Destructor
     ~broker();
 
-    /// Return the name of the broker
+    /// Return the preset value of a parameter (by name)
     cci::cci_value get_preset_cci_value(const std::string &parname) const;
 
-   /// Return the name of the broker
+    /// Set the preset value of a parameter (by name, requires originator)
     void set_preset_cci_value(const std::string &parname,
                               const cci::cci_value &cci_value,
                               const cci::cci_originator& originator);

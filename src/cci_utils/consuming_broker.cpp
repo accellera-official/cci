@@ -182,7 +182,7 @@ namespace cci_utils {
 /*
  * This entire broker can be re-used as a 'greedy' private broker, the broker
  * should remain the same, except for when a model asks for a param handle for a
- * param that this broker has no knowldegd of, at which point it should ask up
+ * param that this broker has no knowledge of, at which point it should ask up
  * the broker tree. This case is _NOT_ handled below. The intention is that a well
  * behaved private broker can then 'wrap' this broker, passing 'public' params up
  * the broker tree and bypassing this broker, while this broker will handle all

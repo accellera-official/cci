@@ -39,7 +39,7 @@ cci_broker_manager::get_broker(const cci_originator &originator)
     }
     if (!org) {
       CCI_REPORT_ERROR("cci_broker_manager","No global broker found!");
-      // We will abort at this point, unless the report is caught.
+      // Abort since no reasonable recovery when the exception is suppressed.
       cci_abort();
     }
     org = org->get_parent_object();
@@ -49,26 +49,21 @@ cci_broker_manager::get_broker(const cci_originator &originator)
 cci_broker_handle
 cci_broker_manager::register_broker(cci_broker_if& broker)
 {
-  cci_originator originator(CCI_UNKNOWN_ORIGINATOR_STRING_);
-  cci_broker_handle broker_handle =
-    broker.create_broker_handle(originator);
-  const sc_core::sc_object *obj=sc_core::sc_get_current_object();
+    cci_originator originator(CCI_UNKNOWN_ORIGINATOR_STRING_);
+    const sc_core::sc_object *obj=sc_core::sc_get_current_object();
 
-    std::map<const sc_core::sc_object*, cci_broker_if*>::iterator it =
-            m_brokers.find(obj);
-    if(it != m_brokers.end()) {
+    cci_broker_if* & broker_entry = m_brokers[obj]; // find broker position in registry
+    if( !broker_entry ) {
+        broker_entry = &broker; // store broker in registry
+    }
+    if( &broker != broker_entry ) { // we already had a different entry!
         CCI_REPORT_ERROR("cci_broker_manager/register_broker",
                          "A broker is already registered in the current"
                                  " hierarchy.");
-        /* Our recovery here is to pass back an unregistered handle */
-    } else {
-      m_brokers.insert(std::make_pair(obj, &broker));
+        /* If this error is supproessed, our recovery is to pass back a handle to the existing broker */
     }
-
-    return broker_handle;
+    return broker_entry->create_broker_handle(originator);
 }
-
-
 
 
 cci_broker_handle cci_get_broker() {
