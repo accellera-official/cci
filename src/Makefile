@@ -17,22 +17,17 @@
 #
 ##############################################################################
 
-ifndef CC
-CC     = gcc
+ifeq ($(origin CXX),default)
+  CXX := g++
 endif
-ifndef CXX
-CXX    = g++
-endif
-OPT    = -g -Wall -Werror -Wno-unused-local-typedefs
-OTHER  = -pedantic -Wno-long-long
-CXXFLAGS = $(OPT) $(OTHER)
 
-SRCS := $(wildcard cci_cfg/*.cpp)
-SRCS += $(wildcard cci_core/*.cpp)
-SRCS += $(wildcard cci_utils/*.cpp)
+# build optimization and debug information
+#OPT := -O2 -g
+OPT  := -g
 
-OBJS := $(SRCS:.cpp=.o)
-DEPS := $(OBJS:.o=.d)
+# control compiler warnings
+WARN := -Wall -Werror
+WARN += -pedantic -Wno-long-long
 
 ## -----------------------------------------------------------------------------
 
@@ -50,40 +45,58 @@ SYSTEMC = $(SYSTEMC_HOME)
 endif
 SYSTEMC ?= /cad/tools/systemc
 
-ifdef BOOST_HOME
-BOOST := $(BOOST_HOME)
-endif
-BOOST ?= /cad/tools/boost
+DEFINES := -DSC_INCLUDE_FX
 
-DEFFLAGS = -DSC_INCLUDE_DYNAMIC_PROCESSES -DSC_INCLUDE_FX
+INCLUDES := -I$(CCI_DIR)
+INCLUDES += -I$(SYSTEMC)/include
+INCLUDES += -I$(RAPIDJSON)/include
 
-INCDIR += -I.
-INCDIR := -I$(CCI_DIR)
-INCDIR += -I$(SYSTEMC)/include
-INCDIR += -I$(RAPIDJSON)/include
-INCDIR += -I$(BOOST)
+## -----------------------------------------------------------------------------
+V ?= 0
+
+define cmd-banner
+printf "  %-8s %s\n" "$1" "$2"
+endef
+
+AT_0 = @
+AT   = $(AT_$(V))
+
+AT_CXX_0 = @$(call cmd-banner,CXX,$@);
+AT_CXX   = $(AT_CXX_$(V))
+
+AT_MKDIR_0 = @$(call cmd-banner,MKDIR,$(@));
+AT_MKDIR   = $(AT_MKDIR_$(V))
+
+AT_LIB_0 = @$(call cmd-banner,LIB,$(notdir $(@)));
+AT_LIB   = $(AT_LIB_$(V))
 
 ## -----------------------------------------------------------------------------
 
-LIB=libcciapi.a
-LIBDIR=$(CCI_HOME)/lib
+SRCS := $(wildcard cci_cfg/*.cpp)
+SRCS += $(wildcard cci_core/*.cpp)
+SRCS += $(wildcard cci_utils/*.cpp)
+
+OBJS := $(SRCS:.cpp=.o)
+DEPS := $(OBJS:.o=.d)
+
+LIB    := libcciapi.a
+LIBDIR := $(CCI_HOME)/lib
 
 all: $(LIBDIR)/$(LIB)
 
-$(LIBDIR)/$(LIB): $(OBJS)
-	mkdir -p $(LIBDIR)
-	$(AR) rcs $@ $^
-	ranlib $@
+$(LIBDIR):
+	$(AT_MKDIR)mkdir -p $(LIBDIR)
+
+$(LIBDIR)/$(LIB): $(OBJS) | $(LIBDIR)
+	$(AT_LIB)$(AR) rcs $@ $^
+	$(AT)ranlib $@
 
 -include $(DEPS)
 
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -MMD -o $@
-
-.cc.o:
-	$(CXX) $(CXXFLAGS) $(DEFFLAGS) $(INCDIR) -c $< -MMD -o $@
+	$(AT_CXX)$(CXX) $(OPT) $(WARN) $(DEFINES) $(INCLUDES) $(CXXFLAGS) -c $< -MMD -o $@
 
 clean:
-	rm -f $(OBJS) $(DEPS)
-	rm -f $(LIBDIR)/$(LIB)
-	-rmdir $(LIBDIR) 2>&1 || true
+	$(AT)rm -vf $(OBJS) $(DEPS)
+	$(AT)rm -vf $(LIBDIR)/$(LIB)
+	$(AT)[ ! -d $(LIBDIR) ] || rmdir --ignore-fail-on-non-empty $(LIBDIR)
