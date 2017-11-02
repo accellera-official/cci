@@ -49,8 +49,9 @@ public:
 private:
     typedef typename Container::iterator container_iterator;
 
+    /// internal implementation class (implementation-defined)
     template<typename BaseIterator>
-    class cci_iterator
+    class iterator_impl
     {
         friend class cci_filtered_range;
 
@@ -61,41 +62,41 @@ private:
         typedef typename BaseIterator:: pointer pointer;
         typedef typename BaseIterator:: reference reference;
 
-        cci_iterator():
+        iterator_impl():
                 m_current(),
                 m_fr(NULL)
         {};
 
     private:
-        cci_iterator(container_iterator it):
+        iterator_impl(container_iterator it):
                 m_current(it),
                 m_fr(NULL)
         {};
 
-        cci_iterator(container_iterator it, const cci_filtered_range* fr):
+        iterator_impl(container_iterator it, const cci_filtered_range* fr):
                 m_current(it),
                 m_fr(fr)
         {};
 
     public:
-        cci_iterator& operator--() {
+        iterator_impl& operator--() {
             decrement();
             return *this;
         }
 
-        cci_iterator& operator++() {
+        iterator_impl& operator++() {
             increment();
             return *this;
         }
 
-        cci_iterator operator--(int) {
-            cci_iterator ret = *this;
+        iterator_impl operator--(int) {
+            iterator_impl ret = *this;
             decrement();
             return ret;
         }
 
-        cci_iterator operator++(int) {
-            cci_iterator ret = *this;
+        iterator_impl operator++(int) {
+            iterator_impl ret = *this;
             increment();
             return ret;
         }
@@ -108,11 +109,11 @@ private:
             return &(*m_current);
         }
 
-        bool operator==(const cci_iterator& it) const {
+        bool operator==(const iterator_impl& it) const {
             return m_current == it.m_current;
         }
 
-        bool operator!=(const cci_iterator& it) const {
+        bool operator!=(const iterator_impl& it) const {
             return !(*this == it);
         }
 
@@ -146,10 +147,10 @@ private:
     };
 
 public:
-    typedef cci_iterator<typename Container::iterator> iterator;
-    typedef cci_iterator<typename Container::const_iterator> const_iterator;
-    typedef std::reverse_iterator<iterator> reverse_iterator;
-    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef iterator_impl<typename Container::iterator>       iterator;
+    typedef iterator_impl<typename Container::const_iterator> const_iterator;
+    typedef std::reverse_iterator<iterator>                   reverse_iterator;
+    typedef std::reverse_iterator<const_iterator>             const_reverse_iterator;
 
     cci_filtered_range(const Predicate& pred,
                        const Container& container):
