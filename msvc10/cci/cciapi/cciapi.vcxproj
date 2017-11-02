@@ -130,7 +130,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -138,11 +138,8 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_handle.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_broker.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.cpp" />
-    <ClCompile Include="..\..\..\src\cci_cfg\cci_global_cfg_broker.cpp" />
+	<ClCompile Include="..\..\..\src\cci_cfg\cci_broker_handle.cpp" />
+	<ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_if.cpp" />
     <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp" />
@@ -150,7 +147,9 @@
     <ClCompile Include="..\..\..\src\cci_cfg\cci_report_handler.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_name_gen.cpp" />
     <ClCompile Include="..\..\..\src\cci_core\cci_value.cpp" />
-    <ClCompile Include="..\..\..\src\cci_core\cci_value_converter.cpp" />
+	<ClCompile Include="..\..\..\src\cci_core\cci_value_converter.cpp" />
+	<ClCompile Include="..\..\..\src\cci_utils\broker.cpp" />
+	<ClCompile Include="..\..\..\src\cci_utils\consuming_broker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cci_configuration">
@@ -161,8 +160,6 @@
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_types.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_cfg_broker.h" />
-    <ClInclude Include="..\..\..\src\cci_cfg\cci_cfg_private_broker.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h" />
     <ClInclude Include="..\..\..\src\cci_cfg\cci_mutable_types.h" />
@@ -186,6 +183,8 @@
     <ClInclude Include="..\..\..\src\cci_core\cci_version.h" />
     <ClInclude Include="..\..\..\src\cci_core\rapidjson.h" />
     <ClInclude Include="..\..\..\src\cci_core\systemc.h" />
+	<ClCompile Include="..\..\..\src\cci_utils\broker.h" />
+	<ClCompile Include="..\..\..\src\cci_utils\consuming_broker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
