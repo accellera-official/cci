@@ -31,11 +31,16 @@ CCI_OPEN_NAMESPACE_
 
 template<typename T, cci_param_mutable_type TM> class cci_param_typed;
 
-// CCI Configuration parameter handle class
 /**
-* Typed base class all cci parameters derive from.
-* This class provided helpers for casting in and out of the base typeless functions
-*/
+ * @brief Type-safe parameter handle
+ *
+ * This class provides a typed handle to access a CCI parameter.
+ * In addition to the untyped capabilities, it provides type-safe
+ * access to the parameter value and allows registering typed
+ * callbacks.
+ *
+ * @see cci_param_untyped_handle, cci_param_if
+ */
 template<typename T>
 class cci_param_typed_handle : public cci_param_untyped_handle
 {
@@ -43,43 +48,23 @@ public:
     /// The parameter's value type.
     typedef T value_type;
 
-    ///Assigns parameter a new value from another parameter handle
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed_handle& operator= (const cci_param_typed_handle & rhs);
+    /// Constructor to create a typed parameter handle
+    explicit cci_param_typed_handle(cci_param_untyped_handle untyped);
 
-    ///Assigns parameter a new value from another untyped parameter handle
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed_handle& operator= (const cci_param_untyped_handle & rhs);
+#if CCI_CPLUSPLUS >= 201103L
+    cci_param_typed_handle(const cci_param_typed_handle&) = default;
+    cci_param_typed_handle& operator=(const cci_param_typed_handle&) = default;
 
-    ///Assigns parameter a new value from another parameter
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed_handle& operator= (const cci_param_typed<value_type> & rhs);
+    cci_param_typed_handle(cci_param_typed_handle&& that)
+      : cci_param_untyped_handle(CCI_MOVE_(that)) {}
 
-    ///Assigns parameter a new value
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed_handle& operator= (const value_type & rhs);
-
-    ///Assigns parameter a new value from another legacy parameter
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed_handle& operator= (const cci_param_if & rhs);
-
-    ///Conversion operator to be able use cci_param_typed as a regular object
-    operator const value_type& () const;
+    cci_param_typed_handle& operator=(cci_param_typed_handle&& that)
+    {
+        cci_param_untyped_handle::operator=(CCI_MOVE_(that));
+        return *this;
+    }
+    ~cci_param_typed_handle() = default;
+#endif // C++11
 
     ///Sets the stored value to a new value
     /**
@@ -94,11 +79,14 @@ public:
     */
     void set(const value_type & value, const void * pwd);
 
+    /// Convenience shortcut to read the stored value
+    const value_type& operator*() const;
+
     ///Gets the stored value
     const value_type& get_value() const;
 
     ///Get the value passed in via constructor
-    const value_type & get_default_value();
+    const value_type & get_default_value() const;
 
 #define CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_(name)                            \
     /* @copydoc cci_param_untyped::register_##name##_callback(const cci_param_##name##_callback_untyped, cci_untyped_tag) */ \
@@ -157,52 +145,13 @@ public:
 
 #undef CCI_PARAM_TYPED_HANDLE_CALLBACK_DECL_
 
-    /// Constructor to create new parameter handle with given originator and
-    /// original parameter
-    cci_param_typed_handle(cci_param_if& orig_param,
-                           const cci_originator& originator);
-
-    /// Constructor to create a typed parameter handle
-    cci_param_typed_handle(cci_param_untyped_handle untyped);
+private:
+    const value_type& typed_cast(const void* val) const
+      { return *static_cast<const value_type *>(val); }
 };
 
 template <typename T>
-cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_typed_handle<T>& rhs)
-{
-    set(rhs.get_value());
-    return *this;
-}
-
-template <typename T>
-cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_untyped_handle& rhs)
-{
-    set_cci_value(rhs.get_cci_value());
-    return *this;
-}
-
-template <typename T>
-cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_typed<T>& rhs)
-{
-    set(rhs.get_value());
-    return *this;
-}
-
-template <typename T>
-cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const cci_param_if& rhs)
-{
-    set_cci_value(rhs.get_cci_value(m_originator));
-    return *this;
-}
-
-template <typename T>
-cci_param_typed_handle<typename cci_param_typed_handle<T>::value_type>& cci_param_typed_handle<T>::operator=(const value_type& rhs)
-{
-    set(rhs);
-    return *this;
-}
-
-template <typename T>
-cci_param_typed_handle<T>::operator const T&() const
+const T& cci_param_typed_handle<T>::operator *() const
 {
     return get_value();
 }
@@ -222,13 +171,14 @@ void cci_param_typed_handle<T>::set(const value_type& value, const void *pwd)
 template <typename T>
 const T& cci_param_typed_handle<T>::get_value() const
 {
-    return *static_cast<const value_type *>(cci_param_untyped_handle::get_raw_value());
+    return typed_cast(cci_param_untyped_handle::get_raw_value());
 }
 
 template <typename T>
-const typename cci_param_typed_handle<T>::value_type& cci_param_typed_handle<T>::get_default_value()
+const typename cci_param_typed_handle<T>::value_type&
+cci_param_typed_handle<T>::get_default_value() const
 {
-    return *static_cast<const value_type *>(cci_param_untyped_handle::get_raw_default_value());
+    return typed_cast(cci_param_untyped_handle::get_raw_default_value());
 }
 
 #define CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(name)                            \
@@ -277,12 +227,6 @@ CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(post_write)
 CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(pre_read)
 
 CCI_PARAM_TYPED_HANDLE_CALLBACK_IMPL_(post_read)
-
-template <typename T>
-cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_if& orig_param,
-                                                  const cci_originator& originator)
- : cci_param_untyped_handle(orig_param, originator)
-{ }
 
 template <typename T>
 cci_param_typed_handle<T>::cci_param_typed_handle(cci_param_untyped_handle untyped)

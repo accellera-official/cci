@@ -17,8 +17,8 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_PARAM_TYPED_H_INCLUDED_
-#define CCI_CCI_PARAM_TYPED_H_INCLUDED_
+#ifndef CCI_CFG_CCI_PARAM_TYPED_H_INCLUDED_
+#define CCI_CFG_CCI_PARAM_TYPED_H_INCLUDED_
 
 #include "cci_cfg/cci_param_untyped.h"
 #include "cci_cfg/cci_param_untyped_handle.h"
@@ -61,6 +61,9 @@ template<typename T, cci_param_mutable_type TM = CCI_MUTABLE_PARAM>
 class cci_param_typed : public cci_param_untyped
 {
 public:
+    ///@name Typed parameter value access
+    //@{
+
     /// The parameter's value type.
     typedef T value_type;
 
@@ -71,28 +74,6 @@ public:
      */
     cci_param_typed& operator= (const cci_param_typed & rhs);
 
-    ///Assigns parameter a new value from another legacy parameter
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed& operator= (const cci_param_if & rhs);
-
-    ///Assigns parameter a new value from another parameter handle
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed& operator= (
-            const cci_param_typed_handle<value_type> & rhs);
-
-    ///Assigns parameter a new value from another untyped parameter handle
-    /**
-     * @param rhs New value to assign
-     * @return reference to this object
-     */
-    cci_param_typed& operator= (const cci_param_untyped_handle & rhs);
-
     ///Assigns parameter a new value
     /**
      * @param rhs New value to assign
@@ -102,7 +83,7 @@ public:
 
     ///Conversion operator to be able use cci_param_typed as a regular object
     operator const value_type& () const;
-    
+
     ///Sets the stored value to a new value 
     /**
      * @param value new value to assign
@@ -117,75 +98,18 @@ public:
     void set(const value_type & value, const void * pwd);
 
     ///Get the value passed in via constructor
-    const value_type & get_default_value();
+    const value_type & get_default_value() const;
 
-    /// Get a pointer to the stored value.
-    /**
-     * @param originator reference to the originator
-     * @return Pointer to type-punned value
-     */
-    const void* get_raw_value(const cci_originator &originator) const;
-
-    ///Conversion operator to be able use cci_param_typed as a regular object
+    /// Get the current value
     const value_type& get_value() const;
 
-    /// Get a pointer to the default value (passed in via constructor).
-    /**
-     * @return Pointer to type-punned default value
-     */
-    const void* get_raw_default_value() const;
+    /// Get the current value (for an explicit originator)
+    const value_type& get_value(const cci_originator& originator) const;
 
-    /// Sets the value via type-punned argument.
-    /**
-     * @param vp pointer to type-punned value
-     * @pre Type of vp must be equal to the internal type
-     */
-    void set_raw_value(const void* vp);
-
-    /// Sets the value via type-punned argument.
-    /**
-     * @param vp pointer to type-punned value
-     * @param originator reference to the originator
-     * @pre Type of vp must be equal to the internal type
-     */
-    void set_raw_value(const void* vp, const cci_originator& originator);
-
-    /// Sets the value via type-punned argument.
-    /**
-     * @param vp pointer to type-punned value
-     * @param pwd Password needed to unlock the param, ideally any pointer
-     *        address known only by the locking entity, default = NULL
-     * @pre Type of vp must be equal to the internal type
-     */
-    void set_raw_value(const void* vp, const void* pwd);
-
-    /// Sets the value via type-punned argument.
-    /**
-     * @param vp pointer to type-punned value
-     * @param pwd Password needed to unlock the param, ideally any pointer
-     *        address known only by the locking entity, default = NULL
-     * @param originator reference to the originator
-     * @pre Type of vp must be equal to the internal type
-     */
-    void set_raw_value(const void* vp, const void* pwd,
-                       const cci_originator& originator);
+    //@}
 
     ///@name Type-punned value operations
     ///@{
-
-    /// Compare parameter handle values.
-    /**
-     * @param rhs reference to another cci_param_untyped_handle implementation
-     * @return True if both values are equal and of the same data type
-     */
-    bool equals(const cci_param_untyped_handle& rhs) const;
-
-    /// Compare parameter values.
-    /**
-     * @param rhs reference to another cci_param_if implementation
-     * @return True if both values are equal and of the same data type
-     */
-    bool equals(const cci_param_if& rhs) const;
 
     /// Returns a basic type this parameter can be converted to or from
     /// (which is not necessarily the actual parameter type).
@@ -200,85 +124,32 @@ public:
      */
     const std::type_info& get_type_info() const;
 
-    ///@}
-
-    ///@name CCI value Data Type and access
-    ///@{
-
-    /// Set the parameter's value to the given one.
-    /**
-     * @exception cci_exception_set_param Setting value failed
-     * @param val This value is either (in the case of a pure basic param)
-     *        converted into a JSON string and stored in the base param or
-     *        (in the case of a typed parameter) into the actual data type
-     */
-    void set_cci_value(const cci_value& val);
-
-    /// Set the parameter's value to the given one.
-    /**
-     * @exception cci_exception_set_param Setting value failed
-     * @param val This value is either (in the case of a pure basic param)
-     *        converted into a JSON string and stored in the base param or
-     *        (in the case of a typed parameter) into the actual data type
-     * @param pwd This is the password to be used to unlock the param (or NULL
-     *        if no password is to be used)
-     */
-     void set_cci_value(const cci_value& val, const void *pwd);
-
-     /// Set the parameter's value to the given one.
-    /**
-     * @exception cci_exception_set_param Setting value failed
-     * @param val This value is either (in the case of a pure basic param)
-     *        converted into a JSON string and stored in the base param or
-     *        (in the case of a typed parameter) into the actual data type
-     * @param pwd This is the password to be used to unlock the param (or NULL
-     *        if no password is to be used)
-     * @param originator reference to the originator
-     */
-     void set_cci_value(const cci_value& val, const void *pwd, const cci_originator& originator);
-
-    /// Set unlocked parameter's value to the given one.
-    /**
-     * @exception cci_exception_set_param Setting value failed
-     * @param val This value is either (in the case of a pure basic param)
-     *        converted into a JSON string and stored in the base param or
-     *        (in the case of a typed parameter) into the actual data type
-     * @param originator reference to the originator
-     */
-     void set_cci_value(const cci_value& val, const cci_originator& originator);
-
     /// Get the parameter's mutable type
     /**
      * @return Parameter mutable type
      */
     cci_param_mutable_type get_mutable_type() const;
 
-    /// Get the parameter's CCI value.
-    /**
-     * @exception cci_exception_get_param Getting value failed
-     * @return This value is either (in the case of a pure basic param)
-     *         converted from the JSON string or (in the case of a typed
-     *         parameter) from the actual data type
-     */
-    cci_value get_cci_value() const;
+    ///@}
 
-    /// Get the parameter's CCI value.
-    /**
-     * @exception cci_exception_get_param Getting value failed
-     * @param originator reference to the originator
-     * @return This value is either (in the case of a pure basic param)
-     *         converted from the JSON string or (in the case of a typed
-     *         parameter) from the actual data type
-     */
+    ///@name (Untyped) parameter value access
+    ///@{
+
+    using cci_param_if::set_cci_value;
+    /// @copydoc cci_param_if::set_cci_value(const cci_value&, const void*, const cci_originator&)
+    void set_cci_value(const cci_value& val, const void *pwd, const cci_originator& originator);
+
+    using cci_param_if::get_cci_value;
+    /// @copydoc cci_param_if::get_cci_value(const cci_originator&) const
     cci_value get_cci_value(const cci_originator& originator) const;
 
-    /// Get the parameter's default value.
-    /**
-     * @return This default value is either (in the case of a pure basic param)
-     * converted from the JSON string or (in the case of a typed parameter)
-     * from the actual data type
-     */
+    /// @copydoc cci_param_if::get_default_cci_value() const
     cci_value get_default_cci_value() const;
+
+    ///@}
+
+    ///@name Parameter Value Status
+    //@{
 
     /// @copydoc cci_param_untyped::is_default_value()
     bool is_default_value() const;
@@ -286,10 +157,10 @@ public:
     /// @copydoc cci_param_untyped::is_preset_value()
     bool is_preset_value() const;
 
-    /// @copydoc cci_param_untyped::lock(void * pwd)
-    bool lock(void* pwd = NULL);
-
     ///@}
+
+    /// @copydoc cci_param_untyped::lock
+    bool lock(const void* pwd = NULL);
 
     /// @name Post write callback handling
     /// @{
@@ -499,6 +370,8 @@ public:
     cci_param_untyped_handle create_param_handle(
             const cci_originator& originator) const;
 
+    /** @name Constructors */
+    //@{
     /**
      * Constructor with (local/hierarchical) name, default value,
      * description and originator.
@@ -562,7 +435,7 @@ public:
                     const std::string& desc = "",
                     cci_name_type name_type = CCI_RELATIVE_NAME,
                     const cci_originator& originator = cci_originator());
-
+    //@}
 
     void reset()
       { reset(get_originator()); }
@@ -583,6 +456,16 @@ protected:
 private:
     ///@copydoc cci_param_if::preset_cci_value
     virtual void preset_cci_value(const cci_value&, const cci_originator&);
+
+    /// @copydoc cci_param_if::set_raw_value
+    virtual void set_raw_value(const void *vp, const void *pwd,
+                               const cci_originator &originator);
+
+    /// @copydoc cci_param_if::get_raw_value
+    virtual const void *get_raw_value(const cci_originator &originator) const;
+
+    /// @copydoc cci_param_if::get_raw_default_value
+    virtual const void *get_raw_default_value() const;
 
     /// Pre write callback
     bool
@@ -724,42 +607,16 @@ cci_broker_handle find_broker_convenience(const cci_originator &originator)
 
 };
 
-template <typename T, cci_param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
-cci_param_typed<T, TM>::operator=(const cci_param_typed<T,
-        TM>& rhs)
+template<typename T, cci_param_mutable_type TM>
+cci_param_typed<T,TM>&
+cci_param_typed<T,TM>::operator=(const cci_param_typed<T,TM>& rhs)
 {
-    set(rhs.get_value(m_originator));
+    set_value(rhs.get_value());
     return *this;
 }
 
 template <typename T, cci_param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
-cci_param_typed<T, TM>::operator=(const cci_param_if& rhs)
-{
-    set_cci_value(rhs.get_cci_value(m_originator));
-    return *this;
-}
-
-template <typename T, cci_param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
-cci_param_typed<T, TM>::operator=(
-        const cci_param_typed_handle<T>& rhs)
-{
-    set(rhs.get_value());
-    return *this;
-}
-
-template <typename T, cci_param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
-cci_param_typed<T, TM>::operator=(const cci_param_untyped_handle& rhs)
-{
-    set_cci_value(rhs.get_cci_value());
-    return *this;
-}
-
-template <typename T, cci_param_mutable_type TM>
-cci_param_typed<typename cci_param_typed<T, TM>::value_type, TM>&
+cci_param_typed<T, TM>&
 cci_param_typed<T, TM>::operator=(const T& rhs)
 {
     set(rhs);
@@ -779,37 +636,14 @@ const T& cci_param_typed<T, TM>::get_value() const
     // this is totally safe, there are no callbacks, and the originator is only
     // used by the callbacks
     return m_value;
-  } else {
-    return *static_cast<const value_type *>(get_raw_value(get_originator()));
   }
+  return get_value(get_originator());
 }
 
 template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(const void* value)
+const T& cci_param_typed<T, TM>::get_value(const cci_originator& originator) const
 {
-  // fast_write tracks whether, we have no callbacks, no lock, we're allowed to
-  // do the write (it's not immutable) AND the orriginator (last time) was,
-  // indeed, the orriginal m_orriginator. The _only_ way of getting here is from
-  // the owner of the param, hence the orriginator must be m_orriginator. 
-  if (cci_param_untyped::fast_write) {
-    m_value = *static_cast<const value_type*>(value);
-  } else {
-    set_raw_value(value, get_originator());
-  }
-}
-
-template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(
-        const void* value, const cci_originator& originator)
-{
-    set_raw_value(value, NULL, originator);
-}
-
-template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set_raw_value(const void* value,
-                                           const void *pwd)
-{
-    set_raw_value(value, pwd, get_originator());
+  return *static_cast<const value_type *>(get_raw_value(originator));
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -858,14 +692,22 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
 template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::set(const T& value)
 {
-    set_raw_value(&value);
+  // fast_write tracks whether, we have no callbacks, no lock, we're allowed to
+  // do the write (it's not immutable) AND the originator (last time) was,
+  // indeed, the original m_originator. The _only_ way of getting here is from
+  // the owner of the param, hence the originator must be m_originator.
+  if (cci_param_untyped::fast_write) {
+    m_value = value;
+  } else {
+    set_raw_value(&value, NULL, get_originator());
+  }
 }
 
 template <typename T, cci_param_mutable_type TM>
 void cci_param_typed<T, TM>::set(const T& value,
                                  const void *pwd)
 {
-    set_raw_value(&value, pwd);
+    set_raw_value(&value, pwd, get_originator());
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -873,7 +715,7 @@ const void* cci_param_typed<T, TM>::get_raw_value(
         const cci_originator &originator) const
 {
     pre_read_callback(m_value, originator);
-    const void *v=static_cast<const void*>(&m_value);
+    const void *v = &m_value;
     post_read_callback(m_value, originator);
 
     const_cast<cci_param_typed<T,TM>* >(this)->cci_param_untyped::fast_read =
@@ -881,25 +723,6 @@ const void* cci_param_typed<T, TM>::get_raw_value(
         m_post_read_callbacks.vec.size()==0;
 
     return v;
-}
-
-template <typename T, cci_param_mutable_type TM>
-bool cci_param_typed<T, TM>::equals(
-        const cci_param_untyped_handle& rhs) const
-{
-    return rhs.equals(*this);
-}
-
-template <typename T, cci_param_mutable_type TM>
-bool cci_param_typed<T, TM>::equals(const cci_param_if& rhs) const
-{
-    const cci_param_typed<value_type, TM>* other =
-            dynamic_cast<const cci_param_typed<value_type, TM>*>(&rhs);
-    if (other)
-    {
-        return other->m_value == this->m_value;
-    }
-    return false;
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -932,39 +755,20 @@ const std::type_info& cci_param_typed<T, TM>::get_type_info() const
 
 template <typename T, cci_param_mutable_type TM>
 const void* cci_param_typed<T, TM>::get_raw_default_value() const {
-    return &this->m_default_value;
+    return &get_default_value();
 }
 
 template <typename T, cci_param_mutable_type TM>
 const typename cci_param_typed<T, TM>::value_type&
-cci_param_typed<T, TM>::get_default_value()
+cci_param_typed<T, TM>::get_default_value() const
 {
-    return *static_cast<const value_type *>(get_raw_default_value());
-}
-
-template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set_cci_value(const cci_value& val)
-{
-    set_cci_value(val, NULL, get_originator());
-}
-
-template <typename T, cci_param_mutable_type TM>
-  void cci_param_typed<T, TM>::set_cci_value(const cci_value& val, const void *pwd)
-{
-    set_cci_value(val, pwd, get_originator());
+    return this->m_default_value;
 }
 
 template <typename T, cci_param_mutable_type TM>
 cci_param_mutable_type cci_param_typed<T, TM>::get_mutable_type() const
 {
     return TM;
-}
-
-template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set_cci_value(const cci_value& val,
-                                           const cci_originator& originator)
-{
-    set_cci_value(val, NULL, originator);
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -997,17 +801,10 @@ void cci_param_typed<T, TM>::preset_cci_value(const cci_value& val,
 }
 
 template <typename T, cci_param_mutable_type TM>
-cci_value cci_param_typed<T, TM>::get_cci_value() const
+cci_value
+cci_param_typed<T, TM>::get_cci_value(const cci_originator& originator) const
 {
-    return get_cci_value(get_originator());
-}
-
-template <typename T, cci_param_mutable_type TM>
-cci_value cci_param_typed<T, TM>::get_cci_value(
-        const cci_originator& originator) const
-{
-    return cci_value(
-            *static_cast<const value_type *>(get_raw_value(originator)));
+    return cci_value( get_value(originator) );
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -1024,8 +821,10 @@ bool cci_param_typed<T, TM>::is_default_value() const
 template <typename T, cci_param_mutable_type TM>
 bool cci_param_typed<T, TM>::is_preset_value() const
 {
-  cci_value init_value = m_broker_handle.get_preset_cci_value(get_name());
-  if(!init_value.is_null()) {
+  const std::string& name = get_name();
+  if (m_broker_handle.has_preset_value(name))
+  {
+    cci_value init_value = m_broker_handle.get_preset_cci_value(name);
     T i;
     if (init_value.try_get<T>(i)) {
       return i == m_value;
@@ -1035,7 +834,7 @@ bool cci_param_typed<T, TM>::is_preset_value() const
 }
 
 template <typename T, cci_param_mutable_type TM>
-bool cci_param_typed<T, TM>::lock(void* pwd)
+bool cci_param_typed<T, TM>::lock(const void* pwd)
 {
   cci_param_untyped::fast_write=false;
   return cci_param_untyped::lock(pwd);
@@ -1105,7 +904,7 @@ template <typename T, cci_param_mutable_type TM>
 cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(
         const cci_originator& originator) const
 {
-    return cci_param_typed_handle<value_type>(
+    return cci_param_untyped_handle(
         (*(const_cast<cci_param_typed<T,TM>* >(this))),originator);
 }
 
@@ -1197,4 +996,4 @@ using cci_param = cci_param_typed<T,TM>;
 #endif
 
 CCI_CLOSE_NAMESPACE_
-#endif //CCI_CNF_CCI_PARAM_H_INCLUDED_
+#endif //CCI_CFG_CCI_PARAM_TYPED_H_INCLUDED_

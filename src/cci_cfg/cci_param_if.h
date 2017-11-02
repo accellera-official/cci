@@ -50,24 +50,108 @@ class cci_originator;
 class cci_param_if : public cci_param_callback_if
 {
     friend class cci_param_untyped_handle;
-
 public:
 
-    ///@name (Untyped) parameter value access
+    /// @name (Untyped) parameter value access
     //@{
 
-    /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const cci_originator&)
+    /**
+     * @brief Set the parameter value from a given cci_value
+     * @param val new value passed to the parameter
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion from the supplied cci_value to
+     *            the parameter's underlying data type fails.
+     * @exception cci_report_handler::set_param_failed
+     *            in case of mutability, locked state or other failures
+     *
+     * This overload uses the parameter's own originator for access tracking.
+     * @see get_originator()
+     */
+    void set_cci_value(const cci_value& val)
+      { set_cci_value(val, NULL); }
+
+    /**
+     * @brief Set the parameter value from a given cci_value
+     * @param val new value passed to the parameter
+     * @param pwd the password, with which the parameter is currently locked
+     *            (or NULL, if the parameter is not locked)
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion from the supplied cci_value to
+     *            the parameter's underlying data type fails.
+     * @exception cci_report_handler::set_param_failed
+     *            in case of mutability, locked state or other failures
+     *
+     * This overload uses the parameter's own originator for access tracking.
+     * @see get_originator()
+     */
+    void set_cci_value(const cci_value& val, const void* pwd)
+      { set_cci_value(val, pwd, get_originator()); }
+
+    /**
+     * @brief Set the parameter value from a given cci_value
+     * @param val new value passed to the parameter
+     * @param originator the accessing originator
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion from the supplied cci_value to
+     *            the parameter's underlying data type fails.
+     * @exception cci_report_handler::set_param_failed
+     *            in case of mutability, locked state or other failures
+     */
     void set_cci_value(const cci_value &val, const cci_originator &originator)
       { set_cci_value(val, NULL, originator); }
 
-    /// @copydoc cci_param_typed::set_cci_value(const cci_value&, const void*, const cci_originator&)
+    /**
+     * @brief Set the parameter value from a given cci_value
+     * @param val new value passed to the parameter
+     * @param pwd the password, with which the parameter is currently locked
+     *            (or NULL, if the parameter is not locked)
+     * @param originator the accessing originator
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion from the supplied cci_value to
+     *            the parameter's underlying data type fails.
+     * @exception cci_report_handler::set_param_failed
+     *            in case of mutability, locked state or other failures
+     * @note This is the only overload that needs to be provided
+     *       by parameter implementations.
+     *
+     * @see set_cci_value(const cci_value&),
+     *      set_cci_value(const cci_value&, const void*),
+     *      set_cci_value(const cci_value&, const cci_originator&)
+     */
     virtual void set_cci_value(const cci_value &val, const void* pwd,
                                const cci_originator &originator) = 0;
 
-    /// @copydoc cci_param_typed::get_cci_value(const cci_originator&)
+    /**
+     * @brief Get the parameter's value converted to cci_value
+     * @return The current value of the parameter's underlying type
+     *         converted to cci_value
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion to a cci_value fails
+     *
+     * This overload uses the parameter's own originator for access tracking.
+     * @see get_originator()
+     */
+    cci_value get_cci_value() const
+      { return get_cci_value(get_originator()); }
+
+    /**
+     * @brief Get the parameter's value converted to cci_value.
+     * @param originator the accessing originator
+     * @return The current value of the parameter's underlying type
+     *         converted to cci_value
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion to a cci_value fails
+     * @see get_cci_value()
+     */
     virtual cci_value get_cci_value(const cci_originator& originator) const = 0;
 
-    /// @copydoc cci_param_typed::get_default_cci_value
+    /**
+     * @brief Get the parameter's default value converted to cci_value
+     * @return The value of the parameter's underlying type
+     *         as given to the constructor, converted to cci_value
+     * @exception cci_report_handler::cci_value_failure
+     *            in case the conversion to a cci_value fails
+     */
     virtual cci_value get_default_cci_value() const = 0;
     //@}
 
@@ -131,12 +215,6 @@ public:
     /// @copydoc cci_param_untyped::get_name
     virtual const std::string &get_name() const = 0;
 
-    /// Computer if the stored values are equal
-    /**
-    * @param rhs reference to another cci_param_if implementation
-    * @return True if both values are equal
-    */
-    virtual bool equals(const cci_param_if &rhs) const = 0;
     /// @copydoc cci_param_typed::get_mutable_type
     virtual cci_param_mutable_type get_mutable_type() const = 0;
 
@@ -249,7 +327,6 @@ private:
 
     /// @copydoc cci_param_untyped::remove_param_handle
     virtual void remove_param_handle(cci_param_untyped_handle* param_handle) = 0;
-
 
     //@}
 
