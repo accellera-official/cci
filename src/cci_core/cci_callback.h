@@ -339,7 +339,7 @@ public:
    * \brief Construct from an untyped callback handle, iff signature matches
    *
    * This constructor is used for type recovery from untyped handles.
-   * If the underlying sigature of the source handle matches the
+   * If the underlying signature of the source handle matches the
    * expected signature of the typed handle, the conversion is successful
    * and the constructed handle is valid.
    *

@@ -31,10 +31,15 @@
 
 #include "cci_core/systemc.h"
 
+/**
+ * @def CCI_NAMESPACE
+ * @brief Main CCI namespace (overridable)
+ * @hideinitializer
+ * @see cci
+ */
 #ifndef CCI_NAMESPACE
-/// Namespace for Accellera Configuration, Control & Inspection (CCI) standard
 # define CCI_NAMESPACE cci
-#endif // CCI_NS_
+#endif // CCI_NAMESPACE
 
 /// Opening a CCI namespace block (internal)
 # define CCI_OPEN_NAMESPACE_  namespace CCI_NAMESPACE {
@@ -43,15 +48,33 @@
 
 /* ------------------------------------------------------------------------ */
 
-// Selected C++ standard baseline, supported values are
-//   199711L (C++03, ISO/IEC 14882:1998, 14882:2003)
-//   201103L (C++11, ISO/IEC 14882:2011)
-//   201402L (C++14, ISO/IEC 14882:2014)
-//   201703L (C++17, N4659: Working Draft, Standard for Programming Language C++)
-//
-// This macro can be used inside the library sources to make certain assumptions
-// on the available features in the underlying C++ implementation.
-//
+/** @namespace cci
+ *  @brief Accellera Configuration, Control & Inspection (CCI) standard
+ */
+
+/** @namespace cci_utils
+ *  @brief CCI utilities (not part of the interoperability standard)
+ */
+
+/* ------------------------------------------------------------------------ */
+
+/**
+ * @def CCI_CPLUSPLUS
+ * @brief Selected C++ standard baseline
+ * @hideinitializer
+ *
+ * This macro can be used inside the library sources to make certain assumptions
+ * on the available features in the underlying C++ implementation.
+ *
+ * Supported values are
+ *  @li @c 199711L (C++03, ISO/IEC 14882:1998, 14882:2003)
+ *  @li @c 201103L (C++11, ISO/IEC 14882:2011)
+ *  @li @c 201402L (C++14, ISO/IEC 14882:2014)
+ *  @li @c 201703L (C++17, ISO/IEC 14882:2017)
+ *
+ * Starting with SystemC 2.3.2, this value should match the @c SC_CPLUSPLUS
+ * macro in order to build compatible models.
+ */
 #ifndef CCI_CPLUSPLUS
 # ifdef SC_CPLUSPLUS // as defined by SystemC >= 2.3.2
 #   define CCI_CPLUSPLUS SC_CPLUSPLUS

@@ -64,6 +64,7 @@ template struct cci_value_converter<sc_dt::sc_ufix>;
 template struct cci_value_converter<sc_dt::sc_ufix_fast>;
 #endif // SC_INCLUDE_FX
 
+#ifndef CCI_DOXYGEN_IS_RUNNING
 // ----------------------------------------------------------------------------
 // C++ builtin types
 
@@ -351,4 +352,5 @@ DEFINE_UNPACK_( sc_dt::sc_lv_base )
   return true;
 }
 
+#endif // CCI_DOXYGEN_IS_RUNNING
 CCI_CLOSE_NAMESPACE_

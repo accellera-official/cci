@@ -35,12 +35,28 @@ class cci_param_typed_handle;
 // forward declaration for friend class
 class cci_broker_handle;
 
-/// CCI configuration broker interface.
 /**
- * This can be used by a tool to access the database or parameter objects, set preset values etc.
- * or can be used by the model itself to get access to configuration objects etc.
+ * @brief CCI configuration broker interface
  *
- * This always returns not the owner's parameter objects but parameter handle wrappers.
+ * This class provides the core interface for "tools" accessing
+ * the availabe configuration parameters in a model.  Parameters
+ * are accessed via brokers, implementing this interface.
+ *
+ * Usually, brokers are not accessed directly, but via broker
+ * handles, including an additional cci_originator for access
+ * tracking.
+ *
+ * The functions of this interface can be grouped as follows:
+ * @li Providing initial preset values for parameters (configuration)
+ * @li Parameter registration and unregistration
+ * @li Parameter lookup and enumeration
+ * @li Callback handling
+ *
+ * @see cci_broker_handle, cci_get_broker(), cci_register_broker()
+ *
+ * For convenience, the CCI PoC implementation provides two
+ * simple brokers:
+ * @see cci_utils::broker, cci_utils::consuming_broker
  */
 class cci_broker_if
  : public cci_broker_callback_if
