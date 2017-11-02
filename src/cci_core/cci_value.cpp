@@ -138,7 +138,7 @@ cci_value_cref::category() const
     return CCI_BOOL_VALUE;
 
   case rapidjson::kNumberType:
-    return THIS->IsDouble() ? CCI_REAL_VALUE : CCI_NUMBER_VALUE;
+    return THIS->IsDouble() ? CCI_REAL_VALUE : CCI_INTEGRAL_VALUE;
 
   case rapidjson::kStringType:
     return CCI_STRING_VALUE;

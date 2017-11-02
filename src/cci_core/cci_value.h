@@ -64,7 +64,7 @@ enum cci_value_category {
 	/// A boolean valued component of data
 	CCI_BOOL_VALUE,
 	/// An integer number component of data
-	CCI_NUMBER_VALUE,
+	CCI_INTEGRAL_VALUE,
 	/// A real number number component of data
 	CCI_REAL_VALUE,
 	/// A string component of data

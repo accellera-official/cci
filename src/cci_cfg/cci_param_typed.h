@@ -909,8 +909,8 @@ cci_param_data_category cci_param_typed<T, TM>::get_data_category() const
 	{
     case CCI_BOOL_VALUE:
         return CCI_BOOL_PARAM;
-	case CCI_NUMBER_VALUE:
-		return CCI_NUMBER_PARAM;
+	case CCI_INTEGRAL_VALUE:
+		return CCI_INTEGRAL_PARAM;
 	case CCI_REAL_VALUE:
 		return CCI_REAL_PARAM;
 	case CCI_STRING_VALUE:
