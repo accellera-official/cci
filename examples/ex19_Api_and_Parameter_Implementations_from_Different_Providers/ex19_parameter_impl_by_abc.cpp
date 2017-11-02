@@ -97,7 +97,6 @@ cci_param_user_data_type::~cci_param_user_data_type()
  *  @return void
  */
 void cci_param_user_data_type::set(const user_data_type& val) {
-  std::cout << "Function cci_param_user_data_type::set Called " << std::endl;
   value = val;
 }
 
@@ -129,7 +128,6 @@ const void* cci_param_user_data_type::get_raw_value(const cci::cci_originator&) 
 *  @return void
 */
 void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_originator &originator) {
-	std::cout << "Function cci_param_user_data_type::set_raw_value Called " << std::endl;
 	if (l_password == NULL) {
 		value = *static_cast<const user_data_type*>(vp);
 	}
@@ -145,7 +143,6 @@ void cci_param_user_data_type::set_raw_value(const void *vp, const cci::cci_orig
  */
 void cci_param_user_data_type::set_raw_value(const void *vp, const void *pwd,
     const cci::cci_originator &originator) {
-  std::cout << "Function cci_param_user_data_type::set_raw_value Called " << std::endl;
   if (l_password == pwd) {
     value = *static_cast<const user_data_type*>(vp);
   }
@@ -157,7 +154,6 @@ void cci_param_user_data_type::set_raw_value(const void *vp, const void *pwd,
  *  @return The user data type for the value of the parameter
  */
 cci::cci_value cci_param_user_data_type::get_default_cci_value() const {
-    std::cout << "Function cci_param_user_data_type::get_default_cci_value Called " << std::endl;
     return c_value; /* TODO */
 }
 
@@ -167,8 +163,6 @@ cci::cci_value cci_param_user_data_type::get_default_cci_value() const {
  *  @return The user data type for the value of the parameter
  */
 const void* cci_param_user_data_type::get_raw_default_value() const {
-  std::cout << "Function cci_param_user_data_type::get_raw_default_value Called " << std::endl;
-
   return &default_value;
 }
 
@@ -180,8 +174,6 @@ const void* cci_param_user_data_type::get_raw_default_value() const {
  *  @return The basic type.
  */
 cci::cci_param_data_category cci_param_user_data_type::get_data_category() const {
-  std::cout << "Function cci_param_user_data_type::get_data_category Called " << std::endl;
-
   return cci::CCI_LIST_PARAM;
 }
 
@@ -195,7 +187,6 @@ cci::cci_param_data_category cci_param_user_data_type::get_data_category() const
  */
 
 void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const void* pwd, const cci::cci_originator& originator) {
-  std::cout << "Function cci_param_user_data_type::set_cci_value Called " << std::endl;
   if (pwd == l_password) {
     c_value = val;
   }
@@ -207,7 +198,6 @@ void cci_param_user_data_type::set_cci_value(const cci::cci_value& val, const vo
  *  @return The cci_value of the parameter
  */
 cci::cci_value cci_param_user_data_type::get_cci_value() const {
-  std::cout << "Function cci_param_user_data_type::get_cci_value Called " << std::endl;
   return c_value;
 }
 
@@ -217,7 +207,6 @@ cci::cci_value cci_param_user_data_type::get_cci_value() const {
  *  @return The cci_value of the parameter
  */
 cci::cci_value cci_param_user_data_type::get_cci_value(const cci::cci_originator&) const {
-    std::cout << "Function cci_param_user_data_type::get_cci_value Called " << std::endl;
     return c_value;
 }
 
@@ -238,8 +227,6 @@ cci::cci_param_mutable_type cci_param_user_data_type::get_mutable_type() const {
  *  @return void
  */
 void cci_param_user_data_type::set_description(const std::string& desc) {
-  std::cout << "Function cci_param_user_data_type::set_description Called " << std::endl;
-
   description = desc;
 }
 
@@ -249,7 +236,6 @@ void cci_param_user_data_type::set_description(const std::string& desc) {
  *  @return The description in a string
  */
 std::string cci_param_user_data_type::get_description() const {
-  std::cout << "Function cci_param_user_data_type::get_description Called " << std::endl;
   return description;
 }
 
@@ -271,8 +257,6 @@ cci::cci_value_map cci_param_user_data_type::get_metadata() const {
  *  @return True of false depending on whether the value is still the default or not
  */
 bool cci_param_user_data_type::is_default_value() const {
-  std::cout << "Function cci_param_user_data_type::is_default_value Called " << std::endl;
-
   return default_flag;
 }
 
@@ -292,8 +276,6 @@ void cci_param_user_data_type::reset(const cci::cci_originator&) {
  *  @return True or false depending on whether the value is valid or not
  */
 bool cci_param_user_data_type::is_invalid_value() {
-  std::cout << "Function cci_param_user_data_type::is_invalid_valueCalled " << std::endl;
-
   return invalid_flag;
 }
 
@@ -303,7 +285,6 @@ bool cci_param_user_data_type::is_invalid_value() {
  *  @return void
  */
 void cci_param_user_data_type::set_invalid_value() {
-  std::cout << "Function cci_param_user_data_type::set_invalid_value Called " << std::endl;
   invalid_flag = true;
 }
 
@@ -313,12 +294,10 @@ void cci_param_user_data_type::set_invalid_value() {
  *  @return True or false depending on whether the value is the preset value or not
  */
 bool cci_param_user_data_type::is_preset_value() const {
-  std::cout << "Function cci_param_user_data_type::is_preset_value Called " << std::endl;
   return preset_flag;
 }
 
 const std::type_info& cci_param_user_data_type::get_type_info() const {
-  std::cout << "Function cci_param_user_data_type::get_type_info Called " << std::endl;
   return typeid(user_data_type);
 }
 
@@ -328,9 +307,6 @@ const std::type_info& cci_param_user_data_type::get_type_info() const {
  *  @return The string representation of the name of the parameter
  */
 const std::string& cci_param_user_data_type::get_name() const {
-  std::cout << "Function cci_param_user_data_type::get_name Called " << std::endl;
-  std::cout << "Return Name = " << nam << std::endl;
-
   return nam;
 }
 
@@ -349,7 +325,6 @@ bool cci_param_user_data_type::is_handle() const {
  *  @return True or false depending on whether callbacks are registered
  */
 bool cci_param_user_data_type::has_callbacks() const {
-  std::cout << "Function cci_param_user_data_type::has_callbacks Called " << std::endl;
   return callback_flag;
 }
 
@@ -360,7 +335,6 @@ bool cci_param_user_data_type::has_callbacks() const {
  *  @return True or false on whether the lock was successful
  */
 bool cci_param_user_data_type::lock(const void* pwd) {
-  std::cout << "Function cci_param_user_data_type::lock Called " << std::endl;
   /* Check if already */
   l_password = pwd;
   lock_flag = true;
@@ -374,8 +348,6 @@ bool cci_param_user_data_type::lock(const void* pwd) {
  *  @return True or false depending on whether the parameter was unlocked
  */
 bool cci_param_user_data_type::unlock(const void* pwd) {
-  std::cout << "Function cci_param_user_data_type::unlock Called " << std::endl;
-
   if (pwd == l_password) {
     lock_flag = false;
     return true;
@@ -389,7 +361,6 @@ bool cci_param_user_data_type::unlock(const void* pwd) {
  *  @return True or false depending on whether or not the parameter is locked
  */
 bool cci_param_user_data_type::is_locked() const {
-  std::cout << "Function cci_param_user_data_type::is_locked Called " << std::endl;
   return lock_flag;
 }
 

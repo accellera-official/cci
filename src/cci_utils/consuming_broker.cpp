@@ -322,12 +322,13 @@ namespace cci_utils {
 
   void consuming_broker::add_param(cci_param_if* par) {
     sc_assert(par != NULL && "Unable to add a NULL parameter");
+    const std::string &par_name = par->get_name();
     bool new_element = m_param_registry.insert(
-      std::pair<std::string, cci_param_if*>(par->get_name(), par)).second;
+      std::pair<std::string, cci_param_if*>(par_name, par)).second;
     sc_assert(new_element && "The same parameter had been added twice!!");
 
     std::map<std::string,cci_value>::iterator iter =
-      m_unused_value_registry.find(par->get_name());
+      m_unused_value_registry.find(par_name);
     if (iter != m_unused_value_registry.end()  ) {
       m_used_value_registry.insert(std::make_pair(iter->first, iter->second));
       m_unused_value_registry.erase(iter);
