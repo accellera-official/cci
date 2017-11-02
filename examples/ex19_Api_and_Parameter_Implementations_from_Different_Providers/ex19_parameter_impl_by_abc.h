@@ -70,7 +70,7 @@ struct cci_param_user_data_type
    *  @param  val The value to assign to the parameter
    *  @return void
    */
-  void set(const user_data_type& val);
+  void set_value(const user_data_type& val);
 
   /**
    *  @fn     user_data_type& get_value()

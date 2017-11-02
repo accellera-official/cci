@@ -80,14 +80,14 @@ public:
     /**
      * @param value new value to assign
      */
-    void set(const value_type& value);
+    void set_value(const value_type& value);
 
     ///Sets the stored value to a new value
     /**
      * @param value new value to assign
      * @param pwd Password needed to unlock the param, ideally any pointer address known only by the locking entity, default = NULL
     */
-    void set(const value_type & value, const void * pwd);
+    void set_value(const value_type & value, const void * pwd);
 
     /// Convenience shortcut to read the stored value
     const value_type& operator*() const;
@@ -167,13 +167,13 @@ const T& cci_param_typed_handle<T>::operator *() const
 }
 
 template <typename T>
-void cci_param_typed_handle<T>::set(const value_type& value)
+void cci_param_typed_handle<T>::set_value(const value_type& value)
 {
     cci_param_untyped_handle::set_raw_value(&value);
 }
 
 template <typename T>
-void cci_param_typed_handle<T>::set(const value_type& value, const void *pwd)
+void cci_param_typed_handle<T>::set_value(const value_type& value, const void *pwd)
 {
     cci_param_untyped_handle::set_raw_value(&value, pwd);
 }

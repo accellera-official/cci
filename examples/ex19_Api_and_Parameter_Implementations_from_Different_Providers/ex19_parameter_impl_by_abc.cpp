@@ -91,12 +91,12 @@ cci_param_user_data_type::~cci_param_user_data_type()
 // Virtual function in cci_param_impl_if
 
 /**
- *  @fn     void cci_param_user_data_type::set(const user_data_type& val)
+ *  @fn     void cci_param_user_data_type::set_value(const user_data_type& val)
  *  @brief  Function to set the value of the parameter
  *  @param  val The value to assign to the parameter
  *  @return void
  */
-void cci_param_user_data_type::set(const user_data_type& val) {
+void cci_param_user_data_type::set_value(const user_data_type& val) {
   value = val;
 }
 

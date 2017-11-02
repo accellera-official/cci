@@ -88,14 +88,14 @@ public:
     /**
      * @param value new value to assign
      */
-    void set(const value_type& value);
+    void set_value(const value_type& value);
     ///Sets the stored value to a new value 
     /**
      * @param value new value to assign
      * @param pwd Password needed to unlock the param, ideally any pointer
      * address known only by the locking entity, default = NULL
      */
-    void set(const value_type & value, const void * pwd);
+    void set_value(const value_type & value, const void * pwd);
 
     ///Get the value passed in via constructor
     const value_type & get_default_value() const;
@@ -604,7 +604,7 @@ template <typename T, cci_param_mutable_type TM>
 cci_param_typed<T, TM>&
 cci_param_typed<T, TM>::operator=(const T& rhs)
 {
-    set(rhs);
+    set_value(rhs);
     return *this;
 }
 
@@ -675,7 +675,7 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
 }
 
 template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set(const T& value)
+void cci_param_typed<T, TM>::set_value(const T& value)
 {
   // fast_write tracks whether, we have no callbacks, no lock, we're allowed to
   // do the write (it's not immutable) AND the originator (last time) was,
@@ -689,8 +689,7 @@ void cci_param_typed<T, TM>::set(const T& value)
 }
 
 template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::set(const T& value,
-                                 const void *pwd)
+void cci_param_typed<T, TM>::set_value(const T& value, const void *pwd)
 {
     set_raw_value(&value, pwd, get_originator());
 }
