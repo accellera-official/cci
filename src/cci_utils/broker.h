@@ -44,9 +44,6 @@ namespace cci_utils
 
   public:
 
-    cci::cci_broker_handle create_broker_handle(
-            const cci::cci_originator& originator);
-
     cci::cci_originator get_latest_write_originator(
             const std::string &parname) const;
 

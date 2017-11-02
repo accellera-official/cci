@@ -50,24 +50,18 @@ public:
     friend class cci_param_if;
 
     /// Destructor
-    virtual ~cci_broker_if() {};
+    virtual ~cci_broker_if() {}
 
-    /// Creates or returns existing responsible handle for this broker for the
-    /// given originator
     /**
-     * This is called by the broker manager when the static search functions
-     * shall return a broker handle. It is possible (but "senseless") to call
-     * this as a user. Returned instances shall be deleted together
-     * with the original broker.
-     *
-     * It is ok to nest calls with the same originator.
-     *
-     * @param originator   Originator for which the broker handle shall be
-     *                     returned
-     * @return Broker handle
+     * @brief Convenience function to create a new broker handle
+     * @param originator Originator for access tracking (forwarded to parameter handles)
+     * @return broker handle for the given (or current) originator
+     * @note  The default argument can only be reliably used from within
+     *        the SystemC hierarchy during elaboration.
+     * @see cci_originator
      */
-    virtual cci_broker_handle create_broker_handle(
-            const cci_originator &originator = cci_originator()) = 0;
+    cci_broker_handle
+    create_broker_handle(const cci_originator &originator = cci_originator()) const;
 
     /// Name of this broker
     /**
@@ -282,16 +276,11 @@ protected:
       { return cci_originator( cci_originator::unknown_tag() ); }
 };
 
-/// Creates or returns the one non-private global broker provided by
-/// the broker implementation. Called by the header function
-/// @see cci_broker_manager::get_broker, NEVER call this as a user!
-/**
- * This returns the raw global broker, not a handle, thus this
- * shall not be returned directly to the user!
- *
- * @return The one non-private global broker (not wrapped with a handle)
- */
-cci_broker_handle cci_get_global_broker(const cci_originator& originator);
+inline cci_broker_handle
+cci_broker_if::create_broker_handle(const cci_originator& originator) const
+{
+  return cci_broker_handle(*const_cast<cci_broker_if*>(this), originator);
+}
 
 CCI_CLOSE_NAMESPACE_
 

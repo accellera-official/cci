@@ -226,9 +226,16 @@ public:
 
     //@}
 
-    /// @copydoc cci_param_typed::create_param_handle
-    virtual cci_param_untyped_handle
-    create_param_handle(const cci_originator &originator) const = 0;
+    /**
+     * @brief Convenience function to create a new parameter handle
+     * @param originator Originator for access tracking
+     * @return parameter handle for the given (or current) originator
+     * @note  The default argument can only be reliably used from within the
+     *        SystemC hierarchy during elaboration.
+     * @see cci_originator
+     */
+    cci_param_untyped_handle
+    create_param_handle(const cci_originator& originator = cci_originator()) const;
 
     /// Reset
     virtual void reset(const cci_originator &originator) = 0;

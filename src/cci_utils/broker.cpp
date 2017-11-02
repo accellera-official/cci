@@ -52,11 +52,6 @@ namespace cci_utils {
   {
   }
 
-  cci_broker_handle broker::create_broker_handle(const cci_originator& originator)
-  {
-    return cci_broker_handle(*this, originator);
-  }
-
   cci_originator broker::get_latest_write_originator(const std::string &parname) const
   {
     if (sendToParent(parname)) {

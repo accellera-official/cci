@@ -46,11 +46,6 @@ namespace cci_utils {
   {
   }
 
-  cci_broker_handle consuming_broker::create_broker_handle(const cci_originator& originator)
-  {
-    return cci_broker_handle(*this, originator);
-  }
-
   const std::string &consuming_broker::name() const
   {
     return m_name;

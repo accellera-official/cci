@@ -355,21 +355,6 @@ public:
 
     /// @}
 
-
-    /// Creates a parameter handle object holding the originator information
-    /// and pointing to the same parameter
-    /**
-     * This shall be used by the broker when returning a not yet created
-     * parameter handle.
-     *
-     * @param originator  Originator object the returned parameter handle
-     *        shall represent
-     * @return  A newed copy pointing to the same implementation parameter.
-     *          Memory management has to be done by the caller!
-     */
-    cci_param_untyped_handle create_param_handle(
-            const cci_originator& originator) const;
-
     /** @name Constructors */
     //@{
     /**
@@ -899,14 +884,6 @@ CCI_PARAM_TYPED_CALLBACK_IMPL_(pre_read)
 
 // Post read callback
 CCI_PARAM_TYPED_CALLBACK_IMPL_(post_read)
-
-template <typename T, cci_param_mutable_type TM>
-cci_param_untyped_handle cci_param_typed<T, TM>::create_param_handle(
-        const cci_originator& originator) const
-{
-    return cci_param_untyped_handle(
-        (*(const_cast<cci_param_typed<T,TM>* >(this))),originator);
-}
 
 /// Constructors
 
