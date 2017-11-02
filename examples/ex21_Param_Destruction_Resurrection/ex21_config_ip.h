@@ -85,8 +85,11 @@ public:
             // Allow simple_ip to resurrect sim_ip.int_param
             wait(40, sc_core::SC_NS);
 
-            // Check param handle validity (force check first)
-            if (int_param_handle.is_valid(true)) {
+            // re-lookup parameter
+            int_param_handle = m_broker.get_param_handle(int_param_name);
+
+            // Check validity of parameter handle
+            if (int_param_handle.is_valid()) {
                 XREPORT("execute: [EXTERNAL] Parameter handle of "
                                 << int_param_name << " is valid again");
             } else {

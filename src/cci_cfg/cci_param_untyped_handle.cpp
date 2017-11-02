@@ -34,7 +34,6 @@ cci_param_untyped_handle::
                           , const cci_originator & originator )
   : m_param(&param)
   , m_originator(originator)
-  , m_param_name( cci_get_name(param.get_name().c_str()) )
 {
     m_param->add_param_handle(this);
 }
@@ -43,16 +42,6 @@ cci_param_untyped_handle::
   cci_param_untyped_handle(const cci_originator & originator)
   : m_param(NULL)
   , m_originator(originator)
-  , m_param_name(NULL)
-{}
-
-cci_param_untyped_handle::
-  cci_param_untyped_handle( const cci_originator & originator
-                          , const std::string& name )
-  : m_param(NULL)
-  , m_originator(originator)
-  // , m_param_name( cci_get_name(name.c_str()) )
-  , m_param_name( name.c_str() )
 {}
 
 cci_param_untyped_handle::~cci_param_untyped_handle()
@@ -64,7 +53,6 @@ cci_param_untyped_handle::
   cci_param_untyped_handle(const cci_param_untyped_handle& param_handle)
     : m_param(param_handle.m_param)
     , m_originator(param_handle.m_originator)
-    , m_param_name(param_handle.m_param_name)
 {
     if(m_param) {
         m_param->add_param_handle(this);
@@ -76,7 +64,6 @@ cci_param_untyped_handle::
   cci_param_untyped_handle(cci_param_untyped_handle&& param_handle)
     : m_param(CCI_MOVE_(param_handle.m_param))
     , m_originator(CCI_MOVE_(param_handle.m_originator))
-    , m_param_name(CCI_MOVE_(param_handle.m_param_name))
 {
     if(m_param) {
         m_param->add_param_handle(this);
@@ -96,7 +83,6 @@ cci_param_untyped_handle::operator=(const cci_param_untyped_handle& param_handle
 
     m_param      = param_handle.m_param;
     m_originator = param_handle.m_originator;
-    m_param_name = param_handle.m_param_name;
 
     if (m_param) {
         m_param->add_param_handle(this);
@@ -117,7 +103,6 @@ cci_param_untyped_handle::operator=(cci_param_untyped_handle&& param_handle)
 
     m_param      = CCI_MOVE_(param_handle.m_param);
     m_originator = CCI_MOVE_(param_handle.m_originator);
-    m_param_name = CCI_MOVE_(param_handle.m_param_name);
 
     if (m_param) {
         m_param->add_param_handle(this);
@@ -306,11 +291,8 @@ void cci_param_untyped_handle::reset()
   m_param->reset(m_originator);
 }
 
-bool cci_param_untyped_handle::is_valid(bool check) const
+bool cci_param_untyped_handle::is_valid() const
 {
-    if(check && !m_param) {
-        check_is_valid(false);
-    }
     return m_param != NULL;
 }
 
@@ -321,21 +303,10 @@ void cci_param_untyped_handle::invalidate() {
     m_param = NULL;
 }
 
-void cci_param_untyped_handle::check_is_valid(bool report_error) const
+void cci_param_untyped_handle::check_is_valid() const
 {
     bool invalid_error = !is_valid();
     if(invalid_error) {
-        if(m_param_name) {
-            cci_param_handle param_handle =
-                    cci_broker_manager::get_broker(m_originator).
-                            get_param_handle(m_param_name);
-            if(param_handle.is_valid()) {
-                invalid_error = false;
-                *const_cast<cci_param_handle*>(this) = CCI_MOVE_(param_handle);
-            }
-        }
-    }
-    if(report_error && invalid_error) {
         CCI_REPORT_ERROR("cci_param_untyped_handle/check_is_valid",
                          "The handled parameter is not valid.");
         cci_abort(); // cannot recover from here

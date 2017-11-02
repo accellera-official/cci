@@ -53,10 +53,6 @@ public:
     /// Constructor to create an invalid param handle with given originator.
     explicit cci_param_untyped_handle(const cci_originator& originator);
 
-    /// Constructor to create an invalid param handle with given originator.
-    cci_param_untyped_handle(const cci_originator& originator,
-                             const std::string& param_name);
-
     /// Copy constructor
     cci_param_untyped_handle(const cci_param_untyped_handle& param_handle);
 
@@ -234,15 +230,11 @@ public:
 
     ///@}
 
-    /// Indicates if the handled parameter is valid or not
     /**
-     * @param check If set to true and the handle is invalid, the handle will
-     *        try to revalidate itself using the current broker and the name
-     *        of the original parameter before to return the result.
-     *
-     * @return false if handled parameter is invalid; otherwise, true
+     * @brief  Indicates if the handled parameter is valid or not
+     * @return whether handle currently points to a valid parameter
      */
-    bool is_valid(bool check = false) const;
+    bool is_valid() const;
 
     /// Invalidate the parameter handle
     /**
@@ -275,14 +267,12 @@ protected:
 private:
     cci_param_if*  m_param;
     cci_originator m_originator;
-    const char*    m_param_name;
 
     /// Check handled parameter is valid
     /**
      * In case the handled parameter is no more valid, it will report an error.
-     * @param report_error Disable error report
      */
-    void check_is_valid(bool report_error = true) const;
+    void check_is_valid() const;
 };
 
 /// Convenience shortcut for untyped parameter handles
