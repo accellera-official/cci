@@ -45,9 +45,9 @@ class ex16_observer {
    *  @return void
    */
   ex16_observer():
-      m_broker(cci::cci_broker_manager::get_broker(
-              cci::cci_originator("observerOriginator"))),
-      obsv_udt_base_handle(cci::cci_originator("ex16_observer"))
+      m_originator(cci::cci_originator("ex16_observer")),
+      m_broker(cci::cci_get_global_broker(m_originator)),
+      obsv_udt_base_handle(m_originator)
   {
     // Check for the broker type (default or private) using
     // 'is_global_broker()' API
@@ -133,6 +133,7 @@ class ex16_observer {
   }
 
  private:
+  cci::cci_originator m_originator;
   cci::cci_broker_handle m_broker;  ///< CCI configuration broker handle
 
   cci::cci_param_handle obsv_udt_base_handle;  ///< Declare CCI param handle for int type cci-parameter

@@ -26,6 +26,7 @@
 
 #include "ex26_simple_ip.h"
 #include "ex26_config_ip.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -35,6 +36,7 @@
  *  @return and integer of successful execution
  */
 int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   ex26_simple_ip sim_ip("sim_ip");
   ex26_config_ip cfg_ip("cfg_ip");
 
@@ -44,7 +46,7 @@ int sc_main(int argc, char *argv[]) {
     if (std::string(argv[1]) == "--verbose") {
       std::cout << "Here\n";
       
-      cci::cci_param_handle verbose_handle = cci::cci_broker_manager::get_broker( cci::cci_originator("Main")).get_param_handle("cfg_ip.verbose");
+      cci::cci_param_handle verbose_handle = cci::cci_get_broker().get_param_handle("cfg_ip.verbose");
       sc_assert(verbose_handle.is_valid());
       verbose_handle.set_cci_value(cci::cci_value::from_json("true"));
     }

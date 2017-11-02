@@ -160,6 +160,24 @@ public:
      */
     cci_broker_handle& operator=(const cci_broker_handle& broker_handle);
 
+    /// equality between this handle and a broker pointer (typically 'this'
+    /// broker)
+    /**
+     * @param pointer to a broker
+     * @return equality
+     */
+    bool operator==(const cci_broker_if *b) const {
+      return &m_orig_broker==b;
+    }
+
+    /**
+     * @param pointer to a broker
+     * @return inequality
+     */
+    bool operator!=(const cci_broker_if *b) const {
+      return &m_orig_broker!=b;
+    }
+
 private:
     friend class cci_param_if;
     cci_broker_if&       ref()       { return m_orig_broker; }

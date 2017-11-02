@@ -43,7 +43,7 @@ SC_MODULE(ex10_parameter_configurator) {
    */
   SC_CTOR(ex10_parameter_configurator):
       cfgr_param_handle(cci::cci_originator(*this)),
-      m_broker(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_get_broker())
   {
     // Checks the parameter exists using name-based look-up
     if (m_broker.param_exists("param_owner.mutable_int_param")) {

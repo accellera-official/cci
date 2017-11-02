@@ -26,6 +26,7 @@
 
 #include "ex15_processor.h"
 #include "ex15_configurator.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
@@ -35,6 +36,7 @@
  *  @return An integer representing the execution status
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   SC_REPORT_INFO("sc_main", "[MAIN] : In this example, the following is"
                  " condition is verified");
   SC_REPORT_INFO("sc_main", "[MAIN] : \t\tx <= 2^n - 1");

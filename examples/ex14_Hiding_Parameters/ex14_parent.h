@@ -52,7 +52,7 @@ SC_MODULE(ex14_parent) {
    */
   ex14_parent(sc_core::sc_module_name _name)
       : sc_core::sc_module(_name),
-        m_broker(cci::cci_broker_manager::get_broker()),
+        m_broker(cci::cci_get_broker()),
         child_inst("child_inst"),
         parent_int_param("parent_int_param", 300),
         parent_buffer("parent_int_buffer", 350),

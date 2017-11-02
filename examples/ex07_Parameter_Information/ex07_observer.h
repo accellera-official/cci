@@ -42,7 +42,7 @@ SC_MODULE(ex07_observer) {
    *  @return void
    */
   SC_CTOR(ex07_observer):
-            m_broker(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_get_broker())
   {
     // Instantiate a cci_originator in order to get hold
     // of the configuration broker interface

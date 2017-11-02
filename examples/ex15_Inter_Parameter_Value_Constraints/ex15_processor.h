@@ -53,7 +53,7 @@ SC_MODULE(ex15_processor) {
   SC_CTOR(ex15_processor)
       : addr_lines_module("addr_lines_mod"),
         memory_block_module("memory_block"),
-        m_broker(cci::cci_broker_manager::get_broker()),
+        m_broker(cci::cci_get_broker()),
         addr_lines_base_handle(cci::cci_originator(*this)),
         mem_size_base_handle(cci::cci_originator(*this))
   {

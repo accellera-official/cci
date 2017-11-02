@@ -41,7 +41,7 @@ public:
      *  @return void
      */
     SC_CTOR(ex22_search_ip):
-        m_broker(cci::cci_broker_manager::get_broker())
+        m_broker(cci::cci_get_broker())
     {
         SC_THREAD(execute);
     }

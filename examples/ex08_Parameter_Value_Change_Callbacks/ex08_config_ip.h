@@ -43,7 +43,7 @@ SC_MODULE(ex08_config_ip) {
    *  @return void
    */
   SC_CTOR(ex08_config_ip):
-            m_broker(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_get_broker())
   {}
 
   /**

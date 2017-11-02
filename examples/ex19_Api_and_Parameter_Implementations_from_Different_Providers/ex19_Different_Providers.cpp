@@ -33,6 +33,7 @@
 
 #include "ex19_parameter_owner.h"
 #include "ex19_parameter_configurator.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int sc_argc, char* sc_argv[])
@@ -44,6 +45,7 @@
  *  @return An integer representing the exit status of the function.
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   // Instantiation of the owner and configurator sc_modules
   ex19_parameter_owner param_owner("param_owner");
   ex19_parameter_configurator param_cfgr("param_setter");

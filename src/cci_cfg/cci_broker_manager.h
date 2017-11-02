@@ -21,33 +21,38 @@
 #define CCI_CCI_BROKER_MANAGER_H_INCLUDED_
 
 #include "cci_cfg/cci_broker_handle.h"
-
+#include "cci_cfg/cci_broker_if.h"
+#include "cci_cfg/cci_config_macros.h"
+#include "cci_cfg/cci_report_handler.h"
 #include <map>
 
 CCI_OPEN_NAMESPACE_
 
 class cci_broker_if;
 
-/// Class managing broker hierarchy
-
-/**
- * To get access to a broker, use static cci_broker_manager::get_broker
- * function.
+///
+/* this is the implementation class for a cci_broker_manager
+ *   it is only required here to enable cci_param_untyped_handle to have access to
+ *  get_broker(originator)
  */
 class cci_broker_manager
 {
-public:
+  friend cci_broker_handle cci_get_broker();
+  friend cci_broker_handle cci_register_broker(cci_broker_if&);
+  friend cci_broker_handle cci_register_broker(cci_broker_if*);
+  friend cci_broker_handle cci_get_global_broker(const cci_originator &);
+  friend class  cci_param_untyped_handle;
+
+private:
     /// Returns a handle to the broker currently on top of broker
     /**
      * Returns a handle to a private or the global broker.
      * Returns a handle to the global broker if no registered broker.
      *
-     * @param originator Originator the handle shall point to
      * @return Broker (private or global) handle
      */
-    static cci_broker_handle get_broker(
-            const cci_originator &originator = cci_originator());
-
+    static cci_broker_handle get_broker(const cci_originator &originator);
+  
     /// Register a broker handle in the broker hierarchy
     /**
      * This can be used to register a private broker handle in the current
@@ -58,27 +63,49 @@ public:
      *
      * @param broker Broker handle to register
      */
-    static cci_broker_if& register_broker(cci_broker_if& broker);
+    static cci_broker_handle register_broker(cci_broker_if& broker);
 
-protected:
-    /// Returns a handle to the parent broker
-    /**
-     * This can be used by a private broker to identify its parent's broker -
-     * which is the broker it needs to forward the public actions to.
-     *
-     * Returns a handle to a private or the global broker.
-     * Returns a handle to the global broker if no parent broker.
-     *
-     * @param originator Originator the handle shall point to
-     * @return Broker (private or global) handle
-     */
-    static cci_broker_handle get_parent_broker(
-            const cci_originator &originator = cci_originator());
+    static cci_broker_handle register_broker(cci_broker_if* broker) 
+    {
+      sc_assert(broker);
+      return register_broker(*broker);
+    }
 
 private:
     /// Public broker hierarchy
-    static std::map<cci_originator, cci_broker_handle> m_brokers;
+    static std::map<const sc_core::sc_object*, cci_broker_if*> m_brokers;
+
 };
+
+/// Returns a handle to the currently responsible broker
+/**
+ * Returns a handle to a private or the global broker.
+ * Returns a handle to the global broker if no registered broker.
+ *
+ * @return Broker (private or global) handle
+ */
+cci_broker_handle cci_get_broker();
+/// Register a broker for the current location
+/**
+ * This can be used to register a private broker handle in the current
+ * location (either within the SystemC object hierarchy or globally).
+ *
+ * In case a different broker has already been registered at the current
+ * location, an error will be generated.
+ *
+ * @param broker Broker handle to register
+ */
+cci_broker_handle cci_register_broker(cci_broker_if& broker);
+/// @copydoc cci_register_broker(cci_broker_if& broker);
+cci_broker_handle cci_register_broker(cci_broker_if* broker);
+
+/**
+ * convenience to get a broker and create a handle from the global scope
+ *
+ * @return A handle to the broker registered at the global scope
+ * This function will throw if there is no broker registered
+ */
+cci_broker_handle cci_get_global_broker(const cci_originator &originator);
 
 
 CCI_CLOSE_NAMESPACE_

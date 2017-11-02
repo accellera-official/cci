@@ -26,6 +26,7 @@
 
 #include "ex11_top_module.h"
 #include "ex11_parameter_configurator.h"
+#include <cci_utils/broker.h>
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
@@ -33,6 +34,7 @@
  *          instantiates the remained of the platform
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   // Instantiation of the owner and configurator sc_modules
   ex11_top_module top_mod("top_mod");
   ex11_parameter_configurator param_cfgr("param_cfgr");

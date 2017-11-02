@@ -46,7 +46,7 @@ SC_MODULE(ex18_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex18_parameter_configurator):
-            m_broker(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_get_broker())
   {
     // Retrieve the list of all cci-parameters within a model.
     complete_parameter_list = m_broker.get_param_handles();

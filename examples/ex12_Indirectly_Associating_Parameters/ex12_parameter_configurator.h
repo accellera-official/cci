@@ -48,7 +48,7 @@ SC_MODULE(ex12_parameter_configurator) {
   SC_CTOR(ex12_parameter_configurator):
       cfgr_param1_handle(cci::cci_originator(*this)),
       cfgr_param2_handle(cci::cci_originator(*this)),
-      m_broker(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_get_broker())
   {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "top_mod.param_owner1.clk_freq_Hz";

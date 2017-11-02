@@ -45,7 +45,7 @@ SC_MODULE(ex13_parameter_configurator) {
    */
   SC_CTOR(ex13_parameter_configurator):
       int_param_handle(cci::cci_originator(*this)),
-      m_broker(cci::cci_broker_manager::get_broker())
+      m_broker(cci::cci_get_broker())
   {
     if (m_broker.param_exists("param_owner.mutable_int_param")) {
       // Getting handle for the integer parameter of onwer module

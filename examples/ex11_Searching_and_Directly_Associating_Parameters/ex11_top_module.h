@@ -54,7 +54,7 @@ SC_MODULE(ex11_top_module) {
    *  @return void
    */
   SC_CTOR(ex11_top_module):
-            m_broker(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_get_broker())
   {
     // Strings to store the names of the owner's parameters
     std::string str1, str2;

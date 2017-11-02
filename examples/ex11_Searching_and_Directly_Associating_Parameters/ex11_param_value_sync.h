@@ -54,7 +54,7 @@ SC_MODULE(ex11_param_value_sync) {
   ex11_param_value_sync(sc_core::sc_module_name _name,
                         std::vector<cci::cci_param_handle> BaseParamList)
       // Define an originator in order to get hold of the default broker
-      : m_broker(cci::cci_broker_manager::get_broker())
+      : m_broker(cci::cci_get_broker())
   {
     // Copy the list of selected base parameters to a local std::vector
     returnBaseParamList = BaseParamList;

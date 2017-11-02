@@ -128,7 +128,7 @@ cci_originator& cci_originator::operator=(cci_originator&& originator)
 #endif // CCI_HAS_CXX_RVALUE_REFS
 
 bool cci_originator::operator==( const cci_originator& originator ) const {
-    if(this->get_object() && originator.get_object()) {
+    if(this->get_object() || originator.get_object()) {
         return this->get_object() == originator.get_object();
     }
     return !std::strcmp(name(), originator.name());

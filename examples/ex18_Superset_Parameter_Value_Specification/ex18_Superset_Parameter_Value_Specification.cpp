@@ -29,6 +29,7 @@
 #include <cci_configuration>
 #include <systemc.h>
 #include <string>
+#include <cci_utils/broker.h>
 
 #include "ex18_cci_configFile_Tool.h"
 #include "ex18_parameter_owner.h"
@@ -44,7 +45,8 @@
  *  @return An integer denoting the return status of execution.
  */
 int sc_main(int sc_argc, char* sc_argv[]) {
-  cci::ex18_cci_configFile_Tool configTool("configFileTool");
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
+  cci::ex18_cci_configFile_Tool configTool("ConfigTool");
   configTool.config("./ex18_Superset_Parameter_Value_Specification/Configuration_File.txt");
 
 #if 0
@@ -52,13 +54,9 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // approach, here is an alternative that assigns preset values to the
   // cci-parameters
 
-  // Declare cci-originator instance in order to retrieve a reference of the
-  // global broker
-  cci::cci_originator sc_main_originator("sc_main_originator");
-
   // Get reference/handle of the default global broker
   cci::cci_broker_handle myMainBrokerIF =
-      cci::cci_broker_manager::get_broker(sc_main_originator);
+      cci::cci_get_broker();
 
   SC_REPORT_INFO("sc_main", "[MAIN] : Set preset value to 'integer type"
                  " parameter'");

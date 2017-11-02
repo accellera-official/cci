@@ -25,8 +25,10 @@
 
 #include "ex21_simple_ip.h"
 #include "ex21_config_ip.h"
+#include <cci_utils/broker.h>
 
 int sc_main(int argc, char *argv[]) {
+    cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
     ex21_simple_ip sim_ip("sim_ip");
     ex21_config_ip cfg_ip("cfg_ip");
 

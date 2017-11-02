@@ -29,6 +29,7 @@ CXXFLAGS = $(OPT) $(OTHER)
 
 SRCS := $(wildcard cci_cfg/*.cpp)
 SRCS += $(wildcard cci_core/*.cpp)
+SRCS += $(wildcard cci_utils/*.cpp)
 
 OBJS := $(SRCS:.cpp=.o)
 DEPS := $(OBJS:.o=.d)

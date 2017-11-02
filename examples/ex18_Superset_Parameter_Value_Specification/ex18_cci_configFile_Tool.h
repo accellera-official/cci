@@ -82,7 +82,7 @@ class ex18_cci_configFile_Tool {
      */
   explicit ex18_cci_configFile_Tool(const char* name)
       : mToolOriginator(name),
-        m_broker(cci::cci_broker_manager::get_broker(mToolOriginator))
+        m_broker(cci::cci_get_global_broker(mToolOriginator))
   {}
 
   /**

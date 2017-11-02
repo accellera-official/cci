@@ -56,7 +56,7 @@ SC_MODULE(ex12_top_module) {
    *  @brief  The class constructor
    */
   SC_CTOR(ex12_top_module):
-            m_broker(cci::cci_broker_manager::get_broker())
+            m_broker(cci::cci_get_broker())
   {
     // Strings to store the names of the owner's parameters
     std::string str1, str2;
