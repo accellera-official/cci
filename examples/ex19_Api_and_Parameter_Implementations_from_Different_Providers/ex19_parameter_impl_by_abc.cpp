@@ -75,6 +75,7 @@ cci_param_user_data_type::cci_param_user_data_type(
       callback_flag(false),
       l_password(NULL),
       description(""),
+      m_originator(cci::cci_originator()),
       m_broker(cci::cci_get_broker())
 {
   nam = _name;
@@ -389,7 +390,7 @@ void cci_param_user_data_type::invalidate_all_param_handles()
 
 cci::cci_originator cci_param_user_data_type::get_originator() const
 {
-  return cci::cci_originator();
+  return m_originator;
 }
 
 cci::cci_callback_untyped_handle

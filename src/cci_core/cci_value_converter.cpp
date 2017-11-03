@@ -64,6 +64,7 @@ template struct cci_value_converter<sc_dt::sc_ufix>;
 template struct cci_value_converter<sc_dt::sc_ufix_fast>;
 #endif // SC_INCLUDE_FX
 
+#ifndef CCI_DOXYGEN_IS_RUNNING
 // ----------------------------------------------------------------------------
 // C++ builtin types
 
@@ -94,14 +95,18 @@ DEFINE_BUILTIN_(std::string, string)
 
 DEFINE_PACK_( sc_core::sc_time )
 {
-  ///@todo normalize output to best matching unit
-  ///      (could benefit from sc_time extension)
+#if CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,3,2)
+  sc_core::sc_time_tuple tp = src;
+  dst.set_list()
+    .push_back( tp.value() )
+    .push_back<std::string>( tp.unit_symbol() );
+#else // print as seconds
   dst.set_list()
     .push_back( src.to_seconds() )
     .push_back( "s" );
+#endif
   return true;
 }
-
 
 static inline sc_core::sc_time sc_time_from_unit( unsigned unit )
 {
@@ -111,6 +116,7 @@ static inline sc_core::sc_time sc_time_from_unit( unsigned unit )
   return sc_core::sc_time( 1, tu );
 }
 
+#if CCI_SYSTEMC_VERSION_CODE_ < CCI_VERSION_HELPER_(2,3,2)
 static inline sc_core::sc_time sc_time_from_symbol( cci_value_string_cref sym )
 {
   static struct symbol
@@ -136,7 +142,7 @@ static inline sc_core::sc_time sc_time_from_symbol( cci_value_string_cref sym )
   sc_assert( unsigned(cursor - symbol_table) < (sizeof(symbol_table)/sizeof(symbol) ) );
   return sc_time_from_unit( unsigned(cursor - symbol_table) );
 }
-
+#endif // SystemC 2.3.2
 
 DEFINE_UNPACK_( sc_core::sc_time )
 {
@@ -158,13 +164,25 @@ DEFINE_UNPACK_( sc_core::sc_time )
       unit  = m.at("unit");
     }
   }
+#if CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,3,2)
+  // encoded as string: "NN <unit>"
+  else if( src.is_string() )
+  {
+    dst = sc_core::sc_time::from_string( src.get_string().c_str() );
+    return true;
+  }
+#endif // SystemC 2.3.2
 
   if( !value.is_number() )
     return false;
 
   if( unit.is_string() )
   {
+#if CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,3,2)
+    dst = sc_core::sc_time( value.get_double(), unit.get_string().c_str() );
+#else
     dst = value.get_double() * sc_time_from_symbol( unit.get_string() );
+#endif // SystemC 2.3.2
     return true;
   }
   else if( unit.is_uint() && unit.get_uint() <= sc_core::SC_SEC )
@@ -334,4 +352,5 @@ DEFINE_UNPACK_( sc_dt::sc_lv_base )
   return true;
 }
 
+#endif // CCI_DOXYGEN_IS_RUNNING
 CCI_CLOSE_NAMESPACE_

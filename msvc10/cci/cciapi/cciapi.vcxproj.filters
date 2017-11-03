@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_handle.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_broker_manager.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_originator.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_if.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_cfg\cci_report_handler.cpp">
+      <Filter>Source Files\cci_cfg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_core\cci_name_gen.cpp">
+      <Filter>Source Files\cci_core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_core\cci_value.cpp">
+      <Filter>Source Files\cci_core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_core\cci_value_converter.cpp">
+      <Filter>Source Files\cci_core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_utils\broker.cpp">
+      <Filter>Source Files\cci_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cci_utils\consuming_broker.cpp">
+      <Filter>Source Files\cci_utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cci_configuration">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_callbacks.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_handle.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_if.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_manager.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_broker_types.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_config_macros.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_macros_undef.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_mutable_types.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_originator.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_callbacks.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_if.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_typed_handle.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_param_untyped_handle.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_cfg\cci_report_handler.h">
+      <Filter>Header Files\cci_cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_callback.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_callback_impl.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_cmnhdr.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_core_types.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_filtered_range.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_meta.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_name_gen.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_value.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_value_converter.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_value_iterator.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\cci_version.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\rapidjson.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_core\systemc.h">
+      <Filter>Header Files\cci_core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_utils\broker.h">
+      <Filter>Header Files\cci_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cci_utils\consuming_broker.h">
+      <Filter>Header Files\cci_utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{33e9d0ef-0ea5-486d-9f02-c9aa3a12d559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cci_core">
+      <UniqueIdentifier>{b023920f-189a-41b3-abd8-51fc5c3ea74d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cci_cfg">
+      <UniqueIdentifier>{dc695b1b-1c3b-4545-89f7-56f6a8229947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{48d5aae6-c337-4560-9983-1e728b7485da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cci_utils">
+      <UniqueIdentifier>{7558eaf9-2d5c-4433-a564-2c06b8011886}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cci_core">
+      <UniqueIdentifier>{b7a55be4-e826-4004-8a1a-65ecd5bc0e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cci_cfg">
+      <UniqueIdentifier>{7f571928-43f0-47dd-9103-5091643a882b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cci_utils">
+      <UniqueIdentifier>{13691759-9527-4e58-91b6-622ec16f7f7e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

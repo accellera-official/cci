@@ -425,6 +425,7 @@ private:
   const void * l_password;  ///< lock password
   std::string description;  ///< parameter description
   std::string nam;  ///< the name of the parameter
+  cci::cci_originator m_originator; /// owner of the parameter
   cci::cci_broker_handle m_broker; ///broker pointer used to register parameter
 };
 // ex19_parameter_impl_by_abc

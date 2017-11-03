@@ -75,14 +75,16 @@ enum cci_value_category {
 	CCI_OTHER_VALUE
 };
 
-///@cond CCI_HIDDEN_FROM_DOXYGEN
-#define CCI_VALUE_CONVERTER_(Type) \
-  typename cci_value_converter<Type>::type
+#ifndef CCI_DOXYGEN_IS_RUNNING
+# define CCI_VALUE_CONVERTER_(Type) \
+    typename cci_value_converter<Type>::type
 #define CCI_VALUE_CHECKED_CONVERTER_(Type) \
-  CCI_VALUE_CONVERTER_(Type) *
-#define CCI_VALUE_REQUIRES_CONVERTER_(Type) \
-  CCI_VALUE_CHECKED_CONVERTER_(Type) = 0
-///@endcond
+    CCI_VALUE_CONVERTER_(Type) *
+# define CCI_VALUE_REQUIRES_CONVERTER_(Type) \
+    CCI_VALUE_CHECKED_CONVERTER_(Type) = 0
+#else
+# define CCI_VALUE_CONVERTER_(Type) Type
+#endif // CCI_DOXYGEN_IS_RUNNING
 
 /// @ref cci_value comparisons
 bool operator==( cci_value_cref const &, cci_value_cref const & );

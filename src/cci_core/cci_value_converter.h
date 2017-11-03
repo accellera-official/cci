@@ -18,17 +18,16 @@
  ****************************************************************************/
 #ifndef CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
 #define CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
+/**
+ * @file   cci_value_converter.h
+ * @brief  conversions from and to a @ref cci::cci_value
+ * @author Philipp A. Hartmann, OFFIS/Intel
+ */
 
 #include "cci_core/systemc.h"
 #include "cci_core/cci_value.h"
 
 #include <cstring> // std::strncpy
-
-/**
- * @file   cci_value_converter.h
- * @brief  conversions from and to a @ref cci_value
- * @author Philipp A. Hartmann, OFFIS/Intel
- */
 
 CCI_OPEN_NAMESPACE_
 
@@ -69,14 +68,30 @@ CCI_OPEN_NAMESPACE_
  *
  * To @em disable conversion support for a given type, you can refer
  * to the helper template @ref cci_value_converter_disabled.
+ *
+ * <b> Predefined converters </b>
+ * @li C++ fundamental types:
+ *     @c bool, @c (unsigned) @c char, @c (unsigned) @c short,
+ *     @c (unsigned) @c int, @c (unsigned) @c long,
+ *     @c float, @c double
+ * @li @c std::string
+ * @li SystemC data types:
+ *     @c sc_dt::int64, @c sc_dt::uint64, @c sc_dt::sc_logic,
+ *     @c sc_dt::sc_int_base, @c sc_dt::sc_uint_base,
+ *     @c sc_dt::sc_signed, @c sc_dt::sc_unsigned, @c sc_dt::sc_bv_base
+ *     @c sc_dt::sc_lv_base and their templated variants
+ * @li SystemC time (@c sc_core::sc_time)
+ * @li Fixed-size C++ arrays and @c std::vector<T> of supported types
+ *
+ * @note SystemC fixpoint type support is prepared, but not yet implemented.
  */
 template<typename T>
 struct cci_value_converter
 {
   typedef T type; ///< common type alias
-  /// convert from \ref type value to a \ref cci_value
+  /// convert from \ref type value to a cci_value
   static bool pack( cci_value::reference dst, type const & src );
-  /// convert from \ref cci_value to a \ref type value
+  /// convert from cci_value to a \ref type value
   static bool unpack( type & dst, cci_value::const_reference src );
 };
 
@@ -119,6 +134,9 @@ template<> struct cci_value_converter<cci_value_ref>       { /* disallowed */ };
 template<> struct cci_value_converter<cci_value_list>      { /* disallowed */ };
 template<> struct cci_value_converter<cci_value_list_cref> { /* disallowed */ };
 template<> struct cci_value_converter<cci_value_list_ref>  { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_map>       { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_map_cref>  { /* disallowed */ };
+template<> struct cci_value_converter<cci_value_map_ref>   { /* disallowed */ };
 
 // ---------------------------------------------------------------------------
 /// helper to convert compatible types (implementation artefact)
@@ -289,6 +307,7 @@ CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_unsigned>;
 CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_bv_base>;
 CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_lv_base>;
 
+/// @see cci_value_converter primary template
 template<int N>
 struct cci_value_converter< sc_dt::sc_int<N> >
   : cci_value_converter< sc_dt::sc_int_base >
@@ -296,6 +315,7 @@ struct cci_value_converter< sc_dt::sc_int<N> >
   typedef sc_dt::sc_int<N> type;
 };
 
+/// @see cci_value_converter primary template
 template<int N>
 struct cci_value_converter< sc_dt::sc_uint<N> >
   : cci_value_converter< sc_dt::sc_uint_base >
@@ -303,6 +323,7 @@ struct cci_value_converter< sc_dt::sc_uint<N> >
   typedef sc_dt::sc_uint<N> type;
 };
 
+/// @see cci_value_converter primary template
 template<int N>
 struct cci_value_converter< sc_dt::sc_bigint<N> >
   : cci_value_converter< sc_dt::sc_signed >
@@ -310,6 +331,7 @@ struct cci_value_converter< sc_dt::sc_bigint<N> >
   typedef sc_dt::sc_bigint<N> type;
 };
 
+/// @see cci_value_converter primary template
 template<int N>
 struct cci_value_converter< sc_dt::sc_biguint<N> >
   : cci_value_converter< sc_dt::sc_unsigned >
@@ -317,6 +339,7 @@ struct cci_value_converter< sc_dt::sc_biguint<N> >
   typedef sc_dt::sc_biguint<N> type;
 };
 
+/// @see cci_value_converter primary template
 template<int N>
 struct cci_value_converter< sc_dt::sc_bv<N> >
   : cci_value_converter< sc_dt::sc_bv_base >
@@ -324,6 +347,7 @@ struct cci_value_converter< sc_dt::sc_bv<N> >
   typedef sc_dt::sc_bv<N> type;
 };
 
+/// @see cci_value_converter primary template
 template<int N>
 struct cci_value_converter< sc_dt::sc_lv<N> >
   : cci_value_converter< sc_dt::sc_lv_base >

@@ -37,16 +37,26 @@ CCI_OPEN_NAMESPACE_
 class cci_param_untyped_handle;
 class cci_originator;
 
-/// Interfaces for cci_param_typed implementation
 /**
-* Features:
-* - Name of the parameter,
-* - stores value untyped as string representation
-* - allows generic typed and list access
-* - CCI value functions
-* - Callback handling
-*/
-
+ * @brief CCI configuration parameter interface
+ *
+ * This class provides the core interfaces between parameter implementations
+ * and the broker(s).  All interactions between the broker and the parameters
+ * are routed through this interface, most commonly by using explicit
+ * parameter handles, which include an additional cci_originator for access
+ * tracking.
+ *
+ * The functions of this interface can be grouped as follows:
+ * @li Basic information (name, documentation, metadata, type information)
+ * @li Generic untyped access via cci_value
+ * @li Generic callback handling
+ * @li Access control (aka locking)
+ *
+ * The type-punned access functions are only needed for parameter
+ * implementations (@c *_raw_value) and are marked @c private.
+ *
+ * @see cci_param_untyped_handle, cci_param_typed_handle<T>
+ */
 class cci_param_if : public cci_param_callback_if
 {
     friend class cci_param_untyped_handle;

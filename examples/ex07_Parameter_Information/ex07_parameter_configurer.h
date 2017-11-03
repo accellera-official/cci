@@ -45,10 +45,10 @@ SC_MODULE(ex07_parameter_configurer) {
    *  @return void
    */
   SC_CTOR(ex07_parameter_configurer)
-      : int_param_handle(cci::cci_originator(*this)),
+      : m_broker(cci::cci_get_broker()),
+        int_param_handle(cci::cci_originator(*this)),
         str_param_handle(cci::cci_originator(*this)),
-        check(0),
-        m_broker(cci::cci_get_broker())
+        check(0)
   {
     // Check for the broker type (default or private)
     // using 'is_global_broker()' API

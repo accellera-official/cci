@@ -48,10 +48,11 @@ SC_MODULE(ex26_simple_ip) {
    *  @return void
    */
   SC_CTOR(ex26_simple_ip)
-  // Initialize int_param with 0
-    : int_param("int_param", 0),
-      normal_int(0),
-      socket("simple_ip_socket") {
+    : socket("simple_ip_socket")
+    // Initialize int_param with 0
+    , int_param("int_param", 0)
+    , normal_int(0)
+  {
 
     socket.register_b_transport(this, &ex26_simple_ip::b_transport);
 

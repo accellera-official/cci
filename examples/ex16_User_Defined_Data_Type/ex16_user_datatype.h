@@ -137,8 +137,8 @@ typedef cci::cci_param<route_table_ut> user_data_type;
 inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
 {
 	return lhs.d_address == rhs.d_address &&
-		lhs.index == lhs.index &&
-		lhs.s_address == lhs.s_address;
+		lhs.index == rhs.index &&
+		lhs.s_address == rhs.s_address;
 }
 
 #endif  // EXAMPLES_EX16_USER_DEFINED_DATA_TYPE_EX16_USER_DATATYPE_H_
