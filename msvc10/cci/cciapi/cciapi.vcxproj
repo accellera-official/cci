@@ -180,11 +180,12 @@
     <ClInclude Include="..\..\..\src\cci_core\cci_name_gen.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_value.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_value_converter.h" />
+    <ClInclude Include="..\..\..\src\cci_core\cci_value_iterator.h" />
     <ClInclude Include="..\..\..\src\cci_core\cci_version.h" />
     <ClInclude Include="..\..\..\src\cci_core\rapidjson.h" />
     <ClInclude Include="..\..\..\src\cci_core\systemc.h" />
-	<ClCompile Include="..\..\..\src\cci_utils\broker.h" />
-	<ClCompile Include="..\..\..\src\cci_utils\consuming_broker.h" />
+	<ClInclude Include="..\..\..\src\cci_utils\broker.h" />
+	<ClInclude Include="..\..\..\src\cci_utils\consuming_broker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
