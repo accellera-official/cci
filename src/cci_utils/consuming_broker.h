@@ -26,9 +26,6 @@ protected:
     // but can be used as a global broker if desired.
 
 public:
-    cci::cci_broker_handle create_broker_handle(
-      const cci::cci_originator& originator);
-
     cci::cci_originator get_latest_write_originator(
       const std::string &parname) const;
 
@@ -114,11 +111,6 @@ public:
   protected:
     /// Get original parameter (internal method)
     cci::cci_param_if* get_orig_param(const std::string &parname) const;
-
-    /// Get parameter handle (internal method)
-    cci::cci_param_untyped_handle get_param_handle(
-            cci::cci_param_if& orig_param,
-            const cci::cci_originator& originator) const;
 
     std::string m_name;
     const cci::cci_originator m_originator;    

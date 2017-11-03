@@ -46,11 +46,6 @@ namespace cci_utils {
   {
   }
 
-  cci_broker_handle consuming_broker::create_broker_handle(const cci_originator& originator)
-  {
-    return cci_broker_handle(*this, originator);
-  }
-
   const std::string &consuming_broker::name() const
   {
     return m_name;
@@ -195,10 +190,9 @@ namespace cci_utils {
   {
     cci_param_if* orig_param = get_orig_param(parname);
     if (orig_param) {
-      return get_param_handle(*orig_param, originator);
-    } else {
-      return cci_param_untyped_handle(originator, parname);
+      return cci_param_untyped_handle(*orig_param, originator);
     }
+    return cci_param_untyped_handle(originator);
   }
 
   bool consuming_broker::param_exists(const std::string &parname) const
@@ -365,7 +359,7 @@ namespace cci_utils {
     std::map<std::string,cci_param_if*>::const_iterator it;
     for (it=m_param_registry.begin(); it != m_param_registry.end(); ++it) {
       cci_param_if* p = it->second;
-      param_handles.push_back(get_param_handle(*p, originator));
+      param_handles.push_back(cci_param_untyped_handle(*p, originator));
     }
     return param_handles;
   }
@@ -376,17 +370,6 @@ namespace cci_utils {
   {
     return cci_param_range(pred,
                            get_param_handles(originator));
-  }
-
-
-  cci_param_untyped_handle consuming_broker::get_param_handle(
-    cci_param_if& orig_param,
-    const cci_originator& originator) const
-  {
-    cci_param_untyped_handle param_handle = orig_param.create_param_handle(
-      originator);
-    sc_assert(param_handle.is_valid());
-    return param_handle;
   }
 
   bool consuming_broker::is_global_broker() const

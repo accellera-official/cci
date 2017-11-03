@@ -41,7 +41,6 @@ class cci_broker_manager
   friend cci_broker_handle cci_register_broker(cci_broker_if&);
   friend cci_broker_handle cci_register_broker(cci_broker_if*);
   friend cci_broker_handle cci_get_global_broker(const cci_originator &);
-  friend class  cci_param_untyped_handle;
 
 private:
     /// Returns a handle to the broker currently on top of broker

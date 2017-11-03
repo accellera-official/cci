@@ -22,6 +22,7 @@
  */
 
 #include "cci_cfg/cci_param_if.h"
+#include "cci_cfg/cci_param_untyped_handle.h"
 #include "cci_cfg/cci_broker_if.h"
 #include "cci_cfg/cci_report_handler.h"
 
@@ -56,6 +57,14 @@ void cci_param_if::invalidate_all_param_handles()
   CCI_REPORT_FATAL( "DESTROY_PARAM"
                   , "Failed to invalidate parameter handles! "
                     "(pure virtual function called)" );
+}
+
+cci_param_untyped_handle
+cci_param_if::create_param_handle(const cci_originator& originator) const
+{
+  // need to keep this function const, as it is used inside the callback handling,
+  // still need to create the handle from a non-const pointer
+  return cci_param_untyped_handle(*const_cast<cci_param_if*>(this), originator);
 }
 
 CCI_CLOSE_NAMESPACE_

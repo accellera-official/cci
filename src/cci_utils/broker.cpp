@@ -52,11 +52,6 @@ namespace cci_utils {
   {
   }
 
-  cci_broker_handle broker::create_broker_handle(const cci_originator& originator)
-  {
-    return cci_broker_handle(*this, originator);
-  }
-
   cci_originator broker::get_latest_write_originator(const std::string &parname) const
   {
     if (sendToParent(parname)) {
@@ -148,18 +143,15 @@ namespace cci_utils {
   {
     if (sendToParent(parname)) {
       return m_parent.get_param_handle(parname);
-    } else {
-      cci_param_if* orig_param = get_orig_param(parname);
-      if (orig_param) {
-        return consuming_broker::get_param_handle(*orig_param, originator);
-      } else {
-        if (has_parent) {
-          return m_parent.get_param_handle(parname);
-        } else {
-          return cci_param_untyped_handle(originator, parname);
-        }
-      }
     }
+    cci_param_if* orig_param = get_orig_param(parname);
+    if (orig_param) {
+      return cci_param_untyped_handle(*orig_param, originator);
+    }
+    if (has_parent) {
+      return m_parent.get_param_handle(parname);
+    }
+    return cci_param_untyped_handle(originator);
   }
 
 

@@ -105,7 +105,7 @@ SC_MODULE(ex13_parameter_owner) {
       // parameter without unlocking it
       XREPORT("[OWNER] : Overwrite value of the (locked!) parameter to 4"
               " without unlocking");
-      int_param.set(4, &key);
+      int_param.set_value(4, &key);
       XREPORT("[OWNER] : Parameter locking status : "
               << int_param.is_locked() << "\tValue : " << int_param.get_value());
 

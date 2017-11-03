@@ -42,59 +42,73 @@ class cci_param_if;
 */
 class cci_param_untyped_handle
 {
-
 public:
+
+    /// @name Construction, destruction, assignment
+    //@{
     /// Constructor to create handle with given originator.
-    cci_param_untyped_handle(cci_param_if & orig_param,
+    cci_param_untyped_handle(cci_param_if& param,
                              const cci_originator& originator);
 
     /// Constructor to create an invalid param handle with given originator.
     explicit cci_param_untyped_handle(const cci_originator& originator);
 
-    /// Constructor to create an invalid param handle with given originator.
-    cci_param_untyped_handle(const cci_originator& originator,
-                                      const std::string&);
-
     /// Copy constructor
     cci_param_untyped_handle(const cci_param_untyped_handle& param_handle);
 
-    /// Destructor.
-    virtual ~cci_param_untyped_handle();
+    /// Copy assignment - update handle to refer to a new parameter
+    cci_param_untyped_handle&
+    operator=(const cci_param_untyped_handle& param_handle);
 
-    ///@name Description
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+    /// Move constructor
+    cci_param_untyped_handle(cci_param_untyped_handle&& that);
+    /// Move assignment - update handle to refer to a new parameter
+    cci_param_untyped_handle&
+    operator=(cci_param_untyped_handle&& that);
+#endif // CCI_HAS_CXX_RVALUE_REFS
+
+    /// Destructor.
+    ~cci_param_untyped_handle();
+
+    //@}
+
+    ///@name Description and metadata
     ///@{
 
     /// @copydoc cci_param_untyped::get_description
     virtual std::string get_description() const;
-
-    ///@}
-
-    ///@name Metadata
-    ///@{
 
     /// @copydoc cci_param_untyped::get_metadata
     cci_value_map get_metadata() const;
 
     ///@}
 
-    ///@name CCI value Data Type and access
+    ///@name (Untyped) parameter value access
     ///@{
 
-    /// @copydoc cci_param_typed::set_cci_value
-    /// Assuming no passwd (passing NULL for the passwd)
+    /**
+     * @copydoc cci_param_if::set_cci_value(const cci_value&)
+     * @note The @c originator is taken from the parameter handle here
+     */
     void set_cci_value(const cci_value& val);
 
-    /// @copydoc cci_param_typed::set_cci_value
-    /// With an explicit passwd
+    /**
+     * @copydoc cci_param_if::set_cci_value(const cci_value&,const void*)
+     * @note The @c originator is taken from the parameter handle here
+     */
     void set_cci_value(const cci_value& val, void *pwd);
 
-    /// @copydoc cci_param_typed::get_cci_value
+    /**
+     * @copydoc cci_param_if::get_cci_value(const cci_originator&)
+     * @note The @c originator is taken from the parameter handle here
+     */
     cci_value get_cci_value() const;
 
-    /// @copydoc cci_param_typed::get_mutable_type
-    cci_param_mutable_type get_mutable_type() const;
-
-    /// @copydoc cci_param_typed::get_default_cci_value
+    /**
+     * @copydoc cci_param_if::get_default_cci_value
+     * @note The @c originator is taken from the parameter handle here
+     */
     cci_value get_default_cci_value() const;
 
     ///@}
@@ -102,20 +116,22 @@ public:
     ///@name Parameter Value Status
     ///@{
 
-    /// @copydoc cci_param_untyped::is_default_value
+    /// @copydoc cci_param_if::is_default_value
     virtual bool is_default_value();
 
 
-    /// @copydoc cci_param_untyped::is_preset_value
+    /// @copydoc cci_param_if::is_preset_value
     virtual bool is_preset_value() const;
 
     ///@}
 
-
-    ///@name Miscellaneous
+    ///@name Originator queries
     ///@{
 
-    /// @copydoc cci_param_untyped::get_latest_write_originator
+    /// @copydoc cci_param_if::get_originator
+    cci_originator get_originator() const;
+
+    /// @copydoc cci_param_if::get_latest_write_originator
     cci_originator get_latest_write_originator() const;
 
     ///@}
@@ -209,33 +225,16 @@ public:
     /// @copydoc cci_param_typed::get_type_info
     const std::type_info& get_type_info() const;
 
-    ///@}
-
-    /// @copydoc cci_param_untyped::get_originator
-    cci_originator get_originator() const;
+    /// @copydoc cci_param_typed::get_mutable_type
+    cci_param_mutable_type get_mutable_type() const;
 
     ///@}
 
-    ///@name Type-punned value operations
-    ///@{
-
-    /// @copydoc cci_param_typed::equals
-    bool equals(const cci_param_untyped_handle& rhs) const;
-
-    /// @copydoc cci_param_typed::equals
-    bool equals(const cci_param_if& rhs) const;
-
-    ///@}
-
-    /// Indicates if the handled parameter is valid or not
     /**
-     * @param check If set to true and the handle is invalid, the handle will
-     *        try to revalidate itself using the current broker and the name
-     *        of the original parameter before to return the result.
-     *
-     * @return false if handled parameter is invalid; otherwise, true
+     * @brief  Indicates if the handled parameter is valid or not
+     * @return whether handle currently points to a valid parameter
      */
-    bool is_valid(bool check = false) const;
+    bool is_valid() const;
 
     /// Invalidate the parameter handle
     /**
@@ -246,14 +245,6 @@ public:
 
     /// Reset the parameter to the intial value
     void reset();
-
-    /// Assigns parameter untyped handle a new value from another legacy
-    /// parameter untyped handle
-    /**
-     * @param param_handle New parameter untyped handle to assign
-     * @return reference to this object
-     */
-    cci_param_untyped_handle& operator=(const cci_param_untyped_handle& param_handle);
 
 protected:
     ///@name Type-punned value operations
@@ -274,21 +265,14 @@ protected:
     ///@}
 
 private:
-    /// Originator of the parameter proxy.
+    cci_param_if*  m_param;
     cci_originator m_originator;
-
-    /// Original parameter
-    mutable cci_param_if* m_orig_param;
 
     /// Check handled parameter is valid
     /**
      * In case the handled parameter is no more valid, it will report an error.
-     * @param report_error Disable error report
      */
-    void check_is_valid(bool report_error = true) const;
-
-    /// Original parameter name
-    const char* m_orig_param_name;
+    void check_is_valid() const;
 };
 
 /// Convenience shortcut for untyped parameter handles
