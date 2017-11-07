@@ -22,7 +22,7 @@ Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.string_param is C++ String
 
 Info: sc_main: Begin Simulation.
 
-Info: cfg_ip: @10 ns, @execute: Type of sim_ip.int_param is a number.
+Info: cfg_ip: @10 ns, @execute: Type of sim_ip.int_param is an integer.
 
 Info: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cci_param_typed_handle<int> *' succeeded
 

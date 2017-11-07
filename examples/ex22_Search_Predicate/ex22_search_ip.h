@@ -49,7 +49,7 @@ public:
     static bool
     integer_type_predicate(const cci::cci_param_untyped_handle handle)
     {
-        return (handle.get_data_category() == cci::CCI_NUMBER_PARAM);
+        return (handle.get_data_category() == cci::CCI_INTEGRAL_PARAM);
     }
 
     static bool
@@ -63,7 +63,7 @@ public:
                              double greater_eq, double lower)
     {
         if(handle.get_data_category() == cci::CCI_REAL_PARAM
-           || handle.get_data_category() == cci::CCI_NUMBER_PARAM) {
+           || handle.get_data_category() == cci::CCI_INTEGRAL_PARAM) {
             return (handle.get_cci_value().get_double() >= greater_eq
                     && handle.get_cci_value().get_double() < lower);
         }

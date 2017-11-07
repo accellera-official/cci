@@ -32,7 +32,7 @@ enum cci_param_data_category {
     /// Boolean valued parameter
     CCI_BOOL_PARAM,
     /// Integer number valued parameter
-    CCI_NUMBER_PARAM,
+    CCI_INTEGRAL_PARAM,
     /// Real number valued parameter
     CCI_REAL_PARAM,
     /// String valued parameter

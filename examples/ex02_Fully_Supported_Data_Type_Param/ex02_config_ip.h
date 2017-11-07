@@ -68,10 +68,10 @@ SC_MODULE(ex02_config_ip) {
       sc_assert(int_param_handle.is_valid());
       cci::cci_param_data_category partype = cci::CCI_OTHER_PARAM;
       partype = int_param_handle.get_data_category();
-      if(partype == cci::CCI_NUMBER_PARAM) {
-        XREPORT("@execute: Type of " << param_name << " is a number.");
+      if(partype == cci::CCI_INTEGRAL_PARAM) {
+        XREPORT("@execute: Type of " << param_name << " is an integer.");
       } else {
-        XREPORT_ERROR("@execute: Type of " << param_name << " is not a number.");
+        XREPORT_ERROR("@execute: Type of " << param_name << " is not an integer.");
       }
 
       // Convert the untyped handle of the param to a typed handle 'int' 
