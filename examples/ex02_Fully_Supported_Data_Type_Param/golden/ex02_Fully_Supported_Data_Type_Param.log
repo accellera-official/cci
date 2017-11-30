@@ -24,15 +24,15 @@ Info: sc_main: Begin Simulation.
 
 Info: cfg_ip: @10 ns, @execute: Type of sim_ip.int_param is an integer.
 
-Info: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cci_param_typed_handle<int> *' succeeded
+Info: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to cci::cci_param_typed_handle<int> succeeded
 
 Info: cfg_ip: @10 ns, @execute: Current value of sim_ip.int_param is -1
 
-Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cci_param_typed_handle<unsigned int> *' type failed.
+Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to cci::cci_param_typed_handle<unsigned int> failed.
 In file: <removed by verify.pl>
 In process: cfg_ip.execute @ 10 ns
 
-Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to 'cci::cci_param_typed_handle<std::string> *' type failed.
+Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to cci::cci_param_typed_handle<std::string> failed.
 In file: <removed by verify.pl>
 In process: cfg_ip.execute @ 10 ns
 
