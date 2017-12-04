@@ -195,32 +195,6 @@ namespace cci_utils {
     return cci_param_untyped_handle(originator);
   }
 
-  bool consuming_broker::param_exists(const std::string &parname) const
-  {
-    {
-      std::map<std::string,cci_param_if*>::const_iterator iter =
-        m_param_registry.find(parname);
-      if( iter != m_param_registry.end() ) {
-        return true;
-      }
-    }
-    {
-      std::map<std::string,cci_value>::const_iterator iter =
-        m_unused_value_registry.find(parname);
-      if (iter != m_unused_value_registry.end()  ) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  bool consuming_broker::is_used(const std::string &parname) const
-  {
-    std::map<std::string,cci_param_if*>::const_iterator iter =
-      m_param_registry.find(parname);  
-    return (iter != m_param_registry.end() );
-  }
-
   bool consuming_broker::has_preset_value(const std::string &parname) const
   {
     {

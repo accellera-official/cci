@@ -4,9 +4,11 @@ ConfigFile_Api: Applying preset value of param 'param_owner.int_param_2' to '200
 ConfigFile_Api: Applying preset value of param 'param_owner.int_param_3' to '300'
 ConfigFile_Api: Applying preset value of param 'param_owner.int_param_4' to '400'
 
-Info: param_cfgr: @0 s, [CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_1	is : 1
+Info: param_cfgr: @0 s, [CFGR within EOE] : List of all parameters in the model
 
-Info: param_cfgr: @0 s, [CFGR within EOE] : 'used status' of cci-parameter : param_owner.int_param_2	is : 1
+Info: param_cfgr: @0 s, [CFGR within EOE] : Parameter Name : param_owner.int_param_1
+
+Info: param_cfgr: @0 s, [CFGR within EOE] : Parameter Name : param_owner.int_param_2
 
 Info: param_cfgr: @0 s, @ 0 s
 

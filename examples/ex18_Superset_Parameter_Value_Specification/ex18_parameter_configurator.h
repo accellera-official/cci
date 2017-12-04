@@ -59,18 +59,11 @@ SC_MODULE(ex18_parameter_configurator) {
    *  @return void
    */
   void end_of_elaboration(void) {
+    XREPORT("[CFGR within EOE] : List of all parameters in the model");
+    
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
-      if (!m_broker.is_used(complete_parameter_list[i].get_name())) {
-        XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
-                << complete_parameter_list[i].get_name() << "\tis : "
-                << m_broker.is_used(
-                        complete_parameter_list[i].get_name()));
-      } else {
-        XREPORT("[CFGR within EOE] : 'used status' of cci-parameter : "
-                << complete_parameter_list[i].get_name() << "\tis : "
-                << m_broker.is_used(
-                        complete_parameter_list[i].get_name()));
-      }
+        XREPORT("[CFGR within EOE] : Parameter Name : "
+                << complete_parameter_list[i].get_name());
     }
 
     XREPORT("@ " << sc_time_stamp());

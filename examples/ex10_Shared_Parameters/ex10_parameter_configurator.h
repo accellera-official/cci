@@ -46,14 +46,10 @@ SC_MODULE(ex10_parameter_configurator) {
       cfgr_param_handle(cci::cci_originator(*this))
   {
     // Checks the parameter exists using name-based look-up
-    if (m_broker.param_exists("param_owner.mutable_int_param")) {
+    // Get handle of the owner parameter
+    cfgr_param_handle = m_broker.get_param_handle("param_owner.mutable_int_param");
+    if (cfgr_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter exists");
-
-      // Get handle of the owner parameter
-      cfgr_param_handle = m_broker.get_param_handle("param_owner.mutable_int_param");
-
-      // Assert if the owner parameter handle returned is NULL
-      sc_assert(cfgr_param_handle.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter doesn't exists.");
     }

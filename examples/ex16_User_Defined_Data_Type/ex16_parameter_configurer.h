@@ -63,14 +63,8 @@ SC_MODULE(ex16_parameter_configurer) {
     udt_param_str = "param_owner.User_data_type_param";
 
     // Check the existence of the user-defined data type cci-parameter
-    if (m_broker.param_exists(udt_param_str)) {
-      // If parameter exists, get handle of the parameter using 'get_param' API
-      udt_param_handle = m_broker.get_param_handle(udt_param_str);
-
-      // Report if parameter handle is returned NULL
-      sc_assert(udt_param_handle.is_valid()
-             && "User define data type CCI Parameter Handle returned NULL");
-    } else {
+    udt_param_handle = m_broker.get_param_handle(udt_param_str);
+    if (!udt_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : User define datatype  parameter does not exist");
     }
 

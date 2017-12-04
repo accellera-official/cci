@@ -62,7 +62,7 @@ SC_MODULE(ex05_config_ip) {
     XREPORT(msg);
 
     // Check for existence of sim_ip.param_1 param
-    if (m_broker.param_exists("sim_ip.param_1")) {
+    if (m_broker.get_param_handle("sim_ip.param_1").is_valid()) {
       XREPORT_ERROR("Instantiate config_ip before simple_ip"
                     " to demonstrate set_preset_cci_value");
     } else {
@@ -89,12 +89,12 @@ SC_MODULE(ex05_config_ip) {
     // update, it will update only the preset value registery.
     m_broker.set_preset_cci_value(int_param_name,cci::cci_value(5));
 
-    // Check for existence of the param
-    if (m_broker.param_exists(int_param_name)) {
-      // Get handle to the param
-      cci::cci_param_handle int_param_handle =
-          m_broker.get_param_handle(int_param_name);
-      sc_assert(int_param_handle.is_valid());
+    // Get handle to the param
+    cci::cci_param_handle int_param_handle =
+        m_broker.get_param_handle(int_param_name);
+    
+    // Check its validity
+    if (int_param_handle.is_valid()) {
 
       // Display new value
       std::string new_value = int_param_handle.get_cci_value().to_json();

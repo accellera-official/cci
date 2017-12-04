@@ -62,13 +62,8 @@ SC_MODULE(ex15_processor) {
     std::string param_path(name());
     param_path.append(".addr_lines_mod.curr_addr_lines");
 
-    if (m_broker.param_exists(param_path)) {
-      addr_lines_base_handle = m_broker.get_param_handle(param_path);
-
-      sc_assert(addr_lines_base_handle.is_valid()
-             && "Returned handle of 'no_of_addr_lines' cci-parameter"
-             " is NULL");
-    } else {
+    addr_lines_base_handle = m_broker.get_param_handle(param_path); 
+    if (!addr_lines_base_handle.is_valid()) {
       XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
               << "\tdoesn't not exists");
     }
@@ -77,13 +72,8 @@ SC_MODULE(ex15_processor) {
     param_path = name();
     param_path.append(".memory_block.mem_size");
 
-    if (m_broker.param_exists(param_path)) {
-      mem_size_base_handle = m_broker.get_param_handle(param_path);
-
-      sc_assert(mem_size_base_handle.is_valid()
-             && "Returned handle of 'memory_block_size' cci-parameter"
-             " is NULL");
-    } else {
+    mem_size_base_handle = m_broker.get_param_handle(param_path);
+    if (!mem_size_base_handle.is_valid()) {
       XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
               << "\tdoesn't not exists");
     }

@@ -72,8 +72,8 @@ SC_MODULE(ex12_top_module) {
     std::string param1_str = "top_mod.param_owner1.clk_freq_Hz";
     std::string param2_str = "top_mod.param_owner2.clock_speed_KHz";
 
-    if (m_broker.param_exists(param1_str)) {
-      cci::cci_param_handle temp_handle = m_broker.get_param_handle(param1_str);
+    cci::cci_param_handle temp_handle = m_broker.get_param_handle(param1_str);
+    if (temp_handle.is_valid()) {
       selectedBaseParamList.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
@@ -86,8 +86,8 @@ SC_MODULE(ex12_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_param_handle
-    if (m_broker.param_exists(param2_str)) {
-      cci::cci_param_handle temp_handle = m_broker.get_param_handle(param2_str);
+    temp_handle = m_broker.get_param_handle(param2_str); 
+    if (temp_handle.is_valid()) {
       selectedBaseParamList.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "

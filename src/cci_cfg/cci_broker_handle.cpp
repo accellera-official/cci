@@ -104,15 +104,6 @@ cci_broker_handle::get_param_handle(const std::string &parname) const
 {
     return m_broker->get_param_handle(parname, m_originator);
 }
-bool cci_broker_handle::param_exists(const std::string &parname) const
-{
-    return m_broker->param_exists(parname);
-}
-
-bool cci_broker_handle::is_used(const std::string &parname) const
-{
-    return m_broker->is_used(parname);
-}
 
 bool cci_broker_handle::has_preset_value(const std::string &parname) const
 {

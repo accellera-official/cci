@@ -70,9 +70,9 @@ SC_MODULE(ex11_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
-    if (m_broker.param_exists(param1_str)) {
-      cci::cci_param_handle temp_handle =
-              m_broker.get_param_handle(param1_str);
+    cci::cci_param_handle temp_handle =
+        m_broker.get_param_handle(param1_str);
+    if (temp_handle.is_valid()) {
       selected_base_param_list.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
@@ -85,9 +85,8 @@ SC_MODULE(ex11_top_module) {
 
     // Check for existence of the owner cci_parameter using name-based look up
     // access and then assign their reference to respective cci_base_param
-    if (m_broker.param_exists(param2_str)) {
-      cci::cci_param_handle temp_handle =
-              m_broker.get_param_handle(param2_str);
+    temp_handle = m_broker.get_param_handle(param2_str);
+    if (temp_handle.is_valid()) {
       selected_base_param_list.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()

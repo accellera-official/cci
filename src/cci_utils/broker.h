@@ -75,10 +75,6 @@ namespace cci_utils
     /// the private broker, or from up the broker stack.
     std::vector<cci::cci_param_untyped_handle> get_param_handles(const cci::cci_originator& originator) const;
 
-    bool param_exists(const std::string &parname) const;
-    
-    bool is_used(const std::string &parname) const;
-
     void add_param(cci::cci_param_if* par);
 
     void remove_param(cci::cci_param_if* par);

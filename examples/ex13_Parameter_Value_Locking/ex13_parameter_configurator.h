@@ -47,13 +47,10 @@ SC_MODULE(ex13_parameter_configurator) {
       m_broker(cci::cci_get_broker()),
       int_param_handle(cci::cci_originator(*this))
   {
-    if (m_broker.param_exists("param_owner.mutable_int_param")) {
       // Getting handle for the integer parameter of onwer module
       // by the configurator
-      int_param_handle = m_broker.get_param_handle("param_owner.mutable_int_param");
-
-      sc_assert(int_param_handle.is_valid() && "Base parameter handle returned NULL");
-    } else {
+      int_param_handle = m_broker.get_param_handle("param_owner.mutable_int_param"); 
+      if (!int_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : int_param not found");
     }
 

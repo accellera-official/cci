@@ -63,7 +63,8 @@ SC_MODULE(ex04_config_ip) {
   void setup_sim_ip(const char *msg, const char *param_name, const char *val) {
     XREPORT(msg);
 
-    if (m_broker.param_exists(param_name)) {
+    if (m_broker.get_param_handle(param_name).is_valid())
+    {
       XREPORT_ERROR("Instantiate config_ip ahead of simple_ip"
                     " to demonstrate this example");
     } else {
@@ -84,22 +85,19 @@ SC_MODULE(ex04_config_ip) {
     wait(20, sc_core::SC_NS);
 
    // Check for existence of the structure_param
-    if (m_broker.param_exists("sim_ip.param_2")) {
-      cci::cci_param_handle param_2_handle =
+    cci::cci_param_handle param_2_handle =
         m_broker.get_param_handle("sim_ip.param_2");
-      if (!param_2_handle.is_valid()) {
-        XREPORT_ERROR("Unable to get handle to 'sim_ip.param_2'!");
-      } else {
+    if (!param_2_handle.is_valid()) {
+        XREPORT_ERROR("Unable to find param - 'sim_ip.param_2'");
+    } 
+    else {
         try {
-          XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
-          param_2_handle.set_cci_value(cci_value(200));
-        } catch (std::exception &x) {
-          XREPORT_WARNING(x.what());
+            XREPORT("Attempting to set value of 'sim_ip.param_2' to 200");
+            param_2_handle.set_cci_value(cci_value(200));
         }
-      }
-      // -- If sim_ip.param_2 is missing
-    } else {
-      XREPORT_ERROR("Unable to find param - 'sim_ip.param_2'");
+        catch (std::exception &x) {
+            XREPORT_WARNING(x.what());
+        }
     }
   }
 

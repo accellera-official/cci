@@ -63,7 +63,7 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
     std::string unique_name = std::string(cci_gen_unique_name(m_name.c_str()));
     if (unique_name != m_name
         && (sc_core::sc_hierarchical_name_exists(m_name.c_str())
-            || broker_handle.param_exists(m_name))) {
+            || broker_handle.has_preset_value(m_name))) {
         m_name = unique_name;
     }
 }

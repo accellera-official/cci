@@ -112,12 +112,6 @@ public:
     /// @copydoc cci_broker_if::get_cci_value
     cci_value get_cci_value(const std::string &parname) const;
 
-    /// @copydoc cci_broker_if::param_exists
-    bool param_exists(const std::string &parname) const;
-
-    /// @copydoc cci_broker_if::is_used
-    bool is_used(const std::string &parname) const;
-
     /// @copydoc cci_broker_if::add_param
     void add_param(cci_param_if *par);
 

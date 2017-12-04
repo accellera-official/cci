@@ -75,10 +75,6 @@ public:
 
     cci::cci_param_range get_param_handles(cci::cci_param_predicate& pred,
                                       const cci::cci_originator& originator) const;
-    
-    bool param_exists(const std::string &parname) const;
-    
-    bool is_used(const std::string &parname) const;
 
     bool has_preset_value(const std::string &parname) const;
 

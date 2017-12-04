@@ -55,23 +55,15 @@ SC_MODULE(ex15_configurator) {
 
     // Check for the existence of 'curr_addr_lines' cci_parameter
     // of ADDRESS_LINES_REGISTER
-    if (m_broker.param_exists(cfgr_param_str1)) {
-        child_base_param_handle = m_broker.get_param_handle(cfgr_param_str1);
-
-      sc_assert(child_base_param_handle.is_valid()
-             && "Handle of 'curr_addr_lines' parameter returned is NULL");
-    } else {
+    child_base_param_handle = m_broker.get_param_handle(cfgr_param_str1); 
+    if (!child_base_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
               << "\tdoesn't exists");
     }
 
     // Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
-    if (m_broker.param_exists(cfgr_param_str2)) {
-      mem_size_base_handle = m_broker.get_param_handle(cfgr_param_str2);
-
-      sc_assert(mem_size_base_handle.is_valid()
-             && "Handle of 'mem_size' parameter returned is NULL");
-    } else {
+    mem_size_base_handle = m_broker.get_param_handle(cfgr_param_str2);
+    if (!mem_size_base_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str2
               << "\tdoesn't exists");
     }

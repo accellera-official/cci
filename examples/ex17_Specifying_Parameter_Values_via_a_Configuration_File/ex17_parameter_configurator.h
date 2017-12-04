@@ -49,37 +49,28 @@ SC_MODULE(ex17_parameter_configurator) {
       str_param(cci::cci_originator(*this))
   {
     // Get handle of the 'int_param' cci-parameter
-    if (m_broker.param_exists("param_owner.mutable_int_param")) {
+    int_param_handle =
+        m_broker.get_param_handle("param_owner.mutable_int_param");
+    if (int_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Integer parameter exists");
-
-      int_param_handle =
-              m_broker.get_param_handle("param_owner.mutable_int_param");
-
-      sc_assert(int_param_handle.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Integer parameter doesn't exists.");
     }
 
     // Get handle of the 'float_param' cci-parameter
-    if (m_broker.param_exists("param_owner.mutable_float_param")) {
+    float_param =
+        m_broker.get_param_handle("param_owner.mutable_float_param");
+    if (float_param.is_valid()) {
       XREPORT("[CFGR C_TOR] : Float parameter exists");
-
-      float_param =
-              m_broker.get_param_handle("param_owner.mutable_float_param");
-
-      sc_assert(float_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Float parameter doesn't exists.");
     }
 
     // Get handle of the 'string_param' cci-parameter
-    if (m_broker.param_exists("param_owner.mutable_string_param")) {
+    str_param =
+        m_broker.get_param_handle("param_owner.mutable_string_param");
+    if (str_param.is_valid()) {
       XREPORT("[CFGR C_TOR] : String parameter exists");
-
-      str_param =
-              m_broker.get_param_handle("param_owner.mutable_string_param");
-
-      sc_assert(str_param.is_valid() && "Parameter Handle is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : String parameter doesn't exists.");
     }
