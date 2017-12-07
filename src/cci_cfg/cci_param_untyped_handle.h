@@ -97,7 +97,7 @@ public:
      * @copydoc cci_param_if::set_cci_value(const cci_value&,const void*)
      * @note The @c originator is taken from the parameter handle here
      */
-    void set_cci_value(const cci_value& val, void *pwd);
+    void set_cci_value(const cci_value& val, const void *pwd);
 
     /**
      * @copydoc cci_param_if::get_cci_value(const cci_originator&)
