@@ -65,9 +65,6 @@ public:
     friend class cci_broker_handle;
     friend class cci_param_if;
 
-    /// Destructor
-    virtual ~cci_broker_if() {}
-
     /**
      * @brief Convenience function to create a new broker handle
      * @param originator Originator for access tracking (forwarded to parameter handles)
@@ -288,6 +285,9 @@ public:
     virtual bool is_global_broker() const = 0;
 
 protected:
+    /// Destructor
+    virtual ~cci_broker_if() {}
+
     cci_originator unknown_originator() const
       { return cci_originator( cci_originator::unknown_tag() ); }
 };
