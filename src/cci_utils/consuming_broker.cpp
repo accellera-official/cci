@@ -338,17 +338,17 @@ namespace cci_utils {
     sc_assert(par != NULL && "Unable to remove a NULL parameter");
     m_param_registry.erase(par->get_name());
 
+    // Destroy callbacks
+    for (unsigned i = 0; i < m_destroy_callbacks.size(); ++i) {
+        m_destroy_callbacks[i].callback.invoke(
+            par->create_param_handle(par->get_originator()));
+    }
+
     std::map<std::string,cci_value>::iterator iter =
       m_used_value_registry.find(par->get_name());
     if (iter != m_used_value_registry.end()  ) {
       m_unused_value_registry.insert(std::make_pair(iter->first, iter->second));
       m_used_value_registry.erase(iter);    
-    }
-
-    // Destroy callbacks
-    for (unsigned i = 0; i < m_destroy_callbacks.size(); ++i) {
-      m_destroy_callbacks[i].callback.invoke(
-        par->create_param_handle(par->get_originator()));
     }
   }
 

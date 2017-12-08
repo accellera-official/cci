@@ -244,7 +244,7 @@ public:
     virtual void add_param(cci_param_if *par) = 0;
 
     /// Removes a parameter from the registry. May only be called by the
-    /// parameter destructor, must not be called by anone else.
+    /// parameter destructor, must not be called by anyone else.
     /**
      * It should be ensured this is not being called from elsewhere than the
      * parameter destructor (e.g. by user).
