@@ -129,7 +129,7 @@ void cci_param_untyped_handle::set_cci_value(const cci_value& val)
     m_param->set_cci_value(val, NULL, m_originator);
 }
 
-void cci_param_untyped_handle::set_cci_value(const cci_value& val, void *pwd)
+void cci_param_untyped_handle::set_cci_value(const cci_value& val, const void *pwd)
 {
     check_is_valid();
     m_param->set_cci_value(val, pwd, m_originator);
