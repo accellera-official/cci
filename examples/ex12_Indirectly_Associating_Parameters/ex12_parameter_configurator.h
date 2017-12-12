@@ -55,12 +55,8 @@ SC_MODULE(ex12_parameter_configurator) {
     std::string cfgr_param_str2 = "top_mod.param_owner2.clock_speed_KHz";
 
     // Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
-    if (m_broker.param_exists(cfgr_param_str1)) {
-      cfgr_param1_handle = m_broker.get_param_handle(cfgr_param_str1);
-
-      sc_assert(cfgr_param1_handle.is_valid()
-             && "Configuration parameter returned is NULL");
-
+    cfgr_param1_handle = m_broker.get_param_handle(cfgr_param_str1);
+    if (cfgr_param1_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter Name : "
               << cfgr_param1_handle.get_name() << "\tParameter Value : "
               << cfgr_param1_handle.get_cci_value().to_json());
@@ -70,12 +66,8 @@ SC_MODULE(ex12_parameter_configurator) {
     }
 
     // Check for 'clock_speed_Hz' cci_parameter of owner module 2
-    if (m_broker.param_exists(cfgr_param_str2)) {
-      cfgr_param2_handle = m_broker.get_param_handle(cfgr_param_str2);
-
-      sc_assert(cfgr_param2_handle.is_valid()
-             && "Configuration parameter returned is NULL");
-
+    cfgr_param2_handle = m_broker.get_param_handle(cfgr_param_str2);
+    if (cfgr_param2_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter Name : "
               << cfgr_param2_handle.get_name() << "\tParameter Value : "
               << cfgr_param2_handle.get_cci_value().to_json());

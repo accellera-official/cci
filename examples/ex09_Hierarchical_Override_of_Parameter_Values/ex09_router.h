@@ -120,10 +120,9 @@ SC_MODULE(ex09_router) {
       snprintf(stringName, sizeof(stringName),
                "top_module_inst.target_%d.s_base_addr", i);
 
-      if (m_broker.param_exists(stringName)) {
-        base_handle = m_broker.get_param_handle(stringName);
-        sc_assert(base_handle.is_valid()
-               && "target Base Address Handle returned is NULL");
+      base_handle = m_broker.get_param_handle(stringName); 
+      if (!base_handle.is_valid()) {
+        sc_assert(!"target Base Address Handle returned is NULL");
       }
 	  std::stringstream row_ss;
 	  row_ss << "| " << std::setw(10) << r_target_index[i]->get_value()

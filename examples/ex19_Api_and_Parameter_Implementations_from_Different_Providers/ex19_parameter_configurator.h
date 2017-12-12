@@ -54,57 +54,32 @@ SC_MODULE(ex19_parameter_configurator) {
   {
 
     // Checks the parameter exists using name-based look-up
-    if (m_broker.param_exists("param_owner.mutable_int_param")) {
+    cfgr_param_handle =
+        m_broker.get_param_handle("param_owner.mutable_int_param");
+    if (cfgr_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_int_param exists");
-
-      // Get handle of the owner parameter
-      cfgr_param_handle =
-              m_broker.get_param_handle("param_owner.mutable_int_param");
-
-      // Assert if the owner parameter handle returned is NULL
-      sc_assert(cfgr_param_handle.is_valid()
-             && "Parameter Handle for param_owner.mutable_int_param is NULL");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_int_param"
               " doesn't exists.");
     }
 
-    if (m_broker.param_exists("param_owner.mutable_udtype_param")) {
+    cfgr_user_param_handle =
+        m_broker.get_param_handle("param_owner.mutable_udtype_param");
+    if (cfgr_user_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_udtype_param"
               " exists");
-
-      // Get handle of the owner parameter
-      cfgr_user_param_handle =
-          m_broker.get_param_handle("param_owner.mutable_udtype_param");
-
-      // Assert if the owner parameter handle returned is NULL
-      sc_assert(cfgr_param_handle.is_valid()
-             && "Parameter param_owner.mutable_udtype_param  Handle is NULL");
-
       XREPORT("[CFGR C_TOR] : Got param_owner.mutable_udtype_param ");
     } else {
       XREPORT("[CFGR C_TOR] : Parameter param_owner.mutable_udtype_param"
               " doesn't exists.");
       XREPORT("Try Again with mutable_udtype_param ");
 
-      if (m_broker.param_exists("mutable_udtype_param")) {
+      cci::cci_param_handle temp_handle =
+          m_broker.get_param_handle("mutable_udtype_param");
+      if (temp_handle.is_valid()) {
         XREPORT("Got Now with mutable_udtype_param");
       } else {
-        XREPORT("Try again now directly with param_owner.mutable_udtype_param");
-        cfgr_user_param_handle =
-            m_broker.get_param_handle("param_owner.mutable_udtype_param");
-
-        if (cfgr_user_param_handle.is_valid()) {
-          XREPORT("Fail to get directly with param_owner.mutable_udtype_param");
-
-          XREPORT("Try again now directly with mutable_udtype_param");
-          cfgr_user_param_handle =
-                  m_broker.get_param_handle("mutable_udtype_param");
-        }
-
-        if (cfgr_user_param_handle.is_valid()) {
-          XREPORT("It will always Fail :(");
-        }
+        XREPORT("It will always Fail :(");
       }
     }
 

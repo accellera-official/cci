@@ -202,24 +202,6 @@ public:
     get_param_handle(const std::string &parname,
                      const cci_originator& originator) const = 0;
 
-    /// Checks whether a parameter exists (implicit or explicit).
-    /**
-     * @param parname  Full hierarchical parameter name.
-     * @return Whether the parameter < parname > exists in the registry.
-     */
-    virtual bool param_exists(const std::string &parname) const = 0;
-
-    /// Returns if the parameter has ever been used.
-    /**
-     * A parameter has been used if there is/was either a parameter object
-     * or handle mapped to the NVP, or the NVP's value has ever been read
-     * (from the broker).
-     *
-     * @param parname  Full hierarchical parameter name.
-     * @return If the parameter is or has been used.
-     */
-    virtual bool is_used(const std::string &parname) const = 0;
-
     /// Returns if the parameter has a preset value
     /**
      * @param parname  Full hierarchical parameter name.

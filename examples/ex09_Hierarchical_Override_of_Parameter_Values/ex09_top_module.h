@@ -89,11 +89,11 @@ SC_MODULE(ex09_top_module) {
     // Top_Module begins construction of the model hierarchy from here
     // ----------------------------------------------------------------
 
-    if (m_broker.param_exists(
-        "top_module_inst.RouterInstance.addr_limit")) {
-      cci::cci_param_handle r_addr_limit_handle =
-          m_broker.get_param_handle(
-              "top_module_inst.RouterInstance.addr_limit");
+
+    cci::cci_param_handle r_addr_limit_handle =
+        m_broker.get_param_handle(
+            "top_module_inst.RouterInstance.addr_limit");
+    if (r_addr_limit_handle.is_valid()) {
       r_addr_max = atoi(
               (r_addr_limit_handle.get_cci_value().to_json()).c_str());
 

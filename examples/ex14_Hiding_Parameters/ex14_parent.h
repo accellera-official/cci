@@ -66,13 +66,8 @@ SC_MODULE(ex14_parent) {
     std::string child_param_path(name());
     child_param_path.append(".child_inst.priv_int_param");
 
-    if (m_broker.param_exists(child_param_path)) {
-      child_base_param_handle = m_broker.get_param_handle(child_param_path);
-
-      sc_assert(child_base_param_handle.is_valid()
-             && "Returned broker handle for 'priv_int_param' of 'child'"
-             " is not valid");
-
+    child_base_param_handle = m_broker.get_param_handle(child_param_path); 
+    if (child_base_param_handle.is_valid()) {
       // Register 'POST_WRITE' callback to change child's cci-parameter
       // Configurators writes to 'parent_buffer' cci-parameter (registered
       // to the default global broker). Changes to the 'parent_buffer' will

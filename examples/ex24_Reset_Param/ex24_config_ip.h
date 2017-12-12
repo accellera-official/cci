@@ -66,12 +66,8 @@ SC_CTOR(ex24_config_ip):
     wait(20, sc_core::SC_NS);
 
     // Check for existence of the param
-    if (m_broker.param_exists(int_param_name)) {
-
-      // Get handle to the param
-      cci::cci_param_handle int_param_handle = m_broker.get_param_handle(int_param_name);
-      sc_assert(int_param_handle.is_valid());
-
+    cci::cci_param_handle int_param_handle = m_broker.get_param_handle(int_param_name);
+    if (int_param_handle.is_valid()) {
       {// Display new value
         std::string new_value = int_param_handle.get_cci_value().to_json();
         XREPORT("execute: [EXTERNAL] Current value of "

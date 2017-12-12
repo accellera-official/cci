@@ -52,14 +52,10 @@ SC_MODULE(ex14_configurator) {
   {
     std::string parameterName(
             "Top.private.parent_inst.parent_int_buffer");
-    if (m_broker.param_exists(parameterName)) {
-      // Get handle of the parent_module's cci-parameter
-      parent_base_param_handle = m_broker.get_param_handle(parameterName);
 
-      // Assert if the handle returned is NULL
-      sc_assert(parent_base_param_handle.is_valid()
-             && "Returned handle of parent_module's cci-parameter is not valid");
-
+    // Get handle of the parent_module's cci-parameter
+    parent_base_param_handle = m_broker.get_param_handle(parameterName);
+    if (parent_base_param_handle.is_valid()) {
       XREPORT("[CFGR] : Parameter Name : "
               << parent_base_param_handle.get_name() << "\tParameter Value : "
               << parent_base_param_handle.get_cci_value().to_json());

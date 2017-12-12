@@ -62,12 +62,9 @@ SC_MODULE(ex03_config_ip) {
     wait(20, sc_core::SC_NS);
 
     // Check for existence of the structure_param
-    if (m_broker.param_exists(struc_param_name)) {
-      // Get handle to the param
-      cci::cci_param_handle struc_param_handle =
-          m_broker.get_param_handle(struc_param_name);
-      sc_assert(struc_param_handle.is_valid());
-
+    cci::cci_param_handle struc_param_handle =
+        m_broker.get_param_handle(struc_param_name);
+    if (struc_param_handle.is_valid()) {
       // Update the structure_param value to 3 (invalid)
 	  XREPORT("execute: [EXTERNAL] Set value of " << struc_param_name << " to 3");
       struc_param_handle.set_cci_value(cci::cci_value(3));

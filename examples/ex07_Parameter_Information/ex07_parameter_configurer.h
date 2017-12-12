@@ -66,12 +66,8 @@ SC_MODULE(ex07_parameter_configurer) {
     strParamExists = false;
 
     // Broker interface checks for the existence of a (int type) parameter
-    if (m_broker.param_exists(int_param_str)) {
-      int_param_handle = m_broker.get_param_handle(int_param_str);
-
-      sc_assert(int_param_handle.is_valid()
-             && "Integer CCI Parameter Handle is not valid");
-
+    int_param_handle = m_broker.get_param_handle(int_param_str);
+    if (int_param_handle.is_valid()) {
       intParamExists = true;
     } else {
       XREPORT_ERROR("[CFGR C_TOR] : Integer parameter does not exist.");
@@ -80,16 +76,9 @@ SC_MODULE(ex07_parameter_configurer) {
     }
 
     // Broker interface checks for existence of a (std::string type)
-    // parameter using 'param_exists' API
-    if (m_broker.param_exists(string_param_str)) {
-      // If parameter exists, get handle of the parameter using
-      // 'get_param' API
-      str_param_handle = m_broker.get_param_handle(string_param_str);
-
-      // Report if parameter handle is returned NULL
-      sc_assert(str_param_handle.is_valid()
-             && "String CCI Parameter Handle is not vlaid");
-
+    // parameter
+    str_param_handle = m_broker.get_param_handle(string_param_str);
+    if (str_param_handle.is_valid()) {
       strParamExists = true;
     } else {
       XREPORT_ERROR("[CFGR C_TOR] : String parameter does not exist");

@@ -62,11 +62,8 @@ SC_CTOR(ex01_config_ip):
     wait(20, sc_core::SC_NS);
 
     // Check for existence of the param
-    if (m_broker.param_exists(int_param_name)) {
-
-      // Get handle to the param
-      cci::cci_param_handle int_param_handle = m_broker.get_param_handle(int_param_name);
-      sc_assert(int_param_handle.is_valid());
+    cci::cci_param_handle int_param_handle = m_broker.get_param_handle(int_param_name);
+    if (int_param_handle.is_valid()) {
 
       // Update the param's value to 2
       XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 2");

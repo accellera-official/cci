@@ -56,13 +56,12 @@ SC_MODULE(ex08_config_ip) {
     const std::string param_1_name = "sim_ip.param_1";
     const std::string param_2_name = "sim_ip.param_2";
 
-    // Check for existence of the param_1
-    if (m_broker.param_exists(param_1_name)) {
-      // Get handle to the param
-      cci::cci_param_handle param_1_handle =
-          m_broker.get_param_handle(param_1_name);
-      sc_assert(param_1_handle.is_valid());
+    // Get handle to param_1
+    cci::cci_param_handle param_1_handle =
+        m_broker.get_param_handle(param_1_name);
 
+    // Check its validity
+    if (param_1_handle.is_valid()) {
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
               << param_1_name << " to 10");
@@ -77,13 +76,11 @@ SC_MODULE(ex08_config_ip) {
                     << ") is not found!");
     }
 
-    // Check for existence of param_2
-    if (m_broker.param_exists(param_2_name)) {
-      // Get handle to the param
-      cci::cci_param_handle param_2_handle =
-          m_broker.get_param_handle(param_2_name);
-      sc_assert(param_2_handle.is_valid());
-
+    // Get handle to the param_2
+    cci::cci_param_handle param_2_handle =
+        m_broker.get_param_handle(param_2_name);
+    // Check its validity
+    if (param_2_handle.is_valid()) {
       // Update the param's value
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Set value of "
               << param_2_name << " to 20");

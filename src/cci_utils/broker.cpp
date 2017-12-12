@@ -88,24 +88,6 @@ namespace cci_utils {
     }
   }
 
-  bool broker::param_exists(const std::string &parname) const
-  {
-    if (sendToParent(parname)) {
-      return m_parent.param_exists(parname);
-    } else {
-      return consuming_broker::param_exists(parname);
-    }
-  }
-
-  bool broker::is_used(const std::string &parname) const
-  {
-    if (sendToParent(parname)) {
-      return m_parent.is_used(parname);
-    } else {
-      return consuming_broker::is_used(parname);
-    }
-  }
-
   void broker::add_param(cci_param_if* par)
   {
     if (sendToParent(par->get_name())) {
