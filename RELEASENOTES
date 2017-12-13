@@ -32,12 +32,6 @@ collisions but otherwise works fine on prior versions of SystemC.
 	information. The destination handle should instead keep/determine its 
 	originator appropriately. This will be fixed in the next release.
 
-  - Untyped and typed handle assignments are not consistent. The untyped handle
-	assignment updates the parameter it is associated with. The typed handle
-	assignment transfers a value. These will be made consistent and it it
-	expected that the typed handle will be updated to match semantics of the 
-	untyped.
-
   - Originator construction currently accepts a string argument even within the
 	module hierarchy context even though it has no real effect. Semantics will
 	likely be sharpened in the future such that a name is accepted only when
