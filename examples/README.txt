@@ -1,6 +1,6 @@
 ================================================================================
                     Accellera/CCI Examples README
-Date  : 09/13/2016
+Date  : 12/12/2017
 ================================================================================
 
 ToC
@@ -12,7 +12,7 @@ ToC
 
 Introduction
 ------------
-  This README provides an overview of the Accellera/CCI package examples and 
+This README provides an overview of the Accellera/CCI package examples and 
 how to build and run them. The build is branched from systemc-regressions/ package's
 verify.pl script.
 
@@ -21,12 +21,14 @@ Directory Structure
         cci/                            // CCI_HOME folder
           examples/                     // Examples folder
                 |- README.txt           // This README
+				|- Compile_and_Run_CCI_Example.ppt
+				                        // Presentation summarizing build and run steps
                 |- common               // Code common to one or more examples
-                |       |- inc          //   Common headers
-                |- ex1_xxx              // ex[Index]_[Example Name]
-                |       |- doc          //   PPT having example description
-                |       |- golden       //   Contains 'main.log' golden reference file
-                |       |- *.h *.cpp    //   Contains example sources
+                |       |- inc/         // Common headers
+                |- ex01_xxx             // ex[Index]_[Example Name]
+                |       |- doc/         // Contains a presentation explaining the example 
+                |       |- golden/      // Contains 'ex01_xxx.log' golden reference log file
+                |       |- *.h *.cpp    // Example source code
                 |- ...                  // More examples
 
 
@@ -48,7 +50,8 @@ Running the examples
 # export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
 --
 
-2) Ensure that you build the CCI lib before attempting to build the examples.
+2) Ensure that you build the CCI lib before attempting to build the examples; see the top-level 
+   README.txt file for instructions.
 
 3) Create a directory called run/ in your CCI_HOME folder, and 'cd' into it.
 +------------------------------------------------+
@@ -71,12 +74,19 @@ Running the examples
 +-----------------------------------------------+
     % ../scripts/verify.pl examples
 +------------------------------------------------+
- 
-5) The build and run logs are placed in the run/ folder; reference logs are
-   provided in the scripts/run/ folder.
+
+  4.3) To see available invocation options, do:
++-----------------------------------------------+
+    % ../scripts/verify.pl -help
++------------------------------------------------+
+
+5) The results are summarized and, for the case of running all examples, can be
+   compared against scripts/results/summary.txt. The build and run logs are
+   placed in the run/ folder though only problem logs are kept unless the
+   -no-cleanup invocation argument is specified.
 
 Note
--------
-CCI specific changes are included between #--CCI and #--/CCI in verify.pl script which is branched from 
-systemc-regressions/ package
+----
+CCI specific changes to verify.pl are included between #--CCI and #--/CCI in
+verify.pl script which is branched from systemc-regressions/ package.
 
