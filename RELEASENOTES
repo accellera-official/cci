@@ -45,3 +45,6 @@ collisions but otherwise works fine on prior versions of SystemC.
   - Parameter names may be registered in the future when a preset value is 
 	provided to the broker. This would allow earlier detection of name collisions.
 
+  - There is no Example #19 so the numbering is non-consecutive. A new example
+	will fill this slot before the next release.
+
