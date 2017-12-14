@@ -1,0 +1,47 @@
+                Release Notes for SystemC CCI Configuration
+				Public Review Draft
+                ===========================================
+
+CONTENTS
+========
+
+  1) Overview
+
+  2) Known issues
+
+
+1) Overview
+===========
+
+This release of the Configuration, Control and Inspection (CCI) "Proof of 
+Concept" implementation is being made available for public review and feedback.
+It works optimally with SystemC 2.3.2 utilizing its hierarchical name registry
+to detect and mitigate parameter name collisions. It doesn't address name 
+collisions but otherwise works fine on prior versions of SystemC.
+
+
+2) Known Issues
+===============
+
+  - The POC incorporates a JSON library (rapidson) which must be obtained
+    separately at this time (see README.txt for details). In the future this
+	should be redistributed as an embedded component of the POC implementation
+	in order to simplify installation.
+
+  - Handle assignments, both broker and parameter, currently transfer originator
+	information. The destination handle should instead keep/determine its 
+	originator appropriately. This will be fixed in the next release.
+
+  - Originator construction currently accepts a string argument even within the
+	module hierarchy context even though it has no real effect. Semantics will
+	likely be sharpened in the future such that a name is accepted only when
+	constructing an originator outside of the module hierarchy.
+
+  - It has not been decided whether it should be allowable to register a broker
+	for a module after some of its parameters have been constructed. Allowing
+	this facilitates allocating some parameters to the parent broker and others
+	to a local broker but it seems to carry a conceptual complexity price tag.
+
+  - Parameter names may be registered in the future when a preset value is 
+	provided to the broker. This would allow earlier detection of name collisions.
+

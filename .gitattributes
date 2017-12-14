@@ -1,0 +1,18 @@
+# Ignore some files for archive creation
+.*                                                                                          export-ignore
+CODING_STYLE.txt                                                                            export-ignore
+docs/0909_analysis_reject_param_access.doc                                                  export-ignore
+docs/100224[[:space:]]CCI[[:space:]]API[[:space:]]proposal[[:space:]]1.3.ppt                export-ignore
+docs/101110[[:space:]]CCI[[:space:]]Flow.ppt                                                export-ignore
+docs/broker_accessor_concept.odg                                                            export-ignore
+docs/broker_accessor_concept.pdf                                                            export-ignore
+docs/cci_doxygen_gs_impl_ref.conf                                                           export-ignore
+docs/cci_param_concept.jpg                                                                  export-ignore
+docs/changelog.txt                                                                          export-ignore
+docs/discussions.txt                                                                        export-ignore
+docs/GreenControl_GreenConfig_CODES09_Schroeder_p81.pdf                                     export-ignore
+docs/guidelines.txt                                                                         export-ignore
+docs/notes.txt                                                                              export-ignore
+examples/review_checklist                                                                   export-ignore
+msvc10/cci/CCI[[:space:]]Instructions[[:space:]]for[[:space:]]MSVS2015.pdf                  export-ignore
+old_docs                                                                                    export-ignore
