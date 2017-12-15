@@ -55,7 +55,7 @@ public:
 int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_register_broker(new cci_utils::broker("DEFAULT_BROKER"));
 
-  cci::cci_originator me=cci::cci_originator("sc_main");
+  cci::cci_originator me("sc_main");
 
   // Get handle of the broker using the originator
   cci::cci_broker_handle globalBroker =
@@ -71,7 +71,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // API to assign preset value before the
   // construction of the model hierarchy begins.
   globalBroker.set_preset_cci_value("param_owner.mutable_string_param",
-    cci::cci_value::from_json("\"Initialized within sc_main\""));
+    cci::cci_value("Initialized within sc_main"));
 
   SC_REPORT_INFO("sc_main",
                  "[MAIN] : Demonstrating 'comparison' between the values"

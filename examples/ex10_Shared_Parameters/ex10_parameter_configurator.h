@@ -54,9 +54,9 @@ SC_MODULE(ex10_parameter_configurator) {
       XREPORT("[CFGR C_TOR] : Parameter doesn't exists.");
     }
 
-    // Set parameter value using cci_base_parameter object
+    // Set parameter value via the handle
     XREPORT("[CFGR C_TOR] : Set parameter value to 10"
-            " using cci_base_parameter");
+            " via the handle");
    cfgr_param_handle.set_cci_value(cci::cci_value(10));
 
     // Registering SC_THREAD with the SystemC kernel

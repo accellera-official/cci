@@ -4,7 +4,7 @@ Info: param_owner: @0 s, [OWNER C_TOR] : Default Value : 5
 
 Info: param_setter: @0 s, [CFGR C_TOR] : Parameter exists
 
-Info: param_setter: @0 s, [CFGR C_TOR] : Set parameter value to 10 using cci_base_parameter
+Info: param_setter: @0 s, [CFGR C_TOR] : Set parameter value to 10 via the handle
 
 Info: param_owner: @0 s, @ 0 s
 
