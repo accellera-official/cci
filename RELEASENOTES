@@ -23,6 +23,11 @@ collisions but otherwise works fine on prior versions of SystemC.
 2) Known Issues
 ===============
 
+  - Some paths in this release are longer than the historical 99 character
+    limit of tar archives, and several Windows archivers (e.g. WinZip)
+    have been reported to trip over this.  The open source archiver 7-zip
+    (http://7-zip.org) is known to work.
+
   - The POC incorporates a JSON library (rapidson) which must be obtained
     separately at this time (see README.txt for details). In the future this
 	should be redistributed as an embedded component of the POC implementation
