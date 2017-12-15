@@ -28,6 +28,11 @@
 
 #include "cci_core/cci_cmnhdr.h"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4355) // 'this' : used in base member initializer list
+#endif // _MSC_VER
+
 CCI_OPEN_NAMESPACE_
 
 /**
@@ -223,5 +228,9 @@ public:
 };
 
 CCI_CLOSE_NAMESPACE_
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif // _MSC_VER
 
 #endif // CCI_CORE_CCI_FILTERED_RANGE_H_INCLUDED_

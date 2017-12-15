@@ -17,6 +17,11 @@
 
  ****************************************************************************/
 
+#if defined(_MSC_VER) && _MSC_VER <= 1600
+# pragma warning(disable:4661)
+# define CCI_TPLEXTERN_
+#endif // excluded from MSVC'2010
+
 #include "cci_core/cci_value_converter.h"
 
 /**

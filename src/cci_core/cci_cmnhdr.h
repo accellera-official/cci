@@ -133,10 +133,12 @@
 /* ------------------------------------------------------------------------ */
 // Extern templates (supported by all major compilers even before C++11)
 
-#if defined(__GNUC__) && CCI_CPLUSPLUS < 201103L
-# define CCI_TPLEXTERN_ __extension__ extern
-#else
-# define CCI_TPLEXTERN_ extern
-#endif
+#ifndef CCI_TPLEXTERN_
+# if defined(__GNUC__) && CCI_CPLUSPLUS < 201103L
+#   define CCI_TPLEXTERN_ __extension__ extern
+# else
+#   define CCI_TPLEXTERN_ extern
+# endif
+#endif // CCI_TPLEXTERN_
 
 #endif // CCI_CORE_CCI_CMNHDR_H_INCLUDED_

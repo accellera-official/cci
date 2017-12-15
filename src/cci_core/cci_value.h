@@ -26,6 +26,11 @@
 
 #include <cstring> // std::strlen
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4231) // extern template
+#endif // _MSC_VER
+
 /**
  * @file   cci_value.h
  * @author Philipp A. Hartmann, OFFIS/Intel
@@ -1534,5 +1539,9 @@ CCI_CLOSE_NAMESPACE_
 #undef CCI_VALUE_CHECKED_CONVERTER_
 #undef CCI_VALUE_REQUIRES_CONVERTER_
 #undef CCI_VALUE_MOVE_
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif // _MSC_VER
 
 #endif // CCI_CCI_VALUE_H_INCLUDED_

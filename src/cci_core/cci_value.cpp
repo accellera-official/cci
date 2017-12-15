@@ -22,6 +22,11 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
+#if defined(_MSC_VER) && _MSC_VER <= 1600
+# pragma warning(disable:4661)
+# define CCI_TPLEXTERN_
+#endif // excluded from MSVC'2010
+
 #include "cci_core/cci_value.h"
 #include "cci_core/rapidjson.h"
 #include "cci_cfg/cci_report_handler.h"
@@ -669,7 +674,7 @@ cci_value_map_cref::do_lookup( const char* key, size_type keylen
 
   if( mode == KEY_CREATE )
   {
-    json_value k( key, keylen, json_allocator );
+    json_value k( key, static_cast<rapidjson::SizeType>(keylen), json_allocator );
     THIS->AddMember( k, json_value().Move(), json_allocator );
     it = THIS->FindMember(kv);
     sc_assert( it != THIS->MemberEnd() );
@@ -733,7 +738,7 @@ cci_value_map_ref
 cci_value_map_ref::do_push( const char * key, size_type keylen
                           , cci_value::const_reference value )
 {
-  json_value k( key, keylen, json_allocator );
+  json_value k( key, static_cast<rapidjson::SizeType>(keylen), json_allocator );
   json_value v;
   if( PIMPL(value) )
     v.CopyFrom( DEREF(value), json_allocator );
