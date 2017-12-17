@@ -75,10 +75,9 @@ struct route_table_ut {
   int index;  ///< Index field
 };
 
-namespace cci {
 // add support for cci_value and JSON (de)serialization
 template<>
-struct cci_value_converter< route_table_ut >
+struct cci::cci_value_converter< route_table_ut >
 {
   typedef route_table_ut type;
   static bool pack( cci_value::reference dst, type const & src )
@@ -106,7 +105,6 @@ struct cci_value_converter< route_table_ut >
     return false;
   }
 };
-} /* namespace cci */
 
 // Overload stream insertion operator of C++
 std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
@@ -114,25 +112,6 @@ std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
   cci::cci_value udv(ud);
   return os << udv;
 }
-
-// Overload stream extraction operator of C++
-/** @todo This operator is currently required by the "GreenControl tool"
- *        implementation.  Its serialisation is not yet based on JSON but
- *        uses plain stream extraction to convert a value from a string.
- */
-std::istream& operator >>(std::istream& is, route_table_ut& ud)
-{
-  cci::cci_value udv;
-  is >> udv;
-  sc_assert( is && "stream extraction of cci_value failed");
-  bool check = udv.try_get(ud);
-  sc_assert( check && "stream extraction of route_table_ut failed");
-  return is;
-}
-
-//!< Provide parameter vendor implementation support for user-defined data type
-typedef cci::cci_param<route_table_ut> user_data_type;
-
 
 inline bool operator== (const route_table_ut& lhs, const route_table_ut& rhs)
 {

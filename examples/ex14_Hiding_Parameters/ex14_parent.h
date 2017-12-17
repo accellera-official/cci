@@ -56,7 +56,7 @@ SC_MODULE(ex14_parent) {
         child_inst("child_inst"),
         parent_int_param("parent_int_param", 300),
         parent_buffer("parent_int_buffer", 350),
-        child_base_param_handle(cci::cci_originator(*this))
+        child_param_handle(cci::cci_originator(*this))
   {
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
@@ -66,15 +66,15 @@ SC_MODULE(ex14_parent) {
     std::string child_param_path(name());
     child_param_path.append(".child_inst.priv_int_param");
 
-    child_base_param_handle = m_broker.get_param_handle(child_param_path); 
-    if (child_base_param_handle.is_valid()) {
+    child_param_handle = m_broker.get_param_handle(child_param_path); 
+    if (child_param_handle.is_valid()) {
       // Register 'POST_WRITE' callback to change child's cci-parameter
       // Configurators writes to 'parent_buffer' cci-parameter (registered
       // to the default global broker). Changes to the 'parent_buffer' will
      // be reflected on to the 'priv_int_param' of child as well
       cci::cci_param_post_write_callback_untyped untyped_post_write_cb(
                       sc_bind(&ex14_parent::untyped_post_write_callback,
-                              this, sc_unnamed::_1,child_base_param_handle));
+                              this, sc_unnamed::_1,child_param_handle));
 
       parent_post_write_cb =
               parent_buffer.register_post_write_callback(untyped_post_write_cb);
@@ -142,8 +142,8 @@ SC_MODULE(ex14_parent) {
   cci::cci_param<int> parent_int_param;  ///< CCI int parameter
   cci::cci_param<int> parent_buffer; ///< CCI int parameter for a buffer
 
-  /// Declare cci_base_param pointers
-  cci::cci_param_handle child_base_param_handle; ///< Handle to the child
+  /// Declare cci_param pointers
+  cci::cci_param_handle child_param_handle; ///< Handle to the child
 
   /// Callback handle
   cci::cci_callback_untyped_handle parent_post_write_cb;  /// callback handle
