@@ -23,7 +23,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex04_Simple_Immutable_Param
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex05_Default_and_Initial_Value", "examples\ex05_Default_and_Initial_Value.vcxproj", "{0A24C282-E269-4FC3-8F5D-1B7A719BF7C9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex05_Default_and_Preset_Value", "examples\ex05_Default_and_Preset_Value.vcxproj", "{0A24C282-E269-4FC3-8F5D-1B7A719BF7C9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
