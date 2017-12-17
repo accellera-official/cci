@@ -67,7 +67,7 @@ SC_MODULE(ex18_parameter_configurator) {
     }
 
     XREPORT("@ " << sc_time_stamp());
-    XREPORT("[CFGR] : List of all unconsumed parameters in the model");
+    XREPORT("[CFGR] : List of parameter names with unconsumed preset values");
 
     unconsumed_parameter_list = m_broker.get_unconsumed_preset_values();
     for (unsigned int i = 0; i < unconsumed_parameter_list.size(); i++) {

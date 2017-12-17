@@ -12,7 +12,7 @@ Info: param_cfgr: @0 s, [CFGR within EOE] : Parameter Name : param_owner.int_par
 
 Info: param_cfgr: @0 s, @ 0 s
 
-Info: param_cfgr: @0 s, [CFGR] : List of all unconsumed parameters in the model
+Info: param_cfgr: @0 s, [CFGR] : List of parameter names with unconsumed preset values
 
 Info: param_cfgr: @0 s, [CFGR] : Unconsumed Parameter Name : param_owner.int_param_3
 

@@ -16,9 +16,9 @@ Info: param_setter: @0 s, [CFGR C_TOR] : String parameter exists
 
 Info: param_setter: @0 s, @ 0 s
 
-Info: param_setter: @0 s, [CFGR] : Set integer parameter value to '20' using cci_base_parameter
+Info: param_setter: @0 s, [CFGR] : Set integer parameter value to '20'
 
-Info: param_setter: @0 s, [CFGR] : Set string  parameter value to 'configure' using cci_base_parameter
+Info: param_setter: @0 s, [CFGR] : Set string  parameter value to 'configure'
 
 Info: param_owner: @5 ns, @ 5 ns
 
