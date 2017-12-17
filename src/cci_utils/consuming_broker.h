@@ -145,8 +145,7 @@ public:
     std::vector<destroy_callback_obj_t> m_destroy_callbacks;
 
     /// Ignored unconsumed preset cci values
-    std::vector<std::string> m_ignored_unconsumed_preset_cci_values;
-
+    std::vector<cci::cci_preset_value_predicate> m_ignored_unconsumed_predicates;
   };
 
 }

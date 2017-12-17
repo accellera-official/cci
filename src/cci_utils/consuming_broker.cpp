@@ -79,8 +79,18 @@ namespace cci_utils {
   {
     std::vector<cci_name_value_pair> unconsumed_preset_cci_values;
     std::map<std::string, cci_value>::const_iterator iter;
+    std::vector<cci_preset_value_predicate>::const_iterator pred;
+
     for( iter = m_unused_value_registry.begin(); iter != m_unused_value_registry.end(); ++iter ) {
-      unconsumed_preset_cci_values.push_back(std::make_pair(iter->first, iter->second));
+      for (pred =  m_ignored_unconsumed_predicates.begin(); pred !=  m_ignored_unconsumed_predicates.end(); ++pred) {
+        const cci_preset_value_predicate &p=*pred; // get the actual predicate
+        if (p(std::make_pair(iter->first, iter->second))) {
+          break;
+        }
+      }
+      if (pred==m_ignored_unconsumed_predicates.end()) {
+        unconsumed_preset_cci_values.push_back(std::make_pair(iter->first, iter->second));
+      }
     }
     return unconsumed_preset_cci_values;
   }
@@ -93,15 +103,7 @@ namespace cci_utils {
 
   void consuming_broker::ignore_unconsumed_preset_values(const cci_preset_value_predicate &pred)
   {
-    std::vector< std::pair<std::string, cci_value> >
-      unconsumed_preset_cci_values = get_unconsumed_preset_values();
-    for(std::vector< std::pair<std::string, cci_value> >::iterator it =
-          unconsumed_preset_cci_values.begin();
-        it != unconsumed_preset_cci_values.end(); it++) {
-      if(pred(*it)) {
-        m_ignored_unconsumed_preset_cci_values.push_back(it->first);
-      }
-    }
+    m_ignored_unconsumed_predicates.push_back(pred);
   }
 
   cci_originator consuming_broker::get_latest_write_originator(const std::string &parname) const
