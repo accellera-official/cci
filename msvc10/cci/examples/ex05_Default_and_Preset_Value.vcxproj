@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{286C867F-E365-4666-BCEB-CA00BAB33C61}</ProjectGuid>
+    <ProjectGuid>{0A24C282-E269-4FC3-8F5D-1B7A719BF7C9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ex19_Api_and_Parameter_Implementations_from_Different_Providers</RootNamespace>
+    <RootNamespace>ex05_Default_and_Preset_Value</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,13 +141,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\ex19_Api_and_Parameter_Implementations_from_Different_Providers\ex19_Different_Providers.cpp" />
-    <ClCompile Include="..\..\..\examples\ex19_Api_and_Parameter_Implementations_from_Different_Providers\ex19_parameter_impl_by_abc.cpp" />
+    <ClInclude Include="..\..\..\examples\ex05_Default_and_Preset_Value\ex05_config_ip.h" />
+    <ClInclude Include="..\..\..\examples\ex05_Default_and_Preset_Value\ex05_simple_ip.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\examples\ex19_Api_and_Parameter_Implementations_from_Different_Providers\ex19_parameter_configurator.h" />
-    <ClInclude Include="..\..\..\examples\ex19_Api_and_Parameter_Implementations_from_Different_Providers\ex19_parameter_impl_by_abc.h" />
-    <ClInclude Include="..\..\..\examples\ex19_Api_and_Parameter_Implementations_from_Different_Providers\ex19_parameter_owner.h" />
+    <ClCompile Include="..\..\..\examples\ex05_Default_and_Preset_Value\ex05_Default_and_Preset_Value.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -161,6 +161,11 @@ struct cci_value_delegate_converter
   }
 };
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4231) // extern template
+#endif // _MSC_VER
+
 // --------------------------------------------------------------------------
 // C++ builtin types
 
@@ -398,6 +403,10 @@ struct cci_value_converter< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
 {
   typedef sc_dt::sc_ufixed_fast<W,I,Q,O,N> type;
 };
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif // _MSC_VER
 
 CCI_CLOSE_NAMESPACE_
 #endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_

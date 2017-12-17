@@ -4,7 +4,7 @@ README for building the CCI PoC library and examples with Microsoft Visual C++
 Authors: Lei Liang <lei.liang@ericsson.com>
          Philipp A. Hartmann <philipp.hartmann@offis.de>
          Sonal Poddar <sonal.poddar@intel.com>
-Date   : 2017-12-12
+Date   : 2017-12-17
 --------------------------------------------------------------------------------
 
 Table of Contents
@@ -55,6 +55,9 @@ And they are verified with following versions:
 
      Note: Please see the next section on upgrading to newer version of MSVC
            (later than 10.0/2010).
+
+Note: The MSVS project files have been configured to use DLLs (vs static
+      libraries) to align with the SystemC 2.3.2+ Windows default.
 
 
 How to build the PoC library
