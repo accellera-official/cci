@@ -48,17 +48,17 @@ SC_MODULE(ex14_configurator) {
    */
   SC_CTOR(ex14_configurator):
       m_broker(cci::cci_get_broker()),
-      parent_base_param_handle(cci::cci_originator(*this))
+      parent_param_handle(cci::cci_originator(*this))
   {
     std::string parameterName(
             "Top.private.parent_inst.parent_int_buffer");
 
     // Get handle of the parent_module's cci-parameter
-    parent_base_param_handle = m_broker.get_param_handle(parameterName);
-    if (parent_base_param_handle.is_valid()) {
+    parent_param_handle = m_broker.get_param_handle(parameterName);
+    if (parent_param_handle.is_valid()) {
       XREPORT("[CFGR] : Parameter Name : "
-              << parent_base_param_handle.get_name() << "\tParameter Value : "
-              << parent_base_param_handle.get_cci_value().to_json());
+              << parent_param_handle.get_name() << "\tParameter Value : "
+              << parent_param_handle.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR] : Parameter by name"
               " " << parameterName << " doesn't exist");
@@ -93,11 +93,11 @@ SC_MODULE(ex14_configurator) {
 
       XREPORT("[CFGR] : Change the value of the 'parent_int_buffer' to '1000'");
 
-      parent_base_param_handle.set_cci_value(cci::cci_value(1000));
+      parent_param_handle.set_cci_value(cci::cci_value(1000));
 
       XREPORT("[CFGR] : Parameter Name : "
-              << parent_base_param_handle.get_name() << "\tParameter Value : "
-              << parent_base_param_handle.get_cci_value().to_json());
+              << parent_param_handle.get_name() << "\tParameter Value : "
+              << parent_param_handle.get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);
     }
@@ -105,7 +105,7 @@ SC_MODULE(ex14_configurator) {
 
  private:
   cci::cci_broker_handle m_broker;  ///< Configuration Broker handle for TOP_MODULE
-  cci::cci_param_handle parent_base_param_handle;  ///< Few directly accessible cci-parameters
+  cci::cci_param_handle parent_param_handle;  ///< Few directly accessible cci-parameters
 };
 /// ex14_configurator
 

@@ -48,11 +48,11 @@ public:
      *  @return void
      */
     SC_CTOR(ex14_private)
+        : pbroker ("My Private Broker")
     {
-      cci_utils::broker *pbroker=new cci_utils::broker("My Private Broker");
-      pbroker->expose.insert("Top.private.parent_inst.parent_int_buffer");
-      pbroker->expose.insert("Top.private.parent_inst.child_inst.pub_int_param");
-      cci::cci_register_broker(*(pbroker));
+      pbroker.expose.insert("Top.private.parent_inst.parent_int_buffer");
+      pbroker.expose.insert("Top.private.parent_inst.child_inst.pub_int_param");
+      cci::cci_register_broker(pbroker);
 
       m_parent_inst = new ex14_parent("parent_inst");
     }
@@ -62,6 +62,7 @@ public:
     }
 
 protected:
+    cci_utils::broker pbroker;
     ex14_parent* m_parent_inst; ///< Parent module pointer
 };
 /// ex14_top

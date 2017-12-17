@@ -48,7 +48,7 @@ class ex20_observer {
   ex20_observer():
       m_broker(cci::cci_get_global_broker(
               cci::cci_originator("observer"))),
-      observer_base_handle(cci::cci_originator("ex20_observer"))
+      new_param_handle(cci::cci_originator("ex20_observer")) // initialize as invalid
   {
     // Registering callback for the creation of the pointer to the
     // cci_parameter of the owner module
@@ -75,37 +75,35 @@ class ex20_observer {
    */
   void config_new_param_callback(const cci::cci_param_untyped_handle& param_handle) {
 
-    std::cout << "\n\t[OBSERVER - create_param_cb] : Retrieving reference"
-                 " of newly created cci_parameter" << std::endl;
+    std::cout << "\n\t[OBSERVER - create_param_cb] : Retrieving handle"
+                 " for newly created cci_parameter" << std::endl;
 
     // Get reference of newly created cci-parameters
-    observer_base_handle = m_broker.get_param_handle(param_handle.get_name());
+    new_param_handle = m_broker.get_param_handle(param_handle.get_name());
 
     // Assert if reference of the cci-parameter returned is NULL
-    sc_assert(observer_base_handle.is_valid()
+    sc_assert(new_param_handle.is_valid()
            && "Reference for the requested cci-parameter is NULL");
 
     std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Name : "
-              << observer_base_handle.get_name() << "\thas been created."
+              << new_param_handle.get_name() << "\thas been created."
               << std::endl;
     std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Value : "
-              << observer_base_handle.get_cci_value().to_json()
+              << new_param_handle.get_cci_value().to_json()
               << std::endl;
 
-    /// Registering other (read/write/destroy) callbacks on the newly created cci-parameters
+    /// Register pre-read, pre/post-write callbacks on the newly created cci-parameters
     std::cout << "\n\t[OBSERVER - create_param_cb] : Registering other"
                  " callbacks on the newly created cci-parameters"
               << std::endl;
 
-    // Recommended way of registering a callback (directly using base
-    // parameter references)
-    observer_cb.push_back(observer_base_handle.register_pre_read_callback(
+    observer_cb.push_back(new_param_handle.register_pre_read_callback(
             &ex20_observer::pre_read_callback,this));
 
-    observer_cb.push_back(observer_base_handle.register_pre_write_callback(
+    observer_cb.push_back(new_param_handle.register_pre_write_callback(
             &ex20_observer::pre_write_callback,this));
 
-    observer_cb.push_back(observer_base_handle.register_post_write_callback(
+    observer_cb.push_back(new_param_handle.register_post_write_callback(
             &ex20_observer::post_write_callback,this));
 
   }
@@ -154,7 +152,7 @@ class ex20_observer {
  private:
   cci::cci_broker_handle m_broker; ///< Declaring a CCI configuration broker handle
 
-  cci::cci_param_handle observer_base_handle;  ///< Handle of Owner's CCI Parameter (integer type)
+  cci::cci_param_handle new_param_handle;  ///< Handle to newly created parameter
 
   std::vector<cci::cci_callback_untyped_handle> observer_cb; ///< Registering all the various callbacks of the owner module cci_parameters
 };
