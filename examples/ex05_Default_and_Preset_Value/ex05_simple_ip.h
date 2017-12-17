@@ -79,11 +79,11 @@ SC_MODULE(ex05_simple_ip) {
   void execute() {
       cci::cci_broker_handle broker = cci::cci_get_broker();
 
-      XREPORT("Setting up param_implicit_1's init-value to 1");
+      XREPORT("Setting up param_implicit_1's preset value to 1");
       broker.set_preset_cci_value("param_implicit_1",
                                    cci::cci_value(1));
 
-      XREPORT("Setting up foo.bar.baz.param_implicit_2's init-value to 2");
+      XREPORT("Setting up foo.bar.baz.param_implicit_2's preset value to 2");
       broker.set_preset_cci_value("foo.bar.baz.param_implicit_2",
                                    cci::cci_value(2));
 

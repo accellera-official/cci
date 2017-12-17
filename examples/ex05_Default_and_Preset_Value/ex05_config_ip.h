@@ -34,7 +34,7 @@
 
 /**
  *  @class  ex05_config_ip
- *  @brief  The config_ip configures sim_ip's init-values
+ *  @brief  The config_ip configures sim_ip's preset values
  */
 SC_MODULE(ex05_config_ip) {
  public:
@@ -66,12 +66,12 @@ SC_MODULE(ex05_config_ip) {
       XREPORT_ERROR("Instantiate config_ip before simple_ip"
                     " to demonstrate set_preset_cci_value");
     } else {
-      XREPORT("Setting up sim_ip.param_1's init-value to " << val);
+      XREPORT("Setting up sim_ip.param_1's preset value to " << val);
       m_broker.set_preset_cci_value("sim_ip.param_1",
                                    cci::cci_value::from_json(val));
     }
 
-    XREPORT("Setting up cfg_ip.param_implicit_3's init-value to 3");
+    XREPORT("Setting up cfg_ip.param_implicit_3's preset value to 3");
     m_broker.set_preset_cci_value("cfg_ip.param_implicit_3",
                                 cci::cci_value(3));
   }
