@@ -16,6 +16,10 @@ This README provides an overview of the Accellera/CCI package examples and
 how to build and run them. The build is branched from systemc-regressions/ package's
 verify.pl script.
 
+See Compile_and_Run_CCI_Example.ppt (in the same directory) with reference 
+instructions for interactive/debug build of the examples on both Linux and Windows
+(the instruction herein are for batch execution).
+
 Directory Structure
 -------------------
         cci/                            // CCI_HOME folder
