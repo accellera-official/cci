@@ -115,6 +115,7 @@ public:
   cci_callback& operator=(cci_callback copy)
   {
     copy.swap(*this);
+    return *this;
   }
 
   /// construction from a functor
