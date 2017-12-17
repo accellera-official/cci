@@ -169,6 +169,13 @@ cci_param_untyped::unregister_##name##_callback(                               \
         }                                                                      \
     }                                                                          \
     return false;                                                              \
+}                                                                              \
+                                                                               \
+bool                                                                           \
+cci_param_untyped::unregister_##name##_callback(                               \
+        const cci_callback_untyped_handle &cb)                                 \
+{                                                                              \
+    return unregister_##name##_callback(cb, m_originator);                     \
 }
 
 CCI_PARAM_UNTYPED_CALLBACK_IMPL_(pre_write)
