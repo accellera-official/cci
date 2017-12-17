@@ -88,13 +88,11 @@ SC_MODULE(ex17_parameter_configurator) {
     while (1) {
       // Set value to the 'integer' parameter of the owner module
       XREPORT("@ " << sc_core::sc_time_stamp());
-      XREPORT("[CFGR] : Set integer parameter value to '20'"
-              " using cci_base_parameter");
+      XREPORT("[CFGR] : Set integer parameter value to '20'");
       int_param_handle.set_cci_value(cci::cci_value(20));
 
       // Set value to the 'string' parameter of the owner module
-      XREPORT("[CFGR] : Set string  parameter value to 'configure'"
-              " using cci_base_parameter");
+      XREPORT("[CFGR] : Set string  parameter value to 'configure'");
       str_param.set_cci_value(cci::cci_value::from_json("\"configure\""));
 
       wait(50.0, sc_core::SC_NS);
