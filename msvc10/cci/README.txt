@@ -35,7 +35,6 @@ You shall have the following software/libraries before you start:
   3. SystemC installation       (mandatory for all operations in this guide)
   4. Boost library installation (mandatory for all operations in this guide)
   5. Microsoft Visual Studio
-  6. rapidjson git submodule	(`git submodule update -i` from CCI root dir)
 
 And they are verified with following versions:
 
@@ -56,8 +55,8 @@ And they are verified with following versions:
      Note: Please see the next section on upgrading to newer version of MSVC
            (later than 10.0/2010).
 
-Note: The MSVS project files have been configured to use DLLs (vs static
-      libraries) to align with the SystemC 2.3.2+ Windows default.
+Note: The MSVS project files are configured to use DLL Runtime Libraries, in 
+      alignment with the SystemC 2.3.2+ default configuration.
 
 
 How to build the PoC library
@@ -76,9 +75,6 @@ How to build the PoC library
        - 11.0/2012 - "msvc11"
        - 12.0/2013 - "msvc12"
 	   - 14.0/2015 - "msvc14"
-
-       IMPORTANT NOTE: you will need to manually sync future git updates to
-       msvc10 project files once you've made a copy of this directory!
 
      - Open the solution file `cci.sln' with your version of MSVC and
        follow the upgrade instructions.
