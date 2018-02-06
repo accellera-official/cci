@@ -153,7 +153,7 @@ cci_value cci_param_untyped_handle::get_default_cci_value() const
     return m_param->get_default_cci_value();
 }
 
-bool cci_param_untyped_handle::is_default_value()
+bool cci_param_untyped_handle::is_default_value() const
 {
     check_is_valid();
     return m_param->is_default_value();

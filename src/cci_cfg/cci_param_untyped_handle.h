@@ -117,7 +117,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_if::is_default_value
-    virtual bool is_default_value();
+    virtual bool is_default_value() const;
 
 
     /// @copydoc cci_param_if::is_preset_value
