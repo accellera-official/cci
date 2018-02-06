@@ -18,9 +18,9 @@
  ****************************************************************************/
 
 /**
- *  @file   simple_ip.h
- *  @brief  A simple IP that has a mutable integer parameter
- *  @author R. Swaminathan, TI
+ *  @file   ex24_simple_ip.h
+ *  @brief  A simple module demonstrating parameter reset
+ *  @author Trevor Wieman, Intel
  */
 
 #ifndef EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_SIMPLE_IP_H_
@@ -31,7 +31,7 @@
 
 /**
  *  @class  ex24_simple_ip
- *  @brief  A simple IP which owns a CCI param.
+ *  @brief  A simple IP that declares, updates, then resets parameters.
  */
 SC_MODULE(ex24_simple_ip) {
  public:
@@ -43,43 +43,41 @@ SC_MODULE(ex24_simple_ip) {
    */
   SC_CTOR(ex24_simple_ip)
   // Initialize int_param with 0
-      : int_param("int_param", 0) {
-    SC_THREAD(execute);
-    XREPORT("Ctor: Default value of " << int_param.get_name() << " is "
-            << int_param);
-  }
+      : paramA("paramA", 1, "mutable param without preset value") 
+      , paramB("paramB", 2, "mutable param with preset value")
+      , paramC("paramC", 3, "mutable locked param")
+      , paramD("paramD", 5, "immutable param")
 
-  /**
-   *  @fn     void ~ex24_simple_ip()
-   *  @brief  The destructor for the class.
-   *  @return void
-   */
-  ~ex24_simple_ip() {
-    XREPORT_PLAIN("Dtor: Current value of " << int_param.get_name() << " is "
-                  << int_param);
+  {
+    SC_THREAD(execute);
   }
 
   /**
    *  @fn     void execute()
-   *  @brief  The main execution block (no real functionality)
+   *  @brief  The main execution block
    *  @return void
    */
   void execute() {
-    // Wait for 10ns to allow config_ip to update int_param value
+    // Pass some time then reset the parameters
     wait(10, sc_core::SC_NS);
+    paramA.reset();
+    paramB.reset();
+    paramC.reset();
+    paramD.reset();
 
-    // Update int_param value to 1
-    XREPORT("execute: Set value of int_param to 1");
-    int_param = 1;
-    XREPORT("execute: Current value of int_param is "<< int_param);
-    int_param = 2;
-    XREPORT("execute: Current value of int_param is "<< int_param);
-    int_param.reset();
-    XREPORT("execute: Value of int_param after reset is "<< int_param);
+    // Wait for config_ip to update preset values
+    wait(10, sc_core::SC_NS);
+    paramA.reset();
+    paramB.reset();
+    paramC.reset();
+    paramD.reset();
   }
 
  private:
-  cci::cci_param<int> int_param; ///< CCI param to hold buffer size
+     cci::cci_param<int> paramA
+         , paramB
+         , paramC;
+     cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> paramD;
 };
 // ex24_simple_ip
 

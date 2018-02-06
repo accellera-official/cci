@@ -18,28 +18,40 @@
  ****************************************************************************/
 
 /**
- *  @file   testbench.cpp
- *  @brief  A testbench that demonstrates how to update the value of a mutable 
- *          integer parameter.
- *  @author R. Swaminathan, TI
+ *  @file   ex24_Reset_Param.cpp
+ *  @brief  An example demonstrating parameter reset.
+ *  @author Trevor Wieman, Intel
  */
 
 #include "ex24_simple_ip.h"
 #include "ex24_config_ip.h"
 #include <cci_utils/broker.h>
+#include "param_tracker.h"
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
- *  @brief  The testbench for the CCI simple_int_param example
- *  @param  argc  An integer for the number of arguments
- *  @param  argv  An array with the input arguments
+ *  @brief  The testbench for the CCI ex24_Reset_Param example
+ *  @param  argc  An integer for the number of arguments; not used
+ *  @param  argv  An array with the input arguments; not used
  *  @return and integer of successful execution
  */
 int sc_main(int argc, char *argv[]) {
+  // Initialize and register a global broker
   cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
-  ex24_simple_ip sim_ip("sim_ip");
-  ex24_config_ip cfg_ip("cfg_ip");
 
+  // Instantiate the modules
+  ex24_config_ip cfg_ip("cfg_ip");
+  ex24_simple_ip sim_ip("sim_ip");
+
+  // Attach trackers to the parameters
+  cci::cci_originator originator("sc_main");
+  cci::cci_broker_handle broker = cci::cci_get_global_broker(originator);
+  param_tracker(broker.get_param_handle("sim_ip.paramA"));
+  param_tracker(broker.get_param_handle("sim_ip.paramB"));
+  param_tracker(broker.get_param_handle("sim_ip.paramC"));
+  param_tracker(broker.get_param_handle("sim_ip.paramD"));
+
+  // Start the simulation
   SC_REPORT_INFO("sc_main", "Begin Simulation.");
   sc_core::sc_start();
   SC_REPORT_INFO("sc_main", "End Simulation.");

@@ -23,8 +23,8 @@
  *  @author R. Swaminathan, TI
  */
 
-#ifndef EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_CONFIG_IP_H_
-#define EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_CONFIG_IP_H_
+#ifndef EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
+#define EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
 
 #include <cci_configuration>
 #include <string>
@@ -48,8 +48,8 @@ SC_CTOR(ex24_config_ip):
   {
     SC_THREAD(execute);
 
-    XREPORT("Setting up sim_ip.int_param's init-value to 10 ");
-    m_broker.set_preset_cci_value("sim_ip.int_param",
+    XREPORT("Setting up sim_ip.paramB's prest value to 10 ");
+    m_broker.set_preset_cci_value("sim_ip.paramB",
                                    cci::cci_value::from_json("10"));
   }
 
@@ -59,48 +59,22 @@ SC_CTOR(ex24_config_ip):
    *  @return void
    */
   void execute() {
-    std::ostringstream ss;
-    const std::string int_param_name = "sim_ip.int_param";
 
-    // Wait for a while to update param value
-    wait(20, sc_core::SC_NS);
+    // Wait until first reset sequence is complete, then update preset values
+    wait(15, sc_core::SC_NS);
 
-    // Check for existence of the param
-    cci::cci_param_handle int_param_handle = m_broker.get_param_handle(int_param_name);
-    if (int_param_handle.is_valid()) {
-      {// Display new value
-        std::string new_value = int_param_handle.get_cci_value().to_json();
-        XREPORT("execute: [EXTERNAL] Current value of "
-                << int_param_handle.get_name() << " is " << new_value);
-      }
-      
-      // Update the param's value to 2
-      XREPORT("execute: [EXTERNAL] Set value of " << int_param_name << " to 3");
-      int_param_handle.set_cci_value(cci::cci_value::from_json("3"));
-
-      {// Display new value
-        std::string new_value = int_param_handle.get_cci_value().to_json();
-        XREPORT("execute: [EXTERNAL] Current value of "
-                << int_param_handle.get_name() << " is " << new_value);
-      }
-      
-      // Lets try resetting
-      int_param_handle.reset();
-      
-      {// Display new value
-        std::string new_value = int_param_handle.get_cci_value().to_json();
-        XREPORT("execute: [EXTERNAL] Value after reset of "
-                << int_param_handle.get_name() << " is " << new_value);
-      }
-      
-    } else {
-      XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
+    XREPORT("[CONFIG_IP] Updating preset values.");
+    std::string params[4] = { "paramA", "paramB", "paramC", "paramD" };
+    std::string param_name("sim_ip.");
+    for (unsigned i = 0; i < 4; ++i)
+    {
+        m_broker.set_preset_cci_value(param_name + params[i],
+            cci::cci_value(100 * i));
     }
   }
 
  private:
   cci::cci_broker_handle m_broker; ///< CCI configuration handle
 };
-// ex24_config_ip
 
-#endif  // EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_CONFIG_IP_H_
+#endif  // EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
