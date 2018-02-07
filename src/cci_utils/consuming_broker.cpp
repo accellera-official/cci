@@ -71,8 +71,17 @@ namespace cci_utils {
     } else {
       m_unused_value_registry[parname] = value;
     }
-    m_preset_value_originator_map.insert(
-      std::pair<std::string, cci_originator>(parname, originator));
+
+    // Store originator of the preset value. Can't use index operator since
+    // null construction of an originator is prohibited outside the module hierarchy.
+    // m_preset_value_originator_map[parname] = originator;
+    std::map<std::string, cci_originator>::iterator it;
+    it = m_preset_value_originator_map.find(parname);
+    if (it != m_preset_value_originator_map.end())
+        it->second = originator;
+    else 
+        m_preset_value_originator_map.insert(
+            std::pair<std::string, cci_originator>(parname, originator));
   }
 
   std::vector<cci_name_value_pair> consuming_broker::get_unconsumed_preset_values() const
