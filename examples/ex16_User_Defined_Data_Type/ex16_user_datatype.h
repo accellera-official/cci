@@ -76,8 +76,9 @@ struct route_table_ut {
 };
 
 // add support for cci_value and JSON (de)serialization
+namespace cci {
 template<>
-struct cci::cci_value_converter< route_table_ut >
+struct cci_value_converter< route_table_ut >
 {
   typedef route_table_ut type;
   static bool pack( cci_value::reference dst, type const & src )
@@ -105,6 +106,7 @@ struct cci::cci_value_converter< route_table_ut >
     return false;
   }
 };
+} // namespace cci
 
 // Overload stream insertion operator of C++
 std::ostream& operator <<(std::ostream& os, const route_table_ut& ud)
