@@ -422,11 +422,8 @@ public:
                     const cci_originator& originator = cci_originator());
     //@}
 
-    void reset()
-      { reset(get_originator()); }
-
     ///@copydoc cci_param_if::reset
-    virtual void reset(const cci_originator& originator);
+    virtual bool reset();
 
     ~cci_param_typed()
       { destroy(m_broker_handle); }
@@ -777,11 +774,11 @@ void cci_param_typed<T, TM>::preset_cci_value(const cci_value& val,
     // Actual write
     m_value = new_value;
 
-    // Write callback(s)
-    post_write_callback(old_value, new_value, originator);
-
     // Update latest write originator
     update_latest_write_originator(originator);
+
+    // Write callback(s)
+    post_write_callback(old_value, new_value, originator);
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -950,16 +947,19 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
 #undef CCI_PARAM_TYPED_CALLBACK_IMPL_
 
 template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::reset(const cci_originator& originator)
+bool cci_param_typed<T, TM>::reset()
 {
+  if (is_locked())
+    return false;
   const std::string& nm = get_name();
   if (m_broker_handle.has_preset_value(nm)) {
     cci_value preset = m_broker_handle.get_preset_cci_value(nm);
-    preset_cci_value(preset, originator);
+    preset_cci_value(preset, m_broker_handle.get_latest_write_originator(nm));
   } else {
     m_value = get_default_value();
+    update_latest_write_originator(m_originator);
   }
-  update_latest_write_originator(originator);
+  return true;
 }
 
 #if CCI_CPLUSPLUS >= 201103L

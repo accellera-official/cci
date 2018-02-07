@@ -285,12 +285,6 @@ const std::type_info& cci_param_untyped_handle::get_type_info() const
     return m_param->get_type_info();
 }
 
-void cci_param_untyped_handle::reset()
-{
-  check_is_valid();
-  m_param->reset(m_originator);
-}
-
 bool cci_param_untyped_handle::is_valid() const
 {
     return m_param != NULL;

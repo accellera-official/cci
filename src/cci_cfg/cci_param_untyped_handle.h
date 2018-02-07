@@ -243,9 +243,6 @@ public:
      */
     void invalidate();
 
-    /// Reset the parameter to the intial value
-    void reset();
-
 protected:
     ///@name Type-punned value operations
     ///@{
