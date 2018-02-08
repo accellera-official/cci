@@ -657,11 +657,11 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
   value_type old_value = m_value;
   m_value = new_value;
 
-  // Write callback(s)
-  post_write_callback(old_value, new_value, originator);
-
   // Update latest write originator
   update_latest_write_originator(originator);
+
+  // Write callback(s)
+  post_write_callback(old_value, new_value, originator);
 
   cci_param_untyped::fast_write =
     TM == CCI_MUTABLE_PARAM &&
