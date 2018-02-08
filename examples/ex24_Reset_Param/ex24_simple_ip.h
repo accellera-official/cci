@@ -23,8 +23,8 @@
  *  @author Trevor Wieman, Intel
  */
 
-#ifndef EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_SIMPLE_IP_H_
-#define EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_SIMPLE_IP_H_
+#ifndef EXAMPLES_EX24_RESET_PARAM_EX24_SIMPLE_IP_H_
+#define EXAMPLES_EX24_RESET_PARAM_EX24_SIMPLE_IP_H_
 
 #include <cci_configuration>
 #include "xreport.hpp"
@@ -46,10 +46,15 @@ SC_MODULE(ex24_simple_ip) {
       : paramA("paramA", 1, "mutable param without preset value") 
       , paramB("paramB", 2, "mutable param with preset value")
       , paramC("paramC", 3, "mutable locked param")
-      , paramD("paramD", 5, "immutable param")
+      , paramD("paramD", 4, "immutable param")
 
   {
     SC_THREAD(execute);
+
+    XREPORT("Parameter construction complete.");
+
+    // Lock a param to show it prevents reset().
+    paramC.lock();
   }
 
   /**
@@ -59,18 +64,27 @@ SC_MODULE(ex24_simple_ip) {
    */
   void execute() {
     // Pass some time then reset the parameters
-    wait(10, sc_core::SC_NS);
+    wait(20, sc_core::SC_NS);
+    XREPORT("Resetting parameters.");
     paramA.reset();
     paramB.reset();
     paramC.reset();
     paramD.reset();
 
     // Wait for config_ip to update preset values
-    wait(10, sc_core::SC_NS);
+    wait(20, sc_core::SC_NS);
+    XREPORT("Resetting parameters.");
     paramA.reset();
     paramB.reset();
     paramC.reset();
     paramD.reset();
+
+    // Pass more time then unlock paramB and reset it
+    wait(10, sc_core::SC_NS);
+    XREPORT("Unlocking and resetting paramB.");
+    paramC.unlock();
+    paramC.reset();
+    paramC.lock();
   }
 
  private:
@@ -81,5 +95,5 @@ SC_MODULE(ex24_simple_ip) {
 };
 // ex24_simple_ip
 
-#endif  // EXAMPLES_EX24_SIMPLE_INT_PARAM_EX24_SIMPLE_IP_H_
+#endif  // EXAMPLES_EX24_RESET_PARAM_EX24_SIMPLE_IP_H_
 

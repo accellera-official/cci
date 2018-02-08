@@ -46,10 +46,10 @@ int sc_main(int argc, char *argv[]) {
   // Attach trackers to the parameters
   cci::cci_originator originator("sc_main");
   cci::cci_broker_handle broker = cci::cci_get_global_broker(originator);
-  param_tracker(broker.get_param_handle("sim_ip.paramA"));
-  param_tracker(broker.get_param_handle("sim_ip.paramB"));
-  param_tracker(broker.get_param_handle("sim_ip.paramC"));
-  param_tracker(broker.get_param_handle("sim_ip.paramD"));
+  param_tracker ptrkA(broker.get_param_handle("sim_ip.paramA"));
+  param_tracker ptrkB(broker.get_param_handle("sim_ip.paramB"));
+  param_tracker ptrkC(broker.get_param_handle("sim_ip.paramC"));
+  param_tracker ptrkD(broker.get_param_handle("sim_ip.paramD"));
 
   // Start the simulation
   SC_REPORT_INFO("sc_main", "Begin Simulation.");

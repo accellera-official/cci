@@ -35,25 +35,25 @@ public:
      * @brief    The class constructor
      * @param h  Handle for parameter to be tracked
      */
-    param_tracker(cci::cci_param_handle &h)
-    : phandle(h)
+    explicit param_tracker(const cci::cci_param_handle h)
+    : phandle(h) // take a copy of handle to control its lifetime
     {
         // Ensure handle validity
-        sc_assert(h.is_valid());
+        sc_assert(phandle.is_valid());
 
         // Report parameter/handle details
         std::cout << prefix()
-                  << "Tracking " << h.get_name() << std::endl
-                  << "  handle originator: " << h.get_originator().name() << std::endl;
+                  << "Tracking " << phandle.get_name() << std::endl
+                  << "  handle originator: " << phandle.get_originator().name() << std::endl;
         if (!h.get_description().empty())
-            std::cout << "  description: " << h.get_description() << std::endl;
+            std::cout << "  description: " << phandle.get_description() << std::endl;
         
         // Report value details
         report_value_details();
         report_value_orginator();
 
         // Register post-write callback
-        h.register_post_write_callback(&param_tracker::post_write_cb, this, cci::cci_untyped_tag());
+        phandle.register_post_write_callback(&param_tracker::post_write_cb, this, cci::cci_untyped_tag());
     }
 protected:
 
@@ -92,6 +92,7 @@ protected:
         std::cout << prefix()
                   << phandle.get_name() << " value updated:" << std::endl;
         report_value_details();
+ std::string new_value_originator = phandle.get_latest_write_originator().name();
         if (value_origin != phandle.get_latest_write_originator().name())
             report_value_orginator();
     }

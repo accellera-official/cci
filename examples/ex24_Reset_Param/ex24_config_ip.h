@@ -19,8 +19,8 @@
 
 /**
  *  @file   config_ip.h
- *  @brief  Configure simple_ip's int_param (simple integer) parameter
- *  @author R. Swaminathan, TI
+ *  @brief  Configure simple_ip's parameters
+ *  @author Trevor Wieman, Intel
  */
 
 #ifndef EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
@@ -32,7 +32,7 @@
 
 /**
  *  @class  ex24_config_ip
- *  @brief  The config_ip configures simple_ip's parameter.
+ *  @brief  The config_ip configures simple_ip's parameters.
  */
 SC_MODULE(ex24_config_ip) {
  public:
@@ -43,38 +43,42 @@ SC_MODULE(ex24_config_ip) {
    */
 
 SC_CTOR(ex24_config_ip):
-    // Get CCI configuration handle specific for this module
    m_broker(cci::cci_get_broker())
   {
     SC_THREAD(execute);
 
-    XREPORT("Setting up sim_ip.paramB's prest value to 10 ");
+    XREPORT("Setting up sim_ip.paramB's preset value to 10 ");
     m_broker.set_preset_cci_value("sim_ip.paramB",
                                    cci::cci_value::from_json("10"));
   }
 
   /**
    *  @fn     void execute()
-   *  @brief  Configure the value of "sim_ip.int_param" parameter
+   *  @brief  Synchronize new preset values.
    *  @return void
    */
   void execute() {
 
-    // Wait until first reset sequence is complete, then update preset values
-    wait(15, sc_core::SC_NS);
+    // Move beyond time zero then update mutable parameters
+    wait(10, sc_core::SC_NS);
+    XREPORT("Updating mutable parameters.");
+    m_broker.get_param_handle("sim_ip.paramA").set_cci_value(cci::cci_value(100));
+    m_broker.get_param_handle("sim_ip.paramB").set_cci_value(cci::cci_value(200));
 
-    XREPORT("[CONFIG_IP] Updating preset values.");
+    // Wait until first reset sequence is complete, then update preset values
+    wait(20, sc_core::SC_NS);
+    XREPORT("Updating preset values.");
     std::string params[4] = { "paramA", "paramB", "paramC", "paramD" };
     std::string param_name("sim_ip.");
     for (unsigned i = 0; i < 4; ++i)
     {
         m_broker.set_preset_cci_value(param_name + params[i],
-            cci::cci_value(100 * i));
+            cci::cci_value(1000 * (i+1)));
     }
   }
 
  private:
-  cci::cci_broker_handle m_broker; ///< CCI configuration handle
+  cci::cci_broker_handle m_broker;
 };
 
 #endif  // EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
