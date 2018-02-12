@@ -82,7 +82,6 @@ cci_param_untyped_handle::operator=(const cci_param_untyped_handle& param_handle
     }
 
     m_param      = param_handle.m_param;
-    m_originator = param_handle.m_originator;
 
     if (m_param) {
         m_param->add_param_handle(this);
@@ -102,7 +101,6 @@ cci_param_untyped_handle::operator=(cci_param_untyped_handle&& param_handle)
     }
 
     m_param      = CCI_MOVE_(param_handle.m_param);
-    m_originator = CCI_MOVE_(param_handle.m_originator);
 
     if (m_param) {
         m_param->add_param_handle(this);
