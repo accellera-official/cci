@@ -46,7 +46,7 @@ SC_MODULE(ex07_observer) {
   {
     // Instantiate a cci_originator in order to get hold
     // of the configuration broker interface
-    cci::cci_originator observerOriginator("observerOriginator");
+    cci::cci_originator observerOriginator();
 
     // Check for the broker type (default or private) using
     // 'is_global_broker()' API

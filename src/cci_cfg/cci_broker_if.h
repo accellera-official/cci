@@ -275,7 +275,7 @@ protected:
     cci_originator unknown_originator() const
       { return cci_originator( cci_originator::unknown_tag() ); }
 
-    static cci_broker_if &unwrap_broker(cci_broker_handle &h)
+    static cci_broker_if &unwrap_broker(cci_broker_handle h)
     { return h.ref(); }
 };
 

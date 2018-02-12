@@ -49,7 +49,6 @@ cci_broker_manager::get_broker(const cci_originator &originator)
 cci_broker_handle
 cci_broker_manager::register_broker(cci_broker_if& broker)
 {
-    cci_originator originator(CCI_UNKNOWN_ORIGINATOR_STRING_);
     const sc_core::sc_object *obj=sc_core::sc_get_current_object();
 
     cci_broker_if* & broker_entry = m_brokers[obj]; // find broker position in registry
@@ -62,7 +61,8 @@ cci_broker_manager::register_broker(cci_broker_if& broker)
                                  " hierarchy.");
         /* If this error is supproessed, our recovery is to pass back a handle to the existing broker */
     }
-    return broker_entry->create_broker_handle(originator);
+    if (obj) return broker_entry->create_broker_handle(cci_originator());
+    else return  broker_entry->create_broker_handle(cci_originator(CCI_UNKNOWN_ORIGINATOR_STRING_));
 }
 
 
