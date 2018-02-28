@@ -59,7 +59,8 @@ SC_CTOR(ex24_config_ip):
    */
   void execute() {
 
-    // Move beyond time zero then update mutable parameters
+    // Move beyond time zero then update mutable parameters (C is locked, 
+    // D is immutable)
     wait(10, sc_core::SC_NS);
     XREPORT("Updating mutable parameters.");
     m_broker.get_param_handle("sim_ip.paramA").set_cci_value(cci::cci_value(100));

@@ -68,7 +68,7 @@ SC_MODULE(ex24_simple_ip) {
     XREPORT("Resetting parameters.");
     paramA.reset();
     paramB.reset();
-    paramC.reset();
+    paramC.reset(); // no effect since paramC is locked
     paramD.reset();
 
     // Wait for config_ip to update preset values
@@ -76,10 +76,10 @@ SC_MODULE(ex24_simple_ip) {
     XREPORT("Resetting parameters.");
     paramA.reset();
     paramB.reset();
-    paramC.reset();
+    paramC.reset(); // no effect since paramC is locked
     paramD.reset();
 
-    // Pass more time then unlock paramB and reset it
+    // Pass more time then unlock paramC and reset it
     wait(10, sc_core::SC_NS);
     XREPORT("Unlocking and resetting paramB.");
     paramC.unlock();

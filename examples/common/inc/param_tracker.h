@@ -53,7 +53,7 @@ public:
         report_value_orginator();
 
         // Register post-write callback
-        phandle.register_post_write_callback(&param_tracker::post_write_cb, this, cci::cci_untyped_tag());
+        phandle.register_post_write_callback(&param_tracker::post_write_cb, this);
     }
 protected:
 
