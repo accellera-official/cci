@@ -42,14 +42,15 @@ Info: cfg_ip: @30 ns, Updating preset values.
 Info: sim_ip: @40 ns, Resetting parameters.
 [PTRK @ 40 ns] sim_ip.paramA value updated:
   value: 1000; is preset
-  value origin: sim_ip
 [PTRK @ 40 ns] sim_ip.paramB value updated:
   value: 2000; is preset
 [PTRK @ 40 ns] sim_ip.paramD value updated:
   value: 4000; is preset
+  value origin: cfg_ip
 
 Info: sim_ip: @50 ns, Unlocking and resetting paramB.
 [PTRK @ 50 ns] sim_ip.paramC value updated:
   value: 3000; is preset
+  value origin: cfg_ip
 
 Info: sc_main: End Simulation.

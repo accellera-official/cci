@@ -200,8 +200,8 @@ public:
     /// @copydoc cci_param_untyped::get_originator
     virtual cci_originator get_originator() const = 0;
 
-    /// @copydoc cci_param_untyped::get_latest_write_originator
-    virtual cci_originator get_latest_write_originator() const = 0;
+    /// @copydoc cci_param_untyped::get_value_origin
+    virtual cci_originator get_value_origin() const = 0;
 
     //@}
 

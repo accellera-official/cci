@@ -115,11 +115,11 @@ namespace cci_utils {
     m_ignored_unconsumed_predicates.push_back(pred);
   }
 
-  cci_originator consuming_broker::get_latest_write_originator(const std::string &parname) const
+  cci_originator consuming_broker::get_value_origin(const std::string &parname) const
   {
     cci_param_if* p = get_orig_param(parname);
     if (p) {
-      return p->get_latest_write_originator();
+      return p->get_value_origin();
     }
     std::map<std::string, cci_originator>::const_iterator it;
     it = m_preset_value_originator_map.find(parname);
@@ -127,6 +127,16 @@ namespace cci_utils {
       return it->second;
     }
     // if the param doesn't exist, we should return 'unkown_originator'
+    return cci_broker_if::unknown_originator();
+  }
+
+  cci_originator consuming_broker::get_preset_value_origin(const std::string &parname) const
+  {
+    std::map<std::string, cci_originator>::const_iterator it;
+    it = m_preset_value_originator_map.find(parname);
+    if (it != m_preset_value_originator_map.end())
+      return it->second;
+    // if no preset value, return 'unknown originator'
     return cci_broker_if::unknown_originator();
   }
 

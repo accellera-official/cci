@@ -79,7 +79,7 @@ protected:
     */
     void report_value_orginator()
     {
-        value_origin = phandle.get_latest_write_originator().name();
+        value_origin = phandle.get_value_origin().name();
         std::cout << "  value origin: " << value_origin << std::endl;
     }
 
@@ -92,8 +92,8 @@ protected:
         std::cout << prefix()
                   << phandle.get_name() << " value updated:" << std::endl;
         report_value_details();
- std::string new_value_originator = phandle.get_latest_write_originator().name();
-        if (value_origin != phandle.get_latest_write_originator().name())
+ std::string new_value_originator = phandle.get_value_origin().name();
+        if (value_origin != phandle.get_value_origin().name())
             report_value_orginator();
     }
 

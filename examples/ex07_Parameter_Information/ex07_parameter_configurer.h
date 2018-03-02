@@ -259,12 +259,12 @@ SC_MODULE(ex07_parameter_configurer) {
         wait(2.0, sc_core::SC_NS);
 
         XREPORT("@ " << sc_core::sc_time_stamp()
-                << " demonstrating 'get_latest_write_originator' API");
+                << " demonstrating 'get_value_origin' API");
 
         // Get the latest write originator for the write value to
         // the string type cci-parameter
         const cci::cci_originator& str_originator =
-                str_param_handle.get_latest_write_originator();
+                str_param_handle.get_value_origin();
         XREPORT("[CFGR] : Originator for the latest write on string"
                 " type cci-parameter : " << str_originator.name());
 

@@ -26,8 +26,11 @@ protected:
     // but can be used as a global broker if desired.
 
 public:
-    cci::cci_originator get_latest_write_originator(
+    cci::cci_originator get_value_origin(
       const std::string &parname) const;
+
+    cci::cci_originator get_preset_value_origin(
+        const std::string &parname) const;
 
     /// Constructor
     explicit consuming_broker(const std::string& name);
@@ -37,8 +40,6 @@ public:
 
     /// Return the name of the broker
     const std::string &name() const;
-
-    /// Return the preset value of a parameter
 
     /// Return the preset value of a parameter (by name)
     cci::cci_value get_preset_cci_value(const std::string &parname) const;

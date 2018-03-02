@@ -166,10 +166,10 @@ bool cci_param_untyped_handle::is_preset_value() const
 }
 
 cci_originator
-cci_param_untyped_handle::get_latest_write_originator() const
+cci_param_untyped_handle::get_value_origin() const
 {
     check_is_valid();
-    return m_param->get_latest_write_originator();
+    return m_param->get_value_origin();
 }
 
 #define CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_(name)                          \

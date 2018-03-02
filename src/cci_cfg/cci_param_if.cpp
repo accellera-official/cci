@@ -34,7 +34,7 @@ void cci_param_if::init( cci_broker_handle broker_handle )
   const std::string& nm = get_name();
   if( broker.has_preset_value(nm) ) {
     preset_cci_value( broker.get_preset_cci_value(nm)
-                    , broker.get_latest_write_originator(nm) );
+                    , broker.get_value_origin(nm) );
   }
   broker.add_param(this);
 }

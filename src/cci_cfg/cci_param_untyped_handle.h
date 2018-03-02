@@ -131,8 +131,8 @@ public:
     /// @copydoc cci_param_if::get_originator
     cci_originator get_originator() const;
 
-    /// @copydoc cci_param_if::get_latest_write_originator
-    cci_originator get_latest_write_originator() const;
+    /// @copydoc cci_param_if::get_value_origin
+    cci_originator get_value_origin() const;
 
     ///@}
 

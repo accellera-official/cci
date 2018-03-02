@@ -88,16 +88,14 @@ public:
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //
 
-    /// Set a parameter's init value.
+    /// Set a parameter's preset value.
     /**
-     * The init value has priority to the default value being set by the owner!
-     * If called for an explicit parameter this is a usual set, including not
-     * setting the is_preset_value state to true!
+     * The preset value has priority to the default value being set by the owner!
      *
      * @exception        cci::cci_report::set_param_failed Setting parameter
      *                   object failed
      * @param parname    Full hierarchical parameter name.
-     * @param cci_value  cci::cci_value representation of the init value the
+     * @param cci_value  cci::cci_value representation of the preset value the
      *                   parameter has to be set to.
      * @param originator originator reference to the originator
      *                   (not applicable in case of broker handle)
@@ -106,7 +104,7 @@ public:
                                        const cci::cci_value &cci_value,
                                        const cci_originator& originator) = 0;
 
-    /// Get a parameter's init value.
+    /// Get a parameter's preset value.
     /**
      *
      * @param parname    Full hierarchical parameter name.
@@ -146,43 +144,41 @@ public:
     virtual void ignore_unconsumed_preset_values(
             const cci_preset_value_predicate &pred) = 0;
 
-    /// Returns the originator of the latest write access for the given parameter, independently if it is an implicit or explicit parameter, otherwise returns NULL
+    /// Returns the originator that wrote the parameter's current value.
     /**
-     * For explicit parameters it is recommended to use the parameter object's get_latest_write_originator() function.
-     * Returns NULL if there is no parameter with the given name
-     * or there is no originator.
-     * If there is an explicit parameter and its originator is not NULL
-     * this returns the explicit parameter's originator information!
-     *
-     * @param parname  Name of an implicit or explicit parameter.
-     * @return Originator object, if available; unknown originator otherwise
+     * @param parname  Name of a parameter.
+     * @return originator 
      */
     virtual cci_originator
-    get_latest_write_originator(const std::string &parname) const = 0;
+    get_value_origin(const std::string &parname) const = 0;
 
-    /// Lock a parameter's init value.
+    /// Returns originator of the preset value if a preset value exists, otherwise unknown originator.
     /**
-     * Lock so that this parameter's init value cannot be overwritten by
-     * any subsequent setInitValue call. This allows to emulate a hierarchical
+    * @param parname  Name of a parameter.
+    * @return originator which will be the unknown originator when no preset value exists
+    */
+    virtual cci_originator
+        get_preset_value_origin(const std::string &parname) const = 0;
+
+    /// Lock a parameter's preset value.
+    /**
+     * Lock so that this parameter's preset value cannot be overwritten by
+     * any subsequent set_preset_value call. This allows to emulate a hierarchical
      * precendence since a top-level module can prevent the childs from setting
-     * init values by locking the init value before creating the subsystem.
+     * preset values by locking the preset value before creating the subsystem.
      *
-     * Throws (and does not lock) if no preset value is existing
+     * Throws (and does not lock) if no preset value exists
      * that can be locked or if a preset value is already locked or if the
-     * parameter is already existing as object (explicit parameter).
+     * parameter is already existing as object.
      *
      * @exception     cci::cci_report::set_param_failed Locking parameter object failed
      * @param parname Hierarchical parameter name.
      */
     virtual void lock_preset_value(const std::string &parname) = 0;
 
-    /// Get a parameter's value (CCI value representation). Independent of the implicit or explicit status.
+    /// Get a parameter's value (CCI value representation).
     /**
-     * This accesses the parameter's NVP and works
-     * for implicit and explicit parameters.
-     *
-     *
-     * @param parname  Full hierarchical name of the parameter whose value should be returned.
+     * @param parname  Full hierarchical name of the parameter whose value should be returned
      * @return  CCI value of the parameter
      */
     virtual cci::cci_value get_cci_value(const std::string &parname) const = 0;
@@ -240,7 +236,7 @@ public:
      */
     virtual void remove_param(cci_param_if *par) = 0;
 
-    /// Return a list of all (explicit) parameter handles in the given scope
+    /// Return a list of all parameter handles in the given scope
     /**
      *
      * This returns not the owner's parameter objects but handles.

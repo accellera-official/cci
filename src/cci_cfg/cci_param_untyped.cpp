@@ -39,7 +39,7 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
                                      const std::string& desc,
                                      const cci_originator& originator)
     : m_description(desc), m_lock_pwd(NULL),
-      m_broker_handle(broker_handle), m_value_originator(originator),
+      m_broker_handle(broker_handle), m_value_origin(originator),
       m_originator(originator), fast_read(false),fast_write(false)
 {
     if(name_type == CCI_ABSOLUTE_NAME) {
@@ -110,15 +110,9 @@ bool cci_param_untyped::is_preset_value() const
   return init_value == get_cci_value(m_originator);
 }
 
-cci_originator cci_param_untyped::get_latest_write_originator() const
+cci_originator cci_param_untyped::get_value_origin() const
 {
-    return m_value_originator;
-}
-
-void cci_param_untyped::update_latest_write_originator(
-        const cci_originator& originator) const
-{
-    m_value_originator = originator;
+    return m_value_origin;
 }
 
 bool

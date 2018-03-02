@@ -657,8 +657,8 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
   value_type old_value = m_value;
   m_value = new_value;
 
-  // Update latest write originator
-  update_latest_write_originator(originator);
+  // Update value's origin
+  m_value_origin = originator;
 
   // Write callback(s)
   post_write_callback(old_value, new_value, originator);
@@ -774,8 +774,8 @@ void cci_param_typed<T, TM>::preset_cci_value(const cci_value& val,
     // Actual write
     m_value = new_value;
 
-    // Update latest write originator
-    update_latest_write_originator(originator);
+    // Update value's origin
+    m_value_origin = originator;
 
     // Write callback(s)
     post_write_callback(old_value, new_value, originator);
@@ -954,10 +954,10 @@ bool cci_param_typed<T, TM>::reset()
   const std::string& nm = get_name();
   if (m_broker_handle.has_preset_value(nm)) {
     cci_value preset = m_broker_handle.get_preset_cci_value(nm);
-    preset_cci_value(preset, m_broker_handle.get_latest_write_originator(nm));
+    preset_cci_value(preset, m_broker_handle.get_preset_value_origin(nm));
   } else {
     m_value = get_default_value();
-    update_latest_write_originator(m_originator);
+    m_value_origin = m_originator;
   }
   return true;
 }
