@@ -953,11 +953,24 @@ bool cci_param_typed<T, TM>::reset()
     return false;
   const std::string& nm = get_name();
   if (m_broker_handle.has_preset_value(nm)) {
+    // Apply preset value if it exists
     cci_value preset = m_broker_handle.get_preset_cci_value(nm);
     preset_cci_value(preset, m_broker_handle.get_preset_value_origin(nm));
   } else {
+    // Otherwise apply the default value
+    // Can't just call set_raw_value(); won't work for IMMUTABLE params.
+    if (!pre_write_callback(get_default_value(), m_originator))
+        return false;
+
+    // Actual write
+    value_type old_value = m_value;
     m_value = get_default_value();
+
+    // Update value's origin
     m_value_origin = m_originator;
+
+    // Write callback(s)
+    post_write_callback(old_value, get_default_value(), m_originator);
   }
   return true;
 }

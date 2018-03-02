@@ -34,14 +34,20 @@ Info: cfg_ip: @10 ns, Updating mutable parameters.
   value: 200
 
 Info: sim_ip: @20 ns, Resetting parameters.
+[PTRK @ 20 ns] sim_ip.paramA value updated:
+  value: 1; is default
+  value origin: sim_ip
 [PTRK @ 20 ns] sim_ip.paramB value updated:
   value: 10; is preset
+[PTRK @ 20 ns] sim_ip.paramD value updated:
+  value: 4; is default
 
 Info: cfg_ip: @30 ns, Updating preset values.
 
 Info: sim_ip: @40 ns, Resetting parameters.
 [PTRK @ 40 ns] sim_ip.paramA value updated:
   value: 1000; is preset
+  value origin: cfg_ip
 [PTRK @ 40 ns] sim_ip.paramB value updated:
   value: 2000; is preset
 [PTRK @ 40 ns] sim_ip.paramD value updated:
