@@ -183,9 +183,11 @@ public:
      *
      *
      * @param parname  Full hierarchical name of the parameter whose value should be returned.
+     * @param   originator Reference to the originator
      * @return  CCI value of the parameter
      */
-    virtual cci::cci_value get_cci_value(const std::string &parname) const = 0;
+    virtual cci::cci_value get_cci_value(const std::string &parname,
+        const cci_originator &originator = cci_originator()) const = 0;
     
     /// Get a parameter handle.
     /**
@@ -272,6 +274,9 @@ protected:
 
     cci_originator unknown_originator() const
       { return cci_originator( cci_originator::unknown_tag() ); }
+
+    static cci_broker_if &unwrap_broker(cci_broker_handle &h)
+    { return h.ref(); }
 };
 
 inline cci_broker_handle
