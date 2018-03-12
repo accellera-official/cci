@@ -22,6 +22,7 @@ examples/ex15_Inter_Parameter_Value_Constraints/ex15_Inter_Parameter_Value_Const
 examples/ex16_User_Defined_Data_Type/ex16_User_Defined_Data_Type.cpp
 examples/ex17_Specifying_Parameter_Values_via_a_Configuration_File/ex17_Specifying_Parameter_Values_via_a_Configuration_File.cpp
 examples/ex18_Superset_Parameter_Value_Specification/ex18_Superset_Parameter_Value_Specification.cpp
+examples/ex19_Reset_Param/ex19_Reset_Param.cpp
 examples/ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
 examples/ex21_Param_Destruction_Resurrection/ex21_Param_Destruction_Resurrection.cpp
 examples/ex22_Search_Predicate/ex22_Search_Predicate.cpp
@@ -31,7 +32,7 @@ examples/ex23_Hierarchical_Value_Update/ex23_Hierarchical_Value_Update.cpp
  Tests that failed :
 -------------------------------------------------------------------------------
 
-Total passed : 22
+Total passed : 23
 Total failed : 0
 
    GUT METER : 100 %

@@ -23,26 +23,26 @@
  *  @author Trevor Wieman, Intel
  */
 
-#ifndef EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
-#define EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
+#ifndef EXAMPLES_EX19_RESET_PARAM_EX19_CONFIG_IP_H_
+#define EXAMPLES_EX19_RESET_PARAM_EX19_CONFIG_IP_H_
 
 #include <cci_configuration>
 #include <string>
 #include "xreport.hpp"
 
 /**
- *  @class  ex24_config_ip
+ *  @class  ex19_config_ip
  *  @brief  The config_ip configures simple_ip's parameters.
  */
-SC_MODULE(ex24_config_ip) {
+SC_MODULE(ex19_config_ip) {
  public:
   /**
-   *  @fn     void ex24_config_ip()
+   *  @fn     void ex19_config_ip()
    *  @brief  The constructor for the class.
    *  @return void
    */
 
-SC_CTOR(ex24_config_ip):
+SC_CTOR(ex19_config_ip):
    m_broker(cci::cci_get_broker())
   {
     SC_THREAD(execute);
@@ -82,4 +82,4 @@ SC_CTOR(ex24_config_ip):
   cci::cci_broker_handle m_broker;
 };
 
-#endif  // EXAMPLES_EX24_RESET_PARAM_EX24_CONFIG_IP_H_
+#endif  // EXAMPLES_EX19_RESET_PARAM_EX19_CONFIG_IP_H_

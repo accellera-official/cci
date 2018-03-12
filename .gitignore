@@ -19,9 +19,9 @@ _UpgradeReport_Files/
 run/
 run.log
 diff.log
+!golden/*.log
 examples/**/*.log
 *.stripped
-!golden/*.log
 
 ### doxygen output
 doc/API_ref

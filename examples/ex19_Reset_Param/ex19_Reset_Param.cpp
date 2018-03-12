@@ -18,19 +18,19 @@
  ****************************************************************************/
 
 /**
- *  @file   ex24_Reset_Param.cpp
+ *  @file   ex19_Reset_Param.cpp
  *  @brief  An example demonstrating parameter reset.
  *  @author Trevor Wieman, Intel
  */
 
-#include "ex24_simple_ip.h"
-#include "ex24_config_ip.h"
+#include "ex19_simple_ip.h"
+#include "ex19_config_ip.h"
 #include <cci_utils/broker.h>
 #include "param_tracker.h"
 
 /**
  *  @fn     int sc_main(int argc, char* argv[])
- *  @brief  The testbench for the CCI ex24_Reset_Param example
+ *  @brief  The testbench for the CCI ex19_Reset_Param example
  *  @param  argc  An integer for the number of arguments; not used
  *  @param  argv  An array with the input arguments; not used
  *  @return and integer of successful execution
@@ -40,8 +40,8 @@ int sc_main(int argc, char *argv[]) {
   cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
 
   // Instantiate the modules
-  ex24_config_ip cfg_ip("cfg_ip");
-  ex24_simple_ip sim_ip("sim_ip");
+  ex19_config_ip cfg_ip("cfg_ip");
+  ex19_simple_ip sim_ip("sim_ip");
 
   // Attach trackers to the parameters
   cci::cci_originator originator("sc_main");

@@ -18,30 +18,30 @@
  ****************************************************************************/
 
 /**
- *  @file   ex24_simple_ip.h
+ *  @file   ex19_simple_ip.h
  *  @brief  A simple module demonstrating parameter reset
  *  @author Trevor Wieman, Intel
  */
 
-#ifndef EXAMPLES_EX24_RESET_PARAM_EX24_SIMPLE_IP_H_
-#define EXAMPLES_EX24_RESET_PARAM_EX24_SIMPLE_IP_H_
+#ifndef EXAMPLES_EX19_RESET_PARAM_EX19_SIMPLE_IP_H_
+#define EXAMPLES_EX19_RESET_PARAM_EX19_SIMPLE_IP_H_
 
 #include <cci_configuration>
 #include "xreport.hpp"
 
 /**
- *  @class  ex24_simple_ip
+ *  @class  ex19_simple_ip
  *  @brief  A simple IP that declares, updates, then resets parameters.
  */
-SC_MODULE(ex24_simple_ip) {
+SC_MODULE(ex19_simple_ip) {
  public:
 
   /**
-   *  @fn     void ex24_simple_ip()
+   *  @fn     void ex19_simple_ip()
    *  @brief  The constructor for the class.
    *  @return void
    */
-  SC_CTOR(ex24_simple_ip)
+  SC_CTOR(ex19_simple_ip)
   // Initialize int_param with 0
       : paramA("paramA", 1, "mutable param without preset value") 
       , paramB("paramB", 2, "mutable param with preset value")
@@ -93,7 +93,7 @@ SC_MODULE(ex24_simple_ip) {
          , paramC;
      cci::cci_param<int, cci::CCI_IMMUTABLE_PARAM> paramD;
 };
-// ex24_simple_ip
+// ex19_simple_ip
 
-#endif  // EXAMPLES_EX24_RESET_PARAM_EX24_SIMPLE_IP_H_
+#endif  // EXAMPLES_EX19_RESET_PARAM_EX19_SIMPLE_IP_H_
 
