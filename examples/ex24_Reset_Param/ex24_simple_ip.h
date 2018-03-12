@@ -81,7 +81,7 @@ SC_MODULE(ex24_simple_ip) {
 
     // Pass more time then unlock paramC and reset it
     wait(10, sc_core::SC_NS);
-    XREPORT("Unlocking and resetting paramB.");
+    XREPORT("Unlocking and resetting paramC.");
     paramC.unlock();
     paramC.reset();
     paramC.lock();

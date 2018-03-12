@@ -54,7 +54,7 @@ Info: sim_ip: @40 ns, Resetting parameters.
   value: 4000; is preset
   value origin: cfg_ip
 
-Info: sim_ip: @50 ns, Unlocking and resetting paramB.
+Info: sim_ip: @50 ns, Unlocking and resetting paramC.
 [PTRK @ 50 ns] sim_ip.paramC value updated:
   value: 3000; is preset
   value origin: cfg_ip
