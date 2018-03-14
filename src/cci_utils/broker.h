@@ -25,18 +25,18 @@ namespace cci_utils
     /// for the public broker, this will be useless, but if people re-use this
     /// broker, then it will help
     bool has_parent;
-    cci::cci_broker_handle m_parent;
+    cci::cci_broker_if &m_parent;
 
     // convenience function for constructor
-    cci::cci_broker_handle get_parent_broker(const cci::cci_originator &originator)
+    cci::cci_broker_if &get_parent_broker()
     {
         if (sc_core::sc_get_current_object()) {
             has_parent=true;
-            return cci::cci_get_broker();
+            return unwrap_broker(cci::cci_get_broker());
         } else {
           // We ARE the global broker
           has_parent=false;
-          return cci::cci_broker_handle(*this, originator);
+          return *this;
         }
     }
 
