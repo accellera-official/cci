@@ -184,6 +184,7 @@ public:
     }
 
 private:
+    friend class cci_broker_if;
     friend class cci_param_if;
     cci_broker_if&       ref()       { return *m_broker; }
     const cci_broker_if& ref() const { return *m_broker; }

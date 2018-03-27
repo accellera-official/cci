@@ -36,8 +36,7 @@ namespace cci_utils {
 // NB this broker must be instanced and registered in the same place
 //
   consuming_broker::consuming_broker(const std::string& name)
-    : m_name(cci_gen_unique_name(name.c_str())),
-    m_originator(cci_originator(m_name))
+    : m_name(cci_gen_unique_name(name.c_str()))
     {
       sc_assert (name.length() > 0 && "Name must not be empty");
     }
@@ -147,11 +146,12 @@ namespace cci_utils {
     locked.insert(parname);
   }
 
-  cci_value consuming_broker::get_cci_value(const std::string &parname) const
+  cci_value consuming_broker::get_cci_value(const std::string &parname,
+  const cci_originator &originator) const
   {
     cci_param_if* p = get_orig_param(parname);
     if(p) {
-      return p->get_cci_value(m_originator);
+      return p->get_cci_value(originator);
     } else {
       std::map<std::string,cci_value>::const_iterator iter =
         m_unused_value_registry.find(parname);
