@@ -141,7 +141,7 @@ public:
      * The originator is updated on successful calls to the following functions:
      * set_cci_value(), cci_param_typed::set_value(), cci_param_typed::operator=()
      */
-    cci_originator get_latest_write_originator() const;
+    cci_originator get_value_origin() const;
 
     ///@}
 
@@ -543,9 +543,6 @@ protected:
                       cci_broker_handle broker_handle, const std::string& desc,
                       const cci_originator& originator);
 
-    /// Updates the internal member m_value_originator
-    void update_latest_write_originator(const cci_originator& originator) const;
-
     /// check mutability
     bool set_cci_value_allowed(cci_param_mutable_type mutability);
 
@@ -566,7 +563,7 @@ protected:
     cci_broker_handle m_broker_handle;
 
     /// Stores the originator of the latest successful write access
-    mutable cci_originator m_value_originator;
+    mutable cci_originator m_value_origin;
 
     /// Callback object
     template<class T>

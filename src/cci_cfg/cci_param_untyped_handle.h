@@ -117,7 +117,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_if::is_default_value
-    virtual bool is_default_value();
+    virtual bool is_default_value() const;
 
 
     /// @copydoc cci_param_if::is_preset_value
@@ -131,8 +131,8 @@ public:
     /// @copydoc cci_param_if::get_originator
     cci_originator get_originator() const;
 
-    /// @copydoc cci_param_if::get_latest_write_originator
-    cci_originator get_latest_write_originator() const;
+    /// @copydoc cci_param_if::get_value_origin
+    cci_originator get_value_origin() const;
 
     ///@}
 
@@ -242,9 +242,6 @@ public:
      *        parameter before invalidating. Otherwise, just invalidate.
      */
     void invalidate();
-
-    /// Reset the parameter to the intial value
-    void reset();
 
 protected:
     ///@name Type-punned value operations

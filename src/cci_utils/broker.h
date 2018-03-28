@@ -44,7 +44,7 @@ namespace cci_utils
 
   public:
 
-    cci::cci_originator get_latest_write_originator(
+    cci::cci_originator get_value_origin(
             const std::string &parname) const;
 
     /// Constructor

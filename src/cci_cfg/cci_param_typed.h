@@ -422,11 +422,8 @@ public:
                     const cci_originator& originator = cci_originator());
     //@}
 
-    void reset()
-      { reset(get_originator()); }
-
     ///@copydoc cci_param_if::reset
-    virtual void reset(const cci_originator& originator);
+    virtual bool reset();
 
     ~cci_param_typed()
       { destroy(m_broker_handle); }
@@ -660,11 +657,11 @@ void cci_param_typed<T, TM>::set_raw_value(const void* value,
   value_type old_value = m_value;
   m_value = new_value;
 
+  // Update value's origin
+  m_value_origin = originator;
+
   // Write callback(s)
   post_write_callback(old_value, new_value, originator);
-
-  // Update latest write originator
-  update_latest_write_originator(originator);
 
   cci_param_untyped::fast_write =
     TM == CCI_MUTABLE_PARAM &&
@@ -777,11 +774,11 @@ void cci_param_typed<T, TM>::preset_cci_value(const cci_value& val,
     // Actual write
     m_value = new_value;
 
+    // Update value's origin
+    m_value_origin = originator;
+
     // Write callback(s)
     post_write_callback(old_value, new_value, originator);
-
-    // Update latest write originator
-    update_latest_write_originator(originator);
 }
 
 template <typename T, cci_param_mutable_type TM>
@@ -950,16 +947,32 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
 #undef CCI_PARAM_TYPED_CALLBACK_IMPL_
 
 template <typename T, cci_param_mutable_type TM>
-void cci_param_typed<T, TM>::reset(const cci_originator& originator)
+bool cci_param_typed<T, TM>::reset()
 {
+  if (is_locked())
+    return false;
   const std::string& nm = get_name();
   if (m_broker_handle.has_preset_value(nm)) {
+    // Apply preset value if it exists
     cci_value preset = m_broker_handle.get_preset_cci_value(nm);
-    preset_cci_value(preset, originator);
+    preset_cci_value(preset, m_broker_handle.get_preset_value_origin(nm));
   } else {
+    // Otherwise apply the default value
+    // Can't just call set_raw_value(); won't work for IMMUTABLE params.
+    if (!pre_write_callback(get_default_value(), m_originator))
+        return false;
+
+    // Actual write
+    value_type old_value = m_value;
     m_value = get_default_value();
+
+    // Update value's origin
+    m_value_origin = m_originator;
+
+    // Write callback(s)
+    post_write_callback(old_value, get_default_value(), m_originator);
   }
-  update_latest_write_originator(originator);
+  return true;
 }
 
 #if CCI_CPLUSPLUS >= 201103L

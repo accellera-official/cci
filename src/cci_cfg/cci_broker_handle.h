@@ -102,9 +102,13 @@ public:
     void ignore_unconsumed_preset_values(
             const cci_preset_value_predicate &pred);
 
-    /// @copydoc cci_broker_if::get_latest_write_originator
+    /// @copydoc cci_broker_if::get_value_origin
     cci_originator
-    get_latest_write_originator(const std::string &parname) const;
+    get_value_origin(const std::string &parname) const;
+
+    /// @copydoc cci_broker_if::get_preset_value_origin
+    cci_originator
+    get_preset_value_origin(const std::string &parname) const;
 
     /// @copydoc cci_broker_if::lock_preset_value
     void lock_preset_value(const std::string &parname);

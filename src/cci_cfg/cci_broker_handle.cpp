@@ -84,9 +84,15 @@ void cci_broker_handle::ignore_unconsumed_preset_values(
 }
 
 cci_originator
-cci_broker_handle::get_latest_write_originator(const std::string &parname) const
+cci_broker_handle::get_value_origin(const std::string &parname) const
 {
-    return m_broker->get_latest_write_originator(parname);
+    return m_broker->get_value_origin(parname);
+}
+
+cci_originator
+cci_broker_handle::get_preset_value_origin(const std::string &parname) const
+{
+    return m_broker->get_preset_value_origin(parname);
 }
 
 void cci_broker_handle::lock_preset_value(const std::string &parname)

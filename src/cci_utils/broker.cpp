@@ -52,12 +52,12 @@ namespace cci_utils {
   {
   }
 
-  cci_originator broker::get_latest_write_originator(const std::string &parname) const
+  cci_originator broker::get_value_origin(const std::string &parname) const
   {
     if (sendToParent(parname)) {
-      return m_parent.get_latest_write_originator(parname);
+      return m_parent.get_value_origin(parname);
     } else {
-      return consuming_broker::get_latest_write_originator(parname);
+      return consuming_broker::get_value_origin(parname);
     }
   }
   
