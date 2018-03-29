@@ -1,12 +1,12 @@
 SystemC Simulation
 
-Info: top_mod.param_owner1: @0 s, [OWNER C_TOR] : Parameter Name   : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 1
+Info: top_mod.param_owner1: @0 s, [OWNER C_TOR] : Parameter Name   : top_mod.param_owner1.clk_freq_Hz, Value : 1
 
-Info: top_mod.param_owner2: @0 s, [OWNER C_TOR] : Parameter Name   : top_mod.param_owner2.clock_speed_KHz   Parameter Value : 2
+Info: top_mod.param_owner2: @0 s, [OWNER C_TOR] : Parameter Name   : top_mod.param_owner2.clock_speed_KHz, Value : 2
 
-Info: top_mod: @0 s, [TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 1.0
+Info: top_mod: @0 s, [TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 1.0
 
-Info: top_mod: @0 s, [TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_KHz	Parameter Value : 2.0
+Info: top_mod: @0 s, [TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_KHz, Value : 2.0
 
 Info: top_mod.param_value_sync_with_cf: @0 s, Parameter1_str: top_mod.param_owner1.clk_freq_Hz
 
@@ -14,30 +14,34 @@ Info: top_mod.param_value_sync_with_cf: @0 s, Parameter2_str : top_mod.param_own
 
 Info: top_mod.param_value_sync_with_cf: @0 s, ConversionFactor : 0.001
 
-Info: param_cfgr: @0 s, [CFGR C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 1.0
+Info: param_cfgr: @0 s, [CFGR C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 1.0
 
-Info: param_cfgr: @0 s, [CFGR C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_KHz	Parameter Value : 0.001
+Info: param_cfgr: @0 s, [CFGR C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_KHz, Value : 0.001
+
+Info: sc_main: Begin Simulation.
 
 Info: param_cfgr: @0 s, [CFGR within beoe] Within the BEOE phase
 
 Info: param_cfgr: @0 s, [CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1) to 5000 (Hz).
 
-Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Value : 5000.0
+Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 5000.0
 
-Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_KHz	Value : 5.0
+Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_KHz, Value : 5.0
 
-Info: param_cfgr: @0 s, [CFGR within beoe] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 5000.0
+Info: param_cfgr: @0 s, [CFGR within beoe] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 5000.0
 
-Info: param_cfgr: @0 s, [CFGR within beoe] : Parameter Name : top_mod.param_owner2.clock_speed_KHz	Parameter Value : 5.0
+Info: param_cfgr: @0 s, [CFGR within beoe] : Parameter Name : top_mod.param_owner2.clock_speed_KHz, Value : 5.0
 
 Info: param_cfgr: @0 s, @ 0 s
 
 Info: param_cfgr: @0 s, [CFGR] : Changing the 'clock_speed_KHz' of OWNER (2) to 12 (KHz).
 
-Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_KHz	Value : 12.0
+Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_KHz, Value : 12.0
 
-Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Value : 12000.0
+Info: top_mod.param_value_sync_with_cf: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 12000.0
 
-Info: param_cfgr: @0 s, [CFGR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz	Parameter Value : 12000.0
+Info: param_cfgr: @0 s, [CFGR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 12000.0
 
-Info: param_cfgr: @0 s, [CFGR] : Parameter Name : top_mod.param_owner2.clock_speed_KHz	Parameter Value : 12.0
+Info: param_cfgr: @0 s, [CFGR] : Parameter Name : top_mod.param_owner2.clock_speed_KHz, Value : 12.0
+
+Info: sc_main: End Simulation.
