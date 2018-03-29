@@ -58,22 +58,22 @@ SC_MODULE(ex11_parameter_configurator) {
     cfgr_param1_handle = m_broker.get_param_handle(cfgr_param_str1);
     if (cfgr_param1_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param1_handle.get_name()
-              << "\tParameter Value : "
+              << ", Value : "
               << cfgr_param1_handle.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
-              << "\tdoesn't exists in top_module");
+              << " doesn't exists in top_module");
     }
 
     // Check for the existence of 'clock_speed_Hz' cci_parameter of owner 2
     cfgr_param2_handle = m_broker.get_param_handle(cfgr_param_str2);
     if (cfgr_param2_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param2_handle.get_name()
-              << "\tParameter Value : "
+              << ", Value : "
               << cfgr_param2_handle.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
-              << "\tdoesn't exists in top_module");
+              << " doesn't exists in top_module");
     }
 
     // Registering SC_THREAD with the SystemC kernel
@@ -97,11 +97,11 @@ SC_MODULE(ex11_parameter_configurator) {
     }
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
-            << cfgr_param1_handle.get_name() << "\tParameter Value : "
+            << cfgr_param1_handle.get_name() << ", Value : "
             << cfgr_param1_handle.get_cci_value().to_json());
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
-            << cfgr_param2_handle.get_name() << "\tParameter Value : "
+            << cfgr_param2_handle.get_name() << ", Value : "
             << cfgr_param2_handle.get_cci_value().to_json());
   }
 
@@ -123,11 +123,11 @@ SC_MODULE(ex11_parameter_configurator) {
       }
 
       XREPORT("[CFGR] : Parameter Name : " << cfgr_param1_handle.get_name()
-              << "\tParameter Value : "
+              << ", Value : "
               << cfgr_param1_handle.get_cci_value().to_json());
 
       XREPORT("[CFGR] : Parameter Name : " << cfgr_param2_handle.get_name()
-              << "\tParameter Value : "
+              << ", Value : "
               << cfgr_param2_handle.get_cci_value().to_json());
 
       wait(50.0, sc_core::SC_NS);

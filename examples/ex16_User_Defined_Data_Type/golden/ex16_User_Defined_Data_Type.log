@@ -16,6 +16,8 @@ Info: param_cfgr: @0 s, [CFGR C_TOR] : Broker Type : DEFAULT_BROKER - is not a p
 
 	[OBSERVER C_TOR] : Broker Type : DEFAULT_BROKER - is not a private broker.
 
+Info: sc_main: Begin Simulation.
+
 Info: param_owner: @0 s, @ 0 s
 
 Info: param_owner: @0 s, [OWNER -> Retrieve] : Description : This is user-defined data type
@@ -63,3 +65,5 @@ Info: param_cfgr: @8 ns, [CFGR -> Retrieve] : Parameter name : param_owner.User_
 	[OBSERVER post_read_cb]:  Parameter Name : param_owner.User_data_type_param	Originator info : param_cfgr
 
 Info: param_cfgr: @8 ns, [CFGR -> Retrieve] : Parameter value: {"s_address":1024,"d_address":1280,"index":3}
+
+Info: sc_main: End Simulation.

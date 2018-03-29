@@ -12,6 +12,8 @@ Info: Top.private.parent_inst: @0 s, [PARENT C_TOR] : Parameter Name : Top.priva
 
 Info: Top.param_cfgr: @0 s, [CFGR] : Parameter Name : Top.private.parent_inst.parent_int_buffer	Parameter Value : 350
 
+Info: sc_main: Begin Simulation.
+
 Info: Top.private.parent_inst.child_inst: @0 s, @ 0 s	Visible parameters to 'child' module
 
 Info: Top.private.parent_inst.child_inst: @0 s, [CHILD] : Parameter Name : Top.private.parent_inst.child_inst.priv_int_param
@@ -49,3 +51,5 @@ Info: Top.param_cfgr: @20 ns, [CFGR] : Parameter Name : Top.private.parent_inst.
 Info: Top.private.parent_inst.child_inst: @25 ns, @ 25 ns
 
 Info: Top.private.parent_inst.child_inst: @25 ns, [CHILD] : Parameter Name : Top.private.parent_inst.child_inst.priv_int_param	Parameter Value : 1000
+
+Info: sc_main: End Simulation.
