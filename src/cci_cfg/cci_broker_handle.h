@@ -24,6 +24,7 @@
 #include "cci_core/cci_value.h"
 #include "cci_cfg/cci_broker_types.h"
 #include "cci_cfg/cci_originator.h"
+#include "cci_cfg/cci_param_typed_handle.h"
 
 /**
  * @author Guillaume Delbergue, Ericsson / GreenSocs
@@ -138,7 +139,7 @@ public:
      * @return  Parameter handle (invalid if not existing or the type is not correct)
      */
     template<class T>
-    cci_param_typed_handle<T> get_param_handle(const std::string &parname) {
+    cci_param_typed_handle<T> get_param_handle(const std::string &parname) const {
         return cci_param_typed_handle<T>(get_param_handle(parname));
     }
 
