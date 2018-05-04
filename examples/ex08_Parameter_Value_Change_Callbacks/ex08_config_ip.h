@@ -28,7 +28,7 @@
 
 #include <sstream>
 #include <string>
-#include "cci_configuration"
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**

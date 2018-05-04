@@ -84,7 +84,9 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   ex18_parameter_configurator param_cfgr("param_cfgr");
 
   // BEOE, EOE and simulation phases advance from here
-  sc_start(10.0, SC_NS);
+  SC_REPORT_INFO("sc_main", "Begin Simulation.");
+  sc_core::sc_start(10.0, sc_core::SC_NS);
+  SC_REPORT_INFO("sc_main", "End Simulation.");
 
   return EXIT_SUCCESS;
 }

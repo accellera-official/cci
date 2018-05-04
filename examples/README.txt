@@ -1,6 +1,6 @@
 ================================================================================
                     Accellera/CCI Examples README
-Date  : 12/12/2017
+Date  : 4/18/2018
 ================================================================================
 
 ToC
@@ -46,7 +46,6 @@ Running the examples
   export BOOST_HOME=.../boost/1.57.0/win_64/vc_12/include/boost-1_57
   export CCI_HOME=.../cci
 # export SYSTEMC_PTHREADS=1
-  export SYSTEMC_TEST=${CCI_HOME}/examples
   export CXX=g++ (for Linux)
          CXX=cl  (for Windows)
 # export PATH=/apps/free/gcc/4.4.5/bin:${PATH} (for Linux)

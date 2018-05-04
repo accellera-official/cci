@@ -76,11 +76,11 @@ SC_MODULE(ex11_top_module) {
       selected_base_param_list.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
-              << "\tParameter Value : "
+              << ", Value : "
               << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
-              << "\tnot found.");
+              << " not found.");
     }
 
     // Check for existence of the owner cci_parameter using name-based look up
@@ -90,11 +90,11 @@ SC_MODULE(ex11_top_module) {
       selected_base_param_list.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
-              << "\tParameter Value : "
+              << ", Value : "
               << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
-              << "\tnot found.");
+              << " not found.");
     }
 
     // Pass on the list of cci_base_parameters to the 'param_value_sync'

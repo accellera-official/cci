@@ -85,7 +85,7 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
                                    double conv_fact)
   {
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
-            << ev.param_handle.get_name() << "\tValue : "
+            << ev.param_handle.get_name() << ", Value : "
             << ev.new_value);
     cci::cci_value freq = ev.new_value;
     sc_assert( freq.is_number() );

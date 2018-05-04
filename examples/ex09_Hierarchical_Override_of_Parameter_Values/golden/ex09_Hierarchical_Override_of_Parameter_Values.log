@@ -95,6 +95,8 @@ Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of targe
 
 Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_3
 
+Info: sc_main: Begin Simulation.
+
 Info: top_module_inst.RouterInstance: @0 s, [ROUTER in beoe] : Number of initiator(s) : 1
 
 Info: top_module_inst.RouterInstance: @0 s, [ROUTER in beoe] : Number of target(s) : 4
@@ -2684,3 +2686,5 @@ Info: top_module_inst.target_3: @1130 ns, [TARGET] : base addr ---- 180
 Info: top_module_inst.initiator_0: @1135 ns, [Initiators Message]=>At address 1fc received response of Read transaction  data aabbccfd at time 1135 ns
 
 Info: top_module_inst.initiator_0: @1135 ns, --------------------------------------------------------
+
+Info: sc_main: End Simulation.

@@ -68,7 +68,9 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // Instantiate the observer class
   ex16_observer observer_obj;
 
-  sc_start(12.0, SC_NS);
+  SC_REPORT_INFO("sc_main", "Begin Simulation.");
+  sc_core::sc_start(12.0, sc_core::SC_NS);
+  SC_REPORT_INFO("sc_main", "End Simulation.");
 
   return EXIT_SUCCESS;
 }

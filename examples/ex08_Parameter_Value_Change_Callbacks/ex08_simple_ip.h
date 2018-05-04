@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX08_PARAMETER_VALUE_CHANGE_CALLBACKS_EX08_SIMPLE_IP_H_
 #define EXAMPLES_EX08_PARAMETER_VALUE_CHANGE_CALLBACKS_EX08_SIMPLE_IP_H_
 
-#include "cci_configuration"
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**

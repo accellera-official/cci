@@ -105,8 +105,10 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // Instantiating observer class
   ex07_observer observer_class("observer");
 
+  SC_REPORT_INFO("sc_main", "Begin Simulation");
   // Simulation time
   sc_core::sc_start(30.0, sc_core::SC_NS);
+  SC_REPORT_INFO("sc_main", "End Simulation");
 
   return EXIT_SUCCESS;
 }  // End of sc_main

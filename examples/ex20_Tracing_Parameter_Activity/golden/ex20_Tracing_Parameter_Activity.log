@@ -12,6 +12,8 @@ Info: param_owner: @0 s, [OWNER C_TOR] : Creating new integer type cci-parameter
 
 	[OBSERVER - create_param_cb] : Registering other callbacks on the newly created cci-parameters
 
+Info: sc_main: Begin Simulation.
+
 Info: param_owner: @0 s, @ 0 s
 
 Info: param_owner: @0 s, [OWNER] : Setting new value to the 'int' type param to '15'
@@ -33,3 +35,5 @@ Info: param_owner: @5 ns, [OWNER] : Creating new 'double' type cci-parameter wit
 	[OBSERVER - create_param_cb] : Parameter Value : 12.345
 
 	[OBSERVER - create_param_cb] : Registering other callbacks on the newly created cci-parameters
+
+Info: sc_main: End Simulation.

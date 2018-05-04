@@ -58,14 +58,14 @@ SC_MODULE(ex15_configurator) {
     child_base_param_handle = m_broker.get_param_handle(cfgr_param_str1); 
     if (!child_base_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
-              << "\tdoesn't exists");
+              << " doesn't exists");
     }
 
     // Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
     mem_size_base_handle = m_broker.get_param_handle(cfgr_param_str2);
     if (!mem_size_base_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str2
-              << "\tdoesn't exists");
+              << " doesn't exists");
     }
 
     // Registering SC_THREAD with the SystemC kernel

@@ -2,6 +2,8 @@ SystemC Simulation
 
 Info: param_owner: @0 s, [OWNER C_TOR] : Parameter locking status : 0	Value : 0
 
+Info: sc_main: Begin Simulation.
+
 Info: param_owner: @0 s, @ 0 s
 
 Info: param_owner: @0 s, [OWNER] : Locking the parameter without password
@@ -77,3 +79,5 @@ Info: param_owner: @10 ns, [OWNER] : Parameter locking status : 1	Value : 3
 Info: param_owner: @10 ns, [OWNER] : Overwrite value of the (locked!) parameter to 4 without unlocking
 
 Info: param_owner: @10 ns, [OWNER] : Parameter locking status : 1	Value : 4
+
+Info: sc_main: End Simulation.
