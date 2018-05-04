@@ -245,10 +245,10 @@ cci_param_data_category cci_param_untyped_handle::get_data_category() const
     return m_param->get_data_category();
 }
 
-const std::string& cci_param_untyped_handle::get_name() const
+const std::string& cci_param_untyped_handle::name() const
 {
     check_is_valid();
-    return m_param->get_name();
+    return m_param->name();
 }
 
 cci_originator cci_param_untyped_handle::get_originator() const

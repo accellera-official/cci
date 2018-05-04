@@ -43,7 +43,7 @@ public:
 
         // Report parameter/handle details
         std::cout << prefix()
-                  << "Tracking " << phandle.get_name() << std::endl
+                  << "Tracking " << phandle.name() << std::endl
                   << "  handle originator: " << phandle.get_originator().name() << std::endl;
         if (!h.get_description().empty())
             std::cout << "  description: " << phandle.get_description() << std::endl;
@@ -90,7 +90,7 @@ protected:
     void post_write_cb(const cci::cci_param_write_event<> &)
     {
         std::cout << prefix()
-                  << phandle.get_name() << " value updated:" << std::endl;
+                  << phandle.name() << " value updated:" << std::endl;
         report_value_details();
  std::string new_value_originator = phandle.get_value_origin().name();
         if (value_origin != phandle.get_value_origin().name())

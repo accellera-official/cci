@@ -76,12 +76,12 @@ SC_MODULE(ex02_config_ip) {
       cci::cci_param_typed_handle<int> int_param_typed_handle =
           cci::cci_param_typed_handle<int>(int_param_handle);
       if (!int_param_typed_handle.is_valid()) {
-        XREPORT_WARNING("@execute: Typecast of " << int_param_handle.get_name()
+        XREPORT_WARNING("@execute: Typecast of " << int_param_handle.name()
                         << " to cci::cci_param_typed_handle<int> failed.");
       } else {
         XREPORT("@execute: Typecast of " << param_name
                 << " to cci::cci_param_typed_handle<int> succeeded");
-        XREPORT("@execute: Current value of " << int_param_typed_handle.get_name()
+        XREPORT("@execute: Current value of " << int_param_typed_handle.name()
                 << " is " << int_param_typed_handle.get_value());
       }
 
@@ -92,7 +92,7 @@ SC_MODULE(ex02_config_ip) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
                         << " to cci::cci_param_typed_handle<unsigned int> failed.");
       } else {
-        XREPORT("@execute: Current value of " << uint_param_typed_handle.get_name()
+        XREPORT("@execute: Current value of " << uint_param_typed_handle.name()
                 << " is " << uint_param_typed_handle.get_value());
       }
 
@@ -103,7 +103,7 @@ SC_MODULE(ex02_config_ip) {
         XREPORT_WARNING("@execute: Typecast of " << param_name
                         << " to cci::cci_param_typed_handle<std::string> failed.");
       } else {
-        XREPORT("@execute: Current value of " << string_param_typed_handle.get_name()
+        XREPORT("@execute: Current value of " << string_param_typed_handle.name()
                 << " is " << string_param_typed_handle.get_value());
       }
 

@@ -75,7 +75,7 @@ cci_param_untyped::~cci_param_untyped()
     sc_assert( m_param_handles.empty() );
 
     if(!m_name.empty()) {
-        cci_unregister_name(get_name().c_str());
+        cci_unregister_name(name().c_str());
     }
 }
 
@@ -104,9 +104,9 @@ cci_value_map cci_param_untyped::get_metadata() const
 
 bool cci_param_untyped::is_preset_value() const
 {
-  const std::string& name = get_name();
-  if (!m_broker_handle.has_preset_value(name)) return false;
-  cci_value init_value = m_broker_handle.get_preset_cci_value(name);
+  const std::string& my_name = name();
+  if (!m_broker_handle.has_preset_value(my_name)) return false;
+  cci_value init_value = m_broker_handle.get_preset_cci_value(my_name);
   return init_value == get_cci_value(m_originator);
 }
 
@@ -120,7 +120,7 @@ cci_param_untyped::set_cci_value_allowed(cci_param_mutable_type mutability)
 {
   if (mutability==CCI_IMMUTABLE_PARAM) {
     std::stringstream ss;
-    ss << "Parameter (" << get_name() << ") is immutable.";
+    ss << "Parameter (" << name() << ") is immutable.";
     cci_report_handler::set_param_failed(ss.str().c_str(), __FILE__, __LINE__);
     return false;
   }
@@ -259,7 +259,7 @@ bool cci_param_untyped::is_locked() const
     return m_lock_pwd != NULL;
 }
 
-const std::string& cci_param_untyped::get_name() const
+const std::string& cci_param_untyped::name() const
 {
     return m_name;
 }

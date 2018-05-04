@@ -45,9 +45,9 @@ SC_MODULE(ex04_simple_ip) {
       : param_1("param_1", 1),
         param_2("param_2", 2) {
     SC_THREAD(execute);
-    XREPORT("@Ctor: Default value specified for " << param_1.get_name()
+    XREPORT("@Ctor: Default value specified for " << param_1.name()
             << " is 1");
-    XREPORT("@Ctor: Default value specified for " << param_2.get_name()
+    XREPORT("@Ctor: Default value specified for " << param_2.name()
             << " is 2");
 
     XREPORT("@Ctor: param_1 mutable type is "
@@ -95,7 +95,7 @@ SC_MODULE(ex04_simple_ip) {
 
     // Attempt to set new value (10) to param_1
     try {
-      XREPORT("@Run: Assign new value (10) to " << param_1.get_name());
+      XREPORT("@Run: Assign new value (10) to " << param_1.name());
       param_1 = 10;
     } catch (std::exception &x) {
       XREPORT_WARNING(x.what());
@@ -115,7 +115,7 @@ SC_MODULE(ex04_simple_ip) {
 
     // Attempt to set new value (20) to param_2
     try {
-      XREPORT("@Run: Assign new value (20) to " << param_2.get_name());
+      XREPORT("@Run: Assign new value (20) to " << param_2.name());
       param_2 = 20;
     } catch (std::exception &x) {
       XREPORT_WARNING(x.what());

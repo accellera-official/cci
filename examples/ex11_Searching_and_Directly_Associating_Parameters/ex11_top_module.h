@@ -75,7 +75,7 @@ SC_MODULE(ex11_top_module) {
     if (temp_handle.is_valid()) {
       selected_base_param_list.push_back(temp_handle);
 
-      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
+      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.name()
               << ", Value : "
               << temp_handle.get_cci_value().to_json());
     } else {
@@ -89,7 +89,7 @@ SC_MODULE(ex11_top_module) {
     if (temp_handle.is_valid()) {
       selected_base_param_list.push_back(temp_handle);
 
-      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.get_name()
+      XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << temp_handle.name()
               << ", Value : "
               << temp_handle.get_cci_value().to_json());
     } else {

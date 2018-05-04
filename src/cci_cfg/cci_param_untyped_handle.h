@@ -219,8 +219,8 @@ public:
     /// @copydoc cci_param_typed::get_data_category
     cci_param_data_category get_data_category() const;
 
-    /// @copydoc cci_param_untyped::get_name
-    const std::string& get_name() const;
+    /// @copydoc cci_param_untyped::name
+    const std::string& name() const;
 
     /// @copydoc cci_param_typed::get_type_info
     const std::type_info& get_type_info() const;

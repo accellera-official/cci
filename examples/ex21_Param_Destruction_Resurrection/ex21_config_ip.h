@@ -64,7 +64,7 @@ public:
 
             // Display new value
             XREPORT("execute: [EXTERNAL] Current value of "
-                            << int_param_handle.get_name() << " is "
+                            << int_param_handle.name() << " is "
                             << int_param_handle.get_cci_value());
 
             // Allow simple_ip to destroy sim_ip.int_param
@@ -96,7 +96,7 @@ public:
 
             // Display new value
             XREPORT("execute: [EXTERNAL] Current value of "
-                            << int_param_handle.get_name() << " is "
+                            << int_param_handle.name() << " is "
                             << int_param_handle.get_cci_value());
         } else {
             XREPORT_ERROR("execute: Param (" << int_param_name

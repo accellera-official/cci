@@ -40,7 +40,7 @@ public:
     // Initialize int_param_ptr with 10
     : int_param_ptr(new cci::cci_param<int>("int_param", 10)) {
         SC_THREAD(execute);
-        XREPORT("Ctor: Default value of " << int_param_ptr->get_name() << " is "
+        XREPORT("Ctor: Default value of " << int_param_ptr->name() << " is "
                                           << *int_param_ptr);
     }
 
@@ -51,7 +51,7 @@ public:
      */
     ~ex21_simple_ip() {
         XREPORT_PLAIN(
-                "Dtor: Current value of " << int_param_ptr->get_name() << " is "
+                "Dtor: Current value of " << int_param_ptr->name() << " is "
                                           << *int_param_ptr);
     }
 

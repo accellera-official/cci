@@ -45,9 +45,9 @@ SC_MODULE(ex05_simple_ip) {
   // Initialize param_1 with 1, and param_2 with 2
       : param_1("param_1", 1),
         param_2("param_2", 2) {
-    XREPORT("@Ctor: Value of " << param_1.get_name() << " is " << param_1
+    XREPORT("@Ctor: Value of " << param_1.name() << " is " << param_1
             << " (Default value Specified: 1)");
-    XREPORT("@Ctor: Value of " << param_2.get_name() << " is " << param_2
+    XREPORT("@Ctor: Value of " << param_2.name() << " is " << param_2
             << " (Default value Specified: 2)");
     SC_THREAD(execute);
   }
@@ -58,9 +58,9 @@ SC_MODULE(ex05_simple_ip) {
    *  @return void
    */
   ~ex05_simple_ip() {
-    XREPORT_PLAIN("@Dtor: Value of " << param_1.get_name() << " is "
+    XREPORT_PLAIN("@Dtor: Value of " << param_1.name() << " is "
                   << param_1);
-    XREPORT_PLAIN("@Dtor: Value of " << param_2.get_name() << " is "
+    XREPORT_PLAIN("@Dtor: Value of " << param_2.name() << " is "
                   << param_2);
   }
 

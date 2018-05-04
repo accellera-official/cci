@@ -72,17 +72,17 @@ SC_MODULE(ex03_config_ip) {
       // Display new value
       std::string new_value = struc_param_handle.get_cci_value().to_json();
       // XREPORT("execute: [EXTERNAL] Current value of " <<
-      // struc_param.get_name()<< " is " << new_value);
+      // struc_param.name()<< " is " << new_value);
       if ("1" == new_value) {
-        XREPORT("execute: [EXTERNAL] Value of " << struc_param_handle.get_name()
+        XREPORT("execute: [EXTERNAL] Value of " << struc_param_handle.name()
                 << " remains unchanged " << new_value);
       } else if ("3" == new_value) {
         XREPORT_WARNING("execute: [EXTERNAL] Value of "
-                        << struc_param_handle.get_name() << " changed to "
+                        << struc_param_handle.name() << " changed to "
                         << new_value);
       } else {
         XREPORT_ERROR("execute: [EXTERNAL] Invalid update to "
-                      << struc_param_handle.get_name() << " value changed to "
+                      << struc_param_handle.name() << " value changed to "
                       << new_value);
         sc_assert(0);
       }

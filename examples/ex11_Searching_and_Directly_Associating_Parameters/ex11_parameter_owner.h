@@ -54,7 +54,7 @@ SC_MODULE(ex11_parameter_owner) {
                        int _param_value = 1000) {
     clk = new cci::cci_param<int>(_param_name.c_str(), _param_value);
 
-    XREPORT("[OWNER C_TOR] : Parameter Name   : " << clk->get_name()
+    XREPORT("[OWNER C_TOR] : Parameter Name   : " << clk->name()
             << ", Value : " << clk->get_value());
   }
 

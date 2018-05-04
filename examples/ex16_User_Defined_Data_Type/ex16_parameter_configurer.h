@@ -83,9 +83,9 @@ SC_MODULE(ex16_parameter_configurer) {
 
       XREPORT("@ " << sc_time_stamp());
 
-      // Access parameter's name using 'get_name()' API
+      // Access parameter's name using 'name()' API
       XREPORT("[CFGR -> Retrieve] : Parameter name : "
-              << udt_param_handle.get_name());
+              << udt_param_handle.name());
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
@@ -107,9 +107,9 @@ SC_MODULE(ex16_parameter_configurer) {
       wait(2.0, SC_NS);
       XREPORT("@ " << sc_time_stamp());
 
-      // Access parameter's name using 'get_name()' API
+      // Access parameter's name using 'name()' API
       XREPORT("[CFGR -> Retrieve] : Parameter name : "
-              << udt_param_handle.get_name());
+              << udt_param_handle.name());
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "

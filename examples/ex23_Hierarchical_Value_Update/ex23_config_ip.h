@@ -49,7 +49,7 @@ public:
     static bool
     log_level_param_predicate(const cci::cci_param_untyped_handle handle)
     {
-        return (handle.get_name().substr(handle.get_name().rfind(".")+1)
+        return (handle.name().substr(handle.name().rfind(".")+1)
                 =="log_level");
     }
 
@@ -70,7 +70,7 @@ public:
 
         for (std::vector<cci::cci_param_untyped_handle>::iterator it =
                 param_list.begin(); it != param_list.end(); ++it) {
-            std::cout << (*it).get_name() << " = ";
+            std::cout << (*it).name() << " = ";
             std::cout << (*it).get_cci_value();
             std::cout << std::endl;
         }
@@ -88,7 +88,7 @@ public:
                 it != log_level_filtered_range.end();
                 ++it) {
             if((*it).is_valid()) {
-                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).name() << " = ";
                 std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
@@ -112,7 +112,7 @@ public:
                 it != log_level_filtered_range.end();
                 ++it) {
             if((*it).is_valid()) {
-                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).name() << " = ";
                 std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }

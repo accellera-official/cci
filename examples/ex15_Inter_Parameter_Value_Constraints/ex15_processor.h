@@ -106,11 +106,11 @@ SC_MODULE(ex15_processor) {
                                    cci::cci_param_handle mem_size_handle)
   {
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
-            << ev.param_handle.get_name() << ", Value : "
+            << ev.param_handle.name() << ", Value : "
             << ev.new_value);
 
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
-            << mem_size_handle.get_name() << ", Value : "
+            << mem_size_handle.name() << ", Value : "
             << mem_size_handle.get_cci_value());
 
     total_addr_lines = atoi(ev.new_value.to_json().c_str());
@@ -129,11 +129,11 @@ SC_MODULE(ex15_processor) {
                                    cci::cci_param_handle addr_lines_handle)
   {
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << ev.param_handle.get_name() << ", Value : "
+            << ev.param_handle.name() << ", Value : "
             << ev.new_value);
 
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << addr_lines_handle.get_name() << ", Value : "
+            << addr_lines_handle.name() << ", Value : "
             << addr_lines_handle.get_cci_value());
 
     mem_block_size = atoi(ev.new_value.to_json().c_str());

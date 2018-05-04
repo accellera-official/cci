@@ -81,7 +81,7 @@ SC_MODULE(ex06_config_ip) {
       // Display new value
       std::string new_value = int_param_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_handle.get_name() << " is " << new_value);
+              << int_param_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name
                     << ") is not found!");
@@ -106,7 +106,7 @@ SC_MODULE(ex06_config_ip) {
       // Display new value
       std::string new_value = int_param_ip_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_ip_handle.get_name() << " is " << new_value);
+              << int_param_ip_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sim_ip_int_param_ip_name_0
                     << ") is not found!");
@@ -131,7 +131,7 @@ SC_MODULE(ex06_config_ip) {
       // Display new value
       std::string new_value = sc_main_int_param_top_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << sc_main_int_param_top_handle.get_name() << " is " << new_value);
+              << sc_main_int_param_top_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << sc_main_int_param_top_name
                     << ") is not found!");
@@ -155,7 +155,7 @@ SC_MODULE(ex06_config_ip) {
       // Display new value
       std::string new_value = int_param_custom_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_custom_handle.get_name() << " is " << new_value);
+              << int_param_custom_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_custom_name
                     << ") is not found!");

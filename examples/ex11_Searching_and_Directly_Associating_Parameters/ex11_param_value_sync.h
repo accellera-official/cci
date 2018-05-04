@@ -73,7 +73,7 @@ SC_MODULE(ex11_param_value_sync) {
                                    cci::cci_param_handle synced_handle)
   {
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
-            << ev.param_handle.get_name() << ", Value : "
+            << ev.param_handle.name() << ", Value : "
             << ev.new_value);
 
     synced_handle.set_cci_value(ev.new_value);

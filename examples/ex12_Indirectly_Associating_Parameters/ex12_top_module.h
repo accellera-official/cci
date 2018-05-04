@@ -77,7 +77,7 @@ SC_MODULE(ex12_top_module) {
       selectedBaseParamList.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
-              << temp_handle.get_name() << ", Value : "
+              << temp_handle.name() << ", Value : "
               << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param1_str
@@ -91,7 +91,7 @@ SC_MODULE(ex12_top_module) {
       selectedBaseParamList.push_back(temp_handle);
 
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : "
-              << temp_handle.get_name() << ", Value : "
+              << temp_handle.name() << ", Value : "
               << temp_handle.get_cci_value().to_json());
     } else {
       XREPORT("[TOP_MODULE C_TOR] : Parameter Name : " << param2_str
