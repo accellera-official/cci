@@ -200,3 +200,6 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+This package bundles RapidJSON 1.1.0, which is available under a MIT license.
+For details see packages/rapidjson/license.txt.
