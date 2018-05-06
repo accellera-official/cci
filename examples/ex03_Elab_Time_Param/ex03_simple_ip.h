@@ -45,7 +45,7 @@ SC_MODULE(ex03_simple_ip) {
   // Initialize struc_param with 0
       : struc_param("struc_param", 0) {
     SC_THREAD(execute);
-    XREPORT("Ctor: Default value of " << struc_param.get_name() << " is "
+    XREPORT("Ctor: Default value of " << struc_param.name() << " is "
             << struc_param);
   }
 
@@ -54,7 +54,7 @@ SC_MODULE(ex03_simple_ip) {
    *  @brief  The destructor for the class
    */
   ~ex03_simple_ip() {
-    XREPORT_PLAIN("Dtor: Current value of " << struc_param.get_name() << " is "
+    XREPORT_PLAIN("Dtor: Current value of " << struc_param.name() << " is "
                   << struc_param);
   }
 

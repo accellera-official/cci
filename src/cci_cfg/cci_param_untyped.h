@@ -519,7 +519,7 @@ public:
     /**
      * @return   Name of the parameter.
      */
-    const std::string& get_name() const;
+    const std::string& name() const;
 
     ///@}
 

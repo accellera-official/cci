@@ -91,7 +91,7 @@ class ex16_observer {
   void untyped_pre_read_callback(const cci::cci_param_read_event<> & ev)
   {
     std::cout << "\n\t[OBSERVER pre_read_cb] :  Parameter Name : "
-              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.param_handle.name() << "\tOriginator info : "
               << ev.originator.name() << std::endl;
   }
 
@@ -103,7 +103,7 @@ class ex16_observer {
   void untyped_post_read_callback(const cci::cci_param_read_event<> & ev)
   {
     std::cout << "\n\t[OBSERVER post_read_cb]:  Parameter Name : "
-              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.param_handle.name() << "\tOriginator info : "
               << ev.originator.name() << std::endl;
   }
 
@@ -115,7 +115,7 @@ class ex16_observer {
   bool untyped_pre_write_callback(const cci::cci_param_write_event<> & ev)
   {
     std::cout << "\n\t[OBSERVER pre_write_cb] :  Parameter Name : "
-              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.param_handle.name() << "\tOriginator info : "
               << ev.originator.name() << std::endl;
     return true;
   }
@@ -128,7 +128,7 @@ class ex16_observer {
   void untyped_post_write_callback(const cci::cci_param_write_event<> & ev)
   {
     std::cout << "\n\t[OBSERVER post_write_cb] :  Parameter Name : "
-              << ev.param_handle.get_name() << "\tOriginator info : "
+              << ev.param_handle.name() << "\tOriginator info : "
               << ev.originator.name() << std::endl;
   }
 

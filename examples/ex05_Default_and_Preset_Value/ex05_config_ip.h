@@ -99,7 +99,7 @@ SC_MODULE(ex05_config_ip) {
       // Display new value
       std::string new_value = int_param_handle.get_cci_value().to_json();
       XREPORT("execute: [EXTERNAL] Current value of "
-              << int_param_handle.get_name() << " is " << new_value);
+              << int_param_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("execute: Param (" << int_param_name<< ") is not found!");
     }

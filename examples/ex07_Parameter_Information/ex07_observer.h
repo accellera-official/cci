@@ -82,7 +82,7 @@ SC_MODULE(ex07_observer) {
    */
   void pre_read_callback(const cci::cci_param_read_event<> & ev) {
     XREPORT("[OBSERVER pre_read_cb] :  Parameter Name : "
-            << ev.param_handle.get_name() << "\tOriginator info : "
+            << ev.param_handle.name() << "\tOriginator info : "
             << ev.originator.name());
   }
 
@@ -94,7 +94,7 @@ SC_MODULE(ex07_observer) {
    */
   bool pre_write_callback(const cci::cci_param_write_event<> & ev) {
     XREPORT("[OBSERVER pre_write_cb] :  Parameter Name : "
-            << ev.param_handle.get_name() << "\tOriginator info : "
+            << ev.param_handle.name() << "\tOriginator info : "
             << ev.originator.name());
     return true;
   }
@@ -106,7 +106,7 @@ SC_MODULE(ex07_observer) {
    */
   void post_write_callback(const cci::cci_param_write_event<> & ev) {
     XREPORT("[OBSERVER post_write_cb] :  Parameter Name : "
-            << ev.param_handle.get_name() << "\tOriginator info : "
+            << ev.param_handle.name() << "\tOriginator info : "
             << ev.originator.name());
   }
 

@@ -63,7 +63,7 @@ SC_MODULE(ex18_parameter_configurator) {
     
     for (unsigned int i = 0; i < complete_parameter_list.size(); i++) {
         XREPORT("[CFGR within EOE] : Parameter Name : "
-                << complete_parameter_list[i].get_name());
+                << complete_parameter_list[i].name());
     }
 
     XREPORT("@ " << sc_time_stamp());

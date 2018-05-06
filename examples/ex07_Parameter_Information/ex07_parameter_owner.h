@@ -53,7 +53,7 @@ SC_MODULE(ex07_parameter_owner) {
     XREPORT("Prior to " << sc_core::sc_time_stamp()
             << "\tdemonstrating 'is_preset_value' API");
 
-    XREPORT("[OWNER] : Parameter : " << int_param.get_name() << "\tValue : "
+    XREPORT("[OWNER] : Parameter : " << int_param.name() << "\tValue : "
             << int_param.get_value());
 
     XREPORT("Is preset value ?\t" << std::boolalpha
@@ -61,7 +61,7 @@ SC_MODULE(ex07_parameter_owner) {
 
     XREPORT("Prior to " << sc_core::sc_time_stamp()
             << "\tdemonstrating 'get_default_value()'");
-    XREPORT("[OWNER -> Retrieve] : Parameter name  : " << int_param.get_name());
+    XREPORT("[OWNER -> Retrieve] : Parameter name  : " << int_param.name());
 
     // Setting parameter value using 'cci_value' not implemented
     // Used something like : int_param = 1; (see code within the SC_THREAD)
@@ -95,7 +95,7 @@ SC_MODULE(ex07_parameter_owner) {
       // Override the default value
       XREPORT("@ " << sc_core::sc_time_stamp());
       XREPORT("[OWNER -> Set] : Overriding default value of "
-              << int_param.get_name() << " to 1");
+              << int_param.name() << " to 1");
 
       // Setting value to the integer type parameter
       int_param = 1;

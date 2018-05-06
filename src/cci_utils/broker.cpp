@@ -90,7 +90,7 @@ namespace cci_utils {
 
   void broker::add_param(cci_param_if* par)
   {
-    if (sendToParent(par->get_name())) {
+    if (sendToParent(par->name())) {
       return m_parent.add_param(par);
     } else {
       return consuming_broker::add_param(par);
@@ -98,7 +98,7 @@ namespace cci_utils {
   }
 
   void broker::remove_param(cci_param_if* par) {
-    if (sendToParent(par->get_name())) {
+    if (sendToParent(par->name())) {
       return m_parent.remove_param(par);
     } else {
       return consuming_broker::remove_param(par);

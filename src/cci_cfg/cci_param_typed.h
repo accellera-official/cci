@@ -802,10 +802,9 @@ bool cci_param_typed<T, TM>::is_default_value() const
 template <typename T, cci_param_mutable_type TM>
 bool cci_param_typed<T, TM>::is_preset_value() const
 {
-  const std::string& name = get_name();
-  if (m_broker_handle.has_preset_value(name))
+  if (m_broker_handle.has_preset_value(name()))
   {
-    cci_value init_value = m_broker_handle.get_preset_cci_value(name);
+    cci_value init_value = m_broker_handle.get_preset_cci_value(name());
     T i;
     if (init_value.try_get<T>(i)) {
       return i == m_value;
@@ -951,7 +950,7 @@ bool cci_param_typed<T, TM>::reset()
 {
   if (is_locked())
     return false;
-  const std::string& nm = get_name();
+  const std::string& nm = name();
   if (m_broker_handle.has_preset_value(nm)) {
     // Apply preset value if it exists
     cci_value preset = m_broker_handle.get_preset_cci_value(nm);

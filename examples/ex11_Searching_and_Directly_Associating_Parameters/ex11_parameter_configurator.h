@@ -57,7 +57,7 @@ SC_MODULE(ex11_parameter_configurator) {
     // Check for the existence of 'clk_freq_Hz' cci_parameter of owner module 1
     cfgr_param1_handle = m_broker.get_param_handle(cfgr_param_str1);
     if (cfgr_param1_handle.is_valid()) {
-      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param1_handle.get_name()
+      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param1_handle.name()
               << ", Value : "
               << cfgr_param1_handle.get_cci_value().to_json());
     } else {
@@ -68,7 +68,7 @@ SC_MODULE(ex11_parameter_configurator) {
     // Check for the existence of 'clock_speed_Hz' cci_parameter of owner 2
     cfgr_param2_handle = m_broker.get_param_handle(cfgr_param_str2);
     if (cfgr_param2_handle.is_valid()) {
-      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param2_handle.get_name()
+      XREPORT("[CFGR C_TOR] : Parameter Name : " << cfgr_param2_handle.name()
               << ", Value : "
               << cfgr_param2_handle.get_cci_value().to_json());
     } else {
@@ -97,11 +97,11 @@ SC_MODULE(ex11_parameter_configurator) {
     }
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
-            << cfgr_param1_handle.get_name() << ", Value : "
+            << cfgr_param1_handle.name() << ", Value : "
             << cfgr_param1_handle.get_cci_value().to_json());
 
     XREPORT("[CFGR within beoe] : Parameter Name : "
-            << cfgr_param2_handle.get_name() << ", Value : "
+            << cfgr_param2_handle.name() << ", Value : "
             << cfgr_param2_handle.get_cci_value().to_json());
   }
 
@@ -122,11 +122,11 @@ SC_MODULE(ex11_parameter_configurator) {
         cfgr_param2_handle.set_cci_value(cci::cci_value(12000));
       }
 
-      XREPORT("[CFGR] : Parameter Name : " << cfgr_param1_handle.get_name()
+      XREPORT("[CFGR] : Parameter Name : " << cfgr_param1_handle.name()
               << ", Value : "
               << cfgr_param1_handle.get_cci_value().to_json());
 
-      XREPORT("[CFGR] : Parameter Name : " << cfgr_param2_handle.get_name()
+      XREPORT("[CFGR] : Parameter Name : " << cfgr_param2_handle.name()
               << ", Value : "
               << cfgr_param2_handle.get_cci_value().to_json());
 

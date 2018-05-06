@@ -74,14 +74,14 @@ SC_MODULE(ex06_simple_ip) {
             cci::CCI_ABSOLUTE_NAME)
   {
     SC_THREAD(execute);
-    XREPORT("Ctor: Name of bool_param is " << bool_param.get_name());
-    XREPORT("Ctor: Default value of " << int_param_ip.get_name() << " is "
+    XREPORT("Ctor: Name of bool_param is " << bool_param.name());
+    XREPORT("Ctor: Default value of " << int_param_ip.name() << " is "
             << int_param_ip);
-    XREPORT("Ctor: Default value of " << int_param_ip_dup.get_name() << " is "
+    XREPORT("Ctor: Default value of " << int_param_ip_dup.name() << " is "
             << int_param_ip_dup);
-    XREPORT("Ctor: Default value of " << int_param_top.get_name() << " is "
+    XREPORT("Ctor: Default value of " << int_param_top.name() << " is "
             << int_param_top);
-    XREPORT("Ctor: Default value of " << int_param_custom.get_name() << " is "
+    XREPORT("Ctor: Default value of " << int_param_custom.name() << " is "
             << int_param_custom);
   }
 
@@ -91,13 +91,13 @@ SC_MODULE(ex06_simple_ip) {
    *  @return void
    */
   ~ex06_simple_ip() {
-    XREPORT_PLAIN("Dtor: Current value of " << int_param_ip.get_name()
+    XREPORT_PLAIN("Dtor: Current value of " << int_param_ip.name()
                   << " is " << int_param_ip);
-    XREPORT_PLAIN("Dtor: Current value of " << int_param_ip_dup.get_name()
+    XREPORT_PLAIN("Dtor: Current value of " << int_param_ip_dup.name()
                   << " is " << int_param_ip_dup);
-    XREPORT_PLAIN("Dtor: Current value of " << int_param_top.get_name()
+    XREPORT_PLAIN("Dtor: Current value of " << int_param_top.name()
                   << " is " << int_param_top);
-    XREPORT_PLAIN("Dtor: Current value of " << int_param_custom.get_name()
+    XREPORT_PLAIN("Dtor: Current value of " << int_param_custom.name()
                   << " is " << int_param_custom);
   }
 
@@ -110,13 +110,13 @@ SC_MODULE(ex06_simple_ip) {
     // Wait for 10ns to allow config_ip to update int_param value
     wait(10, sc_core::SC_NS);
 
-    XREPORT("execute: Current value of " << int_param_ip.get_name()
+    XREPORT("execute: Current value of " << int_param_ip.name()
             << " is " << int_param_ip);
-    XREPORT("execute: Current value of " << int_param_ip_dup.get_name()
+    XREPORT("execute: Current value of " << int_param_ip_dup.name()
             << " is " << int_param_ip_dup);
-    XREPORT("execute: Current value of " << int_param_top.get_name()
+    XREPORT("execute: Current value of " << int_param_top.name()
             << " is " << int_param_top);
-    XREPORT("execute: Current value of " << int_param_custom.get_name()
+    XREPORT("execute: Current value of " << int_param_custom.name()
             << " is " << int_param_custom);
 
     // Update param values
@@ -128,13 +128,13 @@ SC_MODULE(ex06_simple_ip) {
     int_param_ip_dup = 20;
     int_param_top = 30;
     int_param_custom = 40;
-    XREPORT("execute: Current value of " << int_param_ip.get_name()
+    XREPORT("execute: Current value of " << int_param_ip.name()
             << " is " << int_param_ip);
-    XREPORT("execute: Current value of " << int_param_ip_dup.get_name()
+    XREPORT("execute: Current value of " << int_param_ip_dup.name()
             << " is " << int_param_ip_dup);
-    XREPORT("execute: Current value of " << int_param_top.get_name()
+    XREPORT("execute: Current value of " << int_param_top.name()
             << " is " << int_param_top);
-    XREPORT("execute: Current value of " << int_param_custom.get_name()
+    XREPORT("execute: Current value of " << int_param_custom.name()
             << " is " << int_param_custom);
   }
 

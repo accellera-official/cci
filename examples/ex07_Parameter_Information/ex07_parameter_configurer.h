@@ -92,12 +92,12 @@ SC_MODULE(ex07_parameter_configurer) {
     // Check if string type cci-parameter has any preset value using
     // 'is_preset_value' API
     if (str_param_handle.is_preset_value()) {
-      XREPORT("[CFGR C_TOR] : " << str_param_handle.get_name()
+      XREPORT("[CFGR C_TOR] : " << str_param_handle.name()
               << "\tPreset Value : "
               << str_param_handle.get_cci_value().get_string());
     } else {
       XREPORT_ERROR("[CFGR] : No preset value set for "
-                    << str_param_handle.get_name());
+                    << str_param_handle.name());
     }
 
     XREPORT("[CFGR C_TOR] : Is preset value ?\t" << std::boolalpha
@@ -120,12 +120,12 @@ SC_MODULE(ex07_parameter_configurer) {
         // Access parameter's default value status using
         // 'is_default_value()' API
         if (int_param_handle.is_default_value()) {
-          XREPORT("[CFGR] : " << int_param_handle.get_name()
+          XREPORT("[CFGR] : " << int_param_handle.name()
                   << " default value hasn't been modified.");
           XREPORT("[CFGR] : Is Default Value ? " << "\tReturned status : "
                   << std::boolalpha << int_param_handle.is_default_value());
         } else {
-          XREPORT("[CFGR] : " << int_param_handle.get_name()
+          XREPORT("[CFGR] : " << int_param_handle.name()
                   << " default value has been modified.");
           XREPORT("[CFGR] : Is Default Value ? " << "\tReturned status : "
                   << std::boolalpha << int_param_handle.is_default_value());
@@ -139,29 +139,29 @@ SC_MODULE(ex07_parameter_configurer) {
         // Access parameter's default value status using
         // 'is_default_value()' API
         if (!int_param_handle.is_default_value()) {
-          XREPORT("[CFGR] : " << int_param_handle.get_name()
+          XREPORT("[CFGR] : " << int_param_handle.name()
                   << " value has been modified.");
           XREPORT("[CFGR] : Is Default Value ? " << "\tReturned status : "
                   << std::boolalpha << int_param_handle.is_default_value());
         }
 
         if (str_param_handle.is_default_value()) {
-          XREPORT("[CFGR] : " << str_param_handle.get_name()
+          XREPORT("[CFGR] : " << str_param_handle.name()
                   << " value hasn't been modified");
           XREPORT("[CFGR -> Retrieve] : Parameter name  : "
-                  << str_param_handle.get_name());
+                  << str_param_handle.name());
           XREPORT("[CFGR -> Retrieve] : Parameter value : "
                   << str_param_handle.get_cci_value().get_string());
         } else {
-          XREPORT("[CFGR] : " << str_param_handle.get_name() << " New Value : "
+          XREPORT("[CFGR] : " << str_param_handle.name() << " New Value : "
                   << str_param_handle.get_cci_value().get_string());
         }
 
         wait(2.0, sc_core::SC_NS);
 
-        // Access parameter's name using 'get_name()' API
+        // Access parameter's name using 'name()' API
         XREPORT("[CFGR -> Retrieve] Parameter's name : "
-                << int_param_handle.get_name());
+                << int_param_handle.name());
 
         // Access parameter's value using 'get_cci_value()' API
         XREPORT("[CFGR -> Retrieve] Parameter's value : "
@@ -178,7 +178,7 @@ SC_MODULE(ex07_parameter_configurer) {
         wait(2.0, sc_core::SC_NS);
 
         XREPORT("@ " << sc_core::sc_time_stamp());
-        XREPORT("[CFGR -> Set] :  " << int_param_handle.get_name()
+        XREPORT("[CFGR -> Set] :  " << int_param_handle.name()
                 << " value to 10");
 
         // Set parameter's value using 'set_cci_value' API
@@ -188,9 +188,9 @@ SC_MODULE(ex07_parameter_configurer) {
 
         XREPORT("@ " << sc_core::sc_time_stamp());
 
-        // Access parameter's name using 'get_name()' API
+        // Access parameter's name using 'name()' API
         XREPORT("[CFGR -> Retrieve] : Parameter name : "
-                << int_param_handle.get_name());
+                << int_param_handle.name());
 
         // Access parameter's value using 'get_cci_value()' API
         XREPORT("[CFGR -> Retrieve] : Parameter value: "
@@ -216,10 +216,10 @@ SC_MODULE(ex07_parameter_configurer) {
           lock_status = int_param_handle.is_locked();
 
           if (lock_status) {
-            XREPORT("[CFGR] : " << int_param_handle.get_name()
+            XREPORT("[CFGR] : " << int_param_handle.name()
                     << " is in locked state!!");
           } else {
-            XREPORT("[CFGR] : " << int_param_handle.get_name()
+            XREPORT("[CFGR] : " << int_param_handle.name()
                     << " is in unlocked state!!");
           }
 
@@ -273,7 +273,7 @@ SC_MODULE(ex07_parameter_configurer) {
                 " using cci_value");
         XREPORT("[CFGR] : 'Retrieve1' using 'json_serialize' and"
                 " 'Retrieve2' using 'get_value()'");
-        XREPORT("[CFGR -> Retrieve1] : " << str_param_handle.get_name()
+        XREPORT("[CFGR -> Retrieve1] : " << str_param_handle.name()
                 << " value is " << str_param_handle.get_cci_value().to_json());
 
         // Query a (std::string) parameter's value by using

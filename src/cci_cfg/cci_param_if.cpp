@@ -31,7 +31,7 @@ CCI_OPEN_NAMESPACE_
 void cci_param_if::init( cci_broker_handle broker_handle )
 {
   cci_broker_if& broker = broker_handle.ref();
-  const std::string& nm = get_name();
+  const std::string& nm = name();
   if( broker.has_preset_value(nm) ) {
     preset_cci_value( broker.get_preset_cci_value(nm)
                     , broker.get_value_origin(nm) );
