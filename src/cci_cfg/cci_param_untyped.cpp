@@ -104,9 +104,8 @@ cci_value_map cci_param_untyped::get_metadata() const
 
 bool cci_param_untyped::is_preset_value() const
 {
-  const std::string& my_name = name();
-  if (!m_broker_handle.has_preset_value(my_name)) return false;
-  cci_value init_value = m_broker_handle.get_preset_cci_value(my_name);
+  if (!m_broker_handle.has_preset_value(name())) return false;
+  cci_value init_value = m_broker_handle.get_preset_cci_value(name());
   return init_value == get_cci_value(m_originator);
 }
 
