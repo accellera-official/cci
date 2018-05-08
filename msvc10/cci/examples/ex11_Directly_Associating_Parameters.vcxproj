@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EDF63FE9-F648-4AD2-B884-6C28DC2F10BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ex11_Searching_and_Directly_Associating_Parameters</RootNamespace>
+    <RootNamespace>ex11_Directly_Associating_Parameters</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -142,13 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\examples\ex11_Searching_and_Directly_Associating_Parameters\ex11_parameter_configurator.h" />
-    <ClInclude Include="..\..\..\examples\ex11_Searching_and_Directly_Associating_Parameters\ex11_parameter_owner.h" />
-    <ClInclude Include="..\..\..\examples\ex11_Searching_and_Directly_Associating_Parameters\ex11_param_value_sync.h" />
-    <ClInclude Include="..\..\..\examples\ex11_Searching_and_Directly_Associating_Parameters\ex11_top_module.h" />
+    <ClInclude Include="..\..\..\examples\ex11_Directly_Associating_Parameters\ex11_parameter_configurator.h" />
+    <ClInclude Include="..\..\..\examples\ex11_Directly_Associating_Parameters\ex11_parameter_owner.h" />
+    <ClInclude Include="..\..\..\examples\ex11_Directly_Associating_Parameters\ex11_param_value_sync.h" />
+    <ClInclude Include="..\..\..\examples\ex11_Directly_Associating_Parameters\ex11_top_module.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\ex11_Searching_and_Directly_Associating_Parameters\ex11_Searching_and_Directly_Associating_Parameters.cpp" />
+    <ClCompile Include="..\..\..\examples\ex11_Directly_Associating_Parameters\ex11_Directly_Associating_Parameters.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
