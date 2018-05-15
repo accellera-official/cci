@@ -47,8 +47,7 @@ SC_MODULE(ex14_configurator) {
    *  @return void
    */
   SC_CTOR(ex14_configurator):
-      m_broker(cci::cci_get_broker()),
-      parent_param_handle(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     std::string parameterName(
             "Top.private.parent_inst.parent_int_buffer");

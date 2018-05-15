@@ -43,10 +43,7 @@ SC_MODULE(ex17_parameter_configurator) {
    *  @return void
    */
   SC_CTOR(ex17_parameter_configurator):
-      m_broker(cci::cci_get_broker()),
-      int_param_handle(cci::cci_originator(*this)),
-      float_param(cci::cci_originator(*this)),
-      str_param(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     // Get handle of the 'int_param' cci-parameter
     int_param_handle =

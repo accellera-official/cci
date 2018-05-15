@@ -66,7 +66,6 @@ SC_MODULE(ex09_router) {
         r_targets("r_targets", 0),
         addr_limit("addr_max", 64),
         m_broker(cci::cci_get_broker()),
-        base_handle(cci::cci_originator(*this)),
         addrSize(0)
   {
     XREPORT("[ROUTER C_TOR] ----- [ROUTER CONSTRUCTOR BEGINS HERE] ------");
