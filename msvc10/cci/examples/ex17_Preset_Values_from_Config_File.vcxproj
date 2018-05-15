@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{55DB5AA3-4FA7-4B0F-A4AF-C277EE0D3887}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ex17_Specifying_Parameter_Values_via_a_Configuration_File</RootNamespace>
+    <RootNamespace>ex17_Preset_Values_from_Config_File</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -142,13 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\examples\ex17_Specifying_Parameter_Values_via_a_Configuration_File\ex17_cci_configFile_Tool.h" />
-    <ClInclude Include="..\..\..\examples\ex17_Specifying_Parameter_Values_via_a_Configuration_File\ex17_configset.h" />
-    <ClInclude Include="..\..\..\examples\ex17_Specifying_Parameter_Values_via_a_Configuration_File\ex17_parameter_configurator.h" />
-    <ClInclude Include="..\..\..\examples\ex17_Specifying_Parameter_Values_via_a_Configuration_File\ex17_parameter_owner.h" />
+    <ClInclude Include="..\..\..\examples\ex17_Preset_Values_from_Config_File\ex17_cci_configFile_Tool.h" />
+    <ClInclude Include="..\..\..\examples\ex17_Preset_Values_from_Config_File\ex17_configset.h" />
+    <ClInclude Include="..\..\..\examples\ex17_Preset_Values_from_Config_File\ex17_parameter_configurator.h" />
+    <ClInclude Include="..\..\..\examples\ex17_Preset_Values_from_Config_File\ex17_parameter_owner.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\ex17_Specifying_Parameter_Values_via_a_Configuration_File\ex17_Specifying_Parameter_Values_via_a_Configuration_File.cpp" />
+    <ClCompile Include="..\..\..\examples\ex17_Preset_Values_from_Config_File\ex17_Preset_Values_from_Config_File.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

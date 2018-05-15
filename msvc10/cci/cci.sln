@@ -43,7 +43,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex08_Parameter_Value_Change
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex09_Hierarchical_Override_of_Parameter_Values", "examples\ex09_Hierarchical_Override_of_Parameter_Values.vcxproj", "{548853DF-D9BE-45AB-BD51-9323B81DF751}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex09_Parent_Control_of_Preset_Values", "examples\ex09_Parent_Control_of_Preset_Values.vcxproj", "{548853DF-D9BE-45AB-BD51-9323B81DF751}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
@@ -53,7 +53,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex10_Shared_Parameters", "e
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex11_Searching_and_Directly_Associating_Parameters", "examples\ex11_Searching_and_Directly_Associating_Parameters.vcxproj", "{EDF63FE9-F648-4AD2-B884-6C28DC2F10BC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex11_Directly_Associating_Parameters", "examples\ex11_Directly_Associating_Parameters.vcxproj", "{EDF63FE9-F648-4AD2-B884-6C28DC2F10BC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
@@ -83,12 +83,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex16_User_Defined_Data_Type
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex17_Specifying_Parameter_Values_via_a_Configuration_File", "examples\ex17_Specifying_Parameter_Values_via_a_Configuration_File.vcxproj", "{55DB5AA3-4FA7-4B0F-A4AF-C277EE0D3887}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex17_Preset_Values_from_Config_File", "examples\ex17_Preset_Values_from_Config_File.vcxproj", "{55DB5AA3-4FA7-4B0F-A4AF-C277EE0D3887}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex18_Superset_Parameter_Value_Specification", "examples\ex18_Superset_Parameter_Value_Specification.vcxproj", "{87899696-BECF-4FA1-A0A9-D2BE24D92A12}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex18_Preset_Values_Superset", "examples\ex18_Preset_Values_Superset.vcxproj", "{87899696-BECF-4FA1-A0A9-D2BE24D92A12}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
