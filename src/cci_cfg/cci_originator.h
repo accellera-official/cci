@@ -96,9 +96,6 @@ public:
      */
     const sc_core::sc_object* get_object() const;
 
-    /// Returns the parent originator
-    cci_originator get_parent_originator() const;
-
     /// Returns the name of the current originator
     /**
      * Automatically uses the originator object name if the originator is
@@ -138,10 +135,6 @@ public:
     bool is_unknown() const;
 
 protected:
-    /// Constructor with an sc_object originator
-    inline cci_originator(const sc_core::sc_object& originator)
-        : m_originator_obj(&originator), m_originator_str(NULL) {}
-
     /// Return the current originator object pointer
     sc_core::sc_object* current_originator_object();
 

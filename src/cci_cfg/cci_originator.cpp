@@ -88,18 +88,6 @@ const sc_core::sc_object *cci_originator::get_object() const
     return m_originator_obj;
 }
 
-cci_originator cci_originator::get_parent_originator() const
-{
-  if (m_originator_obj != NULL) {
-    const sc_core::sc_object *parent_object =
-            m_originator_obj->get_parent_object();
-    if (parent_object) {
-        return cci_originator(*parent_object);
-    }
-  }
-  return cci_originator( unknown_tag() );
-}
-
 const char* cci_originator::name() const
 {
     static const char* default_name = CCI_UNKNOWN_ORIGINATOR_STRING_;
