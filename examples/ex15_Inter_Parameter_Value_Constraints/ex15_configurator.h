@@ -45,9 +45,7 @@ SC_MODULE(ex15_configurator) {
    *  @return void
    */
   SC_CTOR(ex15_configurator):
-      m_broker(cci::cci_get_broker()),
-      child_base_param_handle(cci::cci_originator(*this)),
-      mem_size_base_handle(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "processor.addr_lines_mod.curr_addr_lines";

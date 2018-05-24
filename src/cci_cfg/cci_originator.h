@@ -76,10 +76,6 @@ public:
      */
     explicit cci_originator(const char *originator_name);
 
-    /// Constructor with an sc_object originator
-    inline cci_originator(const sc_core::sc_object& originator)
-            : m_originator_obj(&originator), m_originator_str(NULL) {}
-
     /// Copy constructor
     cci_originator(const cci_originator& originator);
 
@@ -99,9 +95,6 @@ public:
      * @return Originator object pointer or NULL
      */
     const sc_core::sc_object* get_object() const;
-
-    /// Returns the parent originator
-    cci_originator get_parent_originator() const;
 
     /// Returns the name of the current originator
     /**
@@ -142,7 +135,6 @@ public:
     bool is_unknown() const;
 
 protected:
-
     /// Return the current originator object pointer
     sc_core::sc_object* current_originator_object();
 

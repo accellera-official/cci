@@ -46,9 +46,7 @@ SC_MODULE(ex11_parameter_configurator) {
    *  @brief  The class constructor
    */
   SC_CTOR(ex11_parameter_configurator):
-      m_broker(cci::cci_get_broker()),
-      cfgr_param1_handle(cci::cci_originator(*this)),
-      cfgr_param2_handle(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "top_mod.param_owner1.clk_freq_Hz";

@@ -55,8 +55,7 @@ SC_MODULE(ex14_parent) {
         m_broker(cci::cci_get_broker()),
         child_inst("child_inst"),
         parent_int_param("parent_int_param", 300),
-        parent_buffer("parent_int_buffer", 350),
-        child_param_handle(cci::cci_originator(*this))
+        parent_buffer("parent_int_buffer", 350)
   {
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
