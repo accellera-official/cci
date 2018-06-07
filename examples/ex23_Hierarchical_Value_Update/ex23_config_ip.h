@@ -49,8 +49,8 @@ public:
     static bool
     log_level_param_predicate(const cci::cci_param_untyped_handle handle)
     {
-        return (handle.name().substr(handle.name().rfind(".")+1)
-                =="log_level");
+        const char *basename = strrchr(handle.name(), '.');
+        return basename && !strcmp(++basename, "log_level");
     }
 
     /**

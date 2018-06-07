@@ -83,7 +83,7 @@ public:
      *
      * @return broker name
      */
-    virtual const std::string &name() const = 0;
+    virtual const char* name() const = 0;
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //

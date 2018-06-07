@@ -47,7 +47,7 @@ cci_originator cci_broker_handle::get_originator() const
     return m_originator;
 }
 
-const std::string& cci_broker_handle::name() const
+const char* cci_broker_handle::name() const
 {
     return m_broker->name();
 }

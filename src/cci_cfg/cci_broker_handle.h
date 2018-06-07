@@ -80,7 +80,7 @@ public:
     cci_originator get_originator() const;
 
     /// @copydoc cci_broker_if::name
-    const std::string& name() const;
+    const char* name() const;
 
     /// @copydoc cci_broker_if::set_preset_cci_value
     void set_preset_cci_value(const std::string &parname,

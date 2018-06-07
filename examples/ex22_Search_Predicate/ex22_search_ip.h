@@ -73,7 +73,7 @@ public:
     bool name_contains_character_predicate(
             const cci::cci_param_untyped_handle handle, const char character)
     {
-        return handle.name().find(character) != std::string::npos;
+        return strchr(handle.name(), character) != NULL;
     }
 
     /**

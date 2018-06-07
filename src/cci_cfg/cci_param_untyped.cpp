@@ -75,7 +75,7 @@ cci_param_untyped::~cci_param_untyped()
     sc_assert( m_param_handles.empty() );
 
     if(!m_name.empty()) {
-        cci_unregister_name(name().c_str());
+        cci_unregister_name(name());
     }
 }
 
@@ -258,9 +258,9 @@ bool cci_param_untyped::is_locked() const
     return m_lock_pwd != NULL;
 }
 
-const std::string& cci_param_untyped::name() const
+const char* cci_param_untyped::name() const
 {
-    return m_name;
+    return m_name.c_str();
 }
 
 cci_originator cci_param_untyped::get_originator() const
