@@ -52,7 +52,7 @@ cci_param_untyped_handle::~cci_param_untyped_handle()
 cci_param_untyped_handle::
   cci_param_untyped_handle(const cci_param_untyped_handle& param_handle)
     : m_param(param_handle.m_param)
-    , m_originator(param_handle.m_originator)
+    , m_originator(promote_originator(param_handle.m_originator))
 {
     if(m_param) {
         m_param->add_param_handle(this);
@@ -63,7 +63,7 @@ cci_param_untyped_handle::
 cci_param_untyped_handle::
   cci_param_untyped_handle(cci_param_untyped_handle&& param_handle)
     : m_param(CCI_MOVE_(param_handle.m_param))
-    , m_originator(CCI_MOVE_(param_handle.m_originator))
+    , m_originator(promote_originator(param_handle.m_originator))
 {
     if(m_param) {
         m_param->add_param_handle(this);
@@ -305,6 +305,15 @@ void cci_param_untyped_handle::check_is_valid() const
                          "The handled parameter is not valid.");
         cci_abort(); // cannot recover from here
     }
+}
+
+const cci_originator cci_param_untyped_handle::promote_originator(
+    const cci_originator &gifted_originator)
+{
+    if (sc_core::sc_get_current_object())
+        return cci_originator();
+    else
+        return gifted_originator;
 }
 
 #undef CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_

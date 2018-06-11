@@ -261,6 +261,14 @@ protected:
 
     ///@}
 
+    /// Promote a gifted originator to one that represents the current context
+    /// when possible (i.e. when within the module hierarchy)
+    /**
+    * @param gifted_originator associated with the copy ctor broker argument
+    * @return context originator if possible; otherwise, the gifted_originator
+    */
+    const cci_originator promote_originator(const cci_originator &gifted_originator);
+
 private:
     cci_param_if*  m_param;
     cci_originator m_originator;
