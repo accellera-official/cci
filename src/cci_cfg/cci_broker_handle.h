@@ -49,19 +49,26 @@ public:
     cci_broker_handle(cci_broker_if& broker,
                       const cci_originator& originator);
 
-#if CCI_CPLUSPLUS >= 201103L
-    cci_broker_handle(const cci_broker_handle&) = default;
-    cci_broker_handle& operator=(const cci_broker_handle&) = default;
+    cci_broker_handle(const cci_broker_handle& broker_handle)
+      : m_broker(broker_handle.m_broker)
+      , m_originator(promote_originator(broker_handle.m_originator)) {}
 
-    // need to spell out move constructor and assignment for MSVC 2013
-    cci_broker_handle(cci_broker_handle&& that) /* = default; */
-      : m_broker(CCI_MOVE_(that.m_broker))
-      , m_originator(CCI_MOVE_(that.m_originator)) {}
-
-    cci_broker_handle& operator=(cci_broker_handle&& that) /* = default; */
+    cci_broker_handle& operator=(const cci_broker_handle& broker_handle)
     {
-      m_broker     = CCI_MOVE_(that.m_broker);
-      m_originator = CCI_MOVE_(that.m_originator);
+        m_broker = broker_handle.m_broker;
+        // originator is preserved during assignment
+        return *this;
+    }
+
+#if CCI_CPLUSPLUS >= 201103L
+    cci_broker_handle(cci_broker_handle&& that)
+      : m_broker(CCI_MOVE_(that.m_broker)) 
+      , m_originator(promote_originator(that.m_originator)) {}
+
+    cci_broker_handle& operator=(cci_broker_handle&& that)
+    {
+      m_broker = CCI_MOVE_(that.m_broker);
+      // originator is preserved during assignment
       return *this;
     }
 
@@ -187,6 +194,14 @@ public:
     bool operator!=(const cci_broker_if *b) const {
       return m_broker!=b;
     }
+protected:
+    /// Promote a gifted originator to one that represents the current context
+    /// when possible (i.e. when within the module hierarchy)
+    /**
+     * @param gifted_originator associated with the copy ctor broker argument
+     * @return context originator if possible; otherwise, the gifted_originator 
+     */
+    const cci_originator promote_originator(const cci_originator &gifted_originator);
 
 private:
     friend class cci_broker_if;

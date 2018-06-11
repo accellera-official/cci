@@ -176,4 +176,13 @@ bool cci_broker_handle::has_callbacks() const
     return m_broker->has_callbacks();
 }
 
+const cci_originator cci_broker_handle::promote_originator(
+  const cci_originator &gifted_originator)
+{
+    if (sc_core::sc_get_current_object())
+        return cci_originator();
+    else
+        return gifted_originator;
+}
+
 CCI_CLOSE_NAMESPACE_
