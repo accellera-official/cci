@@ -245,7 +245,7 @@ cci_param_data_category cci_param_untyped_handle::get_data_category() const
     return m_param->get_data_category();
 }
 
-const std::string& cci_param_untyped_handle::name() const
+const char* cci_param_untyped_handle::name() const
 {
     check_is_valid();
     return m_param->name();

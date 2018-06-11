@@ -223,7 +223,7 @@ public:
     //@{
 
     /// @copydoc cci_param_untyped::name
-    virtual const std::string &name() const = 0;
+    virtual const char* name() const = 0;
 
     /// @copydoc cci_param_typed::get_mutable_type
     virtual cci_param_mutable_type get_mutable_type() const = 0;

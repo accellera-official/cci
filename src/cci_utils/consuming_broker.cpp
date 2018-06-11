@@ -45,9 +45,9 @@ namespace cci_utils {
   {
   }
 
-  const std::string &consuming_broker::name() const
+  const char* consuming_broker::name() const
   {
-    return m_name;
+    return m_name.c_str();
   }
 
   void consuming_broker::set_preset_cci_value(
