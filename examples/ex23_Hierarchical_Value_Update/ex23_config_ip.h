@@ -26,6 +26,7 @@
 #define EXAMPLES_EX23_HIERARCHICAL_VALUE_UPDATE_EX23_CONFIG_IP_H_
 
 #include <cci_configuration>
+#include <cstring>
 #include "xreport.hpp"
 
 /**
@@ -49,8 +50,8 @@ public:
     static bool
     log_level_param_predicate(const cci::cci_param_untyped_handle handle)
     {
-        const char *basename = strrchr(handle.name(), '.');
-        return basename && !strcmp(++basename, "log_level");
+        const char *basename = std::strrchr(handle.name(), '.');
+        return basename && !std::strcmp(++basename, "log_level");
     }
 
     /**

@@ -22,6 +22,7 @@
 
 #include <cci_configuration>
 #include <string>
+#include <cstring>
 #include "xreport.hpp"
 
 /**
@@ -73,7 +74,7 @@ public:
     bool name_contains_character_predicate(
             const cci::cci_param_untyped_handle handle, const char character)
     {
-        return strchr(handle.name(), character) != NULL;
+        return std::strchr(handle.name(), character) != NULL;
     }
 
     /**
