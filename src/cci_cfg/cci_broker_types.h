@@ -22,7 +22,8 @@
 
 #include "cci_core/cci_value.h"
 #include "cci_core/cci_filtered_range.h"
-#include "cci_cfg/cci_broker_callbacks.h"
+#include "cci_core/cci_callback.h"
+
 //
 #include <string>
 #include <utility> // std::pair
@@ -31,6 +32,38 @@ CCI_OPEN_NAMESPACE_
 
 // forward declaration
 class cci_param_untyped_handle;
+
+/// Parameter creation callback
+typedef cci_callback<const cci_param_untyped_handle& >
+cci_param_create_callback;
+
+/// Parameter creation callback handle
+typedef cci_callback_typed_handle<const cci_param_untyped_handle& >
+cci_param_create_callback_handle;
+
+/// Parameter destruction callback
+typedef cci_callback<const cci_param_untyped_handle& >
+cci_param_destroy_callback;
+
+/// Parameter destruction callback handle
+typedef cci_callback_typed_handle<const cci_param_untyped_handle& >
+cci_param_destroy_callback_handle;
+
+/// Parameter predicate
+typedef cci_callback<const cci_param_untyped_handle&, bool >
+cci_param_predicate;
+
+/// Parameter predicate handle
+typedef cci_callback_typed_handle<const cci_param_untyped_handle&, bool >
+cci_param_predicate_handle;
+
+/// Preset value predicate
+typedef cci_callback<const std::pair<std::string, cci_value>&, bool >
+cci_preset_value_predicate;
+
+/// Preset value predicate handle
+typedef cci_callback_typed_handle<const std::pair<std::string, cci_value>&,
+    bool > cci_preset_value_predicate_handle;
 
 /// CCI parameter filter iterator type
 typedef cci_filtered_range<cci_param_untyped_handle, cci_param_predicate>
