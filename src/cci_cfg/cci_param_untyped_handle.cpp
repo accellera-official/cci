@@ -307,15 +307,6 @@ void cci_param_untyped_handle::check_is_valid() const
     }
 }
 
-const cci_originator cci_param_untyped_handle::promote_originator(
-    const cci_originator &gifted_originator)
-{
-    if (sc_core::sc_get_current_object())
-        return cci_originator();
-    else
-        return gifted_originator;
-}
-
 #undef CCI_PARAM_UNTYPED_HANDLE_CALLBACK_IMPL_
 
 CCI_CLOSE_NAMESPACE_
