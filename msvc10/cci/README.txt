@@ -4,7 +4,7 @@ README for building the CCI PoC library and examples with Microsoft Visual C++
 Authors: Lei Liang <lei.liang@ericsson.com>
          Philipp A. Hartmann <philipp.hartmann@offis.de>
          Sonal Poddar <sonal.poddar@intel.com>
-Date   : 2017-12-17
+Date   : 2018-06-13
 --------------------------------------------------------------------------------
 
 Table of Contents
@@ -31,10 +31,9 @@ Prerequisites
 You shall have the following software/libraries before you start:
 
   1. CCI POC source code        (mandatory for all operations in this guide)
-  2. rapidjson (in packages/)   (mandatory for all operations in this guide)
-  3. SystemC installation       (mandatory for all operations in this guide)
-  4. Boost library installation (mandatory for all operations in this guide)
-  5. Microsoft Visual Studio
+  2. SystemC installation       (mandatory for all operations in this guide)
+  3. Boost library installation (mandatory for all operations in this guide)
+  4. Microsoft Visual Studio
 
 And they are verified with following versions:
 
