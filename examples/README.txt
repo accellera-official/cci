@@ -49,7 +49,7 @@ Running the examples
   export CXX=g++ (for Linux)
          CXX=cl  (for Windows)
 # export PATH=/apps/free/gcc/4.4.5/bin:${PATH} (for Linux)
-         PATH=/cygdrive/c/Program\ Files\ \(x86\)/Mirosoft\ Visual\ Studio\ 14.0/VC/bin/amd64:${PATH} (for Windows)
+         PATH=/cygdrive/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio\ 14.0/VC/bin/amd64:${PATH} (for Windows)
 # export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
 --
 

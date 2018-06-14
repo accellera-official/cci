@@ -44,7 +44,7 @@ Contained Files:
 ./
 doc/       :  The LRM and overview tutorial presentation
 src/       :  CCI source code, only include <cci_configuration> in user code
-packages/  :  for rapidjson
+packages/  :  for RapidJSON
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)
 msvc10/    :  Microsoft Visual Studio project files
@@ -53,7 +53,7 @@ msvc10/    :  Microsoft Visual Studio project files
 Licensing and Copyright
 
    See the separate LICENSE and NOTICE files to determine your rights
-   and responsiblities for using SystemC CCI Configuration.
+   and responsibilities for using SystemC CCI Configuration.
 
 User Documentation
 

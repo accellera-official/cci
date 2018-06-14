@@ -31,8 +31,9 @@ collisions but otherwise works fine.
     - LRM: Typos and minor issues
       The suggestions have been incorporated into the LRM. 
       ** NOTE **
-12345678901234567890123456789012345678901234567890123456789012345678901234567890       Some PDF viewers still have issues displaying underscores ('_') at certain
+      Some PDF viewers still have issues displaying underscores ('_') at certain
       zoom levels - try a different zoom level to work around this.
+      **********
     - LRM: Callbacks
       LRM clarification has been provided.
     - SystemC CCI Build Issues
@@ -46,7 +47,7 @@ collisions but otherwise works fine.
       to alleviate 'path too long' errors during uncompression. Note: the open
       source archiver 7-zip (http://7-zip.org) have proven to work despite
       long paths.
-    - The rapidjson JSON library is now bundled for convenience.
+    - The RapidJSON library is now bundled for convenience.
     - Handle originators are no longer overwritten during assignment.
     - Originator construction has been constrained such that it uses the
       current context when inside the module hierarchy and otherwise requires
