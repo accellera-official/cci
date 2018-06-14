@@ -59,6 +59,7 @@ class cci_broker_handle;
  * @see cci_utils::broker, cci_utils::consuming_broker
  */
 class cci_broker_if
+ : public cci_broker_callback_if
 {
 public:
     friend class cci_broker_handle;
@@ -264,31 +265,6 @@ public:
      * @return If this broker is the global broker
      */
     virtual bool is_global_broker() const = 0;
-
-    ///@name Broker callbacks
-    //@{
-
-    /// Register a callback for parameter creation
-    virtual cci_param_create_callback_handle
-        register_create_callback(const cci_param_create_callback& cb
-            , const cci_originator& orig) = 0;
-    virtual bool
-        unregister_create_callback(const cci_param_create_callback_handle& cb
-            , const cci_originator& orig) = 0;
-
-    /// Register a callback for parameter destruction
-    virtual cci_param_destroy_callback_handle
-        register_destroy_callback(const cci_param_destroy_callback& cb
-            , const cci_originator& orig) = 0;
-    virtual bool
-        unregister_destroy_callback(const cci_param_destroy_callback_handle& cb
-            , const cci_originator& orig) = 0;
-
-    virtual bool unregister_all_callbacks(const cci_originator& orig) = 0;
-
-    /// Return true if any callbacks are currently registered
-    virtual bool has_callbacks() const = 0;
-    //@}
 
 protected:
     /// Default Constructor
