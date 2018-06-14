@@ -1,6 +1,6 @@
 ================================================================================
                     Accellera/CCI Examples README
-Date  : 4/18/2018
+Date: 6/13/2018
 ================================================================================
 
 ToC
@@ -12,7 +12,7 @@ ToC
 
 Introduction
 ------------
-This README provides an overview of the Accellera/CCI package examples and 
+This README provides an overview of the Accellera CCI package examples and 
 how to build and run them. The build is branched from systemc-regressions/ package's
 verify.pl script.
 
@@ -44,12 +44,12 @@ Running the examples
 -- [ cci_env.bash ]
   export SYSTEMC_HOME=.../systemc
   export BOOST_HOME=.../boost/1.57.0/win_64/vc_12/include/boost-1_57
-  export CCI_HOME=.../cci
+  export CCI_HOME=.../cci-1.0.0
 # export SYSTEMC_PTHREADS=1
   export CXX=g++ (for Linux)
          CXX=cl  (for Windows)
 # export PATH=/apps/free/gcc/4.4.5/bin:${PATH} (for Linux)
-         PATH=/cygdrive/c/Program\ Files\ \(x86\)/Mirosoft\ Visual\ Studio\ 14.0/VC/bin/amd64:${PATH} (for Windows)
+         PATH=/cygdrive/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio\ 14.0/VC/bin/amd64:${PATH} (for Windows)
 # export LD_LIBRARY_PATH=/apps/free/gcc/4.4.5/lib64:${LD_LIBRARY_PATH}
 --
 
@@ -59,11 +59,11 @@ Running the examples
 3) Create a directory called run/ in your CCI_HOME folder, and 'cd' into it.
 +------------------------------------------------+
   % pwd
-  .../cci
+  .../cci-1.0.0
   % mkdir run
   % cd run
   % pwd
-  .../cci/run
+  .../cci-1.0.0/run
 +------------------------------------------------+
 
 4) The verify.pl script needs to be invoked to build/run/compare-golden results.
