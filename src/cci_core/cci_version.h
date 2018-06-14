@@ -26,13 +26,13 @@
 #ifndef CCI_CORE_CCI_VERSION_H_INCLUDED_
 #define CCI_CORE_CCI_VERSION_H_INCLUDED_
 
-#define CCI_SHORT_RELEASE_DATE 20171217
+#define CCI_SHORT_RELEASE_DATE 20180613
 
 #define CCI_VERSION_ORIGINATOR "Accellera"
-#define CCI_VERSION_MAJOR      0
-#define CCI_VERSION_MINOR      9
+#define CCI_VERSION_MAJOR      1
+#define CCI_VERSION_MINOR      0
 #define CCI_VERSION_PATCH      0
-#define CCI_IS_PRERELEASE      1
+#define CCI_IS_PRERELEASE      0
 
 // token stringification
 
