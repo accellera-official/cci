@@ -43,10 +43,10 @@ collisions but otherwise works fine.
 
   - The following "Known Issues" with the public release version have been
     addressed:
-    - Example names have been truncated (shortening the path by 42 characters)
-      to alleviate 'path too long' errors during uncompression. Note: the open
-      source archiver 7-zip (http://7-zip.org) have proven to work despite
-      long paths.
+    - Example names have been truncated (reducing the longest path by 42 
+      characters) to alleviate 'path too long' errors during uncompression. 
+      Note: the open source archiver 7-zip (http://7-zip.org) has been shown to
+      work properly even with long paths.
     - The RapidJSON library is now bundled for convenience.
     - Handle originators are no longer overwritten during assignment.
     - Originator construction has been constrained such that it uses the
@@ -55,8 +55,8 @@ collisions but otherwise works fine.
     - It is allowable to register a broker for a module after some of its
       parameters have been constructed. This facilitates allocating some
       parameters to the parent broker and others to a local broker.
-    - A new example (#19) has been added and now the examples are all 
-      numbered consecutively.
+    - A new example (#19) has been added to show parameter reset behaviors and 
+      now the examples are numbered consecutively.
 
   - cci_param_if::get_name() has been renamed to name() for consistency with 
     sc_object.
@@ -67,8 +67,12 @@ collisions but otherwise works fine.
 
 3) Outstanding issues
 
-  - Parameter names may be registered in the future when a preset value is     provided to the broker. This would allow earlier detection of name
-    collisions.
+  - Convenience functions have been added to cci_broker_handle to register
+    callbacks based on an object and a member function. This is now consistent 
+    with parameter handle callback registration. This is not documented in the 
+    1.0.0 LRM but will be added in the next revision.
 
-
+  - Parameter names may be registered in the future when a preset value is
+    provided to the broker. This would allow earlier detection of name
+    collisions.  
 

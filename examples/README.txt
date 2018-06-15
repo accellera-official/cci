@@ -39,7 +39,7 @@ Directory Structure
 Running the examples
 ---------------------
 1) The following environment variables need to be setup based on your 
-    installation. A sample file has been provided for your reference.
+    installation. A sample file is listed below for reference.
 
 -- [ cci_env.bash ]
   export SYSTEMC_HOME=.../systemc
@@ -66,7 +66,9 @@ Running the examples
   .../cci-1.0.0/run
 +------------------------------------------------+
 
-4) The verify.pl script needs to be invoked to build/run/compare-golden results.
+4) The verify.pl script needs to be invoked to build/run/compare-golden results. 
+   Add the '-g' flag for debug mode (this matches the default Linux library
+   build).
 
   4.1) To run a specific example, say ex1_simple_int_param, do:
 +------------------------------------------------+
