@@ -39,7 +39,7 @@ public:
     ~consuming_broker();
 
     /// Return the name of the broker
-    const std::string &name() const;
+    const char* name() const;
 
     /// Return the preset value of a parameter (by name)
     cci::cci_value get_preset_cci_value(const std::string &parname) const;

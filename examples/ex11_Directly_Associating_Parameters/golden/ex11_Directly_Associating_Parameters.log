@@ -1,0 +1,41 @@
+SystemC Simulation
+
+Info: top_mod.param_owner1: @0 s, [OWNER C_TOR] : Parameter Name   : top_mod.param_owner1.clk_freq_Hz, Value : 1000
+
+Info: top_mod.param_owner2: @0 s, [OWNER C_TOR] : Parameter Name   : top_mod.param_owner2.clock_speed_Hz, Value : 2000
+
+Info: top_mod: @0 s, [TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 1000
+
+Info: top_mod: @0 s, [TOP_MODULE C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz, Value : 2000
+
+Info: param_cfgr: @0 s, [CFGR C_TOR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 1000
+
+Info: param_cfgr: @0 s, [CFGR C_TOR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz, Value : 1000
+
+Info: sc_main: Begin Simulation.
+
+Info: param_cfgr: @0 s, [CFGR within beoe] Within the BEOE phase
+
+Info: param_cfgr: @0 s, [CFGR within beoe] : Changing the 'clk_freq_Hz' of OWNER (1) to 5000 (Hz).
+
+Info: top_mod.param_value_sync: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 5000
+
+Info: top_mod.param_value_sync: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_Hz, Value : 5000
+
+Info: param_cfgr: @0 s, [CFGR within beoe] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 5000
+
+Info: param_cfgr: @0 s, [CFGR within beoe] : Parameter Name : top_mod.param_owner2.clock_speed_Hz, Value : 5000
+
+Info: param_cfgr: @0 s, @ 0 s
+
+Info: param_cfgr: @0 s, [CFGR] : Changing the 'clock_speed_Hz' of OWNER (2) to 12000 (Hz).
+
+Info: top_mod.param_value_sync: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner2.clock_speed_Hz, Value : 12000
+
+Info: top_mod.param_value_sync: @0 s, [PARAM_VALUE_SYNC - post_write callback] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 12000
+
+Info: param_cfgr: @0 s, [CFGR] : Parameter Name : top_mod.param_owner1.clk_freq_Hz, Value : 12000
+
+Info: param_cfgr: @0 s, [CFGR] : Parameter Name : top_mod.param_owner2.clock_speed_Hz, Value : 12000
+
+Info: sc_main: End Simulation.

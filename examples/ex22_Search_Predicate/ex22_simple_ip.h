@@ -50,28 +50,28 @@ public:
     float_param("float_param", 3.14),
     double_param("double_param", 2.714),
     string_param("string_param", "C++ String") {
-        XREPORT("@Ctor: Default value of " << bool_param.get_name()
+        XREPORT("@Ctor: Default value of " << bool_param.name()
                                            << " is "
                                            << bool_param.get_value());
-        XREPORT("@Ctor: Default value of " << char_param.get_name()
+        XREPORT("@Ctor: Default value of " << char_param.name()
                                            << " is "
                                            << char_param.get_value());
-        XREPORT("@Ctor: Default value of " << uchar_param.get_name()
+        XREPORT("@Ctor: Default value of " << uchar_param.name()
                                            << " is "
                                            << uchar_param.get_value());
-        XREPORT("@Ctor: Default value of " << int_param.get_name() << " is "
+        XREPORT("@Ctor: Default value of " << int_param.name() << " is "
                                            << int_param.get_value());
-        XREPORT("@Ctor: Default value of " << uint_param.get_name()
+        XREPORT("@Ctor: Default value of " << uint_param.name()
                                            << " is 0x"
                                            << std::hex
                                            << uint_param.get_value());
-        XREPORT("@Ctor: Default value of " << float_param.get_name()
+        XREPORT("@Ctor: Default value of " << float_param.name()
                                            << " is "
                                            << float_param.get_value());
-        XREPORT("@Ctor: Default value of " << double_param.get_name()
+        XREPORT("@Ctor: Default value of " << double_param.name()
                                            << " is "
                                            << double_param.get_value());
-        XREPORT("@Ctor: Default value of " << string_param.get_name()
+        XREPORT("@Ctor: Default value of " << string_param.name()
                                            << " is "
                                            << string_param.get_value());
     }

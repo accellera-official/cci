@@ -45,9 +45,7 @@ SC_MODULE(ex15_configurator) {
    *  @return void
    */
   SC_CTOR(ex15_configurator):
-      m_broker(cci::cci_get_broker()),
-      child_base_param_handle(cci::cci_originator(*this)),
-      mem_size_base_handle(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     // Hierarchical names for the cci_parameters of the owner modules
     std::string cfgr_param_str1 = "processor.addr_lines_mod.curr_addr_lines";
@@ -58,14 +56,14 @@ SC_MODULE(ex15_configurator) {
     child_base_param_handle = m_broker.get_param_handle(cfgr_param_str1); 
     if (!child_base_param_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str1
-              << "\tdoesn't exists");
+              << " doesn't exists");
     }
 
     // Check for the existence of 'mem_size' cci_parameter of MEMORY_STACK
     mem_size_base_handle = m_broker.get_param_handle(cfgr_param_str2);
     if (!mem_size_base_handle.is_valid()) {
       XREPORT("[CFGR C_TOR] : Parameter " << cfgr_param_str2
-              << "\tdoesn't exists");
+              << " doesn't exists");
     }
 
     // Registering SC_THREAD with the SystemC kernel

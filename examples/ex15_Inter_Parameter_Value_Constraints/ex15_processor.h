@@ -53,9 +53,7 @@ SC_MODULE(ex15_processor) {
   SC_CTOR(ex15_processor)
       : addr_lines_module("addr_lines_mod"),
         memory_block_module("memory_block"),
-        m_broker(cci::cci_get_broker()),
-        addr_lines_base_handle(cci::cci_originator(*this)),
-        mem_size_base_handle(cci::cci_originator(*this))
+        m_broker(cci::cci_get_broker())
   {
     // Get handle of the 'no_of_addr_lines' cci-parameter of
     // 'address_lines_register'
@@ -65,7 +63,7 @@ SC_MODULE(ex15_processor) {
     addr_lines_base_handle = m_broker.get_param_handle(param_path); 
     if (!addr_lines_base_handle.is_valid()) {
       XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
-              << "\tdoesn't not exists");
+              << " doesn't not exists");
     }
 
     // Get handle of the 'mem_size' cci-parameter of 'memory_block'
@@ -75,7 +73,7 @@ SC_MODULE(ex15_processor) {
     mem_size_base_handle = m_broker.get_param_handle(param_path);
     if (!mem_size_base_handle.is_valid()) {
       XREPORT("[PROCESSOR C_TOR] : Parameter " << param_path
-              << "\tdoesn't not exists");
+              << " doesn't not exists");
     }
 
     // Checks for the condition whether the default total number of the
@@ -106,11 +104,11 @@ SC_MODULE(ex15_processor) {
                                    cci::cci_param_handle mem_size_handle)
   {
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
-            << ev.param_handle.get_name() << "\tParameter Value : "
+            << ev.param_handle.name() << ", Value : "
             << ev.new_value);
 
     XREPORT("[PROCESSOR addr_lines_post_wr_cb] : Parameter Name : "
-            << mem_size_handle.get_name() << "\tParameter Value : "
+            << mem_size_handle.name() << ", Value : "
             << mem_size_handle.get_cci_value());
 
     total_addr_lines = atoi(ev.new_value.to_json().c_str());
@@ -129,11 +127,11 @@ SC_MODULE(ex15_processor) {
                                    cci::cci_param_handle addr_lines_handle)
   {
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << ev.param_handle.get_name() << "\tParameter Value : "
+            << ev.param_handle.name() << ", Value : "
             << ev.new_value);
 
     XREPORT("[PROCESSOR mem_block_post_wr_cb] : Parameter Name : "
-            << addr_lines_handle.get_name() << "\tParameter Value : "
+            << addr_lines_handle.name() << ", Value : "
             << addr_lines_handle.get_cci_value());
 
     mem_block_size = atoi(ev.new_value.to_json().c_str());

@@ -1,55 +1,74 @@
-                Release Notes for SystemC CCI Configuration
-				Public Review Draft
-                ===========================================
+                    Release Notes for SystemC CCI 1.0.0
+                    ===================================
 
 CONTENTS
 ========
 
   1) Overview
 
-  2) Known issues
+  2) Updates since the public review version
+
+  3) Outstanding issues
 
 
 1) Overview
 ===========
 
-This release of the Configuration, Control and Inspection (CCI) "Proof of 
-Concept" implementation is being made available for public review and feedback.
-It works optimally with SystemC 2.3.2 utilizing its hierarchical name registry
-to detect and mitigate parameter name collisions. It doesn't address name 
-collisions but otherwise works fine on prior versions of SystemC.
+This package contains a "Proof of Concept" implementation for the SystemC 
+Configuration, Control and Inspection (CCI) standard. It works optimally with
+SystemC 2.3.2 utilizing its hierarchical name registry to detect and mitigate 
+parameter name collisions. On prior versions of SystemC, it doesn't address name
+collisions but otherwise works fine.
 
 
-2) Known Issues
-===============
+2) Updates since the public review version
+==========================================
+  - CCI Forum feedback has been addressed:
+    (http://forums.accellera.org/forum/41-systemc-cci-configuration-control-inspection/)
+    - LRM: Writing to locked params
+      LRM clarifications have been provided as well as a new example
+      (ex19_Reset_Param).
+    - LRM: Typos and minor issues
+      The suggestions have been incorporated into the LRM. 
+      ** NOTE **
+      Some PDF viewers still have issues displaying underscores ('_') at certain
+      zoom levels - try a different zoom level to work around this.
+      **********
+    - LRM: Callbacks
+      LRM clarification has been provided.
+    - SystemC CCI Build Issues
+      This has been fixed.
+    - Problem building CCI using CLang 6.0
+      This has been fixed.
 
-  - Some paths in this release are longer than the historical 99 character
-    limit of tar archives, and several Windows archivers (e.g. WinZip)
-    have been reported to trip over this.  The open source archiver 7-zip
-    (http://7-zip.org) is known to work.
+  - The following "Known Issues" with the public release version have been
+    addressed:
+    - Example names have been truncated (shortening the path by 42 characters)
+      to alleviate 'path too long' errors during uncompression. Note: the open
+      source archiver 7-zip (http://7-zip.org) have proven to work despite
+      long paths.
+    - The RapidJSON library is now bundled for convenience.
+    - Handle originators are no longer overwritten during assignment.
+    - Originator construction has been constrained such that it uses the
+      current context when inside the module hierarchy and otherwise requires
+      a string name.
+    - It is allowable to register a broker for a module after some of its
+      parameters have been constructed. This facilitates allocating some
+      parameters to the parent broker and others to a local broker.
+    - A new example (#19) has been added and now the examples are all 
+      numbered consecutively.
 
-  - The POC incorporates a JSON library (rapidson) which must be obtained
-    separately at this time (see README.txt for details). In the future this
-	should be redistributed as an embedded component of the POC implementation
-	in order to simplify installation.
+  - cci_param_if::get_name() has been renamed to name() for consistency with 
+    sc_object.
+  - Examples have been updated to consistently use #include <cci_configuration>
+    and report start/stop messages; some output messages have been reformatted.
+  - A variety of cleanups, such as adding const function qualifiers, have
+    been made.
 
-  - Handle assignments, both broker and parameter, currently transfer originator
-	information. The destination handle should instead keep/determine its 
-	originator appropriately. This will be fixed in the next release.
+3) Outstanding issues
 
-  - Originator construction currently accepts a string argument even within the
-	module hierarchy context even though it has no real effect. Semantics will
-	likely be sharpened in the future such that a name is accepted only when
-	constructing an originator outside of the module hierarchy.
+  - Parameter names may be registered in the future when a preset value is     provided to the broker. This would allow earlier detection of name
+    collisions.
 
-  - It has not been decided whether it should be allowable to register a broker
-	for a module after some of its parameters have been constructed. Allowing
-	this facilitates allocating some parameters to the parent broker and others
-	to a local broker but it seems to carry a conceptual complexity price tag.
 
-  - Parameter names may be registered in the future when a preset value is 
-	provided to the broker. This would allow earlier detection of name collisions.
-
-  - There is no Example #19 so the numbering is non-consecutive. A new example
-	will fill this slot before the next release.
 

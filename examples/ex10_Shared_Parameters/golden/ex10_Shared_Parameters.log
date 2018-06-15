@@ -6,6 +6,8 @@ Info: param_setter: @0 s, [CFGR C_TOR] : Parameter exists
 
 Info: param_setter: @0 s, [CFGR C_TOR] : Set parameter value to 10 via the handle
 
+Info: sc_main: Begin Simulation.
+
 Info: param_owner: @0 s, @ 0 s
 
 Info: param_owner: @0 s, [OWNER] : Parameter Value : 10
@@ -25,3 +27,5 @@ Info: param_setter: @15 ns, [CFGR] : Change value to 20
 Info: param_owner: @20 ns, @ 20 ns
 
 Info: param_owner: @20 ns, [OWNER] : Parameter Value   : 20
+
+Info: sc_main: End Simulation.

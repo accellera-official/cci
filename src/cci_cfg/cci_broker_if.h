@@ -83,7 +83,7 @@ public:
      *
      * @return broker name
      */
-    virtual const std::string &name() const = 0;
+    virtual const char* name() const = 0;
 
     // //////////////////////////////////////////////////////////////////// //
     // ///////////   Access Parameters and Values   /////////////////////// //
@@ -267,6 +267,9 @@ public:
     virtual bool is_global_broker() const = 0;
 
 protected:
+    /// Default Constructor
+    cci_broker_if() {}
+
     /// Destructor
     virtual ~cci_broker_if() {}
 
@@ -275,6 +278,15 @@ protected:
 
     static cci_broker_if &unwrap_broker(cci_broker_handle h)
     { return h.ref(); }
+
+private:
+    // Disabled
+    cci_broker_if(const cci_broker_if&);
+    cci_broker_if& operator=(const cci_broker_if&);
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+    cci_broker_if(cci_broker_if&&);
+    cci_broker_if& operator=(cci_broker_if&&);
+#endif
 };
 
 inline cci_broker_handle

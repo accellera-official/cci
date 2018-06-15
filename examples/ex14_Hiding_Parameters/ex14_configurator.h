@@ -47,8 +47,7 @@ SC_MODULE(ex14_configurator) {
    *  @return void
    */
   SC_CTOR(ex14_configurator):
-      m_broker(cci::cci_get_broker()),
-      parent_param_handle(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     std::string parameterName(
             "Top.private.parent_inst.parent_int_buffer");
@@ -57,7 +56,7 @@ SC_MODULE(ex14_configurator) {
     parent_param_handle = m_broker.get_param_handle(parameterName);
     if (parent_param_handle.is_valid()) {
       XREPORT("[CFGR] : Parameter Name : "
-              << parent_param_handle.get_name() << "\tParameter Value : "
+              << parent_param_handle.name() << "\tParameter Value : "
               << parent_param_handle.get_cci_value().to_json());
     } else {
       XREPORT("[CFGR] : Parameter by name"
@@ -84,7 +83,7 @@ SC_MODULE(ex14_configurator) {
               << "\tVisible parameters to the 'configurator' module");
 
       for (unsigned int i = 0; i < cfgr_param_list.size(); i++) {
-        XREPORT("[CFGR] : Parameter Name : " << cfgr_param_list[i].get_name());
+        XREPORT("[CFGR] : Parameter Name : " << cfgr_param_list[i].name());
       }
 
       wait(5.0, sc_core::SC_NS);
@@ -96,7 +95,7 @@ SC_MODULE(ex14_configurator) {
       parent_param_handle.set_cci_value(cci::cci_value(1000));
 
       XREPORT("[CFGR] : Parameter Name : "
-              << parent_param_handle.get_name() << "\tParameter Value : "
+              << parent_param_handle.name() << "\tParameter Value : "
               << parent_param_handle.get_cci_value().to_json());
 
       wait(5.0, sc_core::SC_NS);

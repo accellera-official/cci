@@ -27,7 +27,7 @@
 #ifndef EXAMPLES_EX08_PARAMETER_VALUE_CHANGE_CALLBACKS_EX08_SIMPLE_IP_H_
 #define EXAMPLES_EX08_PARAMETER_VALUE_CHANGE_CALLBACKS_EX08_SIMPLE_IP_H_
 
-#include "cci_configuration"
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -63,9 +63,9 @@ SC_MODULE(ex08_simple_ip) {
     param_2_post_write_cb = param_2.register_post_write_callback(
         &ex08_simple_ip::typed_post_write_callback,this);
 
-    XREPORT("@Ctor: Value of " << param_1.get_name() << " is " << param_1
+    XREPORT("@Ctor: Value of " << param_1.name() << " is " << param_1
             << " (Default value Specified: 1)");
-    XREPORT("@Ctor: Value of " << param_2.get_name() << " is " << param_2
+    XREPORT("@Ctor: Value of " << param_2.name() << " is " << param_2
             << " (Default value Specified: 2)");
   }
 
@@ -75,9 +75,9 @@ SC_MODULE(ex08_simple_ip) {
    *  @return void
    */
   ~ex08_simple_ip() {
-    XREPORT_PLAIN("@Dtor: Value of " << param_1.get_name() << " is "
+    XREPORT_PLAIN("@Dtor: Value of " << param_1.name() << " is "
                   << param_1);
-    XREPORT_PLAIN("@Dtor: Value of " << param_2.get_name() << " is "
+    XREPORT_PLAIN("@Dtor: Value of " << param_2.name() << " is "
                   << param_2);
   }
 
@@ -89,7 +89,7 @@ SC_MODULE(ex08_simple_ip) {
   void typed_pre_read_callback(const cci::cci_param_read_event<int> & ev)
   {
     XREPORT("typed_pre_read_callback:"
-            << ev.param_handle.get_name() << " ("
+            << ev.param_handle.name() << " ("
             << ev.value
             << ") by " << ev.originator.name());
   }
@@ -102,7 +102,7 @@ SC_MODULE(ex08_simple_ip) {
   bool typed_pre_write_callback(const cci::cci_param_write_event<int> & ev)
   {
     XREPORT("typed_pre_write_callback:"
-            << ev.param_handle.get_name() << " ("
+            << ev.param_handle.name() << " ("
             << ev.old_value << " -> " << ev.new_value
             << ") by " << ev.originator.name());
     return true;
@@ -116,7 +116,7 @@ SC_MODULE(ex08_simple_ip) {
   void typed_post_write_callback(const cci::cci_param_write_event<int> & ev)
   {
     XREPORT("typed_post_write_callback:"
-            << ev.param_handle.get_name() << " ("
+            << ev.param_handle.name() << " ("
             << ev.old_value << " -> " << ev.new_value
             << ") by " << ev.originator.name());
   }
@@ -129,7 +129,7 @@ SC_MODULE(ex08_simple_ip) {
   bool typed_pre_write_callback_rejected(const cci::cci_param_write_event<int> & ev)
   {
     XREPORT("reject_pre_write_callback: Rejecting Value change on "
-            << ev.param_handle.get_name() << " ("
+            << ev.param_handle.name() << " ("
             << ev.old_value << " -> " << ev.new_value
             << ") by " << ev.originator.name());
     return false;

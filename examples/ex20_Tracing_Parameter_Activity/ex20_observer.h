@@ -79,14 +79,14 @@ class ex20_observer {
                  " for newly created cci_parameter" << std::endl;
 
     // Get reference of newly created cci-parameters
-    new_param_handle = m_broker.get_param_handle(param_handle.get_name());
+    new_param_handle = m_broker.get_param_handle(param_handle.name());
 
     // Assert if reference of the cci-parameter returned is NULL
     sc_assert(new_param_handle.is_valid()
            && "Reference for the requested cci-parameter is NULL");
 
     std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Name : "
-              << new_param_handle.get_name() << "\thas been created."
+              << new_param_handle.name() << "\thas been created."
               << std::endl;
     std::cout << "\n\t[OBSERVER - create_param_cb] : Parameter Value : "
               << new_param_handle.get_cci_value().to_json()
@@ -116,7 +116,7 @@ class ex20_observer {
   void pre_read_callback(const cci::cci_param_read_event<> & ev)
   {
     std::cout << "\t[OBSERVER - pre_read_cb] : Parammeter Name : "
-              << ev.param_handle.get_name() << "\tvalue will be read."
+              << ev.param_handle.name() << "\tvalue will be read."
               << std::endl;
   }
 
@@ -130,7 +130,7 @@ class ex20_observer {
     std::cout << "\n\t[OBSERVER - pre_write_cb] : Retrieving details of"
                " new cci-parameter" << std::endl;
     std::cout << "\t[OBSERVER - pre_write_cb] : Parameter Name : "
-              << ev.param_handle.get_name() << "\tParameter Value : "
+              << ev.param_handle.name() << "\tParameter Value : "
               << ev.new_value << std::endl;
     return true;
   }
@@ -145,7 +145,7 @@ class ex20_observer {
     std::cout << "\n\t[OBSERVER - post_write_cb] : Retrieving details of"
                " new cci-parameter" << std::endl;
     std::cout << "\t[OBSERVER - post_write_cb] : Parameter Name : "
-              << ev.param_handle.get_name() << "\tParameter Value : "
+              << ev.param_handle.name() << "\tParameter Value : "
               << ev.new_value << std::endl;
   }
 

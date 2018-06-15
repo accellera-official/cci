@@ -1,0 +1,33 @@
+SystemC Simulation
+ConfigFile_Api: Applying preset value of param 'param_owner.mutable_int_param' to '15'
+ConfigFile_Api: Applying preset value of param 'param_owner.mutable_string_param' to '"preset"'
+
+Info: param_owner: @0 s, [OWNER C_TOR] : Int Parameter Value : 15
+
+Info: param_owner: @0 s, [OWNER C_TOR] : Float Parameter Value : 123.45
+
+Info: param_owner: @0 s, [OWNER C_TOR] : String Parameter Value : preset
+
+Info: param_setter: @0 s, [CFGR C_TOR] : Integer parameter exists
+
+Info: param_setter: @0 s, [CFGR C_TOR] : Float parameter exists
+
+Info: param_setter: @0 s, [CFGR C_TOR] : String parameter exists
+
+Info: sc_main: Begin Simulation.
+
+Info: param_setter: @0 s, @ 0 s
+
+Info: param_setter: @0 s, [CFGR] : Set integer parameter value to '20'
+
+Info: param_setter: @0 s, [CFGR] : Set string  parameter value to 'configure'
+
+Info: param_owner: @5 ns, @ 5 ns
+
+Info: param_owner: @5 ns, [OWNER] : Int Parameter Value : 20
+
+Info: param_owner: @5 ns, [OWNER] : Float Parameter Value : 123.45
+
+Info: param_owner: @5 ns, [OWNER] : String Parameter Value : configure
+
+Info: sc_main: End Simulation.

@@ -83,7 +83,7 @@ int sc_main(int argc, char *argv[]) {
   std::vector<cci::cci_param_untyped_handle>::iterator iter;
   std::stringstream ss_show;
   for (iter = vec.begin() ; iter < vec.end(); iter++) {
-      std::cout << "   " << iter->get_name() << std::endl;
+      std::cout << "   " << iter->name() << std::endl;
   }
 
   cci::cci_param_handle param_handle = sc_main_broker.get_param_handle(

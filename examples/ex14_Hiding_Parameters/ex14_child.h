@@ -59,11 +59,11 @@ SC_MODULE(ex14_child) {
             << !m_broker.is_global_broker());
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
-            << priv_int_param.get_name() << "\tParameter Value : "
+            << priv_int_param.name() << "\tParameter Value : "
             << priv_int_param.get_value());
 
     XREPORT("[CHILD C_TOR] : Parameter Name   : "
-            << pub_int_param.get_name() << "\tParameter Value : "
+            << pub_int_param.name() << "\tParameter Value : "
             << pub_int_param.get_value());
 
     // Declare a SC_THREAD
@@ -86,14 +86,14 @@ SC_MODULE(ex14_child) {
 
       for (unsigned int i = 0; i < child_param_list.size(); i++) {
         XREPORT("[CHILD] : Parameter Name : "
-                        << child_param_list[i].get_name());
+                        << child_param_list[i].name());
       }
 
       wait(25.0, sc_core::SC_NS);
 
       XREPORT("@ " << sc_core::sc_time_stamp());
 
-      XREPORT("[CHILD] : Parameter Name : " << priv_int_param.get_name()
+      XREPORT("[CHILD] : Parameter Name : " << priv_int_param.name()
               << "\tParameter Value : " << priv_int_param.get_value());
 
       wait(10.0, sc_core::SC_NS);

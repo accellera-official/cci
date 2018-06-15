@@ -36,6 +36,8 @@ Info: param_cfgr: @0 s, [CFGR C_TOR] : Is preset value ?	true
 
 Info: observer: @0 s, [OBSERVER C_TOR] : Broker Type : DEFAULT_BROKER- is not a private broker.
 
+Info: sc_main: Begin Simulation
+
 Info: param_cfgr: @0 s, @ 0 s	demonstrating 'is_default_value()'
 
 Info: param_cfgr: @0 s, [CFGR] : param_owner.mutable_int_param default value hasn't been modified.
@@ -133,3 +135,5 @@ Info: param_owner: @26 ns, [OWNER -> Set] : New String Value : 'String_Value_Set
 Info: param_owner: @28 ns, @ 28 ns	demonstrating retrieving values by OWNER using cci_value
 
 Info: param_owner: @28 ns, [OWNER -> Retrieve] : Receive str_value using 'cci_value' : String_Value_Set_by_OWNER
+
+Info: sc_main: End Simulation

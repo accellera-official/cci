@@ -222,8 +222,8 @@ public:
     ///@name Query parameter type and name
     //@{
 
-    /// @copydoc cci_param_untyped::get_name
-    virtual const std::string &get_name() const = 0;
+    /// @copydoc cci_param_untyped::name
+    virtual const char* name() const = 0;
 
     /// @copydoc cci_param_typed::get_mutable_type
     virtual cci_param_mutable_type get_mutable_type() const = 0;
@@ -300,6 +300,9 @@ protected:
      */
     void destroy(cci_broker_handle broker);
 
+    /// Default Constructor
+    cci_param_if() {}
+
     /// Destruction from base pointer is disallowed
     virtual ~cci_param_if() {}
 
@@ -330,7 +333,6 @@ private:
     invalidate_all_param_handles() = 0;
     //@}
 
-private:
     ///@name Type-punned value operations
     //@{
 
@@ -351,6 +353,14 @@ private:
     virtual void remove_param_handle(cci_param_untyped_handle* param_handle) = 0;
 
     //@}
+
+    // Disabled
+    cci_param_if(const cci_param_if&);
+    cci_param_if& operator=(const cci_param_if&);
+#ifdef CCI_HAS_CXX_RVALUE_REFS
+    cci_param_if(cci_param_if&&);
+    cci_param_if& operator=(cci_param_if&&);
+#endif
 
 }; // class cci_param_if
 

@@ -45,7 +45,7 @@ SC_MODULE(ex01_simple_ip) {
   // Initialize int_param with 0
       : int_param("int_param", 0) {
     SC_THREAD(execute);
-    XREPORT("Ctor: Default value of " << int_param.get_name() << " is "
+    XREPORT("Ctor: Default value of " << int_param.name() << " is "
             << int_param);
   }
 
@@ -55,7 +55,7 @@ SC_MODULE(ex01_simple_ip) {
    *  @return void
    */
   ~ex01_simple_ip() {
-    XREPORT_PLAIN("Dtor: Current value of " << int_param.get_name() << " is "
+    XREPORT_PLAIN("Dtor: Current value of " << int_param.name() << " is "
                   << int_param);
   }
 

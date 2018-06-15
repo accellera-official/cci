@@ -55,12 +55,11 @@ SC_MODULE(ex14_parent) {
         m_broker(cci::cci_get_broker()),
         child_inst("child_inst"),
         parent_int_param("parent_int_param", 300),
-        parent_buffer("parent_int_buffer", 350),
-        child_param_handle(cci::cci_originator(*this))
+        parent_buffer("parent_int_buffer", 350)
   {
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
-            << parent_int_param.get_name() << "\tParameter Value : "
+            << parent_int_param.name() << "\tParameter Value : "
             << parent_int_param.get_value());
 
     std::string child_param_path(name());
@@ -88,7 +87,7 @@ SC_MODULE(ex14_parent) {
     SC_THREAD(run_parent);
 
     XREPORT("[PARENT C_TOR] : Parameter Name : "
-            << parent_buffer.get_name()
+            << parent_buffer.name()
             << "\tParameter Value : "
             << parent_buffer.get_value());
   }
@@ -104,7 +103,7 @@ SC_MODULE(ex14_parent) {
     child_param_handle.set_cci_value(ev.new_value);
 
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
-            << ev.param_handle.get_name()
+            << ev.param_handle.name()
             << "\tParameter Value : "
             << ev.new_value);
   }
@@ -126,7 +125,7 @@ SC_MODULE(ex14_parent) {
 
       for (unsigned int i = 0; i < parent_param_list.size(); i++) {
         XREPORT("[PARENT] : Parameter Name : "
-                        << parent_param_list[i].get_name());
+                        << parent_param_list[i].name());
       }
 
       wait(30.0, sc_core::SC_NS);

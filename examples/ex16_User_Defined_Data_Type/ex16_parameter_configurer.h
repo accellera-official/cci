@@ -47,8 +47,7 @@ SC_MODULE(ex16_parameter_configurer) {
    *  @return void
    */
   SC_CTOR(ex16_parameter_configurer):
-      m_broker(cci::cci_get_broker()),
-      udt_param_handle(cci::cci_originator(*this))
+      m_broker(cci::cci_get_broker())
   {
     // Check for the broker type (default or private) using
     // 'is_global_broker()' API
@@ -83,9 +82,9 @@ SC_MODULE(ex16_parameter_configurer) {
 
       XREPORT("@ " << sc_time_stamp());
 
-      // Access parameter's name using 'get_name()' API
+      // Access parameter's name using 'name()' API
       XREPORT("[CFGR -> Retrieve] : Parameter name : "
-              << udt_param_handle.get_name());
+              << udt_param_handle.name());
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "
@@ -107,9 +106,9 @@ SC_MODULE(ex16_parameter_configurer) {
       wait(2.0, SC_NS);
       XREPORT("@ " << sc_time_stamp());
 
-      // Access parameter's name using 'get_name()' API
+      // Access parameter's name using 'name()' API
       XREPORT("[CFGR -> Retrieve] : Parameter name : "
-              << udt_param_handle.get_name());
+              << udt_param_handle.name());
 
       // Access parameter's value using 'json_serialize' API
       XREPORT("[CFGR -> Retrieve] : Parameter value: "

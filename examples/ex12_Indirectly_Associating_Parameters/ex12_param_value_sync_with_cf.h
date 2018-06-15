@@ -64,8 +64,8 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
 
       // Determine the 'conversion factor' b/w the two cci_base_params
       double conversion_factor = multiplyWithConversionFactor(
-          returnBaseParamList[0].get_name(),
-          returnBaseParamList[i].get_name());
+          returnBaseParamList[0].name(),
+          returnBaseParamList[i].name());
 
       // Synchonize the second cci_base_param value to the first using the
       // conversion factor determined above
@@ -85,7 +85,7 @@ SC_MODULE(ex12_param_value_sync_with_cf) {
                                    double conv_fact)
   {
     XREPORT("[PARAM_VALUE_SYNC - post_write callback] : Parameter Name : "
-            << ev.param_handle.get_name() << "\tValue : "
+            << ev.param_handle.name() << ", Value : "
             << ev.new_value);
     cci::cci_value freq = ev.new_value;
     sc_assert( freq.is_number() );

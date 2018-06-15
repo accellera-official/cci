@@ -4,14 +4,7 @@ README.txt
 This file provides brief instructions for getting started with the CCI 
 Configuration standard.  
 
-- unpack the CCI Config release kit
-
-- install rapidjson
-   download from https://github.com/Tencent/rapidjson/releases/tag/v1.1.0
-   extract to cci/packages within the kit
-   rename to rapidjson (from e.g. rapidjson-1.1.0)
-   Note: the official cci releases will later bundle json to simplify 
-         installation.
+- unpack the CCI Config release kit (producing cci-1.0.0/)
 
 - generate doxygen documentation in doc/ for a useful reference:
    doxygen cci_doxygen_examples.conf
@@ -28,10 +21,10 @@ Configuration standard.
   Windows instructions.
 
   - Initialize environment variables
-    - CCI_HOME (release kit root, e.g. .../cci)
+    - CCI_HOME (release kit root, e.g. .../cci-1.0.0)
     - SYSTEMC_HOME (top-level, e.g. .../systemc-2.3.2)
 
-  - Change to the cci/src/ directory and invoke 'gmake'
+  - Change to the .../cci-1.0.0/src/ directory and invoke 'gmake'
 
     Additional flags to pass on the gmake command-line to customize
     the behavior:
@@ -51,7 +44,7 @@ Contained Files:
 ./
 doc/       :  The LRM and overview tutorial presentation
 src/       :  CCI source code, only include <cci_configuration> in user code
-packages/  :  for rapidjson which is obtained separately (for now)
+packages/  :  for RapidJSON
 examples/  :  directory for user examples
 scripts/   :  directory for build script(s)
 msvc10/    :  Microsoft Visual Studio project files
@@ -60,7 +53,7 @@ msvc10/    :  Microsoft Visual Studio project files
 Licensing and Copyright
 
    See the separate LICENSE and NOTICE files to determine your rights
-   and responsiblities for using SystemC CCI Configuration.
+   and responsibilities for using SystemC CCI Configuration.
 
 User Documentation
 

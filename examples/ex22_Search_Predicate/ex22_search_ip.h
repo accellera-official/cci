@@ -22,6 +22,7 @@
 
 #include <cci_configuration>
 #include <string>
+#include <cstring>
 #include "xreport.hpp"
 
 /**
@@ -73,7 +74,7 @@ public:
     bool name_contains_character_predicate(
             const cci::cci_param_untyped_handle handle, const char character)
     {
-        return handle.get_name().find(character) != std::string::npos;
+        return std::strchr(handle.name(), character) != NULL;
     }
 
     /**
@@ -88,7 +89,7 @@ public:
                 m_broker.get_param_handles();
         for (std::vector<cci::cci_param_untyped_handle>::iterator it =
                 param_list_handle.begin(); it != param_list_handle.end(); ++it) {
-            std::cout << (*it).get_name() << " = ";
+            std::cout << (*it).name() << " = ";
             std::cout << (*it).get_cci_value();
             std::cout << std::endl;
         }
@@ -103,7 +104,7 @@ public:
              it != integer_only_filtered_range.end();
              ++it) {
             if((*it).is_valid()) {
-                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).name() << " = ";
                 std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
@@ -119,7 +120,7 @@ public:
              it != string_only_filtered_range.end();
              ++it) {
             if ((*it).is_valid()) {
-                std::cout << (*it).get_name() << " = ";
+                std::cout << (*it).name() << " = ";
                 std::cout << (*it).get_cci_value();
                 std::cout << std::endl;
             }
@@ -135,7 +136,7 @@ public:
         cci::cci_param_range::iterator value_in_range_it =
                 value_in_range_filtered_range.begin();
         while(value_in_range_it != value_in_range_filtered_range.end()) {
-            std::cout << (*value_in_range_it).get_name() << " = ";
+            std::cout << (*value_in_range_it).name() << " = ";
             std::cout << (*value_in_range_it).get_cci_value();
             std::cout << std::endl;
             ++value_in_range_it;
@@ -150,7 +151,7 @@ public:
         cci::cci_param_range::iterator letter_pfi_it =
                 letter_filtered_range.begin();
         while(letter_pfi_it != letter_filtered_range.end()) {
-            std::cout << (*letter_pfi_it).get_name() << " = ";
+            std::cout << (*letter_pfi_it).name() << " = ";
             std::cout << (*letter_pfi_it).get_cci_value();
             std::cout << std::endl;
             ++letter_pfi_it;

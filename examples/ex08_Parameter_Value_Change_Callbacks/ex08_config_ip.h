@@ -28,7 +28,7 @@
 
 #include <sstream>
 #include <string>
-#include "cci_configuration"
+#include <cci_configuration>
 #include "xreport.hpp"
 
 /**
@@ -70,7 +70,7 @@ SC_MODULE(ex08_config_ip) {
       // Display new value
       std::string new_value = param_1_handle.get_cci_value().to_json();
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Current value of "
-              << param_1_handle.get_name() << " is " << new_value);
+              << param_1_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("end_of_elaboration: Param (" << param_1_name
                     << ") is not found!");
@@ -96,7 +96,7 @@ SC_MODULE(ex08_config_ip) {
       // Display new value
       std::string new_value = param_2_handle.get_cci_value().to_json();
       XREPORT("config_ip::end_of_elaboration: [EXTERNAL] Current value of "
-              << param_2_handle.get_name() << " is " << new_value);
+              << param_2_handle.name() << " is " << new_value);
     } else {
       XREPORT_ERROR("config_ip::end_of_elaboration: Param ("
                     << param_2_name << ") is not found!");

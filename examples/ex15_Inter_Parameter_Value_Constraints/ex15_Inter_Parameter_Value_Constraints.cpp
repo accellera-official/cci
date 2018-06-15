@@ -39,10 +39,10 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   SC_REPORT_INFO("sc_main", "[MAIN] : In this example, the following is"
                  " condition is verified");
-  SC_REPORT_INFO("sc_main", "[MAIN] : \t\tx <= 2^n - 1");
+  SC_REPORT_INFO("sc_main", "[MAIN] : x <= 2^n - 1");
   SC_REPORT_INFO("sc_main", "[MAIN] : where, 'x' : value of 'mem_block_size'"
                  " (Memory Block size), and");
-  SC_REPORT_INFO("sc_main", "[MAIN] :        'n' : total number of address"
+  SC_REPORT_INFO("sc_main", "[MAIN] : 'n' : total number of address"
                  " lines - 'curr_addr_lines'");
 
   // Instantiation of the owner and configurator sc_modules
@@ -50,7 +50,9 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   ex15_configurator param_cfgr("param_cfgr");
 
   // Start and run the simulation till 50 nanoseconds
+  SC_REPORT_INFO("sc_main", "Begin Simulation.");
   sc_core::sc_start(15.0, sc_core::SC_NS);
+  SC_REPORT_INFO("sc_main", "End Simulation.");
 
   return EXIT_SUCCESS;
 }
