@@ -113,6 +113,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex23_Hierarchical_Value_Upd
 		{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D} = {E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex19_Reset_Param", "examples\ex19_Reset_Param.vcxproj", "{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -305,6 +307,14 @@ Global
 		{342DD1EE-4A0A-47B7-A8FA-721B7C82CCC0}.Release|Win32.Build.0 = Release|Win32
 		{342DD1EE-4A0A-47B7-A8FA-721B7C82CCC0}.Release|x64.ActiveCfg = Release|x64
 		{342DD1EE-4A0A-47B7-A8FA-721B7C82CCC0}.Release|x64.Build.0 = Release|x64
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Debug|Win32.Build.0 = Debug|Win32
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Debug|x64.ActiveCfg = Debug|x64
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Debug|x64.Build.0 = Debug|x64
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Release|Win32.ActiveCfg = Release|Win32
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Release|Win32.Build.0 = Release|Win32
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Release|x64.ActiveCfg = Release|x64
+		{2B41DE03-C237-4C60-B22B-FC9475EE1EE9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
