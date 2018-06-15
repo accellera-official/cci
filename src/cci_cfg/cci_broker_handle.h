@@ -156,12 +156,36 @@ public:
     cci_param_create_callback_handle
     register_create_callback(const cci_param_create_callback& cb);
 
+    /**
+     * @brief Convenience overload to register callback for a member function
+     * @param cb  Member function pointer to be used as callback
+     * @param obj Object to invoke member function on
+     * @see register_create_callback(const cci_param_create_callback&)
+     */
+    template<typename Owner>
+    cci_param_create_callback_handle
+    register_create_callback( cci_param_create_callback::signature (Owner::*cb)
+                            , Owner* obj )
+      { return register_create_callback( sc_bind( cb, obj, sc_unnamed::_1 ) ); }
+
     /// @copydoc cci_broker_callback_if::unregister_create_callback
     bool unregister_create_callback(const cci_param_create_callback_handle& cb);
 
     /// @copydoc cci_broker_callback_if::register_destroy_callback
     cci_param_destroy_callback_handle
     register_destroy_callback(const cci_param_destroy_callback& cb);
+
+    /**
+     * @brief Convenience overload to register callback for a member function
+     * @param cb  Member function pointer to be used as callback
+     * @param obj Object to invoke member function on
+     * @see register_destroy_callback(const cci_param_destroy_callback&)
+     */
+    template<typename Owner>
+    cci_param_destroy_callback_handle
+    register_destroy_callback( cci_param_destroy_callback::signature (Owner::*cb)
+                             , Owner* obj )
+      { return register_destroy_callback( sc_bind( cb, obj, sc_unnamed::_1 ) ); }
 
     /// @copydoc cci_broker_callback_if::unregister_destroy_callback
     bool
