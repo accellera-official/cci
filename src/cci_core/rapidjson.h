@@ -82,6 +82,9 @@ RAPIDJSON_DIAG_PUSH
 #if __GNUC__ >= 6
 RAPIDJSON_DIAG_OFF( terminate ) // ignore throwing assertions
 #endif
+#if __GNUC__ >= 8
+RAPIDJSON_DIAG_OFF( class-memaccess ) // ignore raw access to class memory
+#endif
 #endif
 
 // throw exception by default
