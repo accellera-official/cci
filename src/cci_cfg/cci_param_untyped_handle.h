@@ -77,7 +77,7 @@ public:
     ///@{
 
     /// @copydoc cci_param_untyped::get_description
-    virtual std::string get_description() const;
+    std::string get_description() const;
 
     /// @copydoc cci_param_untyped::get_metadata
     cci_value_map get_metadata() const;
@@ -117,11 +117,11 @@ public:
     ///@{
 
     /// @copydoc cci_param_if::is_default_value
-    virtual bool is_default_value() const;
+    bool is_default_value() const;
 
 
     /// @copydoc cci_param_if::is_preset_value
-    virtual bool is_preset_value() const;
+    bool is_preset_value() const;
 
     ///@}
 
