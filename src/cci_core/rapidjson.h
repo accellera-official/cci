@@ -72,17 +72,12 @@ struct AssertException
 #define RAPIDJSON_ASSERT( expr ) \
   ((void)(( expr ) ? 0 : \
     ( throw ::RAPIDJSON_NAMESPACE::AssertException( #expr ), 0 )))
+#define RAPIDJSON_NOEXCEPT_ASSERT( expr ) \
+  sc_assert(expr)
 
 RAPIDJSON_NAMESPACE_END
 
 #include "rapidjson/rapidjson.h"
-
-#ifdef __GNUC__
-RAPIDJSON_DIAG_PUSH
-#if __GNUC__ >= 6
-RAPIDJSON_DIAG_OFF( terminate ) // ignore throwing assertions
-#endif
-#endif
 
 // throw exception by default
 #define RAPIDJSON_PARSE_ERROR_EARLY_RETURN( what ) \
@@ -130,8 +125,5 @@ RAPIDJSON_NAMESPACE_END
 #include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/writer.h"
 
-#ifdef __GNUC__
-RAPIDJSON_DIAG_POP
-#endif
 ///@endcond
 #endif // CCI_CORE_RAPIDJSON_H_INCLUDED_
