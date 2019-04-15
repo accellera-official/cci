@@ -882,15 +882,30 @@ CCI_PARAM_TYPED_CALLBACK_IMPL_(post_read)
 
 /// Constructors
 
+#ifdef CCI_HAS_SC_VARIANT
+# define CCI_PARAM_CHECK_VARIANT_FAILURE(rpt)                                  \
+  if( sc_core::sc_string_view(rpt.get_msg_type())                              \
+      == sc_core::SC_ID_VARIANT_CONVERSION_FAILED_)                            \
+     cci_report_handler::cci_value_failure("conversion from cci_value failed")
+#else
+# define CCI_PARAM_CHECK_VARIANT_FAILURE(rpt) ((void)0)
+#endif // CCI_HAS_SC_VARIANT
+
 #define CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL(signature, broker)                \
-template <typename T, cci_param_mutable_type TM>                               \
-cci_param_typed<T, TM>::cci_param_typed signature                              \
-: cci_param_untyped(name, name_type, broker, desc, originator),                \
-  m_value(default_value.get<T>()),                                             \
-  m_default_value(default_value.get<T>())                                      \
-{                                                                              \
+  template <typename T, cci_param_mutable_type TM>                             \
+  cci_param_typed<T, TM>::cci_param_typed signature                            \
+  try                                                                          \
+    : cci_param_untyped(name, name_type, broker, desc, originator)             \
+    , m_value(default_value.get<T>())                                          \
+    , m_default_value(m_value)                                                 \
+  {                                                                            \
     this->init(m_broker_handle);                                               \
-}
+  }                                                                            \
+  catch (const sc_core::sc_report& rpt)                                        \
+  {                                                                            \
+    CCI_PARAM_CHECK_VARIANT_FAILURE(rpt);                                      \
+    throw rpt;                                                                 \
+  }
 
 #define CCI_PARAM_CONSTRUCTOR_IMPL(signature, broker)                          \
 template <typename T, cci_param_mutable_type TM>                               \
@@ -941,6 +956,7 @@ CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL((const std::string& name,
                                       const cci_originator& originator),
                                       private_broker)
 
+#undef CCI_PARAM_CHECK_VARIANT_FAILURE
 #undef CCI_PARAM_CONSTRUCTOR_IMPL
 #undef CCI_PARAM_CONSTRUCTOR_CCI_VALUE_IMPL
 #undef CCI_PARAM_TYPED_CALLBACK_IMPL_

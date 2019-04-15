@@ -20,11 +20,13 @@
 #ifndef CCI_CCI_VALUE_H_INCLUDED_
 #define CCI_CCI_VALUE_H_INCLUDED_
 
+#include "cci_core/cci_cmnhdr.h"
 #include "cci_core/cci_core_types.h"
-#include "cci_core/cci_value_iterator.h"
-#include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
-#include <cstring> // std::strlen
+#ifndef CCI_HAS_SC_VARIANT
+# include "cci_core/cci_value_iterator.h"
+# include <cstring> // std::strlen
+#endif // CCI_HAS_SC_VARIANT
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -38,9 +40,25 @@
 
 CCI_OPEN_NAMESPACE_
 
-// define our own typedefs to avoid SystemC dependency?
 using sc_dt::int64;
 using sc_dt::uint64;
+
+#ifdef CCI_HAS_SC_VARIANT
+
+typedef sc_dt::sc_variant          cci_value;
+typedef sc_dt::sc_variant_list     cci_value_list;
+typedef sc_dt::sc_variant_map      cci_value_map;
+typedef sc_dt::sc_variant_category cci_value_category;
+
+static const cci_value_category CCI_NULL_VALUE     = sc_dt::SC_VARIANT_NULL;
+static const cci_value_category CCI_BOOL_VALUE     = sc_dt::SC_VARIANT_BOOL;
+static const cci_value_category CCI_INTEGRAL_VALUE = sc_dt::SC_VARIANT_INT;
+static const cci_value_category CCI_REAL_VALUE     = sc_dt::SC_VARIANT_REAL;
+static const cci_value_category CCI_STRING_VALUE   = sc_dt::SC_VARIANT_STRING;
+static const cci_value_category CCI_LIST_VALUE     = sc_dt::SC_VARIANT_LIST;
+static const cci_value_category CCI_OTHER_VALUE    = sc_dt::SC_VARIANT_MAP;
+
+#else // CCI_HAS_SC_VARIANT
 
 // forward declarations
 class cci_value;
@@ -825,8 +843,10 @@ protected:
 
 public:
   typedef size_t size_type;
-  typedef cci_value_iterator<cci_value_map_elem_ref>  iterator;
-  typedef cci_value_iterator<cci_value_map_elem_cref> const_iterator;
+  typedef cci_value_map_elem_ref  element_reference;
+  typedef cci_value_map_elem_cref const_element_reference;
+  typedef cci_value_iterator<element_reference>       iterator;
+  typedef cci_value_iterator<const_element_reference> const_iterator;
   typedef std::reverse_iterator<iterator>             reverse_iterator;
   typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
@@ -1499,6 +1519,7 @@ cci_value_list_ref::insert( const_iterator pos, InputIt first, InputIt last )
 #undef CCI_VALUE_REQUIRES_CONVERTER_
 #undef CCI_VALUE_MOVE_
 
+#endif // CCI_HAS_SC_VARIANT
 CCI_CLOSE_NAMESPACE_
 
 #ifdef _MSC_VER

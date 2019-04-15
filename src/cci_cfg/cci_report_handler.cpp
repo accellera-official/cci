@@ -103,6 +103,15 @@ cci_report_handler::decode_param_failure(const sc_core::sc_report& rpt)
     return cci_type->val;
   }
 
+#ifdef CCI_HAS_SC_VARIANT
+  sc_core::sc_string_view rpt_msg_type_s = rpt_msg_type;
+  if ( rpt_msg_type_s == sc_core::SC_ID_VARIANT_ACCESS_FAILED_
+    || rpt_msg_type_s == sc_core::SC_ID_VARIANT_CONVERSION_FAILED_
+    || rpt_msg_type_s == sc_core::SC_ID_VARIANT_PARSING_FAILED_
+    || rpt_msg_type_s == sc_core::SC_ID_VARIANT_ASSERTION_FAILED_ )
+      return CCI_VALUE_FAILURE;
+#endif // CCI_HAS_SC_VARIANT
+
   //not a CCI failure report
   return CCI_NOT_FAILURE;
 }
