@@ -45,7 +45,7 @@ template<typename T> struct cci_typed_tag : cci_tag<T> {};
 /// Tag alias for an untyped tag
 typedef cci_tag<void> cci_untyped_tag;
 
-///@cond CCI_HIDDEN_FROM_DOXYGEN
+//@cond CCI_HIDDEN_FROM_DOXYGEN
 namespace cci_impl {
 
 #if CCI_CPLUSPLUS >= 201103L
@@ -84,7 +84,13 @@ template<typename T> struct remove_reference<T&> { typedef T type; };
 template<typename T> struct always_void { typedef void type; };
 
 } // namespace cci_impl
-///@endcond
+//@endcond
+
+/// Tag type to represent a boolean @c true value
+typedef cci_impl::true_type  cci_true_type;
+/// Tag type to represent a boolean @c false value
+typedef cci_impl::false_type cci_false_type;
+
 CCI_CLOSE_NAMESPACE_
 
 #endif // CCI_CORE_CCI_META_H_INCLUDED_
