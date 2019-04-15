@@ -17,11 +17,7 @@
 
  ****************************************************************************/
 
-#if defined(_MSC_VER) && _MSC_VER <= 1600
-# pragma warning(disable:4661)
-# define CCI_TPLEXTERN_
-#endif // excluded from MSVC'2010
-
+#define CCI_VALUE_BUILD
 #include "cci_core/cci_value_converter.h"
 
 /**
@@ -39,35 +35,6 @@ CCI_OPEN_NAMESPACE_
 #define DEFINE_UNPACK_(Type)                                                  \
   template<> bool                                                             \
   cci_value_converter<Type>::unpack( type & dst, cci_value::const_reference src )
-
-// ----------------------------------------------------------------------------
-// explicit template instantiations
-
-template struct cci_value_converter<bool>;
-template struct cci_value_converter<int>;
-template struct cci_value_converter<int64>;
-template struct cci_value_converter<unsigned>;
-template struct cci_value_converter<uint64>;
-template struct cci_value_converter<double>;
-template struct cci_value_converter<std::string>;
-
-template struct cci_value_converter<sc_core::sc_time>;
-template struct cci_value_converter<sc_dt::sc_logic>;
-template struct cci_value_converter<sc_dt::sc_int_base>;
-template struct cci_value_converter<sc_dt::sc_uint_base>;
-template struct cci_value_converter<sc_dt::sc_signed>;
-template struct cci_value_converter<sc_dt::sc_unsigned>;
-template struct cci_value_converter<sc_dt::sc_bv_base>;
-template struct cci_value_converter<sc_dt::sc_lv_base>;
-
-#ifdef SC_INCLUDE_FX
-template struct cci_value_converter<sc_dt::sc_fxval>;
-template struct cci_value_converter<sc_dt::sc_fxval_fast>;
-template struct cci_value_converter<sc_dt::sc_fix>;
-template struct cci_value_converter<sc_dt::sc_fix_fast>;
-template struct cci_value_converter<sc_dt::sc_ufix>;
-template struct cci_value_converter<sc_dt::sc_ufix_fast>;
-#endif // SC_INCLUDE_FX
 
 #ifndef CCI_DOXYGEN_IS_RUNNING
 // ----------------------------------------------------------------------------
@@ -358,4 +325,34 @@ DEFINE_UNPACK_( sc_dt::sc_lv_base )
 }
 
 #endif // CCI_DOXYGEN_IS_RUNNING
+
+// ----------------------------------------------------------------------------
+// explicit template instantiations
+
+template struct cci_value_converter<bool>;
+template struct cci_value_converter<int>;
+template struct cci_value_converter<int64>;
+template struct cci_value_converter<unsigned>;
+template struct cci_value_converter<uint64>;
+template struct cci_value_converter<double>;
+template struct cci_value_converter<std::string>;
+
+template struct cci_value_converter<sc_core::sc_time>;
+template struct cci_value_converter<sc_dt::sc_logic>;
+template struct cci_value_converter<sc_dt::sc_int_base>;
+template struct cci_value_converter<sc_dt::sc_uint_base>;
+template struct cci_value_converter<sc_dt::sc_signed>;
+template struct cci_value_converter<sc_dt::sc_unsigned>;
+template struct cci_value_converter<sc_dt::sc_bv_base>;
+template struct cci_value_converter<sc_dt::sc_lv_base>;
+
+#ifdef SC_INCLUDE_FX
+template struct cci_value_converter<sc_dt::sc_fxval>;
+template struct cci_value_converter<sc_dt::sc_fxval_fast>;
+template struct cci_value_converter<sc_dt::sc_fix>;
+template struct cci_value_converter<sc_dt::sc_fix_fast>;
+template struct cci_value_converter<sc_dt::sc_ufix>;
+template struct cci_value_converter<sc_dt::sc_ufix_fast>;
+#endif // SC_INCLUDE_FX
+
 CCI_CLOSE_NAMESPACE_
