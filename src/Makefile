@@ -27,7 +27,7 @@ OPT  := -g
 
 # control compiler warnings
 WARN := -Wall -Werror
-WARN += -pedantic -Wno-long-long
+WARN += -pedantic -Wno-long-long -Wno-variadic-macros
 
 ## -----------------------------------------------------------------------------
 
