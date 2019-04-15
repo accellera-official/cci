@@ -1173,6 +1173,10 @@ public:
    * \see cci_value_ref
    */
   //@{
+  /// @copydoc cci_value_ref::try_set
+  template< typename T >
+  CCI_VALUE_REQUIRES_CONVERTER_(T,bool) try_set( T const & v )
+    { init(); return reference::try_set(v); }
   /// @copydoc cci_value_ref::set
   template< typename T >
   CCI_VALUE_REQUIRES_CONVERTER_(T,reference) set( T const & v )
