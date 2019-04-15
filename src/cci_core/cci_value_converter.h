@@ -112,13 +112,15 @@ template<typename T> struct cci_value_has_converter : cci_false_type {};
  * @li @c std::string
  * @li SystemC data types:
  *     @c sc_dt::int64, @c sc_dt::uint64, @c sc_dt::sc_logic,
+ *     @c sc_dt::sc_bv_base, @c sc_dt::sc_lv_base,
  *     @c sc_dt::sc_int_base, @c sc_dt::sc_uint_base,
- *     @c sc_dt::sc_signed, @c sc_dt::sc_unsigned, @c sc_dt::sc_bv_base
- *     @c sc_dt::sc_lv_base and their templated variants
+ *     @c sc_dt::sc_signed, @c sc_dt::sc_unsigned,
+ *     @c sc_dt::sc_fxval, @c sc_dt::sc_fxval_fast,
+ *     @c sc_dt::sc_fix, @c sc_dt::sc_fix_fast,
+ *     @c sc_dt::sc_ufix, @c sc_dt::sc_ufix_fast,
+ *     and their templated variants
  * @li SystemC time (@c sc_core::sc_time)
  * @li Fixed-size C++ arrays and @c std::vector<T> of supported types
- *
- * @note SystemC fixpoint type support is prepared, but not yet implemented.
  */
 template<typename T>
 struct cci_value_converter
@@ -433,6 +435,13 @@ CCI_CLOSE_NAMESPACE_
 #if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_)
 #define CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
 CCI_OPEN_NAMESPACE_
+
+CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_fxval);
+CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_fxval_fast);
+CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_fix);
+CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_fix_fast);
+CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_ufix);
+CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_ufix_fast);
 
 #ifndef CCI_VALUE_BUILD // defined in cci_value_converter.cpp
 CCI_TPLEXTERN_ template struct cci_value_converter<sc_dt::sc_fxval>;

@@ -324,6 +324,99 @@ DEFINE_UNPACK_( sc_dt::sc_lv_base )
   return true;
 }
 
+// ----------------------------------------------------------------------------
+#ifdef SC_INCLUDE_FX
+
+template<typename FxType>
+static bool
+cci_value_unpack_fx( FxType& dst, cci_value::const_reference src )
+{
+  if( src.is_int64() ) {
+    dst = src.get_int64();
+    return true;
+  }
+  if( src.is_uint64() ) {
+    dst = src.get_uint64();
+    return true;
+  }
+  if( src.is_double() ) {
+    dst = src.get_double();
+    return true;
+  }
+  if( src.is_string() ) {
+    dst = src.get_string().c_str();
+    return true;
+  }
+  return false;
+}
+
+DEFINE_PACK_( sc_dt::sc_fxval )
+{
+  dst.set_string( src.to_string() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_fxval )
+{
+  return cci_value_unpack_fx(dst,src);
+}
+
+DEFINE_PACK_( sc_dt::sc_fxval_fast )
+{
+  dst.set_double( src.to_double() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_fxval_fast )
+{
+  return cci_value_unpack_fx(dst,src);
+}
+
+DEFINE_PACK_( sc_dt::sc_fix )
+{
+  dst.set_string( src.to_string() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_fix )
+{
+  return cci_value_unpack_fx(dst,src);
+}
+
+DEFINE_PACK_( sc_dt::sc_fix_fast )
+{
+  dst.set_double( src.to_double() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_fix_fast )
+{
+  return cci_value_unpack_fx(dst,src);
+}
+
+DEFINE_PACK_( sc_dt::sc_ufix )
+{
+  dst.set_string( src.to_string() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_ufix )
+{
+  return cci_value_unpack_fx(dst,src);
+}
+
+DEFINE_PACK_( sc_dt::sc_ufix_fast )
+{
+  dst.set_double( src.to_double() );
+  return true;
+}
+
+DEFINE_UNPACK_( sc_dt::sc_ufix_fast )
+{
+  return cci_value_unpack_fx(dst,src);
+}
+#endif // SC_INCLUDE_FX
+
 #endif // CCI_DOXYGEN_IS_RUNNING
 
 // ----------------------------------------------------------------------------
