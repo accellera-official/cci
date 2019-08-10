@@ -30,7 +30,7 @@
 #include "cci_core/cci_cmnhdr.h"
 #include "cci_core/cci_value.h"
 
-#ifndef CCI_HAS_SC_VARIANT
+#ifndef CCI_HAS_SC_ANY_VALUE
 #include "cci_core/rapidjson.h"
 #include "cci_cfg/cci_report_handler.h"
 
@@ -976,4 +976,4 @@ cci_value_cref::to_json() const
 }
 
 CCI_CLOSE_NAMESPACE_
-#endif // CCI_HAS_SC_VARIANT
+#endif // CCI_HAS_SC_ANY_VALUE
