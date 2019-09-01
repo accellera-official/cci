@@ -366,9 +366,6 @@ public:
 
   /// @copydoc cci_value_cref::operator&
   proxy_ptr operator&() const { return proxy_ptr(*this); }
-protected:
-  /// try to set the value from a JSON-encoded string
-  bool json_deserialize( std::string const& );
 };
 
 inline cci_value_ref
@@ -1268,9 +1265,6 @@ private:
   impl_type init();
   impl_type do_init();
 
-  bool json_deserialize( std::string const & src )
-    { init(); return reference::json_deserialize( src ); }
-
   impl_type own_pimpl_;
 };
 
@@ -1312,15 +1306,6 @@ cci_value::init()
   if( !pimpl_ )
     pimpl_ = do_init();
   return pimpl_;
-}
-
-inline cci_value
-cci_value::from_json( std::string const & json )
-{
-  cci_value v;
-  bool ok = v.json_deserialize( json );
-  sc_assert( ok );
-  return v;
 }
 
 // --------------------------------------------------------------------------

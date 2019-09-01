@@ -945,19 +945,26 @@ cci_value_map& cci_value_map::operator=(this_type && that)
 // ----------------------------------------------------------------------------
 // JSON (de)serialize
 
-bool
-cci_value_ref::json_deserialize( std::string const & src )
+cci_value
+cci_value::from_json(std::string const & json)
 {
-  json_document doc;
+  cci_value ret;
   try {
-    doc.Parse( src.c_str() );
+    json_document doc;
+    doc.Parse( json.c_str() );
+
+    ret.init();              // ensure target validity
+    DEREF(ret) = doc.Move(); // call Move() to convert doc to value
   }
-  catch ( rapidjson::ParseException const & )
+  catch ( rapidjson::ParseException const & ex )
   {
-    return false;
+    std::stringstream ss;
+      ss << "JSON parse error: "
+         << rapidjson::GetParseError_En( ex.Code() )
+       << " (offset: " << ex.Offset() << ")";
+    ret.report_error( ss.str().c_str(), __FILE__, __LINE__ );
   }
-  THIS->Swap( doc );
-  return true;
+  return ret;
 }
 
 std::string
