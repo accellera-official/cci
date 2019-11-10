@@ -378,12 +378,19 @@ std::istream& operator>>( std::istream& is, cci_value_ref v )
   json_document d;
   rapidjson::IStreamWrapper wis(is);
 
-  d.ParseStream< rapidjson::kParseStopWhenDoneFlag >( wis );
-  // VALUE_ASSERT( !d.HasParseError(), "cci_value stream extraction failed" );
-  if( !d.HasParseError() )
+  try
+  {
+    d.ParseStream< rapidjson::kParseStopWhenDoneFlag >( wis );
     DEREF(v).Swap( d );
-  else
+  }
+  catch ( const rapidjson::ParseException& ex )
+  {
+    std::stringstream ss;
+    ss << "JSON parse error: " << ex.what()
+       << " (offset: " << ex.Offset() << ")";
+    CCI_REPORT_WARNING("CCI_VALUE_FAILURE", ss.str().c_str());
     is.setstate( std::istream::failbit );
+  }
 
   return is;
 }
@@ -959,8 +966,7 @@ cci_value::from_json(std::string const & json)
   catch ( rapidjson::ParseException const & ex )
   {
     std::stringstream ss;
-      ss << "JSON parse error: "
-         << rapidjson::GetParseError_En( ex.Code() )
+      ss << "JSON parse error: " << ex.what()
        << " (offset: " << ex.Offset() << ")";
     ret.report_error( ss.str().c_str(), __FILE__, __LINE__ );
   }
