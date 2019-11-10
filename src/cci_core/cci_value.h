@@ -132,6 +132,7 @@ class cci_value_cref
   template<typename U> friend class cci_impl::value_iterator_impl;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
   friend std::ostream& operator<<( std::ostream&, cci_value_cref const & );
+  typedef cci_value_cref this_type;
 
 protected:
   typedef void* impl_type; // use type-punned pointer for now
@@ -144,6 +145,10 @@ public:
   typedef cci_value      value_type;
   typedef cci_value_cref const_reference;
   typedef cci_value_ref  reference;
+
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_cref( this_type const & ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   /** @name Type queries */
   ///@{
@@ -242,7 +247,7 @@ protected:
 
 private:
   /// constant reference, disabled assignment
-  cci_value_cref operator=( cci_value_cref const& ) /* = delete */;
+  this_type& operator=( this_type const & ) /* = delete */;
 };
 
 template<typename T>
@@ -284,6 +289,10 @@ protected:
     : cci_value_cref(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   /// move contents to another value (becomes @c null afterwards)
   cci_value move();
 
@@ -410,6 +419,10 @@ protected:
 public:
   typedef size_t size_type;
 
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_string_cref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   /// empty string?
   bool      empty()  const { return size() == 0;  }
   size_type length() const { return size(); }
@@ -479,6 +492,10 @@ protected:
     : base_type(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_string_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   /// move contents to another value (becomes empty string afterwards)
   cci_value move();
 
@@ -561,6 +578,10 @@ public:
   typedef cci_value_iterator<const_reference>   const_iterator;
   typedef std::reverse_iterator<iterator>       reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_list_cref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   /** @name list queries */
   //@{
@@ -651,6 +672,10 @@ protected:
     : base_type(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_list_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   this_type operator=( this_type const& );
   this_type operator=( base_type const& );
 
@@ -847,6 +872,10 @@ public:
   typedef std::reverse_iterator<iterator>             reverse_iterator;
   typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
 
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_map_cref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   /** @name map queries */
   //@{
   bool      empty()    const { return size() == 0;  }
@@ -960,6 +989,9 @@ protected:
     : base_type(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_map_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   this_type operator=( base_type const& );
   this_type operator=( this_type const& );
