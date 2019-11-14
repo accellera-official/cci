@@ -72,26 +72,19 @@ struct AssertException
 #define RAPIDJSON_ASSERT( expr ) \
   ((void)(( expr ) ? 0 : \
     ( throw ::RAPIDJSON_NAMESPACE::AssertException( #expr ), 0 )))
+#define RAPIDJSON_NOEXCEPT_ASSERT( expr ) \
+  sc_assert(expr)
 
 RAPIDJSON_NAMESPACE_END
 
 #include "rapidjson/rapidjson.h"
-
-#ifdef __GNUC__
-RAPIDJSON_DIAG_PUSH
-#if __GNUC__ >= 6
-RAPIDJSON_DIAG_OFF( terminate ) // ignore throwing assertions
-#endif
-#endif
 
 // throw exception by default
 #define RAPIDJSON_PARSE_ERROR_EARLY_RETURN( what ) \
   ((void)0)
 #define RAPIDJSON_PARSE_ERROR_NORETURN(parseErrorCode,offset) \
   throw ::RAPIDJSON_NAMESPACE::ParseException( \
-               ::RAPIDJSON_NAMESPACE::parseErrorCode, \
-               #parseErrorCode,offset \
-  )
+           ::RAPIDJSON_NAMESPACE::parseErrorCode, offset )
 
 #include "rapidjson/error/error.h"
 #include "rapidjson/error/en.h"
@@ -101,8 +94,8 @@ RAPIDJSON_NAMESPACE_BEGIN
 struct ParseException
   : std::runtime_error, ParseResult
 {
-  ParseException( ParseErrorCode code, const char* msg, size_t offset )
-     : std::runtime_error(msg), ParseResult(code,offset) {}
+  ParseException( ParseErrorCode code, size_t offset )
+     : std::runtime_error(GetParseError_En(code)), ParseResult(code,offset) {}
 };
 
 struct StringOutputStream
@@ -130,8 +123,5 @@ RAPIDJSON_NAMESPACE_END
 #include "rapidjson/ostreamwrapper.h"
 #include "rapidjson/writer.h"
 
-#ifdef __GNUC__
-RAPIDJSON_DIAG_POP
-#endif
 ///@endcond
 #endif // CCI_CORE_RAPIDJSON_H_INCLUDED_

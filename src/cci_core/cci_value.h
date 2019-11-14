@@ -20,11 +20,13 @@
 #ifndef CCI_CCI_VALUE_H_INCLUDED_
 #define CCI_CCI_VALUE_H_INCLUDED_
 
+#include "cci_core/cci_cmnhdr.h"
 #include "cci_core/cci_core_types.h"
-#include "cci_core/cci_value_iterator.h"
-#include "cci_core/systemc.h" // sc_dt::(u)int64, potentially strip out
 
-#include <cstring> // std::strlen
+#ifndef CCI_HAS_SC_ANY_VALUE
+# include "cci_core/cci_value_iterator.h"
+# include <cstring> // std::strlen
+#endif // CCI_HAS_SC_ANY_VALUE
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -38,9 +40,25 @@
 
 CCI_OPEN_NAMESPACE_
 
-// define our own typedefs to avoid SystemC dependency?
 using sc_dt::int64;
 using sc_dt::uint64;
+
+#ifdef CCI_HAS_SC_ANY_VALUE
+
+typedef sc_dt::sc_any_value          cci_value;
+typedef sc_dt::sc_any_value_list     cci_value_list;
+typedef sc_dt::sc_any_value_map      cci_value_map;
+typedef sc_dt::sc_any_value_category cci_value_category;
+
+static const cci_value_category CCI_NULL_VALUE     = sc_dt::SC_ANY_VALUE_NULL;
+static const cci_value_category CCI_BOOL_VALUE     = sc_dt::SC_ANY_VALUE_BOOL;
+static const cci_value_category CCI_INTEGRAL_VALUE = sc_dt::SC_ANY_VALUE_INT;
+static const cci_value_category CCI_REAL_VALUE     = sc_dt::SC_ANY_VALUE_REAL;
+static const cci_value_category CCI_STRING_VALUE   = sc_dt::SC_ANY_VALUE_STRING;
+static const cci_value_category CCI_LIST_VALUE     = sc_dt::SC_ANY_VALUE_LIST;
+static const cci_value_category CCI_OTHER_VALUE    = sc_dt::SC_ANY_VALUE_MAP;
+
+#else // CCI_HAS_SC_ANY_VALUE
 
 // forward declarations
 class cci_value;
@@ -58,6 +76,10 @@ class cci_value_map_elem_ref;
 class cci_value_map_elem_cref;
 
 template<typename T> struct cci_value_converter;
+template<typename T> struct cci_value_has_converter;
+namespace cci_impl {
+template<typename T, typename R = void> struct value_converter_enable_if;
+} // namespace cci_impl
 
 /**
 *  Enumeration for data type categories, whose rough getting and setting is
@@ -81,14 +103,10 @@ enum cci_value_category {
 };
 
 #ifndef CCI_DOXYGEN_IS_RUNNING
-# define CCI_VALUE_CONVERTER_(Type) \
-    typename cci_value_converter<Type>::type
-#define CCI_VALUE_CHECKED_CONVERTER_(Type) \
-    CCI_VALUE_CONVERTER_(Type) *
-# define CCI_VALUE_REQUIRES_CONVERTER_(Type) \
-    CCI_VALUE_CHECKED_CONVERTER_(Type) = 0
+# define CCI_VALUE_REQUIRES_CONVERTER_(T,R) \
+    typename cci_impl::value_converter_enable_if<T,R>::type
 #else
-# define CCI_VALUE_CONVERTER_(Type) Type
+# define CCI_VALUE_REQUIRES_CONVERTER_(T,R) RetType
 #endif // CCI_DOXYGEN_IS_RUNNING
 
 /// @ref cci_value comparisons
@@ -114,6 +132,7 @@ class cci_value_cref
   template<typename U> friend class cci_impl::value_iterator_impl;
   friend bool operator==( cci_value_cref const &, cci_value_cref const & );
   friend std::ostream& operator<<( std::ostream&, cci_value_cref const & );
+  typedef cci_value_cref this_type;
 
 protected:
   typedef void* impl_type; // use type-punned pointer for now
@@ -126,6 +145,10 @@ public:
   typedef cci_value      value_type;
   typedef cci_value_cref const_reference;
   typedef cci_value_ref  reference;
+
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_cref( this_type const & ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   /** @name Type queries */
   ///@{
@@ -189,15 +212,11 @@ public:
   //@{
   /// try to get a value of a @ref cci_value_converter enabled type
   template<typename T>
-  bool try_get( T& dst
-#ifndef CCI_DOXYGEN_IS_RUNNING
-              , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-              ) const;
+  CCI_VALUE_REQUIRES_CONVERTER_(T,bool) try_get( T& dst ) const;
 
   /// get a value of a @ref cci_value_converter enabled type
   template<typename T>
-  CCI_VALUE_CONVERTER_(T) get() const;
+  CCI_VALUE_REQUIRES_CONVERTER_(T,T) get() const;
   //@}
 
   /// convert value to JSON
@@ -228,23 +247,19 @@ protected:
 
 private:
   /// constant reference, disabled assignment
-  cci_value_cref operator=( cci_value_cref const& ) /* = delete */;
+  this_type& operator=( this_type const & ) /* = delete */;
 };
 
 template<typename T>
-bool
-cci_value_cref::try_get( T& dst
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                       , CCI_VALUE_CHECKED_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-                       ) const
+CCI_VALUE_REQUIRES_CONVERTER_(T,bool)
+cci_value_cref::try_get( T& dst ) const
 {
   typedef cci_value_converter<T> conv;
   return conv::unpack( dst, *this );
 }
 
 template<typename T>
-CCI_VALUE_CONVERTER_(T) cci_value_cref::get() const
+CCI_VALUE_REQUIRES_CONVERTER_(T,T) cci_value_cref::get() const
 {
   T result;
   if( !try_get(result) ) {
@@ -274,6 +289,10 @@ protected:
     : cci_value_cref(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   /// move contents to another value (becomes @c null afterwards)
   cci_value move();
 
@@ -348,25 +367,14 @@ public:
   //@{
   /// set value to cci_value_converter enabled type
   template<typename T>
-  cci_value_ref set(T const & dst
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                   , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-                   );
+  CCI_VALUE_REQUIRES_CONVERTER_(T,cci_value_ref) set(T const & dst );
   /// try to set value to cci_value_converter enabled type
   template<typename T>
-  bool try_set(T const & dst
-#ifndef CCI_DOXYGEN_IS_RUNNING
-              , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-              );
+  CCI_VALUE_REQUIRES_CONVERTER_(T,bool) try_set(T const & dst );
   ///@}
 
   /// @copydoc cci_value_cref::operator&
   proxy_ptr operator&() const { return proxy_ptr(*this); }
-protected:
-  /// try to set the value from a JSON-encoded string
-  bool json_deserialize( std::string const& );
 };
 
 inline cci_value_ref
@@ -374,24 +382,16 @@ cci_value_ref::operator=( const this_type & that )
   { return *this = base_type(that); }
 
 template<typename T>
-bool
-cci_value_ref::try_set( T const & src
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                      , CCI_VALUE_CHECKED_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-                      )
+CCI_VALUE_REQUIRES_CONVERTER_(T,bool)
+cci_value_ref::try_set( T const & src )
 {
   typedef cci_value_converter<T> conv;
   return conv::pack( *this, src );
 }
 
 template<typename T>
-cci_value_ref
-cci_value_ref::set( T const& src
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                  , CCI_VALUE_CHECKED_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-                  )
+CCI_VALUE_REQUIRES_CONVERTER_(T,cci_value_ref)
+cci_value_ref::set( T const& src )
 {
   if( !try_set(src) ) {
     report_error("conversion to cci_value failed", __FILE__, __LINE__);
@@ -418,6 +418,10 @@ protected:
 
 public:
   typedef size_t size_type;
+
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_string_cref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   /// empty string?
   bool      empty()  const { return size() == 0;  }
@@ -488,6 +492,10 @@ protected:
     : base_type(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_string_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   /// move contents to another value (becomes empty string afterwards)
   cci_value move();
 
@@ -570,6 +578,10 @@ public:
   typedef cci_value_iterator<const_reference>   const_iterator;
   typedef std::reverse_iterator<iterator>       reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_list_cref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   /** @name list queries */
   //@{
@@ -660,6 +672,10 @@ protected:
     : base_type(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_list_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
+
   this_type operator=( this_type const& );
   this_type operator=( base_type const& );
 
@@ -726,11 +742,8 @@ public:
 #endif // CCI_HAS_CXX_RVALUE_REFS
   /// append arbitrary cci_value_converter enabled value
   template<typename T>
-  this_type push_back( const T & v
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                     , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-                     );
+  CCI_VALUE_REQUIRES_CONVERTER_(T,this_type)
+  push_back( const T & v );
   //@}
 
   /** @name insert elements into the list */
@@ -852,10 +865,16 @@ protected:
 
 public:
   typedef size_t size_type;
-  typedef cci_value_iterator<cci_value_map_elem_ref>  iterator;
-  typedef cci_value_iterator<cci_value_map_elem_cref> const_iterator;
+  typedef cci_value_map_elem_ref  element_reference;
+  typedef cci_value_map_elem_cref const_element_reference;
+  typedef cci_value_iterator<element_reference>       iterator;
+  typedef cci_value_iterator<const_element_reference> const_iterator;
   typedef std::reverse_iterator<iterator>             reverse_iterator;
   typedef std::reverse_iterator<const_iterator>       const_reverse_iterator;
+
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_map_cref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   /** @name map queries */
   //@{
@@ -970,6 +989,9 @@ protected:
     : base_type(i) {}
 
 public:
+#if CCI_CPLUSPLUS >= 201103L
+  cci_value_map_ref( this_type const& ) = default;
+#endif // CCI_CPLUSPLUS >= 201103L
 
   this_type operator=( base_type const& );
   this_type operator=( this_type const& );
@@ -1063,20 +1085,14 @@ public:
 
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
-  this_type push_entry( const char* key, const T & value
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                      , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif
-                      )
+  CCI_VALUE_REQUIRES_CONVERTER_(T,this_type)
+  push_entry( const char* key, const T & value )
     { return do_push( key, std::strlen(key), value ); }
 
   /// add an arbitrary cci_value_converter enabled value
   template<typename T>
-  this_type push_entry( std::string const & key, const T & value
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                      , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif
-                      )
+  CCI_VALUE_REQUIRES_CONVERTER_(T,this_type)
+  push_entry( std::string const & key, const T & value )
     { return do_push( key.c_str(), key.length(), value ); }
   //@}
 
@@ -1176,7 +1192,7 @@ public:
   explicit
   cci_value( T const & src
 #ifndef CCI_DOXYGEN_IS_RUNNING
-           , CCI_VALUE_REQUIRES_CONVERTER_(T)
+           , CCI_VALUE_REQUIRES_CONVERTER_(T,void)* = NULL
 #endif // CCI_DOXYGEN_IS_RUNNING
            );
 
@@ -1206,13 +1222,13 @@ public:
    * \see cci_value_ref
    */
   //@{
+  /// @copydoc cci_value_ref::try_set
+  template< typename T >
+  CCI_VALUE_REQUIRES_CONVERTER_(T,bool) try_set( T const & v )
+    { init(); return reference::try_set(v); }
   /// @copydoc cci_value_ref::set
   template< typename T >
-  reference  set( T const & v
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                , CCI_VALUE_REQUIRES_CONVERTER_(T)
-#endif //  CCI_DOXYGEN_IS_RUNNING
-                )
+  CCI_VALUE_REQUIRES_CONVERTER_(T,reference) set( T const & v )
     { init(); return reference::set(v); }
 
   /// @copydoc cci_value_ref::set_null
@@ -1281,16 +1297,13 @@ private:
   impl_type init();
   impl_type do_init();
 
-  bool json_deserialize( std::string const & src )
-    { init(); return reference::json_deserialize( src ); }
-
   impl_type own_pimpl_;
 };
 
 template<typename T>
 cci_value::cci_value( T const & v
 #ifndef CCI_DOXYGEN_IS_RUNNING
-                    , CCI_VALUE_CHECKED_CONVERTER_(T)
+                    , CCI_VALUE_REQUIRES_CONVERTER_(T,void)*
 #endif // CCI_DOXYGEN_IS_RUNNING
                     )
   : cci_value_ref(), own_pimpl_()
@@ -1327,15 +1340,6 @@ cci_value::init()
   return pimpl_;
 }
 
-inline cci_value
-cci_value::from_json( std::string const & json )
-{
-  cci_value v;
-  bool ok = v.json_deserialize( json );
-  sc_assert( ok );
-  return v;
-}
-
 // --------------------------------------------------------------------------
 // The following two functions depend on the completeness of the cci_value
 // class, enforced by some compilers (e.g. Clang).
@@ -1350,12 +1354,8 @@ cci_value::from_json( std::string const & json )
 ///@endcond
 
 template<typename T>
-cci_value_list_ref::this_type
-cci_value_list_ref::push_back( const T& value
-#ifndef CCI_DOXYGEN_IS_RUNNING
-                             , CCI_VALUE_CHECKED_CONVERTER_(T)
-#endif // CCI_DOXYGEN_IS_RUNNING
-                             )
+CCI_VALUE_REQUIRES_CONVERTER_(T,cci_value_list_ref::this_type)
+cci_value_list_ref::push_back( const T& value )
 {
   cci_value v(value);
   return push_back( CCI_VALUE_MOVE_(v) );
@@ -1533,12 +1533,11 @@ cci_value_list_ref::insert( const_iterator pos, InputIt first, InputIt last )
   return begin() + offs;
 }
 
-CCI_CLOSE_NAMESPACE_
-
-#undef CCI_VALUE_CONVERTER_
-#undef CCI_VALUE_CHECKED_CONVERTER_
 #undef CCI_VALUE_REQUIRES_CONVERTER_
 #undef CCI_VALUE_MOVE_
+
+#endif // CCI_HAS_SC_ANY_VALUE
+CCI_CLOSE_NAMESPACE_
 
 #ifdef _MSC_VER
 #pragma warning(pop)

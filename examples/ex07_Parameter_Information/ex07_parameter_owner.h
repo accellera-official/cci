@@ -115,7 +115,7 @@ SC_MODULE(ex07_parameter_owner) {
               << "\tdemonstrating retrieving values by OWNER using cci_value");
 
       cci::cci_value rec_str_value = string_param.get_cci_value();
-      std::string recv_str = rec_str_value.get_string();
+      std::string recv_str( rec_str_value.get_string() );
 
       XREPORT("[OWNER -> Retrieve] : Receive str_value using 'cci_value' : "
               << recv_str);
