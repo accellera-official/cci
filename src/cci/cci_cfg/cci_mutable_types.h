@@ -17,27 +17,26 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_HEADER_INCLUDED_
-#define CCI_CCI_HEADER_INCLUDED_
+#ifndef CCI_CFG_CCI_MUTABLE_TYPES_H_INCLUDED_
+#define CCI_CFG_CCI_MUTABLE_TYPES_H_INCLUDED_
 
-// CCI core includes
+#include "cci/cci_core/cci_cmnhdr.h"
 
-#include "cci/cci_core/cci_version.h"
-#include "cci/cci_core/cci_name_gen.h"
-#include "cci/cci_core/cci_core_types.h"
-#include "cci/cci_core/cci_value.h"
-#include "cci/cci_core/cci_value_converter.h"
+CCI_OPEN_NAMESPACE_
 
-// CCI config includes
+/**
+ * Enumeration for cci_param_typed template specifying the parameter type
+ * according the lock behavior
+ */
+enum cci_param_mutable_type {
+    /// Mutable Parameter
+    CCI_MUTABLE_PARAM = 0,
+    /// Immutable Parameter
+    CCI_IMMUTABLE_PARAM,
+    /// Vendor specific/other Parameter type
+    CCI_OTHER_MUTABILITY
+};
 
-#include "cci/cci_cfg/cci_mutable_types.h"
-#include "cci/cci_cfg/cci_originator.h"
-#include "cci/cci_cfg/cci_broker_handle.h"
-#include "cci/cci_cfg/cci_broker_if.h"
-#include "cci/cci_cfg/cci_broker_manager.h"
-#include "cci/cci_cfg/cci_param_typed.h"
-#include "cci/cci_cfg/cci_param_typed_handle.h"
-#include "cci/cci_cfg/cci_report_handler.h"
-#include "cci/cci_cfg/cci_macros_undef.h"
+CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_CCI_HEADER_INCLUDED_
+#endif // CCI_CFG_CCI_MUTABLE_TYPES_H_INCLUDED_

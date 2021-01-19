@@ -1,0 +1,30 @@
+H_FILES += \
+	cci_cfg/cci_broker_callbacks.h \
+	cci_cfg/cci_broker_handle.h \
+	cci_cfg/cci_broker_if.h \
+	cci_cfg/cci_broker_manager.h \
+	cci_cfg/cci_broker_types.h \
+	cci_cfg/cci_config_macros.h \
+	cci_cfg/cci_macros_undef.h \
+	cci_cfg/cci_mutable_types.h \
+	cci_cfg/cci_originator.h \
+	cci_cfg/cci_param_callbacks.h \
+	cci_cfg/cci_param_if.h \
+	cci_cfg/cci_param_typed_handle.h \
+	cci_cfg/cci_param_typed.h \
+	cci_cfg/cci_param_untyped_handle.h \
+	cci_cfg/cci_param_untyped.h \
+	cci_cfg/cci_report_handler.h
+
+CXX_FILES += \
+	cci_cfg/cci_broker_handle.cpp \
+	cci_cfg/cci_broker_manager.cpp \
+	cci_cfg/cci_originator.cpp \
+	cci_cfg/cci_param_if.cpp \
+	cci_cfg/cci_param_untyped_handle.cpp \
+	cci_cfg/cci_param_untyped.cpp \
+	cci_cfg/cci_report_handler.cpp
+
+INCDIRS += cci_cfg
+
+## Taf!

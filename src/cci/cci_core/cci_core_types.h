@@ -17,27 +17,44 @@
 
  ****************************************************************************/
 
-#ifndef CCI_CCI_HEADER_INCLUDED_
-#define CCI_CCI_HEADER_INCLUDED_
+#ifndef CCI_CCI_CORE_TYPES_H_INCLUDED_
+#define CCI_CCI_CORE_TYPES_H_INCLUDED_
 
-// CCI core includes
+#include "cci/cci_core/cci_cmnhdr.h"
 
-#include "cci/cci_core/cci_version.h"
-#include "cci/cci_core/cci_name_gen.h"
-#include "cci/cci_core/cci_core_types.h"
-#include "cci/cci_core/cci_value.h"
-#include "cci/cci_core/cci_value_converter.h"
+CCI_OPEN_NAMESPACE_
 
-// CCI config includes
+/**
+ *  Enumeration for basic parameter data types, whose rough getting and setting 
+ *  is supported directly.
+ */
+enum cci_param_data_category {
+    /// Boolean valued parameter
+    CCI_BOOL_PARAM,
+    /// Integer number valued parameter
+    CCI_INTEGRAL_PARAM,
+    /// Real number valued parameter
+    CCI_REAL_PARAM,
+    /// String valued parameter
+    CCI_STRING_PARAM,
+    /// List valued parameter
+    CCI_LIST_PARAM,
+    /// Parameter with values of any other type (objects etc.)
+    CCI_OTHER_PARAM
+};
 
-#include "cci/cci_cfg/cci_mutable_types.h"
-#include "cci/cci_cfg/cci_originator.h"
-#include "cci/cci_cfg/cci_broker_handle.h"
-#include "cci/cci_cfg/cci_broker_if.h"
-#include "cci/cci_cfg/cci_broker_manager.h"
-#include "cci/cci_cfg/cci_param_typed.h"
-#include "cci/cci_cfg/cci_param_typed_handle.h"
-#include "cci/cci_cfg/cci_report_handler.h"
-#include "cci/cci_cfg/cci_macros_undef.h"
+/**
+ * Enumeration for convenient cci_param_typed constructor.
+ * Choose if a param gets a relative or an absolute name.
+ */
+enum cci_name_type {
+    /// Relative name
+    CCI_RELATIVE_NAME,
+    /// Absolute name
+    CCI_ABSOLUTE_NAME
+};
 
-#endif // CCI_CCI_HEADER_INCLUDED_
+CCI_CLOSE_NAMESPACE_
+
+#endif
+
