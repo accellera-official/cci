@@ -33,9 +33,6 @@ class cci_param_if;
 template<class T>
 class cci_param_typed_handle;
 
-// forward declaration for friend class
-//class cci_broker_handle;
-
 /**
  * @brief CCI configuration broker interface
  *
