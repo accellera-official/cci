@@ -1,0 +1,35 @@
+examples_TESTS += ex09_Parent_Control_of_Preset_Values/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex09_Parent_Control_of_Preset_Values_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex09_Parent_Control_of_Preset_Values
+
+examples_FILES += \
+	$(ex09_Parent_Control_of_Preset_Values_H_FILES) \
+	$(ex09_Parent_Control_of_Preset_Values_CXX_FILES) \
+	$(ex09_Parent_Control_of_Preset_Values_BUILD) \
+	$(ex09_Parent_Control_of_Preset_Values_EXTRA)
+
+ex09_Parent_Control_of_Preset_Values_test_SOURCES = \
+	$(ex09_Parent_Control_of_Preset_Values_H_FILES) \
+	$(ex09_Parent_Control_of_Preset_Values_CXX_FILES)
+
+ex09_Parent_Control_of_Preset_Values_CXX_FILES = \
+    ex09_Parent_Control_of_Preset_Values/ex09_Parent_Control_of_Preset_Values.cpp
+
+ex09_Parent_Control_of_Preset_Values_H_FILES = \
+    ex09_Parent_Control_of_Preset_Values/ex09_initiator.h \
+    ex09_Parent_Control_of_Preset_Values/ex09_router.h \
+    ex09_Parent_Control_of_Preset_Values/ex09_target.h \
+    ex09_Parent_Control_of_Preset_Values/ex09_top_module.h
+
+ex09_Parent_Control_of_Preset_Values_BUILD = 
+
+ex09_Parent_Control_of_Preset_Values_EXTRA = 
+
+## Taf!

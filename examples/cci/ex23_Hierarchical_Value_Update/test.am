@@ -1,0 +1,34 @@
+examples_TESTS += ex23_Hierarchical_Value_Update/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex23_Hierarchical_Value_Update_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex23_Hierarchical_Value_Update
+
+examples_FILES += \
+	$(ex23_Hierarchical_Value_Update_H_FILES) \
+	$(ex23_Hierarchical_Value_Update_CXX_FILES) \
+	$(ex23_Hierarchical_Value_Update_BUILD) \
+	$(ex23_Hierarchical_Value_Update_EXTRA)
+
+ex23_Hierarchical_Value_Update_test_SOURCES = \
+	$(ex23_Hierarchical_Value_Update_H_FILES) \
+	$(ex23_Hierarchical_Value_Update_CXX_FILES)
+
+ex23_Hierarchical_Value_Update_CXX_FILES = \
+    ex23_Hierarchical_Value_Update/ex23_Hierarchical_Value_Update.cpp
+
+ex23_Hierarchical_Value_Update_H_FILES = \
+    ex23_Hierarchical_Value_Update/ex23_config_ip.h \
+    ex23_Hierarchical_Value_Update/ex23_simple_ip.h \
+    ex23_Hierarchical_Value_Update/ex23_sub_simple_ip.h
+
+ex23_Hierarchical_Value_Update_BUILD = 
+
+ex23_Hierarchical_Value_Update_EXTRA = 
+
+## Taf!

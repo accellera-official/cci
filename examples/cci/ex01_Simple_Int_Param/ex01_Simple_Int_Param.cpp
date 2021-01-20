@@ -17,32 +17,34 @@
 
  ****************************************************************************/
 
-#ifndef CCI_HEADER_INCLUDED_
-#define CCI_HEADER_INCLUDED_
+/**
+ *  @file   testbench.cpp
+ *  @brief  A testbench that demonstrates how to update the value of a mutable 
+ *          integer parameter.
+ *  @author R. Swaminathan, TI
+ */
 
-// CCI core includes
+#include "ex01_simple_ip.h"
+#include "ex01_config_ip.h"
 
-#include "cci/core/cci_version.h"
-#include "cci/core/cci_name_gen.h"
-#include "cci/core/cci_core_types.h"
-#include "cci/core/cci_value.h"
-#include "cci/core/cci_value_converter.h"
+#include <cci_configuration>
 
-// CCI config includes
 
-#include "cci/cfg/cci_mutable_types.h"
-#include "cci/cfg/cci_originator.h"
-#include "cci/cfg/cci_broker_handle.h"
-#include "cci/cfg/cci_broker_if.h"
-#include "cci/cfg/cci_broker_manager.h"
-#include "cci/cfg/cci_param_typed.h"
-#include "cci/cfg/cci_param_typed_handle.h"
-#include "cci/cfg/cci_report_handler.h"
-#include "cci/cfg/cci_macros_undef.h"
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  The testbench for the CCI simple_int_param example
+ *  @param  argc  An integer for the number of arguments
+ *  @param  argv  An array with the input arguments
+ *  @return and integer of successful execution
+ */
+int sc_main(int argc, char *argv[]) {
+  cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
+  ex01_simple_ip sim_ip("sim_ip");
+  ex01_config_ip cfg_ip("cfg_ip");
 
-// CCI utils includes
+  SC_REPORT_INFO("sc_main", "Begin Simulation.");
+  sc_core::sc_start();
+  SC_REPORT_INFO("sc_main", "End Simulation.");
 
-#include "cci/utils/broker.h"
-#include "cci/utils/consuming_broker.h"
-
-#endif // CCI_HEADER_INCLUDED_
+  return EXIT_SUCCESS;
+}

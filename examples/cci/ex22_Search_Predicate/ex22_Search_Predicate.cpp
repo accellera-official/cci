@@ -17,32 +17,30 @@
 
  ****************************************************************************/
 
-#ifndef CCI_HEADER_INCLUDED_
-#define CCI_HEADER_INCLUDED_
+/**
+ * @file   ex22_Search_Predicate.cpp
+ * @author Guillaume Delbergue, GreenSocs / Ericsson
+ */
 
-// CCI core includes
+#include "ex22_simple_ip.h"
+#include "ex22_search_ip.h"
+#include <cci_configuration>
 
-#include "cci/core/cci_version.h"
-#include "cci/core/cci_name_gen.h"
-#include "cci/core/cci_core_types.h"
-#include "cci/core/cci_value.h"
-#include "cci/core/cci_value_converter.h"
+/**
+ *  @fn     int sc_main(int argc, char* argv[])
+ *  @brief  Testbench for the CCI ex22_Search_Predicate example
+ *  @param  argc  An integer for the number of input arguments
+ *  @param  argv  A list of the input arguments
+ *  @return an integer representing whether the execution was successful
+ */
+int sc_main(int argc, char *argv[]) {
+    cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
+    ex22_simple_ip sim_ip("sim_ip");
+    ex22_search_ip srch_ip("srch_ip");
 
-// CCI config includes
+    SC_REPORT_INFO("sc_main", "Begin Simulation.");
+    sc_core::sc_start();
+    SC_REPORT_INFO("sc_main", "End Simulation.");
 
-#include "cci/cfg/cci_mutable_types.h"
-#include "cci/cfg/cci_originator.h"
-#include "cci/cfg/cci_broker_handle.h"
-#include "cci/cfg/cci_broker_if.h"
-#include "cci/cfg/cci_broker_manager.h"
-#include "cci/cfg/cci_param_typed.h"
-#include "cci/cfg/cci_param_typed_handle.h"
-#include "cci/cfg/cci_report_handler.h"
-#include "cci/cfg/cci_macros_undef.h"
-
-// CCI utils includes
-
-#include "cci/utils/broker.h"
-#include "cci/utils/consuming_broker.h"
-
-#endif // CCI_HEADER_INCLUDED_
+    return EXIT_SUCCESS;
+}

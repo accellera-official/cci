@@ -1,0 +1,33 @@
+examples_TESTS += ex01_Simple_Int_Param/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex01_Simple_Int_Param_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex01_Simple_Int_Param
+
+examples_FILES += \
+	$(ex01_Simple_Int_Param_H_FILES) \
+	$(ex01_Simple_Int_Param_CXX_FILES) \
+	$(ex01_Simple_Int_Param_BUILD) \
+	$(ex01_Simple_Int_Param_EXTRA)
+
+ex01_Simple_Int_Param_test_SOURCES = \
+	$(ex01_Simple_Int_Param_H_FILES) \
+	$(ex01_Simple_Int_Param_CXX_FILES)
+
+ex01_Simple_Int_Param_CXX_FILES = \
+    ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
+
+ex01_Simple_Int_Param_H_FILES = \
+    ex01_Simple_Int_Param/ex01_config_ip.h \
+    ex01_Simple_Int_Param/ex01_simple_ip.h
+
+ex01_Simple_Int_Param_BUILD = 
+
+ex01_Simple_Int_Param_EXTRA = 
+
+## Taf!

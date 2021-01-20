@@ -1,7 +1,6 @@
 include $(top_srcdir)/config/Make-rules
 
 SUBDIRS = \
-##	docs \
 	src \
 	examples
 
@@ -19,7 +18,7 @@ DOC_FILES = \
 EXTRA_DIST += \
 			  $(DOC_FILES) \
 			  \
-			  msvc80
+			  msvc10
 
 ## ****************************************************************************
 

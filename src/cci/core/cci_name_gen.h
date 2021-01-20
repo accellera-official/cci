@@ -17,32 +17,39 @@
 
  ****************************************************************************/
 
-#ifndef CCI_HEADER_INCLUDED_
-#define CCI_HEADER_INCLUDED_
+#ifndef CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
+#define CCI_CORE_CCI_NAME_GEN_H_INCLUDED_
 
-// CCI core includes
+#include "cci/core/cci_cmnhdr.h"
 
-#include "cci/core/cci_version.h"
-#include "cci/core/cci_name_gen.h"
-#include "cci/core/cci_core_types.h"
-#include "cci/core/cci_value.h"
-#include "cci/core/cci_value_converter.h"
+CCI_OPEN_NAMESPACE_
 
-// CCI config includes
+/// Generate a cci-wide unique name.
+/**
+ * Keeps the first name as it is, later adds _number, beginning with _0
+ *
+ * @param name name of the CCI element
+ *
+ * @return pointer to the name
+ */
+const char* cci_gen_unique_name(const char* name);
 
-#include "cci/cfg/cci_mutable_types.h"
-#include "cci/cfg/cci_originator.h"
-#include "cci/cfg/cci_broker_handle.h"
-#include "cci/cfg/cci_broker_if.h"
-#include "cci/cfg/cci_broker_manager.h"
-#include "cci/cfg/cci_param_typed.h"
-#include "cci/cfg/cci_param_typed_handle.h"
-#include "cci/cfg/cci_report_handler.h"
-#include "cci/cfg/cci_macros_undef.h"
+/// Get cci name pointer
+/**
+ * @param name name of the CCI element
+ *
+ * @return pointer to the name if exists or NULL if the name doesn't exist.
+ */
+const char* cci_get_name(const char* name);
 
-// CCI utils includes
+/// Unregister a cci name
+/**
+ * @param name name of the CCI element to unregister
+ *
+ * @return true if unregistration succeeded. Otherwise, false.
+ */
+bool cci_unregister_name(const char* name);
 
-#include "cci/utils/broker.h"
-#include "cci/utils/consuming_broker.h"
+CCI_CLOSE_NAMESPACE_
 
-#endif // CCI_HEADER_INCLUDED_
+#endif

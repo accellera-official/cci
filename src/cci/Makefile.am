@@ -8,9 +8,9 @@ INCDIRS =
 LIBADD =
 
 # include file lists for sub-directories
-include cci_cfg/files.am
-include cci_core/files.am
-include cci_utils/files.am
+include cfg/files.am
+include core/files.am
+include utils/files.am
 	
 localincludedir = $(includedir)/cci
 nobase_localinclude_HEADERS = $(H_FILES)
