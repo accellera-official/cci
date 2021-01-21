@@ -1,0 +1,9 @@
+SUBDIRS := $(dir $(wildcard ../cci/*/Makefile ../cci/*/*/Makefile))
+
+TARGETS := all build run check clean
+.PHONY: $(TARGETS)
+
+$(TARGETS): %:
+	@set -e ; for i in $(SUBDIRS); do \
+		$(MAKE) -C $$i FLAG_BATCH=1 $@ ; \
+	done

@@ -1,0 +1,49 @@
+Info: cfg_ip: @0 s, Attempting to setup config_ip to 100 before IP construction
+
+Info: cfg_ip: @0 s, Set init-value of sim_ip.param_1 to 100
+
+Info: sim_ip: @0 s, @Ctor: Default value specified for sim_ip.param_1 is 1
+
+Info: sim_ip: @0 s, @Ctor: Default value specified for sim_ip.param_2 is 2
+
+Info: sim_ip: @0 s, @Ctor: param_1 mutable type is immutable
+
+Info: sim_ip: @0 s, @Ctor: param_2 mutable type is immutable
+
+Info: sim_ip: Info: Ctor: immutable param:param_1 = 100 (expected)
+
+Info: sim_ip: Info: Ctor: immutable param:param_2 = 2 (expected)
+
+Info: sc_main: Begin Simulation
+
+Info: sim_ip: @0 s, execute method is testing Use Case 1
+
+Info: sim_ip: Info: @Run: param_1 = 100 (expected)
+
+Info: sim_ip: @10 ns, @Run: Assign new value (10) to sim_ip.param_1
+
+Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter (sim_ip.param_1) is immutable.
+In file: <removed by make>
+In process: sim_ip.execute @ 10 ns
+
+Info: sim_ip: Info: @Run: param_1 = 100 (expected)
+
+Info: sim_ip: @10 ns, execute method is testing Use Case 2
+
+Info: cfg_ip: @20 ns, Attempting to set value of 'sim_ip.param_2' to 200
+
+Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter (sim_ip.param_2) is immutable.
+In file: <removed by make>
+In process: cfg_ip.execute @ 20 ns
+
+Info: sim_ip: Info: @Run: param_2 = 2 (expected)
+
+Info: sim_ip: @30 ns, @Run: Assign new value (20) to sim_ip.param_2
+
+Error: /Accellera/CCI/SET_PARAM_FAILED: Parameter (sim_ip.param_2) is immutable.
+In file: <removed by make>
+In process: sim_ip.execute @ 30 ns
+
+Info: sim_ip: Info: @Run: param_2 = 2 (expected)
+
+Info: sc_main: End Simulation
