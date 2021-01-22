@@ -47,7 +47,7 @@
 int sc_main(int sc_argc, char* sc_argv[]) {
   cci::cci_register_broker(new cci_utils::broker("My Global Broker"));
   cci::ex18_cci_configFile_Tool configTool("ConfigTool");
-  configTool.config("./ex18_Preset_Values_Superset/Configuration_File.txt");
+  configTool.config("Configuration_File.txt");
 
 #if 0
   // In case, if user doesn't want to use the reading from configuration file

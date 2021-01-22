@@ -1,0 +1,8 @@
+!include <..\..\build-msvc\Makefile.config>
+
+PROJECT = ex06_Parameter_Naming
+
+OBJS=\
+    $(OUTDIR)\$(PROJECT).obj
+
+!include <..\..\build-msvc\Makefile.rules>

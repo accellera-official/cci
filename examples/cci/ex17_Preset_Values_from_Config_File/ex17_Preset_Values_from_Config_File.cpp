@@ -51,7 +51,7 @@ int sc_main(int sc_argc, char* sc_argv[]) {
   // values to be set to a cci-parameter via a configuration file, parses them
   // and sets them to the appropriate parameters
   cci::ex17_cci_configFile_Tool configTool("configFileTool");
-  configTool.config("./ex17_Preset_Values_from_Config_File/Configuration_File.txt");
+  configTool.config("Configuration_File.txt");
 
   // Declare instances of the owner and configurator classes
   ex17_parameter_owner param_owner("param_owner");

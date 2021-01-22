@@ -84,7 +84,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -100,7 +100,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -112,7 +112,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -126,7 +126,7 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\..\..\packages\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
 	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -136,54 +136,54 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-	<ClCompile Include="..\..\..\src\cci\cfg\cci_broker_handle.cpp" />
-	<ClCompile Include="..\..\..\src\cci\cfg\cci_broker_manager.cpp" />
-    <ClCompile Include="..\..\..\src\cci\cfg\cci_originator.cpp" />
-    <ClCompile Include="..\..\..\src\cci\cfg\cci_param_if.cpp" />
-    <ClCompile Include="..\..\..\src\cci\cfg\cci_param_untyped.cpp" />
-    <ClCompile Include="..\..\..\src\cci\cfg\cci_param_untyped_handle.cpp" />
-    <ClCompile Include="..\..\..\src\cci\cfg\cci_report_handler.cpp" />
-    <ClCompile Include="..\..\..\src\cci\core\cci_name_gen.cpp" />
-    <ClCompile Include="..\..\..\src\cci\core\cci_value.cpp" />
-	<ClCompile Include="..\..\..\src\cci\core\cci_value_converter.cpp" />
-	<ClCompile Include="..\..\..\src\cci\utils\broker.cpp" />
-	<ClCompile Include="..\..\..\src\cci\utils\consuming_broker.cpp" />
+	<ClCompile Include="..\..\src\cci\cfg\cci_broker_handle.cpp" />
+	<ClCompile Include="..\..\src\cci\cfg\cci_broker_manager.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_originator.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_param_if.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_param_untyped.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_param_untyped_handle.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_report_handler.cpp" />
+    <ClCompile Include="..\..\src\cci\core\cci_name_gen.cpp" />
+    <ClCompile Include="..\..\src\cci\core\cci_value.cpp" />
+	<ClCompile Include="..\..\src\cci\core\cci_value_converter.cpp" />
+	<ClCompile Include="..\..\src\cci\utils\broker.cpp" />
+	<ClCompile Include="..\..\src\cci\utils\consuming_broker.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\cci_configuration">
+    <ClInclude Include="..\..\src\cci_configuration">
       <FileType>CppHeader</FileType>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_broker_callbacks.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_broker_handle.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_broker_if.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_broker_manager.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_broker_types.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_config_macros.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_macros_undef.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_mutable_types.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_originator.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_param_callbacks.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_param_if.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_param_typed.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_param_typed_handle.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_param_untyped.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_param_untyped_handle.h" />
-    <ClInclude Include="..\..\..\src\cci\cfg\cci_report_handler.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_callback.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_callback_impl.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_cmnhdr.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_core_types.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_filtered_range.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_meta.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_name_gen.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_value.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_value_converter.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_value_iterator.h" />
-    <ClInclude Include="..\..\..\src\cci\core\cci_version.h" />
-    <ClInclude Include="..\..\..\src\cci\core\rapidjson.h" />
-    <ClInclude Include="..\..\..\src\cci\core\systemc.h" />
-	<ClInclude Include="..\..\..\src\cci\utils\broker.h" />
-	<ClInclude Include="..\..\..\src\cci\utils\consuming_broker.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_broker_callbacks.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_broker_handle.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_broker_if.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_broker_manager.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_broker_types.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_config_macros.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_macros_undef.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_mutable_types.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_originator.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_param_callbacks.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_param_if.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_param_typed.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_param_typed_handle.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_param_untyped.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_param_untyped_handle.h" />
+    <ClInclude Include="..\..\src\cci\cfg\cci_report_handler.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_callback.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_callback_impl.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_cmnhdr.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_core_types.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_filtered_range.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_meta.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_name_gen.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_value.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_value_converter.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_value_iterator.h" />
+    <ClInclude Include="..\..\src\cci\core\cci_version.h" />
+    <ClInclude Include="..\..\src\cci\core\rapidjson.h" />
+    <ClInclude Include="..\..\src\cci\core\systemc.h" />
+	<ClInclude Include="..\..\src\cci\utils\broker.h" />
+	<ClInclude Include="..\..\src\cci\utils\consuming_broker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

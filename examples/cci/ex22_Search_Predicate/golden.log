@@ -1,5 +1,3 @@
-SystemC Simulation
-
 Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.bool_param is 1
 
 Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.char_param is A

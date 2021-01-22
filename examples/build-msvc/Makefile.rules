@@ -16,37 +16,8 @@
 ##  permissions and limitations under the License.
 ##
 ## ****************************************************************************
-##
-##  Makefile.rules -- simple generic SystemC example build rules
-##                    (for MSVC projects)
-##
-##  Include this file from your own Makefile to obtain a simple build
-##  environment.  You need to set at least the variables
-##    PLATFORM - platform to build for (default Win32)
-##    CONFIG   - configuration to use (Debug, Release, Both)
-##
-##    PROJECT  - name of the MSVC project to use
-##     or, when building manually
-##    OBJS     - object filenames of the sources you use
-##               (located in SRCDIR or SRCDIRCOMMON)
-##  to make things work.
-##
-##  The environment is assumed to be set up from Makefile.config file
-##  and the main example Makefile.
-##
-##  Original Author: Philipp A. Hartmann, OFFIS
-##
-## ***************************************************************************
-##
-##  MODIFICATION LOG - modifiers, enter your name, affiliation, date and
-##  changes you are making here.
-##
-##      Name, Affiliation, Date:
-##  Description of Modification:
-##
-## ***************************************************************************
 
-GOLDEN=..\results\expected.log
+GOLDEN=golden.log
 EXEEXT=.exe
 
 # Windows "find" command (grep)
@@ -169,7 +140,8 @@ PATH=$(SYSTEMC_LIB_DIR);$(PATH)
 #    fc /w ignores (collapses)  white space
 check: announce $(EXECUTABLE)
 	$(AT).\$(EXECUTABLE) $(ARGS) $(INPUTFILE) $(FILTERCMD) > runtemp.log
-	@type runtemp.log | $(FIND) /v /i "stopped by user" > run.log
+	@type runtemp.log | $(FIND) /v /i "stopped by user" > runtemp2.log
+	@type runtemp2.log | $(SED) "s#\(In file: \).*$$#\1<removed by make>#" > run.log
 	@type $(GOLDEN) | $(FIND) /v /i "stopped by user" > expected.log
 	@(fc /w run.log expected.log > diff.log) & \
 	  if ERRORLEVEL 1  (echo "***ERROR:" & type diff.log) else (echo OK)
@@ -205,7 +177,7 @@ build: announce $(OUTDIR)\$(EXECUTABLE)
 
 $(OUTDIR)\$(EXECUTABLE): $(OBJS)
 	@echo $@
-	$(AT)$(LD) /OUT:"$@" $(LDFLAGS) $(OBJS) systemc.lib
+	$(AT)$(LD) /OUT:"$@" $(LDFLAGS) $(OBJS) cci.lib systemc.lib
 
 {$(SRCDIR)}.cpp{$(OUTDIR)}.obj:
 	@if not exist $(OUTDIR) MKDIR $(OUTDIR)
@@ -219,6 +191,14 @@ clean: announce
 	$(AT)if exist $(OUTDIR) ( rmdir /s /q $(OUTDIR) )
 	$(AT)for %%X in ( $(EXECUTABLE) *.log $(EXTRA_CLEAN) ) do \
 	  @( if exist %%X del /q %%X )
+
+test:
+#   @echo test
+#   @echo $(CONFIG)
+#   @echo $(PLATFORM)
+    @echo $(OUTDIR)
+    @echo $(CCI_LIB_DIR)
+#    @type c:\\temp\\test.txt | ssed 's#\(In file: \).*$$#\1<removed by make>#'
 
 !ENDIF # plain command-line rules
 

@@ -151,7 +151,7 @@ announce:
 
 check: announce all
 	@if test -f "$(INPUT)" ; then INPUT="< $(INPUT)" ; fi ; \
-		eval "$(VALGRIND) ./$(EXE) $(ARGS) $${INPUT} | tee run.log"
+		eval "$(VALGRIND) ./$(EXE) $(ARGS) $${INPUT} > run.log"
 	@cat run.log | grep -v "stopped by user" | $(FILTER) |\
 		sed 's#\(In file: \).*$$#\1<removed by make>#' \
 		 | awk '{if($$0!="") print $$0}' > run_trimmed.log

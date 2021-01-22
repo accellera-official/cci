@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{32807D2D-2E7C-44F6-A00B-1CBCA3BFD755}</ProjectGuid>
+    <ProjectGuid>{44CEA44A-B08F-49ED-9ED5-B64D16E97EF1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ex10_Shared_Parameters</RootNamespace>
   </PropertyGroup>
@@ -51,19 +51,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\cci_example.props" />
+    <Import Project="..\..\build-msvc\cci_examples.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\cci_example.props" />
+    <Import Project="..\..\build-msvc\cci_examples.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\cci_example.props" />
+    <Import Project="..\..\build-msvc\cci_examples.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\cci_example.props" />
+    <Import Project="..\..\build-msvc\cci_examples.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -84,10 +84,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+	  <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\common\inc;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;$(BOOST_HOME);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>cci.lib;systemc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(SYSTEMC_HOME)\$(SYSTEMC_MSVC)\SystemC\$(IntDir);$(CCI_HOME)\$(CCI_MSVC)\cci\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
@@ -98,13 +102,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+	  <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\common\inc;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;$(BOOST_HOME);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>cci.lib;systemc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(SYSTEMC_HOME)\$(SYSTEMC_MSVC)\SystemC\$(IntDir);$(CCI_HOME)\$(CCI_MSVC)\cci\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>cciapi.lib;SystemC.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,9 +122,13 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+	  <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\common\inc;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;$(BOOST_HOME);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>cci.lib;systemc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(SYSTEMC_HOME)\$(SYSTEMC_MSVC)\SystemC\$(IntDir);$(CCI_HOME)\$(CCI_MSVC)\cci\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -132,9 +143,13 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+	  <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\src;$(ProjectDir)\..\common\inc;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;$(BOOST_HOME);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>cci.lib;systemc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(SYSTEMC_HOME)\$(SYSTEMC_MSVC)\SystemC\$(IntDir);$(CCI_HOME)\$(CCI_MSVC)\cci\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -142,11 +157,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\examples\ex10_Shared_Parameters\ex10_parameter_configurator.h" />
-    <ClInclude Include="..\..\..\examples\ex10_Shared_Parameters\ex10_parameter_owner.h" />
+    <ClInclude Include="ex10_parameter_configurator.h" />
+    <ClInclude Include="ex10_parameter_owner.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\ex10_Shared_Parameters\ex10_Shared_Parameters.cpp" />
+    <ClCompile Include="ex10_Shared_Parameters.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
