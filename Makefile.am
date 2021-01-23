@@ -1,6 +1,7 @@
 include $(top_srcdir)/config/Make-rules
 
 SUBDIRS = \
+	docs \
 	src \
 	examples
 
@@ -8,12 +9,12 @@ DOC_FILES = \
 	AUTHORS \
 	COPYING \
 	ChangeLog \
-	INSTALL \
+	INSTALL.md \
 	LICENSE \
 	NEWS \
 	NOTICE \
-	README \
-	RELEASENOTES
+	README.md \
+	RELEASENOTES.md
 
 EXTRA_DIST += \
 			  $(DOC_FILES) \

@@ -189,7 +189,7 @@ $(OUTDIR)\$(EXECUTABLE): $(OBJS)
 
 clean: announce
 	$(AT)if exist $(OUTDIR) ( rmdir /s /q $(OUTDIR) )
-	$(AT)for %%X in ( $(EXECUTABLE) *.log $(EXTRA_CLEAN) ) do \
+	$(AT)for %%X in ( $(EXECUTABLE) run*.log expected.log $(EXTRA_CLEAN) ) do \
 	  @( if exist %%X del /q %%X )
 
 test:

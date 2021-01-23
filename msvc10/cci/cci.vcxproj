@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,25 +22,30 @@
     <ProjectGuid>{E81F1EBF-3E32-45B2-8407-1B8A231D3B1D}</ProjectGuid>
     <RootNamespace>cci</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -100,7 +105,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -129,15 +134,15 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src;$(RAPIDJSON_HOME)\include;$(SYSTEMC_HOME)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-	<ClCompile Include="..\..\src\cci\cfg\cci_broker_handle.cpp" />
-	<ClCompile Include="..\..\src\cci\cfg\cci_broker_manager.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_broker_handle.cpp" />
+    <ClCompile Include="..\..\src\cci\cfg\cci_broker_manager.cpp" />
     <ClCompile Include="..\..\src\cci\cfg\cci_originator.cpp" />
     <ClCompile Include="..\..\src\cci\cfg\cci_param_if.cpp" />
     <ClCompile Include="..\..\src\cci\cfg\cci_param_untyped.cpp" />
@@ -145,9 +150,9 @@
     <ClCompile Include="..\..\src\cci\cfg\cci_report_handler.cpp" />
     <ClCompile Include="..\..\src\cci\core\cci_name_gen.cpp" />
     <ClCompile Include="..\..\src\cci\core\cci_value.cpp" />
-	<ClCompile Include="..\..\src\cci\core\cci_value_converter.cpp" />
-	<ClCompile Include="..\..\src\cci\utils\broker.cpp" />
-	<ClCompile Include="..\..\src\cci\utils\consuming_broker.cpp" />
+    <ClCompile Include="..\..\src\cci\core\cci_value_converter.cpp" />
+    <ClCompile Include="..\..\src\cci\utils\broker.cpp" />
+    <ClCompile Include="..\..\src\cci\utils\consuming_broker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\cci_configuration">
@@ -182,11 +187,10 @@
     <ClInclude Include="..\..\src\cci\core\cci_version.h" />
     <ClInclude Include="..\..\src\cci\core\rapidjson.h" />
     <ClInclude Include="..\..\src\cci\core\systemc.h" />
-	<ClInclude Include="..\..\src\cci\utils\broker.h" />
-	<ClInclude Include="..\..\src\cci\utils\consuming_broker.h" />
+    <ClInclude Include="..\..\src\cci\utils\broker.h" />
+    <ClInclude Include="..\..\src\cci\utils\consuming_broker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
-

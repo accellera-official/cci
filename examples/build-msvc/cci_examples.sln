@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex12_Indirectly_Associating
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex13_Parameter_Value_Locking", "..\cci\ex13_Parameter_Value_Locking\ex13_Parameter_Value_Locking.vcxproj", "{8851E829-5B71-4744-BE45-1592FFCBF1F4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex14_Hiding_Parameters", "..\ci\ex14_Hiding_Parameters\ex14_Hiding_Parameters.vcxproj", "{7E89CFF9-22EE-45E4-942B-100C34D8AD72}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex14_Hiding_Parameters", "..\cci\ex14_Hiding_Parameters\ex14_Hiding_Parameters.vcxproj", "{7E89CFF9-22EE-45E4-942B-100C34D8AD72}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex15_Inter_Parameter_Value_Constraints", "..\cci\ex15_Inter_Parameter_Value_Constraints\ex15_Inter_Parameter_Value_Constraints.vcxproj", "{99D7F4F7-B5B9-486E-B0B3-00E0F553B26C}"
 EndProject

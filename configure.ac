@@ -530,7 +530,9 @@ AC_OUTPUT( Makefile
            src/cci/Makefile
            src/cci/cci.pc
            examples/Makefile
-           examples/cci/Makefile )
+           examples/cci/Makefile
+           docs/Makefile
+           docs/cci/doxygen/Doxyfile )
 
 # resolve path variables
 CCI_HOME=$prefix
