@@ -41,7 +41,7 @@ AC_SUBST(CCI_VERSION)
 AC_SUBST(CCI_RELEASE_DATE)
 
 AC_CANONICAL_SYSTEM
-AM_INIT_AUTOMAKE([1.9.4 tar-pax -Werror -Wno-portability no-define subdir-objects])
+AM_INIT_AUTOMAKE([1.9.4 tar-pax -Werror -Wno-portability no-define subdir-objects foreign])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES(yes)])
 
 # ignore GNU defaults for CFLAGS and CXXFLAGS
