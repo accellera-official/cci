@@ -1,32 +1,25 @@
 This directory allows the examples to be launched from 
-the command line on Windows.
-
-It has been tested on Windows 7 with the following compiler versions:
-
-  Microsoft Visual Studio 2005 .NET Professional SP1
-  Microsoft Visual C++ 2005 .NET Express Edition SP1
-  Microsoft Visual C++ 2008 .NET Express Edition
-  Microsoft Visual C++ 2010 Express Edition
-  Microsoft Visual C++ 2012 Express Edition
+the command line on Windows using Microsoft Visual Studio C++.
 
 Note
 ~~~~
 In normal use, you'll probably find it easier to use the Visual C++ integrated
 development environment. However this command line build system is useful for
-regression of unit tests with self-checking.
+running the examples with self-checking.
 
 Usage
 ~~~~~
 
 1. Check the settings in the file Makefile.config
 
-  Check the path to the SystemC installation.  Usually, it should
-  be sufficient to set the SYSTEMC_HOME environment and MSVC environment.
+  Check the path to the SystemC, CCI, RapidJSON and Boost installation.  
+  The setup requires the following corresponding environment variables:
+  SYSTEMC_HOME, CCI_HOME, RAPIDJSON_HOME, BOOST_HOME, SYSTEMC_MSVC, CCI_MSVC.
 
-  If you want to use SystemC with newer versions of MSVC, 
-  it is recommended to copy the MSVC80 project
-  files to a new subdirectory (msvc<version>/SystemC) before upgrading
-  the project files.  Afterwards, update the MSVC variable to point
+  If you want to use the CCI reference implementation and examples with newer 
+  versions of MSVC, it is recommended to copy the MSVC10 project
+  files to a new subdirectory (e.g., msvc<version>/cci) before upgrading
+  the project files.  Afterwards, update the CCI_MSVC variable to point
   to the newly versions msvc directory.
 
   If you use a full-featured Visual Studio version, you might
@@ -48,7 +41,7 @@ Usage
 
    vsvars.bat 2010 amd64  # load 64-bit tools for MSVC 10.0
    vsvars.bat 11.0        # load default (x86) tools for MSVC 2012
-   vsvars.vat x86_amd64   # load x64 cross-tools for MSVC 2005 
+   vsvars.bat x86_amd64   # load x64 cross-tools for MSVC 2005 
 
 
 4. You can then use the Microsoft tool nmake, e.g.

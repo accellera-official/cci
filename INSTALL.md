@@ -431,9 +431,17 @@ Installation Notes for Windows
 This release has been tested on Visual C++ versions 2010 through 2015,
 running on Windows 10. Older platforms before Windows 10 are not supported.
 
+The following environment variables are required:
+
+  * SYSTEMC_HOME           - path to SystemC installation root directory
+  * SYSTEMC_MSVC           - name of the SystemC MSVC directory (e.g. msvc10)
+  * CCI_HOME               - path to CCI installation
+  * CCI_MSVC               - name of the CCI MSVC directory (e.g. msvc10)
+  * BOOST_HOME             - path too Boost libraries
+  * RAPIDJSON_HOME         - path to RapidJSON library
+
 NOTE: _This section covers the installation based on Microsoft Visual C++.
       For Cygwin or MinGW-based installations, see Section 1._
-
 
 NOTE: _If you experience spurious errors about missing files in the
       downloaded archive, please make sure to either download the

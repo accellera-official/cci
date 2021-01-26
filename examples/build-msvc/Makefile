@@ -34,12 +34,6 @@ all: build
 # see
 #  - Makefile.rules  for actual implementation
 #  - Makefile.config for available configuration options
-#$(TARGETS):
-#	@for %%i in ($(SUBDIRS)) do \
-#	  @( chdir $(MAKEDIR)\%%i\build-msvc && \
-#	    $(MAKE) /nologo FLAG_BATCH=1 \
-#	      CONFIG=$(CONFIG) PLATFORM=$(PLATFORM) $@ )
-
 $(TARGETS):
 	@for %%i in ($(SUBDIRS)) do \
 	  @( chdir $(MAKEDIR)\%%i && \
