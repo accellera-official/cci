@@ -435,7 +435,7 @@ AC_ARG_WITH([json],
     "no")   have_json="no";    json_home="";;
     "yes")  have_json="yes";   json_home="";;
     "")     have_json="maybe"; json_home="";;
-    *)      have_json"yes";    json_home="$withval";;
+    *)      have_json="yes";   json_home="$withval";;
   esac],
   [have_json="maybe"; json_home=""]
 )

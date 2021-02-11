@@ -41,7 +41,7 @@ DOC_FILES += \
 	cci/archived/example_review_checklist \
 	cci/archived/GreenControl_GreenConfig_CODES09_Schroeder_p81.pdf \
 	cci/archived/guidelines.txt \
-	cci/archived/notes.txt \
+	cci/archived/notes.txt
 
 
 
