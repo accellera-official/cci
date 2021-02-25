@@ -40,9 +40,11 @@
 
 cmake_minimum_required (VERSION 3.0)
 
+if (NOT TARGET check)
+   add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -C "${CMAKE_BUILD_TYPE}")
+endif()
 # Only built under "check" target
 #  - see https://cmake.org/Wiki/CMakeEmulateMakeCheck
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -C "${CMAKE_BUILD_TYPE}")
 enable_testing()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
@@ -164,7 +166,7 @@ set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
 ## Add the examples.
 ##########################################################################
 include_directories(cci/common/inc/)
-add_executable (ex01
+add_executable (ex01 EXCLUDE_FROM_ALL
                cci/ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
                cci/ex01_Simple_Int_Param/ex01_config_ip.h
                cci/ex01_Simple_Int_Param/ex01_simple_ip.h
