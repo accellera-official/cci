@@ -162,17 +162,37 @@ set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
      "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
 
 
+function (add_test_exe NAME)
+  string (REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/cci/" "" TEST_NAME
+                  "${NAME}")
+  file(GLOB FILES ${NAME}/*.cpp ${NAME}/*.hpp ${NAME}/*.h)
+  add_executable (${TEST_NAME} EXCLUDE_FROM_ALL
+                 ${FILES}
+               cci/common/inc/xreport.hpp
+               cci/common/inc/param_tracker.h
+               )
+  target_link_libraries (${TEST_NAME} SystemC::systemc cci)
+  configure_and_add_test (${TEST_NAME})
+endfunction()
+  
+
 #########################################################################
 ## Add the examples.
 ##########################################################################
 include_directories(cci/common/inc/)
-add_executable (ex01 EXCLUDE_FROM_ALL
-               cci/ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
-               cci/ex01_Simple_Int_Param/ex01_config_ip.h
-               cci/ex01_Simple_Int_Param/ex01_simple_ip.h
-               cci/common/inc/xreport.hpp
-               cci/common/inc/param_tracker.h
-               )
-target_link_libraries (ex01 SystemC::systemc cci)
-configure_and_add_test (ex01)
+
+
+file(GLOB EXAMPLES cci/ex*)
+foreach(example ${EXAMPLES})
+  add_test_exe(${example})
+endforeach()
+#add_executable (ex01 EXCLUDE_FROM_ALL
+#               cci/ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
+#               cci/ex01_Simple_Int_Param/ex01_config_ip.h
+#               cci/ex01_Simple_Int_Param/ex01_simple_ip.h
+#               cci/common/inc/xreport.hpp
+#               cci/common/inc/param_tracker.h
+#               )
+#target_link_libraries (ex01 SystemC::systemc cci)
+#configure_and_add_test (ex01)
 

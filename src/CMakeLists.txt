@@ -102,7 +102,7 @@ set (CMAKE_CXX_STANDARD ${SystemC_CXX_STANDARD} CACHE STRING
 set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
      "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
 
-find_package(rapidjson CONFIG REQUIRED)
+find_package(RapidJSON CONFIG REQUIRED)
 
 target_link_libraries(cci SystemC::systemc rapidjson)
 
@@ -159,9 +159,6 @@ install (TARGETS cci EXPORT  SystemCCCITargets
                          COMPONENT lib)
 
 # Install the CCI
-install (FILES src
-         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-         COMPONENT dev)
 install (DIRECTORY ./
          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
          COMPONENT dev
