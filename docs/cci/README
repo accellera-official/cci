@@ -1,0 +1,25 @@
+===============================================
+README for the SystemC CCI 1.0.1. documentation
+===============================================
+
+This directory contains
+
+doxygen/ 
+
+  A folder containing a command file (template) for doxygen which may be
+  used to generate browseable documentation of the SystemC class library.
+  Please see www.doxygen.org for usage.
+
+archived/
+
+  Documentation from earlier versions of SystemC CCI, much of which is now
+  out-of-date.  Please consult the Configuration, Control & Inspection 
+  Language Reference Manual version 1.0 for the standard definition. Theis document 
+  can be found on accellera.org:
+  https://www.accellera.org/images/downloads/standards/systemc/SystemC_CCI_1_0_LRM.pdf
+
+SystemC_Configuration_Tutorial.pptx
+
+  A presentation outlining the capabilities of the SystemC Configuration standard.
+
+README - this file.

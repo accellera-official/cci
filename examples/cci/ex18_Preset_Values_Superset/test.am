@@ -1,0 +1,35 @@
+examples_TESTS += ex18_Preset_Values_Superset/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex18_Preset_Values_Superset_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex18_Preset_Values_Superset
+
+examples_FILES += \
+	$(ex18_Preset_Values_Superset_H_FILES) \
+	$(ex18_Preset_Values_Superset_CXX_FILES) \
+	$(ex18_Preset_Values_Superset_BUILD) \
+	$(ex18_Preset_Values_Superset_EXTRA)
+
+ex18_Preset_Values_Superset_test_SOURCES = \
+	$(ex18_Preset_Values_Superset_H_FILES) \
+	$(ex18_Preset_Values_Superset_CXX_FILES)
+
+ex18_Preset_Values_Superset_CXX_FILES = \
+    ex18_Preset_Values_Superset/ex18_Preset_Values_Superset.cpp
+
+ex18_Preset_Values_Superset_H_FILES = \
+    ex18_Preset_Values_Superset/ex18_cci_configFile_Tool.h \
+    ex18_Preset_Values_Superset/ex18_configset.h \
+    ex18_Preset_Values_Superset/ex18_parameter_configurator.h \
+    ex18_Preset_Values_Superset/ex18_parameter_owner.h
+
+ex18_Preset_Values_Superset_BUILD = 
+
+ex18_Preset_Values_Superset_EXTRA = 
+
+## Taf!

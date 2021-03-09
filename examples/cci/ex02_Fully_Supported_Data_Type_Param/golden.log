@@ -1,0 +1,37 @@
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.bool_param is 1
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.char_param is A
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uchar_param is U
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int_param is -1
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.uint_param is 0xfeedf00d
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int16_param is 0x1234
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.int64_param is 0x976543210
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.float_param is 3.14
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.double_param is 2.714
+
+Info: sim_ip: @0 s, @Ctor: Default value of sim_ip.string_param is C++ String
+
+Info: sc_main: Begin Simulation.
+
+Info: cfg_ip: @10 ns, @execute: Type of sim_ip.int_param is an integer.
+
+Info: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to cci::cci_param_typed_handle<int> succeeded
+
+Info: cfg_ip: @10 ns, @execute: Current value of sim_ip.int_param is -1
+
+Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to cci::cci_param_typed_handle<unsigned int> failed.
+In file: <removed by make>
+In process: cfg_ip.execute @ 10 ns
+
+Warning: cfg_ip: @10 ns, @execute: Typecast of sim_ip.int_param to cci::cci_param_typed_handle<std::string> failed.
+In file: <removed by make>
+In process: cfg_ip.execute @ 10 ns
+
+Info: sc_main: End Simulation.

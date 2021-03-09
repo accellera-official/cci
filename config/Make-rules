@@ -1,0 +1,30 @@
+ACLOCAL_AMFLAGS = -I config
+
+    AM_CPPFLAGS = -I. \
+                  -I$(top_srcdir)/src \
+                  $(SYSTEMC_CFLAGS) \
+                  $(JSON_CFLAGS)
+
+      AM_CFLAGS = $(EXTRA_CXXFLAGS) \
+                  $(EXTRA_CFLAGS)
+
+    AM_CXXFLAGS = $(EXTRA_CXXFLAGS)
+
+     AM_LDFLAGS =
+
+if WANT_DEBUG
+   AM_CFLAGS   += $(DEBUG_CXXFLAGS)
+   AM_CXXFLAGS += $(DEBUG_CXXFLAGS)
+   AM_LDFLAGS  += $(DEBUG_CXXFLAGS)
+endif
+
+if WANT_OPTIMIZE
+   AM_CFLAGS   += $(OPT_CXXFLAGS)
+   AM_CXXFLAGS += $(OPT_CXXFLAGS)
+   AM_LDFLAGS  += $(OPT_CXXFLAGS)
+endif
+
+          LIBS += $(SYSTEMC_LIBS)
+
+     CLEANFILES =
+     EXTRA_DIST =

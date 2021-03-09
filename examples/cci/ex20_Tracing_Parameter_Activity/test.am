@@ -1,0 +1,33 @@
+examples_TESTS += ex20_Tracing_Parameter_Activity/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex20_Tracing_Parameter_Activity_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex20_Tracing_Parameter_Activity
+
+examples_FILES += \
+	$(ex20_Tracing_Parameter_Activity_H_FILES) \
+	$(ex20_Tracing_Parameter_Activity_CXX_FILES) \
+	$(ex20_Tracing_Parameter_Activity_BUILD) \
+	$(ex20_Tracing_Parameter_Activity_EXTRA)
+
+ex20_Tracing_Parameter_Activity_test_SOURCES = \
+	$(ex20_Tracing_Parameter_Activity_H_FILES) \
+	$(ex20_Tracing_Parameter_Activity_CXX_FILES)
+
+ex20_Tracing_Parameter_Activity_CXX_FILES = \
+    ex20_Tracing_Parameter_Activity/ex20_Tracing_Parameter_Activity.cpp
+
+ex20_Tracing_Parameter_Activity_H_FILES = \
+    ex20_Tracing_Parameter_Activity/ex20_observer.h \
+    ex20_Tracing_Parameter_Activity/ex20_parameter_owner.h
+
+ex20_Tracing_Parameter_Activity_BUILD = 
+
+ex20_Tracing_Parameter_Activity_EXTRA = 
+
+## Taf!

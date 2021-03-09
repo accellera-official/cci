@@ -1,0 +1,35 @@
+examples_TESTS += ex16_User_Defined_Data_Type/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex16_User_Defined_Data_Type_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex16_User_Defined_Data_Type
+
+examples_FILES += \
+	$(ex16_User_Defined_Data_Type_H_FILES) \
+	$(ex16_User_Defined_Data_Type_CXX_FILES) \
+	$(ex16_User_Defined_Data_Type_BUILD) \
+	$(ex16_User_Defined_Data_Type_EXTRA)
+
+ex16_User_Defined_Data_Type_test_SOURCES = \
+	$(ex16_User_Defined_Data_Type_H_FILES) \
+	$(ex16_User_Defined_Data_Type_CXX_FILES)
+
+ex16_User_Defined_Data_Type_CXX_FILES = \
+    ex16_User_Defined_Data_Type/ex16_User_Defined_Data_Type.cpp
+
+ex16_User_Defined_Data_Type_H_FILES = \
+    ex16_User_Defined_Data_Type/ex16_observer.h \
+    ex16_User_Defined_Data_Type/ex16_parameter_configurer.h \
+    ex16_User_Defined_Data_Type/ex16_parameter_owner.h \
+    ex16_User_Defined_Data_Type/ex16_user_datatype.h
+
+ex16_User_Defined_Data_Type_BUILD = 
+
+ex16_User_Defined_Data_Type_EXTRA = 
+
+## Taf!

@@ -1,0 +1,103 @@
+
+Warning: (W534) name already exists: sim_ip.sub_ip (sc_module)
+In file: <removed by make>
+
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: sim_ip.sub_ip is already used in the SystemC hierarchy, using sim_ip.sub_ip_0 instead
+In file: <removed by make>
+
+Warning: (W534) name already exists: sim_ip.int_param_ip (external name)
+In file: <removed by make>
+
+Warning: /Accellera/CCI/cci_name_gen/gen_unique_name: sim_ip.int_param_ip is already used in the SystemC hierarchy, using sim_ip.int_param_ip_0 instead
+In file: <removed by make>
+
+Info: sim_ip: @0 s, Ctor: Name of bool_param is sim_ip.sub_ip_0
+
+Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param_ip is 1
+
+Info: sim_ip: @0 s, Ctor: Default value of sim_ip.int_param_ip_0 is 2
+
+Info: sim_ip: @0 s, Ctor: Default value of int_param_top is 3
+
+Info: sim_ip: @0 s, Ctor: Default value of top.sub.int_param_custom is 4
+
+Info: sc_main: Begin Simulation.
+
+Info: sim_ip: @10 ns, execute: Current value of sim_ip.int_param_ip is 1
+
+Info: sim_ip: @10 ns, execute: Current value of sim_ip.int_param_ip_0 is 2
+
+Info: sim_ip: @10 ns, execute: Current value of int_param_top is 3
+
+Info: sim_ip: @10 ns, execute: Current value of top.sub.int_param_custom is 4
+
+Info: sim_ip: @10 ns, execute: Set int_param_ip = 10
+
+Info: sim_ip: @10 ns, execute: Set int_param_ip_dup = 20
+
+Info: sim_ip: @10 ns, execute: Set int_param_top = 30
+
+Info: sim_ip: @10 ns, execute: Set int_param_custom = 40
+
+Info: sim_ip: @10 ns, execute: Current value of sim_ip.int_param_ip is 10
+
+Info: sim_ip: @10 ns, execute: Current value of sim_ip.int_param_ip_0 is 20
+
+Info: sim_ip: @10 ns, execute: Current value of int_param_top is 30
+
+Info: sim_ip: @10 ns, execute: Current value of top.sub.int_param_custom is 40
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip is 10
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.int_param_ip to 50
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip is 50
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip_0 is 20
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of sim_ip.int_param_ip_0 to 60
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of sim_ip.int_param_ip_0 is 60
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 30
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of int_param_top to 70
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of int_param_top is 70
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_custom is 40
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Set value of top.sub.int_param_custom to 80
+
+Info: cfg_ip: @20 ns, execute: [EXTERNAL] Current value of top.sub.int_param_custom is 80
+
+Info: sc_main: End Simulation.
+
+List of parameters:
+   int_param_top
+   sc_main_param
+   sim_ip.int_param_ip
+   sim_ip.int_param_ip_0
+   sim_ip.sub_ip_0
+   tool.external_param
+   top.sub.int_param_custom
+
+Info: sc_main: Current value of tool.external_param is 10
+
+Info: sc_main: Originator of tool.external_param handle is sc_main
+
+Info: sc_main: Originator of tool.external_param is tool
+
+Info: sc_main: Current value of sc_main_param is "value"
+
+Info: sc_main: Originator of sc_main_param handle is sc_main
+
+Info: sc_main: Originator of sc_main_param is sc_main
+
+Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip is 50
+
+Info: sim_ip: Dtor: Current value of sim_ip.int_param_ip_0 is 60
+
+Info: sim_ip: Dtor: Current value of int_param_top is 70
+
+Info: sim_ip: Dtor: Current value of top.sub.int_param_custom is 80

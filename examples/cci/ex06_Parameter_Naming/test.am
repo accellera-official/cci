@@ -1,0 +1,33 @@
+examples_TESTS += ex06_Parameter_Naming/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex06_Parameter_Naming_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex06_Parameter_Naming
+
+examples_FILES += \
+	$(ex06_Parameter_Naming_H_FILES) \
+	$(ex06_Parameter_Naming_CXX_FILES) \
+	$(ex06_Parameter_Naming_BUILD) \
+	$(ex06_Parameter_Naming_EXTRA)
+
+ex06_Parameter_Naming_test_SOURCES = \
+	$(ex06_Parameter_Naming_H_FILES) \
+	$(ex06_Parameter_Naming_CXX_FILES)
+
+ex06_Parameter_Naming_CXX_FILES = \
+    ex06_Parameter_Naming/ex06_Parameter_Naming.cpp
+
+ex06_Parameter_Naming_H_FILES = \
+    ex06_Parameter_Naming/ex06_config_ip.h \
+    ex06_Parameter_Naming/ex06_simple_ip.h
+
+ex06_Parameter_Naming_BUILD = 
+
+ex06_Parameter_Naming_EXTRA = 
+
+## Taf!

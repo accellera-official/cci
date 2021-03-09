@@ -1,0 +1,8 @@
+!include <..\..\build-msvc\Makefile.config>
+
+PROJECT = ex13_Parameter_Value_Locking
+
+OBJS=\
+    $(OUTDIR)\$(PROJECT).obj
+
+!include <..\..\build-msvc\Makefile.rules>

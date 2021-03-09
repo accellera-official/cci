@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <MSVC>msvc10</MSVC>
+    <SYSTEMC>$(SYSTEMC_HOME)\$(MSVC)</SYSTEMC>
+    <BOOST>$(BOOST_HOME)</BOOST>
+	<JSON>$(RAPIDJSON_HOME)</JSON>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(BOOST);$(SYSTEMC)\..\src;$(RAPIDJSON_HOME);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SC_INCLUDE_DYNAMIC_PROCESSES;SC_INCLUDE_FX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="MSVC">
+      <Value>$(MSVC)</Value>
+    </BuildMacro>
+    <BuildMacro Include="SYSTEMC">
+      <Value>$(SYSTEMC)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BOOST">
+      <Value>$(BOOST)</Value>
+    </BuildMacro>
+    <BuildMacro Include="JSON">
+      <Value>$(RAPIDJSON)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

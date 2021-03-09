@@ -1,0 +1,35 @@
+examples_TESTS += ex15_Inter_Parameter_Value_Constraints/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex15_Inter_Parameter_Value_Constraints_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex15_Inter_Parameter_Value_Constraints
+
+examples_FILES += \
+	$(ex15_Inter_Parameter_Value_Constraints_H_FILES) \
+	$(ex15_Inter_Parameter_Value_Constraints_CXX_FILES) \
+	$(ex15_Inter_Parameter_Value_Constraints_BUILD) \
+	$(ex15_Inter_Parameter_Value_Constraints_EXTRA)
+
+ex15_Inter_Parameter_Value_Constraints_test_SOURCES = \
+	$(ex15_Inter_Parameter_Value_Constraints_H_FILES) \
+	$(ex15_Inter_Parameter_Value_Constraints_CXX_FILES)
+
+ex15_Inter_Parameter_Value_Constraints_CXX_FILES = \
+    ex15_Inter_Parameter_Value_Constraints/ex15_Inter_Parameter_Value_Constraints.cpp
+
+ex15_Inter_Parameter_Value_Constraints_H_FILES = \
+    ex15_Inter_Parameter_Value_Constraints/ex15_address_lines_register.h \
+    ex15_Inter_Parameter_Value_Constraints/ex15_configurator.h \
+    ex15_Inter_Parameter_Value_Constraints/ex15_memory_block.h \
+    ex15_Inter_Parameter_Value_Constraints/ex15_processor.h
+
+ex15_Inter_Parameter_Value_Constraints_BUILD = 
+
+ex15_Inter_Parameter_Value_Constraints_EXTRA = 
+
+## Taf!
