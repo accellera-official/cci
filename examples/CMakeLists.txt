@@ -45,8 +45,9 @@ if (NOT TARGET check)
 endif()
 # Only built under "check" target
 #  - see https://cmake.org/Wiki/CMakeEmulateMakeCheck
-enable_testing()
-
+if (SYSTEMCCCI_BUILD_TESTS)
+  enable_testing()
+endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
 set_directory_properties(PROPERTIES EXCLUDE_FROM_ALL TRUE)
 set_target_properties(check PROPERTIES FOLDER "examples")
@@ -153,15 +154,6 @@ endfunction (configure_and_add_test)
 
 
 
-set (CMAKE_PREFIX_PATH /opt/systemc)
-find_package(SystemCLanguage CONFIG REQUIRED)
-
-set (CMAKE_CXX_STANDARD ${SystemC_CXX_STANDARD} CACHE STRING
-     "C++ standard to build all targets. Supported values are 98, 11, and 14.")
-set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
-     "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
-
-
 function (add_test_exe NAME)
   string (REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/cci/" "" TEST_NAME
                   "${NAME}")
@@ -179,20 +171,12 @@ endfunction()
 #########################################################################
 ## Add the examples.
 ##########################################################################
-include_directories(cci/common/inc/)
+if (SYSTEMCCCI_BUILD_TESTS)
+  include_directories(cci/common/inc/)
 
 
-file(GLOB EXAMPLES cci/ex*)
-foreach(example ${EXAMPLES})
-  add_test_exe(${example})
-endforeach()
-#add_executable (ex01 EXCLUDE_FROM_ALL
-#               cci/ex01_Simple_Int_Param/ex01_Simple_Int_Param.cpp
-#               cci/ex01_Simple_Int_Param/ex01_config_ip.h
-#               cci/ex01_Simple_Int_Param/ex01_simple_ip.h
-#               cci/common/inc/xreport.hpp
-#               cci/common/inc/param_tracker.h
-#               )
-#target_link_libraries (ex01 SystemC::systemc cci)
-#configure_and_add_test (ex01)
-
+  file(GLOB EXAMPLES cci/ex*)
+  foreach(example ${EXAMPLES})
+    add_test_exe(${example})
+  endforeach()
+endif()

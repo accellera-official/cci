@@ -212,7 +212,7 @@ if (NOT CMAKE_BUILD_TYPE)
        FORCE)
 endif (NOT CMAKE_BUILD_TYPE)
 
-set (CMAKE_CXX_STANDARD 98 CACHE STRING
+set (CMAKE_CXX_STANDARD 11 CACHE STRING
      "C++ standard to build all targets. Supported values are 98, 11, and 14.")
 set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL
      "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
@@ -229,6 +229,7 @@ if (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
 endif (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
 
 option (BUILD_SOURCE_DOCUMENTATION "Build source documentation with Doxygen." OFF)
+option (SYSTEMCCCI_BUILD_TESTS "Build tests" ON)
 
 ###############################################################################
 # Set SystemC_TARGET_ARCH depending on OS and processor type
@@ -356,6 +357,17 @@ if (NOT SystemC_TARGET_ARCH)
   set (SystemC_TARGET_ARCH ${_TARGET_ARCH} CACHE STRING "SystemC Target Architecture")
   unset (_TARGET_ARCH)
 endif (NOT SystemC_TARGET_ARCH)
+
+
+set (CMAKE_PREFIX_PATH /opt/systemc)
+
+IF (NOT SystemCLanguage_FOUND )
+    find_package(SystemCLanguage CONFIG REQUIRED)
+ENDIF ()
+message (STATUS "Using SystemC ${SystemCLanguage_VERSION} (${SystemCLanguage_DIR})")
+IF ( "${SystemC_CXX_STANDARD}" AND NOT "${SystemC_CXX_STANDARD}" EQUAL "${CMAKE_CXX_STANDARD}")
+  message (FATAL_ERROR "SystemC_CXX_STANDARD ${SystemC_CXX_STANDARD} does not match SystemCCCI_CXX_STANDARD ${CMAKE_CXX_STANDARD} (-DCMAKE_CXX_STANDARD)")
+ENDIF ()
 
 
 
@@ -558,105 +570,3 @@ install(FILES "${PROJECT_BINARY_DIR}/SystemCCCIConfig.cmake"
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# cmake_minimum_required(VERSION 3.3)
-
-# project(cci VERSION 1.1.0 LANGUAGES CXX)
-
-# # If no build type was specified, set it to Release.
-# if(NOT CMAKE_BUILD_TYPE)
-#     set(CMAKE_BUILD_TYPE Release CACHE STRING
-#             "Choose the type of build, options are: None Debug Release."
-#             FORCE)
-# endif(NOT CMAKE_BUILD_TYPE)
-
-# include(FetchContent)
-
-# FetchContent_Declare(
-#         RapidJson
-#         GIT_REPOSITORY "https://github.com/Tencent/rapidjson.git"
-#         GIT_TAG master
-# )
-# FetchContent_Declare(
-#         SystemC
-#         GIT_REPOSITORY "https://github.com/GreenSocs/systemc.git"
-#         GIT_TAG master
-# )
-# FetchContent_MakeAvailable(RapidJson SystemC)
-
-# set(HEADER
-#     src/cci/cfg/cci_broker_callbacks.h
-#     src/cci/cfg/cci_broker_handle.h
-#     src/cci/cfg/cci_broker_if.h
-#     src/cci/cfg/cci_broker_manager.h
-#     src/cci/cfg/cci_broker_types.h
-#     src/cci/cfg/cci_config_macros.h
-#     src/cci/cfg/cci_macros_undef.h
-#     src/cci/cfg/cci_mutable_types.h
-#     src/cci/cfg/cci_originator.h
-#     src/cci/cfg/cci_param_callbacks.h
-#     src/cci/cfg/cci_param_if.h
-#     src/cci/cfg/cci_param_typed.h
-#     src/cci/cfg/cci_param_typed_handle.h
-#     src/cci/cfg/cci_param_untyped.h
-#     src/cci/cfg/cci_param_untyped_handle.h
-#     src/cci/cfg/cci_report_handler.h
-#     src/cci/core/cci_callback.h
-#     src/cci/core/cci_callback_impl.h
-#     src/cci/core/cci_cmnhdr.h
-#     src/cci/core/cci_core_types.h
-#     src/cci/core/cci_filtered_range.h
-#     src/cci/core/cci_meta.h
-#     src/cci/core/cci_name_gen.h
-#     src/cci/core/cci_value.h
-#     src/cci/core/cci_value_converter.h
-#     src/cci/core/cci_value_iterator.h
-#     src/cci/core/cci_version.h
-#     src/cci/core/rapidjson.h
-#     src/cci/core/systemc.h
-#     src/cci/utils/broker.h
-#     src/cci/utils/consuming_broker.h
-# )
-
-# set(SOURCE
-#     src/cci/cfg/cci_broker_handle.cpp
-#     src/cci/cfg/cci_broker_manager.cpp
-#     src/cci/cfg/cci_originator.cpp
-#     src/cci/cfg/cci_param_if.cpp
-#     src/cci/cfg/cci_param_untyped.cpp
-#     src/cci/cfg/cci_param_untyped_handle.cpp
-#     src/cci/cfg/cci_report_handler.cpp
-#     src/cci/core/cci_name_gen.cpp
-#     src/cci/core/cci_value.cpp
-#     src/cci/core/cci_value_converter.cpp
-#     src/cci/utils/broker.cpp
-#     src/cci/utils/consuming_broker.cpp
-# )
-
-# add_library(cci
-#     ${HEADER}
-#     ${SOURCE})
-
-# target_link_libraries(cci PRIVATE rapidjson systemc)
-# target_include_directories(cci PUBLIC ${CMAKE_SOURCE_DIR}/src ${rapidjson_SOURCE_DIR}/include ${systemc_SOURCE_DIR}/src)
-
-# if(BUILD_TESTING AND ("${PROJECT_NAME}" STREQUAL "${CMAKE_PROJECT_NAME}"))
-#     enable_testing()
-#     add_subdirectory(examples)
-# endif()

@@ -95,7 +95,9 @@ add_library (cci
 # it's not found. As the user is using SystemC, the cmake files should
 # be available.
 set (CMAKE_PREFIX_PATH /opt/systemc)
-find_package(SystemCLanguage CONFIG REQUIRED)
+if ( NOT SystemCLanguage_FOUND )
+  find_package(SystemCLanguage CONFIG REQUIRED)
+ENDIF ()
 
 set (CMAKE_CXX_STANDARD ${SystemC_CXX_STANDARD} CACHE STRING
      "C++ standard to build all targets. Supported values are 98, 11, and 14.")
