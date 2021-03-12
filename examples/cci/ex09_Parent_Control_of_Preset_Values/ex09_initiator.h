@@ -36,8 +36,7 @@
 #include <string>
 #include "tlm_utils/simple_initiator_socket.h"
 #include "xreport.hpp"
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_int.hpp>
+#include <random>
 
 /**
  *  @class  ex09_initiator
@@ -77,8 +76,8 @@ SC_MODULE(ex09_initiator) {
 
     int i = 0;
 	
-	boost::random::mt19937 rng;
-	boost::random::uniform_int_distribution<> cmd_dist(0,1);
+  std::default_random_engine rng;
+  std::uniform_int_distribution<int> cmd_dist(0,1);
 
     while (1) {
       tlm::tlm_command cmd = static_cast<tlm::tlm_command>(cmd_dist(rng));
