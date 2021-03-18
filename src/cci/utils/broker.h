@@ -53,6 +53,9 @@ namespace cci_utils
     /// Destructor
     ~broker();
 
+
+    bool has_preset_value(const std::string &parname) const;
+
     /// Return the preset value of a parameter (by name)
     cci::cci_value get_preset_cci_value(const std::string &parname) const;
 

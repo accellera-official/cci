@@ -60,6 +60,15 @@ namespace cci_utils {
     }
   }
   
+  bool broker::has_preset_value(const std::string &parname) const
+  {
+    if (sendToParent(parname)) {
+      return m_parent.has_preset_value(parname);
+    } else {
+      return consuming_broker::has_preset_value(parname);
+    }
+  }
+
   cci_value broker::get_preset_cci_value(const std::string &parname) const
   {
     if (sendToParent(parname)) {
