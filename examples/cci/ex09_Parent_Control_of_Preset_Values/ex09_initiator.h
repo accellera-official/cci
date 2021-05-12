@@ -36,7 +36,6 @@
 #include <string>
 #include "tlm_utils/simple_initiator_socket.h"
 #include "xreport.hpp"
-#include <random>
 
 /**
  *  @class  ex09_initiator
@@ -76,59 +75,63 @@ SC_MODULE(ex09_initiator) {
 
     int i = 0;
 	
-  std::default_random_engine rng;
-  std::uniform_int_distribution<int> cmd_dist(0,1);
+  static tlm::tlm_command cmds[8] = {
+    tlm::TLM_WRITE_COMMAND, tlm::TLM_READ_COMMAND, tlm::TLM_WRITE_COMMAND,
+    tlm::TLM_READ_COMMAND, tlm::TLM_READ_COMMAND, tlm::TLM_READ_COMMAND,
+    tlm::TLM_WRITE_COMMAND, tlm::TLM_WRITE_COMMAND
+  };
+  while (1) {
+    tlm::tlm_command cmd = cmds[(i>>2)%8];
+    //static_cast<tlm::tlm_command>(cmd_dist(rng));
 
-    while (1) {
-      tlm::tlm_command cmd = static_cast<tlm::tlm_command>(cmd_dist(rng));
+    if (cmd == tlm::TLM_WRITE_COMMAND)
+      data = 0xFF000000 | i;
 
-      if (cmd == tlm::TLM_WRITE_COMMAND)
-        data = 0xFF000000 | i;
+    trans->set_command(cmd);
+    trans->set_address(i);
+    trans->set_data_ptr(reinterpret_cast<unsigned char *>(&data));
+    trans->set_data_length(4);
+    trans->set_streaming_width(4);
+    trans->set_byte_enable_ptr(0);
+    trans->set_dmi_allowed(false);
+    trans->set_response_status(tlm::TLM_INCOMPLETE_RESPONSE);
+    sc_core::sc_time delay = sc_core::sc_time(0, sc_core::SC_NS);
 
-      trans->set_command(cmd);
-      trans->set_address(i);
-      trans->set_data_ptr(reinterpret_cast<unsigned char*>(&data));
-      trans->set_data_length(4);
-      trans->set_streaming_width(4);
-      trans->set_byte_enable_ptr(0);
-      trans->set_dmi_allowed(false);
-      trans->set_response_status(tlm::TLM_INCOMPLETE_RESPONSE);
-      sc_core::sc_time delay = sc_core::sc_time(0, sc_core::SC_NS);
-
-      if (cmd == tlm::TLM_WRITE_COMMAND) {
-        XREPORT("[Initiators Message]=>At address " << std::hex << i
-                << " sending transaction with command = Write" << ", data="
-                << std::hex << data << " at time " << sc_core::sc_time_stamp());
-      } else {
-        XREPORT("[Initiators Message]=>At address " << std::hex << i
-                << " sending transaction with command= Read " << " at time "
-                << sc_core::sc_time_stamp());
-      }
-
-      initiator_socket->b_transport(*trans, delay);
-
-      if (trans->is_response_error())
-        XREPORT_ERROR("TLM_2" << trans->get_response_string().c_str());
-
-      if (delay.to_double() != 0)
-        wait(delay);
-
-      if (cmd == tlm::TLM_WRITE_COMMAND) {
-        XREPORT("[Initiators Message]=>At address " << std::hex << i
-                << " received response of Write transaction " << " at time "
-                << sc_core::sc_time_stamp());
-      } else {
-        XREPORT("[Initiators Message]=>At address " << std::hex << i
-                << " received response of Read transaction " << " data "
-                << data << " at time " << sc_core::sc_time_stamp());
-      }
-
-      XREPORT("--------------------------------------------------------");
-
-      wait(5.0, sc_core::SC_NS);
-
-      i = i + 4;
+    if (cmd == tlm::TLM_WRITE_COMMAND) {
+      XREPORT("[Initiators Message]=>At address "
+              << std::hex << i << " sending transaction with command = Write"
+              << ", data=" << std::hex << data << " at time "
+              << sc_core::sc_time_stamp());
+    } else {
+      XREPORT("[Initiators Message]=>At address "
+              << std::hex << i << " sending transaction with command= Read "
+              << " at time " << sc_core::sc_time_stamp());
     }
+
+    initiator_socket->b_transport(*trans, delay);
+
+    if (trans->is_response_error())
+      XREPORT_ERROR("TLM_2" << trans->get_response_string().c_str());
+
+    if (delay.to_double() != 0)
+      wait(delay);
+
+    if (cmd == tlm::TLM_WRITE_COMMAND) {
+      XREPORT("[Initiators Message]=>At address "
+              << std::hex << i << " received response of Write transaction "
+              << " at time " << sc_core::sc_time_stamp());
+    } else {
+      XREPORT("[Initiators Message]=>At address "
+              << std::hex << i << " received response of Read transaction "
+              << " data " << data << " at time " << sc_core::sc_time_stamp());
+    }
+
+    XREPORT("--------------------------------------------------------");
+
+    wait(5.0, sc_core::SC_NS);
+
+    i = i + 4;
+  }
   }
 
  private:
