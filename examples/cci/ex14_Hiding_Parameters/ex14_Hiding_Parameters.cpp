@@ -30,7 +30,6 @@
  *  @date      3rd September, 2011 (Saturday)
  */
 
-#include <boost/assign/list_of.hpp>
 #include <cci_configuration>
 #include "ex14_parent.h"
 #include "ex14_configurator.h"

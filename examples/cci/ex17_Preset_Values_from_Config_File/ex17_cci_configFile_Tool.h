@@ -30,8 +30,6 @@
 #define EXAMPLES_EX17_SPECIFYING_PARAMETER_VALUES_VIA_A_CONFIGURATION_FILE_EX17_CCI_CONFIGFILE_TOOL_H_
 
 #include <cci_configuration>
-#include <boost/algorithm/string.hpp>
-#include <boost/tokenizer.hpp>
 #include <sstream>
 #include <utility>
 #include <string>
@@ -39,6 +37,23 @@
 
 #include "ex17_configset.h"
 
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
+}
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
 namespace cci {
 
 #define CONFIG_FILE_TOOL_BUFSIZE 1024
@@ -179,7 +194,7 @@ class ex17_cci_configFile_Tool {
           if (cnf_line_data.first.find_first_not_of(
               "ABCDEFGHIJKLMNOPQRSTUVWXYZ_") == std::string::npos) {
             std::string macro_val = cnf_line_data.second.substr(1);
-            boost::algorithm::trim(macro_val);
+            trim(macro_val);
             macro_set.add(cnf_line_data.first, macro_val);
           } else {
             std::stringstream ss;
@@ -283,7 +298,7 @@ class ex17_cci_configFile_Tool {
     if ((lidx = lstr.find("#")) != std::string::npos) {
       lstr = lstr.substr(0, lidx);
     }
-    boost::algorithm::trim_left(lstr);
+    ltrim(lstr);
 
     if (!lstr.empty()) {
       parseresult p = parse(lstr);
@@ -295,7 +310,7 @@ class ex17_cci_configFile_Tool {
           size_t pos = tok.find(p.first[0]);
           std::string val = tok.substr(pos, tok.length() - pos);
           val = val.substr(val.find_first_of(separators) + 1);
-          boost::algorithm::trim(val);
+          trim(val);
           std::string parname = p.first[0];
 
           // package the configuration
