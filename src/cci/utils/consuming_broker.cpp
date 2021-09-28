@@ -160,7 +160,7 @@ namespace cci_utils {
   }
 
   cci_value consuming_broker::get_cci_value(const std::string &parname,
-  const cci_originator &originator) const
+    const cci_originator &originator) const
   {
     cci_param_if* p = get_orig_param(parname);
     if(p) {
