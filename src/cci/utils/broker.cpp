@@ -87,7 +87,8 @@ namespace cci_utils {
     }
   }
 
-  cci_value broker::get_cci_value(const std::string &parname) const
+  cci_value broker::get_cci_value(const std::string &parname,
+    const cci_originator &originator) const
   {
     if (sendToParent(parname)) {
       return m_parent.get_cci_value(parname);

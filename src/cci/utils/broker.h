@@ -68,8 +68,9 @@ namespace cci_utils
     void lock_preset_value(const std::string &parname);
 
     /// Get current cci_value
-    cci::cci_value get_cci_value(const std::string &parname) const;
-    
+    cci::cci_value get_cci_value(const std::string &parname,
+        const cci::cci_originator& originator = cci::cci_originator()) const;
+
     /// return a handle with which to access a parameter
     cci::cci_param_untyped_handle get_param_handle(const std::string &parname,
                                                    const cci::cci_originator& originator) const;
