@@ -83,8 +83,6 @@ SystemC CCI requires the following additional tools
   * RapidJSON, latest version (Github master), 
     https://github.com/Tencent/rapidjson
 
-  * Boost version 1.57.0 or newer, https://www.boost.org/
-
 ### (In)compatibility note
 
 While it is possible to build SystemC and CCI as a shared library (both on

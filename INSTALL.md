@@ -54,8 +54,6 @@ The following additional packages are required:
 
   * SystemC     https://accellera.org/downloads/standards/systemc
   * RapidJSON   https://github.com/Tencent/rapidjson
-  * Boost       https://www.boost.org/
-
 
 Installation Notes for Unix
 ===========================
@@ -436,8 +434,7 @@ The following environment variables are required:
   * SYSTEMC_HOME           - path to SystemC installation root directory
   * SYSTEMC_MSVC           - name of the SystemC MSVC directory (e.g. msvc10)
   * CCI_HOME               - path to CCI installation
-  * CCI_MSVC               - name of the CCI MSVC directory (e.g. msvc10)
-  * BOOST_HOME             - path too Boost libraries
+  * CCI_MSVC               - name of the CCI MSVC directory (e.g. msvc14)
   * RAPIDJSON_HOME         - path to RapidJSON library
 
 NOTE: _This section covers the installation based on Microsoft Visual C++.
@@ -452,13 +449,13 @@ NOTE: _If you experience spurious errors about missing files in the
 Microsoft Visual C++ 2010 (compiler version 10.0) or later
 ----------------------------------------------------------
 
-The SystemC CCI package contains two subdirectories: `msvc10` and
+The SystemC CCI package contains two subdirectories: `msvc14` and
 `examples/build-msvc` to build the CCI library and the examples using
 Microsoft Visual C++ (MSVC).
 
 ### Build the SystemC CCI library with MSVC
 
-The `msvc10` directory contains the project and workspace files to
+The `msvc14` directory contains the project and workspace files to
 compile the `cci.lib` library. Double-click on the `cci.sln`
 file to launch Visual C++ with the workspace file. The workspace file
 will have the proper switches set to compile for Visual C++ 2010.
@@ -518,7 +515,7 @@ Creating SystemC CCI Applications
 
 7. From the C/C++ tab, select the General properties and add to
    'Additional Include Directories' the path 
-   `$(CCI_HOME)\src;$(SYSTEMC_HOME)\src;$(RAPIDJSON_HOME)\include;$(BOOST_HOME);`
+   `$(CCI_HOME)\src;$(SYSTEMC_HOME)\src;$(RAPIDJSON_HOME)\include;`
    
 8. From the C/C++ tab, select the Code Generation and set
    'Runtime Library' to 'Multi-threaded DLL (/MD)' in case of a Release 
@@ -544,8 +541,8 @@ Creating SystemC CCI Applications
 14. Click OK. If necessary repeat the same steps for Configuration Debug 
     or Release
 
-Also make sure that the Windows environment variables `CCI_HOME`, `SYSTEMC_HOME`, 
-`RAPIDJSON_HOME` and `BOOST_HOME` are set and point to the installation directory for each package.
+Also make sure that the Windows environment variables `CCI_HOME`, `SYSTEMC_HOME`, and
+`RAPIDJSON_HOME` are set and point to the installation directory for each package.
 
 
 Building against a SystemC DLL

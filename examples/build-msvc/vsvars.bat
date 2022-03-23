@@ -40,6 +40,7 @@ rem ***************************************************************************
 
 set MSVC_VERSION=
 set MSVC_PLATFORM=
+set VCVARSDIR= 
 
 if "%1" == "8.0"   goto check_MSVC80
 if "%1" == "2005"  goto check_MSVC80
@@ -55,6 +56,10 @@ if "%1" == "2013"  goto check_MSVC120
 if "%1" == "2014"  goto check_MSVC120
 if "%1" == "14.0"  goto check_MSVC140
 if "%1" == "2015"  goto check_MSVC140
+if "%1" == "15.0"  goto check_MSVC150
+if "%1" == "2017"  goto check_MSVC150
+if "%1" == "16.0"  goto check_MSVC160
+if "%1" == "2019"  goto check_MSVC160
 
 if not "%1" == "" set MSVC_PLATFORM=%1
 if     "%1" == "" set MSVC_PLATFORM=x86
@@ -62,6 +67,11 @@ goto check_MSVC100
 
 rem We rely on the variables VSxxxCOMNTOOLS to be set by the MSVC
 rem installation.  This should be usually the case by default.
+
+rem For MSVC 2017 and newer, VSXXXCOMNTOOLS is not defined anymore,
+rem and we need to set the variable ourselves. We will check for the
+rem Community and Professions release in the most commonly used 
+rem install directories 
 
 :check_MSVC80
 set MSVC_VERSION=8.0 (2005)
@@ -103,6 +113,30 @@ set MSVC_VERSION=14.0 (2015)
 set VSINSTALLDIR=%VS140COMNTOOLS%..\..\
 if "%SYSTEMC_MSVC%" == "" set SYSTEMC_MSVC=msvc14
 if "%CCI_MSVC%" == "" set CCI_MSVC=msvc14
+goto load_MSVC
+
+:check_MSVC150
+set MSVC_VERSION=15.0 (2017)
+if "%SYSTEMC_MSVC%" == "" set SYSTEMC_MSVC=msvc15
+if "%CCI_MSVC%" == "" set CCI_MSVC=msvc15
+set VCVARSDIR=Auxiliary\Build\
+set VS150COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\
+set VSINSTALLDIR=%VS150COMNTOOLS%..\..\
+if exist "%VSINSTALLDIR%" goto load_MSVC
+set VS160COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\Tools\
+set VSINSTALLDIR=%VS160COMNTOOLS%..\..\
+goto load_MSVC
+
+:check_MSVC160
+set MSVC_VERSION=16.0 (2019)
+if "%SYSTEMC_MSVC%" == "" set SYSTEMC_MSVC=msvc16
+if "%CCI_MSVC%" == "" set CCI_MSVC=msvc16
+set VCVARSDIR=Auxiliary\Build\
+set VS160COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\
+set VSINSTALLDIR=%VS160COMNTOOLS%..\..\
+if exist "%VSINSTALLDIR%" goto load_MSVC
+set VS160COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\Tools\
+set VSINSTALLDIR=%VS160COMNTOOLS%..\..\
 goto load_MSVC
 
 :load_MSVC

@@ -73,7 +73,6 @@ CCI_LIBS     ?= -lcci
 EXAMPLES_INC_DIR = $(CCI_HOME)/examples/cci/common/inc
 
 INCDIR   += -I. -I.. \
-            -I$(BOOST_HOME) \
             -I$(RAPIDJSON_HOME) \
             -I$(CCI_INC_DIR) \
             -I$(EXAMPLES_INC_DIR) \
@@ -123,12 +122,6 @@ ifeq (,$(wildcard $(RAPIDJSON_HOME)/.))
 $(error RAPIDJSON_HOME [$(RAPIDJSON_HOME)] is not present. \
         Please update Makefile.config)
 endif
-
-ifeq (,$(wildcard $(BOOST_HOME)/.))
-$(error BOOST_HOME [$(RAPIDJSON_HOME)] is not present. \
-        Please update Makefile.config)
-endif
-
 
 
 ## ***************************************************************************
