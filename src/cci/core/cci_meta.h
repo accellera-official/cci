@@ -30,9 +30,7 @@
 #include "cci/core/systemc.h"
 #include "cci/core/cci_cmnhdr.h"
 
-#if CCI_CPLUSPLUS >= 201103L
-# include <type_traits>
-#endif
+# include <type_traits> // C++11
 
 CCI_OPEN_NAMESPACE_
 
@@ -48,37 +46,13 @@ typedef cci_tag<void> cci_untyped_tag;
 //@cond CCI_HIDDEN_FROM_DOXYGEN
 namespace cci_impl {
 
-#if CCI_CPLUSPLUS >= 201103L
+// Note: C++11 minimal required version, should be enforced by build scripts
 using std::enable_if;
 using std::integral_constant;
 using std::true_type;
 using std::false_type;
 using std::is_same;
 using std::remove_reference;
-
-#else // use Boost/local implementation for type traits
-
-template<bool Cond, typename T = void>
-struct enable_if : sc_boost::enable_if_c<Cond, T> {};
-
-/// A type encoding for an integral value
-template<typename IntegralType, IntegralType V> struct integral_constant
-{
-  typedef IntegralType value_type;
-  typedef integral_constant type;
-  static const value_type value = V;
-};
-
-typedef integral_constant<bool,true>  true_type;
-typedef integral_constant<bool,false> false_type;
-
-template<typename T, typename U> struct is_same : false_type {};
-template<typename T> struct is_same<T,T> : true_type {};
-
-template<typename T> struct remove_reference { typedef T type; };
-template<typename T> struct remove_reference<T&> { typedef T type; };
-
-#endif // CCI_CPLUSPLUS >= 201103L
 
 /// C++03 implementation of std::void_t (from C++17)
 template<typename T> struct always_void { typedef void type; };

@@ -103,8 +103,8 @@
 #endif // CCI_CPLUSPLUS
 
 /* ------------------------------------------------------------------------ */
-
 // Macros to check if certain C++ features are supported
+
 #ifndef __has_feature        // Optional of course.
 # define __has_feature(x) 0  // Compatibility with non-clang compilers.
 #endif
@@ -115,30 +115,13 @@
 /* ------------------------------------------------------------------------ */
 // Support for C++ rvalue-references / perfect forwarding
 
-#ifndef CCI_HAS_CXX_RVALUE_REFS
-# if CCI_CPLUSPLUS >= 201103L
-#	 define CCI_HAS_CXX_RVALUE_REFS
-# endif
-#endif // detect: CCI_HAS_CXX_RVALUE_REFS
-
-#ifdef CCI_HAS_CXX_RVALUE_REFS
 # include <utility>
 # define CCI_MOVE_(Obj)::std::move(Obj)
 # define CCI_FORWARD_(Type,Obj) ::std::forward<Type>(Obj)
-#else
-# define CCI_MOVE_(Obj) Obj
-# define CCI_FORWARD_(Type,Obj) Obj
-#endif // CCI_HAS_CXX_RVALUE_REFS
 
 /* ------------------------------------------------------------------------ */
 // Extern templates (supported by all major compilers even before C++11)
 
-#ifndef CCI_TPLEXTERN_
-# if defined(__GNUC__) && CCI_CPLUSPLUS < 201103L
-#   define CCI_TPLEXTERN_ __extension__ extern
-# else
-#   define CCI_TPLEXTERN_ extern
-# endif
-#endif // CCI_TPLEXTERN_
+#define CCI_TPLEXTERN_ extern
 
 #endif // CCI_CORE_CCI_CMNHDR_H_INCLUDED_

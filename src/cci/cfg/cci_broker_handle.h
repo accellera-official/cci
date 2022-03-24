@@ -60,7 +60,6 @@ public:
         return *this;
     }
 
-#if CCI_CPLUSPLUS >= 201103L
     cci_broker_handle(cci_broker_handle&& that)
       : m_broker(CCI_MOVE_(that.m_broker)) 
       , m_originator(promote_originator(that.m_originator)) {}
@@ -73,7 +72,6 @@ public:
     }
 
     ~cci_broker_handle() = default;
-#endif // CCI_CPLUSPLUS
 
     /// @copydoc cci_broker_if::create_broker_handle
     cci_broker_handle

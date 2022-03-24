@@ -148,8 +148,6 @@ struct cci_param_read_event
 
 /* ------------------------------------------------------------------------ */
 
-#if CCI_CPLUSPLUS >= 201103L
-
 /// Parameter pre write callback
 template <typename T = void>
 using cci_param_pre_write_callback
@@ -189,50 +187,6 @@ using cci_param_post_read_callback
 template <typename T = void>
 using cci_param_post_read_callback_handle
   = cci_callback_typed_handle<const cci_param_read_event<T>&>;
-
-#else // CCI_CPLUSPLUS >= 201103L (no alias templates)
-
-/// Parameter pre write callback
-template <typename T = void>
-struct cci_param_pre_write_callback
-        : cci_callback<const cci_param_write_event<T>&, bool> {};
-
-/// Parameter pre write callback handle
-template <typename T = void>
-struct cci_param_pre_write_callback_handle
-        : cci_callback_typed_handle<const cci_param_write_event<T>&, bool> {};
-
-/// Parameter post write callback
-template <typename T = void>
-struct cci_param_post_write_callback
-  : cci_callback<const cci_param_write_event<T>& > {};
-
-/// Parameter post write callback handle
-template <typename T = void>
-struct cci_param_post_write_callback_handle
-  : cci_callback_typed_handle<const cci_param_write_event<T>&> {};
-
-/// Parameter pre read callback
-template <typename T = void>
-struct cci_param_pre_read_callback
-        : cci_callback<const cci_param_read_event<T>& > {};
-
-/// Parameter pre read callback handle
-template <typename T = void>
-struct cci_param_pre_read_callback_handle
-        : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
-
-/// Parameter post read callback
-template <typename T = void>
-struct cci_param_post_read_callback
-        : cci_callback<const cci_param_read_event<T>& > {};
-
-/// Parameter post read callback handle
-template <typename T = void>
-struct cci_param_post_read_callback_handle
-        : cci_callback_typed_handle<const cci_param_read_event<T>&> {};
-
-#endif // CCI_CPLUSPLUS >= 201103L
 
 /// Untyped parameter write event
 typedef cci_param_write_event<>::type

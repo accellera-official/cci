@@ -61,7 +61,6 @@ public:
      */
     explicit cci_param_typed_handle(cci_param_untyped_handle untyped);
 
-#if CCI_CPLUSPLUS >= 201103L
     cci_param_typed_handle(const cci_param_typed_handle&) = default;
     cci_param_typed_handle& operator=(const cci_param_typed_handle&) = default;
 
@@ -73,8 +72,8 @@ public:
         cci_param_untyped_handle::operator=(CCI_MOVE_(that));
         return *this;
     }
+
     ~cci_param_typed_handle() = default;
-#endif // C++11
 
     ///Sets the stored value to a new value
     /**

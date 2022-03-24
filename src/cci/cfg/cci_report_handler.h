@@ -105,18 +105,8 @@ cci_handle_exception(cci_param_failure expect = CCI_ANY_FAILURE);
 /* ------------------------------------------------------------------------ */
 // cci_abort - abort simulation after irrecoverable error
 
-#if CCI_CPLUSPLUS >= 201103L && (!defined(_MSC_VER) || _MSC_VER >= 1900)
 // C++11: use standard C++ attribute
 # define CCI_NORETURN_ [[noreturn]]
-#else
-# if defined(_MSC_VER)
-#    define CCI_NORETURN_ __declspec(noreturn)
-# elif defined(__GNUC__) || defined(__MINGW32__) || defined(__clang__)
-#    define CCI_NORETURN_ __attribute__((noreturn))
-# else
-#    define CCI_NORETURN_ /* nothing */
-# endif
-#endif // CCI_NORETURN_
 
 /// abort simulation
 CCI_NORETURN_ void cci_abort();
