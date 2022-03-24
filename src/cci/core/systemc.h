@@ -88,8 +88,4 @@ inline sc_object* sc_get_current_object()
 } // namespace sc_core
 #endif // sc_core::sc_get_current_object
 
-#if CCI_SYSTEMC_VERSION_CODE_ >= CCI_VERSION_HELPER_(2,4,0)
-# define CCI_HAS_SC_ANY_VALUE 1
-#endif // sc_core::sc_any_value
-
 #endif // CCI_CORE_SYSTEMC_H_INCLUDED_

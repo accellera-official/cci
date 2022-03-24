@@ -27,7 +27,6 @@
  * @author Philipp A. Hartmann, OFFIS/Intel
  */
 
-#ifndef CCI_HAS_SC_ANY_VALUE
 CCI_OPEN_NAMESPACE_
 
 #define DEFINE_PACK_( Type )                                                  \
@@ -451,4 +450,3 @@ template struct cci_value_converter<sc_dt::sc_ufix_fast>;
 #endif // SC_INCLUDE_FX
 
 CCI_CLOSE_NAMESPACE_
-#endif // CCI_HAS_SC_ANY_VALUE
