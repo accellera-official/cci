@@ -52,7 +52,7 @@ SC_MODULE(ex02_simple_ip) {
         uint_param("uint_param", 0xFEEDF00D),
         int16_param ("int16_param", 0x1234),
         int64_param ("int64_param", MK64(0x9,0x876543210)),
-        float_param("float_param", 3.14),
+        float_param("float_param", (float)3.14),
         double_param("double_param", 2.714),
         string_param("string_param", "C++ String") {
     XREPORT("@Ctor: Default value of " << bool_param.name() << " is "

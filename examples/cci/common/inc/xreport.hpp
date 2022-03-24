@@ -32,12 +32,12 @@
  */
 
 #define XREPORT_BASE(type, msg_stream) \
-  XREPORT_PLAIN_BASE(type, "@"<< sc_core::sc_time_stamp()<< ", "<< msg_stream)
+  XREPORT_PLAIN_BASE(type, "@" << sc_core::sc_time_stamp()<< ", " << msg_stream)
 
 #define XREPORT_PLAIN_BASE(type, msg_stream) do { \
-  std::ostringstream ss; \
-  ss<< msg_stream; \
-  SC_REPORT_##type(name(), ss.str().c_str()); \
+  std::ostringstream __ss; \
+  __ss << msg_stream; \
+  SC_REPORT_##type(name(), __ss.str().c_str()); \
 } while (0)
 
 #define XREPORT_INFO(msg_stream)    XREPORT_BASE(INFO, msg_stream)

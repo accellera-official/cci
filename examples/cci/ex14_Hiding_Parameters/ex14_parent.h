@@ -97,15 +97,15 @@ SC_MODULE(ex14_parent) {
    *  @brief  Post Callback function for writes on parameters
    *  @return void
    */
-  void untyped_post_write_callback(const cci::cci_param_write_event<> & ev,
-                                 cci::cci_param_handle child_param_handle)
+  void untyped_post_write_callback(const cci::cci_param_write_event<> & ev_,
+                                   cci::cci_param_handle child_param_handle_)
   {
-    child_param_handle.set_cci_value(ev.new_value);
+    child_param_handle_.set_cci_value(ev_.new_value);
 
     XREPORT("[PARENT - post_write_cb] : Parameter Name : "
-            << ev.param_handle.name()
+            << ev_.param_handle.name()
             << "\tParameter Value : "
-            << ev.new_value);
+            << ev_.new_value);
   }
 
   /**

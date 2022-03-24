@@ -135,7 +135,7 @@ SC_MODULE(ex09_router) {
   }
 
   // Blocking transport implementation of the router
-  void b_transport(int i, tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
+  void b_transport(int i_, tlm::tlm_generic_payload& trans, sc_core::sc_time& delay) {
     wait(delay);
 
     delay = sc_core::SC_ZERO_TIME;
