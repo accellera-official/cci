@@ -23,10 +23,8 @@
 #include "cci/core/cci_cmnhdr.h"
 #include "cci/core/cci_core_types.h"
 
-#ifndef CCI_HAS_SC_ANY_VALUE
 # include "cci/core/cci_value_iterator.h"
 # include <cstring> // std::strlen
-#endif // CCI_HAS_SC_ANY_VALUE
 
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -42,23 +40,6 @@ CCI_OPEN_NAMESPACE_
 
 using sc_dt::int64;
 using sc_dt::uint64;
-
-#ifdef CCI_HAS_SC_ANY_VALUE
-
-typedef sc_dt::sc_any_value          cci_value;
-typedef sc_dt::sc_any_value_list     cci_value_list;
-typedef sc_dt::sc_any_value_map      cci_value_map;
-typedef sc_dt::sc_any_value_category cci_value_category;
-
-static const cci_value_category CCI_NULL_VALUE     = sc_dt::SC_ANY_VALUE_NULL;
-static const cci_value_category CCI_BOOL_VALUE     = sc_dt::SC_ANY_VALUE_BOOL;
-static const cci_value_category CCI_INTEGRAL_VALUE = sc_dt::SC_ANY_VALUE_INT;
-static const cci_value_category CCI_REAL_VALUE     = sc_dt::SC_ANY_VALUE_REAL;
-static const cci_value_category CCI_STRING_VALUE   = sc_dt::SC_ANY_VALUE_STRING;
-static const cci_value_category CCI_LIST_VALUE     = sc_dt::SC_ANY_VALUE_LIST;
-static const cci_value_category CCI_OTHER_VALUE    = sc_dt::SC_ANY_VALUE_MAP;
-
-#else // CCI_HAS_SC_ANY_VALUE
 
 // forward declarations
 class cci_value;
@@ -1536,7 +1517,6 @@ cci_value_list_ref::insert( const_iterator pos, InputIt first, InputIt last )
 #undef CCI_VALUE_REQUIRES_CONVERTER_
 #undef CCI_VALUE_MOVE_
 
-#endif // CCI_HAS_SC_ANY_VALUE
 CCI_CLOSE_NAMESPACE_
 
 #ifdef _MSC_VER

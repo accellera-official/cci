@@ -184,22 +184,6 @@ struct value_converter_enable_if
 //@endcond
 CCI_CLOSE_NAMESPACE_
 
-#ifdef CCI_HAS_SC_ANY_VALUE
-namespace sc_dt {
-
-template<typename T>
-typename CCI_NAMESPACE::cci_impl::value_converter_enable_if<T,bool>::type
-sc_any_value_pack( CCI_NAMESPACE::cci_value::reference dst, T const & src )
-  { return CCI_NAMESPACE::cci_value_converter<T>::pack( dst, src ); }
-
-template<typename T>
-typename CCI_NAMESPACE::cci_impl::value_converter_enable_if<T,bool>::type
-sc_any_value_unpack( T& dst, CCI_NAMESPACE::cci_value::const_reference src )
-  { return CCI_NAMESPACE::cci_value_converter<T>::unpack( dst, src ); }
-
-} // namespace sc_dt
-
-#else // CCI_HAS_SC_ANY_VALUE
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 CCI_OPEN_NAMESPACE_
 
@@ -448,13 +432,12 @@ struct cci_value_converter< sc_dt::sc_lv<N> >
 };
 
 CCI_CLOSE_NAMESPACE_
-#endif // CCI_HAS_SC_ANY_VALUE
 #endif // CCI_CCI_VALUE_CONVERTER_H_INCLUDED_
 
 ///@todo add support for SystemC fixpoint types
 #if defined(SC_INCLUDE_FX) && !defined(CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_)
 #define CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
-#ifndef CCI_HAS_SC_ANY_VALUE
+
 CCI_OPEN_NAMESPACE_
 
 CCI_VALUE_HAS_CONVERTER_(sc_dt::sc_fxval);
@@ -502,7 +485,7 @@ struct cci_value_converter< sc_dt::sc_ufixed_fast<W,I,Q,O,N> >
 };
 
 CCI_CLOSE_NAMESPACE_
-#endif // CCI_HAS_SC_ANY_VALUE
+
 #endif // SC_INCLUDE_FX && ! CCI_CNF_CCI_VALUE_CONVERTER_H_INCLUDED_FX_
 
 #undef CCI_VALUE_HAS_CONVERTER_
