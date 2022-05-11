@@ -169,3 +169,6 @@ install (DIRECTORY ./
          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
          COMPONENT dev
          FILES_MATCHING PATTERN "*.hpp")
+install (FILES "cci_configuration"
+         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+         COMPONENT dev)
