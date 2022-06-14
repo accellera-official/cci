@@ -30,7 +30,7 @@
 #include <cci_configuration>
 #include "xreport.hpp"
 
-class parameter_configurator;
+struct parameter_configurator;
 
 /**
  *  @class  ex10_parameter_owner
@@ -38,7 +38,7 @@ class parameter_configurator;
  */
 SC_MODULE(ex10_parameter_owner) {
  public:
-  friend class ex10_parameter_configurator;
+  friend struct ex10_parameter_configurator;
 
   /**
    *  @fn     ex10_parameter_owner

@@ -33,7 +33,7 @@
 
 #include "xreport.hpp"
 
-class ex17_parameter_configurator;
+struct ex17_parameter_configurator;
 
 /**
  *  @class  ex17_parameter_owner
@@ -43,7 +43,7 @@ class ex17_parameter_configurator;
  */
 SC_MODULE(ex17_parameter_owner) {
  public:
-  friend class ex17_parameter_configurator;
+  friend struct ex17_parameter_configurator;
 
   /**
    *  @fn     ex17_parameter_owner()
@@ -52,7 +52,7 @@ SC_MODULE(ex17_parameter_owner) {
    */
   SC_CTOR(ex17_parameter_owner)
       : int_param("mutable_int_param", 5),
-        float_param("mutable_float_param", 123.45),
+        float_param("mutable_float_param", (float)123.45),
         string_param("mutable_string_param", "default") {
     XREPORT("[OWNER C_TOR] : Int Parameter Value : " << int_param.get_value());
     XREPORT("[OWNER C_TOR] : Float Parameter Value : " << float_param.get_value());

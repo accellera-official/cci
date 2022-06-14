@@ -1,8 +1,6 @@
-Building and running the examples
-=================================
+# Building and running the examples
 
-Unix-like systems
------------------
+## Unix-like systems
 
 In addition to running the examples during the SystemC CCI library build
 process ('make check'), simple Makefiles are provided for building and
@@ -21,7 +19,6 @@ Makefiles
 
      SYSTEMC_HOME           - path to SystemC installation
      CCI_HOME               - path to CCI installation
-     BOOST_HOME             - path too Boost libraries
      RAPIDJSON_HOME         - path to RapidJSON library
      TARGET_ARCH            - target architecture
      ARCH_SUFFIX            - library architecture suffix (see INSTALL)
@@ -46,16 +43,13 @@ For convenience, a simple recursing Makefile is available as well.
 
      gmake -f Makefile.all TARGET_ARCH=linux64 run
 
+## Microsoft Visual C++
 
-Microsoft Visual C++
---------------------
-
-Project files for Microsoft Visual C++ 2010 (10.0) are provided in the 
+Project files for Microsoft Visual C++ 2015 (msvc14, 14.0) are provided in the 
 subdidrectory containing each of these examples.
 
 Each project file has the correct settings to build the example in either
 Debug or Release modes.
 
-The project files assume an environment variable names SYSTEMC_HOME, CCI_HOME, BOOST_HOME
-and RAPIDJSON_HOME and MSVC is set and contains the path to the mscv10 subdirectory. 
-Update the MSVC entry in cci_examples properties file. 
+The project files assume an environment variable names SYSTEMC_HOME, SYSTEMC_MSVC,
+CCI_HOME, and RAPIDJSON_HOME are set.

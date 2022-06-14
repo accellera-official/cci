@@ -34,6 +34,7 @@
 #include <utility>
 #include <string>
 #include <vector>
+#include <cctype>
 
 #include "ex17_configset.h"
 
@@ -269,8 +270,6 @@ class ex17_cci_configFile_Tool {
     } else {
       return make_pair(tokenlist, parse_result_param);
     }
-
-    return make_pair(tokenlist, parse_result_ignore);
   }
 
   /**
@@ -286,9 +285,9 @@ class ex17_cci_configFile_Tool {
    *     empty line,<br> if param_name == "" AND value != "": parsing failed!
    */
   inline std::pair<std::string, std::string>
-      interpret_config_line(const char *line) {
+      interpret_config_line(const char *line_) {
     std::string::size_type lidx;
-    std::string lstr(line);
+    std::string lstr(line_);
     std::pair<std::string, std::string> config_data;
 
     std::string separators;
