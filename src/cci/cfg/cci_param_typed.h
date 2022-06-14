@@ -983,14 +983,9 @@ bool cci_param_typed<T, TM>::reset()
   return true;
 }
 
-#if CCI_CPLUSPLUS >= 201103L
 /// Convenience shortcut for typed parameters
 template <typename T, cci_param_mutable_type TM = CCI_MUTABLE_PARAM>
 using cci_param = cci_param_typed<T,TM>;
-#else
-/// Convenience macro for typed parameters (on C++03)
-# define cci_param cci_param_typed
-#endif
 
 CCI_CLOSE_NAMESPACE_
 #endif //CCI_CFG_CCI_PARAM_TYPED_H_INCLUDED_

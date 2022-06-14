@@ -32,6 +32,8 @@ AC_CONFIG_MACRO_DIR([config])
 AC_CONFIG_SRCDIR([src/cci_configuration])
 AC_CONFIG_HEADERS([src/config.h])
 
+AX_CXX_COMPILE_STDCXX_11(, [mandatory])
+
 AC_DEFINE_UNQUOTED(CONFIGURE_DATE, "`sh -c date`", [Date of configure])
 AC_SUBST(CONFIGURE_DATE)
 
