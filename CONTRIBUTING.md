@@ -15,27 +15,20 @@ How to Contribute
  join Accellera and its working groups.
  Find out more information at http://www.accellera.org/about/join.
  If your company, organization or university is already an Accellera member,
- you can request to [join the SystemC Language Working Group here][4].
+ you can request to [join the SystemC CCI Working Group here][2].
 
 ### Join the SystemC CCI community
 
- If you are not an Accellera member, please join the **[SystemC Forum][5]** 
- and **[CCI Forum][6]** to provide feedback, report bugs and join the general
+ If you are not an Accellera member, please join the **[SystemC Forum][4]** 
+ and **[CCI Forum][5]** to provide feedback, report bugs and join the general
  discussion around the evolution of SystemC and its ecosystem.
-
-[1]: https://www.accellera.org
-[2]: https://accellera.org/activities/working-groups/systemc-cci
-[3]: https://accellera.org/about/policies-and-procedures
-[4]: https://workspace.accellera.org/apps/org/workgroup/lwg/
-[5]: https://forums.accellera.org/forum/9-systemc/
-[6]: https://forums.accellera.org/forum/41-systemc-cci-configuration-control-inspection/
 
 ---------------------------------------------------------------------
 Issue reporting
 ---------------------------------------------------------------------
 
 You can post the bugs and suggestions of general interest to the
-[SystemC Forum][5] or [CCI Forum][6].  When reporting bugs, please specify
+[SystemC Forum][4] or [CCI Forum][5].  When reporting bugs, please specify
 the following information (if applicable):
 
   1. SystemC and CCI library version
@@ -111,3 +104,9 @@ Repository organization
 
 More information on the repository organization can be found in the 
 [Development process description](./docs/DEVELOPMENT.md).
+
+[1]: https://www.accellera.org
+[2]: https://accellera.org/activities/working-groups/systemc-cci
+[3]: https://accellera.org/about/policies-and-procedures
+[4]: https://forums.accellera.org/forum/9-systemc/
+[5]: https://forums.accellera.org/forum/41-systemc-cci-configuration-control-inspection/
