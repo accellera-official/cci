@@ -30,7 +30,7 @@ examples_FILES = \
 	build-msvc/Makefile \
 	build-msvc/Makefile.config \
 	build-msvc/Makefile.rules \
-	build-msvc/READMEcommandlinemsvc.txt \
+	build-msvc/README.md \
 	build-msvc/cci_examples.props \
 	build-msvc/cci_examples.sln \
 	build-msvc/openhere.bat \
