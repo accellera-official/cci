@@ -16,12 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Create configure script
-        run: |
-          libtoolize
-          aclocal
-          autoheader
-          autoconf
-          automake --add-missing
+        run: ./config/bootstrap
       - name: Create output folder
         run: mkdir output
       - name: Create zip
