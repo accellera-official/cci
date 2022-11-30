@@ -17,13 +17,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Create configure script
         run: ./config/bootstrap
-      - name: Create output folder
-        run: mkdir output
+      - name: Create output folder and copy files
+        run: |
+          mkdir ${release_name}
+          rsync -av --progress ./ ${release_name} --exclude .git
+          mkdir output
       - name: Create zip
-        run: zip -r output/${release_name}.zip . -x '*.git*' -x '*output*'
+        run: zip -r output/${release_name}.zip ${release_name}
       - name: Create tar
-        working-directory: ./output
-        run: tar -czf ${release_name}.tar.gz --exclude=output --exclude=.git ../*
+        run: tar -cvzf output/${release_name}.tar.gz ${release_name}
       - uses: "marvinpinto/action-automatic-releases@v1.2.1"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
