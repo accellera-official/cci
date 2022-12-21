@@ -7,7 +7,6 @@ SUBDIRS = \
 
 DOC_FILES = \
 	AUTHORS \
-	COPYING \
 	ChangeLog \
 	INSTALL.md \
 	LICENSE \
