@@ -106,7 +106,7 @@ set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
 
 find_package(RapidJSON CONFIG REQUIRED)
 
-target_link_libraries(cci SystemC::systemc rapidjson)
+target_link_libraries(cci SystemC::systemc)
 
 
 add_library (SystemC::cci ALIAS cci)
