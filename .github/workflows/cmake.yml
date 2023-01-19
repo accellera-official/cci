@@ -1,0 +1,85 @@
+name: cmake
+
+on: [push, pull_request]
+
+env:
+  SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
+  RAPIDJSON_HOME: "${{github.workspace}}/rapidjson"
+  CCI_ROOT_HOME: ${{github.workspace}}/build
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        systemc_version: [2.3.2, 2.3.3, 2.3.4]
+        cxx_compiler: [clang++, g++]
+
+    steps:
+    - name: Setup environment vars
+      run: |
+        echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
+        echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
+
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+
+    - name: Setup Dependencies
+      run: |
+        sudo apt-get update -y -qq
+        sudo apt-get install -y \
+          rapidjson-dev \
+          clang
+
+    - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.cxx_compiler}})
+      id: cache-SystemC
+      uses: actions/cache@v3
+      with:
+        path: ${{env.SYSTEMC_HOME}}
+        key: ${{runner.os}}-systemc-cmake-${{matrix.systemc_version}}-${{matrix.cxx_compiler}}
+
+    - name: Setup SystemC
+      if: steps.cache-SystemC.outputs.cache-hit != 'true'
+      env:
+        SYSTEMC_URL: "https://github.com/accellera-official/systemc/archive/refs/tags"
+      run: |
+        mkdir -p ${SYSTEMC_HOME}
+        mkdir -p ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}} && cd ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}}
+        wget ${SYSTEMC_URL}/${{matrix.systemc_version}}.tar.gz
+        tar -xvf ${{matrix.systemc_version}}.tar.gz
+        cd systemc-${{matrix.systemc_version}}
+        mkdir build && cd build
+        cmake  \
+          -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} \
+          -DCMAKE_CXX_STANDARD=11 \
+          -DCMAKE_INSTALL_PREFIX=${SYSTEMC_HOME} \
+          -DCMAKE_BUILD_TYPE=Release \
+          ..
+        gmake -j`nproc`
+        gmake install
+
+    - name: Configure
+      run: |
+        mkdir -p ${CCI_HOME}/build && cd ${CCI_HOME}/build
+        cmake \
+          -DCMAKE_CXX_COMPILER=${{matrix.cxx_compiler}} \
+          -DCMAKE_CXX_STANDARD=11 \
+          -DCMAKE_PREFIX_PATH=${SYSTEMC_HOME}/lib/cmake/SystemCLanguage \
+          -DCMAKE_INSTALL_PREFIX=${CCI_HOME} \
+          -DCMAKE_BUILD_TYPE=Release \
+          ../../..
+
+    - name: Build
+      run: |
+        cd ${CCI_HOME}/build
+        gmake -j `nproc`
+        gmake install
+
+    - name: Test
+      run: |
+       cd ${CCI_HOME}/build
+       gmake check
