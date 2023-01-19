@@ -359,7 +359,7 @@ if (NOT SystemC_TARGET_ARCH)
 endif (NOT SystemC_TARGET_ARCH)
 
 
-set (CMAKE_PREFIX_PATH /opt/systemc)
+list (APPEND CMAKE_PREFIX_PATH /opt/systemc)
 
 IF (NOT SystemCLanguage_FOUND )
     find_package(SystemCLanguage CONFIG REQUIRED)
