@@ -10,12 +10,30 @@ env:
 jobs:
   build:
     name: "Build"
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         systemc_version: [2.3.2, 2.3.3, 2.3.4]
-        cxx_compiler: [clang++, g++]
+        os:
+          - name: ubuntu
+            version: 20.04
+            cxx_compiler: g++-9
+            c_compiler: gcc-9
+          - name: ubuntu
+            version: 20.04
+            cxx_compiler: clang++-9
+            c_compiler: clang-9
+            deps: 'clang-9'
+          - name: ubuntu
+            version: 22.04
+            cxx_compiler: g++-11
+            c_compiler: gcc-11
+          - name: ubuntu
+            version: 22.04
+            cxx_compiler: clang++-11
+            c_compiler: clang-11
+            deps: 'clang-11'
+    runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
     - name: Setup environment vars
@@ -28,19 +46,20 @@ jobs:
       with:
         submodules: 'recursive'
 
-    - name: Setup Dependencies
+    - name: Setup Dependencies Ubuntu
+      if: matrix.os.name == 'ubuntu'
       run: |
         sudo apt-get update -y -qq
         sudo apt-get install -y \
           rapidjson-dev \
-          clang
+          ${{matrix.os.deps}}
 
-    - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.cxx_compiler}})
+    - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
       id: cache-SystemC
       uses: actions/cache@v3
       with:
         path: ${{env.SYSTEMC_HOME}}
-        key: ${{runner.os}}-systemc-autotools-${{matrix.systemc_version}}-${{matrix.cxx_compiler}}
+        key: ${{matrix.os.name}}-${{matrix.os.version}}-autotools-systemc-${{matrix.systemc_version}}-${{matrix.os.cxx_compiler}}
 
     - name: Setup SystemC
       if: steps.cache-SystemC.outputs.cache-hit != 'true'
@@ -54,20 +73,22 @@ jobs:
         cd systemc-${{matrix.systemc_version}}
         config/bootstrap
         mkdir build && cd build
-        CXX=${{matrix.cxx_compiler}} \
+        CXX=${{matrix.os.cxx_compiler}} \
+        C=${{matrix.os.c_compiler}} \
         CXXFLAGS="$CXXFLAGS -std=c++11" \
           ../configure \
             --prefix=${SYSTEMC_HOME} \
             --enable-optimize \
             --disable-debug
-        gmake -j`nproc`
-        gmake install
+        make -j`nproc`
+        make install
 
     - name: Configure
       run: |
         ./config/bootstrap
         mkdir -p ${CCI_HOME}/build && cd ${CCI_HOME}/build
-        CXX=${{matrix.cxx_compiler}} \
+        CXX=${{matrix.os.cxx_compiler}} \
+        C=${{matrix.os.c_compiler}} \
         CXXFLAGS="$CXXFLAGS -std=c++11" \
         LD_LIBRARY_PATH=${SYSTEMC_HOME}/lib-linux64 \
           ../../../configure \
@@ -80,17 +101,17 @@ jobs:
     - name: Build
       run: |
         cd ${CCI_HOME}/build
-        gmake -j `nproc`
-        gmake install
+        make -j `nproc`
+        make install
 
     - name: Test
       run: |
        cd ${CCI_HOME}/build
-       gmake check
+       make check
 
     - name: Upload test report
       if: success() || failure()
       uses: actions/upload-artifact@v3
       with:
-        name: test-results-${{matrix.systemc_version}}-${{matrix.cxx_compiler}}
+        name: test-results-${{matrix.systemc_version}}-${{matrix.os.cxx_compiler}}
         path: ${{env.CCI_HOME}}/build/examples/cci/test-suite.log
