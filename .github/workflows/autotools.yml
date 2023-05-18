@@ -4,8 +4,7 @@ on: [push, pull_request]
 
 env:
   SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
-  RAPIDJSON_HOME: "${{github.workspace}}/rapidjson"
-  CCI_ROOT_HOME: ${{github.workspace}}/build
+  CCI_ROOT_HOME: "${{github.workspace}}/build"
 
 jobs:
   build:
@@ -96,9 +95,9 @@ jobs:
       env:
         SYSTEMC_URL: "https://github.com/accellera-official/systemc/archive/refs/tags"
       run: |
-        mkdir -p ${SYSTEMC_HOME}
+        mkdir -p ${{env.SYSTEMC_HOME}}
         mkdir -p ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}} && cd ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}}
-        wget ${SYSTEMC_URL}/${{matrix.systemc_version}}.tar.gz
+        wget ${{env.SYSTEMC_URL}}/${{matrix.systemc_version}}.tar.gz
         tar -xvf ${{matrix.systemc_version}}.tar.gz
         cd systemc-${{matrix.systemc_version}}
         config/bootstrap
@@ -107,7 +106,7 @@ jobs:
         C=${{matrix.os.c_compiler}} \
         CXXFLAGS="$CXXFLAGS -std=c++11" \
           ../configure \
-            --prefix=${SYSTEMC_HOME} \
+            --prefix=${{env.SYSTEMC_HOME}} \
             --enable-optimize \
             --disable-debug
         make -j ${{env.NPROC}}
@@ -116,27 +115,27 @@ jobs:
     - name: Configure
       run: |
         ./config/bootstrap
-        mkdir -p ${CCI_HOME}/build && cd ${CCI_HOME}/build
+        mkdir -p ${{env.CCI_HOME}}/build && cd ${{env.CCI_HOME}}/build
         CXX=${{matrix.os.cxx_compiler}} \
         C=${{matrix.os.c_compiler}} \
         CXXFLAGS="$CXXFLAGS -std=c++11" \
-        LD_LIBRARY_PATH=${SYSTEMC_HOME}/lib-linux64 \
+        LD_LIBRARY_PATH=${{env.SYSTEMC_HOME}}/lib-linux64 \
           ../../../configure \
-            --prefix=${CCI_HOME} \
+            --prefix=${{env.CCI_HOME}} \
             --enable-optimize \
             --disable-debug \
-            --with-systemc=${SYSTEMC_HOME} \
+            --with-systemc=${{env.SYSTEMC_HOME}} \
             --with-json="/usr"
 
     - name: Build
+      working-directory: ${{env.CCI_HOME}}/build
       run: |
-        cd ${CCI_HOME}/build
         make -j ${{env.NPROC}}
         make install
 
     - name: Test
+      working-directory: ${{env.CCI_HOME}}/build
       run: |
-       cd ${CCI_HOME}/build
        make check
 
     - name: Upload test report

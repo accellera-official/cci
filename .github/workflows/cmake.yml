@@ -4,8 +4,8 @@ on: [push, pull_request]
 
 env:
   SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
-  RAPIDJSON_HOME: "${{github.workspace}}/rapidjson"
-  CCI_ROOT_HOME: ${{github.workspace}}/build
+  CCI_ROOT_HOME: "${{github.workspace}}/build"
+  ESC: '\'
 
 jobs:
   build:
@@ -19,44 +19,91 @@ jobs:
             version: 20.04
             cxx_compiler: g++-9
             c_compiler: gcc-9
+            generator: "Unix Makefiles"
           - name: ubuntu
             version: 20.04
             cxx_compiler: clang++-9
             c_compiler: clang-9
+            generator: "Unix Makefiles"
             deps: 'clang-9'
           - name: ubuntu
             version: 22.04
             cxx_compiler: g++-11
             c_compiler: gcc-11
+            generator: "Unix Makefiles"
           - name: ubuntu
             version: 22.04
             cxx_compiler: clang++-11
             c_compiler: clang-11
+            generator: "Unix Makefiles"
             deps: 'clang-11'
           - name: macos
             version: 11
             cxx_compiler: g++
             c_compiler: gcc
+            generator: "Unix Makefiles"
           - name: macos
             version: 11
             cxx_compiler: clang++
             c_compiler: clang
+            generator: "Unix Makefiles"
           - name: macos
             version: 12
             cxx_compiler: g++
             c_compiler: gcc
+            generator: "Unix Makefiles"
           - name: macos
             version: 12
             cxx_compiler: clang++
             c_compiler: clang
+            generator: "Unix Makefiles"
+          - name: windows
+            version: 2019
+            cxx_compiler: clang++
+            c_compiler: clang
+            generator: "Unix Makefiles"
+          - name: windows
+            version: 2019
+            cxx_compiler: g++
+            c_compiler: gcc
+            generator: "Unix Makefiles"
+          - name: windows
+            version: 2019
+            cxx_compiler: msvc
+            c_compiler: msvc
+            generator: "Visual Studio 16 2019"
+          - name: windows
+            version: 2022
+            cxx_compiler: clang++
+            c_compiler: clang
+            generator: "Unix Makefiles"
+          - name: windows
+            version: 2022
+            cxx_compiler: g++
+            c_compiler: gcc
+            generator: "Unix Makefiles"
+          - name: windows
+            version: 2022
+            cxx_compiler: msvc
+            c_compiler: msvc
+            generator: "Visual Studio 17 2022"
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
     - name: Setup environment vars
+      if: matrix.os.name != 'windows'
       run: |
         echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
         echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
         echo "NPROC=1" >> ${GITHUB_ENV}
+
+    - name: Setup environment vars (Windows)
+      if: matrix.os.name == 'windows'
+      run: |
+        echo "SYSTEMC_HOME=${env:SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
+        echo "CCI_HOME=${env:CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
+        echo "NPROC=${env:NUMBER_OF_PROCESSORS}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
+        echo "ESC=``" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
 
     - name: Checkout
       uses: actions/checkout@v3
@@ -80,6 +127,23 @@ jobs:
           rapidjson \
           ${{matrix.os.deps}}
 
+    - name: Setup Dependencies Windows
+      if: matrix.os.name == 'windows'
+      run: |
+        # add mingw to path to find clang
+        echo "C:\msys64\mingw64\bin" >> ${GITHUB_PATH}
+
+        choco install wget ${{matrix.os.deps}}
+    
+        git clone https://github.com/Tencent/rapidjson.git ${{github.workspace}}/rapidjson
+        cd ${{github.workspace}}/rapidjson
+        git checkout v1.1.0
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . -- -j ${{env.NPROC}}
+        cmake --build . --target install
+
     - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
       id: cache-SystemC
       uses: actions/cache@v3
@@ -92,41 +156,47 @@ jobs:
       env:
         SYSTEMC_URL: "https://github.com/accellera-official/systemc/archive/refs/tags"
       run: |
-        mkdir -p ${SYSTEMC_HOME}
-        mkdir -p ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}} && cd ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}}
-        wget ${SYSTEMC_URL}/${{matrix.systemc_version}}.tar.gz
+        mkdir -p ${{env.SYSTEMC_HOME}}
+        mkdir -p ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}}
+        cd ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}}
+        wget ${{env.SYSTEMC_URL}}/${{matrix.systemc_version}}.tar.gz
         tar -xvf ${{matrix.systemc_version}}.tar.gz
         cd systemc-${{matrix.systemc_version}}
-        mkdir build && cd build
-        cmake  \
-          -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} \
-          -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} \
-          -DCMAKE_CXX_STANDARD=11 \
-          -DCMAKE_INSTALL_PREFIX=${SYSTEMC_HOME} \
-          -DCMAKE_BUILD_TYPE=Release \
+        mkdir build
+        cd build
+        cmake ${{env.ESC}}
+          -G "${{matrix.os.generator}}" ${{env.ESC}}
+          -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
+          -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
+          -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
+          -DCMAKE_INSTALL_PREFIX=${{env.SYSTEMC_HOME}} ${{env.ESC}}
+          -DCMAKE_BUILD_TYPE=Release ${{env.ESC}}
           ..
-        make -j ${{env.NPROC}}
-        make install
+        cmake --build . -- -j ${{env.NPROC}}
+        cmake --build . --target install
 
     - name: Configure
       run: |
-        mkdir -p ${CCI_HOME}/build && cd ${CCI_HOME}/build
-        cmake \
-          -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} \
-          -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} \
-          -DCMAKE_CXX_STANDARD=11 \
-          -DCMAKE_PREFIX_PATH=${SYSTEMC_HOME}/lib/cmake/SystemCLanguage \
-          -DCMAKE_INSTALL_PREFIX=${CCI_HOME} \
-          -DCMAKE_BUILD_TYPE=Release \
+        mkdir -p ${{env.CCI_HOME}}/build
+        cd ${{env.CCI_HOME}}/build
+        cmake ${{env.ESC}}
+          -G "${{matrix.os.generator}}" ${{env.ESC}}
+          -DSYSTEMCCCI_BUILD_TESTS=ON ${{env.ESC}}
+          -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
+          -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
+          -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
+          -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
+          -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
+          -DCMAKE_BUILD_TYPE=Release ${{env.ESC}}
           ../../..
 
     - name: Build
+      working-directory: ${{env.CCI_HOME}}/build
       run: |
-        cd ${CCI_HOME}/build
-        make -j ${{env.NPROC}}
-        make install
+        cmake --build . -- -j ${{env.NPROC}}
+        cmake --build . --target install
 
     - name: Test
+      working-directory: ${{env.CCI_HOME}}/build
       run: |
-       cd ${CCI_HOME}/build
-       make check
+        cmake --build ./examples --target check
