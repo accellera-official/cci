@@ -135,7 +135,9 @@ target_compile_options(
 target_include_directories(cci
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  PRIVATE
+  ${RAPIDJSON_INCLUDE_DIRS})
 
 if (APPLE)
   # It's OK that _sc_main is an undefined symbol.

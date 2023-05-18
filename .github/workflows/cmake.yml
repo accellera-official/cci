@@ -33,6 +33,22 @@ jobs:
             cxx_compiler: clang++-11
             c_compiler: clang-11
             deps: 'clang-11'
+          - name: macos
+            version: 11
+            cxx_compiler: g++
+            c_compiler: gcc
+          - name: macos
+            version: 11
+            cxx_compiler: clang++
+            c_compiler: clang
+          - name: macos
+            version: 12
+            cxx_compiler: g++
+            c_compiler: gcc
+          - name: macos
+            version: 12
+            cxx_compiler: clang++
+            c_compiler: clang
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
@@ -40,6 +56,7 @@ jobs:
       run: |
         echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
         echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
+        echo "NPROC=1" >> ${GITHUB_ENV}
 
     - name: Checkout
       uses: actions/checkout@v3
@@ -49,9 +66,18 @@ jobs:
     - name: Setup Dependencies Ubuntu
       if: matrix.os.name == 'ubuntu'
       run: |
+        echo "NPROC=$(nproc)" >> ${GITHUB_ENV}
         sudo apt-get update -y -qq
         sudo apt-get install -y \
           rapidjson-dev \
+          ${{matrix.os.deps}}
+
+    - name: Setup Dependencies MacOS
+      if: matrix.os.name == 'macos'
+      run: |
+        echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
+        brew install \
+          rapidjson \
           ${{matrix.os.deps}}
 
     - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
@@ -79,7 +105,7 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=${SYSTEMC_HOME} \
           -DCMAKE_BUILD_TYPE=Release \
           ..
-        make -j`nproc`
+        make -j ${{env.NPROC}}
         make install
 
     - name: Configure
@@ -97,7 +123,7 @@ jobs:
     - name: Build
       run: |
         cd ${CCI_HOME}/build
-        make -j `nproc`
+        make -j ${{env.NPROC}}
         make install
 
     - name: Test
