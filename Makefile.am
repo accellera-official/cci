@@ -7,7 +7,6 @@ SUBDIRS = \
 
 DOC_FILES = \
 	AUTHORS \
-	ChangeLog \
 	INSTALL.md \
 	LICENSE \
 	NEWS \
