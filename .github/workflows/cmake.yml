@@ -170,10 +170,9 @@ jobs:
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
           -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.SYSTEMC_HOME}} ${{env.ESC}}
-          -DCMAKE_BUILD_TYPE=Release ${{env.ESC}}
           ..
-        cmake --build . -- -j ${{env.NPROC}}
-        cmake --build . --target install
+        cmake --build . --config Release -- -j ${{env.NPROC}}
+        cmake --build . --config Release --target install
 
     - name: Configure
       run: |
@@ -187,16 +186,15 @@ jobs:
           -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
           -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
-          -DCMAKE_BUILD_TYPE=Release ${{env.ESC}}
           ../../..
 
     - name: Build
       working-directory: ${{env.CCI_HOME}}/build
       run: |
-        cmake --build . -- -j ${{env.NPROC}}
-        cmake --build . --target install
+        cmake --build . --config Release -- -j ${{env.NPROC}}
+        cmake --build . --config Release --target install
 
     - name: Test
       working-directory: ${{env.CCI_HOME}}/build
       run: |
-        cmake --build ./examples --target check
+        cmake --build ./examples --config Release --target check
