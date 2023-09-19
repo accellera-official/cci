@@ -1,0 +1,8 @@
+include $(top_srcdir)/config/Make-rules
+
+EXAMPLES_INC_DIR = $(top_srcdir)/examples/cci/common/inc
+
+AM_CPPFLAGS += -I$(prefix)/include \
+               -I$(EXAMPLES_INC_DIR)
+
+LDADD = $(top_builddir)/src/libcci.la

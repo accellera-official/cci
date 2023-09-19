@@ -1,0 +1,146 @@
+name: autotools
+
+on: [push, pull_request]
+
+env:
+  SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
+  CCI_ROOT_HOME: "${{github.workspace}}/build"
+
+jobs:
+  build:
+    name: "Build"
+    strategy:
+      fail-fast: false
+      matrix:
+        systemc_version: [2.3.2, 2.3.3, 2.3.4]
+        os:
+          - name: ubuntu
+            version: 20.04
+            cxx_compiler: g++-9
+            c_compiler: gcc-9
+          - name: ubuntu
+            version: 20.04
+            cxx_compiler: clang++-9
+            c_compiler: clang-9
+            deps: 'clang-9'
+          - name: ubuntu
+            version: 22.04
+            cxx_compiler: g++-11
+            c_compiler: gcc-11
+          - name: ubuntu
+            version: 22.04
+            cxx_compiler: clang++-11
+            c_compiler: clang-11
+            deps: 'clang-11'
+          - name: macos
+            version: 11
+            cxx_compiler: g++
+            c_compiler: gcc
+            deps: 'automake'
+          - name: macos
+            version: 11
+            cxx_compiler: clang++
+            c_compiler: clang
+            deps: 'automake'
+          - name: macos
+            version: 12
+            cxx_compiler: g++
+            c_compiler: gcc
+            deps: 'automake'
+          - name: macos
+            version: 12
+            cxx_compiler: clang++
+            c_compiler: clang
+            deps: 'automake'
+    runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
+
+    steps:
+    - name: Setup environment vars
+      run: |
+        echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
+        echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
+        echo "NPROC=1" >> ${GITHUB_ENV}
+
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+
+    - name: Setup Dependencies Ubuntu
+      if: matrix.os.name == 'ubuntu'
+      run: |
+        echo "NPROC=$(nproc)" >> ${GITHUB_ENV}
+        sudo apt-get update -y -qq
+        sudo apt-get install -y \
+          rapidjson-dev \
+          ${{matrix.os.deps}}
+
+    - name: Setup Dependencies MacOS
+      if: matrix.os.name == 'macos'
+      run: |
+        echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
+        brew install \
+          rapidjson \
+          ${{matrix.os.deps}}
+
+    - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
+      id: cache-SystemC
+      uses: actions/cache@v3
+      with:
+        path: ${{env.SYSTEMC_HOME}}
+        key: ${{matrix.os.name}}-${{matrix.os.version}}-autotools-systemc-${{matrix.systemc_version}}-${{matrix.os.cxx_compiler}}
+
+    - name: Setup SystemC
+      if: steps.cache-SystemC.outputs.cache-hit != 'true'
+      env:
+        SYSTEMC_URL: "https://github.com/accellera-official/systemc/archive/refs/tags"
+      run: |
+        mkdir -p ${{env.SYSTEMC_HOME}}
+        mkdir -p ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}} && cd ${{github.workspace}}/tmp/systemc-${{matrix.systemc_version}}
+        wget ${{env.SYSTEMC_URL}}/${{matrix.systemc_version}}.tar.gz
+        tar -xvf ${{matrix.systemc_version}}.tar.gz
+        cd systemc-${{matrix.systemc_version}}
+        config/bootstrap
+        mkdir build && cd build
+        CXX=${{matrix.os.cxx_compiler}} \
+        C=${{matrix.os.c_compiler}} \
+        CXXFLAGS="$CXXFLAGS -std=c++11" \
+          ../configure \
+            --prefix=${{env.SYSTEMC_HOME}} \
+            --enable-optimize \
+            --disable-debug
+        make -j ${{env.NPROC}}
+        make install
+
+    - name: Configure
+      run: |
+        ./config/bootstrap
+        mkdir -p ${{env.CCI_HOME}}/build && cd ${{env.CCI_HOME}}/build
+        CXX=${{matrix.os.cxx_compiler}} \
+        C=${{matrix.os.c_compiler}} \
+        CXXFLAGS="$CXXFLAGS -std=c++11" \
+        LD_LIBRARY_PATH=${{env.SYSTEMC_HOME}}/lib-linux64 \
+          ../../../configure \
+            --prefix=${{env.CCI_HOME}} \
+            --enable-optimize \
+            --disable-debug \
+            --with-systemc=${{env.SYSTEMC_HOME}} \
+            --with-json="/usr"
+
+    - name: Build
+      working-directory: ${{env.CCI_HOME}}/build
+      run: |
+        make -j ${{env.NPROC}}
+        make install
+
+    - name: Test
+      working-directory: ${{env.CCI_HOME}}/build
+      run: |
+       make check
+
+    - name: Upload test report
+      if: success() || failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-${{matrix.systemc_version}}-${{matrix.os.cxx_compiler}}
+        path: ${{env.CCI_HOME}}/build/examples/cci/test-suite.log

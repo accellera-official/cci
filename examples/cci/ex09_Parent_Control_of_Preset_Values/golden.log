@@ -1,0 +1,2668 @@
+Info: sc_main: [MAIN] : Setting preset value of the number of initiators to 2
+
+Info: sc_main: [MAIN] : Setting preset value of the number of initiators to 1
+
+Info: sc_main: [MAIN] : Setting preset value of the number of targets to 4
+
+Info: sc_main: [MAIN] : Set and lock Router Table target_1 contents
+
+Info: sc_main: [MAIN] : Set and lock Router Table Start Address for target_1 to 128
+
+Info: sc_main: [MAIN] : Set and lock Router Table End Address for target_1 to 255
+
+Info: sc_main: [MAIN] : Instantiate top module after setting preset values to top_module, router and target parameters
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] -- [TOP MODULE CONSTRUCTOR BEGINS HERE]
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] :  Number of initiators : 1
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] :  Number of targets : 4
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Creating Router : RouterInstance
+
+Info: top_module_inst.RouterInstance: @0 s, [ROUTER C_TOR] ----- [ROUTER CONSTRUCTOR BEGINS HERE] ------
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Creating initiator : initiator_0
+
+Info: top_module_inst.initiator_0: @0 s, [initiator_0 C_TOR] ------- [INITIATOR CONSTRUCTOR BEGINS HERE] --------
+
+Info: top_module_inst: @0 s, [TOP MODULE C_TOR] : Binding Router_Initiator to initiator_0
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Creating target : target_0
+
+Info: top_module_inst.target_0: @0 s, [target_0 C_TOR] ------- [TARGET CONSTRUCTOR BEGINS HERE] --------
+
+Info: top_module_inst.target_0: @0 s, [target_0 C_TOR] : Base Address : 0
+
+Info: top_module_inst: @0 s, [TOP MODULE C_TOR] : Binding Router_Initiator to target_0
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Creating target : target_1
+
+Info: top_module_inst.target_1: @0 s, [target_1 C_TOR] ------- [TARGET CONSTRUCTOR BEGINS HERE] --------
+
+Info: top_module_inst.target_1: @0 s, [target_1 C_TOR] : Base Address : 0
+
+Info: top_module_inst: @0 s, [TOP MODULE C_TOR] : Binding Router_Initiator to target_1
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Creating target : target_2
+
+Info: top_module_inst.target_2: @0 s, [target_2 C_TOR] ------- [TARGET CONSTRUCTOR BEGINS HERE] --------
+
+Info: top_module_inst.target_2: @0 s, [target_2 C_TOR] : Base Address : 0
+
+Info: top_module_inst: @0 s, [TOP MODULE C_TOR] : Binding Router_Initiator to target_2
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Creating target : target_3
+
+Info: top_module_inst.target_3: @0 s, [target_3 C_TOR] ------- [TARGET CONSTRUCTOR BEGINS HERE] --------
+
+Info: top_module_inst.target_3: @0 s, [target_3 C_TOR] : Base Address : 0
+
+Info: top_module_inst: @0 s, [TOP MODULE C_TOR] : Binding Router_Initiator to target_3
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_0
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of target_0
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_0
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_1
+
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting preset value failed (parameter locked).
+In file: <removed by make>
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of target_1
+
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting preset value failed (parameter locked).
+In file: <removed by make>
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_1
+
+Info: top_module_inst: @0 s, [ROUTER : Caught] : Error: /Accellera/CCI/SET_PARAM_FAILED: Setting preset value failed (parameter locked).
+In file: <removed by make>
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_2
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of target_2
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_2
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting fields of target_3
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting start addr of target_3
+
+Info: top_module_inst: @0 s, [TOP_MODULE C_TOR] : Re-setting end addr of target_3
+
+Info: sc_main: Begin Simulation.
+
+Info: top_module_inst.RouterInstance: @0 s, [ROUTER in beoe] : Number of initiator(s) : 1
+
+Info: top_module_inst.RouterInstance: @0 s, [ROUTER in beoe] : Number of target(s) : 4
+
+Info: top_module_inst.RouterInstance: @0 s, [ROUTER in beoe] : Maximum Addressable Limit of the router : 1024
+
+Info: top_module_inst.RouterInstance: @0 s, ============= ROUTER TABLE INFORMATION ==============
+
+Info: top_module_inst.RouterInstance: @0 s, -----------------------------------------------------
+
+Info: top_module_inst.RouterInstance: @0 s, | Target ID  | Start Addr |  End Addr  | Base Addr  |
+
+Info: top_module_inst.RouterInstance: @0 s, -----------------------------------------------------
+
+Info: top_module_inst.RouterInstance: @0 s, |          0 |          0 |       0x7f |          0 |
+
+Info: top_module_inst.RouterInstance: @0 s, -----------------------------------------------------
+
+Info: top_module_inst.RouterInstance: @0 s, |          1 |       0x80 |       0xff |        128 |
+
+Info: top_module_inst.RouterInstance: @0 s, -----------------------------------------------------
+
+Info: top_module_inst.RouterInstance: @0 s, |          2 |      0x100 |      0x17f |        256 |
+
+Info: top_module_inst.RouterInstance: @0 s, -----------------------------------------------------
+
+Info: top_module_inst.RouterInstance: @0 s, |          3 |      0x180 |      0x1ff |        384 |
+
+Info: top_module_inst.RouterInstance: @0 s, -----------------------------------------------------
+
+Info: top_module_inst.initiator_0: @0 s, [Initiators Message]=>At address 0 sending transaction with command = Write, data=ff000000 at time 0 s
+
+Info: top_module_inst.RouterInstance: @0 s, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @0 s, Address       = 0
+
+Info: top_module_inst.RouterInstance: @0 s, Index         = 0
+
+Info: top_module_inst.RouterInstance: @0 s, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @0 s, End   Address = 7f
+
+Info: top_module_inst.target_0: @0 s, [TARGET] : adr ---- 0
+
+Info: top_module_inst.target_0: @0 s, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @3 ns, [Initiators Message]=>At address 0 received response of Write transaction  at time 3 ns
+
+Info: top_module_inst.initiator_0: @3 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @8 ns, [Initiators Message]=>At address 4 sending transaction with command= Read  at time 8 ns
+
+Info: top_module_inst.RouterInstance: @8 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @8 ns, Address       = 4
+
+Info: top_module_inst.RouterInstance: @8 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @8 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @8 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @8 ns, [TARGET] : adr ---- 4
+
+Info: top_module_inst.target_0: @8 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @13 ns, [Initiators Message]=>At address 4 received response of Read transaction  data aabbccdd at time 13 ns
+
+Info: top_module_inst.initiator_0: @13 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @18 ns, [Initiators Message]=>At address 8 sending transaction with command = Write, data=ff000008 at time 18 ns
+
+Info: top_module_inst.RouterInstance: @18 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @18 ns, Address       = 8
+
+Info: top_module_inst.RouterInstance: @18 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @18 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @18 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @18 ns, [TARGET] : adr ---- 8
+
+Info: top_module_inst.target_0: @18 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @21 ns, [Initiators Message]=>At address 8 received response of Write transaction  at time 21 ns
+
+Info: top_module_inst.initiator_0: @21 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @26 ns, [Initiators Message]=>At address c sending transaction with command= Read  at time 26 ns
+
+Info: top_module_inst.RouterInstance: @26 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @26 ns, Address       = c
+
+Info: top_module_inst.RouterInstance: @26 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @26 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @26 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @26 ns, [TARGET] : adr ---- c
+
+Info: top_module_inst.target_0: @26 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @31 ns, [Initiators Message]=>At address c received response of Read transaction  data aabbccdd at time 31 ns
+
+Info: top_module_inst.initiator_0: @31 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @36 ns, [Initiators Message]=>At address 10 sending transaction with command= Read  at time 36 ns
+
+Info: top_module_inst.RouterInstance: @36 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @36 ns, Address       = 10
+
+Info: top_module_inst.RouterInstance: @36 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @36 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @36 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @36 ns, [TARGET] : adr ---- 10
+
+Info: top_module_inst.target_0: @36 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @41 ns, [Initiators Message]=>At address 10 received response of Read transaction  data aabbccdd at time 41 ns
+
+Info: top_module_inst.initiator_0: @41 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @46 ns, [Initiators Message]=>At address 14 sending transaction with command= Read  at time 46 ns
+
+Info: top_module_inst.RouterInstance: @46 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @46 ns, Address       = 14
+
+Info: top_module_inst.RouterInstance: @46 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @46 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @46 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @46 ns, [TARGET] : adr ---- 14
+
+Info: top_module_inst.target_0: @46 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @51 ns, [Initiators Message]=>At address 14 received response of Read transaction  data aabbccdd at time 51 ns
+
+Info: top_module_inst.initiator_0: @51 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @56 ns, [Initiators Message]=>At address 18 sending transaction with command = Write, data=ff000018 at time 56 ns
+
+Info: top_module_inst.RouterInstance: @56 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @56 ns, Address       = 18
+
+Info: top_module_inst.RouterInstance: @56 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @56 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @56 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @56 ns, [TARGET] : adr ---- 18
+
+Info: top_module_inst.target_0: @56 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @59 ns, [Initiators Message]=>At address 18 received response of Write transaction  at time 59 ns
+
+Info: top_module_inst.initiator_0: @59 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @64 ns, [Initiators Message]=>At address 1c sending transaction with command = Write, data=ff00001c at time 64 ns
+
+Info: top_module_inst.RouterInstance: @64 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @64 ns, Address       = 1c
+
+Info: top_module_inst.RouterInstance: @64 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @64 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @64 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @64 ns, [TARGET] : adr ---- 1c
+
+Info: top_module_inst.target_0: @64 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @67 ns, [Initiators Message]=>At address 1c received response of Write transaction  at time 67 ns
+
+Info: top_module_inst.initiator_0: @67 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @72 ns, [Initiators Message]=>At address 20 sending transaction with command = Write, data=ff000020 at time 72 ns
+
+Info: top_module_inst.RouterInstance: @72 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @72 ns, Address       = 20
+
+Info: top_module_inst.RouterInstance: @72 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @72 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @72 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @72 ns, [TARGET] : adr ---- 20
+
+Info: top_module_inst.target_0: @72 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @75 ns, [Initiators Message]=>At address 20 received response of Write transaction  at time 75 ns
+
+Info: top_module_inst.initiator_0: @75 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @80 ns, [Initiators Message]=>At address 24 sending transaction with command= Read  at time 80 ns
+
+Info: top_module_inst.RouterInstance: @80 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @80 ns, Address       = 24
+
+Info: top_module_inst.RouterInstance: @80 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @80 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @80 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @80 ns, [TARGET] : adr ---- 24
+
+Info: top_module_inst.target_0: @80 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @85 ns, [Initiators Message]=>At address 24 received response of Read transaction  data aabbccfd at time 85 ns
+
+Info: top_module_inst.initiator_0: @85 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @90 ns, [Initiators Message]=>At address 28 sending transaction with command = Write, data=ff000028 at time 90 ns
+
+Info: top_module_inst.RouterInstance: @90 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @90 ns, Address       = 28
+
+Info: top_module_inst.RouterInstance: @90 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @90 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @90 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @90 ns, [TARGET] : adr ---- 28
+
+Info: top_module_inst.target_0: @90 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @93 ns, [Initiators Message]=>At address 28 received response of Write transaction  at time 93 ns
+
+Info: top_module_inst.initiator_0: @93 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @98 ns, [Initiators Message]=>At address 2c sending transaction with command= Read  at time 98 ns
+
+Info: top_module_inst.RouterInstance: @98 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @98 ns, Address       = 2c
+
+Info: top_module_inst.RouterInstance: @98 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @98 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @98 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @98 ns, [TARGET] : adr ---- 2c
+
+Info: top_module_inst.target_0: @98 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @103 ns, [Initiators Message]=>At address 2c received response of Read transaction  data aabbccfd at time 103 ns
+
+Info: top_module_inst.initiator_0: @103 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @108 ns, [Initiators Message]=>At address 30 sending transaction with command= Read  at time 108 ns
+
+Info: top_module_inst.RouterInstance: @108 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @108 ns, Address       = 30
+
+Info: top_module_inst.RouterInstance: @108 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @108 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @108 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @108 ns, [TARGET] : adr ---- 30
+
+Info: top_module_inst.target_0: @108 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @113 ns, [Initiators Message]=>At address 30 received response of Read transaction  data aabbccfd at time 113 ns
+
+Info: top_module_inst.initiator_0: @113 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @118 ns, [Initiators Message]=>At address 34 sending transaction with command= Read  at time 118 ns
+
+Info: top_module_inst.RouterInstance: @118 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @118 ns, Address       = 34
+
+Info: top_module_inst.RouterInstance: @118 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @118 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @118 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @118 ns, [TARGET] : adr ---- 34
+
+Info: top_module_inst.target_0: @118 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @123 ns, [Initiators Message]=>At address 34 received response of Read transaction  data aabbccfd at time 123 ns
+
+Info: top_module_inst.initiator_0: @123 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @128 ns, [Initiators Message]=>At address 38 sending transaction with command = Write, data=ff000038 at time 128 ns
+
+Info: top_module_inst.RouterInstance: @128 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @128 ns, Address       = 38
+
+Info: top_module_inst.RouterInstance: @128 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @128 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @128 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @128 ns, [TARGET] : adr ---- 38
+
+Info: top_module_inst.target_0: @128 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @131 ns, [Initiators Message]=>At address 38 received response of Write transaction  at time 131 ns
+
+Info: top_module_inst.initiator_0: @131 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @136 ns, [Initiators Message]=>At address 3c sending transaction with command = Write, data=ff00003c at time 136 ns
+
+Info: top_module_inst.RouterInstance: @136 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @136 ns, Address       = 3c
+
+Info: top_module_inst.RouterInstance: @136 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @136 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @136 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @136 ns, [TARGET] : adr ---- 3c
+
+Info: top_module_inst.target_0: @136 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @139 ns, [Initiators Message]=>At address 3c received response of Write transaction  at time 139 ns
+
+Info: top_module_inst.initiator_0: @139 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @144 ns, [Initiators Message]=>At address 40 sending transaction with command = Write, data=ff000040 at time 144 ns
+
+Info: top_module_inst.RouterInstance: @144 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @144 ns, Address       = 40
+
+Info: top_module_inst.RouterInstance: @144 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @144 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @144 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @144 ns, [TARGET] : adr ---- 40
+
+Info: top_module_inst.target_0: @144 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @147 ns, [Initiators Message]=>At address 40 received response of Write transaction  at time 147 ns
+
+Info: top_module_inst.initiator_0: @147 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @152 ns, [Initiators Message]=>At address 44 sending transaction with command= Read  at time 152 ns
+
+Info: top_module_inst.RouterInstance: @152 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @152 ns, Address       = 44
+
+Info: top_module_inst.RouterInstance: @152 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @152 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @152 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @152 ns, [TARGET] : adr ---- 44
+
+Info: top_module_inst.target_0: @152 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @157 ns, [Initiators Message]=>At address 44 received response of Read transaction  data aabbccdd at time 157 ns
+
+Info: top_module_inst.initiator_0: @157 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @162 ns, [Initiators Message]=>At address 48 sending transaction with command = Write, data=ff000048 at time 162 ns
+
+Info: top_module_inst.RouterInstance: @162 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @162 ns, Address       = 48
+
+Info: top_module_inst.RouterInstance: @162 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @162 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @162 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @162 ns, [TARGET] : adr ---- 48
+
+Info: top_module_inst.target_0: @162 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @165 ns, [Initiators Message]=>At address 48 received response of Write transaction  at time 165 ns
+
+Info: top_module_inst.initiator_0: @165 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @170 ns, [Initiators Message]=>At address 4c sending transaction with command= Read  at time 170 ns
+
+Info: top_module_inst.RouterInstance: @170 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @170 ns, Address       = 4c
+
+Info: top_module_inst.RouterInstance: @170 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @170 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @170 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @170 ns, [TARGET] : adr ---- 4c
+
+Info: top_module_inst.target_0: @170 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @175 ns, [Initiators Message]=>At address 4c received response of Read transaction  data aabbccdd at time 175 ns
+
+Info: top_module_inst.initiator_0: @175 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @180 ns, [Initiators Message]=>At address 50 sending transaction with command= Read  at time 180 ns
+
+Info: top_module_inst.RouterInstance: @180 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @180 ns, Address       = 50
+
+Info: top_module_inst.RouterInstance: @180 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @180 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @180 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @180 ns, [TARGET] : adr ---- 50
+
+Info: top_module_inst.target_0: @180 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @185 ns, [Initiators Message]=>At address 50 received response of Read transaction  data aabbccdd at time 185 ns
+
+Info: top_module_inst.initiator_0: @185 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @190 ns, [Initiators Message]=>At address 54 sending transaction with command= Read  at time 190 ns
+
+Info: top_module_inst.RouterInstance: @190 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @190 ns, Address       = 54
+
+Info: top_module_inst.RouterInstance: @190 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @190 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @190 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @190 ns, [TARGET] : adr ---- 54
+
+Info: top_module_inst.target_0: @190 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @195 ns, [Initiators Message]=>At address 54 received response of Read transaction  data aabbccdd at time 195 ns
+
+Info: top_module_inst.initiator_0: @195 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @200 ns, [Initiators Message]=>At address 58 sending transaction with command = Write, data=ff000058 at time 200 ns
+
+Info: top_module_inst.RouterInstance: @200 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @200 ns, Address       = 58
+
+Info: top_module_inst.RouterInstance: @200 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @200 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @200 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @200 ns, [TARGET] : adr ---- 58
+
+Info: top_module_inst.target_0: @200 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @203 ns, [Initiators Message]=>At address 58 received response of Write transaction  at time 203 ns
+
+Info: top_module_inst.initiator_0: @203 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @208 ns, [Initiators Message]=>At address 5c sending transaction with command = Write, data=ff00005c at time 208 ns
+
+Info: top_module_inst.RouterInstance: @208 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @208 ns, Address       = 5c
+
+Info: top_module_inst.RouterInstance: @208 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @208 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @208 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @208 ns, [TARGET] : adr ---- 5c
+
+Info: top_module_inst.target_0: @208 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @211 ns, [Initiators Message]=>At address 5c received response of Write transaction  at time 211 ns
+
+Info: top_module_inst.initiator_0: @211 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @216 ns, [Initiators Message]=>At address 60 sending transaction with command = Write, data=ff000060 at time 216 ns
+
+Info: top_module_inst.RouterInstance: @216 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @216 ns, Address       = 60
+
+Info: top_module_inst.RouterInstance: @216 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @216 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @216 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @216 ns, [TARGET] : adr ---- 60
+
+Info: top_module_inst.target_0: @216 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @219 ns, [Initiators Message]=>At address 60 received response of Write transaction  at time 219 ns
+
+Info: top_module_inst.initiator_0: @219 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @224 ns, [Initiators Message]=>At address 64 sending transaction with command= Read  at time 224 ns
+
+Info: top_module_inst.RouterInstance: @224 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @224 ns, Address       = 64
+
+Info: top_module_inst.RouterInstance: @224 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @224 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @224 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @224 ns, [TARGET] : adr ---- 64
+
+Info: top_module_inst.target_0: @224 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @229 ns, [Initiators Message]=>At address 64 received response of Read transaction  data aabbccfd at time 229 ns
+
+Info: top_module_inst.initiator_0: @229 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @234 ns, [Initiators Message]=>At address 68 sending transaction with command = Write, data=ff000068 at time 234 ns
+
+Info: top_module_inst.RouterInstance: @234 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @234 ns, Address       = 68
+
+Info: top_module_inst.RouterInstance: @234 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @234 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @234 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @234 ns, [TARGET] : adr ---- 68
+
+Info: top_module_inst.target_0: @234 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @237 ns, [Initiators Message]=>At address 68 received response of Write transaction  at time 237 ns
+
+Info: top_module_inst.initiator_0: @237 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @242 ns, [Initiators Message]=>At address 6c sending transaction with command= Read  at time 242 ns
+
+Info: top_module_inst.RouterInstance: @242 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @242 ns, Address       = 6c
+
+Info: top_module_inst.RouterInstance: @242 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @242 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @242 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @242 ns, [TARGET] : adr ---- 6c
+
+Info: top_module_inst.target_0: @242 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @247 ns, [Initiators Message]=>At address 6c received response of Read transaction  data aabbccfd at time 247 ns
+
+Info: top_module_inst.initiator_0: @247 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @252 ns, [Initiators Message]=>At address 70 sending transaction with command= Read  at time 252 ns
+
+Info: top_module_inst.RouterInstance: @252 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @252 ns, Address       = 70
+
+Info: top_module_inst.RouterInstance: @252 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @252 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @252 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @252 ns, [TARGET] : adr ---- 70
+
+Info: top_module_inst.target_0: @252 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @257 ns, [Initiators Message]=>At address 70 received response of Read transaction  data aabbccfd at time 257 ns
+
+Info: top_module_inst.initiator_0: @257 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @262 ns, [Initiators Message]=>At address 74 sending transaction with command= Read  at time 262 ns
+
+Info: top_module_inst.RouterInstance: @262 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @262 ns, Address       = 74
+
+Info: top_module_inst.RouterInstance: @262 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @262 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @262 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @262 ns, [TARGET] : adr ---- 74
+
+Info: top_module_inst.target_0: @262 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @267 ns, [Initiators Message]=>At address 74 received response of Read transaction  data aabbccfd at time 267 ns
+
+Info: top_module_inst.initiator_0: @267 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @272 ns, [Initiators Message]=>At address 78 sending transaction with command = Write, data=ff000078 at time 272 ns
+
+Info: top_module_inst.RouterInstance: @272 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @272 ns, Address       = 78
+
+Info: top_module_inst.RouterInstance: @272 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @272 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @272 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @272 ns, [TARGET] : adr ---- 78
+
+Info: top_module_inst.target_0: @272 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @275 ns, [Initiators Message]=>At address 78 received response of Write transaction  at time 275 ns
+
+Info: top_module_inst.initiator_0: @275 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @280 ns, [Initiators Message]=>At address 7c sending transaction with command = Write, data=ff00007c at time 280 ns
+
+Info: top_module_inst.RouterInstance: @280 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @280 ns, Address       = 7c
+
+Info: top_module_inst.RouterInstance: @280 ns, Index         = 0
+
+Info: top_module_inst.RouterInstance: @280 ns, Start addres  = 0
+
+Info: top_module_inst.RouterInstance: @280 ns, End   Address = 7f
+
+Info: top_module_inst.target_0: @280 ns, [TARGET] : adr ---- 7c
+
+Info: top_module_inst.target_0: @280 ns, [TARGET] : base addr ---- 0
+
+Info: top_module_inst.initiator_0: @283 ns, [Initiators Message]=>At address 7c received response of Write transaction  at time 283 ns
+
+Info: top_module_inst.initiator_0: @283 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @288 ns, [Initiators Message]=>At address 80 sending transaction with command = Write, data=ff000080 at time 288 ns
+
+Info: top_module_inst.RouterInstance: @288 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @288 ns, Address       = 80
+
+Info: top_module_inst.RouterInstance: @288 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @288 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @288 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @288 ns, [TARGET] : adr ---- 0
+
+Info: top_module_inst.target_1: @288 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @291 ns, [Initiators Message]=>At address 80 received response of Write transaction  at time 291 ns
+
+Info: top_module_inst.initiator_0: @291 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @296 ns, [Initiators Message]=>At address 84 sending transaction with command= Read  at time 296 ns
+
+Info: top_module_inst.RouterInstance: @296 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @296 ns, Address       = 84
+
+Info: top_module_inst.RouterInstance: @296 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @296 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @296 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @296 ns, [TARGET] : adr ---- 4
+
+Info: top_module_inst.target_1: @296 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @301 ns, [Initiators Message]=>At address 84 received response of Read transaction  data aabbccdd at time 301 ns
+
+Info: top_module_inst.initiator_0: @301 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @306 ns, [Initiators Message]=>At address 88 sending transaction with command = Write, data=ff000088 at time 306 ns
+
+Info: top_module_inst.RouterInstance: @306 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @306 ns, Address       = 88
+
+Info: top_module_inst.RouterInstance: @306 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @306 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @306 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @306 ns, [TARGET] : adr ---- 8
+
+Info: top_module_inst.target_1: @306 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @309 ns, [Initiators Message]=>At address 88 received response of Write transaction  at time 309 ns
+
+Info: top_module_inst.initiator_0: @309 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @314 ns, [Initiators Message]=>At address 8c sending transaction with command= Read  at time 314 ns
+
+Info: top_module_inst.RouterInstance: @314 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @314 ns, Address       = 8c
+
+Info: top_module_inst.RouterInstance: @314 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @314 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @314 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @314 ns, [TARGET] : adr ---- c
+
+Info: top_module_inst.target_1: @314 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @319 ns, [Initiators Message]=>At address 8c received response of Read transaction  data aabbccdd at time 319 ns
+
+Info: top_module_inst.initiator_0: @319 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @324 ns, [Initiators Message]=>At address 90 sending transaction with command= Read  at time 324 ns
+
+Info: top_module_inst.RouterInstance: @324 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @324 ns, Address       = 90
+
+Info: top_module_inst.RouterInstance: @324 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @324 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @324 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @324 ns, [TARGET] : adr ---- 10
+
+Info: top_module_inst.target_1: @324 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @329 ns, [Initiators Message]=>At address 90 received response of Read transaction  data aabbccdd at time 329 ns
+
+Info: top_module_inst.initiator_0: @329 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @334 ns, [Initiators Message]=>At address 94 sending transaction with command= Read  at time 334 ns
+
+Info: top_module_inst.RouterInstance: @334 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @334 ns, Address       = 94
+
+Info: top_module_inst.RouterInstance: @334 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @334 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @334 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @334 ns, [TARGET] : adr ---- 14
+
+Info: top_module_inst.target_1: @334 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @339 ns, [Initiators Message]=>At address 94 received response of Read transaction  data aabbccdd at time 339 ns
+
+Info: top_module_inst.initiator_0: @339 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @344 ns, [Initiators Message]=>At address 98 sending transaction with command = Write, data=ff000098 at time 344 ns
+
+Info: top_module_inst.RouterInstance: @344 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @344 ns, Address       = 98
+
+Info: top_module_inst.RouterInstance: @344 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @344 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @344 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @344 ns, [TARGET] : adr ---- 18
+
+Info: top_module_inst.target_1: @344 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @347 ns, [Initiators Message]=>At address 98 received response of Write transaction  at time 347 ns
+
+Info: top_module_inst.initiator_0: @347 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @352 ns, [Initiators Message]=>At address 9c sending transaction with command = Write, data=ff00009c at time 352 ns
+
+Info: top_module_inst.RouterInstance: @352 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @352 ns, Address       = 9c
+
+Info: top_module_inst.RouterInstance: @352 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @352 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @352 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @352 ns, [TARGET] : adr ---- 1c
+
+Info: top_module_inst.target_1: @352 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @355 ns, [Initiators Message]=>At address 9c received response of Write transaction  at time 355 ns
+
+Info: top_module_inst.initiator_0: @355 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @360 ns, [Initiators Message]=>At address a0 sending transaction with command = Write, data=ff0000a0 at time 360 ns
+
+Info: top_module_inst.RouterInstance: @360 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @360 ns, Address       = a0
+
+Info: top_module_inst.RouterInstance: @360 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @360 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @360 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @360 ns, [TARGET] : adr ---- 20
+
+Info: top_module_inst.target_1: @360 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @363 ns, [Initiators Message]=>At address a0 received response of Write transaction  at time 363 ns
+
+Info: top_module_inst.initiator_0: @363 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @368 ns, [Initiators Message]=>At address a4 sending transaction with command= Read  at time 368 ns
+
+Info: top_module_inst.RouterInstance: @368 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @368 ns, Address       = a4
+
+Info: top_module_inst.RouterInstance: @368 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @368 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @368 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @368 ns, [TARGET] : adr ---- 24
+
+Info: top_module_inst.target_1: @368 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @373 ns, [Initiators Message]=>At address a4 received response of Read transaction  data aabbccfd at time 373 ns
+
+Info: top_module_inst.initiator_0: @373 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @378 ns, [Initiators Message]=>At address a8 sending transaction with command = Write, data=ff0000a8 at time 378 ns
+
+Info: top_module_inst.RouterInstance: @378 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @378 ns, Address       = a8
+
+Info: top_module_inst.RouterInstance: @378 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @378 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @378 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @378 ns, [TARGET] : adr ---- 28
+
+Info: top_module_inst.target_1: @378 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @381 ns, [Initiators Message]=>At address a8 received response of Write transaction  at time 381 ns
+
+Info: top_module_inst.initiator_0: @381 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @386 ns, [Initiators Message]=>At address ac sending transaction with command= Read  at time 386 ns
+
+Info: top_module_inst.RouterInstance: @386 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @386 ns, Address       = ac
+
+Info: top_module_inst.RouterInstance: @386 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @386 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @386 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @386 ns, [TARGET] : adr ---- 2c
+
+Info: top_module_inst.target_1: @386 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @391 ns, [Initiators Message]=>At address ac received response of Read transaction  data aabbccfd at time 391 ns
+
+Info: top_module_inst.initiator_0: @391 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @396 ns, [Initiators Message]=>At address b0 sending transaction with command= Read  at time 396 ns
+
+Info: top_module_inst.RouterInstance: @396 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @396 ns, Address       = b0
+
+Info: top_module_inst.RouterInstance: @396 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @396 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @396 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @396 ns, [TARGET] : adr ---- 30
+
+Info: top_module_inst.target_1: @396 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @401 ns, [Initiators Message]=>At address b0 received response of Read transaction  data aabbccfd at time 401 ns
+
+Info: top_module_inst.initiator_0: @401 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @406 ns, [Initiators Message]=>At address b4 sending transaction with command= Read  at time 406 ns
+
+Info: top_module_inst.RouterInstance: @406 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @406 ns, Address       = b4
+
+Info: top_module_inst.RouterInstance: @406 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @406 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @406 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @406 ns, [TARGET] : adr ---- 34
+
+Info: top_module_inst.target_1: @406 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @411 ns, [Initiators Message]=>At address b4 received response of Read transaction  data aabbccfd at time 411 ns
+
+Info: top_module_inst.initiator_0: @411 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @416 ns, [Initiators Message]=>At address b8 sending transaction with command = Write, data=ff0000b8 at time 416 ns
+
+Info: top_module_inst.RouterInstance: @416 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @416 ns, Address       = b8
+
+Info: top_module_inst.RouterInstance: @416 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @416 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @416 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @416 ns, [TARGET] : adr ---- 38
+
+Info: top_module_inst.target_1: @416 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @419 ns, [Initiators Message]=>At address b8 received response of Write transaction  at time 419 ns
+
+Info: top_module_inst.initiator_0: @419 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @424 ns, [Initiators Message]=>At address bc sending transaction with command = Write, data=ff0000bc at time 424 ns
+
+Info: top_module_inst.RouterInstance: @424 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @424 ns, Address       = bc
+
+Info: top_module_inst.RouterInstance: @424 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @424 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @424 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @424 ns, [TARGET] : adr ---- 3c
+
+Info: top_module_inst.target_1: @424 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @427 ns, [Initiators Message]=>At address bc received response of Write transaction  at time 427 ns
+
+Info: top_module_inst.initiator_0: @427 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @432 ns, [Initiators Message]=>At address c0 sending transaction with command = Write, data=ff0000c0 at time 432 ns
+
+Info: top_module_inst.RouterInstance: @432 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @432 ns, Address       = c0
+
+Info: top_module_inst.RouterInstance: @432 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @432 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @432 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @432 ns, [TARGET] : adr ---- 40
+
+Info: top_module_inst.target_1: @432 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @435 ns, [Initiators Message]=>At address c0 received response of Write transaction  at time 435 ns
+
+Info: top_module_inst.initiator_0: @435 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @440 ns, [Initiators Message]=>At address c4 sending transaction with command= Read  at time 440 ns
+
+Info: top_module_inst.RouterInstance: @440 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @440 ns, Address       = c4
+
+Info: top_module_inst.RouterInstance: @440 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @440 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @440 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @440 ns, [TARGET] : adr ---- 44
+
+Info: top_module_inst.target_1: @440 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @445 ns, [Initiators Message]=>At address c4 received response of Read transaction  data aabbccdd at time 445 ns
+
+Info: top_module_inst.initiator_0: @445 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @450 ns, [Initiators Message]=>At address c8 sending transaction with command = Write, data=ff0000c8 at time 450 ns
+
+Info: top_module_inst.RouterInstance: @450 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @450 ns, Address       = c8
+
+Info: top_module_inst.RouterInstance: @450 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @450 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @450 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @450 ns, [TARGET] : adr ---- 48
+
+Info: top_module_inst.target_1: @450 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @453 ns, [Initiators Message]=>At address c8 received response of Write transaction  at time 453 ns
+
+Info: top_module_inst.initiator_0: @453 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @458 ns, [Initiators Message]=>At address cc sending transaction with command= Read  at time 458 ns
+
+Info: top_module_inst.RouterInstance: @458 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @458 ns, Address       = cc
+
+Info: top_module_inst.RouterInstance: @458 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @458 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @458 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @458 ns, [TARGET] : adr ---- 4c
+
+Info: top_module_inst.target_1: @458 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @463 ns, [Initiators Message]=>At address cc received response of Read transaction  data aabbccdd at time 463 ns
+
+Info: top_module_inst.initiator_0: @463 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @468 ns, [Initiators Message]=>At address d0 sending transaction with command= Read  at time 468 ns
+
+Info: top_module_inst.RouterInstance: @468 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @468 ns, Address       = d0
+
+Info: top_module_inst.RouterInstance: @468 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @468 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @468 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @468 ns, [TARGET] : adr ---- 50
+
+Info: top_module_inst.target_1: @468 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @473 ns, [Initiators Message]=>At address d0 received response of Read transaction  data aabbccdd at time 473 ns
+
+Info: top_module_inst.initiator_0: @473 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @478 ns, [Initiators Message]=>At address d4 sending transaction with command= Read  at time 478 ns
+
+Info: top_module_inst.RouterInstance: @478 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @478 ns, Address       = d4
+
+Info: top_module_inst.RouterInstance: @478 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @478 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @478 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @478 ns, [TARGET] : adr ---- 54
+
+Info: top_module_inst.target_1: @478 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @483 ns, [Initiators Message]=>At address d4 received response of Read transaction  data aabbccdd at time 483 ns
+
+Info: top_module_inst.initiator_0: @483 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @488 ns, [Initiators Message]=>At address d8 sending transaction with command = Write, data=ff0000d8 at time 488 ns
+
+Info: top_module_inst.RouterInstance: @488 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @488 ns, Address       = d8
+
+Info: top_module_inst.RouterInstance: @488 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @488 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @488 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @488 ns, [TARGET] : adr ---- 58
+
+Info: top_module_inst.target_1: @488 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @491 ns, [Initiators Message]=>At address d8 received response of Write transaction  at time 491 ns
+
+Info: top_module_inst.initiator_0: @491 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @496 ns, [Initiators Message]=>At address dc sending transaction with command = Write, data=ff0000dc at time 496 ns
+
+Info: top_module_inst.RouterInstance: @496 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @496 ns, Address       = dc
+
+Info: top_module_inst.RouterInstance: @496 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @496 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @496 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @496 ns, [TARGET] : adr ---- 5c
+
+Info: top_module_inst.target_1: @496 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @499 ns, [Initiators Message]=>At address dc received response of Write transaction  at time 499 ns
+
+Info: top_module_inst.initiator_0: @499 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @504 ns, [Initiators Message]=>At address e0 sending transaction with command = Write, data=ff0000e0 at time 504 ns
+
+Info: top_module_inst.RouterInstance: @504 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @504 ns, Address       = e0
+
+Info: top_module_inst.RouterInstance: @504 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @504 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @504 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @504 ns, [TARGET] : adr ---- 60
+
+Info: top_module_inst.target_1: @504 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @507 ns, [Initiators Message]=>At address e0 received response of Write transaction  at time 507 ns
+
+Info: top_module_inst.initiator_0: @507 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @512 ns, [Initiators Message]=>At address e4 sending transaction with command= Read  at time 512 ns
+
+Info: top_module_inst.RouterInstance: @512 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @512 ns, Address       = e4
+
+Info: top_module_inst.RouterInstance: @512 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @512 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @512 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @512 ns, [TARGET] : adr ---- 64
+
+Info: top_module_inst.target_1: @512 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @517 ns, [Initiators Message]=>At address e4 received response of Read transaction  data aabbccfd at time 517 ns
+
+Info: top_module_inst.initiator_0: @517 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @522 ns, [Initiators Message]=>At address e8 sending transaction with command = Write, data=ff0000e8 at time 522 ns
+
+Info: top_module_inst.RouterInstance: @522 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @522 ns, Address       = e8
+
+Info: top_module_inst.RouterInstance: @522 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @522 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @522 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @522 ns, [TARGET] : adr ---- 68
+
+Info: top_module_inst.target_1: @522 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @525 ns, [Initiators Message]=>At address e8 received response of Write transaction  at time 525 ns
+
+Info: top_module_inst.initiator_0: @525 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @530 ns, [Initiators Message]=>At address ec sending transaction with command= Read  at time 530 ns
+
+Info: top_module_inst.RouterInstance: @530 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @530 ns, Address       = ec
+
+Info: top_module_inst.RouterInstance: @530 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @530 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @530 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @530 ns, [TARGET] : adr ---- 6c
+
+Info: top_module_inst.target_1: @530 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @535 ns, [Initiators Message]=>At address ec received response of Read transaction  data aabbccfd at time 535 ns
+
+Info: top_module_inst.initiator_0: @535 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @540 ns, [Initiators Message]=>At address f0 sending transaction with command= Read  at time 540 ns
+
+Info: top_module_inst.RouterInstance: @540 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @540 ns, Address       = f0
+
+Info: top_module_inst.RouterInstance: @540 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @540 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @540 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @540 ns, [TARGET] : adr ---- 70
+
+Info: top_module_inst.target_1: @540 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @545 ns, [Initiators Message]=>At address f0 received response of Read transaction  data aabbccfd at time 545 ns
+
+Info: top_module_inst.initiator_0: @545 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @550 ns, [Initiators Message]=>At address f4 sending transaction with command= Read  at time 550 ns
+
+Info: top_module_inst.RouterInstance: @550 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @550 ns, Address       = f4
+
+Info: top_module_inst.RouterInstance: @550 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @550 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @550 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @550 ns, [TARGET] : adr ---- 74
+
+Info: top_module_inst.target_1: @550 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @555 ns, [Initiators Message]=>At address f4 received response of Read transaction  data aabbccfd at time 555 ns
+
+Info: top_module_inst.initiator_0: @555 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @560 ns, [Initiators Message]=>At address f8 sending transaction with command = Write, data=ff0000f8 at time 560 ns
+
+Info: top_module_inst.RouterInstance: @560 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @560 ns, Address       = f8
+
+Info: top_module_inst.RouterInstance: @560 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @560 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @560 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @560 ns, [TARGET] : adr ---- 78
+
+Info: top_module_inst.target_1: @560 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @563 ns, [Initiators Message]=>At address f8 received response of Write transaction  at time 563 ns
+
+Info: top_module_inst.initiator_0: @563 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @568 ns, [Initiators Message]=>At address fc sending transaction with command = Write, data=ff0000fc at time 568 ns
+
+Info: top_module_inst.RouterInstance: @568 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @568 ns, Address       = fc
+
+Info: top_module_inst.RouterInstance: @568 ns, Index         = 1
+
+Info: top_module_inst.RouterInstance: @568 ns, Start addres  = 80
+
+Info: top_module_inst.RouterInstance: @568 ns, End   Address = ff
+
+Info: top_module_inst.target_1: @568 ns, [TARGET] : adr ---- 7c
+
+Info: top_module_inst.target_1: @568 ns, [TARGET] : base addr ---- 80
+
+Info: top_module_inst.initiator_0: @571 ns, [Initiators Message]=>At address fc received response of Write transaction  at time 571 ns
+
+Info: top_module_inst.initiator_0: @571 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @576 ns, [Initiators Message]=>At address 100 sending transaction with command = Write, data=ff000100 at time 576 ns
+
+Info: top_module_inst.RouterInstance: @576 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @576 ns, Address       = 100
+
+Info: top_module_inst.RouterInstance: @576 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @576 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @576 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @576 ns, [TARGET] : adr ---- 0
+
+Info: top_module_inst.target_2: @576 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @579 ns, [Initiators Message]=>At address 100 received response of Write transaction  at time 579 ns
+
+Info: top_module_inst.initiator_0: @579 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @584 ns, [Initiators Message]=>At address 104 sending transaction with command= Read  at time 584 ns
+
+Info: top_module_inst.RouterInstance: @584 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @584 ns, Address       = 104
+
+Info: top_module_inst.RouterInstance: @584 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @584 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @584 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @584 ns, [TARGET] : adr ---- 4
+
+Info: top_module_inst.target_2: @584 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @589 ns, [Initiators Message]=>At address 104 received response of Read transaction  data aabbccdd at time 589 ns
+
+Info: top_module_inst.initiator_0: @589 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @594 ns, [Initiators Message]=>At address 108 sending transaction with command = Write, data=ff000108 at time 594 ns
+
+Info: top_module_inst.RouterInstance: @594 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @594 ns, Address       = 108
+
+Info: top_module_inst.RouterInstance: @594 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @594 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @594 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @594 ns, [TARGET] : adr ---- 8
+
+Info: top_module_inst.target_2: @594 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @597 ns, [Initiators Message]=>At address 108 received response of Write transaction  at time 597 ns
+
+Info: top_module_inst.initiator_0: @597 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @602 ns, [Initiators Message]=>At address 10c sending transaction with command= Read  at time 602 ns
+
+Info: top_module_inst.RouterInstance: @602 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @602 ns, Address       = 10c
+
+Info: top_module_inst.RouterInstance: @602 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @602 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @602 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @602 ns, [TARGET] : adr ---- c
+
+Info: top_module_inst.target_2: @602 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @607 ns, [Initiators Message]=>At address 10c received response of Read transaction  data aabbccdd at time 607 ns
+
+Info: top_module_inst.initiator_0: @607 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @612 ns, [Initiators Message]=>At address 110 sending transaction with command= Read  at time 612 ns
+
+Info: top_module_inst.RouterInstance: @612 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @612 ns, Address       = 110
+
+Info: top_module_inst.RouterInstance: @612 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @612 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @612 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @612 ns, [TARGET] : adr ---- 10
+
+Info: top_module_inst.target_2: @612 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @617 ns, [Initiators Message]=>At address 110 received response of Read transaction  data aabbccdd at time 617 ns
+
+Info: top_module_inst.initiator_0: @617 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @622 ns, [Initiators Message]=>At address 114 sending transaction with command= Read  at time 622 ns
+
+Info: top_module_inst.RouterInstance: @622 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @622 ns, Address       = 114
+
+Info: top_module_inst.RouterInstance: @622 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @622 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @622 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @622 ns, [TARGET] : adr ---- 14
+
+Info: top_module_inst.target_2: @622 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @627 ns, [Initiators Message]=>At address 114 received response of Read transaction  data aabbccdd at time 627 ns
+
+Info: top_module_inst.initiator_0: @627 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @632 ns, [Initiators Message]=>At address 118 sending transaction with command = Write, data=ff000118 at time 632 ns
+
+Info: top_module_inst.RouterInstance: @632 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @632 ns, Address       = 118
+
+Info: top_module_inst.RouterInstance: @632 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @632 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @632 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @632 ns, [TARGET] : adr ---- 18
+
+Info: top_module_inst.target_2: @632 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @635 ns, [Initiators Message]=>At address 118 received response of Write transaction  at time 635 ns
+
+Info: top_module_inst.initiator_0: @635 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @640 ns, [Initiators Message]=>At address 11c sending transaction with command = Write, data=ff00011c at time 640 ns
+
+Info: top_module_inst.RouterInstance: @640 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @640 ns, Address       = 11c
+
+Info: top_module_inst.RouterInstance: @640 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @640 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @640 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @640 ns, [TARGET] : adr ---- 1c
+
+Info: top_module_inst.target_2: @640 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @643 ns, [Initiators Message]=>At address 11c received response of Write transaction  at time 643 ns
+
+Info: top_module_inst.initiator_0: @643 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @648 ns, [Initiators Message]=>At address 120 sending transaction with command = Write, data=ff000120 at time 648 ns
+
+Info: top_module_inst.RouterInstance: @648 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @648 ns, Address       = 120
+
+Info: top_module_inst.RouterInstance: @648 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @648 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @648 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @648 ns, [TARGET] : adr ---- 20
+
+Info: top_module_inst.target_2: @648 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @651 ns, [Initiators Message]=>At address 120 received response of Write transaction  at time 651 ns
+
+Info: top_module_inst.initiator_0: @651 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @656 ns, [Initiators Message]=>At address 124 sending transaction with command= Read  at time 656 ns
+
+Info: top_module_inst.RouterInstance: @656 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @656 ns, Address       = 124
+
+Info: top_module_inst.RouterInstance: @656 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @656 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @656 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @656 ns, [TARGET] : adr ---- 24
+
+Info: top_module_inst.target_2: @656 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @661 ns, [Initiators Message]=>At address 124 received response of Read transaction  data aabbccfd at time 661 ns
+
+Info: top_module_inst.initiator_0: @661 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @666 ns, [Initiators Message]=>At address 128 sending transaction with command = Write, data=ff000128 at time 666 ns
+
+Info: top_module_inst.RouterInstance: @666 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @666 ns, Address       = 128
+
+Info: top_module_inst.RouterInstance: @666 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @666 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @666 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @666 ns, [TARGET] : adr ---- 28
+
+Info: top_module_inst.target_2: @666 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @669 ns, [Initiators Message]=>At address 128 received response of Write transaction  at time 669 ns
+
+Info: top_module_inst.initiator_0: @669 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @674 ns, [Initiators Message]=>At address 12c sending transaction with command= Read  at time 674 ns
+
+Info: top_module_inst.RouterInstance: @674 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @674 ns, Address       = 12c
+
+Info: top_module_inst.RouterInstance: @674 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @674 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @674 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @674 ns, [TARGET] : adr ---- 2c
+
+Info: top_module_inst.target_2: @674 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @679 ns, [Initiators Message]=>At address 12c received response of Read transaction  data aabbccfd at time 679 ns
+
+Info: top_module_inst.initiator_0: @679 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @684 ns, [Initiators Message]=>At address 130 sending transaction with command= Read  at time 684 ns
+
+Info: top_module_inst.RouterInstance: @684 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @684 ns, Address       = 130
+
+Info: top_module_inst.RouterInstance: @684 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @684 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @684 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @684 ns, [TARGET] : adr ---- 30
+
+Info: top_module_inst.target_2: @684 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @689 ns, [Initiators Message]=>At address 130 received response of Read transaction  data aabbccfd at time 689 ns
+
+Info: top_module_inst.initiator_0: @689 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @694 ns, [Initiators Message]=>At address 134 sending transaction with command= Read  at time 694 ns
+
+Info: top_module_inst.RouterInstance: @694 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @694 ns, Address       = 134
+
+Info: top_module_inst.RouterInstance: @694 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @694 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @694 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @694 ns, [TARGET] : adr ---- 34
+
+Info: top_module_inst.target_2: @694 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @699 ns, [Initiators Message]=>At address 134 received response of Read transaction  data aabbccfd at time 699 ns
+
+Info: top_module_inst.initiator_0: @699 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @704 ns, [Initiators Message]=>At address 138 sending transaction with command = Write, data=ff000138 at time 704 ns
+
+Info: top_module_inst.RouterInstance: @704 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @704 ns, Address       = 138
+
+Info: top_module_inst.RouterInstance: @704 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @704 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @704 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @704 ns, [TARGET] : adr ---- 38
+
+Info: top_module_inst.target_2: @704 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @707 ns, [Initiators Message]=>At address 138 received response of Write transaction  at time 707 ns
+
+Info: top_module_inst.initiator_0: @707 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @712 ns, [Initiators Message]=>At address 13c sending transaction with command = Write, data=ff00013c at time 712 ns
+
+Info: top_module_inst.RouterInstance: @712 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @712 ns, Address       = 13c
+
+Info: top_module_inst.RouterInstance: @712 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @712 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @712 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @712 ns, [TARGET] : adr ---- 3c
+
+Info: top_module_inst.target_2: @712 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @715 ns, [Initiators Message]=>At address 13c received response of Write transaction  at time 715 ns
+
+Info: top_module_inst.initiator_0: @715 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @720 ns, [Initiators Message]=>At address 140 sending transaction with command = Write, data=ff000140 at time 720 ns
+
+Info: top_module_inst.RouterInstance: @720 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @720 ns, Address       = 140
+
+Info: top_module_inst.RouterInstance: @720 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @720 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @720 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @720 ns, [TARGET] : adr ---- 40
+
+Info: top_module_inst.target_2: @720 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @723 ns, [Initiators Message]=>At address 140 received response of Write transaction  at time 723 ns
+
+Info: top_module_inst.initiator_0: @723 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @728 ns, [Initiators Message]=>At address 144 sending transaction with command= Read  at time 728 ns
+
+Info: top_module_inst.RouterInstance: @728 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @728 ns, Address       = 144
+
+Info: top_module_inst.RouterInstance: @728 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @728 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @728 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @728 ns, [TARGET] : adr ---- 44
+
+Info: top_module_inst.target_2: @728 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @733 ns, [Initiators Message]=>At address 144 received response of Read transaction  data aabbccdd at time 733 ns
+
+Info: top_module_inst.initiator_0: @733 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @738 ns, [Initiators Message]=>At address 148 sending transaction with command = Write, data=ff000148 at time 738 ns
+
+Info: top_module_inst.RouterInstance: @738 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @738 ns, Address       = 148
+
+Info: top_module_inst.RouterInstance: @738 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @738 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @738 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @738 ns, [TARGET] : adr ---- 48
+
+Info: top_module_inst.target_2: @738 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @741 ns, [Initiators Message]=>At address 148 received response of Write transaction  at time 741 ns
+
+Info: top_module_inst.initiator_0: @741 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @746 ns, [Initiators Message]=>At address 14c sending transaction with command= Read  at time 746 ns
+
+Info: top_module_inst.RouterInstance: @746 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @746 ns, Address       = 14c
+
+Info: top_module_inst.RouterInstance: @746 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @746 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @746 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @746 ns, [TARGET] : adr ---- 4c
+
+Info: top_module_inst.target_2: @746 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @751 ns, [Initiators Message]=>At address 14c received response of Read transaction  data aabbccdd at time 751 ns
+
+Info: top_module_inst.initiator_0: @751 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @756 ns, [Initiators Message]=>At address 150 sending transaction with command= Read  at time 756 ns
+
+Info: top_module_inst.RouterInstance: @756 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @756 ns, Address       = 150
+
+Info: top_module_inst.RouterInstance: @756 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @756 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @756 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @756 ns, [TARGET] : adr ---- 50
+
+Info: top_module_inst.target_2: @756 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @761 ns, [Initiators Message]=>At address 150 received response of Read transaction  data aabbccdd at time 761 ns
+
+Info: top_module_inst.initiator_0: @761 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @766 ns, [Initiators Message]=>At address 154 sending transaction with command= Read  at time 766 ns
+
+Info: top_module_inst.RouterInstance: @766 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @766 ns, Address       = 154
+
+Info: top_module_inst.RouterInstance: @766 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @766 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @766 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @766 ns, [TARGET] : adr ---- 54
+
+Info: top_module_inst.target_2: @766 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @771 ns, [Initiators Message]=>At address 154 received response of Read transaction  data aabbccdd at time 771 ns
+
+Info: top_module_inst.initiator_0: @771 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @776 ns, [Initiators Message]=>At address 158 sending transaction with command = Write, data=ff000158 at time 776 ns
+
+Info: top_module_inst.RouterInstance: @776 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @776 ns, Address       = 158
+
+Info: top_module_inst.RouterInstance: @776 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @776 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @776 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @776 ns, [TARGET] : adr ---- 58
+
+Info: top_module_inst.target_2: @776 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @779 ns, [Initiators Message]=>At address 158 received response of Write transaction  at time 779 ns
+
+Info: top_module_inst.initiator_0: @779 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @784 ns, [Initiators Message]=>At address 15c sending transaction with command = Write, data=ff00015c at time 784 ns
+
+Info: top_module_inst.RouterInstance: @784 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @784 ns, Address       = 15c
+
+Info: top_module_inst.RouterInstance: @784 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @784 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @784 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @784 ns, [TARGET] : adr ---- 5c
+
+Info: top_module_inst.target_2: @784 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @787 ns, [Initiators Message]=>At address 15c received response of Write transaction  at time 787 ns
+
+Info: top_module_inst.initiator_0: @787 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @792 ns, [Initiators Message]=>At address 160 sending transaction with command = Write, data=ff000160 at time 792 ns
+
+Info: top_module_inst.RouterInstance: @792 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @792 ns, Address       = 160
+
+Info: top_module_inst.RouterInstance: @792 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @792 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @792 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @792 ns, [TARGET] : adr ---- 60
+
+Info: top_module_inst.target_2: @792 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @795 ns, [Initiators Message]=>At address 160 received response of Write transaction  at time 795 ns
+
+Info: top_module_inst.initiator_0: @795 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @800 ns, [Initiators Message]=>At address 164 sending transaction with command= Read  at time 800 ns
+
+Info: top_module_inst.RouterInstance: @800 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @800 ns, Address       = 164
+
+Info: top_module_inst.RouterInstance: @800 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @800 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @800 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @800 ns, [TARGET] : adr ---- 64
+
+Info: top_module_inst.target_2: @800 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @805 ns, [Initiators Message]=>At address 164 received response of Read transaction  data aabbccfd at time 805 ns
+
+Info: top_module_inst.initiator_0: @805 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @810 ns, [Initiators Message]=>At address 168 sending transaction with command = Write, data=ff000168 at time 810 ns
+
+Info: top_module_inst.RouterInstance: @810 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @810 ns, Address       = 168
+
+Info: top_module_inst.RouterInstance: @810 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @810 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @810 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @810 ns, [TARGET] : adr ---- 68
+
+Info: top_module_inst.target_2: @810 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @813 ns, [Initiators Message]=>At address 168 received response of Write transaction  at time 813 ns
+
+Info: top_module_inst.initiator_0: @813 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @818 ns, [Initiators Message]=>At address 16c sending transaction with command= Read  at time 818 ns
+
+Info: top_module_inst.RouterInstance: @818 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @818 ns, Address       = 16c
+
+Info: top_module_inst.RouterInstance: @818 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @818 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @818 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @818 ns, [TARGET] : adr ---- 6c
+
+Info: top_module_inst.target_2: @818 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @823 ns, [Initiators Message]=>At address 16c received response of Read transaction  data aabbccfd at time 823 ns
+
+Info: top_module_inst.initiator_0: @823 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @828 ns, [Initiators Message]=>At address 170 sending transaction with command= Read  at time 828 ns
+
+Info: top_module_inst.RouterInstance: @828 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @828 ns, Address       = 170
+
+Info: top_module_inst.RouterInstance: @828 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @828 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @828 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @828 ns, [TARGET] : adr ---- 70
+
+Info: top_module_inst.target_2: @828 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @833 ns, [Initiators Message]=>At address 170 received response of Read transaction  data aabbccfd at time 833 ns
+
+Info: top_module_inst.initiator_0: @833 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @838 ns, [Initiators Message]=>At address 174 sending transaction with command= Read  at time 838 ns
+
+Info: top_module_inst.RouterInstance: @838 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @838 ns, Address       = 174
+
+Info: top_module_inst.RouterInstance: @838 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @838 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @838 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @838 ns, [TARGET] : adr ---- 74
+
+Info: top_module_inst.target_2: @838 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @843 ns, [Initiators Message]=>At address 174 received response of Read transaction  data aabbccfd at time 843 ns
+
+Info: top_module_inst.initiator_0: @843 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @848 ns, [Initiators Message]=>At address 178 sending transaction with command = Write, data=ff000178 at time 848 ns
+
+Info: top_module_inst.RouterInstance: @848 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @848 ns, Address       = 178
+
+Info: top_module_inst.RouterInstance: @848 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @848 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @848 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @848 ns, [TARGET] : adr ---- 78
+
+Info: top_module_inst.target_2: @848 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @851 ns, [Initiators Message]=>At address 178 received response of Write transaction  at time 851 ns
+
+Info: top_module_inst.initiator_0: @851 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @856 ns, [Initiators Message]=>At address 17c sending transaction with command = Write, data=ff00017c at time 856 ns
+
+Info: top_module_inst.RouterInstance: @856 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @856 ns, Address       = 17c
+
+Info: top_module_inst.RouterInstance: @856 ns, Index         = 2
+
+Info: top_module_inst.RouterInstance: @856 ns, Start addres  = 100
+
+Info: top_module_inst.RouterInstance: @856 ns, End   Address = 17f
+
+Info: top_module_inst.target_2: @856 ns, [TARGET] : adr ---- 7c
+
+Info: top_module_inst.target_2: @856 ns, [TARGET] : base addr ---- 100
+
+Info: top_module_inst.initiator_0: @859 ns, [Initiators Message]=>At address 17c received response of Write transaction  at time 859 ns
+
+Info: top_module_inst.initiator_0: @859 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @864 ns, [Initiators Message]=>At address 180 sending transaction with command = Write, data=ff000180 at time 864 ns
+
+Info: top_module_inst.RouterInstance: @864 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @864 ns, Address       = 180
+
+Info: top_module_inst.RouterInstance: @864 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @864 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @864 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @864 ns, [TARGET] : adr ---- 0
+
+Info: top_module_inst.target_3: @864 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @867 ns, [Initiators Message]=>At address 180 received response of Write transaction  at time 867 ns
+
+Info: top_module_inst.initiator_0: @867 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @872 ns, [Initiators Message]=>At address 184 sending transaction with command= Read  at time 872 ns
+
+Info: top_module_inst.RouterInstance: @872 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @872 ns, Address       = 184
+
+Info: top_module_inst.RouterInstance: @872 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @872 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @872 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @872 ns, [TARGET] : adr ---- 4
+
+Info: top_module_inst.target_3: @872 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @877 ns, [Initiators Message]=>At address 184 received response of Read transaction  data aabbccdd at time 877 ns
+
+Info: top_module_inst.initiator_0: @877 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @882 ns, [Initiators Message]=>At address 188 sending transaction with command = Write, data=ff000188 at time 882 ns
+
+Info: top_module_inst.RouterInstance: @882 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @882 ns, Address       = 188
+
+Info: top_module_inst.RouterInstance: @882 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @882 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @882 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @882 ns, [TARGET] : adr ---- 8
+
+Info: top_module_inst.target_3: @882 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @885 ns, [Initiators Message]=>At address 188 received response of Write transaction  at time 885 ns
+
+Info: top_module_inst.initiator_0: @885 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @890 ns, [Initiators Message]=>At address 18c sending transaction with command= Read  at time 890 ns
+
+Info: top_module_inst.RouterInstance: @890 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @890 ns, Address       = 18c
+
+Info: top_module_inst.RouterInstance: @890 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @890 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @890 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @890 ns, [TARGET] : adr ---- c
+
+Info: top_module_inst.target_3: @890 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @895 ns, [Initiators Message]=>At address 18c received response of Read transaction  data aabbccdd at time 895 ns
+
+Info: top_module_inst.initiator_0: @895 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @900 ns, [Initiators Message]=>At address 190 sending transaction with command= Read  at time 900 ns
+
+Info: top_module_inst.RouterInstance: @900 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @900 ns, Address       = 190
+
+Info: top_module_inst.RouterInstance: @900 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @900 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @900 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @900 ns, [TARGET] : adr ---- 10
+
+Info: top_module_inst.target_3: @900 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @905 ns, [Initiators Message]=>At address 190 received response of Read transaction  data aabbccdd at time 905 ns
+
+Info: top_module_inst.initiator_0: @905 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @910 ns, [Initiators Message]=>At address 194 sending transaction with command= Read  at time 910 ns
+
+Info: top_module_inst.RouterInstance: @910 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @910 ns, Address       = 194
+
+Info: top_module_inst.RouterInstance: @910 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @910 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @910 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @910 ns, [TARGET] : adr ---- 14
+
+Info: top_module_inst.target_3: @910 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @915 ns, [Initiators Message]=>At address 194 received response of Read transaction  data aabbccdd at time 915 ns
+
+Info: top_module_inst.initiator_0: @915 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @920 ns, [Initiators Message]=>At address 198 sending transaction with command = Write, data=ff000198 at time 920 ns
+
+Info: top_module_inst.RouterInstance: @920 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @920 ns, Address       = 198
+
+Info: top_module_inst.RouterInstance: @920 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @920 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @920 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @920 ns, [TARGET] : adr ---- 18
+
+Info: top_module_inst.target_3: @920 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @923 ns, [Initiators Message]=>At address 198 received response of Write transaction  at time 923 ns
+
+Info: top_module_inst.initiator_0: @923 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @928 ns, [Initiators Message]=>At address 19c sending transaction with command = Write, data=ff00019c at time 928 ns
+
+Info: top_module_inst.RouterInstance: @928 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @928 ns, Address       = 19c
+
+Info: top_module_inst.RouterInstance: @928 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @928 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @928 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @928 ns, [TARGET] : adr ---- 1c
+
+Info: top_module_inst.target_3: @928 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @931 ns, [Initiators Message]=>At address 19c received response of Write transaction  at time 931 ns
+
+Info: top_module_inst.initiator_0: @931 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @936 ns, [Initiators Message]=>At address 1a0 sending transaction with command = Write, data=ff0001a0 at time 936 ns
+
+Info: top_module_inst.RouterInstance: @936 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @936 ns, Address       = 1a0
+
+Info: top_module_inst.RouterInstance: @936 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @936 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @936 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @936 ns, [TARGET] : adr ---- 20
+
+Info: top_module_inst.target_3: @936 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @939 ns, [Initiators Message]=>At address 1a0 received response of Write transaction  at time 939 ns
+
+Info: top_module_inst.initiator_0: @939 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @944 ns, [Initiators Message]=>At address 1a4 sending transaction with command= Read  at time 944 ns
+
+Info: top_module_inst.RouterInstance: @944 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @944 ns, Address       = 1a4
+
+Info: top_module_inst.RouterInstance: @944 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @944 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @944 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @944 ns, [TARGET] : adr ---- 24
+
+Info: top_module_inst.target_3: @944 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @949 ns, [Initiators Message]=>At address 1a4 received response of Read transaction  data aabbccfd at time 949 ns
+
+Info: top_module_inst.initiator_0: @949 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @954 ns, [Initiators Message]=>At address 1a8 sending transaction with command = Write, data=ff0001a8 at time 954 ns
+
+Info: top_module_inst.RouterInstance: @954 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @954 ns, Address       = 1a8
+
+Info: top_module_inst.RouterInstance: @954 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @954 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @954 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @954 ns, [TARGET] : adr ---- 28
+
+Info: top_module_inst.target_3: @954 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @957 ns, [Initiators Message]=>At address 1a8 received response of Write transaction  at time 957 ns
+
+Info: top_module_inst.initiator_0: @957 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @962 ns, [Initiators Message]=>At address 1ac sending transaction with command= Read  at time 962 ns
+
+Info: top_module_inst.RouterInstance: @962 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @962 ns, Address       = 1ac
+
+Info: top_module_inst.RouterInstance: @962 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @962 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @962 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @962 ns, [TARGET] : adr ---- 2c
+
+Info: top_module_inst.target_3: @962 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @967 ns, [Initiators Message]=>At address 1ac received response of Read transaction  data aabbccfd at time 967 ns
+
+Info: top_module_inst.initiator_0: @967 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @972 ns, [Initiators Message]=>At address 1b0 sending transaction with command= Read  at time 972 ns
+
+Info: top_module_inst.RouterInstance: @972 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @972 ns, Address       = 1b0
+
+Info: top_module_inst.RouterInstance: @972 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @972 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @972 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @972 ns, [TARGET] : adr ---- 30
+
+Info: top_module_inst.target_3: @972 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @977 ns, [Initiators Message]=>At address 1b0 received response of Read transaction  data aabbccfd at time 977 ns
+
+Info: top_module_inst.initiator_0: @977 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @982 ns, [Initiators Message]=>At address 1b4 sending transaction with command= Read  at time 982 ns
+
+Info: top_module_inst.RouterInstance: @982 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @982 ns, Address       = 1b4
+
+Info: top_module_inst.RouterInstance: @982 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @982 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @982 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @982 ns, [TARGET] : adr ---- 34
+
+Info: top_module_inst.target_3: @982 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @987 ns, [Initiators Message]=>At address 1b4 received response of Read transaction  data aabbccfd at time 987 ns
+
+Info: top_module_inst.initiator_0: @987 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @992 ns, [Initiators Message]=>At address 1b8 sending transaction with command = Write, data=ff0001b8 at time 992 ns
+
+Info: top_module_inst.RouterInstance: @992 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @992 ns, Address       = 1b8
+
+Info: top_module_inst.RouterInstance: @992 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @992 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @992 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @992 ns, [TARGET] : adr ---- 38
+
+Info: top_module_inst.target_3: @992 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @995 ns, [Initiators Message]=>At address 1b8 received response of Write transaction  at time 995 ns
+
+Info: top_module_inst.initiator_0: @995 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1 us, [Initiators Message]=>At address 1bc sending transaction with command = Write, data=ff0001bc at time 1 us
+
+Info: top_module_inst.RouterInstance: @1 us, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1 us, Address       = 1bc
+
+Info: top_module_inst.RouterInstance: @1 us, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1 us, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1 us, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1 us, [TARGET] : adr ---- 3c
+
+Info: top_module_inst.target_3: @1 us, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1003 ns, [Initiators Message]=>At address 1bc received response of Write transaction  at time 1003 ns
+
+Info: top_module_inst.initiator_0: @1003 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1008 ns, [Initiators Message]=>At address 1c0 sending transaction with command = Write, data=ff0001c0 at time 1008 ns
+
+Info: top_module_inst.RouterInstance: @1008 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1008 ns, Address       = 1c0
+
+Info: top_module_inst.RouterInstance: @1008 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1008 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1008 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1008 ns, [TARGET] : adr ---- 40
+
+Info: top_module_inst.target_3: @1008 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1011 ns, [Initiators Message]=>At address 1c0 received response of Write transaction  at time 1011 ns
+
+Info: top_module_inst.initiator_0: @1011 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1016 ns, [Initiators Message]=>At address 1c4 sending transaction with command= Read  at time 1016 ns
+
+Info: top_module_inst.RouterInstance: @1016 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1016 ns, Address       = 1c4
+
+Info: top_module_inst.RouterInstance: @1016 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1016 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1016 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1016 ns, [TARGET] : adr ---- 44
+
+Info: top_module_inst.target_3: @1016 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1021 ns, [Initiators Message]=>At address 1c4 received response of Read transaction  data aabbccdd at time 1021 ns
+
+Info: top_module_inst.initiator_0: @1021 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1026 ns, [Initiators Message]=>At address 1c8 sending transaction with command = Write, data=ff0001c8 at time 1026 ns
+
+Info: top_module_inst.RouterInstance: @1026 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1026 ns, Address       = 1c8
+
+Info: top_module_inst.RouterInstance: @1026 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1026 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1026 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1026 ns, [TARGET] : adr ---- 48
+
+Info: top_module_inst.target_3: @1026 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1029 ns, [Initiators Message]=>At address 1c8 received response of Write transaction  at time 1029 ns
+
+Info: top_module_inst.initiator_0: @1029 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1034 ns, [Initiators Message]=>At address 1cc sending transaction with command= Read  at time 1034 ns
+
+Info: top_module_inst.RouterInstance: @1034 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1034 ns, Address       = 1cc
+
+Info: top_module_inst.RouterInstance: @1034 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1034 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1034 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1034 ns, [TARGET] : adr ---- 4c
+
+Info: top_module_inst.target_3: @1034 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1039 ns, [Initiators Message]=>At address 1cc received response of Read transaction  data aabbccdd at time 1039 ns
+
+Info: top_module_inst.initiator_0: @1039 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1044 ns, [Initiators Message]=>At address 1d0 sending transaction with command= Read  at time 1044 ns
+
+Info: top_module_inst.RouterInstance: @1044 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1044 ns, Address       = 1d0
+
+Info: top_module_inst.RouterInstance: @1044 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1044 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1044 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1044 ns, [TARGET] : adr ---- 50
+
+Info: top_module_inst.target_3: @1044 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1049 ns, [Initiators Message]=>At address 1d0 received response of Read transaction  data aabbccdd at time 1049 ns
+
+Info: top_module_inst.initiator_0: @1049 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1054 ns, [Initiators Message]=>At address 1d4 sending transaction with command= Read  at time 1054 ns
+
+Info: top_module_inst.RouterInstance: @1054 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1054 ns, Address       = 1d4
+
+Info: top_module_inst.RouterInstance: @1054 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1054 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1054 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1054 ns, [TARGET] : adr ---- 54
+
+Info: top_module_inst.target_3: @1054 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1059 ns, [Initiators Message]=>At address 1d4 received response of Read transaction  data aabbccdd at time 1059 ns
+
+Info: top_module_inst.initiator_0: @1059 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1064 ns, [Initiators Message]=>At address 1d8 sending transaction with command = Write, data=ff0001d8 at time 1064 ns
+
+Info: top_module_inst.RouterInstance: @1064 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1064 ns, Address       = 1d8
+
+Info: top_module_inst.RouterInstance: @1064 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1064 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1064 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1064 ns, [TARGET] : adr ---- 58
+
+Info: top_module_inst.target_3: @1064 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1067 ns, [Initiators Message]=>At address 1d8 received response of Write transaction  at time 1067 ns
+
+Info: top_module_inst.initiator_0: @1067 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1072 ns, [Initiators Message]=>At address 1dc sending transaction with command = Write, data=ff0001dc at time 1072 ns
+
+Info: top_module_inst.RouterInstance: @1072 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1072 ns, Address       = 1dc
+
+Info: top_module_inst.RouterInstance: @1072 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1072 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1072 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1072 ns, [TARGET] : adr ---- 5c
+
+Info: top_module_inst.target_3: @1072 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1075 ns, [Initiators Message]=>At address 1dc received response of Write transaction  at time 1075 ns
+
+Info: top_module_inst.initiator_0: @1075 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1080 ns, [Initiators Message]=>At address 1e0 sending transaction with command = Write, data=ff0001e0 at time 1080 ns
+
+Info: top_module_inst.RouterInstance: @1080 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1080 ns, Address       = 1e0
+
+Info: top_module_inst.RouterInstance: @1080 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1080 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1080 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1080 ns, [TARGET] : adr ---- 60
+
+Info: top_module_inst.target_3: @1080 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1083 ns, [Initiators Message]=>At address 1e0 received response of Write transaction  at time 1083 ns
+
+Info: top_module_inst.initiator_0: @1083 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1088 ns, [Initiators Message]=>At address 1e4 sending transaction with command= Read  at time 1088 ns
+
+Info: top_module_inst.RouterInstance: @1088 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1088 ns, Address       = 1e4
+
+Info: top_module_inst.RouterInstance: @1088 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1088 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1088 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1088 ns, [TARGET] : adr ---- 64
+
+Info: top_module_inst.target_3: @1088 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1093 ns, [Initiators Message]=>At address 1e4 received response of Read transaction  data aabbccfd at time 1093 ns
+
+Info: top_module_inst.initiator_0: @1093 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1098 ns, [Initiators Message]=>At address 1e8 sending transaction with command = Write, data=ff0001e8 at time 1098 ns
+
+Info: top_module_inst.RouterInstance: @1098 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1098 ns, Address       = 1e8
+
+Info: top_module_inst.RouterInstance: @1098 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1098 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1098 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1098 ns, [TARGET] : adr ---- 68
+
+Info: top_module_inst.target_3: @1098 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1101 ns, [Initiators Message]=>At address 1e8 received response of Write transaction  at time 1101 ns
+
+Info: top_module_inst.initiator_0: @1101 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1106 ns, [Initiators Message]=>At address 1ec sending transaction with command= Read  at time 1106 ns
+
+Info: top_module_inst.RouterInstance: @1106 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1106 ns, Address       = 1ec
+
+Info: top_module_inst.RouterInstance: @1106 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1106 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1106 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1106 ns, [TARGET] : adr ---- 6c
+
+Info: top_module_inst.target_3: @1106 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1111 ns, [Initiators Message]=>At address 1ec received response of Read transaction  data aabbccfd at time 1111 ns
+
+Info: top_module_inst.initiator_0: @1111 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1116 ns, [Initiators Message]=>At address 1f0 sending transaction with command= Read  at time 1116 ns
+
+Info: top_module_inst.RouterInstance: @1116 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1116 ns, Address       = 1f0
+
+Info: top_module_inst.RouterInstance: @1116 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1116 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1116 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1116 ns, [TARGET] : adr ---- 70
+
+Info: top_module_inst.target_3: @1116 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1121 ns, [Initiators Message]=>At address 1f0 received response of Read transaction  data aabbccfd at time 1121 ns
+
+Info: top_module_inst.initiator_0: @1121 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1126 ns, [Initiators Message]=>At address 1f4 sending transaction with command= Read  at time 1126 ns
+
+Info: top_module_inst.RouterInstance: @1126 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1126 ns, Address       = 1f4
+
+Info: top_module_inst.RouterInstance: @1126 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1126 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1126 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1126 ns, [TARGET] : adr ---- 74
+
+Info: top_module_inst.target_3: @1126 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1131 ns, [Initiators Message]=>At address 1f4 received response of Read transaction  data aabbccfd at time 1131 ns
+
+Info: top_module_inst.initiator_0: @1131 ns, --------------------------------------------------------
+
+Info: top_module_inst.initiator_0: @1136 ns, [Initiators Message]=>At address 1f8 sending transaction with command = Write, data=ff0001f8 at time 1136 ns
+
+Info: top_module_inst.RouterInstance: @1136 ns, [Router in 'b_transport' layer]
+
+Info: top_module_inst.RouterInstance: @1136 ns, Address       = 1f8
+
+Info: top_module_inst.RouterInstance: @1136 ns, Index         = 3
+
+Info: top_module_inst.RouterInstance: @1136 ns, Start addres  = 180
+
+Info: top_module_inst.RouterInstance: @1136 ns, End   Address = 1ff
+
+Info: top_module_inst.target_3: @1136 ns, [TARGET] : adr ---- 78
+
+Info: top_module_inst.target_3: @1136 ns, [TARGET] : base addr ---- 180
+
+Info: top_module_inst.initiator_0: @1139 ns, [Initiators Message]=>At address 1f8 received response of Write transaction  at time 1139 ns
+
+Info: top_module_inst.initiator_0: @1139 ns, --------------------------------------------------------
+
+Info: sc_main: End Simulation.

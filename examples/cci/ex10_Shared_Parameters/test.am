@@ -1,0 +1,33 @@
+examples_TESTS += ex10_Shared_Parameters/test
+
+examples_XFAIL_TESTS += 
+
+examples_BUILD += \
+	$(ex10_Shared_Parameters_BUILD)
+
+examples_CLEAN += 
+
+examples_DIRS += ex10_Shared_Parameters
+
+examples_FILES += \
+	$(ex10_Shared_Parameters_H_FILES) \
+	$(ex10_Shared_Parameters_CXX_FILES) \
+	$(ex10_Shared_Parameters_BUILD) \
+	$(ex10_Shared_Parameters_EXTRA)
+
+ex10_Shared_Parameters_test_SOURCES = \
+	$(ex10_Shared_Parameters_H_FILES) \
+	$(ex10_Shared_Parameters_CXX_FILES)
+
+ex10_Shared_Parameters_CXX_FILES = \
+    ex10_Shared_Parameters/ex10_Shared_Parameters.cpp
+
+ex10_Shared_Parameters_H_FILES = \
+    ex10_Shared_Parameters/ex10_parameter_configurator.h \
+    ex10_Shared_Parameters/ex10_parameter_owner.h
+
+ex10_Shared_Parameters_BUILD = 
+
+ex10_Shared_Parameters_EXTRA = 
+
+## Taf!

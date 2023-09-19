@@ -1,0 +1,34 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Create Release
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    env:
+      release_name: ${{ github.event.repository.name }}_${{ github.ref_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Create configure script
+        run: ./config/bootstrap
+      - name: Create output folder and copy files
+        run: |
+          mkdir ${release_name}
+          rsync -av --progress ./ ${release_name} --exclude .git
+          mkdir output
+      - name: Create zip
+        run: zip -r output/${release_name}.zip ${release_name}
+      - name: Create tar
+        run: tar -cvzf output/${release_name}.tar.gz ${release_name}
+      - uses: "marvinpinto/action-automatic-releases@v1.2.1"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: ${{ github.event.repository.name }} ${{ github.ref_name }}
+          files: output/*
