@@ -361,7 +361,7 @@ endif (NOT SystemC_TARGET_ARCH)
 
 list (APPEND CMAKE_PREFIX_PATH /opt/systemc)
 
-IF (NOT SystemCLanguage_FOUND )
+IF (NOT SystemCLanguage_FOUND AND NOT TARGET SystemC::systemc)
     find_package(SystemCLanguage CONFIG REQUIRED)
 ENDIF ()
 message (STATUS "Using SystemC ${SystemCLanguage_VERSION} (${SystemCLanguage_DIR})")
@@ -567,6 +567,3 @@ install(FILES "${PROJECT_BINARY_DIR}/SystemCCCIConfig.cmake"
               "${PROJECT_BINARY_DIR}/SystemCCCIConfigVersion.cmake"
         DESTINATION "${SystemCCCI_INSTALL_CMAKEDIR}"
         COMPONENT dev)
-
-
-
