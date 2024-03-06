@@ -95,7 +95,7 @@ add_library (cci
 # it's not found. As the user is using SystemC, the cmake files should
 # be available.
 set (CMAKE_PREFIX_PATH /opt/systemc)
-if ( NOT SystemCLanguage_FOUND )
+if ( NOT SystemCLanguage_FOUND AND NOT TARGET SystemC::systemc )
   find_package(SystemCLanguage CONFIG REQUIRED)
 ENDIF ()
 
