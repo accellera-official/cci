@@ -104,10 +104,10 @@ set (CMAKE_CXX_STANDARD ${SystemC_CXX_STANDARD} CACHE STRING
 set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
      "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
 
-find_package(RapidJSON CONFIG REQUIRED)
+target_link_libraries(cci PUBLIC SystemC::systemc)
 
-target_link_libraries(cci SystemC::systemc)
-
+add_subdirectory(rapidjson)
+target_link_libraries(cci PRIVATE rapidjson)
 
 add_library (SystemC::cci ALIAS cci)
 
@@ -135,9 +135,7 @@ target_compile_options(
 target_include_directories(cci
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-  PRIVATE
-  ${RAPIDJSON_INCLUDE_DIRS})
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 if (APPLE)
   # It's OK that _sc_main is an undefined symbol.
