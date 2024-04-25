@@ -170,7 +170,7 @@
 ###############################################################################
 
 
-cmake_minimum_required (VERSION 3.1)
+cmake_minimum_required (VERSION 3.5)
 cmake_policy(SET CMP0001 NEW)
 
 project (SystemCCCI CXX C)
@@ -362,7 +362,8 @@ endif (NOT SystemC_TARGET_ARCH)
 list (APPEND CMAKE_PREFIX_PATH /opt/systemc)
 
 IF (NOT SystemCLanguage_FOUND AND NOT TARGET SystemC::systemc)
-    find_package(SystemCLanguage CONFIG REQUIRED)
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
+    find_package(SystemCLanguage REQUIRED)
 ENDIF ()
 message (STATUS "Using SystemC ${SystemCLanguage_VERSION} (${SystemCLanguage_DIR})")
 IF ( "${SystemC_CXX_STANDARD}" AND NOT "${SystemC_CXX_STANDARD}" EQUAL "${CMAKE_CXX_STANDARD}")
