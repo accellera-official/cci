@@ -116,7 +116,6 @@ jobs:
         echo "NPROC=$(nproc)" >> ${GITHUB_ENV}
         sudo apt-get update -y -qq
         sudo apt-get install -y \
-          rapidjson-dev \
           ${{matrix.os.deps}}
 
     - name: Setup Dependencies MacOS
@@ -124,7 +123,6 @@ jobs:
       run: |
         echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
         brew install \
-          rapidjson \
           ${{matrix.os.deps}}
 
     - name: Setup Dependencies Windows
@@ -134,15 +132,6 @@ jobs:
         echo "C:\msys64\mingw64\bin" >> ${GITHUB_PATH}
 
         choco install wget ${{matrix.os.deps}}
-
-        git clone https://github.com/Tencent/rapidjson.git ${{github.workspace}}/rapidjson
-        cd ${{github.workspace}}/rapidjson
-        git checkout v1.1.0
-        mkdir build
-        cd build
-        cmake ..
-        cmake --build . -- -j ${{env.NPROC}}
-        cmake --build . --target install
 
     - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
       id: cache-SystemC
