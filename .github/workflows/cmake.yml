@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        systemc_version: [2.3.2, 2.3.3, 2.3.4]
+        systemc_version: [2.3.2, 2.3.3, 2.3.4, 3.0.0]
         os:
           - name: ubuntu
             version: 20.04
@@ -134,7 +134,7 @@ jobs:
         echo "C:\msys64\mingw64\bin" >> ${GITHUB_PATH}
 
         choco install wget ${{matrix.os.deps}}
-    
+
         git clone https://github.com/Tencent/rapidjson.git ${{github.workspace}}/rapidjson
         cd ${{github.workspace}}/rapidjson
         git checkout v1.1.0
