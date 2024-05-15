@@ -122,8 +122,6 @@ jobs:
       if: matrix.os.name == 'macos'
       run: |
         echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
-        brew install \
-          ${{matrix.os.deps}}
 
     - name: Setup Dependencies Windows
       if: matrix.os.name == 'windows'
@@ -172,7 +170,7 @@ jobs:
           -DSYSTEMCCCI_BUILD_TESTS=ON ${{env.ESC}}
           -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
-          -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
+          -DCMAKE_CXX_STANDARD=${{matrix.systemc_version != '3.0.0' && '11' || '17'}} ${{env.ESC}}
           -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
           ../../..
