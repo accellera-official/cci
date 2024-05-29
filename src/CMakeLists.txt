@@ -99,11 +99,6 @@ if ( NOT SystemCLanguage_FOUND AND NOT TARGET SystemC::systemc )
   find_package(SystemCLanguage CONFIG REQUIRED)
 ENDIF ()
 
-set (CMAKE_CXX_STANDARD ${SystemC_CXX_STANDARD} CACHE STRING
-     "C++ standard to build all targets. Supported values are 98, 11, and 14.")
-set (CMAKE_CXX_STANDARD_REQUIRED ${SystemC_CXX_STANDARD_REQUIRED} CACHE BOOL
-     "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
-
 target_link_libraries(cci PUBLIC SystemC::systemc)
 
 add_library (SystemC::cci ALIAS cci)
@@ -128,6 +123,11 @@ target_compile_options(
   $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:
     -Wall -Wextra -Wno-unused-parameter -Wno-unused-variable>
   $<$<CXX_COMPILER_ID:MSVC>:/W3 /wd4244 /wd4267 /wd4996>)
+
+target_compile_features(
+  cci
+  PUBLIC
+  cxx_std_11)
 
 target_include_directories(cci
   PUBLIC

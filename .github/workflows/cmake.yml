@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        systemc_version: [2.3.2, 2.3.3, 2.3.4]
+        systemc_version: [2.3.2, 2.3.3, 2.3.4, 3.0.0]
         os:
           - name: ubuntu
             version: 20.04
@@ -116,16 +116,12 @@ jobs:
         echo "NPROC=$(nproc)" >> ${GITHUB_ENV}
         sudo apt-get update -y -qq
         sudo apt-get install -y \
-          rapidjson-dev \
           ${{matrix.os.deps}}
 
     - name: Setup Dependencies MacOS
       if: matrix.os.name == 'macos'
       run: |
         echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
-        brew install \
-          rapidjson \
-          ${{matrix.os.deps}}
 
     - name: Setup Dependencies Windows
       if: matrix.os.name == 'windows'
@@ -134,15 +130,6 @@ jobs:
         echo "C:\msys64\mingw64\bin" >> ${GITHUB_PATH}
 
         choco install wget ${{matrix.os.deps}}
-    
-        git clone https://github.com/Tencent/rapidjson.git ${{github.workspace}}/rapidjson
-        cd ${{github.workspace}}/rapidjson
-        git checkout v1.1.0
-        mkdir build
-        cd build
-        cmake ..
-        cmake --build . -- -j ${{env.NPROC}}
-        cmake --build . --target install
 
     - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
       id: cache-SystemC
@@ -183,7 +170,7 @@ jobs:
           -DSYSTEMCCCI_BUILD_TESTS=ON ${{env.ESC}}
           -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
-          -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
+          -DCMAKE_CXX_STANDARD=${{matrix.systemc_version != '3.0.0' && '11' || '17'}} ${{env.ESC}}
           -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
           ../../..

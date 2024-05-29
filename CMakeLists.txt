@@ -100,12 +100,6 @@
 # CMAKE_BUILD_TYPE              Specifies the build type on single-configuration
 #                               generators. (default: Release).
 #
-# CMAKE_CXX_STANDARD            C++ standard to build all targets. Supported
-#                               values are 98, 11, and 14. (default: 98)
-#
-# CMAKE_CXX_STANDARD_REQUIRED   The with CMAKE_CXX_STANDARD selected C++ standard
-#                               is a requirement. (default: ON)
-#
 # CMAKE_INSTALL_PREFIX          Root directory of the SystemC libraries
 #                               installation (defaults to $ENV{SYSTEMC_HOME}
 #                               if set to an absolute path and otherwise to either
@@ -211,12 +205,6 @@ if (NOT CMAKE_BUILD_TYPE)
        "Choose the type of build, options are: empty, Debug, Release, RelWithDebInfo, MinSizeRel."
        FORCE)
 endif (NOT CMAKE_BUILD_TYPE)
-
-set (CMAKE_CXX_STANDARD 11 CACHE STRING
-     "C++ standard to build all targets. Supported values are 98, 11, and 14.")
-set (CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL
-     "The with CMAKE_CXX_STANDARD selected C++ standard is a requirement.")
-mark_as_advanced (CMAKE_CXX_STANDARD_REQUIRED)
 
 if (NOT (WIN32 OR CYGWIN))
   option (BUILD_SHARED_LIBS "Build shared libraries." ON)
