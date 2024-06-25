@@ -148,7 +148,7 @@ set_target_properties (cci
                        LINKER_LANGUAGE CXX
                        VERSION ${SystemCCCI_VERSION}
                        SOVERSION ${SystemCCCI_SOVERSION}
-                       INSTALL_NAME_DIR ${CMAKE_INSTALL_FULL_LIBDIR})
+                       )
 
 
 ###############################################################################
