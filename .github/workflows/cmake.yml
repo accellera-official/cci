@@ -100,10 +100,16 @@ jobs:
     - name: Setup Dependencies Windows
       if: matrix.os.name == 'windows'
       run: |
-        # add mingw to path to find clang
-        echo "C:\msys64\mingw64\bin" >> ${GITHUB_PATH}
-
         choco install wget ${{matrix.os.deps}}
+        # add mingw to path to find clang
+        echo "C:\msys64\mingw64\bin" | Out-File -FilePath ${env:GITHUB_PATH} -Append
+
+    - name: Setup Dependencies Windows Clang
+      if : matrix.os.name == 'windows' && matrix.os.c_compiler == 'clang'
+      uses: msys2/setup-msys2@v2
+      with:
+        install: mingw-w64-x86_64-clang
+        release: false
 
     - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
       id: cache-SystemC
