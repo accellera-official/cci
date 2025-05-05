@@ -16,17 +16,6 @@ jobs:
         systemc_version: [2.3.2, 2.3.3, 2.3.4, 3.0.0]
         os:
           - name: ubuntu
-            version: 20.04
-            cxx_compiler: g++-9
-            c_compiler: gcc-9
-            generator: "Unix Makefiles"
-          - name: ubuntu
-            version: 20.04
-            cxx_compiler: clang++-9
-            c_compiler: clang-9
-            generator: "Unix Makefiles"
-            deps: 'clang-9'
-          - name: ubuntu
             version: 22.04
             cxx_compiler: g++-11
             c_compiler: gcc-11
@@ -37,41 +26,26 @@ jobs:
             c_compiler: clang-11
             generator: "Unix Makefiles"
             deps: 'clang-11'
-          - name: macos
-            version: 11
+          - name: ubuntu
+            version: 24.04
             cxx_compiler: g++
             c_compiler: gcc
             generator: "Unix Makefiles"
-          - name: macos
-            version: 11
+          - name: ubuntu
+            version: 24.04
             cxx_compiler: clang++
             c_compiler: clang
             generator: "Unix Makefiles"
           - name: macos
-            version: 12
+            version: 13
             cxx_compiler: g++
             c_compiler: gcc
             generator: "Unix Makefiles"
           - name: macos
-            version: 12
+            version: 13
             cxx_compiler: clang++
             c_compiler: clang
             generator: "Unix Makefiles"
-          - name: windows
-            version: 2019
-            cxx_compiler: clang++
-            c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2019
-            cxx_compiler: g++
-            c_compiler: gcc
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2019
-            cxx_compiler: msvc
-            c_compiler: msvc
-            generator: "Visual Studio 16 2019"
           - name: windows
             version: 2022
             cxx_compiler: clang++

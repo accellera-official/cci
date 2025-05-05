@@ -15,15 +15,6 @@ jobs:
         systemc_version: [2.3.2, 2.3.3, 2.3.4]
         os:
           - name: ubuntu
-            version: 20.04
-            cxx_compiler: g++-9
-            c_compiler: gcc-9
-          - name: ubuntu
-            version: 20.04
-            cxx_compiler: clang++-9
-            c_compiler: clang-9
-            deps: 'clang-9'
-          - name: ubuntu
             version: 22.04
             cxx_compiler: g++-11
             c_compiler: gcc-11
@@ -32,26 +23,16 @@ jobs:
             cxx_compiler: clang++-11
             c_compiler: clang-11
             deps: 'clang-11'
-          - name: macos
-            version: 11
+          - name: ubuntu
+            version: 24.04
             cxx_compiler: g++
             c_compiler: gcc
-            deps: 'automake'
-          - name: macos
-            version: 11
+            generator: "Unix Makefiles"
+          - name: ubuntu
+            version: 24.04
             cxx_compiler: clang++
             c_compiler: clang
-            deps: 'automake'
-          - name: macos
-            version: 12
-            cxx_compiler: g++
-            c_compiler: gcc
-            deps: 'automake'
-          - name: macos
-            version: 12
-            cxx_compiler: clang++
-            c_compiler: clang
-            deps: 'automake'
+            generator: "Unix Makefiles"
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
@@ -142,5 +123,5 @@ jobs:
       if: success() || failure()
       uses: actions/upload-artifact@v3
       with:
-        name: test-results-${{matrix.systemc_version}}-${{matrix.os.cxx_compiler}}
+        name: test-results-${{matrix.systemc_version}}-${{matrix.os.name}}-${{matrix.os.version}}-${{matrix.os.cxx_compiler}}
         path: ${{env.CCI_HOME}}/build/examples/cci/test-suite.log
