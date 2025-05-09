@@ -121,7 +121,7 @@ jobs:
 
     - name: Upload test report
       if: success() || failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results-${{matrix.systemc_version}}-${{matrix.os.name}}-${{matrix.os.version}}-${{matrix.os.cxx_compiler}}
         path: ${{env.CCI_HOME}}/build/examples/cci/test-suite.log
