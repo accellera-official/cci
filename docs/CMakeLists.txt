@@ -47,7 +47,7 @@ set (DOC_FILES
 	cci/archived/broker_accessor_concept.pdf
 	cci/archived/CCI_Instructions_for_MSVS2015.pdf
 	cci/archived/cci_param_concept.jpg
-	cci/archived/CODING_STYLE.txt
+	cci/archived/coding_style.txt
 	cci/archived/discussions.txt
 	cci/archived/example_review_checklist
 	cci/archived/GreenControl_GreenConfig_CODES09_Schroeder_p81.pdf
