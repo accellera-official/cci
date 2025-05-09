@@ -137,6 +137,7 @@ jobs:
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
           -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.SYSTEMC_HOME}} ${{env.ESC}}
+          -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
           ..
         cmake --build . --config Release -- -j ${{env.NPROC}}
         cmake --build . --config Release --target install
@@ -153,6 +154,7 @@ jobs:
           -DCMAKE_CXX_STANDARD=${{matrix.systemc_version != '3.0.0' && '11' || '17'}} ${{env.ESC}}
           -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
+          -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
           ../../..
 
     - name: Build
