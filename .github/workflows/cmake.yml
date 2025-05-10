@@ -36,31 +36,40 @@ jobs:
             cxx_compiler: clang++
             c_compiler: clang
             generator: "Unix Makefiles"
-          - name: macos
-            version: 13
-            cxx_compiler: g++
-            c_compiler: gcc
-            generator: "Unix Makefiles"
-          - name: macos
-            version: 13
-            cxx_compiler: clang++
-            c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2022
-            cxx_compiler: clang++
-            c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2022
-            cxx_compiler: g++
-            c_compiler: gcc
-            generator: "Unix Makefiles"
           - name: windows
             version: 2022
             cxx_compiler: msvc
             c_compiler: msvc
             generator: "Visual Studio 17 2022"
+        include:
+          - systemc_version: 3.0.0
+            os:
+              name: macos
+              version: 13
+              cxx_compiler: g++
+              c_compiler: gcc
+              generator: "Unix Makefiles"
+          - systemc_version: 3.0.0
+            os:
+              name: macos
+              version: 13
+              cxx_compiler: clang++
+              c_compiler: clang
+              generator: "Unix Makefiles"
+          - systemc_version: 3.0.0
+            os:
+              name: windows
+              version: 2022
+              cxx_compiler: g++
+              c_compiler: gcc
+              generator: "Unix Makefiles"
+          - systemc_version: 3.0.0
+            os:
+              name: windows
+              version: 2022
+              cxx_compiler: clang++
+              c_compiler: clang
+              generator: "Unix Makefiles"
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
