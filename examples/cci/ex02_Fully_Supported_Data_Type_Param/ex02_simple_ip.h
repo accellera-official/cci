@@ -28,6 +28,7 @@
 #define EXAMPLES_EX02_FULLY_SUPPORTED_DATA_TYPE_PARAM_EX02_SIMPLE_IP_H_
 
 #include <cci_configuration>
+#include <stdint.h>
 #include <string>
 #include "xreport.hpp"
 

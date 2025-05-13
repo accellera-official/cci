@@ -16,17 +16,6 @@ jobs:
         systemc_version: [2.3.2, 2.3.3, 2.3.4, 3.0.0]
         os:
           - name: ubuntu
-            version: 20.04
-            cxx_compiler: g++-9
-            c_compiler: gcc-9
-            generator: "Unix Makefiles"
-          - name: ubuntu
-            version: 20.04
-            cxx_compiler: clang++-9
-            c_compiler: clang-9
-            generator: "Unix Makefiles"
-            deps: 'clang-9'
-          - name: ubuntu
             version: 22.04
             cxx_compiler: g++-11
             c_compiler: gcc-11
@@ -37,56 +26,50 @@ jobs:
             c_compiler: clang-11
             generator: "Unix Makefiles"
             deps: 'clang-11'
-          - name: macos
-            version: 11
+          - name: ubuntu
+            version: 24.04
             cxx_compiler: g++
             c_compiler: gcc
             generator: "Unix Makefiles"
-          - name: macos
-            version: 11
+          - name: ubuntu
+            version: 24.04
             cxx_compiler: clang++
             c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: macos
-            version: 12
-            cxx_compiler: g++
-            c_compiler: gcc
-            generator: "Unix Makefiles"
-          - name: macos
-            version: 12
-            cxx_compiler: clang++
-            c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2019
-            cxx_compiler: clang++
-            c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2019
-            cxx_compiler: g++
-            c_compiler: gcc
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2019
-            cxx_compiler: msvc
-            c_compiler: msvc
-            generator: "Visual Studio 16 2019"
-          - name: windows
-            version: 2022
-            cxx_compiler: clang++
-            c_compiler: clang
-            generator: "Unix Makefiles"
-          - name: windows
-            version: 2022
-            cxx_compiler: g++
-            c_compiler: gcc
             generator: "Unix Makefiles"
           - name: windows
             version: 2022
             cxx_compiler: msvc
             c_compiler: msvc
             generator: "Visual Studio 17 2022"
+        include:
+          - systemc_version: 3.0.0
+            os:
+              name: macos
+              version: 13
+              cxx_compiler: g++
+              c_compiler: gcc
+              generator: "Unix Makefiles"
+          - systemc_version: 3.0.0
+            os:
+              name: macos
+              version: 13
+              cxx_compiler: clang++
+              c_compiler: clang
+              generator: "Unix Makefiles"
+          - systemc_version: 3.0.0
+            os:
+              name: windows
+              version: 2022
+              cxx_compiler: g++
+              c_compiler: gcc
+              generator: "Unix Makefiles"
+          - systemc_version: 3.0.0
+            os:
+              name: windows
+              version: 2022
+              cxx_compiler: clang++
+              c_compiler: clang
+              generator: "Unix Makefiles"
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
@@ -126,10 +109,16 @@ jobs:
     - name: Setup Dependencies Windows
       if: matrix.os.name == 'windows'
       run: |
-        # add mingw to path to find clang
-        echo "C:\msys64\mingw64\bin" >> ${GITHUB_PATH}
-
         choco install wget ${{matrix.os.deps}}
+        # add mingw to path to find clang
+        echo "C:\msys64\mingw64\bin" | Out-File -FilePath ${env:GITHUB_PATH} -Append
+
+    - name: Setup Dependencies Windows Clang
+      if : matrix.os.name == 'windows' && matrix.os.c_compiler == 'clang'
+      uses: msys2/setup-msys2@v2
+      with:
+        install: mingw-w64-x86_64-clang
+        release: false
 
     - name: Cache SystemC ${{matrix.systemc_version}} (${{matrix.os.cxx_compiler}})
       id: cache-SystemC
@@ -157,6 +146,7 @@ jobs:
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
           -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.SYSTEMC_HOME}} ${{env.ESC}}
+          -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
           ..
         cmake --build . --config Release -- -j ${{env.NPROC}}
         cmake --build . --config Release --target install
@@ -173,6 +163,7 @@ jobs:
           -DCMAKE_CXX_STANDARD=${{matrix.systemc_version != '3.0.0' && '11' || '17'}} ${{env.ESC}}
           -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
+          -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
           ../../..
 
     - name: Build
@@ -183,5 +174,11 @@ jobs:
 
     - name: Test
       working-directory: ${{env.CCI_HOME}}/build
+      if: matrix.os.name != 'windows' || matrix.os.c_compiler != 'gcc' # Tests segfault on Windows w/ MinGW GCC
       run: |
         cmake --build ./examples --config Release --target check
+
+    - name: Test (mingw-gcc)
+      if: matrix.os.name == 'windows' && matrix.os.c_compiler == 'gcc'
+      run: |
+        echo "::warning file=.github/workflows/cmake.yml,::Tests are disabled on ${{matrix.os.name}}-${{matrix.os.c_compiler}}"

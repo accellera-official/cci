@@ -89,7 +89,7 @@ if(NOT TEST_GOLDEN)
     message ("OK")
     return()
   else(TEST_EXIT_CODE EQUAL 0)
-    message (FATAL_ERROR "***ERROR:\n${TEST_ERROR}")
+    message (FATAL_ERROR "***ERROR (test execution):\nExit code: ${TEST_EXIT_CODE}\n${TEST_ERROR}")
   endif(TEST_EXIT_CODE EQUAL 0)
 endif(NOT TEST_GOLDEN)
 
@@ -125,7 +125,7 @@ if(DIFF_EXIT_CODE EQUAL 0)
   message ("OK")
 else(DIFF_EXIT_CODE EQUAL 0)
   file(READ ${TEST_DIR}/diff.log DIFF_LOG)
-  message(FATAL_ERROR "***ERROR:\n${DIFF_LOG}")
+  message(FATAL_ERROR "***ERROR (golden file diff):\n${DIFF_LOG}")
 endif(DIFF_EXIT_CODE EQUAL 0)
 
 file(REMOVE ${TEST_DIR}/run.log
