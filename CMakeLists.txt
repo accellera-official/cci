@@ -213,7 +213,7 @@ else (NOT (WIN32 OR CYGWIN))
 endif (NOT (WIN32 OR CYGWIN))
 if (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
   message (WARNING "The compilation of SystemC as a DLL on Windows is currently not supported!")
-  set (BUILD_SHARED_LIBS CACHE BOOL "Build shared libraries." OFF FORCE)
+  set (BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries." FORCE)
 endif (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
 
 option (BUILD_SOURCE_DOCUMENTATION "Build source documentation with Doxygen." OFF)
