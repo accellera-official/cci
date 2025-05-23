@@ -2,11 +2,6 @@ name: cmake
 
 on: [push, pull_request]
 
-env:
-  SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
-  CCI_ROOT_HOME: "${{github.workspace}}/build"
-  ESC: '\'
-
 jobs:
   build:
     name: "Build"
@@ -84,29 +79,21 @@ jobs:
             os:
               name: macos
 
+    env:
+      SYSTEMC_HOME: "${{github.workspace}}/systemc/${{matrix.systemc_version}}"
+      CCI_HOME: "${{github.workspace}}/build/release-sc_${{matrix.systemc_version}}"
+      ESC: ${{matrix.os.name == 'windows' && '`' || '\'}}
+
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
-    - name: Setup environment vars
-      if: matrix.os.name != 'windows'
-      run: |
-        echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-        echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-
-    - name: Setup environment vars (Windows)
-      if: matrix.os.name == 'windows'
-      run: |
-        echo "SYSTEMC_HOME=${env:SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-        echo "CCI_HOME=${env:CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-        echo "ESC=``" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-
     - name: Checkout
       uses: actions/checkout@v3
       with:
         submodules: 'recursive'
 
     - name: Setup Dependencies Ubuntu
-      if: matrix.os.name == 'ubuntu'
+      if: matrix.os.name == 'ubuntu' && matrix.os.deps != 0
       run: |
         sudo apt-get update -y -qq
         sudo apt-get install -y \
@@ -176,7 +163,7 @@ jobs:
       working-directory: ${{env.CCI_HOME}}/build
       run: |
         cmake --build . --config Release --parallel
-        cmake --build . --config Release --target install
+        cmake --install . --config Release
 
     - name: Test
       working-directory: ${{env.CCI_HOME}}/build
