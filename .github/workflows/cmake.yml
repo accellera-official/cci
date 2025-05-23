@@ -92,14 +92,12 @@ jobs:
       run: |
         echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
         echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-        echo "NPROC=1" >> ${GITHUB_ENV}
 
     - name: Setup environment vars (Windows)
       if: matrix.os.name == 'windows'
       run: |
         echo "SYSTEMC_HOME=${env:SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
         echo "CCI_HOME=${env:CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-        echo "NPROC=${env:NUMBER_OF_PROCESSORS}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
         echo "ESC=``" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
 
     - name: Checkout
@@ -110,15 +108,9 @@ jobs:
     - name: Setup Dependencies Ubuntu
       if: matrix.os.name == 'ubuntu'
       run: |
-        echo "NPROC=$(nproc)" >> ${GITHUB_ENV}
         sudo apt-get update -y -qq
         sudo apt-get install -y \
           ${{matrix.os.deps}}
-
-    - name: Setup Dependencies MacOS
-      if: matrix.os.name == 'macos'
-      run: |
-        echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
 
     - name: Setup Dependencies Windows
       if: matrix.os.name == 'windows'
@@ -162,7 +154,7 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=${{env.SYSTEMC_HOME}} ${{env.ESC}}
           -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
           ..
-        cmake --build . --config Release -- -j ${{env.NPROC}}
+        cmake --build . --config Release --parallel
         cmake --build . --config Release --target install
 
     - name: Configure
@@ -183,14 +175,14 @@ jobs:
     - name: Build
       working-directory: ${{env.CCI_HOME}}/build
       run: |
-        cmake --build . --config Release -- -j ${{env.NPROC}}
+        cmake --build . --config Release --parallel
         cmake --build . --config Release --target install
 
     - name: Test
       working-directory: ${{env.CCI_HOME}}/build
       if: matrix.os.name != 'windows' || matrix.os.c_compiler != 'gcc' # Tests segfault on Windows w/ MinGW GCC
       run: |
-        cmake --build ./examples --config Release --target check
+        cmake --build ./examples --config Release --target check --parallel
 
     - name: Test (mingw-gcc)
       if: matrix.os.name == 'windows' && matrix.os.c_compiler == 'gcc'
