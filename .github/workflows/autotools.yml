@@ -2,10 +2,6 @@ name: autotools
 
 on: [push, pull_request]
 
-env:
-  SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
-  CCI_ROOT_HOME: "${{github.workspace}}/build"
-
 jobs:
   build:
     name: "Build"
@@ -33,15 +29,15 @@ jobs:
             cxx_compiler: clang++
             c_compiler: clang
             generator: "Unix Makefiles"
+
+    env:
+      SYSTEMC_HOME: "${{github.workspace}}/systemc/${{matrix.systemc_version}}"
+      CCI_HOME: "${{github.workspace}}/build/release-sc_${{matrix.systemc_version}}"
+      ESC: ${{matrix.os.name == 'windows' && '`' || '\'}}
+
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
-    - name: Setup environment vars
-      run: |
-        echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-        echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-        echo "NPROC=1" >> ${GITHUB_ENV}
-
     - name: Checkout
       uses: actions/checkout@v3
       with:

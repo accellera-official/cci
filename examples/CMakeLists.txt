@@ -122,13 +122,13 @@ function (configure_and_add_test TEST_PROG)
   endif (NOT "${TEST_INPUT}" STREQUAL "")
 
   if ("${TEST_GOLDEN}" STREQUAL "")
-    if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/golden.log)
-      set (TEST_GOLDEN ${CMAKE_CURRENT_SOURCE_DIR}/golden.log)
+    if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cci/${TEST_PROG}/golden.log)
+      set (TEST_GOLDEN ${CMAKE_CURRENT_SOURCE_DIR}/cci/${TEST_PROG}/golden.log)
     elseif (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/results/expected.log)
       set (TEST_GOLDEN ${CMAKE_CURRENT_SOURCE_DIR}/results/expected.log)
     else (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/golden.log)
       unset (TEST_GOLDEN)
-    endif (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/golden.log)
+    endif (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cci/${TEST_PROG}/golden.log)
   else ("${TEST_GOLDEN}" STREQUAL "")
     set (TEST_GOLDEN ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_GOLDEN})
     if (NOT EXISTS ${TEST_GOLDEN})
@@ -139,7 +139,7 @@ function (configure_and_add_test TEST_PROG)
 
   add_test (NAME ${TEST_NAME}
             COMMAND ${CMAKE_COMMAND} "-DTEST_EXE=$<TARGET_FILE:${TEST_PROG}>"
-                                     "-DTEST_DIR=${CMAKE_CURRENT_BINARY_DIR}"
+                                     "-DTEST_DIR=${CMAKE_CURRENT_SOURCE_DIR}/cci/${TEST_PROG}"
                                      "-DTEST_INPUT=${TEST_INPUT}"
                                      "-DTEST_GOLDEN=${TEST_GOLDEN}"
                                      "-DTEST_FILTER=${TEST_FILTER}"

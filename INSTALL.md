@@ -14,10 +14,7 @@ The SystemC CCI library can be installed on the following platforms:
 
   * Linux
     * Architectures
-      - x86 (32-bit)
       - x86_64 (64-bit)
-      - x86 (32-bit) application running on x86_64 (64-bit) kernel  
-        (`../configure --host=i686-linux-gnu`)
     * Compilers
       - GNU C++ compiler
       - Clang C++ compiler
@@ -25,7 +22,6 @@ The SystemC CCI library can be installed on the following platforms:
 
   * Mac OS X
     * Architectures
-      - x86 (32-bit)
       - x86_64 (64-bit)
     * Compilers
       - GNU C++ compiler
@@ -34,14 +30,16 @@ The SystemC CCI library can be installed on the following platforms:
 
   * Windows
     * Compatibility layer
-      - Cygwin
       - MinGW / MSYS
     * Architectures
-      - x86 (32-bit)
       - x86_64 (64-bit)
     * Compilers
       - GNU C++ compiler
+      - Clang C++ compiler
       - or compatible
+    * Visual Studio C++
+      - x64 (64 bit)
+      - Static library
 
 NOTE: _Not all combinations are equally well-tested and some combinations
       may not work as expected.  Please report your findings on the 
