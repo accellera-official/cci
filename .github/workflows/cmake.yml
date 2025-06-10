@@ -2,18 +2,13 @@ name: cmake
 
 on: [push, pull_request]
 
-env:
-  SYSTEMC_ROOT_HOME: "${{github.workspace}}/systemc"
-  CCI_ROOT_HOME: "${{github.workspace}}/build"
-  ESC: '\'
-
 jobs:
   build:
     name: "Build"
     strategy:
       fail-fast: false
       matrix:
-        systemc_version: [2.3.2, 2.3.3, 2.3.4, 3.0.0]
+        systemc_version: [2.3.2, 2.3.3, 2.3.4, 3.0.0, 3.0.1]
         os:
           - name: ubuntu
             version: 22.04
@@ -36,75 +31,73 @@ jobs:
             cxx_compiler: clang++
             c_compiler: clang
             generator: "Unix Makefiles"
+          - name: macos
+            version: 13
+            cxx_compiler: g++
+            c_compiler: gcc
+            generator: "Unix Makefiles"
+          - name: macos
+            version: 13
+            cxx_compiler: clang++
+            c_compiler: clang
+            generator: "Unix Makefiles"
           - name: windows
             version: 2022
             cxx_compiler: msvc
             c_compiler: msvc
             generator: "Visual Studio 17 2022"
-        include:
-          - systemc_version: 3.0.0
-            os:
-              name: macos
-              version: 13
-              cxx_compiler: g++
-              c_compiler: gcc
-              generator: "Unix Makefiles"
-          - systemc_version: 3.0.0
-            os:
-              name: macos
-              version: 13
-              cxx_compiler: clang++
-              c_compiler: clang
-              generator: "Unix Makefiles"
-          - systemc_version: 3.0.0
+          - name: windows
+            version: 2022
+            cxx_compiler: g++
+            c_compiler: gcc
+            generator: "Unix Makefiles"
+          - name: windows
+            version: 2022
+            cxx_compiler: clang++
+            c_compiler: clang
+            generator: "Unix Makefiles"
+        exclude:
+          - systemc_version: 2.3.2
             os:
               name: windows
-              version: 2022
-              cxx_compiler: g++
-              c_compiler: gcc
               generator: "Unix Makefiles"
-          - systemc_version: 3.0.0
+          - systemc_version: 2.3.3
             os:
               name: windows
-              version: 2022
-              cxx_compiler: clang++
-              c_compiler: clang
               generator: "Unix Makefiles"
+          - systemc_version: 2.3.4
+            os:
+              name: windows
+              generator: "Unix Makefiles"
+          - systemc_version: 2.3.2
+            os:
+              name: macos
+          - systemc_version: 2.3.3
+            os:
+              name: macos
+          - systemc_version: 2.3.4
+            os:
+              name: macos
+
+    env:
+      SYSTEMC_HOME: "${{github.workspace}}/systemc/${{matrix.systemc_version}}"
+      CCI_HOME: "${{github.workspace}}/build/release-sc_${{matrix.systemc_version}}"
+      ESC: ${{matrix.os.name == 'windows' && '`' || '\'}}
+
     runs-on: ${{matrix.os.name}}-${{matrix.os.version}}
 
     steps:
-    - name: Setup environment vars
-      if: matrix.os.name != 'windows'
-      run: |
-        echo "SYSTEMC_HOME=${SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-        echo "CCI_HOME=${CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" >> ${GITHUB_ENV}
-        echo "NPROC=1" >> ${GITHUB_ENV}
-
-    - name: Setup environment vars (Windows)
-      if: matrix.os.name == 'windows'
-      run: |
-        echo "SYSTEMC_HOME=${env:SYSTEMC_ROOT_HOME}/${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-        echo "CCI_HOME=${env:CCI_ROOT_HOME}/release-sc_${{matrix.systemc_version}}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-        echo "NPROC=${env:NUMBER_OF_PROCESSORS}" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-        echo "ESC=``" | Out-File -FilePath ${env:GITHUB_ENV} -Append 
-
     - name: Checkout
       uses: actions/checkout@v3
       with:
         submodules: 'recursive'
 
     - name: Setup Dependencies Ubuntu
-      if: matrix.os.name == 'ubuntu'
+      if: matrix.os.name == 'ubuntu' && matrix.os.deps != 0
       run: |
-        echo "NPROC=$(nproc)" >> ${GITHUB_ENV}
         sudo apt-get update -y -qq
         sudo apt-get install -y \
           ${{matrix.os.deps}}
-
-    - name: Setup Dependencies MacOS
-      if: matrix.os.name == 'macos'
-      run: |
-        echo "NPROC=$(sysctl -n hw.logicalcpu)" >> ${GITHUB_ENV}
 
     - name: Setup Dependencies Windows
       if: matrix.os.name == 'windows'
@@ -144,11 +137,11 @@ jobs:
           -G "${{matrix.os.generator}}" ${{env.ESC}}
           -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
-          -DCMAKE_CXX_STANDARD=11 ${{env.ESC}}
+          -DCMAKE_CXX_STANDARD=${{startsWith(matrix.systemc_version, '2.') && '11' || '17'}} ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.SYSTEMC_HOME}} ${{env.ESC}}
           -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
           ..
-        cmake --build . --config Release -- -j ${{env.NPROC}}
+        cmake --build . --config Release --parallel
         cmake --build . --config Release --target install
 
     - name: Configure
@@ -160,7 +153,7 @@ jobs:
           -DSYSTEMCCCI_BUILD_TESTS=ON ${{env.ESC}}
           -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
           -DCMAKE_C_COMPILER=${{matrix.os.c_compiler}} ${{env.ESC}}
-          -DCMAKE_CXX_STANDARD=${{matrix.systemc_version != '3.0.0' && '11' || '17'}} ${{env.ESC}}
+          -DCMAKE_CXX_STANDARD=${{startsWith(matrix.systemc_version, '2.') && '11' || '17'}} ${{env.ESC}}
           -DCMAKE_PREFIX_PATH=${{env.SYSTEMC_HOME}}/lib/cmake/SystemCLanguage ${{env.ESC}}
           -DCMAKE_INSTALL_PREFIX=${{env.CCI_HOME}} ${{env.ESC}}
           -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
@@ -169,14 +162,14 @@ jobs:
     - name: Build
       working-directory: ${{env.CCI_HOME}}/build
       run: |
-        cmake --build . --config Release -- -j ${{env.NPROC}}
-        cmake --build . --config Release --target install
+        cmake --build . --config Release --parallel
+        cmake --install . --config Release
 
     - name: Test
       working-directory: ${{env.CCI_HOME}}/build
       if: matrix.os.name != 'windows' || matrix.os.c_compiler != 'gcc' # Tests segfault on Windows w/ MinGW GCC
       run: |
-        cmake --build ./examples --config Release --target check
+        cmake --build ./examples --config Release --target check --parallel
 
     - name: Test (mingw-gcc)
       if: matrix.os.name == 'windows' && matrix.os.c_compiler == 'gcc'
