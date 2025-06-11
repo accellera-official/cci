@@ -29,21 +29,7 @@ DOC_FILES =
 ## SystemC CCI documentation
 ##   find cci -type f -a -not -name "*.in" -printf "\t%p \\\\\n"
 DOC_FILES += \
-	cci/README \
-	cci/archived/0909_analysis_reject_param_access.doc \
-	cci/archived/100224_CCI_API_proposal_1v3.ppt \
-	cci/archived/101110_CCI_Flow.ppt \
-	cci/archived/broker_accessor_concept.pdf \
-	cci/archived/CCI_Instructions_for_MSVS2015.pdf \
-	cci/archived/cci_param_concept.jpg \
-	cci/archived/CODING_STYLE.txt \
-	cci/archived/discussions.txt \
-	cci/archived/example_review_checklist \
-	cci/archived/GreenControl_GreenConfig_CODES09_Schroeder_p81.pdf \
-	cci/archived/guidelines.txt \
-	cci/archived/notes.txt
-
-
+	cci/README
 
 ## ****************************************************************************
 
@@ -58,7 +44,6 @@ nobase_doc_DATA += \
 	cci/doxygen/Doxyfile
 
 DOCDIRS = \
-	cci/archived \
 	cci/doxygen \
 	cci
 
