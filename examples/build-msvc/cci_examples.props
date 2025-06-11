@@ -15,6 +15,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SC_INCLUDE_DYNAMIC_PROCESSES;SC_INCLUDE_FX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
