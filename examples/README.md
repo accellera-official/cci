@@ -15,7 +15,7 @@ Makefiles
    variables (like the TARGET_ARCH) may need to be provided from the
    environment.
 
-   The following variables should  be set (or overridden from the environment):
+   The following variables should be set (or overridden from the environment):
 
      SYSTEMC_HOME           - path to SystemC installation
      CCI_HOME               - path to CCI installation
@@ -45,11 +45,11 @@ For convenience, a simple recursing Makefile is available as well.
 
 ## Microsoft Visual C++
 
-Project files for Microsoft Visual C++ 2015 (msvc14, 14.0) are provided in the 
-subdidrectory containing each of these examples.
+Project files for Microsoft Visual C++ 2019 (msvc16, 16.0) are provided in the 
+subdirectory containing each of these examples.
 
 Each project file has the correct settings to build the example in either
 Debug or Release modes.
 
-The project files assume an environment variable names SYSTEMC_HOME, SYSTEMC_MSVC,
+The project files assume that environment variables SYSTEMC_HOME, SYSTEMC_MSVC,
 CCI_HOME, and RAPIDJSON_HOME are set.

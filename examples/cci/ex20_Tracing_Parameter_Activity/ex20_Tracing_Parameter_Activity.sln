@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33328.57
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ex20_Tracing_Parameter_Activity", "ex20_Tracing_Parameter_Activity.vcxproj", "{EF9191E5-B7F6-499A-A3CB-55283EFD6370}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Debug|x64.ActiveCfg = Debug|x64
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Debug|x64.Build.0 = Debug|x64
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Debug|x86.ActiveCfg = Debug|Win32
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Debug|x86.Build.0 = Debug|Win32
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Release|x64.ActiveCfg = Release|x64
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Release|x64.Build.0 = Release|x64
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Release|x86.ActiveCfg = Release|Win32
+		{EF9191E5-B7F6-499A-A3CB-55283EFD6370}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81C2738D-96B0-4F04-BF5C-AD2949D110B7}
+	EndGlobalSection
+EndGlobal
