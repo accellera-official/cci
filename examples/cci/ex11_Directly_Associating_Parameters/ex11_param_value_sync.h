@@ -42,6 +42,7 @@
  */
 SC_MODULE(ex11_param_value_sync) {
  public:
+  SC_HAS_PROCESS(ex11_param_value_sync);
 
   /**
    *  @fn     ex11_param_value_sync(sc_core::sc_module_name _name, std::vector<cci::cci_param_handle> BaseParamList)

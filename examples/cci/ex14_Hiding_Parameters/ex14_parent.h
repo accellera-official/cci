@@ -42,6 +42,7 @@
  */
 SC_MODULE(ex14_parent) {
  public:
+  SC_HAS_PROCESS(ex14_parent);
 
   /**
    *  @fn     ex14_parent(sc_core::sc_module _name)
