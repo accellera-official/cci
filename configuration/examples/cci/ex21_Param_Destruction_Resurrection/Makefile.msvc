@@ -1,8 +1,0 @@
-!include <..\..\build-msvc\Makefile.config>
-
-PROJECT = ex21_Param_Destruction_Resurrection
-
-OBJS=\
-    $(OUTDIR)\$(PROJECT).obj
-
-!include <..\..\build-msvc\Makefile.rules>
