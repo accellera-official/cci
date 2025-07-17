@@ -5,6 +5,7 @@ project (SystemCCCI CXX C)
 
 option(CCI_ENABLE_CFG "Build SystemCCI configuration library" ON)
 option(SYSTEMCCCI_BUILD_TESTS "Build tests & examples" ON)
+option(CCI_ENABLE_INSPECTION "Build SystemCCI inspection library" ON)
 
 set(SystemCCCI_VERSION_FILE "${PROJECT_SOURCE_DIR}/cci/core/cci_version.h")
 if(EXISTS ${SystemCCCI_VERSION_FILE})
@@ -33,6 +34,9 @@ set (SystemCCCI_SOVERSION "${SystemCCCI_VERSION_MAJOR}.${SystemCCCI_VERSION_MINO
 
 if(CCI_ENABLE_CFG)
     add_subdirectory(configuration)
+endif()
+if(CCI_ENABLE_INSPECTION)
+    add_subdirectory(inspection)
 endif()
 
 ###############################################################################
