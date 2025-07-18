@@ -20,9 +20,12 @@
 #ifndef CCI_HEADER_INCLUDED_
 #define CCI_HEADER_INCLUDED_
 
+// CCI version includes
+
+#include "cci/common/cci_version.h"
+
 // CCI core includes
 
-#include "cci/core/cci_version.h"
 #include "cci/core/cci_name_gen.h"
 #include "cci/core/cci_core_types.h"
 #include "cci/core/cci_value.h"
