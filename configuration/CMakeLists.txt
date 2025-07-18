@@ -183,8 +183,6 @@ if (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
   set (BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries." FORCE)
 endif (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
 
-option (BUILD_SOURCE_DOCUMENTATION "Build source documentation with Doxygen." OFF)
-
 ###############################################################################
 # Set SystemC_TARGET_ARCH depending on OS and processor type
 ###############################################################################
@@ -467,7 +465,6 @@ message (STATUS "===============================================================
 # Subdirectories
 ###############################################################################
 
-add_subdirectory (docs)
 add_subdirectory (src)
 add_subdirectory (examples)
 
@@ -477,9 +474,7 @@ add_subdirectory (examples)
 ###############################################################################
 
 install (FILES AUTHORS
-               cmake/INSTALL_USING_CMAKE
-               README-config.md
-               RELEASENOTES.md
+               README.md
          DESTINATION ${CMAKE_INSTALL_DOCDIR}/configuration
          COMPONENT doc)
 
