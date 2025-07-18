@@ -3,7 +3,7 @@ cmake_policy(SET CMP0001 NEW)
 
 project (SystemCCCI CXX C)
 
-set(SystemCCCI_VERSION_FILE "${PROJECT_SOURCE_DIR}/cci/core/cci_version.h")
+set(SystemCCCI_VERSION_FILE "${PROJECT_SOURCE_DIR}/cci/common/cci_version.h")
 if(EXISTS ${SystemCCCI_VERSION_FILE})
     file(READ ${SystemCCCI_VERSION_FILE} SYSTEMCCCI_VERSION_FILE_CONTENT)
     string(REGEX MATCH "CCI_VERSION_MAJOR[ \t]+([0-9]+)" SystemCCCI_VERSION_MAJOR ${SYSTEMCCCI_VERSION_FILE_CONTENT})
@@ -233,3 +233,8 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SystemCCCIConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/SystemCCCIConfigVersion.cmake"
         DESTINATION "${SystemCCCI_INSTALL_CMAKEDIR}"
         COMPONENT dev)
+
+# Install version header
+install (DIRECTORY ${PROJECT_SOURCE_DIR}/cci/common
+         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cci
+         COMPONENT dev)

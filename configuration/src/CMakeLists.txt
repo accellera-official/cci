@@ -172,6 +172,3 @@ install (DIRECTORY ./
 install (FILES "cci_configuration"
          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
          COMPONENT dev)
-install (FILES ${PROJECT_SOURCE_DIR}/cci/core/cci_version.h
-         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cci/core
-         COMPONENT dev)
