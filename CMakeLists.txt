@@ -6,6 +6,7 @@ project (SystemCCCI CXX C)
 option(CCI_ENABLE_CFG "Build SystemCCI configuration library" ON)
 option(SYSTEMCCCI_BUILD_TESTS "Build tests & examples" ON)
 option(CCI_ENABLE_INSPECTION "Build SystemCCI inspection library" ON)
+option(BUILD_SOURCE_DOCUMENTATION "Build source documentation with Doxygen." OFF)
 
 set(SystemCCCI_VERSION_FILE "${PROJECT_SOURCE_DIR}/cci/core/cci_version.h")
 if(EXISTS ${SystemCCCI_VERSION_FILE})
@@ -38,15 +39,20 @@ endif()
 if(CCI_ENABLE_INSPECTION)
     add_subdirectory(inspection)
 endif()
+if(BUILD_SOURCE_DOCUMENTATION)
+    add_subdirectory (docs)
+endif()
 
 ###############################################################################
 # Install README files
 ###############################################################################
 
 install (FILES INSTALL.md
+               cmake/INSTALL_USING_CMAKE
                LICENSE
                NOTICE
                README.md
+               RELEASENOTES.md
          DESTINATION ${CMAKE_INSTALL_DOCDIR}
          COMPONENT doc)
 
