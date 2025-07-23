@@ -27,13 +27,13 @@ running the examples with self-checking.
 
  2. Double-click openhere.bat to open a cmd prompt
 
- 3. Run vsvars.bat to set up Visual C++ paths
+ 3. Run vsvars.bat to set up Visual Studio C++ paths
 
     You can specify the version and the platform to use via additional
     command-line options given to vsvars.bat, e.g.
 
     ```
-    vsvars.bat [arch]               # load MSVC 2005 for [arch]
+    vsvars.bat [platform]           # load MSVC 2019 for [platform]
     vsvars.bat [version]            # load MSVC [version] for x86
     vsvars.bat [version] [platform] # load MSVC [version] for [platform]
     ```
@@ -41,9 +41,8 @@ running the examples with self-checking.
     Examples:
 
     ```
-    vsvars.bat 2010 amd64  # load 64-bit tools for MSVC 10.0
-    vsvars.bat 11.0        # load default (x86) tools for MSVC 2012
-    vsvars.bat x86_amd64   # load x64 cross-tools for MSVC 2005
+    vsvars.bat 2019 amd64  # load 64-bit (x64) tools for MSVC 16.0 (2019)
+    vsvars.bat 17.0        # load default (x86) tools for MSVC 17.0 (2022)
     ```
 
  4. You can then use the Microsoft tool nmake, e.g.
