@@ -24,6 +24,8 @@ DOXYGEN=doxygen
 ## Core documentation (see also root directory)
 
 DOC_FILES =
+	DEVELOPMENT.md \
+	INSTALL_USING_AUTOTOOLS.md
 
 ##
 ## SystemC CCI documentation
