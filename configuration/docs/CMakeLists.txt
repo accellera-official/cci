@@ -45,7 +45,7 @@ set (DOC_FILES
 foreach (DOC_FILE ${DOC_FILES})
   get_filename_component (DOC_INSTALL_PATH ${DOC_FILE} PATH)
   install (FILES ${DOC_FILE}
-           DESTINATION ${CMAKE_INSTALL_DOCDIR}/${DOC_INSTALL_PATH}
+           DESTINATION ${CMAKE_INSTALL_DOCDIR}/configuration/${DOC_INSTALL_PATH}
            COMPONENT doc)
 endforeach (DOC_FILE ${DOC_FILES})
 
@@ -75,10 +75,10 @@ if (BUILD_SOURCE_DOCUMENTATION)
   add_custom_target (doxygen-cci
                      DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/cci/doxygen/html/index.html)
   install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/cci/doxygen/html
-           DESTINATION ${CMAKE_INSTALL_DOCDIR}/cci/doxygen
+           DESTINATION ${CMAKE_INSTALL_DOCDIR}/configuration/cci/doxygen
            COMPONENT doc)
   install (FILES ${CMAKE_CURRENT_BINARY_DIR}/cci/doxygen/${PACKAGE_TARNAME}.tag
-           DESTINATION ${CMAKE_INSTALL_DOCDIR}/cci/doxygen
+           DESTINATION ${CMAKE_INSTALL_DOCDIR}/configuration/cci/doxygen
            COMPONENT doc)
 
 endif (BUILD_SOURCE_DOCUMENTATION)

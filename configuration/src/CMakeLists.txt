@@ -45,7 +45,7 @@
 # Build rules for SystemC library
 ###############################################################################
 
-add_library (cci
+add_library (cci-config
                         cci/core/cci_name_gen.h
                         cci/core/cci_value_iterator.h
                         cci/core/cci_meta.h
@@ -56,7 +56,6 @@ add_library (cci
                         cci/core/cci_filtered_range.h
                         cci/core/cci_callback_impl.h
                         cci/core/cci_name_gen.cpp
-                        cci/core/cci_version.h
                         cci/core/rapidjson.h
                         cci/core/cci_core_types.h
                         cci/core/systemc.h
@@ -99,12 +98,12 @@ if ( NOT SystemCLanguage_FOUND AND NOT TARGET SystemC::systemc )
   find_package(SystemCLanguage CONFIG REQUIRED)
 ENDIF ()
 
-target_link_libraries(cci PUBLIC SystemC::systemc)
+target_link_libraries(cci-config PUBLIC SystemC::systemc)
 
-add_library (SystemC::cci ALIAS cci)
+add_library (SystemC::cci-config ALIAS cci-config)
 
 target_compile_definitions (
-  cci
+  cci-config
   PUBLIC
   $<$<BOOL:${WIN32}>:WIN32>
   $<$<AND:$<BOOL:${BUILD_SHARED_LIBS}>,$<OR:$<BOOL:${WIN32}>,$<BOOL:${CYGWIN}>>>:
@@ -116,7 +115,7 @@ target_compile_definitions (
   )
 
 target_compile_options(
-  cci
+  cci-config
   PUBLIC
   $<$<CXX_COMPILER_ID:MSVC>:/vmg /MP>
   PRIVATE
@@ -125,25 +124,25 @@ target_compile_options(
   $<$<CXX_COMPILER_ID:MSVC>:/W3 /wd4244 /wd4267 /wd4996>)
 
 target_compile_features(
-  cci
+  cci-config
   PUBLIC
   cxx_std_11)
 
-target_include_directories(cci
+target_include_directories(cci-config
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-target_include_directories(cci
+target_include_directories(cci-config
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/rapidjson/include)
 
 if (APPLE)
   # It's OK that _sc_main is an undefined symbol.
-  set_target_properties (cci PROPERTIES LINK_FLAGS -Wl,-U,_sc_main)
+  set_target_properties (cci-config PROPERTIES LINK_FLAGS -Wl,-U,_sc_main)
 endif (APPLE)
 
-set_target_properties (cci
+set_target_properties (cci-config
                        PROPERTIES
                        LINKER_LANGUAGE CXX
                        VERSION ${SystemCCCI_VERSION}
@@ -155,7 +154,7 @@ set_target_properties (cci
 # Install rules for CCI library
 ###############################################################################
 
-install (TARGETS cci EXPORT  SystemCCCITargets
+install (TARGETS cci-config EXPORT  SystemCCCITargets
                          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -172,4 +171,7 @@ install (DIRECTORY ./
          FILES_MATCHING PATTERN "*.hpp")
 install (FILES "cci_configuration"
          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+         COMPONENT dev)
+install (FILES ${PROJECT_SOURCE_DIR}/cci/core/cci_version.h
+         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/cci/core
          COMPONENT dev)
