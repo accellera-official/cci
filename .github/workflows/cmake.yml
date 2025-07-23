@@ -165,11 +165,11 @@ jobs:
         cmake --build . --config Release --parallel
         cmake --install . --config Release
 
-    - name: Test
+    - name: Test (Configuration)
       working-directory: ${{env.CCI_HOME}}/build
       if: matrix.os.name != 'windows' || matrix.os.c_compiler != 'gcc' # Tests segfault on Windows w/ MinGW GCC
       run: |
-        cmake --build ./examples --config Release --target check --parallel
+        cmake --build ./configuration/examples --config Release --target check --parallel
 
     - name: Test (mingw-gcc)
       if: matrix.os.name == 'windows' && matrix.os.c_compiler == 'gcc'

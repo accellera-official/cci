@@ -145,7 +145,7 @@ function (configure_and_add_test TEST_PROG)
                                      "-DTEST_FILTER=${TEST_FILTER}"
                                      "-DDIFF_COMMAND=${DIFF_COMMAND}"
                                      "-DDIFF_OPTIONS=${DIFF_OPTIONS}"
-                                     -P ${PROJECT_SOURCE_DIR}/cmake/run_test.cmake)
+                                     -P ${PROJECT_SOURCE_DIR}/configuration/cmake/run_test.cmake)
   add_dependencies(check ${TEST_PROG})
   set_tests_properties (${TEST_NAME}
                         PROPERTIES FAIL_REGULAR_EXPRESSION "^[*][*][*]ERROR")
@@ -163,7 +163,8 @@ function (add_test_exe NAME)
                cci/common/inc/xreport.hpp
                cci/common/inc/param_tracker.h
                )
-  target_link_libraries (${TEST_NAME} SystemC::systemc cci)
+  target_include_directories(${TEST_NAME} PRIVATE ${PROJECT_SOURCE_DIR})
+  target_link_libraries (${TEST_NAME} SystemC::systemc cci-config)
   configure_and_add_test (${TEST_NAME})
 endfunction()
   
