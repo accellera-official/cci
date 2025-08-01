@@ -1,8 +1,0 @@
-!include <..\..\build-msvc\Makefile.config>
-
-PROJECT = ex22_Search_Predicate
-
-OBJS=\
-    $(OUTDIR)\$(PROJECT).obj
-
-!include <..\..\build-msvc\Makefile.rules>

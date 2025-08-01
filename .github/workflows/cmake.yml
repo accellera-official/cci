@@ -165,13 +165,18 @@ jobs:
         cmake --build . --config Release --parallel
         cmake --install . --config Release
 
-    - name: Test
+    - name: Test (Configuration)
       working-directory: ${{env.CCI_HOME}}/build
       if: matrix.os.name != 'windows' || matrix.os.c_compiler != 'gcc' # Tests segfault on Windows w/ MinGW GCC
       run: |
-        cmake --build ./examples --config Release --target check --parallel
+        cmake --build ./configuration/examples --config Release --target check --parallel
 
-    - name: Test (mingw-gcc)
+    - name: Test (Configuration (mingw-gcc))
       if: matrix.os.name == 'windows' && matrix.os.c_compiler == 'gcc'
       run: |
         echo "::warning file=.github/workflows/cmake.yml,::Tests are disabled on ${{matrix.os.name}}-${{matrix.os.c_compiler}}"
+
+    - name: Test (Inspection)
+      working-directory: ${{env.CCI_HOME}}/build/inspection
+      run: |
+        ctest --output-on-failure -C Release
