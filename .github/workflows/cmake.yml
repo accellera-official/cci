@@ -165,13 +165,32 @@ jobs:
         cmake --build . --config Release --parallel
         cmake --install . --config Release
 
-    - name: Test
+    - name: Test (Configuration)
       working-directory: ${{env.CCI_HOME}}/build
       if: matrix.os.name != 'windows' || matrix.os.c_compiler != 'gcc' # Tests segfault on Windows w/ MinGW GCC
       run: |
-        cmake --build ./examples --config Release --target check --parallel
+        cmake --build ./configuration/examples --config Release --target check --parallel
 
-    - name: Test (mingw-gcc)
+    - name: Test (Configuration (mingw-gcc))
       if: matrix.os.name == 'windows' && matrix.os.c_compiler == 'gcc'
       run: |
-        echo "::warning file=.github/workflows/cmake.yml,::Tests are disabled on ${{matrix.os.name}}-${{matrix.os.c_compiler}}"
+        echo "::warning file=.github/workflows/cmake.yml,::Configuration tests are disabled on ${{matrix.os.name}}-${{matrix.os.c_compiler}}"
+
+    - name: Test (Inspection)
+      working-directory: ${{env.CCI_HOME}}/build/inspection
+      run: |
+        ctest --output-on-failure -C Release
+
+    - name: Test (CCI Linking)
+      working-directory: ${{github.workspace}}/test
+      if: ${{startsWith(matrix.systemc_version, '3.')}} # CCI inspection requires C++17
+      run: |
+          cmake ${{env.ESC}}
+            -G "${{matrix.os.generator}}" ${{env.ESC}}
+            -DCMAKE_CXX_COMPILER=${{matrix.os.cxx_compiler}} ${{env.ESC}}
+            -DCMAKE_CXX_STANDARD=17 ${{env.ESC}}
+            -DCMAKE_PREFIX_PATH="${{env.SYSTEMC_HOME}};${{env.CCI_HOME}}" ${{env.ESC}}
+            -DCMAKE_BUILD_TYPE="Release" ${{env.ESC}}
+            -B BUILD ${{env.ESC}}
+            .
+          cmake --build BUILD --config Release --parallel

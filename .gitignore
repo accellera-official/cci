@@ -8,28 +8,16 @@
 *.db
 Makefile.*deps
 
-.cproject
+# ignore recommended build directory and variants
+/build*/
+/objdir*/
+/inst*/
+
+
+# ignore project specific settings
 .project
-.settings
-testbench
-Upgradelog.XML
-Debug/
-_UpgradeReport_Files/
-### self-test intermediates + results (except for reference golden.log)
-run/
-run.log
-diff.log
-!golden/*.log
-examples/**/*.log
-*.stripped
+.project/
+.settings/
+.vscode/
 
-### doxygen output
-doc/API_ref
-doc/Examples
-doc/GS_implementation_ref
-
-### editor autosave
-\#*#
-*.swp
-*~
-
+.clang-format

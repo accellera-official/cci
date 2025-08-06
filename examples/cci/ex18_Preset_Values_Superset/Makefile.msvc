@@ -1,8 +1,0 @@
-!include <..\..\build-msvc\Makefile.config>
-
-PROJECT = ex18_Preset_Values_Superset
-
-OBJS=\
-    $(OUTDIR)\$(PROJECT).obj
-
-!include <..\..\build-msvc\Makefile.rules>
