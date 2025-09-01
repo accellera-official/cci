@@ -1,4 +1,4 @@
-# Installation Notes for SystemC CCI 1.0.1
+# Installation Notes for SystemC CCI
 
 ## Table of Contents
 
