@@ -1,4 +1,4 @@
-Release Notes for SystemC CCI 1.0.1
+Release Notes for SystemC CCI 1.0.2
 ===================================
 
 **CONTENTS**
@@ -57,23 +57,21 @@ SystemC and CCI models built from separate sources.
 
 What's new in this release?
 ---------------------------
-  
-Compared to the previous release, 1.0.1 is a minor release containing the 
+
+Compared to the previous release, 1.0.1 is a minor release containing the
 following enhancements and bug fixes:
 
- * Introduced Automake configuration and build flow (configure, make, 
-   make install) for the CCI reference implementation and the examples
+ * Deprecate Automake configuration and build flow (configure, make,
+   make install) for the CCI reference implementation and the examples.
+   CMake is now recommended.
 
- * RapidJSON has become an external package dependency and needs to be added 
-   as part of the configuration or using environment variable RAPIDJSON_HOME.
-
- * Improved build flow using Microsoft Visual C++ IDE, compiler and linker 
+ * Improved build flow using Microsoft Visual C++ IDE, compiler and linker
    for Windows, for the CCI reference implementation and examples.
-   
+
  * Improved checking of the CCI examples.
- 
+
  * Updated platform support, see the README.md.
- 
+
  * Updated documentation.
 
 
@@ -87,7 +85,7 @@ Known problems
 
  * Parameter names may be registered in the future when a preset value is
    provided to the broker. This would allow earlier detection of name
-   collisions.  
+   collisions.
 
 
 Reporting Bugs and Suggestions
