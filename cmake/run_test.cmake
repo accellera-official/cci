@@ -38,7 +38,7 @@
 ###############################################################################
 
 
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.5)
 
 if(NOT TEST_EXE)
   message(FATAL_ERROR "  Usage: cmake -DTEST_EXE=<executable> [-DTEST_INPUT=<input-file>] \\\n"
