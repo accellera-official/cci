@@ -38,17 +38,6 @@
 #
 ###############################################################################
 
-
-set (DOC_FILES
-	cci/README)
-
-foreach (DOC_FILE ${DOC_FILES})
-  get_filename_component (DOC_INSTALL_PATH ${DOC_FILE} PATH)
-  install (FILES ${DOC_FILE}
-           DESTINATION ${CMAKE_INSTALL_DOCDIR}/${DOC_INSTALL_PATH}
-           COMPONENT doc)
-endforeach (DOC_FILE ${DOC_FILES})
-
 if (BUILD_SOURCE_DOCUMENTATION)
   find_package (Doxygen REQUIRED)
   add_custom_target (doxygen ALL
