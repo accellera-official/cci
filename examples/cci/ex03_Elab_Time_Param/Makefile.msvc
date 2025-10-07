@@ -1,8 +1,0 @@
-!include <..\..\build-msvc\Makefile.config>
-
-PROJECT = ex03_Elab_Time_Param
-
-OBJS=\
-    $(OUTDIR)\$(PROJECT).obj
-
-!include <..\..\build-msvc\Makefile.rules>

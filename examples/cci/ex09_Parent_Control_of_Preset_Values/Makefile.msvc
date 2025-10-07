@@ -1,8 +1,0 @@
-!include <..\..\build-msvc\Makefile.config>
-
-PROJECT = ex09_Parent_Control_of_Preset_Values
-
-OBJS=\
-    $(OUTDIR)\$(PROJECT).obj
-
-!include <..\..\build-msvc\Makefile.rules>

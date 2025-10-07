@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Create configure script
-        run: ./config/bootstrap
       - name: Create output folder and copy files
         run: |
           mkdir ${release_name}
