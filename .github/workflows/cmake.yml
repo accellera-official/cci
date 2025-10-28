@@ -32,12 +32,12 @@ jobs:
             c_compiler: clang
             generator: "Unix Makefiles"
           - name: macos
-            version: 13
+            version: 15-intel
             cxx_compiler: g++
             c_compiler: gcc
             generator: "Unix Makefiles"
           - name: macos
-            version: 13
+            version: 15-intel
             cxx_compiler: clang++
             c_compiler: clang
             generator: "Unix Makefiles"
