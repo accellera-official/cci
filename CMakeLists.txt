@@ -101,11 +101,6 @@ if (NOT (WIN32 OR CYGWIN))
 else (NOT (WIN32 OR CYGWIN))
     option (BUILD_SHARED_LIBS "Build shared libraries." OFF)
 endif (NOT (WIN32 OR CYGWIN))
-if (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
-    message (WARNING "The compilation of SystemC as a DLL on Windows is currently not supported!")
-    set (BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries." FORCE)
-endif (BUILD_SHARED_LIBS AND (WIN32 OR CYGWIN))
-
 
 ###############################################################################
 # Set the installation paths
