@@ -187,16 +187,25 @@ message (STATUS "INSTALL_CMAKEDIR = ${INSTALL_CMAKEDIR}")
 message (STATUS "======================================================================================================")
 
 
+set(CCI_INTERFACE_MEMBERS)
 
 if(CCI_ENABLE_CFG)
     add_subdirectory(configuration)
+    set(CCI_INTERFACE_MEMBERS ${CCI_INTERFACE_MEMBERS} cci-config)
 endif()
 if(CCI_ENABLE_INSPECTION)
     add_subdirectory(inspection)
+    set(CCI_INTERFACE_MEMBERS ${CCI_INTERFACE_MEMBERS} cci-inspection)
 endif()
 if(BUILD_SOURCE_DOCUMENTATION)
     add_subdirectory (docs)
 endif()
+
+# Add all collected components to the SystemC::cci interface library.
+add_library(cci INTERFACE)
+target_link_libraries(cci INTERFACE ${CCI_INTERFACE_MEMBERS})
+add_library(SystemC::cci ALIAS cci)
+install(TARGETS cci EXPORT SystemCCCITargets COMPONENT dev)
 
 ###############################################################################
 # Install README files
@@ -215,10 +224,8 @@ install (FILES INSTALL.md
 ###############################################################################
 # Provide package of the SystemC library to other programs using CMake
 ###############################################################################
-
-# Export the cci library target for usage by other programs
-# ... to local build tree
-export (TARGETS cci-config
+# Export individual cci library targets along the interface library cci
+export (TARGETS ${CCI_INTERFACE_MEMBERS} cci
         NAMESPACE SystemC::
         FILE SystemCCCITargets.cmake)
 # ... to installation tree
