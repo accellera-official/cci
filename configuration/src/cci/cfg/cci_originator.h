@@ -21,6 +21,7 @@
 #define CCI_CFG_CCI_ORIGINATOR_H_INCLUDED_
 
 #include "cci/core/cci_cmnhdr.h"
+#include "cci/cfg/cci_config_macros.h"
 
 CCI_OPEN_NAMESPACE_
 
@@ -48,11 +49,13 @@ class cci_originator
       : m_originator_obj(), m_originator_str() {}
 
 public:
-    /// Default Constructor assumes current module is the originator
+    /// Default Constructor assumes current module is the originator.
+    /// Outside the SystemC hierarchy (e.g. non-SystemC threads),
+    /// creates an originator with the unknown/default name.
     inline cci_originator()
             : m_originator_obj(current_originator_object()),
-              m_originator_str(NULL) {
-        check_is_valid();
+              m_originator_str(m_originator_obj ? NULL
+                  : new std::string(CCI_UNKNOWN_ORIGINATOR_STRING_)) {
     }
 
     /// Constructor with an originator name
