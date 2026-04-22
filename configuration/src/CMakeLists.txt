@@ -108,6 +108,7 @@ target_compile_definitions (
   $<$<BOOL:${WIN32}>:WIN32>
   $<$<AND:$<BOOL:${BUILD_SHARED_LIBS}>,$<OR:$<BOOL:${WIN32}>,$<BOOL:${CYGWIN}>>>:
     SC_WIN_DLL>
+  $<$<BOOL:${CCI_ENABLE_THREAD_SAFETY}>:CCI_THREAD_SAFE>
   PRIVATE
   SC_BUILD
   SC_INCLUDE_FX

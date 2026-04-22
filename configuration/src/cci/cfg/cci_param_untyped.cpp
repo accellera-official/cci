@@ -39,7 +39,7 @@ cci_param_untyped::cci_param_untyped(const std::string& name,
                                      const cci_originator& originator)
     : m_description(desc), m_lock_pwd(NULL),
       m_broker_handle(broker_handle), m_value_origin(originator),
-      m_originator(originator), fast_read(false),fast_write(false)
+      m_originator(originator)
 {
     if(name_type == CCI_ABSOLUTE_NAME) {
         m_name = name;
@@ -269,12 +269,18 @@ cci_originator cci_param_untyped::get_originator() const
 
 void cci_param_untyped::add_param_handle(cci_param_untyped_handle* param_handle)
 {
+#ifdef CCI_THREAD_SAFE
+    std::lock_guard<std::recursive_mutex> lk(m_param_handles_mutex);
+#endif
     m_param_handles.push_back(param_handle);
 }
 
 void cci_param_untyped::remove_param_handle(
         cci_param_untyped_handle* param_handle)
 {
+#ifdef CCI_THREAD_SAFE
+    std::lock_guard<std::recursive_mutex> lk(m_param_handles_mutex);
+#endif
     m_param_handles.erase(std::remove(m_param_handles.begin(),
                                       m_param_handles.end(),
                                       param_handle),
@@ -284,6 +290,9 @@ void cci_param_untyped::remove_param_handle(
 void
 cci_param_untyped::invalidate_all_param_handles()
 {
+#ifdef CCI_THREAD_SAFE
+    std::lock_guard<std::recursive_mutex> lk(m_param_handles_mutex);
+#endif
     while( !m_param_handles.empty() )
         m_param_handles.front()->invalidate(); // removes itself from the list
 }

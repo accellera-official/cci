@@ -175,9 +175,12 @@ endfunction()
 if (SYSTEMCCCI_BUILD_TESTS)
   include_directories(cci/common/inc/)
 
-
   file(GLOB EXAMPLES cci/ex*)
   foreach(example ${EXAMPLES})
+    # ex20_Thread_Safety requires CCI_ENABLE_THREAD_SAFETY
+    if ("${example}" MATCHES "ex20_Thread_Safety" AND NOT CCI_ENABLE_THREAD_SAFETY)
+      continue()
+    endif()
     add_test_exe(${example})
   endforeach()
 endif()
