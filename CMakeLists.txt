@@ -186,11 +186,10 @@ message (STATUS "CMAKE_INSTALL_LIBDIR = ${CMAKE_INSTALL_LIBDIR}")
 message (STATUS "INSTALL_CMAKEDIR = ${INSTALL_CMAKEDIR}")
 message (STATUS "======================================================================================================")
 
+#If SYSTEMC_HOME is defined add it to the search path for the find_package/find_libary ... 
 if (DEFINED ENV{SYSTEMC_HOME})
   list (APPEND CMAKE_PREFIX_PATH $ENV{SYSTEMC_HOME})
   # Also search platform-specific lib subdirectories (e.g. lib-mingw-w64, lib64)
-  # so that find_package(SystemCLanguage) can locate cmake config files
-  # even when SystemC was installed with a non-default CMAKE_INSTALL_LIBDIR.
   file (GLOB _sc_libsubdirs LIST_DIRECTORIES true "$ENV{SYSTEMC_HOME}/lib*")
   foreach (_sc_libsubdir IN LISTS _sc_libsubdirs)
     if (IS_DIRECTORY "${_sc_libsubdir}")
