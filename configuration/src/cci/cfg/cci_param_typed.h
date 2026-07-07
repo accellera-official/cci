@@ -48,12 +48,21 @@ class cci_param_typed_handle;
 ///@cond CCI_HIDDEN_FROM_DOXYGEN
 namespace cci_impl {
 /// implementation defined helper to set/reset a boolean flag
+#ifdef CCI_THREAD_SAFE
+struct scoped_true {
+    explicit scoped_true(std::atomic<bool>& ref) : ref_(ref) { ref_ = true; }
+    ~scoped_true() { ref_ = false; }
+private:
+    std::atomic<bool>& ref_;
+};
+#else
 struct scoped_true {
     explicit scoped_true(bool& ref) : ref_(ref) { ref_ = true; }
     ~scoped_true() { ref_ = false; }
 private:
     bool& ref_;
-}; // class scoped_true
+};
+#endif
 }  // namespace cci_impl
 ///@endcond
 

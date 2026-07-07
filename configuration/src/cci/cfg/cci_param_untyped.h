@@ -23,6 +23,10 @@
 #ifndef CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_
 #define CCI_CFG_CCI_PARAM_UNTYPED_H_INCLUDED_
 
+#ifdef CCI_THREAD_SAFE
+#include <atomic>
+#include <mutex>
+#endif
 #include <string>
 #include <vector>
 
@@ -579,7 +583,11 @@ protected:
     struct callback_obj_vector {
       callback_obj_vector():oncall(false){};
       std::vector<T> vec;
+#ifdef CCI_THREAD_SAFE
+      mutable std::atomic<bool> oncall;
+#else
       mutable bool oncall;
+#endif
     };
 
     /// Pre write callbacks
@@ -613,11 +621,19 @@ private:
     /// @copydoc cci_param_if::invalidate_all_param_handles
     virtual void invalidate_all_param_handles();
 
-    /// Parameter handles
+#ifdef CCI_THREAD_SAFE
+    /// Parameter handles (recursive_mutex because invalidate_all calls
+    /// invalidate which calls remove_param_handle — re-entrant)
+    mutable std::recursive_mutex m_param_handles_mutex;
+#endif
     std::vector<cci_param_untyped_handle*> m_param_handles;
 
 protected:
-    bool fast_read, fast_write;
+#ifdef CCI_THREAD_SAFE
+    std::atomic<bool> fast_read{false}, fast_write{false};
+#else
+    bool fast_read{false}, fast_write{false};
+#endif
 };
 
 CCI_CLOSE_NAMESPACE_

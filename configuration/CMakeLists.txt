@@ -256,11 +256,14 @@ if (NOT SystemC_TARGET_ARCH)
 endif (NOT SystemC_TARGET_ARCH)
 
 
-list (APPEND CMAKE_PREFIX_PATH /opt/systemc)
+list (APPEND CMAKE_PREFIX_PATH /opt/systemc $ENV{SYSTEMC_HOME})
 
 IF (NOT SystemCLanguage_FOUND AND NOT TARGET SystemC::systemc)
-    list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
-    find_package(SystemCLanguage REQUIRED)
+    find_package(SystemCLanguage CONFIG QUIET NO_CMAKE_PACKAGE_REGISTRY)
+    if (NOT TARGET SystemC::systemc)
+        list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
+        find_package(SystemCLanguage REQUIRED)
+    endif()
 ENDIF ()
 message (STATUS "Using SystemC ${SystemCLanguage_VERSION} (${SystemCLanguage_DIR})")
 IF ( "${SystemC_CXX_STANDARD}" AND NOT "${SystemC_CXX_STANDARD}" EQUAL "${CMAKE_CXX_STANDARD}")

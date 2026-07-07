@@ -23,6 +23,13 @@
 
 #include "cci/utils/consuming_broker.h"
 
+#ifdef CCI_THREAD_SAFE
+#define CCI_LOCK_READ  std::shared_lock<std::shared_mutex> _lk(m_mutex)
+#define CCI_LOCK_WRITE std::unique_lock<std::shared_mutex> _lk(m_mutex)
+#else
+#define CCI_LOCK_READ
+#define CCI_LOCK_WRITE
+#endif
 
 namespace cci_utils {
   using namespace cci;
@@ -49,6 +56,7 @@ namespace cci_utils {
     const cci_value & value,
     const cci_originator& originator)
   {
+    CCI_LOCK_WRITE;
     if (locked.find(parname) != locked.end()) {
       cci_report_handler::set_param_failed("Setting preset value failed (parameter locked).");
       return;
@@ -79,6 +87,7 @@ namespace cci_utils {
 
   std::vector<cci_name_value_pair> consuming_broker::get_unconsumed_preset_values() const
   {
+    CCI_LOCK_READ;
     std::vector<cci_name_value_pair> unconsumed_preset_cci_values;
     std::map<std::string, cci_value>::const_iterator iter;
     std::vector<cci_preset_value_predicate>::const_iterator pred;
@@ -105,11 +114,13 @@ namespace cci_utils {
 
   void consuming_broker::ignore_unconsumed_preset_values(const cci_preset_value_predicate &pred)
   {
+    CCI_LOCK_WRITE;
     m_ignored_unconsumed_predicates.push_back(pred);
   }
 
   cci_originator consuming_broker::get_value_origin(const std::string &parname) const
   {
+    CCI_LOCK_READ;
     cci_param_if* p = get_orig_param(parname);
     if (p) {
       return p->get_value_origin();
@@ -125,6 +136,7 @@ namespace cci_utils {
 
   cci_originator consuming_broker::get_preset_value_origin(const std::string &parname) const
   {
+    CCI_LOCK_READ;
     std::map<std::string, cci_originator>::const_iterator it;
     it = m_preset_value_originator_map.find(parname);
     if (it != m_preset_value_originator_map.end())
@@ -135,6 +147,7 @@ namespace cci_utils {
 
   cci_value consuming_broker::get_preset_cci_value(const std::string &parname) const
   {
+    CCI_LOCK_READ;
     {
       std::map<std::string,cci_value>::const_iterator iter =
         m_used_value_registry.find(parname);
@@ -155,6 +168,7 @@ namespace cci_utils {
 
   void consuming_broker::lock_preset_value(const std::string &parname)
   {
+    CCI_LOCK_WRITE;
     // no error is possible. Even if the parameter does not yet exist.
     locked.insert(parname);
   }
@@ -162,6 +176,7 @@ namespace cci_utils {
   cci_value consuming_broker::get_cci_value(const std::string &parname,
     const cci_originator &originator) const
   {
+    CCI_LOCK_READ;
     cci_param_if* p = get_orig_param(parname);
     if(p) {
       return p->get_cci_value(originator);
@@ -203,6 +218,7 @@ namespace cci_utils {
     const std::string &parname,
     const cci_originator& originator) const
   {
+    CCI_LOCK_READ;
     cci_param_if* orig_param = get_orig_param(parname);
     if (orig_param) {
       return cci_param_untyped_handle(*orig_param, originator);
@@ -212,6 +228,7 @@ namespace cci_utils {
 
   bool consuming_broker::has_preset_value(const std::string &parname) const
   {
+    CCI_LOCK_READ;
     {
       std::map<std::string,cci_value>::const_iterator iter =
         m_used_value_registry.find(parname);
@@ -233,6 +250,7 @@ namespace cci_utils {
     consuming_broker::register_create_callback(
       const cci_param_create_callback &cb,
       const cci_originator &orig) {
+    CCI_LOCK_WRITE;
     m_create_callbacks.push_back(create_callback_obj_t(cb, orig));
     return cb;
   }
@@ -241,6 +259,7 @@ namespace cci_utils {
     consuming_broker::unregister_create_callback(
       const cci_param_create_callback_handle &cb,
       const cci_originator &orig) {
+    CCI_LOCK_WRITE;
     std::vector<create_callback_obj_t>::iterator it;
     for(it=m_create_callbacks.begin() ; it < m_create_callbacks.end(); it++ )
     {
@@ -256,6 +275,7 @@ namespace cci_utils {
     consuming_broker::register_destroy_callback(
       const cci_param_destroy_callback &cb,
       const cci_originator& orig) {
+    CCI_LOCK_WRITE;
     m_destroy_callbacks.push_back(destroy_callback_obj_t(cb, orig));
     return cb;
   }
@@ -264,6 +284,7 @@ namespace cci_utils {
     consuming_broker::unregister_destroy_callback(
       const cci_param_destroy_callback_handle &cb,
       const cci_originator &orig) {
+    CCI_LOCK_WRITE;
     std::vector<destroy_callback_obj_t>::iterator it;
     for(it=m_destroy_callbacks.begin() ; it < m_destroy_callbacks.end(); it++ )
     {
@@ -277,6 +298,7 @@ namespace cci_utils {
 
   bool consuming_broker::unregister_all_callbacks(
     const cci_originator &orig) {
+    CCI_LOCK_WRITE;
     bool result = false;
     std::vector<create_callback_obj_t>::iterator it;
     for(it=m_create_callbacks.begin() ; it < m_create_callbacks.end(); it++ )
@@ -299,11 +321,13 @@ namespace cci_utils {
   }
 
   bool consuming_broker::has_callbacks() const {
+    CCI_LOCK_READ;
     return (!m_create_callbacks.empty() ||
             !m_destroy_callbacks.empty());
   }
 
   void consuming_broker::add_param(cci_param_if* par) {
+    CCI_LOCK_WRITE;
     sc_assert(par != NULL && "Unable to add a NULL parameter");
     const std::string &par_name = par->name();
     bool new_element = m_param_registry.insert(
@@ -324,6 +348,7 @@ namespace cci_utils {
   }
 
   void consuming_broker::remove_param(cci_param_if* par) {
+    CCI_LOCK_WRITE;
     sc_assert(par != NULL && "Unable to remove a NULL parameter");
     m_param_registry.erase(par->name());
 
@@ -344,6 +369,7 @@ namespace cci_utils {
   std::vector<cci_param_untyped_handle>
     consuming_broker::get_param_handles(const cci_originator& originator) const
   {
+    CCI_LOCK_READ;
     std::vector<cci_param_untyped_handle> param_handles;
     std::map<std::string,cci_param_if*>::const_iterator it;
     for (it=m_param_registry.begin(); it != m_param_registry.end(); ++it) {

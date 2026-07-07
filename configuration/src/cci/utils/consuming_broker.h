@@ -22,6 +22,9 @@
 
 #include <map>
 #include <set>
+#ifdef CCI_THREAD_SAFE
+#include <shared_mutex>
+#endif
 
 #include "cci/core/cci_name_gen.h"
 #include "cci/cfg/cci_broker_if.h"
@@ -136,6 +139,12 @@ public:
     cci::cci_param_if* get_orig_param(const std::string &parname) const;
 
     std::string m_name;
+
+#ifdef CCI_THREAD_SAFE
+    /// Mutex for thread-safe access to broker data structures.
+    /// Uses shared_mutex: concurrent reads (shared_lock), exclusive writes (unique_lock).
+    mutable std::shared_mutex m_mutex;
+#endif
 
     // These are used as a database of _preset_ values.
     std::map<std::string, cci::cci_param_if*> m_param_registry;

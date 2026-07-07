@@ -34,6 +34,9 @@
 #include "cci/cfg/cci_report_handler.h"
 
 #include <algorithm> // std::swap
+#ifdef CCI_THREAD_SAFE
+#include <mutex>
+#endif
 #include <sstream> //std::stringstream
 
 namespace rapidjson = RAPIDJSON_NAMESPACE;
@@ -68,6 +71,9 @@ struct impl_pool
 {
   static impl_type* allocate()
   {
+#ifdef CCI_THREAD_SAFE
+    std::lock_guard<std::mutex> lk(mutex_);
+#endif
     impl_type* ret = free_list_;
     if (free_list_ != NULL) {
       free_list_ = *reinterpret_cast<impl_type**>(free_list_);
@@ -80,14 +86,23 @@ struct impl_pool
 
   static void deallocate(impl_type* elem) {
     if (elem == NULL) return; // delete NULL is no-op
+#ifdef CCI_THREAD_SAFE
+    std::lock_guard<std::mutex> lk(mutex_);
+#endif
     elem->~impl_type();       // release internal memory (not pooled)
      *reinterpret_cast<impl_type**>(elem) = free_list_;
     free_list_ = elem;
   }
 private:
   static impl_type* free_list_;
+#ifdef CCI_THREAD_SAFE
+  static std::mutex mutex_;
+#endif
 };
 impl_type* impl_pool::free_list_;
+#ifdef CCI_THREAD_SAFE
+std::mutex impl_pool::mutex_;
+#endif
 
 } // anonymous namespace
 

@@ -20,11 +20,28 @@
 #include "cci/cfg/cci_originator.h"
 
 #include <cstring>
+#include <thread>
 
 #include "cci/cfg/cci_config_macros.h"
 #include "cci/cfg/cci_report_handler.h"
 
 CCI_OPEN_NAMESPACE_
+
+/// Captured SystemC thread ID — set on first originator construction.
+/// Used to detect non-SystemC threads where sc_get_current_object()
+/// is unreliable.
+static std::thread::id sysc_thread_id{};
+static bool sysc_thread_id_set = false;
+
+static bool is_on_sysc_thread() {
+    if (!sysc_thread_id_set) {
+        // First call — assume we're on the SystemC thread
+        sysc_thread_id = std::this_thread::get_id();
+        sysc_thread_id_set = true;
+        return true;
+    }
+    return std::this_thread::get_id() == sysc_thread_id;
+}
 
 cci_originator::cci_originator(const std::string& originator_name)
   : m_originator_obj()
@@ -143,6 +160,7 @@ bool cci_originator::operator<(const cci_originator& originator) const {
 }
 
 sc_core::sc_object *cci_originator::current_originator_object() {
+    if (!is_on_sysc_thread()) return NULL;
     return sc_core::sc_get_current_object();
 }
 

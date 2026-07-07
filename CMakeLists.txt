@@ -86,6 +86,7 @@ set (SystemCCCI_SOVERSION "${SystemCCCI_VERSION_MAJOR}.${SystemCCCI_VERSION_MINO
 #                               lib-<target-arch>. (default: OFF)
 
 option(CCI_ENABLE_CFG "Build SystemCCI configuration library" ON)
+option(CCI_ENABLE_THREAD_SAFETY "Enable thread-safe broker and parameter access" OFF)
 option(SYSTEMCCCI_BUILD_TESTS "Build tests & examples" ON)
 option(CCI_ENABLE_INSPECTION "Build SystemCCI inspection library" ON)
 option(BUILD_SOURCE_DOCUMENTATION "Build source documentation with Doxygen." OFF)
