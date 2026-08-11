@@ -186,18 +186,33 @@ message (STATUS "CMAKE_INSTALL_LIBDIR = ${CMAKE_INSTALL_LIBDIR}")
 message (STATUS "INSTALL_CMAKEDIR = ${INSTALL_CMAKEDIR}")
 message (STATUS "======================================================================================================")
 
-#If SYSTEMC_HOME is defined add it to the search path for the find_package/find_libary ... 
-if (DEFINED ENV{SYSTEMC_HOME})
-  list (APPEND CMAKE_PREFIX_PATH $ENV{SYSTEMC_HOME})
-  # Also search platform-specific lib subdirectories (e.g. lib-mingw-w64, lib64)
-  file (GLOB _sc_libsubdirs LIST_DIRECTORIES true "$ENV{SYSTEMC_HOME}/lib*")
-  foreach (_sc_libsubdir IN LISTS _sc_libsubdirs)
-    if (IS_DIRECTORY "${_sc_libsubdir}")
-      list (APPEND CMAKE_PREFIX_PATH "${_sc_libsubdir}")
+# Treat an explicitly selected SystemCLanguage_DIR as authoritative: do not add
+# SYSTEMC_HOME-derived guesses that could hide an invalid user-supplied path.
+# Without an explicit selection, use SYSTEMC_HOME for package/library discovery.
+if (NOT DEFINED SystemCLanguage_DIR AND DEFINED ENV{SYSTEMC_HOME})
+    list (APPEND CMAKE_PREFIX_PATH "$ENV{SYSTEMC_HOME}")
+
+    # Prefer the libdir matching the current CCI configuration.
+    if (NOT IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+        set (_sc_preferred_libdir "$ENV{SYSTEMC_HOME}/${CMAKE_INSTALL_LIBDIR}")
+        if (IS_DIRECTORY "${_sc_preferred_libdir}")
+            list (APPEND CMAKE_PREFIX_PATH "${_sc_preferred_libdir}")
+        endif ()
     endif ()
-  endforeach ()
-  unset (_sc_libsubdirs)
-  unset (_sc_libsubdir)
+
+    # Fall back to all available SystemC lib directories.
+    file (GLOB _sc_libsubdirs LIST_DIRECTORIES true "$ENV{SYSTEMC_HOME}/lib*")
+    list (REMOVE_ITEM _sc_libsubdirs "${_sc_preferred_libdir}")
+
+    foreach (_sc_libsubdir IN LISTS _sc_libsubdirs)
+        if (IS_DIRECTORY "${_sc_libsubdir}")
+            list (APPEND CMAKE_PREFIX_PATH "${_sc_libsubdir}")
+        endif ()
+    endforeach ()
+
+    unset (_sc_preferred_libdir)
+    unset (_sc_libsubdirs)
+    unset (_sc_libsubdir)
 endif ()
 
 set(CCI_INTERFACE_MEMBERS)
