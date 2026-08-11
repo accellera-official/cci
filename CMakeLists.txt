@@ -186,8 +186,10 @@ message (STATUS "CMAKE_INSTALL_LIBDIR = ${CMAKE_INSTALL_LIBDIR}")
 message (STATUS "INSTALL_CMAKEDIR = ${INSTALL_CMAKEDIR}")
 message (STATUS "======================================================================================================")
 
-#If SYSTEMC_HOME is defined add it to the search path for the find_package/find_libary ... 
-if (DEFINED ENV{SYSTEMC_HOME})
+# Treat an explicitly selected SystemCLanguage_DIR as authoritative: do not add
+# SYSTEMC_HOME-derived guesses that could hide an invalid user-supplied path.
+# Without an explicit selection, use SYSTEMC_HOME for package/library discovery.
+if (NOT DEFINED SystemCLanguage_DIR AND DEFINED ENV{SYSTEMC_HOME})
     list (APPEND CMAKE_PREFIX_PATH "$ENV{SYSTEMC_HOME}")
 
     # Prefer the libdir matching the current CCI configuration.
